@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{65246688-FADB-4A71-85D4-360306B1711C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MangoPay</RootNamespace>
+    <AssemblyName>MangoPay</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\APIs\ApiBase.cs" />
+    <Compile Include="Core\APIs\ApiCardPreauthorizations.cs" />
+    <Compile Include="Core\APIs\ApiCardRegistrations.cs" />
+    <Compile Include="Core\APIs\ApiCards.cs" />
+    <Compile Include="Core\APIs\ApiClients.cs" />
+    <Compile Include="Core\APIs\ApiEvents.cs" />
+    <Compile Include="Core\APIs\ApiHooks.cs" />
+    <Compile Include="Core\APIs\ApiOAuth.cs" />
+    <Compile Include="Core\APIs\ApiPayIns.cs" />
+    <Compile Include="Core\APIs\ApiPayOuts.cs" />
+    <Compile Include="Core\APIs\ApiRefunds.cs" />
+    <Compile Include="Core\APIs\ApiTransfers.cs" />
+    <Compile Include="Core\APIs\ApiUsers.cs" />
+    <Compile Include="Core\APIs\ApiWallets.cs" />
+    <Compile Include="Core\AuthenticationHelper.cs" />
+    <Compile Include="Core\AuthorizationTokenManager.cs" />
+    <Compile Include="Core\DefaultStorageStrategy.cs" />
+    <Compile Include="Core\EventType.cs" />
+    <Compile Include="Core\FileStorageStrategy.cs" />
+    <Compile Include="Core\FilterEvents.cs" />
+    <Compile Include="Core\FilterTransactions.cs" />
+    <Compile Include="Core\Interfaces\IPayInPaymentDetails.cs" />
+    <Compile Include="Core\Interfaces\IPayOutPaymentDetails.cs" />
+    <Compile Include="Core\Interfaces\IStorageStrategy.cs" />
+    <Compile Include="Core\KycDocumentType.cs" />
+    <Compile Include="Core\Logs.cs" />
+    <Compile Include="Core\MangoPayJsonDeserializer.cs" />
+    <Compile Include="Entities\Money.cs" />
+    <Compile Include="Core\OAuthToken.cs" />
+    <Compile Include="Entities\Pagination.cs" />
+    <Compile Include="Entities\Depentend\PayInExecutionDetailsDirect.cs" />
+    <Compile Include="Entities\Depentend\PayInExecutionDetailsWeb.cs" />
+    <Compile Include="Entities\Depentend\PayInPaymentDetailsBankWire.cs" />
+    <Compile Include="Entities\Depentend\PayInPaymentDetailsCard.cs" />
+    <Compile Include="Entities\Depentend\PayInPaymentDetailsPreAuthorized.cs" />
+    <Compile Include="Entities\Depentend\PayOutPaymentDetailsBankWire.cs" />
+    <Compile Include="Core\ResponseException.cs" />
+    <Compile Include="Core\RestTool.cs" />
+    <Compile Include="Core\UrlTool.cs" />
+    <Compile Include="Entities\Depentend\BankAccountDetailsCA.cs" />
+    <Compile Include="Entities\Depentend\BankAccountDetailsGB.cs" />
+    <Compile Include="Entities\Depentend\BankAccountDetailsIBAN.cs" />
+    <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Core\Dto.cs" />
+    <Compile Include="Core\EntityBase.cs" />
+    <Compile Include="Core\Interfaces\IBankAccountDetails.cs" />
+    <Compile Include="Core\RequestType.cs" />
+    <Compile Include="Entities\BankAccount.cs" />
+    <Compile Include="Entities\Depentend\BankAccountDetailsOTHER.cs" />
+    <Compile Include="Entities\Depentend\BankAccountDetailsUS.cs" />
+    <Compile Include="Entities\Card.cs" />
+    <Compile Include="Entities\CardPreAuthorization.cs" />
+    <Compile Include="Entities\CardRegistration.cs" />
+    <Compile Include="Entities\Client.cs" />
+    <Compile Include="Entities\Event.cs" />
+    <Compile Include="Entities\Hook.cs" />
+    <Compile Include="Core\Interfaces\IPayInExecutionDetails.cs" />
+    <Compile Include="Entities\KycDocument.cs" />
+    <Compile Include="Entities\KycPage.cs" />
+    <Compile Include="Entities\PayIn.cs" />
+    <Compile Include="Entities\PayOut.cs" />
+    <Compile Include="Entities\Refund.cs" />
+    <Compile Include="Core\ResponseError.cs" />
+    <Compile Include="Entities\Transaction.cs" />
+    <Compile Include="Entities\Transfer.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserLegal.cs" />
+    <Compile Include="Entities\UserNatural.cs" />
+    <Compile Include="Entities\Wallet.cs" />
+    <Compile Include="MangoPayApi.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
