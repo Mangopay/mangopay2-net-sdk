@@ -84,6 +84,15 @@ namespace MangoPay.Core
                 throw new Exception("Unsupported user entity type.");
         }
 
+		/// <summary>Gets all user's wallets.</summary>
+		/// <param name="userId">User identifier to get wallets of.</param>
+		/// <param name="pagination">Pagination.</param>
+		/// <returns>Collection of user's wallets.</returns>
+		public List<Wallet> GetWallets(String userId, Pagination pagination)
+		{
+			return this.GetList<Wallet>("users_allwallets", pagination, userId);
+		}
+
         /// <summary>Creates bank account for user.</summary>
         /// <param name="userId">User identifier to create bank account for.</param>
         /// <param name="bankAccount">Bank account object to be created.</param>
@@ -151,14 +160,7 @@ namespace MangoPay.Core
 
             kycPage.File = fileContent;
 
-            try
-            {
-                this.CreateObject<KycPage>("users_createkycpage", kycPage, userId, kycDocumentId);
-            }
-            catch (Exception ex)
-            {
-                Exception e = ex;
-            }
+            this.CreateObject<KycPage>("users_createkycpage", kycPage, userId, kycDocumentId);
         }
 
         /// <summary>Creates KycPage from file.</summary>
@@ -175,10 +177,11 @@ namespace MangoPay.Core
         /// <param name="userId">User identifier.</param>
         /// <param name="type">Type of KycDocument.</param>
         /// <returns>KycDocument object returned from API.</returns>
-        public KycDocument CreateKycDocument(String userId, KycDocumentType type)
+        public KycDocument CreateKycDocument(String userId, KycDocumentType type, string tag = null)
         {
             KycDocument kycDocument = new KycDocument();
             kycDocument.Type = type.ToString();
+            kycDocument.Tag = tag;
 
             return this.CreateObject<KycDocument>("users_createkycdocument", kycDocument, userId);
         }

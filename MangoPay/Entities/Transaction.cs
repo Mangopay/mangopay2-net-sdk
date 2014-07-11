@@ -43,6 +43,12 @@ namespace MangoPay.Entities
         /// <summary>TransactionNature { REGULAR, REFUND, REPUDIATION }.</summary>
         public String Nature;
 
+        /// <summary>Credited wallet identifier.</summary>
+        public string CreditedWalletId;
+
+        /// <summary>Debited wallet identifier.</summary>
+        public string DebitedWalletId;
+
         /// <summary>Gets map which property is an object and what type of object.</summary>
         /// <returns>Collection of field name-field type pairs.</returns>
         public override Dictionary<String, Type> GetSubObjects()

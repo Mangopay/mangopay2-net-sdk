@@ -186,6 +186,22 @@ namespace MangoPay.Tests
         }
 
         [TestMethod]
+        public void Test_Users_GetAll()
+        {
+            try
+            {
+                List<User> users = this.Api.Users.GetAll();
+
+                Assert.IsNotNull(users);
+                Assert.IsTrue(users.Count > 0);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
         public void Test_Users_Save_Natural()
         {
             try
