@@ -77,40 +77,47 @@ namespace MangoPay.Core
         {
             if (this._responseCode != 200 && this._responseCode != 204)
             {
-                Dictionary<int, String> responseCodes = new Dictionary<int, String> 
-                {
-                    { 206, "PartialContent" },
-                    { 400, "Bad request" },
-                    { 401, "Unauthorized" },
-                    { 403, "Prohibition to use the method" },
-                    { 404, "Not found" },
-                    { 405, "Method not allowed" },
-                    { 413, "Request entity too large" },
-                    { 422, "Unprocessable entity" },
-                    { 500, "Internal server error" },
-                    { 501, "Not implemented" }
-                };
+                //Dictionary<int, String> responseCodes = new Dictionary<int, String> 
+                //{
+                //    { 206, "PartialContent" },
+                //    { 400, "Bad request" },
+                //    { 401, "Unauthorized" },
+                //    { 403, "Prohibition to use the method" },
+                //    { 404, "Not found" },
+                //    { 405, "Method not allowed" },
+                //    { 413, "Request entity too large" },
+                //    { 422, "Unprocessable entity" },
+                //    { 500, "Internal server error" },
+                //    { 501, "Not implemented" }
+                //};
 
-                String errorMessage = "";
-                if (responseCodes.ContainsKey(this._responseCode))
+                //String errorMessage = "";
+                //if (responseCodes.ContainsKey(this._responseCode))
+                //{
+                //    errorMessage = responseCodes[this._responseCode];
+                //}
+                //else
+                //{
+                //    errorMessage = "Unknown response error";
+                //}
+
+                //if (textResponse != null)
+                //{
+                //    errorMessage += ". " + textResponse;
+                //}
+
+                if (this._responseCode == 401)
                 {
-                    errorMessage = responseCodes[this._responseCode];
+                    throw new UnauthorizedAccessException(textResponse);
                 }
                 else
                 {
-                    errorMessage = "Unknown response error";
+                    ResponseError error = JsonConvert.DeserializeObject<ResponseError>(textResponse);
+                    ResponseException rex = new ResponseException(textResponse);
+                    rex.ResponseError = error;
+
+                    throw rex;
                 }
-
-                if (textResponse != null)
-                {
-                    errorMessage += ". " + textResponse;
-                }
-
-                ResponseError error = JsonConvert.DeserializeObject<ResponseError>(textResponse);
-                ResponseException rex = new ResponseException(errorMessage);
-                rex.ResponseError = error;
-
-                throw rex;
             }
         }
 

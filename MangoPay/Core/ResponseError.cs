@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,5 +27,24 @@ namespace MangoPay.Core
 
         /// <summary>Collection of field name / error decription pairs.</summary>
         public Dictionary<String, String> errors;
+
+        /// <summary>Deserializes JSON ResponseError instance.</summary>
+        /// <param name="serializedResponseError">JSON-serialized ResponseError instance.</param>
+        /// <returns>Returns new instance of ResponseError class or null if deserialization failed.</returns>
+        public static ResponseError FromJSON(string serializedResponseError)
+        {
+            ResponseError result = null;
+
+            try
+            {
+                result = JsonConvert.DeserializeObject<ResponseError>(serializedResponseError);
+            }
+            catch(JsonException ex)
+            {
+                result = null;
+            }
+
+            return result;
+        }
     }
 }

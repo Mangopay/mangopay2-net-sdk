@@ -20,6 +20,7 @@ namespace MangoPay.Core
         {
             try
             {
+                this.ResponseErrorRaw = message;
                 this.ResponseError = JsonConvert.DeserializeObject<ResponseError>(message);
             }
             catch (JsonException jex)
@@ -27,6 +28,9 @@ namespace MangoPay.Core
                 // Intentionally suppress optional deserialize exception. //
             }
         }
+
+        /// <summary>Raw text data that came as response from API.</summary>
+        public String ResponseErrorRaw;
 
         /// <summary>Deserialized response error data.</summary>
         public ResponseError ResponseError = new ResponseError();
