@@ -45,7 +45,7 @@ namespace MangoPay.Entities
         public bool SecureModeNeeded;
 
         /// <summary>This is the URL where to redirect users to proceed to 3D secure validation.</summary>
-        public string SecureModeRedirectUrl;
+        public string SecureModeRedirectURL;
 
         /// <summary>This is the URL where users are automatically redirected after 3D secure validation (if activated).</summary>
         public string SecureModeReturnURL;
