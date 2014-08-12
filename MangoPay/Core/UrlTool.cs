@@ -108,7 +108,7 @@ namespace MangoPay.Core
             {
                 result = (new Uri(_root.Config.BaseUrl)).GetComponents(UriComponents.Scheme, UriFormat.Unescaped) + "://" + this.GetHost() + restUrl;
             }
-            catch (Exception ex) { }
+            catch { /* Intentionally suppress exceptions here. */ }
 
             return result;
         }

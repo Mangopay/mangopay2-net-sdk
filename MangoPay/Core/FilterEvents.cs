@@ -20,7 +20,7 @@ namespace MangoPay.Core
 
         /// <summary>Gets map of fields and values.</summary>
         /// <returns>Collection of field name-field value pairs.</returns>
-        public new Dictionary<String, String> GetValues()
+        public Dictionary<String, String> GetValues()
         {
             Dictionary<String, String> result = new Dictionary<String, String>();
 

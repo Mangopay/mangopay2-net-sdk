@@ -24,20 +24,19 @@ namespace MangoPay.Core
         }
 
         /// <summary>Creates new user.</summary>
-        /// <param name="user">User object to be created.</param>
-        /// <returns>User instance returned from API, which is either of UserNatural or UserLegal type.</returns>
-        public User Create(User user)
+        /// <param name="user">UserNatural object to be created.</param>
+        /// <returns>UserNatural instance returned from API.</returns>
+        public UserNatural Create(UserNatural user)
         {
-            User response = null;
+            return this.CreateObject<UserNatural>("users_createnaturals", user);
+        }
 
-            if (user is UserNatural)
-                response = this.CreateObject<UserNatural>("users_createnaturals", (user as UserNatural));
-            else if (user is UserLegal)
-                response = this.CreateObject<UserLegal>("users_createlegals", (user as UserLegal));
-            else
-                throw new Exception("Unsupported user entity type.");
-
-            return response;
+        /// <summary>Creates new user.</summary>
+        /// <param name="user">UserLegal object to be created.</param>
+        /// <returns>UserLegal instance returned from API.</returns>
+        public UserLegal Create(UserLegal user)
+        {
+            return this.CreateObject<UserLegal>("users_createlegals", user);
         }
 
         /// <summary>Gets users.</summary>

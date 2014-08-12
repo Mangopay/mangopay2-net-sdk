@@ -31,9 +31,9 @@ namespace MangoPay.Core
                 { "Email", clientEmail }
             };
 
-            RestTool rest = new RestTool(this._root, false);
-            rest.AddRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
-            return rest.Request<Client>(urlMethod, requestType, requestData);
+            RestTool restTool = new RestTool(this._root, false);
+            restTool.AddRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
+            return restTool.Request<Client>(urlMethod, requestType, requestData);
         }
     }
 }

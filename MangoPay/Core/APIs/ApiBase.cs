@@ -145,7 +145,7 @@ namespace MangoPay.Core
             {
                 result = this._methods[key][0];
             }
-            catch (Exception ex)
+            catch
             {
                 throw new Exception("Unknown method key: " + key);
             }
@@ -180,8 +180,8 @@ namespace MangoPay.Core
             else
                 urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
 
-            RestTool rest = new RestTool(this._root, true);
-            T result = rest.Request<T>(urlMethod, this.GetRequestType(methodKey), null, null, entity);
+            RestTool restTool = new RestTool(this._root, true);
+            T result = restTool.Request<T>(urlMethod, this.GetRequestType(methodKey), null, null, entity);
 
             return result;
 
@@ -260,9 +260,9 @@ namespace MangoPay.Core
                 pagination = new Pagination();
             }
 
-            RestTool rest = new RestTool(this._root, true);
+            RestTool restTool = new RestTool(this._root, true);
 
-            return rest.RequestList<T>(urlMethod, this.GetRequestType(methodKey), additionalUrlParams, pagination);
+            return restTool.RequestList<T>(urlMethod, this.GetRequestType(methodKey), additionalUrlParams, pagination);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
@@ -321,8 +321,8 @@ namespace MangoPay.Core
                 }
 
 
-                RestTool rest = new RestTool(this._root, true);
-                return rest.Request(urlMethod, this.GetRequestType(methodKey), null, null, entity);
+                RestTool restTool = new RestTool(this._root, true);
+                return restTool.Request(urlMethod, this.GetRequestType(methodKey), null, null, entity);
             }
             else
             {

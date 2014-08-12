@@ -17,10 +17,6 @@ namespace MangoPay.Core
         /// <returns></returns>
         public virtual Dictionary<string, Dictionary<string, Dictionary<string, Type>>> GetDependentObjects() { return new Dictionary<string, Dictionary<string, Dictionary<string, Type>>>(); }
 
-        /// <summary>Gets map of fields and values. To be overridden in child class.</summary>
-        /// <returns>Collection of field name-field value pairs.</returns>
-        public virtual Dictionary<string, string> GetValues() { return new Dictionary<string, string>(); }
-
         /// <summary>Gets the collection of read-only fields names. To be overridden in child class.</summary>
         /// <returns>List of field names.</returns>
         public virtual List<string> GetReadOnlyProperties() { return new List<string>(); }

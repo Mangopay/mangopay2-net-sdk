@@ -1,6 +1,7 @@
 ﻿using MangoPay.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,38 +24,24 @@ namespace MangoPay.Core
         /// <returns>Currently stored token instance or null.</returns>
         public OAuthToken Get()
         {
-            throw new NotImplementedException();
-
-            //try
-            //{
-            //   FileInputStream fileIn = new FileInputStream(getFilePath());
-            //   ObjectInputStream in = new ObjectInputStream(fileIn);
-            //   OAuthToken token = (OAuthToken) in.readObject();
-            //   in.close();
-            //   fileIn.close();
-            //   return token;
-            //} catch (Exception ex)
-            //{
-            //    return null; // it's not an error: e.g. file not found cause not stored yet
-            //}
+            try
+            {
+                OAuthToken token = OAuthToken.Deserialize(File.ReadAllText(GetFilePath()));
+                return token;
+            }
+            catch
+            {
+                return null; // it's not an error: e.g. file not found because not stored yet
+            }
         }
 
         /// <summary>Stores authorization token passed as an argument.</summary>
         /// <param name="token">Token instance to be stored.</param>
         public void Store(OAuthToken token)
         {
-            throw new NotImplementedException();
+            string serializedToken = token.Serialize();
 
-            //FileOutputStream fileOut;
-            //try {
-            //    fileOut = new FileOutputStream(getFilePath());
-            //    ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            //    out.writeObject(token);
-            //    out.close();
-            //    fileOut.close();
-            //} catch (Exception ex) {
-            //    throw;
-            //}
+            File.WriteAllText(GetFilePath(), serializedToken);
         }
 
         private String GetFilePath() { return _tempDir + GetType().Name + ".tmp"; }

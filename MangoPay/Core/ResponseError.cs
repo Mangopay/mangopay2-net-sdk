@@ -39,7 +39,7 @@ namespace MangoPay.Core
             {
                 result = JsonConvert.DeserializeObject<ResponseError>(serializedResponseError);
             }
-            catch(JsonException ex)
+            catch (JsonException)
             {
                 result = null;
             }

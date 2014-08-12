@@ -77,35 +77,6 @@ namespace MangoPay.Core
         {
             if (this._responseCode != 200 && this._responseCode != 204)
             {
-                //Dictionary<int, String> responseCodes = new Dictionary<int, String> 
-                //{
-                //    { 206, "PartialContent" },
-                //    { 400, "Bad request" },
-                //    { 401, "Unauthorized" },
-                //    { 403, "Prohibition to use the method" },
-                //    { 404, "Not found" },
-                //    { 405, "Method not allowed" },
-                //    { 413, "Request entity too large" },
-                //    { 422, "Unprocessable entity" },
-                //    { 500, "Internal server error" },
-                //    { 501, "Not implemented" }
-                //};
-
-                //String errorMessage = "";
-                //if (responseCodes.ContainsKey(this._responseCode))
-                //{
-                //    errorMessage = responseCodes[this._responseCode];
-                //}
-                //else
-                //{
-                //    errorMessage = "Unknown response error";
-                //}
-
-                //if (textResponse != null)
-                //{
-                //    errorMessage += ". " + textResponse;
-                //}
-
                 if (this._responseCode == 401)
                 {
                     throw new UnauthorizedAccessException(textResponse);
@@ -306,7 +277,7 @@ namespace MangoPay.Core
             {
                 request.AddHeader(h.Key, h.Value);
 
-                if (this._debugMode)
+                if (this._debugMode && h.Key != "Authorization")
                     Logs.Debug("HTTP Header", h.Key + ": " + h.Value);
             }
 
@@ -393,6 +364,19 @@ namespace MangoPay.Core
             UrlTool urlTool = new UrlTool(_root);
             String restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired, pagination, null);
 
+            if (this._requestData != null)
+            {
+                String parameters = "";
+                foreach (KeyValuePair<String, String> entry in this._requestData)
+                {
+                    parameters += String.Format("&{0}={1}", Uri.EscapeDataString(entry.Key), Uri.EscapeDataString(entry.Value));
+                }
+                if (pagination == null)
+                    parameters = parameters.Remove(0, 1).Insert(0, "?");
+
+                restUrl += parameters;
+            }
+
             string fullUrl = urlTool.GetFullUrl(restUrl);
             var client = new RestClient(fullUrl);
 
@@ -412,7 +396,7 @@ namespace MangoPay.Core
             {
                 request.AddHeader(h.Key, h.Value);
 
-                if (this._debugMode)
+                if (this._debugMode && h.Key != "Authorization")
                     Logs.Debug("HTTP Header", h.Key + ": " + h.Value);
             }
 
@@ -426,16 +410,16 @@ namespace MangoPay.Core
                 Logs.Debug("RequestType", this._requestType);
             }
 
-            IRestResponse<List<T>> resp = client.Execute<List<T>>(request);
-            String responseString = resp.Content;
+            IRestResponse<List<T>> restResponse = client.Execute<List<T>>(request);
+            String responseString = restResponse.Content;
 
-            response = resp.Data;
+            response = restResponse.Data;
 
-            this._responseCode = (int)resp.StatusCode;
+            this._responseCode = (int)restResponse.StatusCode;
 
             if (this._debugMode)
             {
-                if (resp.StatusCode == HttpStatusCode.OK || resp.StatusCode == HttpStatusCode.NoContent)
+                if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
                 {
                     Logs.Debug("Response OK", responseString);
                 }
@@ -447,7 +431,7 @@ namespace MangoPay.Core
 
             if (this._responseCode == 200)
             {
-                this.ReadResponseHeaders(resp);
+                this.ReadResponseHeaders(restResponse);
 
                 if (this._debugMode) Logs.Debug("Response object", response.ToString());
             }
@@ -570,7 +554,12 @@ namespace MangoPay.Core
                         if (!isList)
                         {
                             if (f.GetValue(entity) != null)
-                                result.Add(fieldName, f.GetValue(entity));
+                            {
+                                if (f.GetValue(entity).GetType().IsEnum)
+                                    result.Add(fieldName, f.GetValue(entity).ToString());
+                                else
+                                    result.Add(fieldName, f.GetValue(entity));
+                            }
                         }
                         else
                         {
@@ -578,7 +567,7 @@ namespace MangoPay.Core
                                 result.Add(fieldName, ((List<T>)f.GetValue(entity)).ToArray());
                         }
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         continue;
                     }

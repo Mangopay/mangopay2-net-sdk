@@ -56,7 +56,7 @@ namespace MangoPay.Tests
 
                 Assert.Fail("CreateLegal() should throw an exception when required props are not provided.");
             }
-            catch (ResponseException ex)
+            catch (ResponseException)
             {
                 Assert.IsNull(ret);
             }
@@ -134,7 +134,7 @@ namespace MangoPay.Tests
 
                 Assert.Fail("GetUser() should throw an exception when called with legal user id.");
             }
-            catch (ResponseException ex)
+            catch (ResponseException)
             {
                 Assert.IsNull(user);
             }
@@ -160,7 +160,7 @@ namespace MangoPay.Tests
 
                 Assert.IsTrue(false, "GetLegal() should throw an exception when called with natural user id");
             }
-            catch (ResponseException ex)
+            catch (ResponseException)
             {
                 Assert.IsNull(user);
             }

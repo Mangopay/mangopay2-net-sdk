@@ -57,16 +57,18 @@ namespace MangoPay.Tests
         {
             if (BaseTest._john == null)
             {
-                UserNatural user = new UserNatural();
-                user.FirstName = "John";
-                user.LastName = "Doe";
-                user.Email = "john.doe@sample.org";
-                user.Address = "Some Address";
-                user.Birthday = (long)(new DateTime(1975, 12, 21, 0, 0, 0) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
-                user.Nationality = "FR";
-                user.CountryOfResidence = "FR";
-                user.Occupation = "programmer";
-                user.IncomeRange = 3;
+                UserNatural user = new UserNatural
+                {
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Email = "john.doe@sample.org",
+                    Address = "Some Address",
+                    Birthday = (long)(new DateTime(1975, 12, 21, 0, 0, 0) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds,
+                    Nationality = "FR",
+                    CountryOfResidence = "FR",
+                    Occupation = "programmer",
+                    IncomeRange = 3
+                };
 
                 BaseTest._john = (UserNatural)this.Api.Users.Create(user);
             }
@@ -75,18 +77,20 @@ namespace MangoPay.Tests
 
         protected UserNatural GetNewJohn()
         {
-            UserNatural user = new UserNatural();
-            user.FirstName = "John";
-            user.LastName = "Doe";
-            user.Email = "john.doe@sample.org";
-            user.Address = "Some Address";
-            user.Birthday = (long)(new DateTime(1975, 12, 21, 0, 0, 0) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
-            user.Nationality = "FR";
-            user.CountryOfResidence = "FR";
-            user.Occupation = "programmer";
-            user.IncomeRange = 3;
-            return (UserNatural)this.Api.Users.Create(user);
+            UserNatural user = new UserNatural
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                Email = "john.doe@sample.org",
+                Address = "Some Address",
+                Birthday = (long)(new DateTime(1975, 12, 21, 0, 0, 0) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds,
+                Nationality = "FR",
+                CountryOfResidence = "FR",
+                Occupation = "programmer",
+                IncomeRange = 3
+            };
 
+            return (UserNatural)this.Api.Users.Create(user);
         }
 
         protected UserLegal GetMatrix()

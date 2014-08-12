@@ -62,7 +62,7 @@ namespace MangoPay.Core
             return textWriter.ToString();
         }
 
-        /// <summary>Creates new instance of OAuthToken class from deserialized data.</summary>
+        /// <summary>Creates new instance of OAuthToken class from serialized data.</summary>
         /// <param name="serializedData">Serialized OAuthToken object.</param>
         /// <returns>Returns new instance of OAuthToken class.</returns>
         public static OAuthToken Deserialize(string serializedData)

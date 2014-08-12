@@ -28,8 +28,8 @@ namespace MangoPay.Core
         public Int64? AfterDate;
 
         /// <summary>Gets map of fields and values.</summary>
-        /// <returns>Collection of field name-field value pairs.</returns>
-        public override Dictionary<String, String> GetValues()
+        /// <returns>Returns collection of field_name-field_value pairs.</returns>
+        public Dictionary<String, String> GetValues()
         {
             Dictionary<String, String> result = new Dictionary<String, String>();
 

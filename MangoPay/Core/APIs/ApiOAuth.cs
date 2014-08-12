@@ -24,27 +24,14 @@ namespace MangoPay.Core
                 { "grant_type", "client_credentials" }
             };
 
-            RestTool rest = new RestTool(this._root, false);
-            AuthenticationHelper authHlp = new AuthenticationHelper(_root);
+            RestTool restTool = new RestTool(this._root, false);
+            AuthenticationHelper authHelper = new AuthenticationHelper(_root);
 
-            try
-            {
-                rest.AddRequestHttpHeader("Host", (new Uri(_root.Config.BaseUrl)).Host);
-            }
-            catch (Exception ex)
-            {
-                //Logger.getLogger(ApiOAuth.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try
-            {
-                rest.AddRequestHttpHeader("Authorization", "Basic " + authHlp.GetHttpHeaderBasicKey());
-            }
-            catch (Exception ex)
-            {
-                //Logger.getLogger(ApiOAuth.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            rest.AddRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
-            OAuthToken response = rest.Request<OAuthToken>(urlMethod, requestType, requestData);
+            restTool.AddRequestHttpHeader("Host", (new Uri(_root.Config.BaseUrl)).Host);
+            restTool.AddRequestHttpHeader("Authorization", "Basic " + authHelper.GetHttpHeaderBasicKey());
+            restTool.AddRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            OAuthToken response = restTool.Request<OAuthToken>(urlMethod, requestType, requestData);
 
             return response;
         }
