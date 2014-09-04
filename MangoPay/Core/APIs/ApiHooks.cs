@@ -1,9 +1,6 @@
 ﻿using MangoPay.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -17,38 +14,39 @@ namespace MangoPay.Core
         /// <summary>Creates new hook.</summary>
         /// <param name="hook">Hook instance to be created.</param>
         /// <returns>Hook instance returned from API.</returns>
-        public Hook Create(Hook hook)
+        public HookDTO Create(HookPostDTO hook)
         {
-            return this.CreateObject<Hook>("hooks_create", hook);
+            return this.CreateObject<HookDTO, HookPostDTO>(MethodKey.HooksCreate, hook);
         }
 
         /// <summary>Gets hook.</summary>
         /// <param name="hookId">Hook identifier.</param>
         /// <returns>Hook instance returned from API.</returns>
-        public Hook Get(String hookId)
+        public HookDTO Get(String hookId)
         {
-            return this.GetObject<Hook>("hooks_get", hookId);
+            return this.GetObject<HookDTO>(MethodKey.HooksGet, hookId);
         }
 
         /// <summary>Saves a hook.</summary>
         /// <param name="hook">Hook instance to save.</param>
+        /// <param name="hookId">Hook identifier.</param>
         /// <returns>Hook instance returned from API.</returns>
-        public Hook Update(Hook hook)
+        public HookDTO Update(HookPutDTO hook, String hookId)
         {
-            return this.UpdateObject<Hook>("hooks_save", hook);
+            return this.UpdateObject<HookDTO, HookPutDTO>(MethodKey.HooksSave, hook, hookId);
         }
 
         /// <summary>Gets all hooks.</summary>
         /// <param name="pagination">Pagination.</param>
         /// <returns>List of Hook instances returned from API.</returns>
-        public List<Hook> GetAll(Pagination pagination)
+        public List<HookDTO> GetAll(Pagination pagination)
         {
-            return this.GetList<Hook>("hooks_all", pagination);
+            return this.GetList<HookDTO>(MethodKey.HooksAll, pagination);
         }
 
         /// <summary>Gets all hooks.</summary>
         /// <returns>List of Hook instances returned from API.</returns>
-        public List<Hook> GetAll()
+        public List<HookDTO> GetAll()
         {
             return this.GetAll(null);
         }

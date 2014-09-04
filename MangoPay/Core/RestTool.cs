@@ -1,15 +1,10 @@
-﻿using System;
+﻿using MangoPay.Entities;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Net;
-using System.IO;
-using System.Reflection;
-using MangoPay.Entities;
-using Newtonsoft.Json.Linq;
-using RestSharp;
 
 namespace MangoPay.Core
 {
@@ -57,7 +52,7 @@ namespace MangoPay.Core
             if (this._requestHttpHeaders == null)
                 this._requestHttpHeaders = new Dictionary<String, String>();
 
-            foreach (var item in httpHeader)
+            foreach (KeyValuePair<string, string> item in httpHeader)
             {
                 this._requestHttpHeaders.Add(item.Key, item.Value);
             }
@@ -94,83 +89,82 @@ namespace MangoPay.Core
 
         /// <summary>Makes a call to the MangoPay API.
         /// This generic method handles calls targeting single 
-        /// <code>Dto</code> instances. In order to process collections of objects, 
+        /// DTO instances. In order to process collections of objects, 
         /// use <code>RequestList</code> method instead.
         /// </summary>
+        /// <typeparam name="U">Return type.</typeparam>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="urlMethod">Relevant method key.</param>
         /// <param name="requestType">HTTP request term, one of the GET, PUT or POST.</param>
         /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
         /// <param name="pagination">Pagination object.</param>
-        /// <param name="entity">Instance of Dto class that is going to be sent in case of PUTting or POSTing.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        public T Request<T>(String urlMethod, String requestType, Dictionary<String, String> requestData, Pagination pagination, T entity)
-            where T : Dto, new()
+        /// <param name="entity">Instance of DTO class that is going to be sent in case of PUTting or POSTing.</param>
+        /// <returns>The DTO instance returned from API.</returns>
+        public U Request<U, T>(String urlMethod, String requestType, Dictionary<String, String> requestData, Pagination pagination, T entity)
+            where U : new()
         {
             this._requestType = requestType;
             this._requestData = requestData;
 
-            T responseResult = this.DoRequest<T>(urlMethod, pagination, entity);
-
-            if (pagination != null)
-            {
-                pagination = this._pagination;
-            }
+            U responseResult = this.DoRequest<U, T>(urlMethod, pagination, entity);
 
             return responseResult;
         }
 
         /// <summary>Makes a call to the MangoPay API.
         /// This generic method handles calls targeting single 
-        /// <code>Dto</code> instances. In order to process collections of objects, 
+        /// DTO instances. In order to process collections of objects, 
         /// use <code>RequestList</code> method instead.
         /// </summary>
+        /// <typeparam name="U">Return type.</typeparam>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="urlMethod">Relevant method key.</param>
         /// <param name="requestType">HTTP request term, one of the GET, PUT or POST.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        public T Request<T>(String urlMethod, String requestType)
-            where T : Dto, new()
+        /// <returns>The DTO instance returned from API.</returns>
+        public U Request<U, T>(String urlMethod, String requestType)
+            where U : new()
         {
-            return Request<T>(urlMethod, requestType, null, null, null);
+            return Request<U, T>(urlMethod, requestType, null, null, default(T));
         }
 
         /// <summary>Makes a call to the MangoPay API.
         /// This generic method handles calls targeting single 
-        /// <code>Dto</code> instances. In order to process collections of objects, 
+        /// DTO instances. In order to process collections of objects, 
         /// use <code>RequestList</code> method instead.
         /// </summary>
+        /// <typeparam name="U">Return type.</typeparam>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="urlMethod">Relevant method key.</param>
         /// <param name="requestType">HTTP request term, one of the GET, PUT or POST.</param>
         /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        public T Request<T>(String urlMethod, String requestType, Dictionary<String, String> requestData)
-            where T : Dto, new()
+        /// <returns>The DTO instance returned from API.</returns>
+        public U Request<U, T>(String urlMethod, String requestType, Dictionary<String, String> requestData)
+            where U : new()
         {
-            return Request<T>(urlMethod, requestType, requestData, null, null);
+            return Request<U, T>(urlMethod, requestType, requestData, null, default(T));
         }
 
         /// <summary>Makes a call to the MangoPay API.
         /// This generic method handles calls targeting single 
-        /// <code>Dto</code> instances. In order to process collections of objects, 
+        /// DTO instances. In order to process collections of objects, 
         /// use <code>RequestList</code> method instead.
         /// </summary>
+        /// <typeparam name="U">Return type.</typeparam>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="urlMethod">Relevant method key.</param>
         /// <param name="requestType">HTTP request term, one of the GET, PUT or POST.</param>
         /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
         /// <param name="pagination">Pagination object.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        public T Request<T>(String urlMethod, String requestType, Dictionary<String, String> requestData, Pagination pagination)
-            where T : Dto, new()
+        /// <returns>The DTO instance returned from API.</returns>
+        public U Request<U, T>(String urlMethod, String requestType, Dictionary<String, String> requestData, Pagination pagination)
+            where U : new()
         {
-            return Request<T>(urlMethod, requestType, requestData, pagination, null);
+            return Request<U, T>(urlMethod, requestType, requestData, pagination, default(T));
         }
 
         /// <summary>Makes a call to the MangoPay API. 
         /// This generic method handles calls targeting collections of 
-        /// <code>Dto</code> instances. In order to process single objects, 
+        /// DTO instances. In order to process single objects, 
         /// use <code>Request</code> method instead.
         /// </summary>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
@@ -179,57 +173,52 @@ namespace MangoPay.Core
         /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <param name="additionalUrlParams"></param>
-        /// <returns>Collection of Dto instances returned from API.</returns>
+        /// <returns>Collection of DTO instances returned from API.</returns>
         public List<T> RequestList<T>(String urlMethod, String requestType, Dictionary<String, String> requestData, Pagination pagination, Dictionary<String, String> additionalUrlParams)
-            where T : Dto, new()
+            where T : new()
         {
             this._requestType = requestType;
             this._requestData = requestData;
 
             List<T> responseResult = this.DoRequestList<T>(urlMethod, pagination, additionalUrlParams);
 
-            if (pagination != null)
-            {
-                pagination = this._pagination;
-            }
-
             return responseResult;
         }
 
         /// <summary>Makes a call to the MangoPay API. 
         /// This generic method handles calls targeting collections of 
-        /// <code>Dto</code> instances. In order to process single objects, 
+        /// DTO instances. In order to process single objects, 
         /// use <code>Request</code> method instead.
         /// </summary>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="urlMethod">Relevant method key.</param>
         /// <param name="requestType">HTTP request term. For lists should be always GET.</param>
-        /// <returns>Collection of Dto instances returned from API.</returns>
+        /// <returns>Collection of DTO instances returned from API.</returns>
         public List<T> RequestList<T>(String urlMethod, String requestType)
-            where T : Dto, new()
+            where T : new()
         {
             return RequestList<T>(urlMethod, requestType, null, null, null);
         }
 
         /// <summary>Makes a call to the MangoPay API. 
         /// This generic method handles calls targeting collections of 
-        /// <code>Dto</code> instances. In order to process single objects, 
+        /// DTO instances. In order to process single objects, 
         /// use <code>Request</code> method instead.
         /// </summary>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="urlMethod">Relevant method key.</param>
         /// <param name="requestType">HTTP request term. For lists should be always GET.</param>
         /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
-        /// <returns>Collection of Dto instances returned from API.</returns>
+        /// <returns>Collection of DTO instances returned from API.</returns>
         public List<T> RequestList<T>(String urlMethod, String requestType, Dictionary<String, String> requestData)
-            where T : Dto, new()
+            where T : new()
         {
             return RequestList<T>(urlMethod, requestType, requestData, null, null);
         }
 
         /// <summary>Makes a call to the MangoPay API. 
         /// This generic method handles calls targeting collections of 
-        /// <code>Dto</code> instances. In order to process single objects, 
+        /// DTO instances. In order to process single objects, 
         /// use <code>Request</code> method instead.
         /// </summary>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
@@ -237,31 +226,32 @@ namespace MangoPay.Core
         /// <param name="requestType">HTTP request term. For lists should be always GET.</param>
         /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
         /// <param name="pagination">Pagination object.</param>
-        /// <returns>Collection of Dto instances returned from API.</returns>
+        /// <returns>Collection of DTO instances returned from API.</returns>
         public List<T> RequestList<T>(String urlMethod, String requestType, Dictionary<String, String> requestData, Pagination pagination)
-            where T : Dto, new()
+            where T : new()
         {
             return RequestList<T>(urlMethod, requestType, requestData, pagination, null);
         }
 
-        private T DoRequest<T>(String urlMethod, Pagination pagination)
-            where T : Dto, new()
+        private U DoRequest<U, T>(String urlMethod, Pagination pagination)
+            where T : new()
+            where U : new()
         {
-            return DoRequest<T>(urlMethod, pagination, null);
+            return DoRequest<U, T>(urlMethod, pagination, default(T));
         }
 
-        private T DoRequest<T>(String urlMethod, Pagination pagination, T entity)
-            where T : Dto, new()
+        private U DoRequest<U, T>(String urlMethod, Pagination pagination, T entity)
+            where U : new()
         {
-            T response = null;
+            U responseObject = default(U);
 
             UrlTool urlTool = new UrlTool(_root);
             String restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired, pagination, null);
-
+            
             string fullUrl = urlTool.GetFullUrl(restUrl);
-            var client = new RestClient(fullUrl);
+            RestClient client = new RestClient(fullUrl);
 
-            client.AddHandler("application/json", new MangoPayJsonDeserializer(_debugMode));
+            client.AddHandler(Constants.APPLICATION_JSON, new MangoPayJsonDeserializer());
 
             if (this._debugMode)
             {
@@ -269,15 +259,16 @@ namespace MangoPay.Core
             }
 
             Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
-            var request = new RestRequest(method);
-            request.RequestFormat = DataFormat.Json;
+            RestRequest restRequest = new RestRequest(method);
+            restRequest.RequestFormat = DataFormat.Json;
+            restRequest.JsonSerializer = new MangoPayJsonSerializer();
+            restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
 
-
-            foreach (var h in this.GetHttpHeaders(restUrl))
+            foreach (KeyValuePair<string, string> h in this.GetHttpHeaders(restUrl))
             {
-                request.AddHeader(h.Key, h.Value);
+                restRequest.AddHeader(h.Key, h.Value);
 
-                if (this._debugMode && h.Key != "Authorization")
+                if (this._debugMode && h.Key != Constants.AUTHORIZATION)
                     Logs.Debug("HTTP Header", h.Key + ": " + h.Value);
             }
 
@@ -293,23 +284,22 @@ namespace MangoPay.Core
             {
                 if (entity != null)
                 {
-                    Dictionary<String, Object> requestData = BuildRequestData<T>(entity);
-                    request.AddBody(requestData);
+                    restRequest.AddBody(entity);
                 }
                 if (this._requestData != null)
                 {
                     foreach (KeyValuePair<String, String> entry in this._requestData)
                     {
-                        request.AddParameter(entry.Key, entry.Value);
+                        restRequest.AddParameter(entry.Key, entry.Value);
                     }
                 }
 
                 if (this._debugMode)
                 {
-                    var body = request.Parameters.Where(p => p.Type == ParameterType.RequestBody).FirstOrDefault();
+                    Parameter body = restRequest.Parameters.Where(p => p.Type == ParameterType.RequestBody).FirstOrDefault();
 
-                    var ppp = request.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
-                    foreach (var p in ppp)
+                    IEnumerable<Parameter> parameters = restRequest.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
+                    foreach (Parameter p in parameters)
                     {
                         Logs.Debug(p.Name, p.Value);
                     }
@@ -325,62 +315,59 @@ namespace MangoPay.Core
                 }
             }
 
-            IRestResponse<T> resp = client.Execute<T>(request);
-            String responseString = resp.Content;
+            IRestResponse<U> restResponse = client.Execute<U>(restRequest);
+            responseObject = restResponse.Data;
 
-            response = resp.Data;
-
-            this._responseCode = (int)resp.StatusCode;
+            this._responseCode = (int)restResponse.StatusCode;
 
             if (this._debugMode)
             {
-                if (resp.StatusCode == HttpStatusCode.OK || resp.StatusCode == HttpStatusCode.NoContent)
+                if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
                 {
-                    Logs.Debug("Response OK", responseString);
+                    Logs.Debug("Response OK", restResponse.Content);
                 }
                 else
                 {
-                    Logs.Debug("Response ERROR", responseString);
+                    Logs.Debug("Response ERROR", restResponse.Content);
                 }
             }
 
             if (this._responseCode == 200)
             {
-                this.ReadResponseHeaders(resp);
+                this.ReadResponseHeaders(restResponse);
 
-                if (this._debugMode) Logs.Debug("Response object", response.ToString());
+                if (this._debugMode) Logs.Debug("Response object", responseObject.ToString());
             }
 
-            this.CheckResponseCode(responseString);
+            this.CheckResponseCode(restResponse.Content);
 
-            return response;
+            return responseObject;
         }
 
         private List<T> DoRequestList<T>(string urlMethod, Pagination pagination, Dictionary<String, String> additionalUrlParams)
-            where T : Dto, new()
         {
-            List<T> response = null;
+            List<T> responseObject = null;
 
             UrlTool urlTool = new UrlTool(_root);
-            String restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired, pagination, null);
+            string restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired, pagination, null);
 
             if (this._requestData != null)
             {
-                String parameters = "";
+                string parameters = "";
                 foreach (KeyValuePair<String, String> entry in this._requestData)
                 {
                     parameters += String.Format("&{0}={1}", Uri.EscapeDataString(entry.Key), Uri.EscapeDataString(entry.Value));
                 }
                 if (pagination == null)
-                    parameters = parameters.Remove(0, 1).Insert(0, "?");
+                    parameters = parameters.Remove(0, 1).Insert(0, Constants.URI_QUERY_SEPARATOR);
 
                 restUrl += parameters;
             }
 
             string fullUrl = urlTool.GetFullUrl(restUrl);
-            var client = new RestClient(fullUrl);
+            RestClient client = new RestClient(fullUrl);
 
-            client.AddHandler("application/json", new MangoPayJsonDeserializer(_debugMode));
+            client.AddHandler(Constants.APPLICATION_JSON, new MangoPayJsonDeserializer());
 
             if (this._debugMode)
             {
@@ -388,15 +375,16 @@ namespace MangoPay.Core
             }
 
             Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
-            var request = new RestRequest(method);
-            request.RequestFormat = DataFormat.Json;
+            RestRequest restRequest = new RestRequest(method);
+            restRequest.RequestFormat = DataFormat.Json;
+            restRequest.JsonSerializer = new MangoPayJsonSerializer();
+            restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
 
-
-            foreach (var h in this.GetHttpHeaders(restUrl))
+            foreach (KeyValuePair<string, string> h in this.GetHttpHeaders(restUrl))
             {
-                request.AddHeader(h.Key, h.Value);
+                restRequest.AddHeader(h.Key, h.Value);
 
-                if (this._debugMode && h.Key != "Authorization")
+                if (this._debugMode && h.Key != Constants.AUTHORIZATION)
                     Logs.Debug("HTTP Header", h.Key + ": " + h.Value);
             }
 
@@ -410,10 +398,8 @@ namespace MangoPay.Core
                 Logs.Debug("RequestType", this._requestType);
             }
 
-            IRestResponse<List<T>> restResponse = client.Execute<List<T>>(request);
-            String responseString = restResponse.Content;
-
-            response = restResponse.Data;
+            IRestResponse<List<T>> restResponse = client.Execute<List<T>>(restRequest);
+            responseObject = restResponse.Data;
 
             this._responseCode = (int)restResponse.StatusCode;
 
@@ -421,11 +407,11 @@ namespace MangoPay.Core
             {
                 if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
                 {
-                    Logs.Debug("Response OK", responseString);
+                    Logs.Debug("Response OK", restResponse.Content);
                 }
                 else
                 {
-                    Logs.Debug("Response ERROR", responseString);
+                    Logs.Debug("Response ERROR", restResponse.Content);
                 }
             }
 
@@ -433,34 +419,34 @@ namespace MangoPay.Core
             {
                 this.ReadResponseHeaders(restResponse);
 
-                if (this._debugMode) Logs.Debug("Response object", response.ToString());
+                if (this._debugMode) Logs.Debug("Response object", responseObject.ToString());
             }
 
-            this.CheckResponseCode(responseString);
+            this.CheckResponseCode(restResponse.Content);
 
-            return response;
+            return responseObject;
         }
 
         /// <summary>Reads and parses response headers (pagination etc.)</summary>
         /// <param name="conn">Response object.</param>
         private void ReadResponseHeaders(IRestResponse restResponse)
         {
-            foreach (var k in restResponse.Headers)
+            foreach (Parameter k in restResponse.Headers)
             {
                 String v = (string)k.Value;
                 if (this._debugMode) Logs.Debug("Response header", k.Name + ":" + v);
 
                 if (k.Name == null) continue;
 
-                if (k.Name.Equals("X-Number-Of-Pages"))
+                if (k.Name.Equals(Constants.X_NUMBER_OF_PAGES))
                 {
                     this._pagination.TotalPages = Int32.Parse(v);
                 }
-                if (k.Name.Equals("X-Number-Of-Items"))
+                if (k.Name.Equals(Constants.X_NUMBER_OF_ITEMS))
                 {
                     this._pagination.TotalItems = Int32.Parse(v);
                 }
-                if (k.Name.Equals("Link"))
+                if (k.Name.Equals(Constants.LINK))
                 {
                     String linkValue = v;
                     String[] links = linkValue.Split(',');
@@ -490,118 +476,6 @@ namespace MangoPay.Core
             }
         }
 
-        private bool IFilter(Type typeObj, Object criteriaObj)
-        {
-            if (typeObj.ToString() == criteriaObj.ToString())
-                return true;
-            else
-                return false;
-        }
-
-        private Dictionary<String, Object> BuildRequestData<T>(T entity)
-        {
-            Dictionary<String, Object> result = new Dictionary<String, Object>();
-
-            List<String> readOnlyProperties = entity is Dto ? (entity as Dto).GetReadOnlyProperties() : new List<String>();
-
-            String fieldName = "";
-
-            TypeFilter myFilter = new TypeFilter(IFilter);
-            String[] myInterfaceList = new String[1] { "System.Collections.IEnumerable" };
-            foreach (FieldInfo f in typeof(T).GetFields())
-            {
-                bool isList = false;
-                if (f.GetType().FindInterfaces(myFilter, myInterfaceList).Count() > 0)
-                    isList = true;
-
-                fieldName = f.Name;
-
-                bool isReadOnly = false;
-                foreach (String s in readOnlyProperties)
-                {
-                    if (s.Equals(fieldName))
-                    {
-                        isReadOnly = true;
-                        break;
-                    }
-                }
-                if (isReadOnly) continue;
-
-
-                if (CanReadSubRequestData<T>(fieldName))
-                {
-                    Dictionary<String, Object> subRequestData = new Dictionary<String, Object>();
-
-                    MethodInfo m = this.GetType().GetMethod("BuildRequestData", BindingFlags.NonPublic | BindingFlags.Instance)
-                        .MakeGenericMethod(f.GetValue(entity).GetType());
-                    subRequestData = (Dictionary<String, Object>)m.Invoke(this, new object[] { f.GetValue(entity) });
-
-                    foreach (KeyValuePair<String, Object> e in subRequestData)
-                    {
-                        if (e.Value != null)
-                        {
-                            if (!result.Keys.Contains(e.Key))
-                                result.Add(e.Key, e.Value);
-                            else
-                                result[e.Key] = e.Value;
-                        }
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        if (!isList)
-                        {
-                            if (f.GetValue(entity) != null)
-                            {
-                                if (f.GetValue(entity).GetType().IsEnum)
-                                    result.Add(fieldName, f.GetValue(entity).ToString());
-                                else
-                                    result.Add(fieldName, f.GetValue(entity));
-                            }
-                        }
-                        else
-                        {
-                            if (f.GetValue(entity) != null)
-                                result.Add(fieldName, ((List<T>)f.GetValue(entity)).ToArray());
-                        }
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-                }
-
-            }
-
-            return result;
-        }
-
-        /// <summary>Checks whether can read subrequest data.</summary>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="fieldName">Field name.</param>
-        /// <returns>Returns true if can read subrequest data, otherwise false.</returns>
-        private bool CanReadSubRequestData<T>(String fieldName)
-        {
-            if ((typeof(T).Name == typeof(PayIn).Name) && (fieldName.Equals("PaymentDetails") || fieldName.Equals("ExecutionDetails")))
-            {
-                return true;
-            }
-
-            if ((typeof(T).Name == typeof(PayOut).Name) && fieldName.Equals("MeanOfPaymentDetails"))
-            {
-                return true;
-            }
-
-            if ((typeof(T).Name == typeof(BankAccount).Name) && fieldName.Equals("Details"))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         /// <summary>Gets HTTP header to use in request.</summary>
         /// <param name="restUrl">The REST API URL.</param>
         /// <returns>Collection of headers name-value pairs.</returns>
@@ -615,13 +489,13 @@ namespace MangoPay.Core
             Dictionary<String, String> httpHeaders = new Dictionary<String, String>();
 
             // content type
-            httpHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
+            httpHeaders.Add(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
 
             // AuthenticationHelper http header
             if (this._authRequired)
             {
                 AuthenticationHelper authHlp = new AuthenticationHelper(_root);
-                foreach (var item in authHlp.GetHttpHeaderKey())
+                foreach (KeyValuePair<string, string> item in authHlp.GetHttpHeaderKey())
                 {
                     httpHeaders.Add(item.Key, item.Value);
                 }

@@ -1,12 +1,9 @@
 ﻿using MangoPay.Core;
 using MangoPay.Entities;
-using MangoPay.Entities.Dependend;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Tests
 {
@@ -14,13 +11,26 @@ namespace MangoPay.Tests
     public class ApiUsersTest : BaseTest
     {
         [TestMethod]
+        public void Test_AdHoc()
+        {
+            try
+            {
+                UserDTO user1 = this.Api.Users.Get("1148742");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
         public void Test_Users_CreateNatural()
         {
             try
             {
-                UserNatural john = this.GetJohn();
+                UserNaturalDTO john = this.GetJohn();
                 Assert.IsTrue(john.Id.Length > 0);
-                Assert.IsTrue(john.PersonType == User.Types.Natural);
+                Assert.IsTrue(john.PersonType == PersonType.NATURAL);
             }
             catch (Exception ex)
             {
@@ -33,9 +43,9 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserLegal matrix = this.GetMatrix();
+                UserLegalDTO matrix = this.GetMatrix();
                 Assert.IsTrue(matrix.Id.Length > 0);
-                Assert.IsTrue(matrix.PersonType == User.Types.Legal);
+                Assert.IsTrue(matrix.PersonType == PersonType.LEGAL);
             }
             catch (Exception ex)
             {
@@ -44,46 +54,19 @@ namespace MangoPay.Tests
         }
 
         [TestMethod]
-        public void Test_Users_CreateLegal_FailsIfRequiredPropsNotProvided()
-        {
-            UserLegal user = new UserLegal();
-
-            User ret = null;
-
-            try
-            {
-                ret = this.Api.Users.Create(user);
-
-                Assert.Fail("CreateLegal() should throw an exception when required props are not provided.");
-            }
-            catch (ResponseException)
-            {
-                Assert.IsNull(ret);
-            }
-        }
-
-        [TestMethod]
         public void Test_Users_CreateLegal_PassesIfRequiredPropsProvided()
         {
             try
             {
-                UserLegal user = new UserLegal();
-                user.Name = "SomeOtherSampleOrg";
-                user.LegalPersonType = "BUSINESS";
-                user.LegalRepresentativeFirstName = "RepFName";
-                user.LegalRepresentativeLastName = "RepLName";
-                user.LegalRepresentativeBirthday = (long)(new DateTime(1975, 12, 21, 0, 0, 0) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
-                user.LegalRepresentativeNationality = "FR";
-                user.LegalRepresentativeCountryOfResidence = "FR";
-                user.Email = "email@email.org";
+                UserLegalPostDTO userPost = new UserLegalPostDTO("email@email.org", "SomeOtherSampleOrg", LegalPersonType.BUSINESS, "RepFName", "RepLName", (long)(new DateTime(1975, 12, 21, 0, 0, 0) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds, CountryIso.FR, CountryIso.FR);
 
-                User ret = null;
+                UserLegalDTO userCreated = this.Api.Users.Create(userPost);
 
-                ret = this.Api.Users.Create(user);
+                UserLegalDTO userGet = this.Api.Users.GetLegal(userCreated.Id);
 
-                Assert.IsTrue(ret.Id.Length > 0, "Created successfully after required props set.");
+                Assert.IsTrue(userCreated.Id.Length > 0, "Created successfully after required props set.");
 
-                AssertEqualInputProps(user, ret);
+                AssertEqualInputProps(userCreated, userGet);
             }
             catch (Exception ex)
             {
@@ -96,17 +79,14 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
+                UserNaturalDTO john = this.GetJohn();
 
-                User user1 = this.Api.Users.Get(john.Id);
-                UserNatural user2 = this.Api.Users.GetNatural(john.Id);
+                UserNaturalDTO userNatural = this.Api.Users.GetNatural(john.Id);
 
-                Assert.IsTrue(user1.PersonType == (User.Types.Natural));
-                Assert.IsTrue(user1.Id == (john.Id));
-                Assert.IsTrue(user2.PersonType == (User.Types.Natural));
-                Assert.IsTrue(user2.Id == (john.Id));
+                Assert.IsTrue(userNatural.PersonType == PersonType.NATURAL);
+                Assert.IsTrue(userNatural.Id == john.Id);
 
-                AssertEqualInputProps(user1, john);
+                AssertEqualInputProps(userNatural, john);
             }
             catch (Exception ex)
             {
@@ -117,7 +97,7 @@ namespace MangoPay.Tests
         [TestMethod]
         public void Test_Users_GetNatural_FailsForLegalUser()
         {
-            UserLegal matrix = null;
+            UserLegalDTO matrix = null;
             try
             {
                 matrix = this.GetMatrix();
@@ -127,7 +107,7 @@ namespace MangoPay.Tests
                 Assert.Fail(ex.Message);
             }
 
-            UserNatural user = null;
+            UserNaturalDTO user = null;
             try
             {
                 user = this.Api.Users.GetNatural(matrix.Id);
@@ -143,7 +123,7 @@ namespace MangoPay.Tests
         [TestMethod]
         public void Test_Users_GetLegal_FailsForNaturalUser()
         {
-            UserNatural john = null;
+            UserNaturalDTO john = null;
             try
             {
                 john = this.GetJohn();
@@ -153,7 +133,7 @@ namespace MangoPay.Tests
                 Assert.Fail(ex.Message);
             }
 
-            User user = null;
+            UserDTO user = null;
             try
             {
                 user = this.Api.Users.GetLegal(john.Id);
@@ -171,13 +151,11 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserLegal matrix = this.GetMatrix();
+                UserLegalDTO matrix = this.GetMatrix();
 
-                User user1 = this.Api.Users.Get(matrix.Id);
-                User user2 = this.Api.Users.GetLegal(matrix.Id);
+                UserDTO userLegal = this.Api.Users.GetLegal(matrix.Id);
 
-                AssertEqualInputProps((UserLegal)user1, matrix);
-                AssertEqualInputProps((UserLegal)user2, matrix);
+                AssertEqualInputProps((UserLegalDTO)userLegal, matrix);
             }
             catch (Exception ex)
             {
@@ -190,7 +168,7 @@ namespace MangoPay.Tests
         {
             try
             {
-                List<User> users = this.Api.Users.GetAll();
+                List<UserDTO> users = this.Api.Users.GetAll();
 
                 Assert.IsNotNull(users);
                 Assert.IsTrue(users.Count > 0);
@@ -206,14 +184,27 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                john.LastName += " - CHANGED";
+                UserNaturalDTO john = this.GetJohn();
 
-                User userSaved = this.Api.Users.Update(john);
-                User userFetched = this.Api.Users.Get(john.Id);
+                UserNaturalPutDTO johnPut = new UserNaturalPutDTO
+                {
+                    Tag = john.Tag,
+                    Email = john.Email,
+                    FirstName = john.FirstName,
+                    LastName = john.LastName + " - CHANGED",
+                    Address = john.Address,
+                    Birthday = john.Birthday,
+                    Nationality = john.Nationality,
+                    CountryOfResidence = john.CountryOfResidence,
+                    Occupation = john.Occupation,
+                    IncomeRange = john.IncomeRange
+                };
 
-                AssertEqualInputProps(john, userSaved);
-                AssertEqualInputProps(john, userFetched);
+                UserNaturalDTO userSaved = this.Api.Users.UpdateNatural(johnPut, john.Id);
+                UserNaturalDTO userFetched = this.Api.Users.GetNatural(john.Id);
+
+                Assert.AreEqual(johnPut.LastName, userSaved.LastName);
+                AssertEqualInputProps(userSaved, userFetched);
             }
             catch (Exception ex)
             {
@@ -226,14 +217,27 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                john.LastName += " - CHANGED (éèęóąśłżźćń)";
+                UserNaturalDTO john = this.GetJohn();
 
-                User userSaved = this.Api.Users.Update(john);
-                User userFetched = this.Api.Users.Get(john.Id);
+                UserNaturalPutDTO johnPut = new UserNaturalPutDTO
+                {
+                    Tag = john.Tag,
+                    Email = john.Email,
+                    FirstName = john.FirstName,
+                    LastName = john.LastName + " - CHANGED (éèęóąśłżźćń)",
+                    Address = john.Address,
+                    Birthday = john.Birthday,
+                    Nationality = john.Nationality,
+                    CountryOfResidence = john.CountryOfResidence,
+                    Occupation = john.Occupation,
+                    IncomeRange = john.IncomeRange
+                };
 
-                AssertEqualInputProps(john, userSaved);
-                AssertEqualInputProps(john, userFetched);
+                UserNaturalDTO userSaved = this.Api.Users.UpdateNatural(johnPut, john.Id);
+                UserNaturalDTO userFetched = this.Api.Users.GetNatural(john.Id);
+
+                Assert.AreEqual(johnPut.LastName, userSaved.LastName);
+                AssertEqualInputProps(userSaved, userFetched);
             }
             catch (Exception ex)
             {
@@ -246,14 +250,29 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserLegal matrix = this.GetMatrix();
-                matrix.LegalRepresentativeLastName += " - CHANGED";
+                UserLegalDTO matrix = this.GetMatrix();
 
-                User userSaved = this.Api.Users.Update(matrix);
-                User userFetched = this.Api.Users.Get(matrix.Id);
+                UserLegalPutDTO matrixPut = new UserLegalPutDTO
+                {
+                    Tag = matrix.Tag,
+                    Email = matrix.Email,
+                    Name = matrix.Name,
+                    LegalPersonType = matrix.LegalPersonType,
+                    HeadquartersAddress = matrix.HeadquartersAddress,
+                    LegalRepresentativeFirstName = matrix.LegalRepresentativeFirstName,
+                    LegalRepresentativeLastName = matrix.LegalRepresentativeLastName + " - CHANGED",
+                    LegalRepresentativeAddress = matrix.LegalRepresentativeAddress,
+                    LegalRepresentativeEmail = matrix.LegalRepresentativeEmail,
+                    LegalRepresentativeBirthday = matrix.LegalRepresentativeBirthday,
+                    LegalRepresentativeNationality = matrix.LegalRepresentativeNationality,
+                    LegalRepresentativeCountryOfResidence = matrix.LegalRepresentativeCountryOfResidence
+                };
 
-                AssertEqualInputProps(userSaved, matrix);
-                AssertEqualInputProps(userFetched, matrix);
+                UserLegalDTO userSaved = this.Api.Users.UpdateLegal(matrixPut, matrix.Id);
+                UserLegalDTO userFetched = this.Api.Users.GetLegal(userSaved.Id);
+
+                Assert.AreEqual(matrixPut.LegalRepresentativeLastName, userFetched.LegalRepresentativeLastName);
+                AssertEqualInputProps(userSaved, userFetched);
             }
             catch (Exception ex)
             {
@@ -266,8 +285,8 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                BankAccount account = this.GetJohnsAccount();
+                UserNaturalDTO john = this.GetJohn();
+                BankAccountDTO account = this.GetJohnsAccount();
 
                 Assert.IsTrue(account.Id.Length > 0);
                 Assert.AreEqual(account.UserId, john.Id);
@@ -283,21 +302,17 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                BankAccount account = new BankAccount();
-                account.OwnerName = john.FirstName + " " + john.LastName;
-                account.OwnerAddress = john.Address;
-                account.Details = new BankAccountDetailsGB();
-                ((BankAccountDetailsGB)account.Details).AccountNumber = "18329068";
-                ((BankAccountDetailsGB)account.Details).SortCode = "306541";
+                UserNaturalDTO john = this.GetJohn();
+                BankAccountGbPostDTO account = new BankAccountGbPostDTO(john.FirstName + " " + john.LastName, john.Address, "18329068");
+                account.SortCode = "306541";
 
-                BankAccount createAccount = this.Api.Users.CreateBankAccount(john.Id, account);
+                BankAccountDTO createAccount = this.Api.Users.CreateBankAccountGb(john.Id, account);
 
                 Assert.IsTrue(createAccount.Id.Length > 0);
                 Assert.IsTrue(createAccount.UserId == (john.Id));
-                Assert.IsTrue(createAccount.Type == ("GB"));
-                Assert.IsTrue(((BankAccountDetailsGB)createAccount.Details).AccountNumber == ("18329068"));
-                Assert.IsTrue(((BankAccountDetailsGB)createAccount.Details).SortCode == ("306541"));
+                Assert.IsTrue(createAccount.Type == BankAccountType.GB);
+                Assert.IsTrue(((BankAccountGbDTO)createAccount).AccountNumber == "18329068");
+                Assert.IsTrue(((BankAccountGbDTO)createAccount).SortCode == "306541");
             }
             catch (Exception ex)
             {
@@ -310,21 +325,16 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                BankAccount account = new BankAccount();
-                account.OwnerName = john.FirstName + " " + john.LastName;
-                account.OwnerAddress = john.Address;
-                account.Details = new BankAccountDetailsUS();
-                ((BankAccountDetailsUS)account.Details).AccountNumber = "234234234234";
-                ((BankAccountDetailsUS)account.Details).ABA = "234334789";
+                UserNaturalDTO john = this.GetJohn();
+                BankAccountUsPostDTO account = new BankAccountUsPostDTO(john.FirstName + " " + john.LastName, john.Address, "234234234234", "234334789");
 
-                BankAccount createAccount = this.Api.Users.CreateBankAccount(john.Id, account);
+                BankAccountDTO createAccount = this.Api.Users.CreateBankAccountUs(john.Id, account);
 
                 Assert.IsTrue(createAccount.Id.Length > 0);
                 Assert.IsTrue(createAccount.UserId == (john.Id));
-                Assert.IsTrue(createAccount.Type == ("US"));
-                Assert.IsTrue(((BankAccountDetailsUS)createAccount.Details).AccountNumber == ("234234234234"));
-                Assert.IsTrue(((BankAccountDetailsUS)createAccount.Details).ABA == ("234334789"));
+                Assert.IsTrue(createAccount.Type == BankAccountType.US);
+                Assert.IsTrue(((BankAccountUsDTO)createAccount).AccountNumber == "234234234234");
+                Assert.IsTrue(((BankAccountUsDTO)createAccount).ABA == "234334789");
             }
             catch (Exception ex)
             {
@@ -337,25 +347,18 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                BankAccount account = new BankAccount();
-                account.OwnerName = john.FirstName + " " + john.LastName;
-                account.OwnerAddress = john.Address;
-                account.Details = new BankAccountDetailsCA();
-                ((BankAccountDetailsCA)account.Details).BankName = "TestBankName";
-                ((BankAccountDetailsCA)account.Details).BranchCode = "12345";
-                ((BankAccountDetailsCA)account.Details).AccountNumber = "234234234234";
-                ((BankAccountDetailsCA)account.Details).InstitutionNumber = "123";
+                UserNaturalDTO john = this.GetJohn();
+                BankAccountCaPostDTO account = new BankAccountCaPostDTO(john.FirstName + " " + john.LastName, john.Address, "TestBankName", "123", "12345", "234234234234");
 
-                BankAccount createAccount = this.Api.Users.CreateBankAccount(john.Id, account);
+                BankAccountDTO createAccount = this.Api.Users.CreateBankAccountCa(john.Id, account);
 
                 Assert.IsTrue(createAccount.Id.Length > 0);
                 Assert.IsTrue(createAccount.UserId == (john.Id));
-                Assert.IsTrue(createAccount.Type == ("CA"));
-                Assert.IsTrue(((BankAccountDetailsCA)createAccount.Details).AccountNumber == ("234234234234"));
-                Assert.IsTrue(((BankAccountDetailsCA)createAccount.Details).BankName == ("TestBankName"));
-                Assert.IsTrue(((BankAccountDetailsCA)createAccount.Details).BranchCode == ("12345"));
-                Assert.IsTrue(((BankAccountDetailsCA)createAccount.Details).InstitutionNumber == ("123"));
+                Assert.IsTrue(createAccount.Type == BankAccountType.CA);
+                Assert.IsTrue(((BankAccountCaDTO)createAccount).AccountNumber == "234234234234");
+                Assert.IsTrue(((BankAccountCaDTO)createAccount).BankName == "TestBankName");
+                Assert.IsTrue(((BankAccountCaDTO)createAccount).BranchCode == "12345");
+                Assert.IsTrue(((BankAccountCaDTO)createAccount).InstitutionNumber == "123");
             }
             catch (Exception ex)
             {
@@ -368,25 +371,20 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                BankAccount account = new BankAccount();
-                account.OwnerName = john.FirstName + " " + john.LastName;
-                account.OwnerAddress = john.Address;
-                account.Details = new BankAccountDetailsOTHER();
-                ((BankAccountDetailsOTHER)account.Details).Type = "OTHER";
-                ((BankAccountDetailsOTHER)account.Details).Country = "FR";
-                ((BankAccountDetailsOTHER)account.Details).AccountNumber = "234234234234";
-                ((BankAccountDetailsOTHER)account.Details).BIC = "BINAADADXXX";
+                UserNaturalDTO john = this.GetJohn();
+                BankAccountOtherPostDTO account = new BankAccountOtherPostDTO(john.FirstName + " " + john.LastName, john.Address, "234234234234", "BINAADADXXX");
+                account.Type = BankAccountType.OTHER;
+                account.Country = CountryIso.FR;
 
-                BankAccount createAccount = this.Api.Users.CreateBankAccount(john.Id, account);
+                BankAccountDTO createAccount = this.Api.Users.CreateBankAccountOther(john.Id, account);
 
                 Assert.IsTrue(createAccount.Id.Length > 0);
                 Assert.IsTrue(createAccount.UserId == (john.Id));
-                Assert.IsTrue(createAccount.Type == ("OTHER"));
-                Assert.IsTrue(((BankAccountDetailsOTHER)createAccount.Details).Type == ("OTHER"));
-                Assert.IsTrue(((BankAccountDetailsOTHER)createAccount.Details).Country == ("FR"));
-                Assert.IsTrue(((BankAccountDetailsOTHER)createAccount.Details).AccountNumber == ("234234234234"));
-                Assert.IsTrue(((BankAccountDetailsOTHER)createAccount.Details).BIC == ("BINAADADXXX"));
+                Assert.IsTrue(createAccount.Type == BankAccountType.OTHER);
+                Assert.IsTrue(((BankAccountOtherDTO)createAccount).Type == BankAccountType.OTHER);
+                Assert.IsTrue(((BankAccountOtherDTO)createAccount).Country == CountryIso.FR);
+                Assert.IsTrue(((BankAccountOtherDTO)createAccount).AccountNumber == ("234234234234"));
+                Assert.IsTrue(((BankAccountOtherDTO)createAccount).BIC == ("BINAADADXXX"));
             }
             catch (Exception ex)
             {
@@ -399,8 +397,8 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                BankAccount account = this.GetJohnsAccount();
+                UserNaturalDTO john = this.GetJohn();
+                BankAccountIbanDTO account = this.GetJohnsAccount();
 
                 Assert.IsTrue(account.Id.Length > 0);
                 Assert.IsTrue(account.UserId == (john.Id));
@@ -416,10 +414,10 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                BankAccount account = this.GetJohnsAccount();
+                UserNaturalDTO john = this.GetJohn();
+                BankAccountIbanDTO account = this.GetJohnsAccount();
 
-                BankAccount accountFetched = this.Api.Users.GetBankAccount(john.Id, account.Id);
+                BankAccountIbanDTO accountFetched = this.Api.Users.GetBankAccountIban(john.Id, account.Id);
 
                 AssertEqualInputProps(account, accountFetched);
             }
@@ -434,15 +432,19 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                BankAccount account = this.GetJohnsAccount();
+                UserNaturalDTO john = this.GetJohn();
+                BankAccountIbanDTO account = this.GetJohnsAccount();
                 Pagination pagination = new Pagination(1, 12);
 
-                List<BankAccount> list = this.Api.Users.GetBankAccounts(john.Id, pagination);
+                List<BankAccountDTO> list = this.Api.Users.GetBankAccounts(john.Id, pagination);
 
-                Assert.IsTrue(list[0] is BankAccount);
-                Assert.IsTrue(account.Id == list[0].Id);
-                AssertEqualInputProps(account, list[0]);
+                Assert.IsTrue(list[0] is BankAccountDTO);
+
+                BankAccountIbanDTO castedBankAccount = this.Api.Users.GetBankAccountIban(john.Id, list[0].Id);
+
+
+                Assert.IsTrue(account.Id == castedBankAccount.Id);
+                AssertEqualInputProps(account, castedBankAccount);
                 Assert.IsTrue(pagination.Page == 1);
                 Assert.IsTrue(pagination.ItemsPerPage == 12);
             }
@@ -458,12 +460,12 @@ namespace MangoPay.Tests
         {
             try
             {
-                KycDocument kycDocument = this.GetJohnsKycDocument();
+                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
 
                 Assert.IsNotNull(kycDocument);
                 Assert.IsTrue(kycDocument.Id.Length > 0);
-                Assert.IsTrue(kycDocument.Status == "CREATED");
-                Assert.IsTrue(kycDocument.Type == "IDENTITY_PROOF");
+                Assert.IsTrue(kycDocument.Status == KycStatus.CREATED);
+                Assert.IsTrue(kycDocument.Type == KycDocumentType.IDENTITY_PROOF);
             }
             catch (Exception ex)
             {
@@ -476,16 +478,19 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                KycDocument kycDocument = this.GetJohnsKycDocument();
+                UserNaturalDTO john = this.GetJohn();
+                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
 
-                kycDocument.Status = "VALIDATION_ASKED";
+                KycDocumentPutDTO kycDocumentPut = new KycDocumentPutDTO 
+                {
+                    Status = KycStatus.VALIDATION_ASKED
+                };
 
-                KycDocument result = this.Api.Users.UpdateKycDocument(john.Id, kycDocument);
+                KycDocumentDTO result = this.Api.Users.UpdateKycDocument(john.Id, kycDocumentPut, kycDocument.Id);
 
                 Assert.IsNotNull(result);
-                Assert.IsTrue(kycDocument.Type == (result.Type));
-                Assert.IsTrue(kycDocument.Status == ("VALIDATION_ASKED"));
+                Assert.IsTrue(kycDocument.Type == result.Type);
+                Assert.IsTrue(result.Status == KycStatus.VALIDATION_ASKED);
             }
             catch (Exception ex)
             {
@@ -498,10 +503,10 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                KycDocument kycDocument = this.GetJohnsKycDocument();
+                UserNaturalDTO john = this.GetJohn();
+                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
 
-                KycDocument result = this.Api.Users.GetKycDocument(john.Id, kycDocument.Id);
+                KycDocumentDTO result = this.Api.Users.GetKycDocument(john.Id, kycDocument.Id);
 
                 Assert.IsNotNull(result);
                 Assert.IsTrue(kycDocument.Id == (result.Id));
@@ -520,8 +525,8 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                KycDocument kycDocument = this.GetJohnsKycDocument();
+                UserNaturalDTO john = this.GetJohn();
+                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, Encoding.UTF8.GetBytes("Test KYC page"));
 
@@ -539,15 +544,14 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                PayIn payIn = this.GetNewPayInCardDirect();
+                UserNaturalDTO john = this.GetJohn();
+                PayInCardDirectDTO payIn = this.GetNewPayInCardDirect();
                 Pagination pagination = new Pagination(1, 1);
-                Card card = this.Api.Cards.Get(((PayInPaymentDetailsCard)payIn.PaymentDetails).CardId);
-                List<Card> cards = this.Api.Users.GetCards(john.Id, pagination);
+                CardDTO card = this.Api.Cards.Get(payIn.CardId);
+                List<CardDTO> cards = this.Api.Users.GetCards(john.Id, pagination);
 
                 Assert.IsTrue(cards.Count == 1);
                 Assert.IsTrue(cards[0].CardType != null);
-                Assert.IsTrue(cards[0].Currency != null);
                 AssertEqualInputProps(cards[0], card);
             }
             catch (Exception ex)
@@ -561,15 +565,13 @@ namespace MangoPay.Tests
         {
             try
             {
-                UserNatural john = this.GetJohn();
-                Transfer transfer = this.GetNewTransfer();
+                UserNaturalDTO john = this.GetJohn();
+                TransferDTO transfer = this.GetNewTransfer();
                 Pagination pagination = new Pagination(1, 1);
 
-                List<Transaction> transactions = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions());
+                List<TransactionDTO> transactions = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions());
 
                 Assert.IsTrue(transactions.Count > 0);
-                Assert.IsTrue(transactions[0].Type != null);
-                Assert.IsTrue(transactions[0].Status != null);
             }
             catch (Exception ex)
             {

@@ -1,10 +1,6 @@
-﻿using MangoPay.Entities;
+﻿using MangoPay.Core;
+using MangoPay.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Tests
 {
@@ -14,31 +10,31 @@ namespace MangoPay.Tests
         [TestMethod]
         public void Test_Refund_GetForTransfer()
         {
-            Transfer transfer = this.GetNewTransfer();
-            Refund refund = this.GetNewRefundForTransfer(transfer);
-            UserNatural user = this.GetJohn();
+            TransferDTO transfer = this.GetNewTransfer();
+            RefundDTO refund = this.GetNewRefundForTransfer(transfer);
+            UserNaturalDTO user = this.GetJohn();
 
-            Refund getRefund = this.Api.Refunds.Get(refund.Id);
+            RefundDTO getRefund = this.Api.Refunds.Get(refund.Id);
 
             Assert.AreEqual(getRefund.Id, refund.Id);
             Assert.AreEqual(getRefund.InitialTransactionId, transfer.Id);
             Assert.AreEqual(getRefund.AuthorId, user.Id);
-            Assert.AreEqual(getRefund.Type, "TRANSFER");
+            Assert.AreEqual(getRefund.Type, TransactionType.TRANSFER);
         }
 
         [TestMethod]
         public void Test_Refund_GetForPayIn()
         {
-            PayIn payIn = this.GetNewPayInCardDirect();
-            Refund refund = this.GetNewRefundForPayIn(payIn);
-            UserNatural user = this.GetJohn();
+            PayInDTO payIn = this.GetNewPayInCardDirect();
+            RefundDTO refund = this.GetNewRefundForPayIn(payIn);
+            UserNaturalDTO user = this.GetJohn();
 
-            Refund getRefund = this.Api.Refunds.Get(refund.Id);
+            RefundDTO getRefund = this.Api.Refunds.Get(refund.Id);
 
             Assert.AreEqual(getRefund.Id, refund.Id);
             Assert.AreEqual(getRefund.InitialTransactionId, payIn.Id);
             Assert.AreEqual(getRefund.AuthorId, user.Id);
-            Assert.AreEqual(getRefund.Type, "PAYOUT");
+            Assert.AreEqual(getRefund.Type, TransactionType.PAYOUT);
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using MangoPay.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -15,12 +11,15 @@ namespace MangoPay.Core
         public ApiEvents(MangoPayApi root) : base(root) { }
 
         /// <summary>Gets events.</summary>
+		/// <param name="pagination">Pagination.</param>
         /// <param name="filter">Filters for events.</param>
-        /// <param name="pagination">Pagination.</param>
         /// <returns>List of events matching passed filter criteria.</returns>
-        public List<Event> Get(FilterEvents filter, Pagination pagination)
+        public List<EventDTO> GetAll(Pagination pagination, FilterEvents filter = null)
         {
-            return this.GetList<Event>("events_all", pagination, "", filter.GetValues());
+			if (filter == null)
+				return this.GetList<EventDTO>(MethodKey.EventsAll, pagination, "");
+
+            return this.GetList<EventDTO>(MethodKey.EventsAll, pagination, "", filter.GetValues());
         }
     }
 }

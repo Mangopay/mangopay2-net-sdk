@@ -2,10 +2,6 @@
 using MangoPay.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Tests
 {
@@ -19,7 +15,7 @@ namespace MangoPay.Tests
             {
                 Random rand = new Random();
                 String id = (rand.Next(1000000000) + 1).ToString();
-                Client client = this.Api.Clients.Create(id, "test", "test@o2.pl");
+                ClientDTO client = this.Api.Clients.Create(id, "test", "test@o2.pl");
                 Assert.IsTrue("test" == (client.Name));
                 Assert.IsTrue(client.Passphrase.Length > 0);
             }
@@ -32,7 +28,7 @@ namespace MangoPay.Tests
         [TestMethod]
         public void Test_Clients_TryCreateInvalidClient()
         {
-            Client client = null;
+            ClientDTO client = null;
             try
             {
                 // invalid id

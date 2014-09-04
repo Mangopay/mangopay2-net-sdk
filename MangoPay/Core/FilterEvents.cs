@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
     /// <summary>Filter for events list.</summary>
-    public class FilterEvents : Dto
+    public class FilterEvents
     {
         /// <summary>Type of events.</summary>
         public EventType Type;
@@ -24,10 +21,11 @@ namespace MangoPay.Core
         {
             Dictionary<String, String> result = new Dictionary<String, String>();
 
-            result.Add("eventtype", Type.ToString());
+			if (Type != EventType.All)
+				result.Add(Constants.EVENTTYPE, Type.ToString());
 
-            if (BeforeDate != null) result.Add("beforeDate", BeforeDate.ToString());
-            if (AfterDate != null) result.Add("afterDate", AfterDate.ToString());
+            if (BeforeDate != null) result.Add(Constants.BEFOREDATE, BeforeDate.ToString());
+            if (AfterDate != null) result.Add(Constants.AFTERDATE, AfterDate.ToString());
 
             return result;
         }

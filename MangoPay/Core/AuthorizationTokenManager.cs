@@ -1,8 +1,4 @@
 ﻿using MangoPay.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MangoPay.Core
 {
@@ -24,9 +20,9 @@ namespace MangoPay.Core
         /// If currently stored token is expired, this method creates a new one.
         /// </summary>
         /// <returns>Valid OAuthToken instance.</returns>
-        public OAuthToken GetToken()
+        public OAuthTokenDTO GetToken()
         {
-            OAuthToken token = _storageStrategy.Get();
+            OAuthTokenDTO token = _storageStrategy.Get();
 
             if (token == null || token.IsExpired())
             {
@@ -38,7 +34,7 @@ namespace MangoPay.Core
 
         /// <summary>Stores authorization token passed as an argument in the underlying storage strategy implementation.</summary>
         /// <param name="token">Token instance to be stored.</param>
-        public void StoreToken(OAuthToken token)
+        public void StoreToken(OAuthTokenDTO token)
         {
             _storageStrategy.Store(token);
         }

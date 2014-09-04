@@ -1,9 +1,6 @@
 ﻿using MangoPay.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -17,25 +14,26 @@ namespace MangoPay.Core
         /// <summary>Creates new wallet.</summary>
         /// <param name="wallet">Wallet instance to be created.</param>
         /// <returns>Wallet instance returned from API.</returns>
-        public Wallet Create(Wallet wallet)
+        public WalletDTO Create(WalletPostDTO wallet)
         {
-            return this.CreateObject<Wallet>("wallets_create", wallet);
+            return this.CreateObject<WalletDTO, WalletPostDTO>(MethodKey.WalletsCreate, wallet);
         }
 
         /// <summary>Gets wallet.</summary>
         /// <param name="walletId">Wallet identifier.</param>
         /// <returns>Wallet instance returned from API.</returns>
-        public Wallet Get(String walletId)
+        public WalletDTO Get(String walletId)
         {
-            return this.GetObject<Wallet>("wallets_get", walletId);
+            return this.GetObject<WalletDTO>(MethodKey.WalletsGet, walletId);
         }
 
         /// <summary>Updates wallet.</summary>
         /// <param name="wallet">Wallet object to save.</param>
+        /// <param name="walletId">Wallet identifier.</param>
         /// <returns>Wallet instance returned from API.</returns>
-        public Wallet Update(Wallet wallet)
+        public WalletDTO Update(WalletPutDTO wallet, String walletId)
         {
-            return this.UpdateObject<Wallet>("wallets_save", wallet);
+            return this.UpdateObject<WalletDTO, WalletPutDTO>(MethodKey.WalletsSave, wallet, walletId);
         }
 
         /// <summary>Gets transactions for the wallet.</summary>
@@ -43,16 +41,16 @@ namespace MangoPay.Core
         /// <param name="pagination">Pagination.</param>
         /// <param name="filter">Filter.</param>
         /// <returns>Transactions for wallet returned from API.</returns>
-        public List<Transaction> GetTransactions(String walletId, Pagination pagination, FilterTransactions filter)
+        public List<TransactionDTO> GetTransactions(String walletId, Pagination pagination, FilterTransactions filter)
         {
-            return this.GetList<Transaction>("wallets_alltransactions", pagination, walletId, filter.GetValues());
+            return this.GetList<TransactionDTO>(MethodKey.WalletsAllTransactions, pagination, walletId, filter.GetValues());
         }
 
         /// <summary>Gets transactions for the wallet.</summary>
         /// <param name="walletId">Wallet identifier.</param>
         /// <param name="pagination">Pagination.</param>
         /// <returns>Transactions for wallet returned from API.</returns>
-        public List<Transaction> GetTransactions(String walletId, Pagination pagination)
+        public List<TransactionDTO> GetTransactions(String walletId, Pagination pagination)
         {
             return GetTransactions(walletId, pagination, new FilterTransactions());
         }
@@ -60,7 +58,7 @@ namespace MangoPay.Core
         /// <summary>Gets transactions for the wallet.</summary>
         /// <param name="walletId">Wallet identifier.</param>
         /// <returns>Transactions for wallet returned from API.</returns>
-        public List<Transaction> GetTransactions(String walletId)
+        public List<TransactionDTO> GetTransactions(String walletId)
         {
             return GetTransactions(walletId, null, new FilterTransactions());
         }

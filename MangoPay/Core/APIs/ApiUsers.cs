@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -18,38 +15,38 @@ namespace MangoPay.Core
         /// <summary>Gets user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>User instance returned from API, which is either of UserNatural or UserLegal type.</returns>
-        public User Get(String userId)
+        public UserDTO Get(String userId)
         {
-            return this.GetObject<User>("users_get", userId);
+            return this.GetObject<UserDTO>(MethodKey.UsersGet, userId);
         }
 
         /// <summary>Creates new user.</summary>
         /// <param name="user">UserNatural object to be created.</param>
         /// <returns>UserNatural instance returned from API.</returns>
-        public UserNatural Create(UserNatural user)
+        public UserNaturalDTO Create(UserNaturalPostDTO user)
         {
-            return this.CreateObject<UserNatural>("users_createnaturals", user);
+            return this.CreateObject<UserNaturalDTO, UserNaturalPostDTO>(MethodKey.UsersCreateNaturals, user);
         }
 
         /// <summary>Creates new user.</summary>
         /// <param name="user">UserLegal object to be created.</param>
         /// <returns>UserLegal instance returned from API.</returns>
-        public UserLegal Create(UserLegal user)
+        public UserLegalDTO Create(UserLegalPostDTO user)
         {
-            return this.CreateObject<UserLegal>("users_createlegals", user);
+            return this.CreateObject<UserLegalDTO, UserLegalPostDTO>(MethodKey.UsersCreateLegals, user);
         }
 
         /// <summary>Gets users.</summary>
         /// <param name="pagination">Pagination.</param>
         /// <returns>Collection of User instances.</returns>
-        public List<User> GetAll(Pagination pagination)
+        public List<UserDTO> GetAll(Pagination pagination)
         {
-            return this.GetList<User>("users_all", pagination);
+            return this.GetList<UserDTO>(MethodKey.UsersAll, pagination);
         }
 
         /// <summary>Gets first page of users.</summary>
         /// <returns>Collection of User instances.</returns>
-        public List<User> GetAll()
+        public List<UserDTO> GetAll()
         {
             return GetAll(null);
         }
@@ -57,64 +54,104 @@ namespace MangoPay.Core
         /// <summary>Gets natural user.</summary>
         /// <param name="userId">UserNatural identifier.</param>
         /// <returns>UserNatural object returned from API.</returns>
-        public UserNatural GetNatural(String userId)
+        public UserNaturalDTO GetNatural(String userId)
         {
-            return this.GetObject<UserNatural>("users_getnaturals", userId);
+            return this.GetObject<UserNaturalDTO>(MethodKey.UsersGetNaturals, userId);
         }
 
         /// <summary>Gets legal user.</summary>
         /// <param name="userId">UserLegal identifier.</param>
         /// <returns>UserLegal object returned from API.</returns>
-        public UserLegal GetLegal(String userId)
+        public UserLegalDTO GetLegal(String userId)
         {
-            return this.GetObject<UserLegal>("users_getlegals", userId);
+            return this.GetObject<UserLegalDTO>(MethodKey.UsersGetLegals, userId);
         }
 
         /// <summary>Updates the user.</summary>
-        /// <param name="user">Instance of UserNatural or UserLegal class to be updated.</param>
+        /// <param name="user">Instance of UserNatural class to be updated.</param>
+        /// <param name="userId">User identifier.</param>
         /// <returns>Updated User object returned from API.</returns>
-        public User Update(User user)
+        public UserNaturalDTO UpdateNatural(UserNaturalPutDTO user, String userId)
         {
-            if (user is UserNatural)
-                return this.UpdateObject<UserNatural>("users_savenaturals", (UserNatural)user);
-            else if (user is UserLegal)
-                return this.UpdateObject<UserLegal>("users_savelegals", (UserLegal)user);
-            else
-                throw new Exception("Unsupported user entity type.");
+            return this.UpdateObject<UserNaturalDTO, UserNaturalPutDTO>(MethodKey.UsersSaveNaturals, user, userId);
+        }
+
+        /// <summary>Updates the user.</summary>
+        /// <param name="user">Instance UserLegal class to be updated.</param>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>Updated User object returned from API.</returns>
+        public UserLegalDTO UpdateLegal(UserLegalPutDTO user, String userId)
+        {
+            return this.UpdateObject<UserLegalDTO, UserLegalPutDTO>(MethodKey.UsersSaveLegals, user, userId);
         }
 
 		/// <summary>Gets all user's wallets.</summary>
 		/// <param name="userId">User identifier to get wallets of.</param>
 		/// <param name="pagination">Pagination.</param>
 		/// <returns>Collection of user's wallets.</returns>
-		public List<Wallet> GetWallets(String userId, Pagination pagination)
+		public List<WalletDTO> GetWallets(String userId, Pagination pagination)
 		{
-			return this.GetList<Wallet>("users_allwallets", pagination, userId);
+			return this.GetList<WalletDTO>(MethodKey.UsersAllWallets, pagination, userId);
 		}
 
-        /// <summary>Creates bank account for user.</summary>
-        /// <param name="userId">User identifier to create bank account for.</param>
-        /// <param name="bankAccount">Bank account object to be created.</param>
-        /// <returns>Created bank account object returned from API.</returns>
-        public BankAccount CreateBankAccount(String userId, BankAccount bankAccount)
+        /// <summary>Creates CA bank account.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="bankAccount">Bank account instance to be created.</param>
+        /// <returns>Bank account instance returned from API.</returns>
+        public BankAccountCaDTO CreateBankAccountCa(String userId, BankAccountCaPostDTO bankAccount)
         {
-            String type = this.GetBankAccountType(bankAccount);
-            return this.CreateObject<BankAccount>("users_createbankaccounts_" + type, bankAccount, userId);
+            return this.CreateObject<BankAccountCaDTO, BankAccountCaPostDTO>(MethodKey.UsersCreateBankAccountsCa, bankAccount, userId);
+        }
+
+        /// <summary>Creates GB bank account.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="bankAccount">Bank account instance to be created.</param>
+        /// <returns>Bank account instance returned from API.</returns>
+        public BankAccountGbDTO CreateBankAccountGb(String userId, BankAccountGbPostDTO bankAccount)
+        {
+            return this.CreateObject<BankAccountGbDTO, BankAccountGbPostDTO>(MethodKey.UsersCreateBankAccountsGb, bankAccount, userId);
+        }
+
+        /// <summary>Creates IBAN bank account.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="bankAccount">Bank account instance to be created.</param>
+        /// <returns>Bank account instance returned from API.</returns>
+        public BankAccountIbanDTO CreateBankAccountIban(String userId, BankAccountIbanPostDTO bankAccount)
+        {
+            return this.CreateObject<BankAccountIbanDTO, BankAccountIbanPostDTO>(MethodKey.UsersCreateBankAccountsIban, bankAccount, userId);
+        }
+
+        /// <summary>Creates OTHER bank account.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="bankAccount">Bank account instance to be created.</param>
+        /// <returns>Bank account instance returned from API.</returns>
+        public BankAccountOtherDTO CreateBankAccountOther(String userId, BankAccountOtherPostDTO bankAccount)
+        {
+            return this.CreateObject<BankAccountOtherDTO, BankAccountOtherPostDTO>(MethodKey.UsersCreateBankAccountsOther, bankAccount, userId);
+        }
+
+        /// <summary>Creates US bank account.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="bankAccount">Bank account instance to be created.</param>
+        /// <returns>Bank account instance returned from API.</returns>
+        public BankAccountUsDTO CreateBankAccountUs(String userId, BankAccountUsPostDTO bankAccount)
+        {
+            return this.CreateObject<BankAccountUsDTO, BankAccountUsPostDTO>(MethodKey.UsersCreateBankAccountsUs, bankAccount, userId);
         }
 
         /// <summary>Gets all user's bank accounts.</summary>
         /// <param name="userId">User identifier to get bank accounts of.</param>
         /// <param name="pagination">Pagination.</param>
         /// <returns>Collection of user's bank accounts.</returns>
-        public List<BankAccount> GetBankAccounts(String userId, Pagination pagination)
+        public List<BankAccountDTO> GetBankAccounts(String userId, Pagination pagination)
         {
-            return this.GetList<BankAccount>("users_allbankaccount", pagination, userId);
+            return this.GetList<BankAccountDTO>(MethodKey.UsersAllBankAccount, pagination, userId);
         }
 
         /// <summary>Gets first page of all bank accounts of user.</summary>
         /// <param name="userId">User identifier to get bank accounts of.</param>
         /// <returns>Collection of user's bank accounts.</returns>
-        public List<BankAccount> GetBankAccounts(String userId)
+        public List<BankAccountDTO> GetBankAccounts(String userId)
         {
             return GetBankAccounts(userId, null);
         }
@@ -123,9 +160,54 @@ namespace MangoPay.Core
         /// <param name="userId">User identifier.</param>
         /// <param name="bankAccountId">Bank account identifier.</param>
         /// <returns>Bank account object returned from API.</returns>
-        public BankAccount GetBankAccount(String userId, String bankAccountId)
+        public BankAccountDTO GetBankAccount(String userId, String bankAccountId)
         {
-            return this.GetObject<BankAccount>("users_getbankaccount", userId, bankAccountId);
+            return this.GetObject<BankAccountDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+        }
+
+        /// <summary>Gets CA bank account of user.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="bankAccountId">Bank account identifier.</param>
+        /// <returns>Bank account object returned from API.</returns>
+        public BankAccountCaDTO GetBankAccountCa(String userId, String bankAccountId)
+        {
+            return this.GetObject<BankAccountCaDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+        }
+
+        /// <summary>Gets GB bank account of user.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="bankAccountId">Bank account identifier.</param>
+        /// <returns>Bank account object returned from API.</returns>
+        public BankAccountGbDTO GetBankAccountGb(String userId, String bankAccountId)
+        {
+            return this.GetObject<BankAccountGbDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+        }
+
+        /// <summary>Gets IBAN bank account of user.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="bankAccountId">Bank account identifier.</param>
+        /// <returns>Bank account object returned from API.</returns>
+        public BankAccountIbanDTO GetBankAccountIban(String userId, String bankAccountId)
+        {
+            return this.GetObject<BankAccountIbanDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+        }
+
+        /// <summary>Gets OTHER bank account of user.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="bankAccountId">Bank account identifier.</param>
+        /// <returns>Bank account object returned from API.</returns>
+        public BankAccountOtherDTO GetBankAccountOther(String userId, String bankAccountId)
+        {
+            return this.GetObject<BankAccountOtherDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+        }
+
+        /// <summary>Gets US bank account of user.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="bankAccountId">Bank account identifier.</param>
+        /// <returns>Bank account object returned from API.</returns>
+        public BankAccountUsDTO GetBankAccountUs(String userId, String bankAccountId)
+        {
+            return this.GetObject<BankAccountUsDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
         }
 
         /// <summary>Gets transactions for user.</summary>
@@ -133,18 +215,18 @@ namespace MangoPay.Core
         /// <param name="pagination">Pagination.</param>
         /// <param name="filter">Filter.</param>
         /// <returns>Collection of user's transactions.</returns>
-        public List<Transaction> GetTransactions(String userId, Pagination pagination, FilterTransactions filter)
+        public List<TransactionDTO> GetTransactions(String userId, Pagination pagination, FilterTransactions filter)
         {
-            return this.GetList<Transaction>("users_alltransactions", pagination, userId, filter.GetValues());
+            return this.GetList<TransactionDTO>(MethodKey.UsersAllTransactions, pagination, userId, filter.GetValues());
         }
 
         /// <summary>Gets all cards for user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="pagination">Pagination.</param>
         /// <returns>Collection of user's cards.</returns>
-        public List<Card> GetCards(String userId, Pagination pagination)
+        public List<CardDTO> GetCards(String userId, Pagination pagination)
         {
-            return this.GetList<Card>("users_allcards", pagination, userId);
+            return this.GetList<CardDTO>(MethodKey.UsersAllCards, pagination, userId);
         }
 
         /// <summary>Creates KycPage from byte array.</summary>
@@ -153,13 +235,11 @@ namespace MangoPay.Core
         /// <param name="binaryData">The byte array the KycPage will be created from.</param>
         public void CreateKycPage(String userId, String kycDocumentId, byte[] binaryData)
         {
-            KycPage kycPage = new KycPage();
-
             String fileContent = Convert.ToBase64String(binaryData);
 
-            kycPage.File = fileContent;
+            KycPagePostDTO kycPage = new KycPagePostDTO(fileContent);
 
-            this.CreateObject<KycPage>("users_createkycpage", kycPage, userId, kycDocumentId);
+            this.CreateObject<KycPageDTO, KycPagePostDTO>(MethodKey.UsersCreateKycPage, kycPage, userId, kycDocumentId);
         }
 
         /// <summary>Creates KycPage from file.</summary>
@@ -176,40 +256,31 @@ namespace MangoPay.Core
         /// <param name="userId">User identifier.</param>
         /// <param name="type">Type of KycDocument.</param>
         /// <returns>KycDocument object returned from API.</returns>
-        public KycDocument CreateKycDocument(String userId, KycDocumentType type, string tag = null)
+        public KycDocumentDTO CreateKycDocument(String userId, KycDocumentType type, string tag = null)
         {
-            KycDocument kycDocument = new KycDocument();
-            kycDocument.Type = type.ToString();
+            KycDocumentPostDTO kycDocument = new KycDocumentPostDTO(type);
             kycDocument.Tag = tag;
 
-            return this.CreateObject<KycDocument>("users_createkycdocument", kycDocument, userId);
+            return this.CreateObject<KycDocumentDTO, KycDocumentPostDTO>(MethodKey.UsersCreateKycDocument, kycDocument, userId);
         }
 
         /// <summary>Gets KycDocument.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="kycDocumentId">KycDocument identifier.</param>
         /// <returns>KycDocument object returned from API.</returns>
-        public KycDocument GetKycDocument(String userId, String kycDocumentId)
+        public KycDocumentDTO GetKycDocument(String userId, String kycDocumentId)
         {
-            return this.GetObject<KycDocument>("users_getkycdocument", userId, kycDocumentId);
+            return this.GetObject<KycDocumentDTO>(MethodKey.UsersGetKycDocument, userId, kycDocumentId);
         }
 
         /// <summary>Updates KycDocument.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="kycDocument">KycDocument entity instance to be updated.</param>
+        /// <param name="kycDocumentId">KycDocument identifier.</param>
         /// <returns>KycDocument object returned from API.</returns>
-        public KycDocument UpdateKycDocument(String userId, KycDocument kycDocument)
+        public KycDocumentDTO UpdateKycDocument(String userId, KycDocumentPutDTO kycDocument, String kycDocumentId)
         {
-            return this.UpdateObject<KycDocument>("users_savekycdocument", kycDocument, userId);
-        }
-
-        private String GetBankAccountType(BankAccount bankAccount)
-        {
-            if (bankAccount.Details == null)
-                throw new Exception("Details is not defined.");
-
-            String className = bankAccount.Details.GetType().Name.Replace("BankAccountDetails", "");
-            return className.ToLower();
+            return this.UpdateObject<KycDocumentDTO, KycDocumentPutDTO>(MethodKey.UsersSaveKycDocument, kycDocument, userId, kycDocumentId);
         }
     }
 }

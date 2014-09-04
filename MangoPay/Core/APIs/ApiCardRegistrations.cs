@@ -1,9 +1,5 @@
 ﻿using MangoPay.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -17,25 +13,26 @@ namespace MangoPay.Core
         /// <summary>Creates new card registration.</summary>
         /// <param name="cardRegistration">Card registration object to create.</param>
         /// <returns>Card registration object returned from API.</returns>
-        public CardRegistration Create(CardRegistration cardRegistration)
+        public CardRegistrationDTO Create(CardRegistrationPostDTO cardRegistration)
         {
-            return this.CreateObject<CardRegistration>("cardregistration_create", cardRegistration);
+            return this.CreateObject<CardRegistrationDTO, CardRegistrationPostDTO>(MethodKey.CardRegistrationCreate, cardRegistration);
         }
 
         /// <summary>Gets card registration.</summary>
         /// <param name="cardRegistrationId">Card registration identifier.</param>
         /// <returns>Card registration instance returned from API.</returns>
-        public CardRegistration Get(String cardRegistrationId)
+        public CardRegistrationDTO Get(String cardRegistrationId)
         {
-            return this.GetObject<CardRegistration>("cardregistration_get", cardRegistrationId);
+            return this.GetObject<CardRegistrationDTO>(MethodKey.CardRegistrationGet, cardRegistrationId);
         }
 
         /// <summary>Updates card registration.</summary>
         /// <param name="cardRegistration">Card registration instance to be updated.</param>
+        /// <param name="cardRegistrationId">Card registration identifier.</param>
         /// <returns>Card registration object returned from API.</returns>
-        public CardRegistration Update(CardRegistration cardRegistration)
+        public CardRegistrationDTO Update(CardRegistrationPutDTO cardRegistration, String cardRegistrationId)
         {
-            return this.UpdateObject<CardRegistration>("cardregistration_save", cardRegistration);
+            return this.UpdateObject<CardRegistrationDTO, CardRegistrationPutDTO>(MethodKey.CardRegistrationSave, cardRegistration, cardRegistrationId);
         }
     }
 }

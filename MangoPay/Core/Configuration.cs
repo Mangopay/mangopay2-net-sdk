@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace MangoPay.Core
 {
     /// <summary>Configuration settings.</summary>
@@ -17,7 +13,7 @@ namespace MangoPay.Core
         /// <summary>Base URL to MangoPay API.</summary>
         public string BaseUrl = "https://api.sandbox.mangopay.com";
 
-        /// <summary>[INTERNAL USAGE ONLY] Switch debug mode: log all request and response data.</summary>
+        /// <summary>Switch debug mode: log all request and response data.</summary>
         public bool DebugMode = false;
     }
 }

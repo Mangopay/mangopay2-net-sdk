@@ -1,9 +1,6 @@
 ﻿using MangoPay.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -85,10 +82,10 @@ namespace MangoPay.Core
 
             if (additionalUrlParams != null)
             {
-                foreach (var key in additionalUrlParams.Keys)
+                foreach (string key in additionalUrlParams.Keys)
                 {
 
-                    url += paramsAdded ? "&" : "?";
+                    url += paramsAdded ? Constants.URI_QUERY_PARAMS_SEPARATOR : Constants.URI_QUERY_SEPARATOR;
                     url += key + "=" + Uri.EscapeDataString(additionalUrlParams[key]);
                     paramsAdded = true;
                 }
@@ -99,7 +96,7 @@ namespace MangoPay.Core
 
         /// <summary>Gets complete url.</summary>
         /// <param name="restUrl">Rest url.</param>
-        /// <returns>Complete url.</returns>
+        /// <returns>Returns complete url.</returns>
         public String GetFullUrl(String restUrl)
         {
             String result = "";

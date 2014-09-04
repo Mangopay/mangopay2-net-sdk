@@ -1,8 +1,6 @@
 ﻿using MangoPay.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MangoPay.Core
 {
@@ -13,120 +11,120 @@ namespace MangoPay.Core
         protected MangoPayApi _root;
 
         /// <summary>Array with REST URL and request type.</summary>
-        private Dictionary<String, String[]> _methods = new Dictionary<String, String[]> {
-        { "authentication_base", new String[] { "/api/clients/", RequestType.POST } },
-        { "authentication_oauth", new String[] { "/oauth/token", RequestType.POST } },
+        private Dictionary<MethodKey, String[]> _methods = new Dictionary<MethodKey, String[]> 
+        {
+            { MethodKey.AuthenticationBase, new String[] { "/api/clients/", RequestType.POST } },
+            { MethodKey.AuthenticationOAuth, new String[] { "/oauth/token", RequestType.POST } },
         
-        { "events_all", new String[] { "/events", RequestType.GET } },
-        { "events_gethookcallbacks", new String[] { "/events/{0}/hook-callbacks", RequestType.GET } },
+            { MethodKey.EventsAll, new String[] { "/events", RequestType.GET } },
+            { MethodKey.EventsGetHookCallbacks, new String[] { "/events/{0}/hook-callbacks", RequestType.GET } },
         
-        { "hooks_create", new String[] { "/hooks", RequestType.POST } },
-        { "hooks_all", new String[] { "/hooks", RequestType.GET } },
-        { "hooks_get", new String[] { "/hooks/{0}", RequestType.GET } },
-        { "hooks_save", new String[] { "/hooks/{0}", RequestType.PUT } },
+            { MethodKey.HooksCreate, new String[] { "/hooks", RequestType.POST } },
+            { MethodKey.HooksAll, new String[] { "/hooks", RequestType.GET } },
+            { MethodKey.HooksGet, new String[] { "/hooks/{0}", RequestType.GET } },
+            { MethodKey.HooksSave, new String[] { "/hooks/{0}", RequestType.PUT } },
         
-        { "info_get", new String[] { "/info", RequestType.GET } },
-        { "info_getfeewallets", new String[] { "/info/fee-wallets", RequestType.GET } },
-        { "info_getmeansofpayment", new String[] { "/info/means-of-payment", RequestType.GET } },
+            { MethodKey.InfoGet, new String[] { "/info", RequestType.GET } },
+            { MethodKey.InfoGetFeeWallets, new String[] { "/info/fee-wallets", RequestType.GET } },
+            { MethodKey.InfoGetMeansOfPayment, new String[] { "/info/means-of-payment", RequestType.GET } },
      
-        { "cardregistration_create", new String[] { "/cardregistrations", RequestType.POST } },
-        { "cardregistration_get", new String[] { "/cardregistrations/{0}", RequestType.GET } },
-        { "cardregistration_save", new String[] { "/cardregistrations/{0}", RequestType.PUT } },
+            { MethodKey.CardRegistrationCreate, new String[] { "/cardregistrations", RequestType.POST } },
+            { MethodKey.CardRegistrationGet, new String[] { "/cardregistrations/{0}", RequestType.GET } },
+            { MethodKey.CardRegistrationSave, new String[] { "/cardregistrations/{0}", RequestType.PUT } },
         
-        { "preauthorization_create", new String[] { "/preauthorizations/card/direct", RequestType.POST } },
-        { "preauthorization_get", new String[] { "/preauthorizations/{0}", RequestType.GET } },
-        { "preauthorization_save", new String[] { "/preauthorizations/{0}", RequestType.PUT } },
+            { MethodKey.PreauthorizationCreate, new String[] { "/preauthorizations/card/direct", RequestType.POST } },
+            { MethodKey.PreauthorizationGet, new String[] { "/preauthorizations/{0}", RequestType.GET } },
+            { MethodKey.PreauthorizationSave, new String[] { "/preauthorizations/{0}", RequestType.PUT } },
         
-        { "card_get", new String[] { "/cards/{0}", RequestType.GET } },
-        { "card_save", new String[] { "/cards/{0}", RequestType.PUT } },
+            { MethodKey.CardGet, new String[] { "/cards/{0}", RequestType.GET } },
+            { MethodKey.CardSave, new String[] { "/cards/{0}", RequestType.PUT } },
         
-        // pay ins URLs
-        { "payins_card-web_create", new String[] { "/payins/card/web/", RequestType.POST } },
-        { "payins_card-direct_create", new String[] { "/payins/card/direct/", RequestType.POST } },
-        { "payins_card-preauthorized_create", new String[] { "/payins/card/preauthorized/", RequestType.POST } },
-        { "payins_card-recurrentexecution_create", new String[] { "/payins/card/recurrent-pay-in-execution/", RequestType.POST } },
+            { MethodKey.PayinsCardWebCreate, new String[] { "/payins/card/web/", RequestType.POST } },
+            { MethodKey.PayinsCardDirectCreate, new String[] { "/payins/card/direct/", RequestType.POST } },
+            { MethodKey.PayinsCardPreauthorizedCreate, new String[] { "/payins/card/preauthorized/", RequestType.POST } },
+            { MethodKey.PayinsCardRecurrentExecutionCreate, new String[] { "/payins/card/recurrent-pay-in-execution/", RequestType.POST } },
         
-        { "payins_registeredcard-web_create", new String[] { "/payins/registered-card/web/", RequestType.POST } },
-        { "payins_registeredcard-direct_create", new String[] { "/payins/registered-card/direct/", RequestType.POST } },
-        { "payins_registeredcard-preauthorized_create", new String[] { "/payins/registered-card/preauthorized/", RequestType.POST } },
-        { "payins_registeredcard-recurrentexecution_create", new String[] { "/payins/registered-card/recurrent-pay-in-execution/", RequestType.POST } },
+            { MethodKey.PayinsRegisteredCardWebCreate, new String[] { "/payins/registered-card/web/", RequestType.POST } },
+            { MethodKey.PayinsRegisteredCardDirectCreate, new String[] { "/payins/registered-card/direct/", RequestType.POST } },
+            { MethodKey.PayinsRegisteredCardPreauthorizedCreate, new String[] { "/payins/registered-card/preauthorized/", RequestType.POST } },
+            { MethodKey.PayinsRegisteredCardRecurrentExecutionCreate, new String[] { "/payins/registered-card/recurrent-pay-in-execution/", RequestType.POST } },
         
-        { "payins_bankwirepayin-web_create", new String[] { "/payins/bankwire/web/", RequestType.POST } },
-        { "payins_bankwirepayin-direct_create", new String[] { "/payins/bankwire/direct/", RequestType.POST } },
-        { "payins_bankwirepayin-preauthorized_create", new String[] { "/payins/bankwire/preauthorized/", RequestType.POST } },
-        { "payins_bankwirepayin-recurrentexecution_create", new String[] { "/payins/bankwire/recurrent-pay-in-execution/", RequestType.POST } },
+            { MethodKey.PayinsBankwirePayinWebCreate, new String[] { "/payins/bankwire/web/", RequestType.POST } },
+            { MethodKey.PayinsBankwirePayinDirectCreate, new String[] { "/payins/bankwire/direct/", RequestType.POST } },
+            { MethodKey.PayinsBankwirePayinPreauthorizedCreate, new String[] { "/payins/bankwire/preauthorized/", RequestType.POST } },
+            { MethodKey.PayinsBankwirePayinRecurrentExecutionCreate, new String[] { "/payins/bankwire/recurrent-pay-in-execution/", RequestType.POST } },
         
-        { "payins_directcredit-web_create", new String[] { "/payins/direct-credit/web/", RequestType.POST } },
-        { "payins_directcredit-direct_create", new String[] { "/payins/direct-credit/direct/", RequestType.POST } },
-        { "payins_directcredit-preauthorized_create", new String[] { "/payins/direct-credit/preauthorized/", RequestType.POST } },
-        { "payins_directcredit-recurrentexecution_create", new String[] { "/payins/direct-credit/recurrent-pay-in-execution/", RequestType.POST } },
-        { "payins_get", new String[] { "/payins/{0}", RequestType.GET } },
-        { "payins_createrefunds", new String[] { "/payins/{0}/refunds", RequestType.POST } },
+            { MethodKey.PayinsDirectCreditWebCreate, new String[] { "/payins/direct-credit/web/", RequestType.POST } },
+            { MethodKey.PayinsDirectCreditDirectCreate, new String[] { "/payins/direct-credit/direct/", RequestType.POST } },
+            { MethodKey.PayinsDirectCreditPreauthorizedCreate, new String[] { "/payins/direct-credit/preauthorized/", RequestType.POST } },
+            { MethodKey.PayinsDirectCreditRecurrentExecutionCreate, new String[] { "/payins/direct-credit/recurrent-pay-in-execution/", RequestType.POST } },
+            { MethodKey.PayinsGet, new String[] { "/payins/{0}", RequestType.GET } },
+            { MethodKey.PayinsCreateRefunds, new String[] { "/payins/{0}/refunds", RequestType.POST } },
+            { MethodKey.PayinsGetRefunds, new String[] { "/payins/{0}/refunds", RequestType.GET } },
         
-        { "payins_preauthorized-direct_create", new String[] { "/payins/preauthorized/direct/", RequestType.POST } },
-        { "payins_bankwire-direct_create", new String[] { "/payins/bankwire/direct/", RequestType.POST } },
+            { MethodKey.PayinsPreauthorizedDirectCreate, new String[] { "/payins/preauthorized/direct/", RequestType.POST } },
+            { MethodKey.PayinsBankwireDirectCreate, new String[] { "/payins/bankwire/direct/", RequestType.POST } },
         
-        { "payouts_bankwire_create", new String[] { "/payouts/bankwire/", RequestType.POST } },
-        { "payouts_merchantexpense_create", new String[] { "/payouts/merchant-expense/", RequestType.POST } },
-        { "payouts_amazongiftcard_create", new String[] { "/payouts/amazon-giftcard/", RequestType.POST } },
-        { "payouts_get", new String[] { "/payouts/{0}", RequestType.GET } },
-        { "payouts_createrefunds", new String[] { "/payouts/{0}/refunds", RequestType.POST } },
-        { "payouts_getrefunds", new String[] { "/payouts/{0}/refunds", RequestType.GET } },
+            { MethodKey.PayoutsBankwireCreate, new String[] { "/payouts/bankwire/", RequestType.POST } },
+            { MethodKey.PayoutsMerchantExpenseCreate, new String[] { "/payouts/merchant-expense/", RequestType.POST } },
+            { MethodKey.PayoutsAmazonGiftcardCreate, new String[] { "/payouts/amazon-giftcard/", RequestType.POST } },
+            { MethodKey.PayoutsGet, new String[] { "/payouts/{0}", RequestType.GET } },
+            { MethodKey.PayoutsCreateRefunds, new String[] { "/payouts/{0}/refunds", RequestType.POST } },
+            { MethodKey.PayoutsGetRefunds, new String[] { "/payouts/{0}/refunds", RequestType.GET } },
         
-        { "reccurringpayinorders_create", new String[] { "/reccurring-pay-in-orders", RequestType.POST } },
-        { "reccurringpayinorders_get", new String[] { "/reccurring-pay-in-orders/{0}", RequestType.GET } },
-        { "reccurringpayinorders_gettransactions", new String[] { "/reccurring-pay-in-orders/{0}/transactions", RequestType.GET } },
+            { MethodKey.ReccurringPayinOrdersCreate, new String[] { "/reccurring-pay-in-orders", RequestType.POST } },
+            { MethodKey.ReccurringPayinOrdersGet, new String[] { "/reccurring-pay-in-orders/{0}", RequestType.GET } },
+            { MethodKey.ReccurringPayinOrdersGetTransactions, new String[] { "/reccurring-pay-in-orders/{0}/transactions", RequestType.GET } },
         
-        { "refunds_get", new String[] { "/refunds/{0}", RequestType.GET } },
+            { MethodKey.RefundsGet, new String[] { "/refunds/{0}", RequestType.GET } },
         
-        { "repudiations_get", new String[] { "/repudiations/{0}", RequestType.GET } },
+            { MethodKey.RepudiationsGet, new String[] { "/repudiations/{0}", RequestType.GET } },
         
-        { "transfers_create", new String[] { "/transfers/", RequestType.POST } },
-        { "transfers_get", new String[] { "/transfers/{0}", RequestType.GET } },
-        { "transfers_getrefunds", new String[] { "/transfers/{0}/refunds", RequestType.GET } },
-        { "transfers_createrefunds", new String[] { "/transfers/{0}/refunds", RequestType.POST } },
+            { MethodKey.TransfersCreate, new String[] { "/transfers/", RequestType.POST } },
+            { MethodKey.TransfersGet, new String[] { "/transfers/{0}", RequestType.GET } },
+            { MethodKey.TransfersGetRefunds, new String[] { "/transfers/{0}/refunds", RequestType.GET } },
+            { MethodKey.TransfersCreateRefunds, new String[] { "/transfers/{0}/refunds", RequestType.POST } },
         
-        { "users_all", new String[] { "/users", RequestType.GET } },
-        { "users_allkyc", new String[] { "/users/{0}/KYC", RequestType.GET } },
-        { "users_allkycrequests", new String[] { "/users/{0}/KYC/requests", RequestType.GET } },
-        { "users_allwallets", new String[] { "/users/{0}/wallets", RequestType.GET } },
-        { "users_allbankaccount", new String[] { "/users/{0}/bankaccounts", RequestType.GET } },
-        { "users_allpaymentcards", new String[] { "/users/{0}/payment-cards", RequestType.GET } },
-        { "users_allcards", new String[] { "/users/{0}/cards", RequestType.GET } },
-        { "users_alltransactions", new String[] { "/users/{0}/transactions", RequestType.GET } },
-        { "users_createnaturals", new String[] { "/users/natural", RequestType.POST } },
-        { "users_createlegals", new String[] { "/users/legal", RequestType.POST } },
-        { "users_createkycrequests", new String[] { "/users/{0}/KYC/requests", RequestType.POST } },
-        { "users_createkycdocument", new String[] { "/users/{0}/KYC/documents", RequestType.POST } },
-        { "users_createkycpage", new String[] { "/users/{0}/KYC/documents/{1}/pages", RequestType.POST } },
-        { "users_createbankaccounts_iban", new String[] { "/users/{0}/bankaccounts/iban", RequestType.POST } },
-        { "users_createbankaccounts_gb", new String[] { "/users/{0}/bankaccounts/gb", RequestType.POST } },
-        { "users_createbankaccounts_us", new String[] { "/users/{0}/bankaccounts/us", RequestType.POST } },
-        { "users_createbankaccounts_ca", new String[] { "/users/{0}/bankaccounts/ca", RequestType.POST } },
-        { "users_createbankaccounts_other", new String[] { "/users/{0}/bankaccounts/other", RequestType.POST } },
-        { "users_get", new String[] { "/users/{0}", RequestType.GET } },
-        { "users_getnaturals", new String[] { "/users/natural/{0}", RequestType.GET } },
-        { "users_getlegals", new String[] { "/users/legal/{0}", RequestType.GET } },
-        { "users_getkycdocument", new String[] { "/users/{0}/KYC/documents/{1}", RequestType.GET } },
-        { "users_getkycrequests", new String[] { "/users/{0}/KYC/requests/{1}", RequestType.GET } },
-        { "users_getproofofidentity", new String[] { "/users/{0}/ProofOfIdentity", RequestType.GET } },
-        { "users_getproofofaddress", new String[] { "/users/{0}/ProofOfAddress", RequestType.GET } },
-        { "users_getproofofregistration", new String[] { "/users/{0}/ProofOfRegistration", RequestType.GET } },
-        { "users_getshareholderdeclaration", new String[] { "/users/{0}/ShareholderDeclaration", RequestType.GET } },
-        { "users_getbankaccount", new String[] { "/users/{0}/bankaccounts/{1}", RequestType.GET } },
-        { "users_getpaymentcards", new String[] { "/users/{0}/payment-cards/{1}", RequestType.GET } },
-        { "users_savenaturals", new String[] { "/users/natural/{0}", RequestType.PUT } },
-        { "users_savelegals", new String[] { "/users/legal/{0}", RequestType.PUT } },
-        { "users_savekycdocument", new String[] { "/users/{0}/KYC/documents/{1}", RequestType.PUT } },
+            { MethodKey.UsersAll, new String[] { "/users", RequestType.GET } },
+            { MethodKey.UsersAllKyc, new String[] { "/users/{0}/KYC", RequestType.GET } },
+            { MethodKey.UsersAllKycRequests, new String[] { "/users/{0}/KYC/requests", RequestType.GET } },
+            { MethodKey.UsersAllWallets, new String[] { "/users/{0}/wallets", RequestType.GET } },
+            { MethodKey.UsersAllBankAccount, new String[] { "/users/{0}/bankaccounts", RequestType.GET } },
+            { MethodKey.UsersAllPaymentCards, new String[] { "/users/{0}/payment-cards", RequestType.GET } },
+            { MethodKey.UsersAllCards, new String[] { "/users/{0}/cards", RequestType.GET } },
+            { MethodKey.UsersAllTransactions, new String[] { "/users/{0}/transactions", RequestType.GET } },
+            { MethodKey.UsersCreateNaturals, new String[] { "/users/natural", RequestType.POST } },
+            { MethodKey.UsersCreateLegals, new String[] { "/users/legal", RequestType.POST } },
+            { MethodKey.UsersCreateKycRequests, new String[] { "/users/{0}/KYC/requests", RequestType.POST } },
+            { MethodKey.UsersCreateKycDocument, new String[] { "/users/{0}/KYC/documents", RequestType.POST } },
+            { MethodKey.UsersCreateKycPage, new String[] { "/users/{0}/KYC/documents/{1}/pages", RequestType.POST } },
+            { MethodKey.UsersCreateBankAccountsIban, new String[] { "/users/{0}/bankaccounts/iban", RequestType.POST } },
+            { MethodKey.UsersCreateBankAccountsGb, new String[] { "/users/{0}/bankaccounts/gb", RequestType.POST } },
+            { MethodKey.UsersCreateBankAccountsUs, new String[] { "/users/{0}/bankaccounts/us", RequestType.POST } },
+            { MethodKey.UsersCreateBankAccountsCa, new String[] { "/users/{0}/bankaccounts/ca", RequestType.POST } },
+            { MethodKey.UsersCreateBankAccountsOther, new String[] { "/users/{0}/bankaccounts/other", RequestType.POST } },
+            { MethodKey.UsersGet, new String[] { "/users/{0}", RequestType.GET } },
+            { MethodKey.UsersGetNaturals, new String[] { "/users/natural/{0}", RequestType.GET } },
+            { MethodKey.UsersGetLegals, new String[] { "/users/legal/{0}", RequestType.GET } },
+            { MethodKey.UsersGetKycDocument, new String[] { "/users/{0}/KYC/documents/{1}", RequestType.GET } },
+            { MethodKey.UsersGetKycRequests, new String[] { "/users/{0}/KYC/requests/{1}", RequestType.GET } },
+            { MethodKey.UsersGetProofOfIdentity, new String[] { "/users/{0}/ProofOfIdentity", RequestType.GET } },
+            { MethodKey.UsersGetProofOfAddress, new String[] { "/users/{0}/ProofOfAddress", RequestType.GET } },
+            { MethodKey.UsersGetProofOfRegistration, new String[] { "/users/{0}/ProofOfRegistration", RequestType.GET } },
+            { MethodKey.UsersGetShareholderDeclaration, new String[] { "/users/{0}/ShareholderDeclaration", RequestType.GET } },
+            { MethodKey.UsersGetBankAccount, new String[] { "/users/{0}/bankaccounts/{1}", RequestType.GET } },
+            { MethodKey.UsersGetPaymentCards, new String[] { "/users/{0}/payment-cards/{1}", RequestType.GET } },
+            { MethodKey.UsersSaveNaturals, new String[] { "/users/natural/{0}", RequestType.PUT } },
+            { MethodKey.UsersSaveLegals, new String[] { "/users/legal/{0}", RequestType.PUT } },
+            { MethodKey.UsersSaveKycDocument, new String[] { "/users/{0}/KYC/documents/{1}", RequestType.PUT } },
         
-        { "wallets_create", new String[] { "/wallets", RequestType.POST } },
-        { "wallets_allrecurringpayinorders", new String[] { "/wallets/{0}/recurring-pay-in-orders", RequestType.GET } },
-        { "wallets_alltransactions", new String[] { "/wallets/{0}/transactions", RequestType.GET } },
-        { "wallets_alltransactionspage", new String[] { "/wallets/{0}/transactions/pages/{1}", RequestType.GET } },
-        { "wallets_get", new String[] { "/wallets/{0}", RequestType.GET } },
-        { "wallets_save", new String[] { "/wallets/{0}", RequestType.PUT } },
-        
-    };
+            { MethodKey.WalletsCreate, new String[] { "/wallets", RequestType.POST } },
+            { MethodKey.WalletsAllRecurringPayinOrders, new String[] { "/wallets/{0}/recurring-pay-in-orders", RequestType.GET } },
+            { MethodKey.WalletsAllTransactions, new String[] { "/wallets/{0}/transactions", RequestType.GET } },
+            { MethodKey.WalletsAllTransactionsPage, new String[] { "/wallets/{0}/transactions/pages/{1}", RequestType.GET } },
+            { MethodKey.WalletsGet, new String[] { "/wallets/{0}", RequestType.GET } },
+            { MethodKey.WalletsSave, new String[] { "/wallets/{0}", RequestType.PUT } }
+        };
 
         /// <summary>Creates new API instance.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
@@ -138,7 +136,7 @@ namespace MangoPay.Core
         /// <summary>Gets the URL of REST Mango Pay API.</summary>
         /// <param name="key">The method key to get URL of.</param>
         /// <returns>The URL string of given method.</returns>
-        protected String GetRequestUrl(String key)
+        protected String GetRequestUrl(MethodKey key)
         {
             String result = "";
             try
@@ -155,22 +153,23 @@ namespace MangoPay.Core
         /// <summary>Gets the HTTP request verb.</summary>
         /// <param name="key">The method key.</param>
         /// <returns>One of the HTTP verbs: GET, PUT or POST.</returns>
-        protected String GetRequestType(String key)
+        protected String GetRequestType(MethodKey key)
         {
             return this._methods[key][1];
         }
 
-        /// <summary>Creates the Dto instance.</summary>
+        /// <summary>Creates the DTO instance.</summary>
+        /// <typeparam name="U">Return type.</typeparam>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
-        /// <param name="entity">Dto instance that is going to be sent.</param>
+        /// <param name="entity">DTO instance that is going to be sent.</param>
         /// <param name="entityId">Entity identifier.</param>
         /// <param name="secondEntityId">Second entity identifier.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        protected T CreateObject<T>(String methodKey, T entity, String entityId, String secondEntityId)
-            where T : Dto, new()
+        /// <returns>The DTO instance returned from API.</returns>
+        protected U CreateObject<U, T>(MethodKey methodKey, T entity, String entityId, String secondEntityId)
+            where U : EntityBase, new()
+            where T : EntityPostBase
         {
-
             String urlMethod;
 
             if (entityId.Length == 0)
@@ -181,48 +180,51 @@ namespace MangoPay.Core
                 urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
 
             RestTool restTool = new RestTool(this._root, true);
-            T result = restTool.Request<T>(urlMethod, this.GetRequestType(methodKey), null, null, entity);
+            U result = restTool.Request<U, T>(urlMethod, this.GetRequestType(methodKey), null, null, entity);
 
             return result;
-
         }
 
-        /// <summary>Creates the Dto instance.</summary>
+        /// <summary>Creates the DTO instance.</summary>
+        /// <typeparam name="U">Return type.</typeparam>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
-        /// <param name="entity">Dto instance that is going to be sent.</param>
+        /// <param name="entity">DTO instance that is going to be sent.</param>
         /// <param name="entityId">Entity identifier.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        protected T CreateObject<T>(string methodKey, T entity, string entityId)
-            where T : Dto, new()
+        /// <returns>The DTO instance returned from API.</returns>
+        protected U CreateObject<U, T>(MethodKey methodKey, T entity, string entityId)
+            where U : EntityBase, new()
+            where T : EntityPostBase
         {
-            return CreateObject(methodKey, entity, entityId, "");
+            return CreateObject<U, T>(methodKey, entity, entityId, "");
         }
 
-        /// <summary>Creates the Dto instance.</summary>
+        /// <summary>Creates the DTO instance.</summary>
+        /// <typeparam name="U">Return type.</typeparam>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
-        /// <param name="entity">Dto instance that is going to be sent.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        protected T CreateObject<T>(string methodKey, T entity)
-            where T : Dto, new()
+        /// <param name="entity">DTO instance that is going to be sent.</param>
+        /// <returns>The DTO instance returned from API.</returns>
+        protected U CreateObject<U, T>(MethodKey methodKey, T entity)
+            where U : EntityBase, new()
+            where T : EntityPostBase
         {
-            return CreateObject(methodKey, entity, "");
+            return CreateObject<U, T>(methodKey, entity, "");
         }
 
-        /// <summary>Gets the Dto instance from API.</summary>
+        /// <summary>Gets the DTO instance from API.</summary>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entityId">Entity identifier.</param>
         /// <param name="secondEntityId">Second entity identifier.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        protected T GetObject<T>(string methodKey, string entityId, string secondEntityId)
-            where T : Dto, new()
+        /// <returns>The DTO instance returned from API.</returns>
+        protected T GetObject<T>(MethodKey methodKey, string entityId, string secondEntityId)
+            where T : EntityBase, new()
         {
             string urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
 
             RestTool rest = new RestTool(this._root, true);
-            T response = rest.Request<T>(urlMethod, this.GetRequestType(methodKey));
+            T response = rest.Request<T, T>(urlMethod, this.GetRequestType(methodKey));
 
             return response;
         }
@@ -232,8 +234,8 @@ namespace MangoPay.Core
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entityId">Entity identifier.</param>
         /// <returns>The Dto instance returned from API.</returns>
-        protected T GetObject<T>(string methodKey, string entityId)
-            where T : Dto, new()
+        protected T GetObject<T>(MethodKey methodKey, string entityId)
+            where T : EntityBase, new()
         {
             return GetObject<T>(methodKey, entityId, "");
         }
@@ -245,8 +247,8 @@ namespace MangoPay.Core
         /// <param name="entityId">Entity identifier.</param>
         /// <param name="additionalUrlParams">Collection of key-value pairs of request parameters.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected List<T> GetList<T>(string methodKey, Pagination pagination, string entityId, Dictionary<String, String> additionalUrlParams)
-            where T : Dto, new()
+        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Dictionary<String, String> additionalUrlParams)
+            where T : EntityBase, new()
         {
             string urlMethod = "";
 
@@ -271,8 +273,8 @@ namespace MangoPay.Core
         /// <param name="pagination">Pagination object.</param>
         /// <param name="entityId">Entity identifier.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected List<T> GetList<T>(string methodKey, Pagination pagination, string entityId)
-            where T : Dto, new()
+        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId)
+            where T : EntityBase, new()
         {
             return GetList<T>(methodKey, pagination, entityId, null);
         }
@@ -282,52 +284,62 @@ namespace MangoPay.Core
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected List<T> GetList<T>(string methodKey, Pagination pagination)
-            where T : Dto, new()
+        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination)
+            where T : EntityBase, new()
         {
             return GetList<T>(methodKey, pagination, "");
         }
 
         /// <summary>Saves the Dto instance.</summary>
+        /// <typeparam name="U">Return type.</typeparam>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entity">Dto instance that is going to be sent.</param>
         /// <returns>The Dto instance returned from API.</returns>
-        protected T UpdateObject<T>(string methodKey, T entity)
-            where T : Dto, new()
+        protected U UpdateObject<U, T>(MethodKey methodKey, T entity)
+            where U : EntityBase, new()
+            where T : EntityPutBase
         {
-            return UpdateObject(methodKey, entity, "");
+            return UpdateObject<U, T>(methodKey, entity, "");
         }
 
         /// <summary>Saves the Dto instance.</summary>
+        /// <typeparam name="U">Return type.</typeparam>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entity">Dto instance that is going to be sent.</param>
         /// <param name="entityId">Entity identifier.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        protected T UpdateObject<T>(string methodKey, T entity, string entityId)
-            where T : Dto, new()
+        /// <returns></returns>
+        protected U UpdateObject<U, T>(MethodKey methodKey, T entity, string entityId)
+            where U : EntityBase, new()
+            where T : EntityPutBase
         {
-            if (entity is EntityBase)
-            {
+            return UpdateObject<U, T>(methodKey, entity, entityId, "");
+        }
 
-                String urlMethod;
+        /// <summary>Saves the Dto instance.</summary>
+        /// <typeparam name="U">Return type.</typeparam>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="entity">Dto instance that is going to be sent.</param>
+        /// <param name="entityId">Entity identifier.</param>
+        /// <param name="secondEntityId">Second entity identifier.</param>
+        /// <returns>The Dto instance returned from API.</returns>
+        protected U UpdateObject<U, T>(MethodKey methodKey, T entity, string entityId, string secondEntityId)
+            where U : EntityBase, new()
+            where T : EntityPutBase
+        {
+            String urlMethod;
 
-                if (entityId.Length == 0)
-                    urlMethod = String.Format(this.GetRequestUrl(methodKey), (entity as EntityBase).Id);
-                else
-                {
-                    urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, (entity as EntityBase).Id);
-                }
-
-
-                RestTool restTool = new RestTool(this._root, true);
-                return restTool.Request(urlMethod, this.GetRequestType(methodKey), null, null, entity);
-            }
+            if (secondEntityId.Length == 0)
+                urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId);
             else
             {
-                return null;
+                urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
             }
+
+            RestTool restTool = new RestTool(this._root, true);
+            return restTool.Request<U, T>(urlMethod, this.GetRequestType(methodKey), null, null, entity);
         }
     }
 }

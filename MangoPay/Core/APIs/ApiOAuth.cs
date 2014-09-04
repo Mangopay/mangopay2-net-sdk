@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -15,23 +12,23 @@ namespace MangoPay.Core
 
         /// <summary>Gets the new token used for requests authentication.</summary>
         /// <returns>OAuth object with token information.</returns>
-        public OAuthToken CreateToken()
+        public OAuthTokenDTO CreateToken()
         {
-            String urlMethod = this.GetRequestUrl("authentication_oauth");
-            String requestType = this.GetRequestType("authentication_oauth");
+            String urlMethod = this.GetRequestUrl(MethodKey.AuthenticationOAuth);
+            String requestType = this.GetRequestType(MethodKey.AuthenticationOAuth);
             Dictionary<String, String> requestData = new Dictionary<String, String>
             {
-                { "grant_type", "client_credentials" }
+                { Constants.GRANT_TYPE, Constants.CLIENT_CREDENTIALS }
             };
 
             RestTool restTool = new RestTool(this._root, false);
             AuthenticationHelper authHelper = new AuthenticationHelper(_root);
 
-            restTool.AddRequestHttpHeader("Host", (new Uri(_root.Config.BaseUrl)).Host);
-            restTool.AddRequestHttpHeader("Authorization", "Basic " + authHelper.GetHttpHeaderBasicKey());
-            restTool.AddRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
+            restTool.AddRequestHttpHeader(Constants.HOST, (new Uri(_root.Config.BaseUrl)).Host);
+            restTool.AddRequestHttpHeader(Constants.AUTHORIZATION, String.Format("{0} {1}", Constants.BASIC, authHelper.GetHttpHeaderBasicKey()));
+            restTool.AddRequestHttpHeader(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
 
-            OAuthToken response = restTool.Request<OAuthToken>(urlMethod, requestType, requestData);
+            OAuthTokenDTO response = restTool.Request<OAuthTokenDTO, OAuthTokenDTO>(urlMethod, requestType, requestData);
 
             return response;
         }

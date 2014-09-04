@@ -3,9 +3,6 @@ using MangoPay.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Tests
 {
@@ -20,10 +17,10 @@ namespace MangoPay.Tests
                 FilterEvents eventsFilter = new FilterEvents();
                 eventsFilter.Type = EventType.PAYIN_NORMAL_CREATED;
 
-                List<Event> getEvents = this.Api.Events.Get(eventsFilter, null);
+                List<EventDTO> getEvents = this.Api.Events.GetAll(null, eventsFilter);
 
                 eventsFilter.Type = EventType.All;
-                List<Event> getAllEvents = this.Api.Events.Get(eventsFilter, null);
+                List<EventDTO> getAllEvents = this.Api.Events.GetAll(null, eventsFilter);
 
                 Assert.IsNotNull(getEvents);
                 Assert.IsNotNull(getAllEvents);

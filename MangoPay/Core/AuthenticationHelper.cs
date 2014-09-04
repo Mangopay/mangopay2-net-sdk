@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -46,21 +44,21 @@ namespace MangoPay.Core
         {
             return new Dictionary<String, String> 
             {
-                { "Authorization", "Basic " + GetHttpHeaderBasicKey() }
+                { Constants.AUTHORIZATION, String.Format("{0} {1}", Constants.BASIC, GetHttpHeaderBasicKey()) }
             };
         }
 
         // gets HTTP header value with authorization string for strong authentication
         private Dictionary<String, String> GetHttpHeaderStrong()
         {
-            OAuthToken token = _root.OAuthTokenManager.GetToken();
+            OAuthTokenDTO token = _root.OAuthTokenManager.GetToken();
 
             if (token == null || String.IsNullOrEmpty(token.access_token) || String.IsNullOrEmpty(token.token_type))
                 throw new Exception("OAuth token is not created (or is invalid) for strong authentication");
 
             return new Dictionary<String, String> 
             {
-                { "Authorization", token.token_type + " " + token.access_token }
+                { Constants.AUTHORIZATION, token.token_type + " " + token.access_token }
             };
         }
     }

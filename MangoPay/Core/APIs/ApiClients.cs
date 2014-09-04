@@ -1,9 +1,6 @@
 ﻿using MangoPay.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -15,25 +12,25 @@ namespace MangoPay.Core
         public ApiClients(MangoPayApi root) : base(root) { }
 
         /// <summary>Gets client data for Basic Access Authentication.</summary>
-        /// <param name="clientId">Client identifier.</param>
-        /// <param name="clientName">Beautiful name for presentation.</param>
+        /// <param name="clientId">Client's identifier.</param>
+        /// <param name="clientName">Client's name for presentation.</param>
         /// <param name="clientEmail">Client's email.</param>
         /// <returns>Client instance returned from API.</returns>
-        public Client Create(String clientId, String clientName, String clientEmail)
+        public ClientDTO Create(String clientId, String clientName, String clientEmail)
         {
-            String urlMethod = this.GetRequestUrl("authentication_base");
-            String requestType = this.GetRequestType("authentication_base");
+            String urlMethod = this.GetRequestUrl(MethodKey.AuthenticationBase);
+            String requestType = this.GetRequestType(MethodKey.AuthenticationBase);
 
             Dictionary<String, String> requestData = new Dictionary<String, String>
             {
-                { "ClientId", clientId },
-                { "Name", clientName },
-                { "Email", clientEmail }
+                { Constants.CLIENT_ID, clientId },
+                { Constants.NAME, clientName },
+                { Constants.EMAIL, clientEmail }
             };
 
             RestTool restTool = new RestTool(this._root, false);
-            restTool.AddRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
-            return restTool.Request<Client>(urlMethod, requestType, requestData);
+            restTool.AddRequestHttpHeader(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            return restTool.Request<ClientDTO, ClientDTO>(urlMethod, requestType, requestData);
         }
     }
 }

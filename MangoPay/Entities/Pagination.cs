@@ -1,14 +1,9 @@
-﻿using MangoPay.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace MangoPay.Entities
 {
     /// <summary>Pagination class.</summary>
-    public class Pagination : Dto
+    public class Pagination
     {
         /// <summary>Page number.</summary>
         public int Page;

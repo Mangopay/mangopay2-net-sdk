@@ -3,9 +3,6 @@ using MangoPay.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Tests
 {
@@ -17,7 +14,9 @@ namespace MangoPay.Tests
         {
             try
             {
-                Hook hook = this.GetJohnsHook();
+                HookPostDTO hookPost = new HookPostDTO("http://test.com", EventType.TRANSFER_REFUND_FAILED);
+
+                HookDTO hook = this.Api.Hooks.Create(hookPost);
                 Assert.IsTrue(hook.Id.Length > 0);
             }
             catch (Exception ex)
@@ -31,8 +30,8 @@ namespace MangoPay.Tests
         {
             try
             {
-                Hook hook = this.GetJohnsHook();
-                Hook getHook = this.Api.Hooks.Get(hook.Id);
+                HookDTO hook = this.GetJohnsHook();
+                HookDTO getHook = this.Api.Hooks.Get(hook.Id);
 
                 Assert.AreEqual(getHook.Id, hook.Id);
             }
@@ -47,13 +46,15 @@ namespace MangoPay.Tests
         {
             try
             {
-                Hook hook = this.GetJohnsHook();
-                hook.Url = String.Format("http://test{0}.com", DateTime.Now.Ticks);
+                HookDTO hook = this.GetJohnsHook();
+                HookPutDTO hookPut = new HookPutDTO();
+                hookPut.Status = hook.Status;
+                hookPut.Url = String.Format("http://test{0}.com", DateTime.Now.Ticks);
 
-                Hook saveHook = this.Api.Hooks.Update(hook);
+                HookDTO saveHook = this.Api.Hooks.Update(hookPut, hook.Id);
 
                 Assert.AreEqual(saveHook.Id, hook.Id);
-                Assert.AreEqual(saveHook.Url, hook.Url);
+                Assert.AreEqual(hookPut.Url, saveHook.Url);
             }
             catch (Exception ex)
             {
@@ -66,13 +67,13 @@ namespace MangoPay.Tests
         {
             try
             {
-                Hook hook = this.GetJohnsHook();
+                HookDTO hook = this.GetJohnsHook();
                 Pagination pagination = new Pagination(1, 1);
 
-                List<Hook> list = this.Api.Hooks.GetAll(pagination);
+                List<HookDTO> list = this.Api.Hooks.GetAll(pagination);
 
                 Assert.IsNotNull(list[0]);
-                Assert.IsTrue(list[0] is Hook);
+                Assert.IsTrue(list[0] is HookDTO);
                 Assert.AreEqual(hook.Id, list[0].Id);
                 Assert.AreEqual(pagination.Page, 1);
                 Assert.AreEqual(pagination.ItemsPerPage, 1);

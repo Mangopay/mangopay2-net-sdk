@@ -1,10 +1,6 @@
 ﻿using MangoPay.Core.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -22,11 +18,11 @@ namespace MangoPay.Core
 
         /// <summary>Gets the currently stored token.</summary>
         /// <returns>Currently stored token instance or null.</returns>
-        public OAuthToken Get()
+        public OAuthTokenDTO Get()
         {
             try
             {
-                OAuthToken token = OAuthToken.Deserialize(File.ReadAllText(GetFilePath()));
+                OAuthTokenDTO token = OAuthTokenDTO.Deserialize(File.ReadAllText(GetFilePath()));
                 return token;
             }
             catch
@@ -37,13 +33,13 @@ namespace MangoPay.Core
 
         /// <summary>Stores authorization token passed as an argument.</summary>
         /// <param name="token">Token instance to be stored.</param>
-        public void Store(OAuthToken token)
+        public void Store(OAuthTokenDTO token)
         {
             string serializedToken = token.Serialize();
 
             File.WriteAllText(GetFilePath(), serializedToken);
         }
 
-        private String GetFilePath() { return _tempDir + GetType().Name + ".tmp"; }
+        private String GetFilePath() { return _tempDir + GetType().Name + Constants.TMP_FILE_EXTENSION; }
     }
 }

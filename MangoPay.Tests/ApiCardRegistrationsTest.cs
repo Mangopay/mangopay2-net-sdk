@@ -1,10 +1,7 @@
-﻿using MangoPay.Entities;
+﻿using MangoPay.Core;
+using MangoPay.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Tests
 {
@@ -16,8 +13,8 @@ namespace MangoPay.Tests
         {
             try
             {
-                CardRegistration cardRegistration = this.GetJohnsCardRegistration();
-                UserNatural user = this.GetJohn();
+                CardRegistrationDTO cardRegistration = this.GetJohnsCardRegistration();
+                UserNaturalDTO user = this.GetJohn();
 
                 Assert.IsNotNull(cardRegistration.Id);
                 Assert.IsTrue(cardRegistration.Id.Length > 0);
@@ -26,7 +23,7 @@ namespace MangoPay.Tests
                 Assert.IsNotNull(cardRegistration.PreregistrationData);
                 Assert.IsNotNull(cardRegistration.CardRegistrationURL);
                 Assert.AreEqual(user.Id, cardRegistration.UserId);
-                Assert.AreEqual("EUR", cardRegistration.Currency);
+                Assert.AreEqual(CurrencyIso.EUR, cardRegistration.Currency);
                 Assert.AreEqual("CREATED", cardRegistration.Status);
             }
             catch (Exception ex)
@@ -40,9 +37,9 @@ namespace MangoPay.Tests
         {
             try
             {
-                CardRegistration cardRegistration = this.GetJohnsCardRegistration();
+                CardRegistrationDTO cardRegistration = this.GetJohnsCardRegistration();
 
-                CardRegistration getCardRegistration = this.Api.CardRegistrations.Get(cardRegistration.Id);
+                CardRegistrationDTO getCardRegistration = this.Api.CardRegistrations.Get(cardRegistration.Id);
 
                 Assert.IsTrue(getCardRegistration.Id.Length > 0);
                 Assert.AreEqual(cardRegistration.Id, getCardRegistration.Id);
@@ -58,11 +55,12 @@ namespace MangoPay.Tests
         {
             try
             {
-                CardRegistration cardRegistration = this.GetJohnsCardRegistration();
+                CardRegistrationDTO cardRegistration = this.GetJohnsCardRegistration();
+                CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
                 String registrationData = this.GetPaylineCorrectRegistartionData(cardRegistration);
-                cardRegistration.RegistrationData = registrationData;
+                cardRegistrationPut.RegistrationData = registrationData;
 
-                CardRegistration getCardRegistration = this.Api.CardRegistrations.Update(cardRegistration);
+                CardRegistrationDTO getCardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
 
                 Assert.AreEqual(registrationData, getCardRegistration.RegistrationData);
                 Assert.IsNotNull(getCardRegistration.CardId);

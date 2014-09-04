@@ -1,12 +1,7 @@
 ﻿using MangoPay.Core;
 using MangoPay.Entities;
-using MangoPay.Entities.Dependend;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Tests
 {
@@ -18,12 +13,11 @@ namespace MangoPay.Tests
         {
             try
             {
-                PayIn payIn = this.GetJohnsPayInCardWeb();
-                PayOut payOut = this.GetJohnsPayOutBankWire();
+                PayInDTO payIn = this.GetJohnsPayInCardWeb();
+                PayOutDTO payOut = this.GetJohnsPayOutBankWire();
 
                 Assert.IsTrue(payOut.Id.Length > 0);
-                Assert.AreEqual(payOut.PaymentType, "BANK_WIRE");
-                Assert.IsTrue(payOut.MeanOfPaymentDetails is PayOutPaymentDetailsBankWire);
+                Assert.AreEqual(payOut.PaymentType, PayOutPaymentType.BANK_WIRE);
             }
             catch (Exception ex)
             {

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using MangoPay.Core;
 using MangoPay.Entities;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace MangoPay.Tests
 {
@@ -14,12 +13,12 @@ namespace MangoPay.Tests
         {
             try
             {
-                CardPreAuthorization cardPreAuthorization = this.GetJohnsCardPreAuthorization();
+                CardPreAuthorizationDTO cardPreAuthorization = this.GetJohnsCardPreAuthorization();
 
-                Assert.IsTrue(cardPreAuthorization.Id != "");
-                Assert.AreEqual(cardPreAuthorization.Status, "SUCCEEDED");
-                Assert.AreEqual(cardPreAuthorization.PaymentStatus, "WAITING");
-                Assert.AreEqual(cardPreAuthorization.ExecutionType, "DIRECT");
+                Assert.IsTrue(cardPreAuthorization.Id.Length > 0);
+                Assert.AreEqual(cardPreAuthorization.Status, PreAuthorizationStatus.SUCCEEDED);
+                Assert.AreEqual(cardPreAuthorization.PaymentStatus, PaymentStatus.WAITING);
+                Assert.AreEqual(cardPreAuthorization.ExecutionType, PreAuthorizationExecutionType.DIRECT);
                 Assert.IsNull(cardPreAuthorization.PayInId);
             }
             catch (Exception ex)
@@ -33,9 +32,9 @@ namespace MangoPay.Tests
         {
             try
             {
-                CardPreAuthorization cardPreAuthorization = this.GetJohnsCardPreAuthorization();
+                CardPreAuthorizationDTO cardPreAuthorization = this.GetJohnsCardPreAuthorization();
 
-                CardPreAuthorization getCardPreAuthorization = this.Api.CardPreAuthorizations.Get(cardPreAuthorization.Id);
+                CardPreAuthorizationDTO getCardPreAuthorization = this.Api.CardPreAuthorizations.Get(cardPreAuthorization.Id);
 
                 Assert.AreEqual(cardPreAuthorization.Id, getCardPreAuthorization.Id);
                 Assert.AreEqual(getCardPreAuthorization.ResultCode, "000000");
@@ -51,13 +50,15 @@ namespace MangoPay.Tests
         {
             try
             {
-                CardPreAuthorization cardPreAuthorization = this.GetJohnsCardPreAuthorization();
-                cardPreAuthorization.PaymentStatus = "CANCELED ";
+                CardPreAuthorizationDTO cardPreAuthorization = this.GetJohnsCardPreAuthorization();
+                CardPreAuthorizationPutDTO cardPreAuthorizationPut = new CardPreAuthorizationPutDTO();
+                cardPreAuthorizationPut.Tag = cardPreAuthorization.Tag;
+                cardPreAuthorizationPut.PaymentStatus = PaymentStatus.CANCELED;
 
-                CardPreAuthorization resultCardPreAuthorization = this.Api.CardPreAuthorizations.Update(cardPreAuthorization);
+                CardPreAuthorizationDTO resultCardPreAuthorization = this.Api.CardPreAuthorizations.Update(cardPreAuthorizationPut, cardPreAuthorization.Id);
 
-                Assert.AreEqual(resultCardPreAuthorization.Status, "SUCCEEDED");
-                Assert.AreEqual(resultCardPreAuthorization.PaymentStatus, "CANCELED");
+                Assert.AreEqual(resultCardPreAuthorization.Status, PreAuthorizationStatus.SUCCEEDED);
+                Assert.AreEqual(resultCardPreAuthorization.PaymentStatus, PaymentStatus.CANCELED);
             }
             catch (Exception ex)
             {

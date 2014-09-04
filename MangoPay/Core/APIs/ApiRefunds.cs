@@ -1,9 +1,5 @@
 ﻿using MangoPay.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -17,9 +13,9 @@ namespace MangoPay.Core
         /// <summary>Gets refund.</summary>
         /// <param name="refundId">Refund identifier.</param>
         /// <returns>Refund entity instance returned from API.</returns>
-        public Refund Get(String refundId)
+        public RefundDTO Get(String refundId)
         {
-            return this.GetObject<Refund>("refunds_get", refundId);
+            return this.GetObject<RefundDTO>(MethodKey.RefundsGet, refundId);
         }
     }
 }

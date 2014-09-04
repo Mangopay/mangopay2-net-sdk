@@ -1,9 +1,5 @@
 ﻿using MangoPay.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -17,28 +13,25 @@ namespace MangoPay.Core
         /// <summary>Creates new PayOut object.</summary>
         /// <param name="payOut">The PayOut object to be created.</param>
         /// <returns>Created PayOut object returned from API.</returns>
-        public PayOut Create(PayOut payOut)
+        public PayOutBankWireDTO CreateBankWire(PayOutBankWirePostDTO payOut)
         {
-            String paymentKey = this.GetPaymentKey(payOut);
-            return this.CreateObject<PayOut>(String.Format("payouts_{0}_create", paymentKey), payOut);
+            return this.CreateObject<PayOutBankWireDTO, PayOutBankWirePostDTO>(MethodKey.PayoutsBankwireCreate, payOut);
         }
 
         /// <summary>Gets PayOut entity by its identifier.</summary>
         /// <param name="payOutId">PayOut identifier.</param>
         /// <returns>PayOut instance returned from API.</returns>
-        public PayOut Get(String payOutId)
+        public PayOutDTO Get(String payOutId)
         {
-            return this.GetObject<PayOut>("payouts_get", payOutId);
+            return this.GetObject<PayOutDTO>(MethodKey.PayoutsGet, payOutId);
         }
 
-        private String GetPaymentKey(PayOut payOut)
+        /// <summary>Gets PayOut entity by its identifier.</summary>
+        /// <param name="payOutId">PayOutBankWire identifier.</param>
+        /// <returns>PayOutBankWire instance returned from API.</returns>
+        public PayOutBankWireDTO GetBankWire(String payOutId)
         {
-            if (payOut.MeanOfPaymentDetails == null)
-                throw new Exception("Mean of payment is not defined or it is not object type");
-
-            String className = payOut.MeanOfPaymentDetails.GetType().Name.Replace("PayOutPaymentDetails", "");
-            return className.ToLower();
-
+            return this.GetObject<PayOutBankWireDTO>(MethodKey.PayoutsGet, payOutId);
         }
     }
 }

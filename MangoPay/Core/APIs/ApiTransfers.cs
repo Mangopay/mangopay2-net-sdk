@@ -1,9 +1,5 @@
 ﻿using MangoPay.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangoPay.Core
 {
@@ -17,34 +13,34 @@ namespace MangoPay.Core
         /// <summary>Creates new transfer.</summary>
         /// <param name="transfer">Transfer entity instance to be created.</param>
         /// <returns>Transfer object returned from API.</returns>
-        public Transfer Create(Transfer transfer)
+        public TransferDTO Create(TransferPostDTO transfer)
         {
-            return this.CreateObject<Transfer>("transfers_create", transfer);
+            return this.CreateObject<TransferDTO, TransferPostDTO>(MethodKey.TransfersCreate, transfer);
         }
 
         /// <summary>Gets the transfer.</summary>
         /// <param name="transferId">Transfer identifier.</param>
         /// <returns>Transfer instance returned from API.</returns>
-        public Transfer Get(String transferId)
+        public TransferDTO Get(String transferId)
         {
-            return this.GetObject<Transfer>("transfers_get", transferId);
+            return this.GetObject<TransferDTO>(MethodKey.TransfersGet, transferId);
         }
 
         /// <summary>Creates refund for transfer object.</summary>
         /// <param name="transferId">Transfer identifier.</param>
         /// <param name="refund">Refund object to create.</param>
         /// <returns>Refund entity instance returned from API.</returns>
-        public Refund CreateRefund(String transferId, Refund refund)
+        public RefundDTO CreateRefund(String transferId, RefundPostDTO refund)
         {
-            return this.CreateObject<Refund>("transfers_createrefunds", refund, transferId);
+            return this.CreateObject<RefundDTO, RefundPostDTO>(MethodKey.TransfersCreateRefunds, refund, transferId);
         }
 
         /// <summary>Gets refund for transfer object.</summary>
         /// <param name="transferId">Transfer identifier.</param>
         /// <returns>Refund entity instance returned from API.</returns>
-        public Refund GetRefund(String transferId)
+        public RefundDTO GetRefund(String transferId)
         {
-            return this.GetObject<Refund>("transfers_getrefunds", transferId);
+            return this.GetObject<RefundDTO>(MethodKey.TransfersGetRefunds, transferId);
         }
     }
 }
