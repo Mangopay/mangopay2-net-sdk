@@ -51,8 +51,8 @@ namespace MangoPay.Entities
             public static readonly int Above120 = 6;
         }
 
-        /// <summary>Income range. One of UserNatural.IncomeRanges constants.</summary>
-        public int IncomeRange { get; set; }
+        /// <summary>Income range. One of UserNatural.IncomeRanges constants or null, if not specified.</summary>
+        public int? IncomeRange { get; set; }
 
         /// <summary>Proof of identity.</summary>
         public String ProofOfIdentity { get; set; }
