@@ -29,6 +29,9 @@ namespace MangoPay.Entities
         /// <summary>Active.</summary>
         public bool Active { get; set; }
 
+        /// <summary>User identifier.</summary>
+        public String UserId { get; set; }
+
         /// <summary>The currency accepted in the wallet.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public CurrencyIso Currency { get; set; }
