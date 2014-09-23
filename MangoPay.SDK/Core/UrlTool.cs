@@ -24,7 +24,7 @@ namespace MangoPay.SDK.Core
 
             Uri baseUrl = new Uri(_root.Config.BaseUrl);
 
-            return baseUrl.Host;
+            return baseUrl.Authority;
         }
 
         /// <summary>Gets REST url.</summary>

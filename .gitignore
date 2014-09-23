@@ -2,3 +2,5 @@ MangoPay.Tests/bin/*
 MangoPay.Tests/obj
 MangoPay/bin
 MangoPay/obj
+MangoPay.SDK/obj/
+MangoPay.SDK/bin/
