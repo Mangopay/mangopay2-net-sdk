@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MangoPay.SDK.Core;
+using Newtonsoft.Json;
+using System;
 
 namespace MangoPay.SDK.Entities
 {
@@ -11,7 +13,8 @@ namespace MangoPay.SDK.Entities
         /// <summary>Custom data.</summary>
         public String Tag { get; set; }
 
-        /// <summary>Date of creation (UNIX timestamp).</summary>
-        public long CreationDate { get; set; }
+        /// <summary>Date of creation.</summary>
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime CreationDate { get; set; }
     }
 }

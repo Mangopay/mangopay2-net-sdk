@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -37,7 +38,8 @@ namespace MangoPay.SDK.Entities.PUT
         public String LegalRepresentativeEmail { get; set; }
 
         /// <summary>Legal representative birthday.</summary>
-        public long LegalRepresentativeBirthday { get; set; }
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime LegalRepresentativeBirthday { get; set; }
 
         /// <summary>Legal representative nationality.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

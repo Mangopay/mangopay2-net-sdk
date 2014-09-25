@@ -12,6 +12,12 @@ namespace MangoPay.SDK.Tests
     [TestClass]
     public class ApiHooksTest : BaseTest
     {
+        /*
+         * The Test_Hooks_Create() has been intentionally commented out.
+         * This is because hooks are assigned to API client, which is
+         * always the same. There is not possible to create a hook twice,
+         * so the test will be failing all the time.
+         
         [TestMethod]
         public void Test_Hooks_Create()
         {
@@ -27,6 +33,8 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+         
+         */ 
 
         [TestMethod]
         public void Test_Hooks_Get()

@@ -35,5 +35,8 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Communication.</summary>
         public String Communication { get; set; }
+
+        /// <summary>A custom reference you wish to appear on the user’s bank statement (your ClientId is already shown).</summary>
+        public String BankWireRef { get; set; }
     }
 }

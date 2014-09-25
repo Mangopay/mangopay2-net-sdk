@@ -68,8 +68,12 @@
     <Compile Include="Core\Enumerations\CountryIso.cs" />
     <Compile Include="Core\Enumerations\CurrencyIso.cs" />
     <Compile Include="Core\DefaultStorageStrategy.cs" />
+    <Compile Include="Core\Enumerations\DirectDebitType.cs" />
     <Compile Include="Core\Enumerations\MethodKey.cs" />
+    <Compile Include="Core\Enumerations\SortDirection.cs" />
     <Compile Include="Core\MangoPayJsonSerializer.cs" />
+    <Compile Include="Core\Sort.cs" />
+    <Compile Include="Core\UnixDateTimeConverter.cs" />
     <Compile Include="Entities\EntityPutBase.cs" />
     <Compile Include="Entities\EntityPostBase.cs" />
     <Compile Include="Core\Enumerations\EventType.cs" />
@@ -107,6 +111,7 @@
     <Compile Include="Entities\GET\KycPageDTO.cs" />
     <Compile Include="Entities\GET\PayInBankWireDirectDTO.cs" />
     <Compile Include="Entities\GET\PayInCardDirectDTO.cs" />
+    <Compile Include="Entities\GET\PayInDirectDebitDTO.cs" />
     <Compile Include="Entities\GET\PayInCardWebDTO.cs" />
     <Compile Include="Entities\GET\PayInPreauthorizedDirectDTO.cs" />
     <Compile Include="Entities\GET\PayOutBankWireDTO.cs" />
@@ -151,6 +156,7 @@
     <Compile Include="Entities\POST\PayInBankWireDirectPostDTO.cs" />
     <Compile Include="Entities\POST\PayInCardDirectPostDTO.cs" />
     <Compile Include="Entities\POST\PayInCardWebPostDTO.cs" />
+    <Compile Include="Entities\POST\PayInDirectDebitPostDTO.cs" />
     <Compile Include="Entities\POST\PayInPreauthorizedDirectPostDTO.cs" />
     <Compile Include="Entities\POST\PayOutBankWirePostDTO.cs" />
     <Compile Include="Entities\POST\RefundPostDTO.cs" />

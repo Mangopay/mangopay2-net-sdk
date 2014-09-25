@@ -2,6 +2,7 @@
 using MangoPay.SDK.Entities.GET;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace MangoPay.SDK.Tests
 {
@@ -40,6 +41,24 @@ namespace MangoPay.SDK.Tests
             }
 
             Assert.IsTrue(client == null);
+        }
+
+        [TestMethod]
+        public void Test_Client_GetKycDocuments()
+        {
+            List<KycDocumentDTO> result = null;
+
+            try
+            {
+                result = this.Api.Clients.GetKycDocuments(null);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Count > 0);
         }
     }
 }

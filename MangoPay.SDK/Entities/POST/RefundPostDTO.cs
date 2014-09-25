@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -45,8 +46,9 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>The pre-authorization result message explaining the result code.</summary>
         public String ResultMessage { get; set; }
 
-        /// <summary>Execution date (UNIX timestamp).</summary>
-        public long? ExecutionDate { get; set; }
+        /// <summary>Execution date.</summary>
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime? ExecutionDate { get; set; }
 
         /// <summary>Transaction type.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

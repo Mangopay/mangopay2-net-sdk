@@ -1,4 +1,5 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,14 @@ namespace MangoPay.SDK.Core.APIs
             RestTool restTool = new RestTool(this._root, false);
             restTool.AddRequestHttpHeader(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
             return restTool.Request<ClientDTO, ClientDTO>(urlMethod, requestType, requestData);
+        }
+
+        /// <summary>Gets the list of all the uploaded documents for all users.</summary>
+        /// <param name="pagination">Pagination.</param>
+        /// <returns>Collection of all users' uploaded documents.</returns>
+        public List<KycDocumentDTO> GetKycDocuments(Pagination pagination)
+        {
+            return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination);
         }
     }
 }

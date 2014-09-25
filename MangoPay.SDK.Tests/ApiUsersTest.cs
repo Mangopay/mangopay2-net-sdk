@@ -49,7 +49,7 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                UserLegalPostDTO userPost = new UserLegalPostDTO("email@email.org", "SomeOtherSampleOrg", LegalPersonType.BUSINESS, "RepFName", "RepLName", (long)(new DateTime(1975, 12, 21, 0, 0, 0) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds, CountryIso.FR, CountryIso.FR);
+                UserLegalPostDTO userPost = new UserLegalPostDTO("email@email.org", "SomeOtherSampleOrg", LegalPersonType.BUSINESS, "RepFName", "RepLName", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
 
                 UserLegalDTO userCreated = this.Api.Users.Create(userPost);
 
@@ -569,6 +569,27 @@ namespace MangoPay.SDK.Tests
             {
                 Assert.Fail(ex.Message);
             }
+        }
+
+        [TestMethod]
+        public void Test_Users_GetKycDocuments()
+        {
+            List<KycDocumentDTO> result = null;
+
+            UserNaturalDTO john = this.GetJohn();
+            KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
+
+            try
+            {
+                result = this.Api.Users.GetKycDocuments(john.Id, null);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Count > 0);
         }
     }
 }

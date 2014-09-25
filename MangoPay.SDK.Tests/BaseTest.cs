@@ -54,7 +54,7 @@ namespace MangoPay.SDK.Tests
         {
             if (BaseTest._john == null)
             {
-                UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", (long)(new DateTime(1975, 12, 21, 0, 0, 0) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds, CountryIso.FR, CountryIso.FR);
+                UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
                 user.Occupation = "programmer";
                 user.IncomeRange = 3;
                 user.Address = "Some Address";
@@ -66,7 +66,7 @@ namespace MangoPay.SDK.Tests
 
         protected UserNaturalDTO GetNewJohn()
         {
-            UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", (long)(new DateTime(1975, 12, 21, 0, 0, 0) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds, CountryIso.FR, CountryIso.FR);
+            UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
             user.Occupation = "programmer";
             user.IncomeRange = 3;
             user.Address = "Some Address";
@@ -83,7 +83,7 @@ namespace MangoPay.SDK.Tests
                 user.HeadquartersAddress = "Some Address";
                 user.LegalRepresentativeAddress = john.Address;
                 user.LegalRepresentativeEmail = john.Email;
-                user.LegalRepresentativeBirthday = (long)(new DateTime(1975, 12, 21, 0, 0, 0) - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
+                user.LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0);
                 user.Email = john.Email;
 
                 BaseTest._matrix = this.Api.Users.Create(user);
@@ -198,9 +198,21 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO user = this.GetJohn();
 
                 PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", "fr", "CB_VISA_MASTERCARD");
-                
+
                 BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
             }
+
+            return BaseTest._johnsPayInCardWeb;
+        }
+
+        protected PayInCardWebDTO GetNewPayInCardWeb()
+        {
+            WalletDTO wallet = this.GetJohnsWallet();
+            UserNaturalDTO user = this.GetJohn();
+
+            PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", "fr", "CB_VISA_MASTERCARD");
+
+            BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
 
             return BaseTest._johnsPayInCardWeb;
         }

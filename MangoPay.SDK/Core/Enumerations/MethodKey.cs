@@ -50,6 +50,7 @@ namespace MangoPay.SDK.Core.Enumerations
         UsersGet,
         UsersGetBankAccount,
         UsersGetKycDocument,
+        UsersGetKycDocuments,
         UsersGetLegals,
         UsersGetNaturals,
         UsersSaveKycDocument,
@@ -58,6 +59,8 @@ namespace MangoPay.SDK.Core.Enumerations
         WalletsAllTransactions,
         WalletsCreate,
         WalletsGet,
-        WalletsSave
+        WalletsSave,
+
+        ClientGetKycDocuments
     }
 }

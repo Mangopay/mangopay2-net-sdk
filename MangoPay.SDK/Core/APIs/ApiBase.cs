@@ -72,6 +72,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersGetNaturals, new String[] { "/users/natural/{0}", RequestType.GET } },
             { MethodKey.UsersGetLegals, new String[] { "/users/legal/{0}", RequestType.GET } },
             { MethodKey.UsersGetKycDocument, new String[] { "/users/{0}/KYC/documents/{1}", RequestType.GET } },
+            { MethodKey.UsersGetKycDocuments, new String[] { "/users/{0}/KYC/documents", RequestType.GET } },
             { MethodKey.UsersGetBankAccount, new String[] { "/users/{0}/bankaccounts/{1}", RequestType.GET } },
             { MethodKey.UsersSaveNaturals, new String[] { "/users/natural/{0}", RequestType.PUT } },
             { MethodKey.UsersSaveLegals, new String[] { "/users/legal/{0}", RequestType.PUT } },
@@ -80,7 +81,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.WalletsCreate, new String[] { "/wallets", RequestType.POST } },
             { MethodKey.WalletsAllTransactions, new String[] { "/wallets/{0}/transactions", RequestType.GET } },
             { MethodKey.WalletsGet, new String[] { "/wallets/{0}", RequestType.GET } },
-            { MethodKey.WalletsSave, new String[] { "/wallets/{0}", RequestType.PUT } }
+            { MethodKey.WalletsSave, new String[] { "/wallets/{0}", RequestType.PUT } },
+
+            { MethodKey.ClientGetKycDocuments, new String[] { "/KYC/documents", RequestType.GET } }
         };
 
         /// <summary>Creates new API instance.</summary>
@@ -202,9 +205,10 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <param name="entityId">Entity identifier.</param>
+        /// <param name="sort">Sort.</param>
         /// <param name="additionalUrlParams">Collection of key-value pairs of request parameters.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Dictionary<String, String> additionalUrlParams)
+        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort, Dictionary<String, String> additionalUrlParams)
             where T : EntityBase, new()
         {
             string urlMethod = "";
@@ -219,6 +223,14 @@ namespace MangoPay.SDK.Core.APIs
                 pagination = new Pagination();
             }
 
+            if (sort != null && sort.IsSet)
+            {
+                if (additionalUrlParams == null)
+                    additionalUrlParams = new Dictionary<string, string>();
+
+                additionalUrlParams.Add(Constants.SORT_URL_PARAMETER_NAME, sort.GetFields());
+            }
+
             RestTool restTool = new RestTool(this._root, true);
 
             return restTool.RequestList<T>(urlMethod, this.GetRequestType(methodKey), additionalUrlParams, pagination);
@@ -229,11 +241,24 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <param name="entityId">Entity identifier.</param>
+        /// <param name="sort">Sort.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId)
+        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort = null)
             where T : EntityBase, new()
         {
-            return GetList<T>(methodKey, pagination, entityId, null);
+            return GetList<T>(methodKey, pagination, entityId, sort, null);
+        }
+
+        /// <summary>Gets the collection of Dto instances from API.</summary>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="pagination">Pagination object.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>Collection of Dto instances returned from API.</returns>
+        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination, Sort sort = null)
+            where T : EntityBase, new()
+        {
+            return GetList<T>(methodKey, pagination, "", sort);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
@@ -244,7 +269,7 @@ namespace MangoPay.SDK.Core.APIs
         protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination)
             where T : EntityBase, new()
         {
-            return GetList<T>(methodKey, pagination, "");
+            return GetList<T>(methodKey, pagination, null);
         }
 
         /// <summary>Saves the Dto instance.</summary>

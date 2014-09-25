@@ -21,7 +21,7 @@ namespace MangoPay.SDK.Core.APIs
 			if (filter == null)
 				return this.GetList<EventDTO>(MethodKey.EventsAll, pagination, "");
 
-            return this.GetList<EventDTO>(MethodKey.EventsAll, pagination, "", filter.GetValues());
+            return this.GetList<EventDTO>(MethodKey.EventsAll, pagination, "", null, filter.GetValues());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -23,8 +24,9 @@ namespace MangoPay.SDK.Entities.PUT
         /// <summary>Address.</summary>
         public String Address { get; set; }
 
-        /// <summary>Date of birth (UNIX timestamp).</summary>
-        public long Birthday { get; set; }
+        /// <summary>Date of birth.</summary>
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime Birthday { get; set; }
 
         /// <summary>User's country.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

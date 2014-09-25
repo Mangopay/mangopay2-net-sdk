@@ -19,7 +19,7 @@ namespace MangoPay.SDK.Core
         /// <summary>Resolves to "?" string.</summary>
         public const string URI_QUERY_SEPARATOR = "?";
 
-        /// <summary>Resolves to "&" string.</summary>
+        /// <summary>Resolves to ampersand sign.</summary>
         public const string URI_QUERY_PARAMS_SEPARATOR = "&";
 
         /// <summary>Resolves to "X-Number-Of-Pages" string.</summary>
@@ -75,5 +75,11 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Resolves to "Email" string.</summary>
         public const string EMAIL = "Email";
+
+        /// <summary>Resolves to "_" string.</summary>
+        public const string SORT_FIELD_SEPARATOR = "_";
+
+        /// <summary>Resolves to "Sort" string.</summary>
+        public const string SORT_URL_PARAMETER_NAME = "Sort";
     }
 }

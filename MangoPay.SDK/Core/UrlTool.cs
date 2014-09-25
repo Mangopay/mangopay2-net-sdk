@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Entities;
+﻿using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using System;
 using System.Collections.Generic;
 

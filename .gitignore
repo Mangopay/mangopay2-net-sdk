@@ -4,3 +4,8 @@ MangoPay/bin
 MangoPay/obj
 MangoPay.SDK/obj/
 MangoPay.SDK/bin/
+MangoPay.SDK.Tests/bin/
+MangoPay.SDK.Tests/obj/
+MangoPay.SDK.Tests/MangoPay.SDK.Tests.csproj.user
+MangoPay.SDK/MangoPay.SDK.csproj.user
+mangopay2-net-sdk.v12.suo

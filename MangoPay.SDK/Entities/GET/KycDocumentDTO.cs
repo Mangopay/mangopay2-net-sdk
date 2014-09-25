@@ -21,5 +21,8 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Refused reason message.</summary>
         public String RefusedReasonMessage { get; set; }
+
+        /// <summary>User identifier.</summary>
+        public String UserId { get; set; }
     }
 }

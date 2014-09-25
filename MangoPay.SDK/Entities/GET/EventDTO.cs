@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -15,7 +16,8 @@ namespace MangoPay.SDK.Entities.GET
         [JsonConverter(typeof(StringEnumConverter))]
         public EventType EventType { get; set; }
 
-        /// <summary>Date as UNIX timestamp.</summary>
-        public long Date { get; set; }
+        /// <summary>Date.</summary>
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime Date { get; set; }
     }
 }

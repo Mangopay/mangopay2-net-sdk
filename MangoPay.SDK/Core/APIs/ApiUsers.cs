@@ -221,7 +221,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Collection of user's transactions.</returns>
         public List<TransactionDTO> GetTransactions(String userId, Pagination pagination, FilterTransactions filter)
         {
-            return this.GetList<TransactionDTO>(MethodKey.UsersAllTransactions, pagination, userId, filter.GetValues());
+            return this.GetList<TransactionDTO>(MethodKey.UsersAllTransactions, pagination, userId, null, filter.GetValues());
         }
 
         /// <summary>Gets all cards for user.</summary>
@@ -285,6 +285,15 @@ namespace MangoPay.SDK.Core.APIs
         public KycDocumentDTO UpdateKycDocument(String userId, KycDocumentPutDTO kycDocument, String kycDocumentId)
         {
             return this.UpdateObject<KycDocumentDTO, KycDocumentPutDTO>(MethodKey.UsersSaveKycDocument, kycDocument, userId, kycDocumentId);
+        }
+
+        /// <summary>Gets a list of all the uploaded documents for the particular user.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="pagination">Pagination.</param>
+        /// <returns>Collection of user's uploaded documents.</returns>
+        public List<KycDocumentDTO> GetKycDocuments(String userId, Pagination pagination)
+        {
+            return this.GetList<KycDocumentDTO>(MethodKey.UsersGetKycDocuments, pagination, userId);
         }
     }
 }

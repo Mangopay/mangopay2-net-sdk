@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -51,8 +52,9 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>This is the URL where users are automatically redirected after 3D secure validation (if activated).</summary>
         public String SecureModeReturnURL { get; set; }
 
-        /// <summary>The date when the payment has been processed (UNIX timestamp).</summary>
-        public long ExpirationDate { get; set; }
+        /// <summary>The date when the payment has been processed.</summary>
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime ExpirationDate { get; set; }
 
         /// <summary>Identifier of the associated PayIn.</summary>
         public String PayInId { get; set; }
