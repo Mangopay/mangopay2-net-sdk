@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using Common.Logging.Simple;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
@@ -43,6 +44,7 @@ namespace MangoPay.SDK.Tests
             api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
             api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
             api.Config.DebugMode = true;
+            api.Config.LoggerFactoryAdapter = new ConsoleOutLoggerFactoryAdapter();
 
             // register storage strategy for tests
             api.OAuthTokenManager.RegisterCustomStorageStrategy(new DefaultStorageStrategyForTests());

@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Entities;
+﻿using Common.Logging;
+using MangoPay.SDK.Entities;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -18,13 +19,13 @@ namespace MangoPay.SDK.Core
         private bool _debugMode;
 
         // variable to flag that in request authentication data are required
-        private Boolean _authRequired;
+        private bool _authRequired;
 
         // array with HTTP header to send with request
         private Dictionary<String, String> _requestHttpHeaders;
 
         // request type for current request
-        private String _requestType;
+        private string _requestType;
 
         // key-value collection pass to the request
         private Dictionary<String, String> _requestData;
@@ -35,6 +36,9 @@ namespace MangoPay.SDK.Core
         // pagination object
         private Pagination _pagination;
 
+        // logger object
+        private ILog _log;
+
         /// <summary>Instantiates new RestTool object.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
         /// <param name="authRequired">Defines whether request authentication is required.</param>
@@ -43,6 +47,8 @@ namespace MangoPay.SDK.Core
             this._root = root;
             this._authRequired = authRequired;
             this._debugMode = this._root.Config.DebugMode;
+            LogManager.Adapter = this._root.Config.LoggerFactoryAdapter;
+            this._log = LogManager.GetCurrentClassLogger();
         }
 
         /// <summary>Adds HTTP headers as name/value pairs into the request.</summary>
@@ -255,7 +261,7 @@ namespace MangoPay.SDK.Core
 
             if (this._debugMode)
             {
-                Logs.Debug("FullUrl", urlTool.GetFullUrl(restUrl));
+                _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
             }
 
             Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
@@ -269,7 +275,7 @@ namespace MangoPay.SDK.Core
                 restRequest.AddHeader(h.Key, h.Value);
 
                 if (this._debugMode && h.Key != Constants.AUTHORIZATION)
-                    Logs.Debug("HTTP Header", h.Key + ": " + h.Value);
+                    _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
             }
 
             if (pagination != null)
@@ -278,7 +284,7 @@ namespace MangoPay.SDK.Core
             }
 
             if (this._debugMode)
-                Logs.Debug("RequestType", this._requestType);
+                _log.Debug("RequestType: " + this._requestType);
 
             if (this._requestData != null || entity != null)
             {
@@ -301,16 +307,16 @@ namespace MangoPay.SDK.Core
                     IEnumerable<Parameter> parameters = restRequest.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
                     foreach (Parameter p in parameters)
                     {
-                        Logs.Debug(p.Name, p.Value);
+                        _log.Debug(p.Name + ": " + p.Value);
                     }
 
                     if (body != null)
                     {
-                        Logs.Debug("CurrentBody", body.Value);
+                        _log.Debug("CurrentBody: " + body.Value);
                     }
                     else
                     {
-                        Logs.Debug("CurrentBody", "/body is null/");
+                        _log.Debug("CurrentBody: /body is null/");
                     }
                 }
             }
@@ -324,11 +330,11 @@ namespace MangoPay.SDK.Core
             {
                 if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
                 {
-                    Logs.Debug("Response OK", restResponse.Content);
+                    _log.Debug("Response OK: " + restResponse.Content);
                 }
                 else
                 {
-                    Logs.Debug("Response ERROR", restResponse.Content);
+                    _log.Debug("Response ERROR: " + restResponse.Content);
                 }
             }
 
@@ -336,7 +342,7 @@ namespace MangoPay.SDK.Core
             {
                 this.ReadResponseHeaders(restResponse);
 
-                if (this._debugMode) Logs.Debug("Response object", responseObject.ToString());
+                if (this._debugMode) _log.Debug("Response object: " + responseObject.ToString());
             }
 
             this.CheckResponseCode(restResponse.Content);
@@ -371,7 +377,7 @@ namespace MangoPay.SDK.Core
 
             if (this._debugMode)
             {
-                Logs.Debug("FullUrl", urlTool.GetFullUrl(restUrl));
+                _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
             }
 
             Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
@@ -385,7 +391,7 @@ namespace MangoPay.SDK.Core
                 restRequest.AddHeader(h.Key, h.Value);
 
                 if (this._debugMode && h.Key != Constants.AUTHORIZATION)
-                    Logs.Debug("HTTP Header", h.Key + ": " + h.Value);
+                    _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
             }
 
             if (pagination != null)
@@ -395,7 +401,7 @@ namespace MangoPay.SDK.Core
 
             if (this._debugMode)
             {
-                Logs.Debug("RequestType", this._requestType);
+                _log.Debug("RequestType: " + this._requestType);
             }
 
             IRestResponse<List<T>> restResponse = client.Execute<List<T>>(restRequest);
@@ -407,11 +413,11 @@ namespace MangoPay.SDK.Core
             {
                 if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
                 {
-                    Logs.Debug("Response OK", restResponse.Content);
+                    _log.Debug("Response OK: " + restResponse.Content);
                 }
                 else
                 {
-                    Logs.Debug("Response ERROR", restResponse.Content);
+                    _log.Debug("Response ERROR: " + restResponse.Content);
                 }
             }
 
@@ -419,7 +425,7 @@ namespace MangoPay.SDK.Core
             {
                 this.ReadResponseHeaders(restResponse);
 
-                if (this._debugMode) Logs.Debug("Response object", responseObject.ToString());
+                if (this._debugMode) _log.Debug("Response object: " + responseObject.ToString());
             }
 
             this.CheckResponseCode(restResponse.Content);
@@ -434,7 +440,7 @@ namespace MangoPay.SDK.Core
             foreach (Parameter k in restResponse.Headers)
             {
                 String v = (string)k.Value;
-                if (this._debugMode) Logs.Debug("Response header", k.Name + ":" + v);
+                if (this._debugMode) _log.Debug("Response header: " + k.Name + ":" + v);
 
                 if (k.Name == null) continue;
 
