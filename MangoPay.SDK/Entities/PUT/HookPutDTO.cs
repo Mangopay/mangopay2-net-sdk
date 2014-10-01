@@ -8,6 +8,9 @@ namespace MangoPay.SDK.Entities.PUT
     /// <summary>Hook PUT entity.</summary>
     public class HookPutDTO : EntityPutBase
     {
+        /// <summary>Custom data.</summary>
+        public String Tag { get; set; }
+
         /// <summary>This is the URL where you receive notification.</summary>
         public String Url { get; set; }
 

@@ -16,7 +16,7 @@ namespace MangoPay.SDK.Core
         private MangoPayApi _root;
 
         // enable/disable log debugging
-        private bool _debugMode;
+        //private bool _debugMode;
 
         // variable to flag that in request authentication data are required
         private bool _authRequired;
@@ -46,7 +46,6 @@ namespace MangoPay.SDK.Core
         {
             this._root = root;
             this._authRequired = authRequired;
-            this._debugMode = this._root.Config.DebugMode;
             LogManager.Adapter = this._root.Config.LoggerFactoryAdapter;
             this._log = LogManager.GetCurrentClassLogger();
         }
@@ -259,10 +258,7 @@ namespace MangoPay.SDK.Core
 
             client.AddHandler(Constants.APPLICATION_JSON, new MangoPayJsonDeserializer());
 
-            if (this._debugMode)
-            {
-                _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
-            }
+            _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
 
             Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
             RestRequest restRequest = new RestRequest(method);
@@ -274,7 +270,7 @@ namespace MangoPay.SDK.Core
             {
                 restRequest.AddHeader(h.Key, h.Value);
 
-                if (this._debugMode && h.Key != Constants.AUTHORIZATION)
+                if (h.Key != Constants.AUTHORIZATION)
                     _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
             }
 
@@ -283,8 +279,7 @@ namespace MangoPay.SDK.Core
                 this._pagination = pagination;
             }
 
-            if (this._debugMode)
-                _log.Debug("RequestType: " + this._requestType);
+            _log.Debug("RequestType: " + this._requestType);
 
             if (this._requestData != null || entity != null)
             {
@@ -300,24 +295,20 @@ namespace MangoPay.SDK.Core
                     }
                 }
 
-                if (this._debugMode)
+                Parameter body = restRequest.Parameters.Where(p => p.Type == ParameterType.RequestBody).FirstOrDefault();
+                IEnumerable<Parameter> parameters = restRequest.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
+                foreach (Parameter p in parameters)
                 {
-                    Parameter body = restRequest.Parameters.Where(p => p.Type == ParameterType.RequestBody).FirstOrDefault();
+                    _log.Debug(p.Name + ": " + p.Value);
+                }
 
-                    IEnumerable<Parameter> parameters = restRequest.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
-                    foreach (Parameter p in parameters)
-                    {
-                        _log.Debug(p.Name + ": " + p.Value);
-                    }
-
-                    if (body != null)
-                    {
-                        _log.Debug("CurrentBody: " + body.Value);
-                    }
-                    else
-                    {
-                        _log.Debug("CurrentBody: /body is null/");
-                    }
+                if (body != null)
+                {
+                    _log.Debug("CurrentBody: " + body.Value);
+                }
+                else
+                {
+                    _log.Debug("CurrentBody: /body is null/");
                 }
             }
 
@@ -326,23 +317,20 @@ namespace MangoPay.SDK.Core
 
             this._responseCode = (int)restResponse.StatusCode;
 
-            if (this._debugMode)
+            if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
             {
-                if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
-                {
-                    _log.Debug("Response OK: " + restResponse.Content);
-                }
-                else
-                {
-                    _log.Debug("Response ERROR: " + restResponse.Content);
-                }
+                _log.Debug("Response OK: " + restResponse.Content);
+            }
+            else
+            {
+                _log.Debug("Response ERROR: " + restResponse.Content);
             }
 
             if (this._responseCode == 200)
             {
                 this.ReadResponseHeaders(restResponse);
 
-                if (this._debugMode) _log.Debug("Response object: " + responseObject.ToString());
+                _log.Debug("Response object: " + responseObject.ToString());
             }
 
             this.CheckResponseCode(restResponse.Content);
@@ -375,10 +363,7 @@ namespace MangoPay.SDK.Core
 
             client.AddHandler(Constants.APPLICATION_JSON, new MangoPayJsonDeserializer());
 
-            if (this._debugMode)
-            {
-                _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
-            }
+            _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
 
             Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
             RestRequest restRequest = new RestRequest(method);
@@ -390,7 +375,7 @@ namespace MangoPay.SDK.Core
             {
                 restRequest.AddHeader(h.Key, h.Value);
 
-                if (this._debugMode && h.Key != Constants.AUTHORIZATION)
+                if (h.Key != Constants.AUTHORIZATION)
                     _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
             }
 
@@ -399,33 +384,27 @@ namespace MangoPay.SDK.Core
                 this._pagination = pagination;
             }
 
-            if (this._debugMode)
-            {
-                _log.Debug("RequestType: " + this._requestType);
-            }
+            _log.Debug("RequestType: " + this._requestType);
 
             IRestResponse<List<T>> restResponse = client.Execute<List<T>>(restRequest);
             responseObject = restResponse.Data;
 
             this._responseCode = (int)restResponse.StatusCode;
 
-            if (this._debugMode)
+            if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
             {
-                if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
-                {
-                    _log.Debug("Response OK: " + restResponse.Content);
-                }
-                else
-                {
-                    _log.Debug("Response ERROR: " + restResponse.Content);
-                }
+                _log.Debug("Response OK: " + restResponse.Content);
+            }
+            else
+            {
+                _log.Debug("Response ERROR: " + restResponse.Content);
             }
 
             if (this._responseCode == 200)
             {
                 this.ReadResponseHeaders(restResponse);
 
-                if (this._debugMode) _log.Debug("Response object: " + responseObject.ToString());
+                _log.Debug("Response object: " + responseObject.ToString());
             }
 
             this.CheckResponseCode(restResponse.Content);
@@ -440,7 +419,7 @@ namespace MangoPay.SDK.Core
             foreach (Parameter k in restResponse.Headers)
             {
                 String v = (string)k.Value;
-                if (this._debugMode) _log.Debug("Response header: " + k.Name + ":" + v);
+                _log.Debug("Response header: " + k.Name + ":" + v);
 
                 if (k.Name == null) continue;
 

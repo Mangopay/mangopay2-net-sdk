@@ -40,15 +40,6 @@ namespace MangoPay.SDK.Core
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(signature));
         }
 
-        // gets HTTP header value with authorization string for basic authentication
-        private Dictionary<String, String> GetHttpHeaderBasic()
-        {
-            return new Dictionary<String, String> 
-            {
-                { Constants.AUTHORIZATION, String.Format("{0} {1}", Constants.BASIC, GetHttpHeaderBasicKey()) }
-            };
-        }
-
         // gets HTTP header value with authorization string for strong authentication
         private Dictionary<String, String> GetHttpHeaderStrong()
         {

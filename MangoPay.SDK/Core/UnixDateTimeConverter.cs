@@ -9,14 +9,14 @@ namespace MangoPay.SDK.Core
     /// </summary>
     public class UnixDateTimeConverter : DateTimeConverterBase
     {
-        private long? ConvertToUnixFormat(DateTime? dateTime)
+        internal long? ConvertToUnixFormat(DateTime? dateTime)
         {
             if (dateTime == null) return null;
 
             return (long?)(dateTime.Value - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
         }
 
-        private DateTime? ConvertFromUnixFormat(long? unixTime)
+        internal DateTime? ConvertFromUnixFormat(long? unixTime)
         {
             if (unixTime == null) return null;
 

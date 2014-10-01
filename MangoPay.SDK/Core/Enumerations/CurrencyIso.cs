@@ -4,6 +4,8 @@ namespace MangoPay.SDK.Core.Enumerations
     /// <summary>Currency ISO 4217 symbols enumeration.</summary>
     public enum CurrencyIso
     {
+        /// <summary>No currency</summary>
+        XXX,
         /// <summary>United Arab Emirates dirham</summary>
         AED,
         /// <summary>Afghan afghani</summary>
@@ -356,8 +358,6 @@ namespace MangoPay.SDK.Core.Enumerations
         XTS,
         /// <summary>ADB Unit of Account</summary>
         XUA,
-        /// <summary>No currency</summary>
-        XXX,
         /// <summary>Yemeni rial</summary>
         YER,
         /// <summary>South African rand</summary>

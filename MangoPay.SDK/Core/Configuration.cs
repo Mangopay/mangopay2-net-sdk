@@ -6,6 +6,8 @@ namespace MangoPay.SDK.Core
     /// <summary>Configuration settings.</summary>
     public class Configuration
     {
+        private ILoggerFactoryAdapter _loggerFactoryAdapter;
+
         /// <summary>Client identifier.</summary>
         public string ClientId = "";
 
@@ -14,11 +16,6 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Base URL to MangoPay API.</summary>
         public string BaseUrl = "https://api.sandbox.mangopay.com";
-
-        /// <summary>Switch debug mode: log all request and response data.</summary>
-        public bool DebugMode = false;
-
-        private ILoggerFactoryAdapter _loggerFactoryAdapter;
 
         /// <summary>Logger adapter implementation (default: NoOpLoggerFactoryAdapter).</summary>
         public ILoggerFactoryAdapter LoggerFactoryAdapter

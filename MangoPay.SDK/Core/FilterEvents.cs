@@ -1,4 +1,5 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -10,11 +11,11 @@ namespace MangoPay.SDK.Core
         /// <summary>Type of events.</summary>
         public EventType Type;
 
-        /// <summary>Start date in Unix format.</summary>
-        public Int64? BeforeDate;
+        /// <summary>End date.</summary>
+        public DateTime? BeforeDate;
 
-        /// <summary>End date in Unix format.</summary>
-        public Int64? AfterDate;
+        /// <summary>Start date.</summary>
+        public DateTime? AfterDate;
 
         /// <summary>Gets map of fields and values.</summary>
         /// <returns>Collection of field name-field value pairs.</returns>
@@ -25,8 +26,10 @@ namespace MangoPay.SDK.Core
 			if (Type != EventType.All)
 				result.Add(Constants.EVENTTYPE, Type.ToString());
 
-            if (BeforeDate != null) result.Add(Constants.BEFOREDATE, BeforeDate.ToString());
-            if (AfterDate != null) result.Add(Constants.AFTERDATE, AfterDate.ToString());
+            UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
+
+            if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
+            if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());
 
             return result;
         }
