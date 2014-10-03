@@ -4,6 +4,8 @@ namespace MangoPay.SDK.Core.Enumerations
     /// <summary>ISO 3166-1 alpha-2 country codes enumeration.</summary>
     public enum CountryIso
     {
+        /// <summary>Not specified.</summary>
+        NotSpecified,
         /// <summary>Andorra</summary> 
         AD,
         /// <summary>United Arab Emirates</summary> 

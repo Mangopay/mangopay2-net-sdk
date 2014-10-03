@@ -19,7 +19,7 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Initial transaction type.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public InitialTransactionType InitialTransactionType { get; set; }
+        public InitialTransactionType? InitialTransactionType { get; set; }
 
         /// <summary>Author identifier.</summary>
         public String AuthorId { get; set; }
@@ -38,7 +38,7 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Transaction status.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public TransactionStatus Status { get; set; }
+        public TransactionStatus? Status { get; set; }
 
         /// <summary>Result code.</summary>
         public String ResultCode { get; set; }
@@ -52,11 +52,11 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Transaction type.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public TransactionType Type { get; set; }
+        public TransactionType? Type { get; set; }
 
         /// <summary>Transaction nature.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public TransactionNature Nature { get; set; }
+        public TransactionNature? Nature { get; set; }
 
         /// <summary>Credited wallet identifier.</summary>
         public String CreditedWalletId { get; set; }

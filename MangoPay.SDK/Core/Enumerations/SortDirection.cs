@@ -5,12 +5,12 @@ namespace MangoPay.SDK.Core.Enumerations
     public enum SortDirection
     {
         /// <summary>No sorting.</summary>
-        none,
+        NotSpecified,
 
-        /// <summary>Sort ascending.</summary>
+        /// <summary>ASCENDING sort direction.</summary>
         asc,
 
-        /// <summary>Sort descending.</summary>
+        /// <summary>DESCENDING sort direction.</summary>
         desc
     }
 }

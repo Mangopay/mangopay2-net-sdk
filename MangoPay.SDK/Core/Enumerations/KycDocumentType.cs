@@ -4,6 +4,9 @@ namespace MangoPay.SDK.Core.Enumerations
     /// <summary>KYC document type enumeration.</summary>
     public enum KycDocumentType
     {
+        /// <summary>Not specified.</summary>
+        NotSpecified,
+
         /// <summary>Only for natural users. ID of the individual duly empowered to act on behalf of the legal entity.</summary>
         IDENTITY_PROOF,
 

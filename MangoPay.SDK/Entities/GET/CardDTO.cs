@@ -15,7 +15,8 @@ namespace MangoPay.SDK.Entities.GET
         public String Alias { get; set; }
 
         /// <summary>Card type.</summary>
-        public String CardType { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CardType CardType { get; set; }
 
         /// <summary>The card provider, it could be CB, VISA, MASTERCARD, etc.</summary>
         public String CardProvider { get; set; }

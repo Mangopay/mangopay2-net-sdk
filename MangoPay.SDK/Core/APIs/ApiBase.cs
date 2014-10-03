@@ -132,9 +132,9 @@ namespace MangoPay.SDK.Core.APIs
         {
             String urlMethod;
 
-            if (entityId.Length == 0)
+            if (String.IsNullOrEmpty(entityId))
                 urlMethod = this.GetRequestUrl(methodKey);
-            else if (secondEntityId.Length == 0)
+            else if (String.IsNullOrEmpty(secondEntityId))
                 urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId);
             else
                 urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
@@ -213,7 +213,7 @@ namespace MangoPay.SDK.Core.APIs
         {
             string urlMethod = "";
 
-            if (entityId.Length > 0)
+            if (!String.IsNullOrEmpty(entityId))
                 urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId);
             else
                 urlMethod = this.GetRequestUrl(methodKey);
@@ -313,7 +313,7 @@ namespace MangoPay.SDK.Core.APIs
         {
             String urlMethod;
 
-            if (secondEntityId.Length == 0)
+            if (String.IsNullOrEmpty(secondEntityId))
                 urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId);
             else
             {

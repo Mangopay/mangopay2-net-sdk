@@ -154,10 +154,10 @@ namespace MangoPay.SDK.Tests
                     new Money { Amount = amount, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, 
                     BaseTest._johnsWalletWithMoney.Id, "http://test.com", card.Id);
 
-                if (card.CardType == "CB" || card.CardType == "VISA" || card.CardType == "MASTERCARD" || card.CardType == "CB_VISA_MASTERCARD")
-                    payIn.CardType = "CB_VISA_MASTERCARD";
-                else if (card.CardType == "AMEX")
-                    payIn.CardType = "AMEX";
+                if (card.CardType == CardType.CB || card.CardType == CardType.VISA || card.CardType == CardType.MASTERCARD || card.CardType == CardType.CB_VISA_MASTERCARD)
+                    payIn.CardType = CardType.CB_VISA_MASTERCARD;
+                else if (card.CardType == CardType.AMEX)
+                    payIn.CardType = CardType.AMEX;
 
                 // create Pay-In
                 this.Api.PayIns.CreateCardDirect(payIn);
@@ -198,7 +198,7 @@ namespace MangoPay.SDK.Tests
                 WalletDTO wallet = this.GetJohnsWallet();
                 UserNaturalDTO user = this.GetJohn();
 
-                PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", "fr", "CB_VISA_MASTERCARD");
+                PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CountryIso.FR, CardType.CB_VISA_MASTERCARD);
 
                 BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
             }
@@ -211,7 +211,7 @@ namespace MangoPay.SDK.Tests
             WalletDTO wallet = this.GetJohnsWallet();
             UserNaturalDTO user = this.GetJohn();
 
-            PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", "fr", "CB_VISA_MASTERCARD");
+            PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CountryIso.FR, CardType.CB_VISA_MASTERCARD);
 
             BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
 
@@ -252,10 +252,10 @@ namespace MangoPay.SDK.Tests
                     wallet.Id, "http://test.com", card.Id);
             
             // payment type as CARD
-            if (card.CardType == "CB" || card.CardType == "VISA" || card.CardType == "MASTERCARD" || card.CardType == "CB_VISA_MASTERCARD")
-                payIn.CardType = "CB_VISA_MASTERCARD";
-            else if (card.CardType == "AMEX")
-                payIn.CardType = "AMEX";
+            if (card.CardType == CardType.CB || card.CardType == CardType.VISA || card.CardType == CardType.MASTERCARD || card.CardType == CardType.CB_VISA_MASTERCARD)
+                payIn.CardType = CardType.CB_VISA_MASTERCARD;
+            else if (card.CardType == CardType.AMEX)
+                payIn.CardType = CardType.AMEX;
 
             return this.Api.PayIns.CreateCardDirect(payIn);
         }
@@ -331,6 +331,9 @@ namespace MangoPay.SDK.Tests
             refund.Fees.Amount = transfer.Fees.Amount;
             refund.Fees.Currency = transfer.Fees.Currency;
             refund.InitialTransactionType = InitialTransactionType.TRANSFER;
+            refund.Nature = TransactionNature.REFUND;
+            refund.Status = TransactionStatus.CREATED;
+            refund.Type = TransactionType.TRANSFER;
 
             return this.Api.Transfers.CreateRefund(transfer.Id, refund);
         }
@@ -350,6 +353,10 @@ namespace MangoPay.SDK.Tests
             refund.Fees = new Money();
             refund.Fees.Amount = payIn.Fees.Amount;
             refund.Fees.Currency = payIn.Fees.Currency;
+            refund.InitialTransactionType = InitialTransactionType.PAYIN;
+            refund.Nature = TransactionNature.REFUND;
+            refund.Status = TransactionStatus.CREATED;
+            refund.Type = TransactionType.PAYIN;
 
             return this.Api.PayIns.CreateRefund(payIn.Id, refund);
         }
@@ -398,6 +405,12 @@ namespace MangoPay.SDK.Tests
             }
 
             return BaseTest._johnsKycDocument;
+        }
+
+        protected KycDocumentDTO GetNewKycDocument()
+        {
+            BaseTest._johnsKycDocument = null;
+            return GetJohnsKycDocument();
         }
 
         /// <summary>Gets registration data from Payline service.</summary>

@@ -518,7 +518,7 @@ namespace MangoPay.SDK.Tests
             try
             {
                 UserNaturalDTO john = this.GetJohn();
-                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
+                KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, Encoding.UTF8.GetBytes("Test KYC page"));
 

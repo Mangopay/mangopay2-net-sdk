@@ -36,7 +36,7 @@ namespace MangoPay.SDK.Core
 
         public void AddField(string fieldName, SortDirection sortDirection)
         {
-            if (sortDirection != SortDirection.none)
+            if (sortDirection != SortDirection.NotSpecified)
                 sortFields.Add(fieldName, sortDirection);
         }
     }

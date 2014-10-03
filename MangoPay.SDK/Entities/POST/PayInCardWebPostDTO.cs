@@ -1,4 +1,7 @@
 ﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 
 namespace MangoPay.SDK.Entities.POST
@@ -6,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn card web POST entity.</summary>
     public class PayInCardWebPostDTO : EntityPostBase
     {
-        public PayInCardWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, string culture, string cardType)
+        public PayInCardWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CountryIso culture, CardType cardType)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
@@ -36,13 +39,16 @@ namespace MangoPay.SDK.Entities.POST
         public String TemplateURLOptions { get; set; }
 
         /// <summary>Culture.</summary>
-        public String Culture { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CountryIso Culture { get; set; }
 
         /// <summary>Card type { CB_VISA_MASTERCARD, AMEX }.</summary>
-        public String CardType { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CardType CardType { get; set; }
 
         /// <summary>Mode3DSType { DEFAULT, FORCE }.</summary>
-        public String SecureMode { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SecureMode? SecureMode { get; set; }
 
         /// <summary>Credited user identifier.</summary>
         public String CreditedUserId { get; set; }

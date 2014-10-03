@@ -18,7 +18,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsTrue(transfer.Id.Length > 0);
             Assert.AreEqual(transfer.AuthorId, john.Id);
             Assert.AreEqual(transfer.CreditedUserId, john.Id);
-            Assert.IsTrue(creditedWallet.Balance.Amount == 100.0);
+            Assert.IsTrue(creditedWallet.Balance.Amount == 100);
         }
 
         [TestMethod]

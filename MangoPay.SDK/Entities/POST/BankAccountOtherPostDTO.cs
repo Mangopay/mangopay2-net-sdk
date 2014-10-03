@@ -20,7 +20,7 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>The Country associate to the BankAccount. 
         /// ISO 3166-1 alpha-2 format is expected.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public CountryIso Country { get; set; }
+        public CountryIso? Country { get; set; }
 
         /// <summary>Valid BIC format.</summary>
         public String BIC { get; set; }

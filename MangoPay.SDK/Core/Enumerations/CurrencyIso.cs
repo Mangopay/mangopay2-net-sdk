@@ -4,6 +4,8 @@ namespace MangoPay.SDK.Core.Enumerations
     /// <summary>Currency ISO 4217 symbols enumeration.</summary>
     public enum CurrencyIso
     {
+        /// <summary>Not specified.</summary>
+        NotSpecified,
         /// <summary>No currency</summary>
         XXX,
         /// <summary>United Arab Emirates dirham</summary>

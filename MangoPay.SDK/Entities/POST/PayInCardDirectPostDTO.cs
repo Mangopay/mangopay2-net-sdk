@@ -1,4 +1,7 @@
 ﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 
 namespace MangoPay.SDK.Entities.POST
@@ -39,9 +42,11 @@ namespace MangoPay.SDK.Entities.POST
         public String CardId { get; set; }
 
         /// <summary>SecureMode { DEFAULT, FORCE }.</summary>
-        public String SecureMode { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SecureMode? SecureMode { get; set; }
 
         /// <summary>Card type { CB_VISA_MASTERCARD, AMEX }.</summary>
-        public String CardType { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CardType? CardType { get; set; }
     }
 }
