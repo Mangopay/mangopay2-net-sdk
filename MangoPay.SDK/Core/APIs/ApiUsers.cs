@@ -43,14 +43,14 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets users.</summary>
         /// <param name="pagination">Pagination.</param>
         /// <returns>Collection of User instances.</returns>
-        public List<UserDTO> GetAll(Pagination pagination)
+        public ListPaginated<UserDTO> GetAll(Pagination pagination)
         {
             return this.GetList<UserDTO>(MethodKey.UsersAll, pagination);
         }
 
         /// <summary>Gets first page of users.</summary>
         /// <returns>Collection of User instances.</returns>
-        public List<UserDTO> GetAll()
+        public ListPaginated<UserDTO> GetAll()
         {
             return GetAll(null);
         }
@@ -93,7 +93,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="userId">User identifier to get wallets of.</param>
 		/// <param name="pagination">Pagination.</param>
 		/// <returns>Collection of user's wallets.</returns>
-		public List<WalletDTO> GetWallets(String userId, Pagination pagination)
+        public ListPaginated<WalletDTO> GetWallets(String userId, Pagination pagination)
 		{
 			return this.GetList<WalletDTO>(MethodKey.UsersAllWallets, pagination, userId);
 		}
@@ -147,7 +147,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="userId">User identifier to get bank accounts of.</param>
         /// <param name="pagination">Pagination.</param>
         /// <returns>Collection of user's bank accounts.</returns>
-        public List<BankAccountDTO> GetBankAccounts(String userId, Pagination pagination)
+        public ListPaginated<BankAccountDTO> GetBankAccounts(String userId, Pagination pagination)
         {
             return this.GetList<BankAccountDTO>(MethodKey.UsersAllBankAccount, pagination, userId);
         }
@@ -155,7 +155,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets first page of all bank accounts of user.</summary>
         /// <param name="userId">User identifier to get bank accounts of.</param>
         /// <returns>Collection of user's bank accounts.</returns>
-        public List<BankAccountDTO> GetBankAccounts(String userId)
+        public ListPaginated<BankAccountDTO> GetBankAccounts(String userId)
         {
             return GetBankAccounts(userId, null);
         }
@@ -219,7 +219,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="pagination">Pagination.</param>
         /// <param name="filter">Filter.</param>
         /// <returns>Collection of user's transactions.</returns>
-        public List<TransactionDTO> GetTransactions(String userId, Pagination pagination, FilterTransactions filter)
+        public ListPaginated<TransactionDTO> GetTransactions(String userId, Pagination pagination, FilterTransactions filter)
         {
             return this.GetList<TransactionDTO>(MethodKey.UsersAllTransactions, pagination, userId, null, filter.GetValues());
         }
@@ -228,7 +228,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="userId">User identifier.</param>
         /// <param name="pagination">Pagination.</param>
         /// <returns>Collection of user's cards.</returns>
-        public List<CardDTO> GetCards(String userId, Pagination pagination)
+        public ListPaginated<CardDTO> GetCards(String userId, Pagination pagination)
         {
             return this.GetList<CardDTO>(MethodKey.UsersAllCards, pagination, userId);
         }
@@ -291,7 +291,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="userId">User identifier.</param>
         /// <param name="pagination">Pagination.</param>
         /// <returns>Collection of user's uploaded documents.</returns>
-        public List<KycDocumentDTO> GetKycDocuments(String userId, Pagination pagination)
+        public ListPaginated<KycDocumentDTO> GetKycDocuments(String userId, Pagination pagination)
         {
             return this.GetList<KycDocumentDTO>(MethodKey.UsersGetKycDocuments, pagination, userId);
         }

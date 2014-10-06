@@ -179,13 +179,13 @@ namespace MangoPay.SDK.Core
         /// <param name="pagination">Pagination object.</param>
         /// <param name="additionalUrlParams"></param>
         /// <returns>Collection of DTO instances returned from API.</returns>
-        public List<T> RequestList<T>(String urlMethod, String requestType, Dictionary<String, String> requestData, Pagination pagination, Dictionary<String, String> additionalUrlParams)
+        public ListPaginated<T> RequestList<T>(String urlMethod, String requestType, Dictionary<String, String> requestData, Pagination pagination, Dictionary<String, String> additionalUrlParams)
             where T : new()
         {
             this._requestType = requestType;
             this._requestData = requestData;
 
-            List<T> responseResult = this.DoRequestList<T>(urlMethod, pagination, additionalUrlParams);
+            ListPaginated<T> responseResult = this.DoRequestList<T>(urlMethod, pagination, additionalUrlParams);
 
             return responseResult;
         }
@@ -199,7 +199,7 @@ namespace MangoPay.SDK.Core
         /// <param name="urlMethod">Relevant method key.</param>
         /// <param name="requestType">HTTP request term. For lists should be always GET.</param>
         /// <returns>Collection of DTO instances returned from API.</returns>
-        public List<T> RequestList<T>(String urlMethod, String requestType)
+        public ListPaginated<T> RequestList<T>(String urlMethod, String requestType)
             where T : new()
         {
             return RequestList<T>(urlMethod, requestType, null, null, null);
@@ -215,7 +215,7 @@ namespace MangoPay.SDK.Core
         /// <param name="requestType">HTTP request term. For lists should be always GET.</param>
         /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
         /// <returns>Collection of DTO instances returned from API.</returns>
-        public List<T> RequestList<T>(String urlMethod, String requestType, Dictionary<String, String> requestData)
+        public ListPaginated<T> RequestList<T>(String urlMethod, String requestType, Dictionary<String, String> requestData)
             where T : new()
         {
             return RequestList<T>(urlMethod, requestType, requestData, null, null);
@@ -232,7 +232,7 @@ namespace MangoPay.SDK.Core
         /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <returns>Collection of DTO instances returned from API.</returns>
-        public List<T> RequestList<T>(String urlMethod, String requestType, Dictionary<String, String> requestData, Pagination pagination)
+        public ListPaginated<T> RequestList<T>(String urlMethod, String requestType, Dictionary<String, String> requestData, Pagination pagination)
             where T : new()
         {
             return RequestList<T>(urlMethod, requestType, requestData, pagination, null);
@@ -328,8 +328,6 @@ namespace MangoPay.SDK.Core
 
             if (this._responseCode == 200)
             {
-                this.ReadResponseHeaders(restResponse);
-
                 _log.Debug("Response object: " + responseObject.ToString());
             }
 
@@ -338,9 +336,9 @@ namespace MangoPay.SDK.Core
             return responseObject;
         }
 
-        private List<T> DoRequestList<T>(string urlMethod, Pagination pagination, Dictionary<String, String> additionalUrlParams)
+        private ListPaginated<T> DoRequestList<T>(string urlMethod, Pagination pagination, Dictionary<String, String> additionalUrlParams)
         {
-            List<T> responseObject = null;
+            ListPaginated<T> responseObject = null;
 
             UrlTool urlTool = new UrlTool(_root);
             string restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired, pagination, null);
@@ -387,7 +385,7 @@ namespace MangoPay.SDK.Core
             _log.Debug("RequestType: " + this._requestType);
 
             IRestResponse<List<T>> restResponse = client.Execute<List<T>>(restRequest);
-            responseObject = restResponse.Data;
+            responseObject = new ListPaginated<T>(restResponse.Data);
 
             this._responseCode = (int)restResponse.StatusCode;
 
@@ -402,7 +400,7 @@ namespace MangoPay.SDK.Core
 
             if (this._responseCode == 200)
             {
-                this.ReadResponseHeaders(restResponse);
+                responseObject = this.ReadResponseHeaders<T>(restResponse, responseObject);
 
                 _log.Debug("Response object: " + responseObject.ToString());
             }
@@ -414,7 +412,7 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Reads and parses response headers (pagination etc.)</summary>
         /// <param name="conn">Response object.</param>
-        private void ReadResponseHeaders(IRestResponse restResponse)
+        private ListPaginated<T> ReadResponseHeaders<T>(IRestResponse restResponse, ListPaginated<T> listPaginated = null)
         {
             foreach (Parameter k in restResponse.Headers)
             {
@@ -425,11 +423,11 @@ namespace MangoPay.SDK.Core
 
                 if (k.Name.Equals(Constants.X_NUMBER_OF_PAGES))
                 {
-                    this._pagination.TotalPages = Int32.Parse(v);
+                    listPaginated.TotalPages = Int32.Parse(v);
                 }
                 if (k.Name.Equals(Constants.X_NUMBER_OF_ITEMS))
                 {
-                    this._pagination.TotalItems = Int32.Parse(v);
+                    listPaginated.TotalItems = Int32.Parse(v);
                 }
                 if (k.Name.Equals(Constants.LINK))
                 {
@@ -452,13 +450,18 @@ namespace MangoPay.SDK.Core
                             {
                                 if (oneLink[0] != null && oneLink[1] != null)
                                 {
-                                    this._pagination.Links = oneLink;
+                                    if (oneLink[1] == Constants.LINKS_FIRST_ITEM) listPaginated.Links[0] = oneLink[0];
+                                    if (oneLink[1] == Constants.LINKS_PREVIOUS_ITEM) listPaginated.Links[1] = oneLink[0];
+                                    if (oneLink[1] == Constants.LINKS_NEXT_ITEM) listPaginated.Links[2] = oneLink[0];
+                                    if (oneLink[1] == Constants.LINKS_LAST_ITEM) listPaginated.Links[3] = oneLink[0];
                                 }
                             }
                         }
                     }
                 }
             }
+
+            return listPaginated;
         }
 
         /// <summary>Gets HTTP header to use in request.</summary>

@@ -159,7 +159,7 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                List<UserDTO> users = this.Api.Users.GetAll();
+                ListPaginated<UserDTO> users = this.Api.Users.GetAll();
 
                 Assert.IsNotNull(users);
                 Assert.IsTrue(users.Count > 0);
@@ -427,14 +427,17 @@ namespace MangoPay.SDK.Tests
                 BankAccountIbanDTO account = this.GetJohnsAccount();
                 Pagination pagination = new Pagination(1, 12);
 
-                List<BankAccountDTO> list = this.Api.Users.GetBankAccounts(john.Id, pagination);
+                ListPaginated<BankAccountDTO> list = this.Api.Users.GetBankAccounts(john.Id, pagination);
 
-                int listIndex = list.FindIndex(b => b.Id == account.Id);
+                int listIndex;
+                for (listIndex = 0; listIndex < list.Count; listIndex++)
+                {
+                    if (list[listIndex].Id == account.Id) break;
+                }
 
                 Assert.IsTrue(list[listIndex] is BankAccountDTO);
 
                 BankAccountIbanDTO castedBankAccount = this.Api.Users.GetBankAccountIban(john.Id, list[listIndex].Id);
-
 
                 Assert.IsTrue(account.Id == castedBankAccount.Id);
                 AssertEqualInputProps(account, castedBankAccount);
@@ -540,10 +543,10 @@ namespace MangoPay.SDK.Tests
                 PayInCardDirectDTO payIn = this.GetNewPayInCardDirect();
                 Pagination pagination = new Pagination(1, 1);
                 CardDTO card = this.Api.Cards.Get(payIn.CardId);
-                List<CardDTO> cards = this.Api.Users.GetCards(john.Id, pagination);
+                ListPaginated<CardDTO> cards = this.Api.Users.GetCards(john.Id, pagination);
 
                 Assert.IsTrue(cards.Count == 1);
-                Assert.IsTrue(cards[0].CardType != null);
+                Assert.IsTrue(cards[0].CardType != CardType.NotSpecified);
                 AssertEqualInputProps(cards[0], card);
             }
             catch (Exception ex)
@@ -561,7 +564,7 @@ namespace MangoPay.SDK.Tests
                 TransferDTO transfer = this.GetNewTransfer();
                 Pagination pagination = new Pagination(1, 1);
 
-                List<TransactionDTO> transactions = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions());
+                ListPaginated<TransactionDTO> transactions = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions());
 
                 Assert.IsTrue(transactions.Count > 0);
             }
@@ -574,7 +577,7 @@ namespace MangoPay.SDK.Tests
         [TestMethod]
         public void Test_Users_GetKycDocuments()
         {
-            List<KycDocumentDTO> result = null;
+            ListPaginated<KycDocumentDTO> result = null;
 
             UserNaturalDTO john = this.GetJohn();
             KycDocumentDTO kycDocument = this.GetJohnsKycDocument();

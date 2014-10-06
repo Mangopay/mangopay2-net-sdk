@@ -208,7 +208,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="sort">Sort.</param>
         /// <param name="additionalUrlParams">Collection of key-value pairs of request parameters.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort, Dictionary<String, String> additionalUrlParams)
+        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort, Dictionary<String, String> additionalUrlParams)
             where T : EntityBase, new()
         {
             string urlMethod = "";
@@ -243,7 +243,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="entityId">Entity identifier.</param>
         /// <param name="sort">Sort.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort = null)
+        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort = null)
             where T : EntityBase, new()
         {
             return GetList<T>(methodKey, pagination, entityId, sort, null);
@@ -255,7 +255,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="pagination">Pagination object.</param>
         /// <param name="sort">Sort.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination, Sort sort = null)
+        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, Sort sort = null)
             where T : EntityBase, new()
         {
             return GetList<T>(methodKey, pagination, "", sort);
@@ -266,7 +266,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected List<T> GetList<T>(MethodKey methodKey, Pagination pagination)
+        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination)
             where T : EntityBase, new()
         {
             return GetList<T>(methodKey, pagination, null);

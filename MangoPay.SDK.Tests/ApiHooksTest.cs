@@ -1,11 +1,8 @@
-﻿using MangoPay.SDK.Core.Enumerations;
-using MangoPay.SDK.Entities;
+﻿using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
-using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace MangoPay.SDK.Tests
 {
@@ -81,7 +78,7 @@ namespace MangoPay.SDK.Tests
                 HookDTO hook = this.GetJohnsHook();
                 Pagination pagination = new Pagination(1, 1);
 
-                List<HookDTO> list = this.Api.Hooks.GetAll(pagination);
+                ListPaginated<HookDTO> list = this.Api.Hooks.GetAll(pagination);
 
                 Assert.IsNotNull(list[0]);
                 Assert.IsTrue(list[0] is HookDTO);

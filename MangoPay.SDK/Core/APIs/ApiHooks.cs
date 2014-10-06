@@ -43,14 +43,14 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets all hooks.</summary>
         /// <param name="pagination">Pagination.</param>
         /// <returns>List of Hook instances returned from API.</returns>
-        public List<HookDTO> GetAll(Pagination pagination)
+        public ListPaginated<HookDTO> GetAll(Pagination pagination)
         {
             return this.GetList<HookDTO>(MethodKey.HooksAll, pagination);
         }
 
         /// <summary>Gets all hooks.</summary>
         /// <returns>List of Hook instances returned from API.</returns>
-        public List<HookDTO> GetAll()
+        public ListPaginated<HookDTO> GetAll()
         {
             return this.GetAll(null);
         }

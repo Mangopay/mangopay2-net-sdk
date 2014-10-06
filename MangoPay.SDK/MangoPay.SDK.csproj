@@ -121,6 +121,7 @@
     <Compile Include="Entities\GET\PayInCardWebDTO.cs" />
     <Compile Include="Entities\GET\PayInPreauthorizedDirectDTO.cs" />
     <Compile Include="Entities\GET\PayOutBankWireDTO.cs" />
+    <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\Money.cs" />
     <Compile Include="Entities\OAuthTokenDTO.cs" />
     <Compile Include="Entities\Pagination.cs" />
@@ -165,7 +166,8 @@
     <Compile Include="Entities\POST\PayInDirectDebitPostDTO.cs" />
     <Compile Include="Entities\POST\PayInPreauthorizedDirectPostDTO.cs" />
     <Compile Include="Entities\POST\PayOutBankWirePostDTO.cs" />
-    <Compile Include="Entities\POST\RefundPostDTO.cs" />
+    <Compile Include="Entities\POST\RefundPayInPostDTO.cs" />
+    <Compile Include="Entities\POST\RefundTransferPostDTO.cs" />
     <Compile Include="Entities\POST\TransferPostDTO.cs" />
     <Compile Include="Entities\POST\UserLegalPostDTO.cs" />
     <Compile Include="Entities\POST\UserNaturalPostDTO.cs" />

@@ -81,5 +81,17 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Resolves to "Sort" string.</summary>
         public const string SORT_URL_PARAMETER_NAME = "Sort";
+
+        /// <summary>Resolves to "first" string.</summary>
+        public const string LINKS_FIRST_ITEM = "first";
+
+        /// <summary>Resolves to "next" string.</summary>
+        public const string LINKS_NEXT_ITEM = "next";
+
+        /// <summary>Resolves to "prev" string.</summary>
+        public const string LINKS_PREVIOUS_ITEM = "prev";
+
+        /// <summary>Resolves to "last" string.</summary>
+        public const string LINKS_LAST_ITEM = "last";
     }
 }

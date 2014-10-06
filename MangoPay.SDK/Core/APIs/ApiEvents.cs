@@ -16,7 +16,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="pagination">Pagination.</param>
         /// <param name="filter">Filters for events.</param>
         /// <returns>List of events matching passed filter criteria.</returns>
-        public List<EventDTO> GetAll(Pagination pagination, FilterEvents filter = null)
+        public ListPaginated<EventDTO> GetAll(Pagination pagination, FilterEvents filter = null)
         {
 			if (filter == null)
 				return this.GetList<EventDTO>(MethodKey.EventsAll, pagination, "");

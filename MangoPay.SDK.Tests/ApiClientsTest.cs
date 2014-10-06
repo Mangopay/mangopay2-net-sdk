@@ -1,8 +1,8 @@
 ﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace MangoPay.SDK.Tests
 {
@@ -46,7 +46,7 @@ namespace MangoPay.SDK.Tests
         [TestMethod]
         public void Test_Client_GetKycDocuments()
         {
-            List<KycDocumentDTO> result = null;
+            ListPaginated<KycDocumentDTO> result = null;
 
             try
             {

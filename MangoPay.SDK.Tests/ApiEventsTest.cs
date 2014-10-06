@@ -1,9 +1,9 @@
 ﻿using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace MangoPay.SDK.Tests
 {
@@ -18,10 +18,10 @@ namespace MangoPay.SDK.Tests
                 FilterEvents eventsFilter = new FilterEvents();
                 eventsFilter.Type = EventType.PAYIN_NORMAL_CREATED;
 
-                List<EventDTO> getEvents = this.Api.Events.GetAll(null, eventsFilter);
+                ListPaginated<EventDTO> getEvents = this.Api.Events.GetAll(null, eventsFilter);
 
                 eventsFilter.Type = EventType.All;
-                List<EventDTO> getAllEvents = this.Api.Events.GetAll(null, eventsFilter);
+                ListPaginated<EventDTO> getAllEvents = this.Api.Events.GetAll(null, eventsFilter);
 
                 Assert.IsNotNull(getEvents);
                 Assert.IsNotNull(getAllEvents);

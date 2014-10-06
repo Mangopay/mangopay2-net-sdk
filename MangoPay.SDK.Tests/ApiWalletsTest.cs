@@ -58,7 +58,7 @@ namespace MangoPay.SDK.Tests
             Pagination pagination = new Pagination(1, 1);
             FilterTransactions filter = new FilterTransactions();
             filter.Type = TransactionType.PAYIN;
-            List<TransactionDTO> transactions = this.Api.Wallets.GetTransactions(wallet.Id, pagination, filter, null);
+            ListPaginated<TransactionDTO> transactions = this.Api.Wallets.GetTransactions(wallet.Id, pagination, filter, null);
 
             Assert.IsTrue(transactions.Count == 1);
             Assert.IsTrue(transactions[0] is TransactionDTO);
@@ -80,7 +80,7 @@ namespace MangoPay.SDK.Tests
             FilterTransactions filter = new FilterTransactions();
             filter.Type = TransactionType.PAYIN;
 
-            List<TransactionDTO> transactions = this.Api.Wallets.GetTransactions(wallet.Id, pagination, filter, sort);
+            ListPaginated<TransactionDTO> transactions = this.Api.Wallets.GetTransactions(wallet.Id, pagination, filter, sort);
 
             Assert.IsTrue(transactions[0].CreationDate > transactions[1].CreationDate);
         }

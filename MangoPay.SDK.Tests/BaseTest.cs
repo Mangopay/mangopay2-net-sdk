@@ -166,31 +166,6 @@ namespace MangoPay.SDK.Tests
             return this.Api.Wallets.Get(BaseTest._johnsWalletWithMoney.Id);
         }
 
-        //private PayInPaymentDetailsCard GetPayInPaymentDetailsCard()
-        //{
-        //    if (BaseTest._payInPaymentDetailsCard == null)
-        //    {
-        //        BaseTest._payInPaymentDetailsCard = new PayInPaymentDetailsCard();
-        //        BaseTest._payInPaymentDetailsCard.CardType = "CB_VISA_MASTERCARD";
-        //    }
-
-        //    return BaseTest._payInPaymentDetailsCard;
-        //}
-
-        //private PayInExecutionDetailsWeb GetPayInExecutionDetailsWeb()
-        //{
-        //    if (BaseTest._payInExecutionDetailsWeb == null)
-        //    {
-        //        BaseTest._payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
-        //        BaseTest._payInExecutionDetailsWeb.TemplateURL = "https://TemplateURL.com";
-        //        BaseTest._payInExecutionDetailsWeb.SecureMode = "DEFAULT";
-        //        BaseTest._payInExecutionDetailsWeb.Culture = "fr";
-        //        BaseTest._payInExecutionDetailsWeb.ReturnURL = "https://test.com";
-        //    }
-
-        //    return BaseTest._payInExecutionDetailsWeb;
-        //}
-
         protected PayInCardWebDTO GetJohnsPayInCardWeb()
         {
             if (BaseTest._johnsPayInCardWeb == null)
@@ -321,19 +296,7 @@ namespace MangoPay.SDK.Tests
         {
             UserNaturalDTO user = this.GetJohn();
 
-            RefundPostDTO refund = new RefundPostDTO(user.Id);
-            refund.DebitedWalletId = transfer.DebitedWalletId;
-            refund.CreditedWalletId = transfer.CreditedWalletId;
-            refund.DebitedFunds = new Money();
-            refund.DebitedFunds.Amount = transfer.DebitedFunds.Amount;
-            refund.DebitedFunds.Currency = transfer.DebitedFunds.Currency;
-            refund.Fees = new Money();
-            refund.Fees.Amount = transfer.Fees.Amount;
-            refund.Fees.Currency = transfer.Fees.Currency;
-            refund.InitialTransactionType = InitialTransactionType.TRANSFER;
-            refund.Nature = TransactionNature.REFUND;
-            refund.Status = TransactionStatus.CREATED;
-            refund.Type = TransactionType.TRANSFER;
+            RefundTransferPostDTO refund = new RefundTransferPostDTO(user.Id);
 
             return this.Api.Transfers.CreateRefund(transfer.Id, refund);
         }
@@ -345,18 +308,14 @@ namespace MangoPay.SDK.Tests
         {
             UserNaturalDTO user = this.GetJohn();
 
-            RefundPostDTO refund = new RefundPostDTO(user.Id);
-            refund.CreditedWalletId = payIn.CreditedWalletId;
-            refund.DebitedFunds = new Money();
-            refund.DebitedFunds.Amount = payIn.DebitedFunds.Amount;
-            refund.DebitedFunds.Currency = payIn.DebitedFunds.Currency;
-            refund.Fees = new Money();
-            refund.Fees.Amount = payIn.Fees.Amount;
-            refund.Fees.Currency = payIn.Fees.Currency;
-            refund.InitialTransactionType = InitialTransactionType.PAYIN;
-            refund.Nature = TransactionNature.REFUND;
-            refund.Status = TransactionStatus.CREATED;
-            refund.Type = TransactionType.PAYIN;
+            Money debitedFunds = new Money();
+            debitedFunds.Amount = payIn.DebitedFunds.Amount;
+            debitedFunds.Currency = payIn.DebitedFunds.Currency;
+            Money fees = new Money();
+            fees.Amount = payIn.Fees.Amount;
+            fees.Currency = payIn.Fees.Currency;
+
+            RefundPayInPostDTO refund = new RefundPayInPostDTO(user.Id, fees, debitedFunds);
 
             return this.Api.PayIns.CreateRefund(payIn.Id, refund);
         }
@@ -443,7 +402,7 @@ namespace MangoPay.SDK.Tests
             {
 
                 Pagination pagination = new Pagination(1, 1);
-                List<HookDTO> list = this.Api.Hooks.GetAll(pagination);
+                ListPaginated<HookDTO> list = this.Api.Hooks.GetAll(pagination);
 
                 if (list != null && list.Count > 0 && list[0] != null)
                 {

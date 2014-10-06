@@ -32,9 +32,9 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="transferId">Transfer identifier.</param>
         /// <param name="refund">Refund object to create.</param>
         /// <returns>Refund entity instance returned from API.</returns>
-        public RefundDTO CreateRefund(String transferId, RefundPostDTO refund)
+        public RefundDTO CreateRefund(String transferId, RefundTransferPostDTO refund)
         {
-            return this.CreateObject<RefundDTO, RefundPostDTO>(MethodKey.TransfersCreateRefunds, refund, transferId);
+            return this.CreateObject<RefundDTO, RefundTransferPostDTO>(MethodKey.TransfersCreateRefunds, refund, transferId);
         }
 
         /// <summary>Gets refund for transfer object.</summary>
