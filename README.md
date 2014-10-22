@@ -39,7 +39,7 @@ Client creation example (you need to call it only once)
 	
     ClientDTO client = api.Clients.Create("your-client-id", "your-client-name", "your-client-email@sample.org");
 
-    // you receive your password here, note it down and keep in secret
+    // you'll receive your passphrase here, note it down and keep in secret
     string passphrase = client.Passphrase;
 
 
@@ -53,7 +53,7 @@ Then set `api.Config.ClientId` to your MangoPay Client ID and `api.Config.Client
     api.Config.BaseUrl = "https://api.mangopay.com";
 
 The `ClientId`, `ClientPassword` and `BaseUrl` properties are mandatory. Optionally, you can set the logger instance, setting `LoggerFactoryAdapter` property to an instance of `ILoggerFactoryAdapter`.
-By default, there is `NoOpLoggerFactoryAdapter` used, what means there are no any logs being emitted anywhere. For more details please refer to the [Common.Logging documentation](http://netcommon.sourceforge.net/docs/2.1.0/reference/html/ch01.html#logging-adapters).
+By default, there is `NoOpLoggerFactoryAdapter` used, what means there won't be any logs emitted anywhere. For more details please refer to the [Common.Logging library documentation](http://netcommon.sourceforge.net/docs/2.1.0/reference/html/ch01.html#logging-adapters).
 
 Below is the example showing how to configure SDK:
 
@@ -61,7 +61,7 @@ Below is the example showing how to configure SDK:
 
     // configure client credentails..
     api.Config.ClientId = "your-client-id";
-    api.Config.ClientPassword = "your-client-name";
+    api.Config.ClientPassword = "your-client-passphrase";
     api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
 	
 	// ..and optionally, set the logger you want (here, the console logger is used)
@@ -78,7 +78,7 @@ Sample usage (get, update and save an entity)
 
     // configuration
     api.Config.ClientId = "your-client-id";
-    api.Config.ClientPassword = "your-client-name";
+    api.Config.ClientPassword = "your-client-passphrase";
 
     // get some Natural user
     UserNaturalDTO user = api.Users.GetNatural(someUserId);
