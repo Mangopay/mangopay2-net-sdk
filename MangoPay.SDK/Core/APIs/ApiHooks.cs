@@ -42,10 +42,11 @@ namespace MangoPay.SDK.Core.APIs
 
         /// <summary>Gets all hooks.</summary>
         /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
         /// <returns>List of Hook instances returned from API.</returns>
-        public ListPaginated<HookDTO> GetAll(Pagination pagination)
+        public ListPaginated<HookDTO> GetAll(Pagination pagination, Sort sort = null)
         {
-            return this.GetList<HookDTO>(MethodKey.HooksAll, pagination);
+            return this.GetList<HookDTO>(MethodKey.HooksAll, pagination, sort);
         }
 
         /// <summary>Gets all hooks.</summary>

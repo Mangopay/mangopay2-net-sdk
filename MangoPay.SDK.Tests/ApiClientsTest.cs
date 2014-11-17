@@ -1,4 +1,5 @@
 ﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -47,18 +48,33 @@ namespace MangoPay.SDK.Tests
         public void Test_Client_GetKycDocuments()
         {
             ListPaginated<KycDocumentDTO> result = null;
+            ListPaginated<KycDocumentDTO> result2 = null;
 
             try
             {
                 result = this.Api.Clients.GetKycDocuments(null);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+                Pagination pagination = new Pagination(1, 2);
+                Sort sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.asc);
+                result = this.Api.Clients.GetKycDocuments(pagination, sort);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+                sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.desc);
+                result2 = this.Api.Clients.GetKycDocuments(pagination, sort);
+                Assert.IsNotNull(result2);
+                Assert.IsTrue(result2.Count > 0);
+
+                Assert.IsTrue(result[0].Id != result2[0].Id);
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
-
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Count > 0);
         }
     }
 }

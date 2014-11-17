@@ -44,8 +44,9 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="walletId">Wallet identifier.</param>
         /// <param name="pagination">Pagination.</param>
         /// <param name="filter">Filter.</param>
+        /// <param name="sort">Sort.</param>
         /// <returns>Transactions for wallet returned from API.</returns>
-        public ListPaginated<TransactionDTO> GetTransactions(String walletId, Pagination pagination, FilterTransactions filter, Sort sort)
+        public ListPaginated<TransactionDTO> GetTransactions(String walletId, Pagination pagination, FilterTransactions filter, Sort sort = null)
         {
             return this.GetList<TransactionDTO>(MethodKey.WalletsAllTransactions, pagination, walletId, sort, filter.GetValues());
         }
@@ -53,8 +54,9 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets transactions for the wallet.</summary>
         /// <param name="walletId">Wallet identifier.</param>
         /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
         /// <returns>Transactions for wallet returned from API.</returns>
-        public ListPaginated<TransactionDTO> GetTransactions(String walletId, Pagination pagination, Sort sort)
+        public ListPaginated<TransactionDTO> GetTransactions(String walletId, Pagination pagination, Sort sort = null)
         {
             return GetTransactions(walletId, pagination, new FilterTransactions(), sort);
         }

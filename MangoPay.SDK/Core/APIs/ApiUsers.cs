@@ -42,10 +42,11 @@ namespace MangoPay.SDK.Core.APIs
 
         /// <summary>Gets users.</summary>
         /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
         /// <returns>Collection of User instances.</returns>
-        public ListPaginated<UserDTO> GetAll(Pagination pagination)
+        public ListPaginated<UserDTO> GetAll(Pagination pagination, Sort sort = null)
         {
-            return this.GetList<UserDTO>(MethodKey.UsersAll, pagination);
+            return this.GetList<UserDTO>(MethodKey.UsersAll, pagination, sort);
         }
 
         /// <summary>Gets first page of users.</summary>
@@ -91,11 +92,12 @@ namespace MangoPay.SDK.Core.APIs
 
 		/// <summary>Gets all user's wallets.</summary>
 		/// <param name="userId">User identifier to get wallets of.</param>
-		/// <param name="pagination">Pagination.</param>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
 		/// <returns>Collection of user's wallets.</returns>
-        public ListPaginated<WalletDTO> GetWallets(String userId, Pagination pagination)
+        public ListPaginated<WalletDTO> GetWallets(String userId, Pagination pagination, Sort sort = null)
 		{
-			return this.GetList<WalletDTO>(MethodKey.UsersAllWallets, pagination, userId);
+			return this.GetList<WalletDTO>(MethodKey.UsersAllWallets, pagination, userId, sort);
 		}
 
         /// <summary>Creates CA bank account.</summary>
@@ -146,10 +148,11 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets all user's bank accounts.</summary>
         /// <param name="userId">User identifier to get bank accounts of.</param>
         /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
         /// <returns>Collection of user's bank accounts.</returns>
-        public ListPaginated<BankAccountDTO> GetBankAccounts(String userId, Pagination pagination)
+        public ListPaginated<BankAccountDTO> GetBankAccounts(String userId, Pagination pagination, Sort sort = null)
         {
-            return this.GetList<BankAccountDTO>(MethodKey.UsersAllBankAccount, pagination, userId);
+            return this.GetList<BankAccountDTO>(MethodKey.UsersAllBankAccount, pagination, userId, sort);
         }
 
         /// <summary>Gets first page of all bank accounts of user.</summary>
@@ -218,19 +221,21 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="userId">User identifier.</param>
         /// <param name="pagination">Pagination.</param>
         /// <param name="filter">Filter.</param>
+        /// <param name="sort">Sort.</param>
         /// <returns>Collection of user's transactions.</returns>
-        public ListPaginated<TransactionDTO> GetTransactions(String userId, Pagination pagination, FilterTransactions filter)
+        public ListPaginated<TransactionDTO> GetTransactions(String userId, Pagination pagination, FilterTransactions filter, Sort sort = null)
         {
-            return this.GetList<TransactionDTO>(MethodKey.UsersAllTransactions, pagination, userId, null, filter.GetValues());
+            return this.GetList<TransactionDTO>(MethodKey.UsersAllTransactions, pagination, userId, sort, filter.GetValues());
         }
 
         /// <summary>Gets all cards for user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
         /// <returns>Collection of user's cards.</returns>
-        public ListPaginated<CardDTO> GetCards(String userId, Pagination pagination)
+        public ListPaginated<CardDTO> GetCards(String userId, Pagination pagination, Sort sort = null)
         {
-            return this.GetList<CardDTO>(MethodKey.UsersAllCards, pagination, userId);
+            return this.GetList<CardDTO>(MethodKey.UsersAllCards, pagination, userId, sort);
         }
 
         /// <summary>Creates KycPage from byte array.</summary>
@@ -290,10 +295,11 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets a list of all the uploaded documents for the particular user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
         /// <returns>Collection of user's uploaded documents.</returns>
-        public ListPaginated<KycDocumentDTO> GetKycDocuments(String userId, Pagination pagination)
+        public ListPaginated<KycDocumentDTO> GetKycDocuments(String userId, Pagination pagination, Sort sort = null)
         {
-            return this.GetList<KycDocumentDTO>(MethodKey.UsersGetKycDocuments, pagination, userId);
+            return this.GetList<KycDocumentDTO>(MethodKey.UsersGetKycDocuments, pagination, userId, sort);
         }
     }
 }

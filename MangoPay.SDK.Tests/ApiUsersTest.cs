@@ -163,6 +163,26 @@ namespace MangoPay.SDK.Tests
 
                 Assert.IsNotNull(users);
                 Assert.IsTrue(users.Count > 0);
+
+
+                // test sorting
+                ListPaginated<UserDTO> result = null;
+                ListPaginated<UserDTO> result2 = null;
+
+                Pagination pagination = new Pagination(1, 2);
+                Sort sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.asc);
+                result = this.Api.Users.GetAll(pagination, sort);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+                sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.desc);
+                result2 = this.Api.Users.GetAll(pagination, sort);
+                Assert.IsNotNull(result2);
+                Assert.IsTrue(result2.Count > 0);
+
+                Assert.IsTrue(result[0].Id != result2[0].Id);
             }
             catch (Exception ex)
             {
@@ -443,6 +463,32 @@ namespace MangoPay.SDK.Tests
                 AssertEqualInputProps(account, castedBankAccount);
                 Assert.IsTrue(pagination.Page == 1);
                 Assert.IsTrue(pagination.ItemsPerPage == 12);
+
+
+                // test sorting
+                ListPaginated<BankAccountDTO> result = null;
+                ListPaginated<BankAccountDTO> result2 = null;
+
+                BankAccountOtherPostDTO account2 = new BankAccountOtherPostDTO(john.FirstName + " " + john.LastName, john.Address, "234234234234", "BINAADADXXX");
+                account2.Type = BankAccountType.OTHER;
+                account2.Country = CountryIso.FR;
+
+                this.Api.Users.CreateBankAccountOther(john.Id, account2);
+
+                pagination = new Pagination(1, 2);
+                Sort sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.asc);
+                result = this.Api.Users.GetBankAccounts(john.Id, pagination, sort);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+                sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.desc);
+                result2 = this.Api.Users.GetBankAccounts(john.Id, pagination, sort);
+                Assert.IsNotNull(result2);
+                Assert.IsTrue(result2.Count > 0);
+
+                Assert.IsTrue(result[0].Id != result2[0].Id);
             }
             catch (Exception ex)
             {
@@ -548,6 +594,26 @@ namespace MangoPay.SDK.Tests
                 Assert.IsTrue(cards.Count == 1);
                 Assert.IsTrue(cards[0].CardType != CardType.NotSpecified);
                 AssertEqualInputProps(cards[0], card);
+
+
+                // test sorting
+                ListPaginated<CardDTO> result = null;
+                ListPaginated<CardDTO> result2 = null;
+
+                pagination = new Pagination(1, 2);
+                Sort sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.asc);
+                result = this.Api.Users.GetCards(john.Id, pagination, sort);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+                sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.desc);
+                result2 = this.Api.Users.GetCards(john.Id, pagination, sort);
+                Assert.IsNotNull(result2);
+                Assert.IsTrue(result2.Count > 0);
+
+                Assert.IsTrue(result[0].Id != result2[0].Id);
             }
             catch (Exception ex)
             {
@@ -567,6 +633,26 @@ namespace MangoPay.SDK.Tests
                 ListPaginated<TransactionDTO> transactions = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions());
 
                 Assert.IsTrue(transactions.Count > 0);
+
+
+                // test sorting
+                ListPaginated<TransactionDTO> result = null;
+                ListPaginated<TransactionDTO> result2 = null;
+
+                pagination = new Pagination(1, 2);
+                Sort sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.asc);
+                result = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions(), sort);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+                sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.desc);
+                result2 = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions(), sort);
+                Assert.IsNotNull(result2);
+                Assert.IsTrue(result2.Count > 0);
+
+                Assert.IsTrue(result[0].Id != result2[0].Id);
             }
             catch (Exception ex)
             {
@@ -585,14 +671,35 @@ namespace MangoPay.SDK.Tests
             try
             {
                 result = this.Api.Users.GetKycDocuments(john.Id, null);
+
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+
+                // test sorting
+                GetNewKycDocument();
+                result = null;
+                ListPaginated<KycDocumentDTO> result2 = null;
+
+                Pagination pagination = new Pagination(1, 2);
+                Sort sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.asc);
+                result = this.Api.Users.GetKycDocuments(john.Id, pagination, sort);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+                sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.desc);
+                result2 = this.Api.Users.GetKycDocuments(john.Id, pagination, sort);
+                Assert.IsNotNull(result2);
+                Assert.IsTrue(result2.Count > 0);
+
+                Assert.IsTrue(result[0].Id != result2[0].Id);
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
-
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Count > 0);
         }
     }
 }

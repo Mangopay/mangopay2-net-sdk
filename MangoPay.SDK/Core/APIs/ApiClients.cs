@@ -37,10 +37,11 @@ namespace MangoPay.SDK.Core.APIs
 
         /// <summary>Gets the list of all the uploaded documents for all users.</summary>
         /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
         /// <returns>Collection of all users' uploaded documents.</returns>
-        public ListPaginated<KycDocumentDTO> GetKycDocuments(Pagination pagination)
+        public ListPaginated<KycDocumentDTO> GetKycDocuments(Pagination pagination, Sort sort = null)
         {
-            return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination);
+            return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, sort);
         }
     }
 }

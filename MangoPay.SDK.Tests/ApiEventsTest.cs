@@ -25,6 +25,26 @@ namespace MangoPay.SDK.Tests
 
                 Assert.IsNotNull(getEvents);
                 Assert.IsNotNull(getAllEvents);
+
+
+                // test sorting
+                ListPaginated<EventDTO> result = null;
+                ListPaginated<EventDTO> result2 = null;
+
+                Pagination pagination = new Pagination(1, 2);
+                Sort sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.asc);
+                result = this.Api.Events.GetAll(pagination, eventsFilter, sort);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+                sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.desc);
+                result2 = this.Api.Events.GetAll(pagination, eventsFilter, sort);
+                Assert.IsNotNull(result2);
+                Assert.IsTrue(result2.Count > 0);
+
+                Assert.IsTrue(result[0].ResourceId != result2[0].ResourceId);
             }
             catch (Exception ex)
             {
