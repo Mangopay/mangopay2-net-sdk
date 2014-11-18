@@ -7,6 +7,7 @@ using MangoPay.SDK.Entities.PUT;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace MangoPay.SDK.Tests
@@ -562,17 +563,34 @@ namespace MangoPay.SDK.Tests
         }
 
         [TestMethod]
-        public void Test_Users_CreateKycPage()
+        public void Test_Users_CreateKycPageFromFile()
         {
             try
             {
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
-                this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, Encoding.UTF8.GetBytes("Test KYC page"));
-
-                String filePath = "TestKycPageFile.txt";
+                String filePath = "TestKycPageFile.png";
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, filePath);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public void Test_Users_CreateKycPageFromBytes()
+        {
+            try
+            {
+                UserNaturalDTO john = this.GetJohn();
+                KycDocumentDTO kycDocument = this.GetNewKycDocument();
+
+                String filePath = "TestKycPageFile.png";
+                byte[] bytes = File.ReadAllBytes(filePath);
+
+                this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
             }
             catch (Exception ex)
             {
