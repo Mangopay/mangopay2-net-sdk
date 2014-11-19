@@ -18,5 +18,8 @@ namespace MangoPay.SDK.Entities.GET
         
         /// <summary>Secure mode return URL.</summary>
         public String SecureModeReturnURL { get; set; }
+        
+        /// <summary>Secure mode needed.</summary>
+        public String SecureModeNeeded { get; set; }
     }
 }
