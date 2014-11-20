@@ -688,7 +688,7 @@ namespace MangoPay.SDK.Tests
 
             try
             {
-                result = this.Api.Users.GetKycDocuments(john.Id, null);
+                result = this.Api.Users.GetKycDocuments(john.Id, null, null);
 
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
@@ -702,13 +702,13 @@ namespace MangoPay.SDK.Tests
                 Pagination pagination = new Pagination(1, 2);
                 Sort sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.asc);
-                result = this.Api.Users.GetKycDocuments(john.Id, pagination, sort);
+                result = this.Api.Users.GetKycDocuments(john.Id, pagination, null, sort);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
 
                 sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
-                result2 = this.Api.Users.GetKycDocuments(john.Id, pagination, sort);
+                result2 = this.Api.Users.GetKycDocuments(john.Id, pagination, null, sort);
                 Assert.IsNotNull(result2);
                 Assert.IsTrue(result2.Count > 0);
 

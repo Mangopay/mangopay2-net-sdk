@@ -78,6 +78,7 @@
     <Compile Include="Core\Enumerations\DirectDebitType.cs" />
     <Compile Include="Core\Enumerations\MethodKey.cs" />
     <Compile Include="Core\Enumerations\SortDirection.cs" />
+    <Compile Include="Core\FilterKycDocuments.cs" />
     <Compile Include="Core\MangoPayJsonSerializer.cs" />
     <Compile Include="Core\Sort.cs" />
     <Compile Include="Core\UnixDateTimeConverter.cs" />

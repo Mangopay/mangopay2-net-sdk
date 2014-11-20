@@ -52,20 +52,20 @@ namespace MangoPay.SDK.Tests
 
             try
             {
-                result = this.Api.Clients.GetKycDocuments(null);
+                result = this.Api.Clients.GetKycDocuments(null, null);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
 
                 Pagination pagination = new Pagination(1, 2);
                 Sort sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.asc);
-                result = this.Api.Clients.GetKycDocuments(pagination, sort);
+                result = this.Api.Clients.GetKycDocuments(pagination, null, sort);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
 
                 sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
-                result2 = this.Api.Clients.GetKycDocuments(pagination, sort);
+                result2 = this.Api.Clients.GetKycDocuments(pagination, null, sort);
                 Assert.IsNotNull(result2);
                 Assert.IsTrue(result2.Count > 0);
 
