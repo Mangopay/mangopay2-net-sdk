@@ -10,6 +10,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.Net SDK for access to Mangopay API v2</description>
     <releaseNotes></releaseNotes>
+    <files>
+      <file src="bin\Release\MangoPay.SDK.dll" target="lib\MangoPay.SDK.dll" />
+    </files>
     <tags>mangopay sdk payment wallet banking emoney</tags>
     <dependencies>
       <dependency id="Common.Logging" version="2.2.0" />
