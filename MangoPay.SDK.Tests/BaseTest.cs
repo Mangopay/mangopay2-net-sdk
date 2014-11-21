@@ -197,7 +197,6 @@ namespace MangoPay.SDK.Tests
         {
             if (BaseTest._johnsPayInCardWeb == null)
             {
-                WalletDTO wallet = this.GetJohnsWallet();
                 UserNaturalDTO user = this.GetJohn();
 
                 PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CountryIso.FR, CardType.CB_VISA_MASTERCARD);
@@ -206,6 +205,16 @@ namespace MangoPay.SDK.Tests
             }
 
             return BaseTest._johnsPayInCardWeb;
+        }
+
+        protected PayInCardWebDTO CreateJohnsPayInCardWeb(string walletId)
+        {
+
+            UserNaturalDTO user = this.GetJohn();
+
+            PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CountryIso.FR, CardType.CB_VISA_MASTERCARD);
+
+            return this.Api.PayIns.CreateCardWeb(payIn);
         }
 
         protected PayInCardWebDTO GetNewPayInCardWeb()
