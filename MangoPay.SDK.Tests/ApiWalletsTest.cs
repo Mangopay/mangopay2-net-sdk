@@ -51,8 +51,9 @@ namespace MangoPay.SDK.Tests
         public void Test_Wallets_Transactions()
         {
             UserNaturalDTO john = this.GetJohn();
-            WalletDTO wallet = this.GetJohnsWallet();
-            PayInDTO payIn = this.GetJohnsPayInCardWeb();
+            
+            WalletDTO wallet = this.CreateJohnsWallet();
+            PayInDTO payIn = this.GetJohnsPayInCardWeb(wallet.Id);
 
             Pagination pagination = new Pagination(1, 1);
             FilterTransactions filter = new FilterTransactions();
