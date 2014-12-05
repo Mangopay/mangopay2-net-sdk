@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -34,12 +35,8 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Return URL.</summary>
         public String ReturnURL { get; set; }
 
-        /// <summary>
-        /// The URL where you host the iFramed template. 
-        /// For CB, Visa, MasterCard you need to specify « PAYLINE: » before your URL with the iFramed template. 
-        /// I.e.: PAYLINE: « https://www.maysite.com/payline_template/ »
-        /// </summary>
-        public String TemplateURLOptions { get; set; }
+        /// <summary>The URL where you host the iFramed template.</summary>
+        public TemplateURLOptions TemplateURLOptions { get; set; }
 
         /// <summary>Culture (language).</summary>
         [JsonConverter(typeof(StringEnumConverter))]
