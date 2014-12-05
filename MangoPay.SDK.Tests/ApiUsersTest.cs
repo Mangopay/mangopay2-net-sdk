@@ -580,6 +580,7 @@ namespace MangoPay.SDK.Tests
         }
 
         [TestMethod]
+        [DeploymentItem("TestKycPageFile.png")]
         public void Test_Users_CreateKycPageFromBytes()
         {
             try

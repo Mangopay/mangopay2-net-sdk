@@ -50,14 +50,15 @@ namespace MangoPay.SDK.Tests
         [TestMethod]
         public void Test_Wallets_Transactions()
         {
-            UserNaturalDTO john = this.GetJohn();
-            WalletDTO wallet = this.GetJohnsWallet();
-            PayInDTO payIn = this.GetJohnsPayInCardWeb();
+            UserNaturalDTO john = GetJohn();
+            
+            WalletDTO wallet = CreateJohnsWallet();
+            PayInDTO payIn = CreateJohnsPayInCardWeb(wallet.Id);
 
             Pagination pagination = new Pagination(1, 1);
             FilterTransactions filter = new FilterTransactions();
             filter.Type = TransactionType.PAYIN;
-            ListPaginated<TransactionDTO> transactions = this.Api.Wallets.GetTransactions(wallet.Id, pagination, filter, null);
+            ListPaginated<TransactionDTO> transactions = Api.Wallets.GetTransactions(wallet.Id, pagination, filter, null);
 
             Assert.IsTrue(transactions.Count == 1);
             Assert.IsTrue(transactions[0] is TransactionDTO);
