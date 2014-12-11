@@ -10,7 +10,7 @@ namespace MangoPay.SDK.Core.Enumerations
         /// <summary>BUSINESS person type.</summary>
         BUSINESS,
 
-        /// <summary>ASSOCIATION person type.</summary>
-        ASSOCIATION
+        /// <summary>ORGANIZATION person type.</summary>
+        ORGANIZATION
     }
 }
