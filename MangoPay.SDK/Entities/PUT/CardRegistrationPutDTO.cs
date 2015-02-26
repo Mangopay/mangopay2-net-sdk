@@ -6,7 +6,7 @@ namespace MangoPay.SDK.Entities.PUT
     /// <summary>Card registration PUT entity.</summary>
     public class CardRegistrationPutDTO : EntityPutBase
     {
-        /// <summary>Registration data.</summary>
+        /// <summary>Registration data. This have to be prefixed by "data=".</summary>
         public String RegistrationData { get; set; }
     }
 }
