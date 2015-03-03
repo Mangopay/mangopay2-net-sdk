@@ -270,7 +270,7 @@ namespace MangoPay.SDK.Core.APIs
         protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination)
             where T : EntityBase, new()
         {
-            return GetList<T>(methodKey, pagination, null);
+            return GetList<T>(methodKey, pagination, sort: null);
         }
 
         /// <summary>Saves the Dto instance.</summary>
