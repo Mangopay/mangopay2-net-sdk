@@ -166,10 +166,7 @@ namespace MangoPay.SDK.Tests
                     new Money { Amount = amount, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR },
                     BaseTest._johnsWalletWithMoney.Id, "http://test.com", card.Id);
 
-                if (card.CardType == CardType.CB || card.CardType == CardType.VISA || card.CardType == CardType.MASTERCARD || card.CardType == CardType.CB_VISA_MASTERCARD)
-                    payIn.CardType = CardType.CB_VISA_MASTERCARD;
-                else if (card.CardType == CardType.AMEX)
-                    payIn.CardType = CardType.AMEX;
+                payIn.CardType = card.CardType;
 
                 // create Pay-In
                 this.Api.PayIns.CreateCardDirect(payIn);
