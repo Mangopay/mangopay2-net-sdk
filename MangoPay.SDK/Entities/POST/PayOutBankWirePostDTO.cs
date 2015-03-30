@@ -6,13 +6,14 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayOut bank wire POST entity.</summary>
     public class PayOutBankWirePostDTO : EntityPostBase
     {
-        public PayOutBankWirePostDTO(string authorId, string debitedWalletId, Money debitedFunds, Money fees, string bankAccountId)
+        public PayOutBankWirePostDTO(string authorId, string debitedWalletId, Money debitedFunds, Money fees, string bankAccountId, string bankWireRef)
         {
             AuthorId = authorId;
             DebitedWalletId = debitedWalletId;
             DebitedFunds = debitedFunds;
             Fees = fees;
             BankAccountId = bankAccountId;
+            BankWireRef = bankWireRef;
         }
 
         /// <summary>Author identifier.</summary>
