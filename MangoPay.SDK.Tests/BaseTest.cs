@@ -190,6 +190,13 @@ namespace MangoPay.SDK.Tests
             return BaseTest._johnsPayInCardWeb;
         }
 
+		protected PayInCardWebDTO GetJohnsNewPayInCardWeb()
+		{
+			BaseTest._johnsPayInCardWeb = null;
+
+			return GetJohnsPayInCardWeb();
+		}
+
         protected PayInCardWebDTO GetJohnsPayInCardWeb(string walletId)
         {
             if (BaseTest._johnsPayInCardWeb == null)
@@ -260,10 +267,7 @@ namespace MangoPay.SDK.Tests
                     wallet.Id, "http://test.com", card.Id);
 
             // payment type as CARD
-            if (card.CardType == CardType.CB || card.CardType == CardType.VISA || card.CardType == CardType.MASTERCARD || card.CardType == CardType.CB_VISA_MASTERCARD)
-                payIn.CardType = CardType.CB_VISA_MASTERCARD;
-            else if (card.CardType == CardType.AMEX)
-                payIn.CardType = CardType.AMEX;
+            payIn.CardType = card.CardType;
 
             return this.Api.PayIns.CreateCardDirect(payIn);
         }
@@ -276,7 +280,7 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO user = this.GetJohn();
                 BankAccountDTO account = this.GetJohnsAccount();
 
-                PayOutBankWirePostDTO payOut = new PayOutBankWirePostDTO(user.Id, wallet.Id, new Money { Amount = 10, Currency = CurrencyIso.EUR }, new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id);
+                PayOutBankWirePostDTO payOut = new PayOutBankWirePostDTO(user.Id, wallet.Id, new Money { Amount = 10, Currency = CurrencyIso.EUR }, new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref");
                 payOut.Tag = "DefaultTag";
                 payOut.CreditedUserId = user.Id;
                 payOut.Communication = "Communication text";
@@ -297,7 +301,7 @@ namespace MangoPay.SDK.Tests
                 BankAccountDTO account = this.GetJohnsAccount();
 
                 PayOutBankWirePostDTO payOut = new PayOutBankWirePostDTO(payIn.AuthorId, payIn.CreditedWalletId, new Money { Amount = 10, Currency = CurrencyIso.EUR },
-                    new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id);
+                    new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref");
                 payOut.Tag = "DefaultTag";
                 payOut.CreditedUserId = payIn.AuthorId;
                 payOut.Communication = "Communication text";

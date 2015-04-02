@@ -19,7 +19,9 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(getRefund.Id, refund.Id);
             Assert.AreEqual(getRefund.InitialTransactionId, transfer.Id);
             Assert.AreEqual(getRefund.AuthorId, user.Id);
-            Assert.AreEqual(getRefund.Type, TransactionType.TRANSFER);
+			Assert.AreEqual(getRefund.Type, TransactionType.TRANSFER);
+			Assert.IsNotNull(getRefund.RefundReason);
+			Assert.AreEqual(getRefund.RefundReason.RefundReasonType, RefundReasonType.OTHER);
         }
 
         [TestMethod]
@@ -34,7 +36,9 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(getRefund.Id, refund.Id);
             Assert.AreEqual(getRefund.InitialTransactionId, payIn.Id);
             Assert.AreEqual(getRefund.AuthorId, user.Id);
-            Assert.AreEqual(getRefund.Type, TransactionType.PAYOUT);
+			Assert.AreEqual(getRefund.Type, TransactionType.PAYOUT);
+			Assert.IsNotNull(getRefund.RefundReason);
+			Assert.AreEqual(getRefund.RefundReason.RefundReasonType, RefundReasonType.INITIALIZED_BY_CLIENT);
         }
     }
 }
