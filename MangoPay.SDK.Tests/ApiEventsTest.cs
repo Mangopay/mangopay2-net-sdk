@@ -51,5 +51,35 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+
+		[TestMethod]
+        public void Test_Events_GetAll_SortByCreationDate()
+		{
+			try
+			{
+				PayInCardWebDTO payIn1 = GetJohnsNewPayInCardWeb();
+				PayInCardWebDTO payIn2 = GetJohnsNewPayInCardWeb();
+
+				FilterEvents eventsFilter = new FilterEvents();
+				eventsFilter.BeforeDate = payIn2.CreationDate;
+				eventsFilter.AfterDate = payIn1.CreationDate;
+				eventsFilter.Type = EventType.PAYIN_NORMAL_CREATED;
+
+				Sort sort = new Sort();
+				sort.AddField("Date", SortDirection.desc);
+
+				Pagination pagination = new Pagination();
+
+				ListPaginated<EventDTO> result = this.Api.Events.GetAll(pagination, eventsFilter, sort);
+
+				Assert.IsNotNull(result);
+				Assert.IsTrue(result.Count > 1);
+				Assert.IsTrue(result[0].Date > result[1].Date);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
     }
 }

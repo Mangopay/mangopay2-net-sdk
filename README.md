@@ -11,7 +11,9 @@ SDK has been written in C#, for .NET Framework 4.5 and has 3 dependencies on ext
 - Json.NET (version 6.0.3)
 - RestSharp (version 104.4.0)
 
-The installation is as easy as downloading the SDK package and storing it under any location that will be available for referencing by your project (see examples below).
+The installation is as easy as downloading the SDK package and storing it under any location that will be available for referencing by your project (see examples below). You can also install from the .Net Package Manager Console:
+
+	Install-Package mangopay2-sdk
 
 License
 -------------------------------------------------
@@ -25,7 +27,7 @@ Tests are placed in MangoPay.SDK.Tests project in solution.
 
 Contact
 -------------------------------------------------
-Report bugs or suggest features using [issue tracker at GitHub](https://github.com/MangoPay/mangopay2-net-sdk).
+Report bugs or suggest features using [issue tracker at GitHub](https://github.com/MangoPay/mangopay2-net-sdk/issues).
 
 
 Client creation example (you need to call it only once)

@@ -44,6 +44,14 @@ namespace MangoPay.SDK.Core.APIs
             return this.CreateObject<PayInPreauthorizedDirectDTO, PayInPreauthorizedDirectPostDTO>(MethodKey.PayinsPreauthorizedDirectCreate, payIn);
         }
 
+        /// <summary>Creates new payin direct debit.</summary>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public PayInDirectDebitDTO CreateDirectDebit(PayInDirectDebitPostDTO payIn)
+        {
+            return this.CreateObject<PayInDirectDebitDTO, PayInDirectDebitPostDTO>(MethodKey.PayinsDirectDebitCreate, payIn);
+        }
+
         /// <summary>Gets PayIn entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
         /// <returns>PayIn object returned from API.</returns>
@@ -82,6 +90,14 @@ namespace MangoPay.SDK.Core.APIs
         public PayInPreauthorizedDirectDTO GetPreauthorizedDirect(String payInId)
         {
             return this.GetObject<PayInPreauthorizedDirectDTO>(MethodKey.PayinsGet, payInId);
+        }
+
+        /// <summary>Gets PayIn direct debit entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public PayInDirectDebitDTO GetDirectDebit(String payInId)
+        {
+            return this.GetObject<PayInDirectDebitDTO>(MethodKey.PayinsGet, payInId);
         }
 
         /// <summary>Creates refund for PayIn object.</summary>

@@ -11,6 +11,9 @@ namespace MangoPay.SDK.Core.Enumerations
         PAYIN,
 
         /// <summary>TRANSFER transaction type.</summary>
-        TRANSFER
+        TRANSFER,
+
+        /// <summary>PAYOUT transaction type.</summary>
+        PAYOUT
     }
 }

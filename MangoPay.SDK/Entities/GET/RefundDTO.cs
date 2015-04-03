@@ -58,5 +58,8 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Debited wallet identifier.</summary>
         public String DebitedWalletId { get; set; }
+
+		/// <summary>Contains info about the reason for refund.</summary>
+		public RefundReason RefundReason { get; set; }
     }
 }

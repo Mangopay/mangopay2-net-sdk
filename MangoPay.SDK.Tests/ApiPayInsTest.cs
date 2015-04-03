@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
@@ -221,6 +222,55 @@ namespace MangoPay.SDK.Tests
             {
                 Assert.Fail(ex.Message);
             }
+        }
+
+        [TestMethod]
+        public void Test_PayIns_DirectDebit_Create_Get()
+        {
+            WalletDTO wallet = this.GetJohnsWallet();
+            UserNaturalDTO user = this.GetJohn();
+            // create pay-in DIRECT DEBIT
+            PayInDirectDebitPostDTO payIn = new PayInDirectDebitPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 100, Currency = CurrencyIso.EUR }, wallet.Id, "http://www.mysite.com/returnURL/", CountryIso.FR, DirectDebitType.GIROPAY);
+
+            payIn.TemplateURLOptions = new TemplateURLOptions { PAYLINE = "https://www.maysite.com/payline_template/" };
+            payIn.Tag = "DirectDebit test tag";
+
+            PayInDirectDebitDTO createPayIn = this.Api.PayIns.CreateDirectDebit(payIn);
+
+            Assert.IsNotNull(createPayIn);
+            Assert.IsTrue(createPayIn.Id.Length > 0);
+            Assert.AreEqual(wallet.Id, createPayIn.CreditedWalletId);
+            Assert.IsTrue(createPayIn.PaymentType == PayInPaymentType.DIRECT_DEBIT);
+            Assert.IsTrue(createPayIn.DirectDebitType == DirectDebitType.GIROPAY);
+            Assert.IsTrue(createPayIn.Culture == CountryIso.FR);
+            Assert.AreEqual(user.Id, createPayIn.AuthorId);
+            Assert.IsTrue(createPayIn.Status == TransactionStatus.CREATED);
+            Assert.IsTrue(createPayIn.Type == TransactionType.PAYIN);
+            Assert.IsNotNull(createPayIn.DebitedFunds);
+            Assert.IsTrue(createPayIn.DebitedFunds is Money);
+            Assert.AreEqual(10000, createPayIn.DebitedFunds.Amount);
+            Assert.IsTrue(createPayIn.DebitedFunds.Currency == CurrencyIso.EUR);
+
+            Assert.IsNotNull(createPayIn.CreditedFunds);
+            Assert.IsTrue(createPayIn.CreditedFunds is Money);
+            Assert.AreEqual(9900, createPayIn.CreditedFunds.Amount);
+            Assert.IsTrue(createPayIn.CreditedFunds.Currency == CurrencyIso.EUR);
+
+            Assert.IsNotNull(createPayIn.Fees);
+            Assert.IsTrue(createPayIn.Fees is Money);
+            Assert.AreEqual(100, createPayIn.Fees.Amount);
+            Assert.IsTrue(createPayIn.Fees.Currency == CurrencyIso.EUR);
+
+            Assert.IsNotNull(createPayIn.ReturnURL);
+            Assert.IsNotNull(createPayIn.RedirectURL);
+            Assert.IsNotNull(createPayIn.TemplateURL);
+
+
+            PayInDirectDebitDTO getPayIn = this.Api.PayIns.GetDirectDebit(createPayIn.Id);
+
+            Assert.IsNotNull(getPayIn);
+            Assert.IsTrue(getPayIn.Id == createPayIn.Id);
+            Assert.IsTrue(getPayIn.Tag == createPayIn.Tag);
         }
     }
 }

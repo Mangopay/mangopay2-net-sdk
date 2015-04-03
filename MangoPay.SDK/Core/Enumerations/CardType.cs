@@ -7,14 +7,19 @@ namespace MangoPay.SDK.Core.Enumerations
         /// <summary>Not specified.</summary>
         NotSpecified,
 
-        CB,
-        VISA,
-        MASTERCARD,
-
         /// <summary>CB VISA MASTERCARD card type.</summary>
         CB_VISA_MASTERCARD,
 
         /// <summary>AMEX card type.</summary>
-        AMEX
+        AMEX,
+
+        /// <summary>DINERS card type.</summary>
+        DINERS,
+
+        /// <summary>MASTERPASS card type.</summary>
+        MASTERPASS,
+
+        /// <summary>MAESTRO card type.</summary>
+        MAESTRO
     }
 }

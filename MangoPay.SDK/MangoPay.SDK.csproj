@@ -78,9 +78,11 @@
     <Compile Include="Core\Enumerations\DirectDebitType.cs" />
     <Compile Include="Core\Enumerations\MethodKey.cs" />
     <Compile Include="Core\Enumerations\SortDirection.cs" />
+    <Compile Include="Core\Enumerations\RefundReasonType.cs" />
     <Compile Include="Core\FilterKycDocuments.cs" />
     <Compile Include="Core\MangoPayJsonSerializer.cs" />
     <Compile Include="Core\Sort.cs" />
+    <Compile Include="Core\TemplateURLOptions.cs" />
     <Compile Include="Core\UnixDateTimeConverter.cs" />
     <Compile Include="Entities\EntityPutBase.cs" />
     <Compile Include="Entities\EntityPostBase.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Entities\GET\PayInPreauthorizedDirectDTO.cs" />
     <Compile Include="Entities\GET\PayOutBankWireDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
+    <Compile Include="Entities\RefundReason.cs" />
     <Compile Include="Entities\Money.cs" />
     <Compile Include="Entities\OAuthTokenDTO.cs" />
     <Compile Include="Entities\Pagination.cs" />
