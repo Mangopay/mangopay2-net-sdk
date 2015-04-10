@@ -15,8 +15,8 @@
     </files>
     <tags>mangopay sdk payment wallet banking emoney</tags>
     <dependencies>
-      <dependency id="Common.Logging" version="2.2.0" />
-      <dependency id="Common.Logging.Core" version="2.2.0" />
+      <dependency id="Common.Logging" version="[2.2.0]" />
+      <dependency id="Common.Logging.Core" version="[2.2.0]" />
       <dependency id="Newtonsoft.Json" version="6.0.3" />
       <dependency id="RestSharp" version="104.4.0" />
     </dependencies>
