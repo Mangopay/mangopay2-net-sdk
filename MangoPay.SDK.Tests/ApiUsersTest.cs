@@ -340,13 +340,24 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 BankAccountUsPostDTO account = new BankAccountUsPostDTO(john.FirstName + " " + john.LastName, john.Address, "234234234234", "234334789");
 
-                BankAccountDTO createAccount = this.Api.Users.CreateBankAccountUs(john.Id, account);
+				BankAccountDTO createAccount = this.Api.Users.CreateBankAccountUs(john.Id, account);
 
-                Assert.IsTrue(createAccount.Id.Length > 0);
-                Assert.IsTrue(createAccount.UserId == (john.Id));
-                Assert.IsTrue(createAccount.Type == BankAccountType.US);
-                Assert.IsTrue(((BankAccountUsDTO)createAccount).AccountNumber == "234234234234");
-                Assert.IsTrue(((BankAccountUsDTO)createAccount).ABA == "234334789");
+				Assert.IsTrue(createAccount.Id.Length > 0);
+				Assert.IsTrue(createAccount.UserId == (john.Id));
+				Assert.IsTrue(createAccount.Type == BankAccountType.US);
+				Assert.IsTrue(((BankAccountUsDTO)createAccount).AccountNumber == "234234234234");
+				Assert.IsTrue(((BankAccountUsDTO)createAccount).ABA == "234334789");
+				Assert.IsTrue(((BankAccountUsDTO)createAccount).DepositAccountType == DepositAccountType.CHECKING);
+
+				account.DepositAccountType = DepositAccountType.SAVINGS;
+				BankAccountDTO createAccountSavings = this.Api.Users.CreateBankAccountUs(john.Id, account);
+
+				Assert.IsTrue(createAccountSavings.Id.Length > 0);
+				Assert.IsTrue(createAccountSavings.UserId == (john.Id));
+				Assert.IsTrue(createAccountSavings.Type == BankAccountType.US);
+				Assert.IsTrue(((BankAccountUsDTO)createAccountSavings).AccountNumber == "234234234234");
+				Assert.IsTrue(((BankAccountUsDTO)createAccountSavings).ABA == "234334789");
+				Assert.IsTrue(((BankAccountUsDTO)createAccountSavings).DepositAccountType == DepositAccountType.SAVINGS);
             }
             catch (Exception ex)
             {

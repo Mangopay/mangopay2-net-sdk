@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MangoPay.SDK.Core.Enumerations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -10,5 +13,9 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>ABA.</summary>
         public String ABA { get; set; }
+
+		/// <summary>Deposit account type.</summary>
+		[JsonConverter(typeof(StringEnumConverter))]
+		public DepositAccountType DepositAccountType { get; set; }
     }
 }

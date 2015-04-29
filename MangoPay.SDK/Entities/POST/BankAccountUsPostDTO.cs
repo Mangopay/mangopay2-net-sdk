@@ -1,4 +1,6 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 
 namespace MangoPay.SDK.Entities.POST
@@ -13,6 +15,7 @@ namespace MangoPay.SDK.Entities.POST
             OwnerAddress = ownerAddress;
             AccountNumber = accountNumber;
             ABA = aba;
+			DepositAccountType = DepositAccountType.CHECKING;
         }
 
         /// <summary>Account number.</summary>
@@ -20,5 +23,9 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>ABA.</summary>
         public String ABA { get; set; }
+
+		/// <summary>Deposit account type.</summary>
+		[JsonConverter(typeof(StringEnumConverter))]
+		public DepositAccountType DepositAccountType { get; set; }
     }
 }

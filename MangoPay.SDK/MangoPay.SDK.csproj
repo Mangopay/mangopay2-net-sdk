@@ -78,6 +78,8 @@
     <Compile Include="Core\Enumerations\CurrencyIso.cs" />
     <Compile Include="Core\DefaultStorageStrategy.cs" />
     <Compile Include="Core\Enumerations\DirectDebitType.cs" />
+    <Compile Include="Core\Enumerations\DepositAccountType .cs" />
+    <Compile Include="Core\Enumerations\KycLevel.cs" />
     <Compile Include="Core\Enumerations\MethodKey.cs" />
     <Compile Include="Core\Enumerations\SortDirection.cs" />
     <Compile Include="Core\Enumerations\RefundReasonType.cs" />
