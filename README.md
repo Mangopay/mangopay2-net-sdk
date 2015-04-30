@@ -1,7 +1,7 @@
-MangoPay SDK
+Mangopay SDK
 =================================================
-MangoPaySDK is a Microsoft .NET client library to work with
-[MangoPay REST API](http://docs.mangopay.com/api-references/).
+MangopaySDK is a Microsoft .NET client library to work with
+[Mangopay REST API](http://docs.mangopay.com/api-references/).
 
 
 Installation and package dependencies
@@ -17,7 +17,7 @@ The installation is as easy as downloading the SDK package and storing it under 
 
 License
 -------------------------------------------------
-MangoPaySDK is distributed under MIT license, see LICENSE file.
+MangopaySDK is distributed under MIT license, see LICENSE file.
 
 
 Unit Tests
@@ -48,7 +48,7 @@ Client creation example (you need to call it only once)
 Configuration
 -------------------------------------------------
 See the example above and call `api.Clients.Create(...)` to get your passphrase. 
-Then set `api.Config.ClientId` to your MangoPay Client ID and `api.Config.ClientPassword` to your passphrase.
+Then set `api.Config.ClientId` to your Mangopay Client ID and `api.Config.ClientPassword` to your passphrase.
 
 `api.Config.BaseUrl` is set to sandbox environment by default. To enable production environment, set it to `https://api.mangopay.com`:
 
