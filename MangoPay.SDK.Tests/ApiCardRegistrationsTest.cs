@@ -14,18 +14,33 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                CardRegistrationDTO cardRegistration = this.GetJohnsCardRegistration();
+                CardRegistrationDTO cardRegistration_visa = this.GetJohnsCardRegistration();
                 UserNaturalDTO user = this.GetJohn();
 
-                Assert.IsNotNull(cardRegistration.Id);
-                Assert.IsTrue(cardRegistration.Id.Length > 0);
+                Assert.IsNotNull(cardRegistration_visa.Id);
+                Assert.IsTrue(cardRegistration_visa.Id.Length > 0);
 
-                Assert.IsNotNull(cardRegistration.AccessKey);
-                Assert.IsNotNull(cardRegistration.PreregistrationData);
-                Assert.IsNotNull(cardRegistration.CardRegistrationURL);
-                Assert.AreEqual(user.Id, cardRegistration.UserId);
-                Assert.AreEqual(CurrencyIso.EUR, cardRegistration.Currency);
-                Assert.AreEqual("CREATED", cardRegistration.Status);
+                Assert.IsNotNull(cardRegistration_visa.AccessKey);
+                Assert.IsNotNull(cardRegistration_visa.PreregistrationData);
+                Assert.IsNotNull(cardRegistration_visa.CardRegistrationURL);
+                Assert.AreEqual(user.Id, cardRegistration_visa.UserId);
+                Assert.AreEqual(CurrencyIso.EUR, cardRegistration_visa.Currency);
+                Assert.AreEqual("CREATED", cardRegistration_visa.Status);
+				Assert.AreEqual(CardType.CB_VISA_MASTERCARD, cardRegistration_visa.CardType);
+
+
+				CardRegistrationDTO cardRegistration_maestro = this.GetNewJohnsCardRegistration(CardType.MAESTRO);
+
+				Assert.IsNotNull(cardRegistration_maestro.Id);
+				Assert.IsTrue(cardRegistration_maestro.Id.Length > 0);
+
+				Assert.IsNotNull(cardRegistration_maestro.AccessKey);
+				Assert.IsNotNull(cardRegistration_maestro.PreregistrationData);
+				Assert.IsNotNull(cardRegistration_maestro.CardRegistrationURL);
+				Assert.AreEqual(user.Id, cardRegistration_maestro.UserId);
+				Assert.AreEqual(CurrencyIso.EUR, cardRegistration_maestro.Currency);
+				Assert.AreEqual("CREATED", cardRegistration_maestro.Status);
+				Assert.AreEqual(CardType.MAESTRO, cardRegistration_maestro.CardType);
             }
             catch (Exception ex)
             {

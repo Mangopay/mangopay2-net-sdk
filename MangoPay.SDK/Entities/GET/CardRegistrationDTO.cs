@@ -35,5 +35,9 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Status.</summary>
         public String Status { get; set; }
+
+		/// <summary>Card type.</summary>
+		[JsonConverter(typeof(StringEnumConverter))]
+		public CardType CardType { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace MangoPay.SDK.Core.Enumerations
 {
-    /// <summary>PreAuthorization status enumeration.</summary>
+	/// <summary>Refund reason type enumeration.</summary>
     public enum RefundReasonType
     {
         /// <summary>Not specified.</summary>

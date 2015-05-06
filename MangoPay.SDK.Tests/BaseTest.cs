@@ -357,21 +357,32 @@ namespace MangoPay.SDK.Tests
             return this.Api.PayIns.CreateRefund(payIn.Id, refund);
         }
 
-        /// <summary>Creates card registration object.</summary>
+		/// <summary>Creates card registration object.</summary>
+		/// <param name="cardType">Card type.</param>
         /// <returns>CardRegistration instance returned from API.</returns>
-        protected CardRegistrationDTO GetJohnsCardRegistration()
+        protected CardRegistrationDTO GetJohnsCardRegistration(CardType cardType = CardType.CB_VISA_MASTERCARD)
         {
             if (BaseTest._johnsCardRegistration == null)
             {
                 UserNaturalDTO user = this.GetJohn();
 
-                CardRegistrationPostDTO cardRegistration = new CardRegistrationPostDTO(user.Id, CurrencyIso.EUR);
+				CardRegistrationPostDTO cardRegistration = new CardRegistrationPostDTO(user.Id, CurrencyIso.EUR, cardType);
 
                 BaseTest._johnsCardRegistration = this.Api.CardRegistrations.Create(cardRegistration);
             }
 
             return BaseTest._johnsCardRegistration;
         }
+
+		/// <summary>Creates new card registration object.</summary>
+		/// <param name="cardType">Card type.</param>
+		/// <returns>CardRegistration instance returned from API.</returns>
+		protected CardRegistrationDTO GetNewJohnsCardRegistration(CardType cardType = CardType.CB_VISA_MASTERCARD)
+		{
+			BaseTest._johnsCardRegistration = null;
+
+			return GetJohnsCardRegistration(cardType);
+		}
 
         /// <summary>Creates card registration object.</summary>
         /// <returns>CardPreAuthorization instance returned from API.</returns>

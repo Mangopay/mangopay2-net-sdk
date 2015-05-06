@@ -8,11 +8,12 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>Card registration POST entity.</summary>
     public class CardRegistrationPostDTO : EntityPostBase
     {
-        public CardRegistrationPostDTO(string userId, CurrencyIso currency)
-        {
-            UserId = userId;
-            Currency = currency;
-        }
+		public CardRegistrationPostDTO(string userId, CurrencyIso currency, CardType cardType = CardType.CB_VISA_MASTERCARD)
+		{
+			UserId = userId;
+			Currency = currency;
+			CardType = cardType;
+		}
 
         /// <summary>User identifier.</summary>
         public String UserId { get; set; }
@@ -26,5 +27,9 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Registration data.</summary>
         public String RegistrationData { get; set; }
+
+		/// <summary>Card type.</summary>
+		[JsonConverter(typeof(StringEnumConverter))]
+		public CardType CardType { get; set; }
     }
 }
