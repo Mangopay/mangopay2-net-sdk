@@ -97,9 +97,9 @@ namespace MangoPay.SDK.Tests
             if (BaseTest._johnsAccount == null)
             {
                 UserNaturalDTO john = this.GetJohn();
-                BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR76 1790 6000 3200 0833 5232 973");
+                BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154");
                 account.UserId = john.Id;
-                account.BIC = "BINAADADXXX";
+                account.BIC = "CMBRFR2BCME";
                 BaseTest._johnsAccount = this.Api.Users.CreateBankAccountIban(john.Id, account);
             }
             return BaseTest._johnsAccount;
