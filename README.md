@@ -4,6 +4,11 @@ MangopaySDK is a Microsoft .NET client library to work with
 [Mangopay REST API](http://docs.mangopay.com/api-references/).
 
 
+Compatibility Note
+-------------------------------------------------
+Since v1.0.47 of this SDK, you must be using at least v2.01 of the API ([more information about the changes required](https://docs.mangopay.com/api-v2-01-overview/))
+
+
 Installation and package dependencies
 -------------------------------------------------
 SDK has been written in C#, for .NET Framework 4.5 and has 3 dependencies on external packages. These dependencies are:

@@ -8,7 +8,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>OTHER bank account POST entity.</summary>
     public class BankAccountOtherPostDTO : BankAccountPostDTO
     {
-        public BankAccountOtherPostDTO(String ownerName, String ownerAddress, String accountNumber, String bic)
+		public BankAccountOtherPostDTO(String ownerName, Address ownerAddress, String accountNumber, String bic)
         {
             Type = BankAccountType.OTHER;
             OwnerName = ownerName;
