@@ -67,11 +67,11 @@ namespace MangoPay.SDK.Core
 
             if (!addClientId)
             {
-                url = "/v2.01" + urlKey;
+                url = "/v2" + urlKey;
             }
             else
             {
-                url = "/v2.01/" + _root.Config.ClientId + urlKey;
+                url = "/v2/" + _root.Config.ClientId + urlKey;
             }
 
             bool paramsAdded = false;

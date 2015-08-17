@@ -6,7 +6,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>CA bank account POST entity.</summary>
     public class BankAccountCaPostDTO : BankAccountPostDTO
     {
-		public BankAccountCaPostDTO(String ownerName, Address ownerAddress, String bankName, String institutionNumber, String branchCode, String accountNumber)
+        public BankAccountCaPostDTO(String ownerName, String ownerAddress, String bankName, String institutionNumber, String branchCode, String accountNumber)
         {
             Type = BankAccountType.CA;
             OwnerName = ownerName;

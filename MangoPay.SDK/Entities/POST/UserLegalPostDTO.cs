@@ -32,7 +32,7 @@ namespace MangoPay.SDK.Entities.POST
         public LegalPersonType LegalPersonType { get; set; }
 
         /// <summary>Headquarters address.</summary>
-		public Address HeadquartersAddress { get; set; }
+        public String HeadquartersAddress { get; set; }
 
         /// <summary>Legal representative first name.</summary>
         public String LegalRepresentativeFirstName { get; set; }
@@ -41,7 +41,7 @@ namespace MangoPay.SDK.Entities.POST
         public String LegalRepresentativeLastName { get; set; }
 
         /// <summary>Legal representative address.</summary>
-		public Address LegalRepresentativeAddress { get; set; }
+        public String LegalRepresentativeAddress { get; set; }
 
         /// <summary>Legal representative email.</summary>
         public String LegalRepresentativeEmail { get; set; }
