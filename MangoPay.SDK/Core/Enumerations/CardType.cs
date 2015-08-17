@@ -20,9 +20,6 @@ namespace MangoPay.SDK.Core.Enumerations
         MASTERPASS,
 
         /// <summary>MAESTRO card type.</summary>
-        MAESTRO,
-
-        /// <summary>P24 (Przelewy24) card type.</summary>
-        P24
+        MAESTRO
     }
 }
