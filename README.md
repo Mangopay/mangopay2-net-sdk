@@ -35,7 +35,7 @@ Contact
 Report bugs or suggest features using [issue tracker at GitHub](https://github.com/MangoPay/mangopay2-net-sdk/issues).
 
 
-Client creation example (you need to call it only once)
+Client creation example (you need to use this once only)
 -------------------------------------------------
 
 	using MangoPay.SDK;
