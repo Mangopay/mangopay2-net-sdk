@@ -182,7 +182,7 @@ namespace MangoPay.SDK.Tests
                 WalletDTO wallet = this.GetJohnsWallet();
                 UserNaturalDTO user = this.GetJohn();
 
-                PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CountryIso.FR, CardType.CB_VISA_MASTERCARD);
+				PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
                 BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
             }
@@ -203,7 +203,7 @@ namespace MangoPay.SDK.Tests
             {
                 UserNaturalDTO user = this.GetJohn();
 
-                PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CountryIso.FR, CardType.CB_VISA_MASTERCARD);
+				PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
                 BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
             }
@@ -216,7 +216,7 @@ namespace MangoPay.SDK.Tests
 
             UserNaturalDTO user = this.GetJohn();
 
-            PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CountryIso.FR, CardType.CB_VISA_MASTERCARD);
+			PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
             return this.Api.PayIns.CreateCardWeb(payIn);
         }
@@ -226,7 +226,7 @@ namespace MangoPay.SDK.Tests
             WalletDTO wallet = this.GetJohnsWallet();
             UserNaturalDTO user = this.GetJohn();
 
-            PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CountryIso.FR, CardType.CB_VISA_MASTERCARD);
+			PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
             BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
 

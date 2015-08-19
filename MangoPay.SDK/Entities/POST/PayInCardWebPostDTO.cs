@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn card web POST entity.</summary>
     public class PayInCardWebPostDTO : EntityPostBase
     {
-        public PayInCardWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CountryIso culture, CardType cardType)
+        public PayInCardWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CultureCode culture, CardType cardType)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
@@ -40,7 +40,7 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Culture.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public CountryIso Culture { get; set; }
+		public CultureCode Culture { get; set; }
 
         /// <summary>Card type { CB_VISA_MASTERCARD, AMEX }.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

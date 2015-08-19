@@ -75,6 +75,7 @@
     <Compile Include="Core\Enumerations\BankAccountType.cs" />
     <Compile Include="Core\Enumerations\CardType.cs" />
     <Compile Include="Core\Enumerations\CountryIso.cs" />
+    <Compile Include="Core\Enumerations\CultureCode.cs" />
     <Compile Include="Core\Enumerations\CurrencyIso.cs" />
     <Compile Include="Core\DefaultStorageStrategy.cs" />
     <Compile Include="Core\Enumerations\DirectDebitType.cs" />
