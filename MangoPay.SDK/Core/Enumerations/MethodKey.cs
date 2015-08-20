@@ -62,6 +62,13 @@ namespace MangoPay.SDK.Core.Enumerations
         WalletsGet,
         WalletsSave,
 
-        ClientGetKycDocuments
+        ClientGetKycDocuments,
+
+		ClientGetWalletsDefault,
+		ClientGetWalletsFees,
+		ClientGetWalletsCredit,
+		ClientGetWalletsDefaultWithCurrency,
+		ClientGetWalletsFeesWithCurrency,
+		ClientGetWalletsCreditWithCurrency
     }
 }

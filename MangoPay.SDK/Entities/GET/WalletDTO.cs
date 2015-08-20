@@ -20,6 +20,10 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Currency code in ISO.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public CurrencyIso Currency { get; set; }
+		public CurrencyIso Currency { get; set; }
+
+		/// <summary>Currency code in ISO.</summary>
+		[JsonConverter(typeof(StringEnumConverter))]
+		public FundsType FundsType { get; set; }
     }
 }
