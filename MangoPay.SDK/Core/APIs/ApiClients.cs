@@ -46,5 +46,31 @@ namespace MangoPay.SDK.Core.APIs
 
             return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, null, sort, filter.GetValues());
         }
+
+		public ListPaginated<WalletDTO> GetWallets(FundsType fundsType, Pagination pagination, CurrencyIso currency = CurrencyIso.NotSpecified)
+		{
+			string currencyParam = currency == CurrencyIso.NotSpecified ? "" : currency.ToString();
+
+			MethodKey? methodKey = null;
+
+			if (fundsType == FundsType.FEES)
+			{
+				if (currencyParam != "") methodKey = MethodKey.ClientGetWalletsFeesWithCurrency;
+				else methodKey = MethodKey.ClientGetWalletsFees;
+			}
+			else if (fundsType == FundsType.CREDIT)
+			{
+				if (currencyParam != "") methodKey = MethodKey.ClientGetWalletsCreditWithCurrency;
+				else methodKey = MethodKey.ClientGetWalletsCredit;
+			}
+			else if (fundsType == FundsType.DEFAULT)
+			{
+				if (currencyParam != "") methodKey = MethodKey.ClientGetWalletsDefaultWithCurrency;
+				else methodKey = MethodKey.ClientGetWalletsDefault;
+			}
+
+			if (methodKey.HasValue) return this.GetList<WalletDTO>(methodKey.Value, pagination, currencyParam);
+			else return null;
+		}
     }
 }
