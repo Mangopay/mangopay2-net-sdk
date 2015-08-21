@@ -6,6 +6,6 @@ namespace MangoPay.SDK.Entities.PUT
     public class CardPutDTO : EntityPutBase
     {
         /// <summary>You only can switch from TRUE to FALSE to disable the card. Note that this action is irreversible.</summary>
-        public bool Active { get; set; }
+        public bool? Active { get; set; }
     }
 }

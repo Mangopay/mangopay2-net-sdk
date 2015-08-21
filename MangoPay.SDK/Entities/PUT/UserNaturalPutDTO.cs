@@ -26,15 +26,15 @@ namespace MangoPay.SDK.Entities.PUT
 
         /// <summary>Date of birth.</summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         /// <summary>User's country.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public CountryIso Nationality { get; set; }
+        public CountryIso? Nationality { get; set; }
 
         /// <summary>Country of residence.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public CountryIso CountryOfResidence { get; set; }
+        public CountryIso? CountryOfResidence { get; set; }
 
         /// <summary>User's occupation.</summary>
         public String Occupation { get; set; }
