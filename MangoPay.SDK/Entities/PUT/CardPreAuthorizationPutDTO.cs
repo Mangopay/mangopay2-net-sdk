@@ -13,6 +13,6 @@ namespace MangoPay.SDK.Entities.PUT
 
         /// <summary>The status of the payment after the PreAuthorization.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public PaymentStatus PaymentStatus { get; set; }
+        public PaymentStatus? PaymentStatus { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace MangoPay.SDK.Entities.PUT
     {
         /// <summary>Status of KYC document.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public KycStatus Status { get; set; }
+        public KycStatus? Status { get; set; }
     }
 }

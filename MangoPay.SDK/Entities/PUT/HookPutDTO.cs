@@ -16,6 +16,6 @@ namespace MangoPay.SDK.Entities.PUT
 
         /// <summary>Hook status.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public HookStatus Status { get; set; }
+        public HookStatus? Status { get; set; }
     }
 }
