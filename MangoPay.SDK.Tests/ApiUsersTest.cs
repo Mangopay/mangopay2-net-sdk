@@ -200,16 +200,8 @@ namespace MangoPay.SDK.Tests
 
                 UserNaturalPutDTO johnPut = new UserNaturalPutDTO
                 {
-                    Tag = john.Tag,
-                    Email = john.Email,
-                    FirstName = john.FirstName,
-                    LastName = john.LastName + " - CHANGED",
-                    Address = john.Address,
-                    Birthday = john.Birthday,
-                    Nationality = john.Nationality,
-                    CountryOfResidence = john.CountryOfResidence,
-                    Occupation = john.Occupation,
-                    IncomeRange = john.IncomeRange
+					LastName = john.LastName + " - CHANGED",
+					Nationality = CountryIso.DK
                 };
 
                 UserNaturalDTO userSaved = this.Api.Users.UpdateNatural(johnPut, john.Id);

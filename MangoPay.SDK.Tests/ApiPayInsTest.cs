@@ -230,7 +230,7 @@ namespace MangoPay.SDK.Tests
             WalletDTO wallet = this.GetJohnsWallet();
             UserNaturalDTO user = this.GetJohn();
             // create pay-in DIRECT DEBIT
-            PayInDirectDebitPostDTO payIn = new PayInDirectDebitPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 100, Currency = CurrencyIso.EUR }, wallet.Id, "http://www.mysite.com/returnURL/", CountryIso.FR, DirectDebitType.GIROPAY);
+            PayInDirectDebitPostDTO payIn = new PayInDirectDebitPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 100, Currency = CurrencyIso.EUR }, wallet.Id, "http://www.mysite.com/returnURL/", CultureCode.FR, DirectDebitType.GIROPAY);
 
             payIn.TemplateURLOptions = new TemplateURLOptions { PAYLINE = "https://www.maysite.com/payline_template/" };
             payIn.Tag = "DirectDebit test tag";
@@ -242,7 +242,7 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(wallet.Id, createPayIn.CreditedWalletId);
             Assert.IsTrue(createPayIn.PaymentType == PayInPaymentType.DIRECT_DEBIT);
             Assert.IsTrue(createPayIn.DirectDebitType == DirectDebitType.GIROPAY);
-            Assert.IsTrue(createPayIn.Culture == CountryIso.FR);
+            Assert.IsTrue(createPayIn.Culture == CultureCode.FR);
             Assert.AreEqual(user.Id, createPayIn.AuthorId);
             Assert.IsTrue(createPayIn.Status == TransactionStatus.CREATED);
             Assert.IsTrue(createPayIn.Type == TransactionType.PAYIN);
