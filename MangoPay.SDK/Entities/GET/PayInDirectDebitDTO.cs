@@ -14,7 +14,7 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Culture.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public CountryIso Culture { get; set; }
+        public CultureCode Culture { get; set; }
 
         /// <summary>Redirect URL.</summary>
         public String RedirectURL { get; set; }

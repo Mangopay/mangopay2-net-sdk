@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn direct debit POST entity.</summary>
     public class PayInDirectDebitPostDTO : EntityPostBase
     {
-        public PayInDirectDebitPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CountryIso culture, DirectDebitType directDebitType)
+        public PayInDirectDebitPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CultureCode culture, DirectDebitType directDebitType)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
@@ -40,7 +40,7 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Culture (language).</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public CountryIso Culture { get; set; }
+        public CultureCode Culture { get; set; }
 
         /// <summary>Direct debit type.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
