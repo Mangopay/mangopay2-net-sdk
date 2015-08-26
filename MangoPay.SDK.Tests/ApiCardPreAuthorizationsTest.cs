@@ -20,6 +20,7 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual(cardPreAuthorization.Status, PreAuthorizationStatus.SUCCEEDED);
                 Assert.AreEqual(cardPreAuthorization.PaymentStatus, PaymentStatus.WAITING);
                 Assert.AreEqual(cardPreAuthorization.ExecutionType, PreAuthorizationExecutionType.DIRECT);
+                Assert.AreEqual(cardPreAuthorization.PaymentType, PreAuthorizationPaymentType.CARD);
                 Assert.IsNull(cardPreAuthorization.PayInId);
             }
             catch (Exception ex)

@@ -13,9 +13,6 @@ namespace MangoPay.SDK.Core.Enumerations
         /// <summary>BANK WIRE payment type.</summary>
         BANK_WIRE, 
 
-        /// <summary>AUTOMATIC DEBIT payment type.</summary>
-        AUTOMATIC_DEBIT, 
-
         /// <summary>DIRECT DEBIT payment type.</summary>
         DIRECT_DEBIT,
 

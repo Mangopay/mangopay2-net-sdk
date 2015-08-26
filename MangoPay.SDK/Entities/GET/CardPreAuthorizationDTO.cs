@@ -34,6 +34,9 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>How the PreAuthorization has been executed..</summary>
         public PreAuthorizationExecutionType ExecutionType { get; set; }
 
+        /// <summary>How the PreAuthorization has been paid..</summary>
+        public PreAuthorizationPaymentType PaymentType { get; set; }
+
         /// <summary>The SecureMode correspond to '3D secure' for CB Visa and MasterCard 
         /// or 'Amex Safe Key' for American Express. 
         /// This field lets you activate it manually.</summary>

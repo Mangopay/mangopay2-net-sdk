@@ -8,12 +8,6 @@ namespace MangoPay.SDK.Core.Enumerations
         NotSpecified,
 
         /// <summary>BANK WIRE payment type.</summary>
-        BANK_WIRE, 
-
-        /// <summary>MERCHANT EXPENSE payment type.</summary>
-        MERCHANT_EXPENSE, 
-
-        /// <summary>AMAZON GIFTCARD payment type.</summary>
-        AMAZON_GIFTCARD
+        BANK_WIRE
     }
 }
