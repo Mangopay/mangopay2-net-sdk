@@ -82,6 +82,7 @@
     <Compile Include="Core\Enumerations\DepositAccountType .cs" />
     <Compile Include="Core\Enumerations\KycLevel.cs" />
     <Compile Include="Core\Enumerations\MethodKey.cs" />
+    <Compile Include="Core\Enumerations\PreAuthorizationPaymentType.cs" />
     <Compile Include="Core\Enumerations\SortDirection.cs" />
     <Compile Include="Core\Enumerations\RefundReasonType.cs" />
     <Compile Include="Core\FilterKycDocuments.cs" />
