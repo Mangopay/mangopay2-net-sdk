@@ -55,9 +55,13 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>This is the URL where users are automatically redirected after 3D secure validation (if activated).</summary>
         public String SecureModeReturnURL { get; set; }
 
+        /// <summary>The date when the preauth expires.</summary>
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime? ExpirationDate { get; set; }
+
         /// <summary>The date when the payment has been processed.</summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime ExpirationDate { get; set; }
+        public DateTime? AuthorizationDate { get; set; }
 
         /// <summary>Identifier of the associated PayIn.</summary>
         public String PayInId { get; set; }
