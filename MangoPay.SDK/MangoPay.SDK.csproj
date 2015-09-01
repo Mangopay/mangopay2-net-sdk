@@ -58,6 +58,7 @@
     <Compile Include="Core\APIs\ApiBase.cs" />
     <Compile Include="Core\APIs\ApiCardPreauthorizations.cs" />
     <Compile Include="Core\APIs\ApiCardRegistrations.cs" />
+    <Compile Include="Core\APIs\ApiKyc.cs" />
     <Compile Include="Core\APIs\ApiCards.cs" />
     <Compile Include="Core\APIs\ApiClients.cs" />
     <Compile Include="Core\APIs\ApiEvents.cs" />
