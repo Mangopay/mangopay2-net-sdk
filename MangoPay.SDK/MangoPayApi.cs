@@ -30,7 +30,6 @@ namespace MangoPay.SDK
             Events = new ApiEvents(this);
             CardPreAuthorizations = new ApiCardPreAuthorizations(this);
             Hooks = new ApiHooks(this);
-			Kyc = new ApiKyc(this);
         }
 
         /// <summary>Provides authorization token methods.</summary>
@@ -79,9 +78,6 @@ namespace MangoPay.SDK
 
         /// <summary>Provides Hooks methods.</summary>
         public ApiHooks Hooks;
-
-		/// <summary>Provides KYC methods.</summary>
-		public ApiKyc Kyc;
 
         #endregion
     }
