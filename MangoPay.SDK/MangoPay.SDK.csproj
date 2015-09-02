@@ -69,6 +69,7 @@
     <Compile Include="Core\APIs\ApiTransfers.cs" />
     <Compile Include="Core\APIs\ApiUsers.cs" />
     <Compile Include="Core\APIs\ApiWallets.cs" />
+    <Compile Include="Core\APIs\ApiKyc.cs" />
     <Compile Include="Core\AuthenticationHelper.cs" />
     <Compile Include="Core\AuthorizationTokenManager.cs" />
     <Compile Include="Core\Constants.cs" />
