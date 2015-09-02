@@ -35,7 +35,7 @@ namespace MangoPay.SDK.Core.APIs
             return restTool.Request<ClientDTO, ClientDTO>(urlMethod, requestType, requestData);
         }
 
-        /// <summary>Gets the list of all the uploaded documents for all users.</summary>
+        /// <summary>***Now depreciated and soon to be removed from this class (already moved to ApiKyc.cs)*** Gets the list of all the uploaded documents for all users.</summary>
         /// <param name="pagination">Pagination.</param>
         /// <param name="filter">Filter.</param>
         /// <param name="sort">Sort.</param>

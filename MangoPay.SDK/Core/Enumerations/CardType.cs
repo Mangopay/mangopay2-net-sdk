@@ -23,6 +23,9 @@ namespace MangoPay.SDK.Core.Enumerations
         MAESTRO,
 
         /// <summary>P24 (Przelewy24) card type.</summary>
-        P24
+        P24,
+
+        /// <summary>IDEAL card type.</summary>
+        IDEAL
     }
 }
