@@ -86,6 +86,8 @@ namespace MangoPay.SDK.Core.APIs
 
             { MethodKey.ClientGetKycDocuments, new String[] { "/KYC/documents", RequestType.GET } },
 
+			{ MethodKey.GetKycDocument, new String[] { "/KYC/documents/{0}", RequestType.GET } },
+
             { MethodKey.ClientGetWalletsDefault, new String[] { "/account/wallets", RequestType.GET } },
 			{ MethodKey.ClientGetWalletsFees, new String[] { "/account/wallets/fees", RequestType.GET } },
 			{ MethodKey.ClientGetWalletsCredit, new String[] { "/account/wallets/credit", RequestType.GET } },

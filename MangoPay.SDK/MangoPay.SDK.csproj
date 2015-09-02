@@ -62,6 +62,7 @@
     <Compile Include="Core\APIs\ApiClients.cs" />
     <Compile Include="Core\APIs\ApiEvents.cs" />
     <Compile Include="Core\APIs\ApiHooks.cs" />
+    <Compile Include="Core\APIs\ApiKyc.cs" />
     <Compile Include="Core\APIs\ApiOAuth.cs" />
     <Compile Include="Core\APIs\ApiPayIns.cs" />
     <Compile Include="Core\APIs\ApiPayOuts.cs" />
