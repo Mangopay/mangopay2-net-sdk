@@ -307,16 +307,16 @@ namespace MangoPay.SDK.Tests
             try
             {
                 UserNaturalDTO john = this.GetJohn();
-                BankAccountGbPostDTO account = new BankAccountGbPostDTO(john.FirstName + " " + john.LastName, john.Address, "18329068");
-                account.SortCode = "306541";
+                BankAccountGbPostDTO account = new BankAccountGbPostDTO(john.FirstName + " " + john.LastName, john.Address, "63956474");
+                account.SortCode = "200000";
 
                 BankAccountDTO createAccount = this.Api.Users.CreateBankAccountGb(john.Id, account);
 
                 Assert.IsTrue(createAccount.Id.Length > 0);
                 Assert.IsTrue(createAccount.UserId == (john.Id));
                 Assert.IsTrue(createAccount.Type == BankAccountType.GB);
-                Assert.IsTrue(((BankAccountGbDTO)createAccount).AccountNumber == "18329068");
-                Assert.IsTrue(((BankAccountGbDTO)createAccount).SortCode == "306541");
+                Assert.IsTrue(((BankAccountGbDTO)createAccount).AccountNumber == "63956474");
+                Assert.IsTrue(((BankAccountGbDTO)createAccount).SortCode == "200000");
             }
             catch (Exception ex)
             {
