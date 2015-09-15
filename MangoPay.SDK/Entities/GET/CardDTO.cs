@@ -8,6 +8,9 @@ namespace MangoPay.SDK.Entities.GET
     /// <summary>Card entity.</summary>
     public class CardDTO : EntityBase
     {
+        /// <summary>Country.</summary>
+        public String Country { get; set; }
+        
         /// <summary>Expiration date.</summary>
         public String ExpirationDate { get; set; }
 
