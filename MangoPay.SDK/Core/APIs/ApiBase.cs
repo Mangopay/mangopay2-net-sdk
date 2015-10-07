@@ -94,6 +94,28 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.ClientGetWalletsDefaultWithCurrency, new String[] { "/account/wallets/{0}", RequestType.GET } },
 			{ MethodKey.ClientGetWalletsFeesWithCurrency, new String[] { "/account/wallets/fees/{0}", RequestType.GET } },
 			{ MethodKey.ClientGetWalletsCreditWithCurrency, new String[] { "/account/wallets/credit/{0}", RequestType.GET } }
+
+			{ MethodKey.DisputesGet, new String[] { "/disputes/{0}", RequestType.GET } },
+			{ MethodKey.DisputesSaveTag, new String[] { "/disputes/{0}", RequestType.PUT } },
+			{ MethodKey.DisputesSaveContestFunds, new String[] { "/disputes/{0}/submit", RequestType.PUT } },
+			{ MethodKey.DisputeSaveClose, new String[] { "/disputes/{0}/close", RequestType.PUT } },
+
+			{ MethodKey.DisputesGetTransactions, new String[] { "/disputes/{0}/transactions", RequestType.GET } },
+
+			{ MethodKey.DisputesGetAll, new String[] { "/disputes", RequestType.GET } },
+			{ MethodKey.DisputesGetForWallet, new String[] { "/wallets/{0}/disputes", RequestType.GET } },
+			{ MethodKey.DisputesGetForUser, new String[] { "/users/{0}/disputes", RequestType.GET } },
+
+			{ MethodKey.DisputesDocumentCreate, new String[] { "/disputes/{0}/documents", RequestType.POST } },
+			{ MethodKey.DisputesDocumentPageCreate, new String[] { "/disputes/{0}/documents/{1}/pages", RequestType.POST } },
+			{ MethodKey.DisputesDocumentSubmit, new String[] { "/disputes/{0}/documents/{1}", RequestType.PUT } },
+			{ MethodKey.DisputesDocumentGet, new String[] { "/dispute-documents/{0}", RequestType.GET } },
+			{ MethodKey.DisputesDocumentGetForDispute, new String[] { "/disputes/{0}/documents", RequestType.GET } },
+			{ MethodKey.DisputesDocumentGetForClient, new String[] { "/dispute-documents", RequestType.GET } },
+
+			{ MethodKey.DisputesRepudiationGet, new String[] { "/repudiations/{0}", RequestType.GET } },
+
+			{ MethodKey.DisputesRepudiationCreateSettlement, new String[] { "/repudiations/{0}/settlementtransfer", RequestType.POST } },
         };
 
         /// <summary>Creates new API instance.</summary>

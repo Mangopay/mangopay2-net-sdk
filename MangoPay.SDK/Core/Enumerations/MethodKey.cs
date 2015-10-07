@@ -61,15 +61,29 @@ namespace MangoPay.SDK.Core.Enumerations
         WalletsCreate,
         WalletsGet,
         WalletsSave,
-
 		ClientGetKycDocuments,
 		GetKycDocument,
-
 		ClientGetWalletsDefault,
 		ClientGetWalletsFees,
 		ClientGetWalletsCredit,
 		ClientGetWalletsDefaultWithCurrency,
 		ClientGetWalletsFeesWithCurrency,
-		ClientGetWalletsCreditWithCurrency
+		ClientGetWalletsCreditWithCurrency,		
+		DisputesGet,
+		DisputesSaveTag,
+		DisputesSaveContestFunds,
+		DisputeSaveClose,
+		DisputesGetTransactions,		
+		DisputesGetAll,
+		DisputesGetForWallet,
+		DisputesGetForUser,
+		DisputesDocumentCreate,
+		DisputesDocumentPageCreate,
+		DisputesDocumentSubmit,
+		DisputesDocumentGet,
+		DisputesDocumentGetForDispute,
+		DisputesDocumentGetForClient,
+		DisputesRepudiationGet,
+		DisputesRepudiationCreateSettlement 
     }
 }
