@@ -1,8 +1,7 @@
-﻿using MangoPay.SDK.Core;
-
+﻿
 namespace MangoPay.SDK.Entities.GET
 {
-    public class KycPageDTO : PageDTO
+	public class DisputePageDTO : PageDTO
     {
         // Intentionally empty. Class added to achieve code consistency.
     }
