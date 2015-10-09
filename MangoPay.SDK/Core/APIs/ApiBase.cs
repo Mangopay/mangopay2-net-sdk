@@ -93,7 +93,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.ClientGetWalletsCredit, new String[] { "/account/wallets/credit", RequestType.GET } },
 			{ MethodKey.ClientGetWalletsDefaultWithCurrency, new String[] { "/account/wallets/{0}", RequestType.GET } },
 			{ MethodKey.ClientGetWalletsFeesWithCurrency, new String[] { "/account/wallets/fees/{0}", RequestType.GET } },
-			{ MethodKey.ClientGetWalletsCreditWithCurrency, new String[] { "/account/wallets/credit/{0}", RequestType.GET } }
+			{ MethodKey.ClientGetWalletsCreditWithCurrency, new String[] { "/account/wallets/credit/{0}", RequestType.GET } },
 
 			{ MethodKey.DisputesGet, new String[] { "/disputes/{0}", RequestType.GET } },
 			{ MethodKey.DisputesSaveTag, new String[] { "/disputes/{0}", RequestType.PUT } },
