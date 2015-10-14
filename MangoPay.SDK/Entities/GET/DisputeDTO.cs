@@ -16,7 +16,7 @@ namespace MangoPay.SDK.Entities.GET
         [JsonConverter(typeof(StringEnumConverter))]
 		public InitialTransactionType? InitialTransactionType { get; set; }
 
-        /// <summary>Date.</summary>
+        /// <summary>Type of dispute.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]
 		public DisputeType? DisputeType { get; set; }
 
