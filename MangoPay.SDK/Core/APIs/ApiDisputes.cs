@@ -4,7 +4,6 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace MangoPay.SDK.Core.APIs
@@ -26,48 +25,60 @@ namespace MangoPay.SDK.Core.APIs
 
 		/// <summary>Gets all disputes.</summary>
 		/// <param name="pagination">Pagination.</param>
+		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of Dispute instances returned from API.</returns>
-		public ListPaginated<DisputeDTO> GetAll(Pagination pagination, Sort sort = null)
+		public ListPaginated<DisputeDTO> GetAll(Pagination pagination, FilterDisputes filters, Sort sort = null)
 		{
-			return this.GetList<DisputeDTO>(MethodKey.DisputesGetAll, pagination, sort);
+			if (filters == null) filters = new FilterDisputes();
+
+			return this.GetList<DisputeDTO>(MethodKey.DisputesGetAll, pagination, null, sort, filters.GetValues());
 		}
 
 		/// <summary>Gets all disputes.</summary>
 		/// <returns>List of Dispute instances returned from API.</returns>
 		public ListPaginated<DisputeDTO> GetAll()
 		{
-			return this.GetAll(null);
+			return this.GetAll(null, null);
 		}
 
 		/// <summary>Gets dispute's transactions.</summary>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <param name="pagination">Pagination.</param>
+		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of Transaction instances returned from API.</returns>
-		public ListPaginated<TransactionDTO> GetTransactions(String disputeId, Pagination pagination, Sort sort = null)
+		public ListPaginated<TransactionDTO> GetTransactions(String disputeId, Pagination pagination, FilterTransactions filters, Sort sort = null)
 		{
-			return this.GetList<TransactionDTO>(MethodKey.DisputesGetTransactions, pagination, disputeId, sort);
+			if (filters == null) filters = new FilterTransactions();
+
+			return this.GetList<TransactionDTO>(MethodKey.DisputesGetTransactions, pagination, disputeId, sort, filters.GetValues());
 		}
 
 		/// <summary>Gets dispute's documents for wallet.</summary>
 		/// <param name="walletId">Wallet identifier.</param>
 		/// <param name="pagination">Pagination.</param>
+		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of dispute instances returned from API.</returns>
-		public ListPaginated<DisputeDTO> GetDisputesForWallet(String walletId, Pagination pagination, Sort sort = null)
+		public ListPaginated<DisputeDTO> GetDisputesForWallet(String walletId, Pagination pagination, FilterDisputes filters, Sort sort = null)
 		{
-			return this.GetList<DisputeDTO>(MethodKey.DisputesGetForWallet, pagination, walletId, sort);
+			if (filters == null) filters = new FilterDisputes();
+
+			return this.GetList<DisputeDTO>(MethodKey.DisputesGetForWallet, pagination, walletId, sort, filters.GetValues());
 		}
 
 		/// <summary>Gets user's disputes.</summary>
 		/// <param name="userId">User identifier.</param>
 		/// <param name="pagination">Pagination.</param>
+		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of Dispute instances returned from API.</returns>
-		public ListPaginated<DisputeDTO> GetDisputesForUser(String userId, Pagination pagination, Sort sort = null)
+		public ListPaginated<DisputeDTO> GetDisputesForUser(String userId, Pagination pagination, FilterDisputes filters, Sort sort = null)
 		{
-			return this.GetList<DisputeDTO>(MethodKey.DisputesGetForUser, pagination, userId, sort);
+			if (filters == null) filters = new FilterDisputes();
+
+			return this.GetList<DisputeDTO>(MethodKey.DisputesGetForUser, pagination, userId, sort, filters.GetValues());
 		}
 
 		/// <summary>Gets dispute's document.</summary>
@@ -81,20 +92,26 @@ namespace MangoPay.SDK.Core.APIs
 		/// <summary>Gets documents for dispute.</summary>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <param name="pagination">Pagination.</param>
+		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of DisputeDocument instances returned from API.</returns>
-		public ListPaginated<DisputeDocumentDTO> GetDocumentsForDispute(String disputeId, Pagination pagination, Sort sort = null)
+		public ListPaginated<DisputeDocumentDTO> GetDocumentsForDispute(String disputeId, Pagination pagination, FilterDisputeDocuments filters, Sort sort = null)
 		{
-			return this.GetList<DisputeDocumentDTO>(MethodKey.DisputesDocumentGetForDispute, pagination, disputeId, sort);
+			if (filters == null) filters = new FilterDisputeDocuments();
+
+			return this.GetList<DisputeDocumentDTO>(MethodKey.DisputesDocumentGetForDispute, pagination, disputeId, sort, filters.GetValues());
 		}
 
 		/// <summary>Gets dispute's documents for client.</summary>
 		/// <param name="pagination">Pagination.</param>
+		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of dispute documents returned from API.</returns>
-		public ListPaginated<DisputeDocumentDTO> GetDocumentsForClient(Pagination pagination, Sort sort = null)
+		public ListPaginated<DisputeDocumentDTO> GetDocumentsForClient(Pagination pagination, FilterDisputeDocuments filters, Sort sort = null)
 		{
-			return this.GetList<DisputeDocumentDTO>(MethodKey.DisputesDocumentGetForClient, pagination, sort);
+			if (filters == null) filters = new FilterDisputeDocuments();
+
+			return this.GetList<DisputeDocumentDTO>(MethodKey.DisputesDocumentGetForClient, pagination, null, sort, filters.GetValues());
 		}
 
 		/// <summary>Gets repudiation.</summary>

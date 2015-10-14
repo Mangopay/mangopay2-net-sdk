@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
@@ -29,7 +30,7 @@ namespace MangoPay.SDK.Tests
 		[TestInitialize]
 		public void Initialize()
 		{
-			_clientDisputes = Api.Disputes.GetAll(new Pagination(1, 50));
+			_clientDisputes = Api.Disputes.GetAll(new Pagination(1, 100), null);
 
 			if (_clientDisputes == null || _clientDisputes.Count == 0)
 				Assert.Fail("INITIALIZATION FAILURE - cannot test disputes");
@@ -60,7 +61,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = Api.Disputes.GetTransactions(_clientDisputes[0].Id, new Pagination(1, 10));
+				result = Api.Disputes.GetTransactions(_clientDisputes[0].Id, new Pagination(1, 10), null);
 			}
 			catch (Exception ex)
 			{
@@ -85,7 +86,7 @@ namespace MangoPay.SDK.Tests
 			{
 				string walletId = Api.PayIns.Get(dispute.InitialTransactionId).CreditedWalletId;
 
-				result = Api.Disputes.GetDisputesForWallet(walletId, new Pagination(1, 10));
+				result = Api.Disputes.GetDisputesForWallet(walletId, new Pagination(1, 10), null);
 			}
 			catch (Exception ex)
 			{
@@ -102,9 +103,9 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				string userId = Api.Disputes.GetTransactions(_clientDisputes[0].Id, new Pagination(1, 1))[0].AuthorId;
+				string userId = Api.Disputes.GetTransactions(_clientDisputes[0].Id, new Pagination(1, 1), null)[0].AuthorId;
 
-				result = Api.Disputes.GetDisputesForUser(userId, new Pagination(1, 20));
+				result = Api.Disputes.GetDisputesForUser(userId, new Pagination(1, 20), null);
 			}
 			catch (Exception ex)
 			{
@@ -179,7 +180,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				Money contestedFunds = notContestedDispute.Status == DisputeStatus.PENDING_CLIENT_ACTION ? new Money { Amount = 0, Currency = CurrencyIso.EUR } : null;
+				Money contestedFunds = notContestedDispute.Status == DisputeStatus.PENDING_CLIENT_ACTION ? new Money { Amount = 100, Currency = CurrencyIso.EUR } : null;
 
 				result = Api.Disputes.ContestDispute(contestedFunds, notContestedDispute.Id);
 			}
@@ -280,7 +281,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = Api.Disputes.GetDocumentsForDispute(dispute.Id, new Pagination(1, 1));
+				result = Api.Disputes.GetDocumentsForDispute(dispute.Id, new Pagination(1, 1), null);
 			}
 			catch (Exception ex)
 			{
@@ -297,7 +298,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = Api.Disputes.GetDocumentsForClient(new Pagination(1, 1));
+				result = Api.Disputes.GetDocumentsForClient(new Pagination(1, 1), null);
 			}
 			catch (Exception ex)
 			{
@@ -321,7 +322,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				disputeDocument = Api.Disputes.GetDocumentsForDispute(dispute.Id, new Pagination(1, 1)).First();
+				disputeDocument = Api.Disputes.GetDocumentsForDispute(dispute.Id, new Pagination(1, 1), null).First();
 
 				DisputeDocumentPutDTO disputeDocumentPut = new DisputeDocumentPutDTO
 				{
@@ -352,7 +353,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				string repudiationId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1))[0].Id;
+				string repudiationId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1), null)[0].Id;
 
 				result = Api.Disputes.GetRepudiation(repudiationId);
 			}
@@ -377,7 +378,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				string repudiationId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1))[0].Id;
+				string repudiationId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1), null)[0].Id;
 
 				repudiation = Api.Disputes.GetRepudiation(repudiationId);
 
@@ -391,6 +392,67 @@ namespace MangoPay.SDK.Tests
 			}
 
 			Assert.IsNotNull(result);
+		}
+
+		[TestMethod]
+		public void Test_GetFilteredDisputes()
+		{
+			ListPaginated<DisputeDTO> result1 = null;
+			ListPaginated<DisputeDTO> result2 = null;
+
+			try
+			{
+				result1 = Api.Disputes.GetAll(new Pagination(1, 100), new FilterDisputes { AfterDate = DateTime.Now });
+				result2 = Api.Disputes.GetAll(new Pagination(1, 100), new FilterDisputes { BeforeDate = DateTime.Now });
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			Assert.IsNotNull(result1);
+			Assert.IsNotNull(result2);
+			Assert.IsTrue(result1.Count == 0);
+			Assert.IsTrue(result2.Count > 0);
+		}
+
+		[TestMethod]
+		public void Test_GetFilteredDisputeDocuments()
+		{
+			ListPaginated<DisputeDocumentDTO> result1 = null;
+			ListPaginated<DisputeDocumentDTO> result2 = null;
+			ListPaginated<DisputeDocumentDTO> result3 = null;
+
+			try
+			{
+				result1 = Api.Disputes.GetDocumentsForClient(new Pagination(1, 100), new FilterDisputeDocuments { AfterDate = DateTime.Now });
+				result2 = Api.Disputes.GetDocumentsForClient(new Pagination(1, 100), new FilterDisputeDocuments { BeforeDate = DateTime.Now });
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			Assert.IsNotNull(result1);
+			Assert.IsNotNull(result2);
+			Assert.IsTrue(result1.Count == 0);
+			Assert.IsTrue(result2.Count > 0);
+
+			try
+			{
+				result3 = Api.Disputes.GetDocumentsForClient(new Pagination(1, 100), new FilterDisputeDocuments { Type = result2[0].Type });
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			Assert.IsNotNull(result3);
+			Assert.IsTrue(result3.Count > 0);
+			foreach (DisputeDocumentDTO dd in result3)
+			{
+				Assert.IsTrue(dd.Type == result2[0].Type);
+			}
 		}
     }
 }

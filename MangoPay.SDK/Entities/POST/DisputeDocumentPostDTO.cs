@@ -16,8 +16,5 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Type of dispute document.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public DisputeDocumentType Type { get; set; }
-
-        /// <summary>Custom data.</summary>
-        public String Tag { get; set; }
     }
 }
