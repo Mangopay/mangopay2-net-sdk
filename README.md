@@ -30,25 +30,14 @@ Contact
 Report bugs or suggest features using [issue tracker at GitHub](https://github.com/MangoPay/mangopay2-net-sdk/issues).
 
 
-Client creation example (you need to use this once only)
+Account creation
 -------------------------------------------------
-
-	using MangoPay.SDK;
-	using MangoPay.SDK.Entities.GET;
-	(...)
-	
-    MangoPayApi api = new MangoPayApi();
-	
-    ClientDTO client = api.Clients.Create("your-client-id", "your-client-name", "your-client-email@sample.org");
-
-    // you'll receive your passphrase here, note it down and keep in secret
-    string passphrase = client.Passphrase;
+You can get yourself a [free sandbox account](https://www.mangopay.com/get-started/create-sandbox/) or sign up for a [production account](https://www.mangopay.com/get-started/submit-your-app/create-credentials/) (note that validation of your production account can take a few days, so think about doing it in advance of when you actually want to go live).
 
 
 Configuration
 -------------------------------------------------
-See the example above and call `api.Clients.Create(...)` to get your passphrase. 
-Then set `api.Config.ClientId` to your Mangopay Client ID and `api.Config.ClientPassword` to your passphrase.
+Using the credential info from the signup process above, you should then set `api.Config.ClientId` to your Mangopay Client ID and `api.Config.ClientPassword` to your passphrase.
 
 `api.Config.BaseUrl` is set to sandbox environment by default. To enable production environment, set it to `https://api.mangopay.com`:
 
