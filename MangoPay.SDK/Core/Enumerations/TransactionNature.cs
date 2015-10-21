@@ -14,6 +14,9 @@ namespace MangoPay.SDK.Core.Enumerations
         REFUND, 
 
         /// <summary>REPUDIATION transaction nature.</summary>
-        REPUDIATION
+        REPUDIATION,
+
+		/// <summary>SETTLEMENT transaction nature.</summary>
+		SETTLEMENT
     }
 }

@@ -6,7 +6,7 @@ using System;
 namespace MangoPay.SDK.Entities.GET
 {
     /// <summary>KYC document entity.</summary>
-    public class KycDocumentDTO : EntityBase
+    public class KycDocumentDTO : DocumentDTO
     {
         /// <summary>Type of KYC document.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -15,14 +15,5 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>Status of KYC document.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public KycStatus Status { get; set; }
-
-        /// <summary>Refused reason type.</summary>
-        public String RefusedReasonType { get; set; }
-
-        /// <summary>Refused reason message.</summary>
-        public String RefusedReasonMessage { get; set; }
-
-        /// <summary>User identifier.</summary>
-        public String UserId { get; set; }
     }
 }
