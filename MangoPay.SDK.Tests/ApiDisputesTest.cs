@@ -30,7 +30,10 @@ namespace MangoPay.SDK.Tests
 		[TestInitialize]
 		public void Initialize()
 		{
-			_clientDisputes = Api.Disputes.GetAll(new Pagination(1, 100), null);
+			Sort sort = new Sort();
+			sort.AddField("CreationDate", SortDirection.desc);
+
+			_clientDisputes = Api.Disputes.GetAll(new Pagination(1, 100), null, sort);
 
 			if (_clientDisputes == null || _clientDisputes.Count == 0)
 				Assert.Fail("INITIALIZATION FAILURE - cannot test disputes");
@@ -453,6 +456,29 @@ namespace MangoPay.SDK.Tests
 			{
 				Assert.IsTrue(dd.Type == result2[0].Type);
 			}
+		}
+
+		[TestMethod]
+		public void Test_ResubmitDispute()
+		{
+			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
+
+			DisputeDTO result = null;
+
+			if (dispute == null)
+				Assert.Fail("Cannot test resubmitting dispute because there's no re-opened disputes in the disputes list.");
+
+			try
+			{
+				result = Api.Disputes.ResubmitDispute(dispute.Id);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.Status == DisputeStatus.SUBMITTED);
 		}
     }
 }
