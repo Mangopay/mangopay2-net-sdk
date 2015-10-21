@@ -164,12 +164,12 @@ namespace MangoPay.SDK.Core.APIs
 			return this.UpdateObject<DisputeDTO, DisputeContestPutDTO>(MethodKey.DisputesSaveContestFunds, disputeContest, disputeId);
 		}
 
-		/// <summary>Updates dispute.</summary>
-		/// <param name="dispute">Dispute to update.</param>
+		/// <summary>Resubmits dispute.</summary>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <returns>Dispute instance returned from API.</returns>
-		public DisputeDTO UpdateDispute(DisputeContestPutDTO dispute, String disputeId)
+		public DisputeDTO ResubmitDispute(String disputeId)
 		{
+			DisputeContestPutDTO dispute = new DisputeContestPutDTO();
 			return this.UpdateObject<DisputeDTO, DisputeContestPutDTO>(MethodKey.DisputesSaveContestFunds, dispute, disputeId);
 		}
 
