@@ -269,7 +269,7 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(result.Status, document.Status);
 			Assert.AreEqual(result.Tag, document.Tag);
 			Assert.AreEqual(result.Type, document.Type);
-			Assert.AreEqual(result.UserId, document.UserId);
+			Assert.AreEqual(result.DisputeId, document.DisputeId);
 		}
 
 		[TestMethod]

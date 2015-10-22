@@ -14,6 +14,9 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Status of KYC document.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public KycStatus Status { get; set; }
+		public KycStatus Status { get; set; }
+
+		/// <summary>The User that this document belongs to.</summary>
+		public String UserId { get; set; }
     }
 }
