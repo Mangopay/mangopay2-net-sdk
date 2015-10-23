@@ -479,6 +479,9 @@ namespace MangoPay.SDK.Core
             // content type
             httpHeaders.Add(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
 
+            //identify as the Dashboard making this API call
+            httpHeaders.Add(Constants.CONTENT_GENERATOR, Constants.CONTENT_GENERATOR_VALUE);
+
             // AuthenticationHelper http header
             if (this._authRequired)
             {
