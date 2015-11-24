@@ -93,5 +93,30 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Resolves to "last" string.</summary>
         public const string LINKS_LAST_ITEM = "last";
+
+        /// <summary>
+        /// Resolves to "data" string.
+        /// </summary>
+        public const string DATA = "data";
+
+        /// <summary>
+        /// Resolves to "accessKeyRef" string.
+        /// </summary>
+        public const string ACCESS_KEY_REF = "accessKeyRef";
+
+        /// <summary>
+        /// Resolves to "cardNumber" string.
+        /// </summary>
+        public const string CARD_NUMBER = "cardNumber";
+
+        /// <summary>
+        /// Resolves to "cardExpirationDate" string.
+        /// </summary>
+        public const string CARD_EXPIRATION_DATE = "cardExpirationDate";
+
+        /// <summary>
+        /// Resolves to "cardCvx" string.
+        /// </summary>
+        public const string CARD_CVX = "cardCvx";
     }
 }
