@@ -2,7 +2,9 @@
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
+using RestSharp;
 using System;
+using System.Net;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -36,6 +38,36 @@ namespace MangoPay.SDK.Core.APIs
         public CardRegistrationDTO Update(CardRegistrationPutDTO cardRegistration, String cardRegistrationId)
         {
             return this.UpdateObject<CardRegistrationDTO, CardRegistrationPutDTO>(MethodKey.CardRegistrationSave, cardRegistration, cardRegistrationId);
+        }
+
+        /// <summary>Creates new card registration data.</summary>
+        /// <param name="cardRegistration">Card registration data object to create.</param>
+        /// <returns>Card registration object returned from API.</returns>
+        public CardRegistrationDataDTO RegisterCardData(CardRegistrationDataPostDTO cardRegistrationData)
+        {
+            var client = new RestClient(cardRegistrationData.CardRegistrationURL);
+
+            var request = new RestRequest(Method.POST);
+            request.AddParameter(Constants.DATA, cardRegistrationData.PreregistrationData);
+            request.AddParameter(Constants.ACCESS_KEY_REF, cardRegistrationData.AccessKey);
+            request.AddParameter(Constants.CARD_NUMBER, cardRegistrationData.CardNumber);
+            request.AddParameter(Constants.CARD_EXPIRATION_DATE, cardRegistrationData.CardExpirationDate);
+            request.AddParameter(Constants.CARD_CVX, cardRegistrationData.CardCvx);
+
+            var response = client.Execute(request);
+
+            var responseString = response.Content;
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var cardRegistrationDataDTO = new CardRegistrationDataDTO
+                {
+                    RegistrationData = responseString
+                };
+                return cardRegistrationDataDTO;
+            }
+            else
+                throw new Exception(responseString);
         }
     }
 }

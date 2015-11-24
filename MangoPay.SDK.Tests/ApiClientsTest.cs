@@ -2,6 +2,8 @@
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
+using MangoPay.SDK.Entities.POST;
+using MangoPay.SDK.Entities.PUT;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -75,6 +77,25 @@ namespace MangoPay.SDK.Tests
             {
                 Assert.Fail(ex.Message);
             }
+        }
+
+        [TestMethod]
+        public void Test_CardRegistrationData()
+        {
+            var userId = this.GetJohn().Id;
+            var cardRegistrationPost = new CardRegistrationPostDTO(userId,
+                CurrencyIso.EUR,
+               CardType.CB_VISA_MASTERCARD);
+            var cardRegistrationGet = this.Api.CardRegistrations.Create(cardRegistrationPost);
+
+            var cardRegistrationDataPost = new CardRegistrationDataPostDTO(cardRegistrationGet.PreregistrationData,
+                cardRegistrationGet.AccessKey, "4970100000000154", "1218", "123", cardRegistrationGet.CardRegistrationURL);
+            var cardRegistrationDataGet = this.Api.CardRegistrations.RegisterCardData(cardRegistrationDataPost);
+
+            var cardRegistrationPut = new CardRegistrationPutDTO();
+            cardRegistrationPut.RegistrationData = cardRegistrationDataGet.RegistrationData;
+            var cardRegistrationPutGet = this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistrationGet.Id);
+
         }
     }
 }

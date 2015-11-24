@@ -133,6 +133,7 @@
     <Compile Include="Entities\GET\BankAccountOtherDTO.cs" />
     <Compile Include="Entities\GET\BankAccountUsDTO.cs" />
     <Compile Include="Entities\GET\BankAccountIbanDTO.cs" />
+    <Compile Include="Entities\GET\CardRegistrationDataDTO.cs" />
     <Compile Include="Entities\GET\DisputeDTO.cs" />
     <Compile Include="Entities\GET\DocumentDTO.cs" />
     <Compile Include="Entities\GET\DisputeDocumentDTO.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Entities\GET\RepudiationDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\DisputeReason.cs" />
+    <Compile Include="Entities\POST\CardRegistrationDataPostDTO.cs" />
     <Compile Include="Entities\POST\DisputeDocumentPostDTO.cs" />
     <Compile Include="Entities\POST\DisputePagePostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
