@@ -76,13 +76,21 @@ namespace MangoPay.SDK.Core.APIs
             return this.GetObject<PayInCardDirectDTO>(MethodKey.PayinsGet, payInId);
         }
 
-        /// <summary>Gets PayIn car web entity by its identifier.</summary>
+        /// <summary>Gets PayIn card web entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
         /// <returns>PayIn object returned from API.</returns>
         public PayInCardWebDTO GetCardWeb(String payInId)
         {
             return this.GetObject<PayInCardWebDTO>(MethodKey.PayinsGet, payInId);
         }
+
+		/// <summary>Gets limited card data for PayIn card web.</summary>
+		/// <param name="payInId">PayIn identifier.</param>
+		/// <returns>Simplified Card object returned from API.</returns>
+		public CardDTO GetCardDataForCardWeb(String payInId)
+		{
+			return this.GetObject<CardDTO>(MethodKey.PayinsCardWebGetCardData, payInId);
+		}
 
         /// <summary>Gets PayIn preauthorized direct entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>

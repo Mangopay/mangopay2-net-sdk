@@ -36,6 +36,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.CardSave, new String[] { "/cards/{0}", RequestType.PUT } },
         
             { MethodKey.PayinsCardWebCreate, new String[] { "/payins/card/web/", RequestType.POST } },
+			{ MethodKey.PayinsCardWebGetCardData, new String[] { "/payins/card/web/{0}/extended/", RequestType.GET } },
             { MethodKey.PayinsCardDirectCreate, new String[] { "/payins/card/direct/", RequestType.POST } },
             { MethodKey.PayinsGet, new String[] { "/payins/{0}", RequestType.GET } },
             { MethodKey.PayinsCreateRefunds, new String[] { "/payins/{0}/refunds", RequestType.POST } },
