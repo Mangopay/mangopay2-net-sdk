@@ -19,6 +19,7 @@ namespace MangoPay.SDK.Core.Enumerations
         PayinsBankwireDirectCreate,
         PayinsCardDirectCreate,
         PayinsCardWebCreate,
+		PayinsCardWebGetCardData,
         PayinsCreateRefunds,
         PayinsGetRefunds,
         PayinsGet,
