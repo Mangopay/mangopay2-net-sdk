@@ -99,5 +99,8 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Resolves to "MANGOPAY-Dashboard" string.</summary>
         public const string CONTENT_GENERATOR_VALUE = "MANGOPAY-Dashboard";
+
+	/// <summary>Resolves to "DisputeType" string.</summary>
+	public const string DISPUTE_TYPE = "DisputeType";
     }
 }
