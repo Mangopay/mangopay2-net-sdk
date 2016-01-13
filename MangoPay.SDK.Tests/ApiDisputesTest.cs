@@ -402,11 +402,15 @@ namespace MangoPay.SDK.Tests
 		{
 			ListPaginated<DisputeDTO> result1 = null;
 			ListPaginated<DisputeDTO> result2 = null;
+			ListPaginated<DisputeDTO> result3 = null;
+			ListPaginated<DisputeDTO> result4 = null;
 
 			try
 			{
 				result1 = Api.Disputes.GetAll(new Pagination(1, 100), new FilterDisputes { AfterDate = DateTime.Now });
 				result2 = Api.Disputes.GetAll(new Pagination(1, 100), new FilterDisputes { BeforeDate = DateTime.Now });
+				result3 = Api.Disputes.GetAll(new Pagination(1, 100), new FilterDisputes { Type = DisputeType.CONTESTABLE });
+				result4 = Api.Disputes.GetAll(new Pagination(1, 100), new FilterDisputes { Status = DisputeStatus.SUBMITTED });
 			}
 			catch (Exception ex)
 			{
@@ -415,8 +419,22 @@ namespace MangoPay.SDK.Tests
 
 			Assert.IsNotNull(result1);
 			Assert.IsNotNull(result2);
+			Assert.IsNotNull(result3);
+			Assert.IsNotNull(result4);
 			Assert.IsTrue(result1.Count == 0);
 			Assert.IsTrue(result2.Count > 0);
+			Assert.IsTrue(result3.Count > 0);
+			Assert.IsTrue(result4.Count > 0);
+
+			foreach (DisputeDTO dispute in result3)
+			{
+				Assert.AreEqual(dispute.DisputeType, DisputeType.CONTESTABLE);
+			}
+
+			foreach (DisputeDTO dispute in result4)
+			{
+				Assert.AreEqual(dispute.Status, DisputeStatus.SUBMITTED);
+			}
 		}
 
 		[TestMethod]
