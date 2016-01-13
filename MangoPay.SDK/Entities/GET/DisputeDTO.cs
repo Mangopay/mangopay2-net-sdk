@@ -33,7 +33,7 @@ namespace MangoPay.SDK.Entities.GET
 		/// <summary>Contested funds.</summary>
 		public Money ContestedFunds { get; set; }
 
-		/// <summary>Contested funds.</summary>
+		/// <summary>Status of dispute.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]
 		public DisputeStatus? Status { get; set; }
 

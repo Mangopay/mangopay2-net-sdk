@@ -92,6 +92,9 @@ namespace MangoPay.SDK.Core
         public const string LINKS_PREVIOUS_ITEM = "prev";
 
         /// <summary>Resolves to "last" string.</summary>
-        public const string LINKS_LAST_ITEM = "last";
+		public const string LINKS_LAST_ITEM = "last";
+
+		/// <summary>Resolves to "DisputeType" string.</summary>
+		public const string DISPUTE_TYPE = "DisputeType";
     }
 }
