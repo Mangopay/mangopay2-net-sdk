@@ -498,5 +498,51 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(result);
 			Assert.IsTrue(result.Status == DisputeStatus.SUBMITTED);
 		}
+
+		[TestMethod]
+		public void Test_GetSettlementTransfer()
+		{
+			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED);
+
+			RepudiationDTO repudiation = null;
+			TransferDTO transfer = null;
+
+			if (dispute == null)
+				Assert.Fail("Cannot test getting settlement transfer because there's no closed disputes in the disputes list.");
+
+			try
+			{
+				string repudiationId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1), null)[0].Id;
+
+				repudiation = Api.Disputes.GetRepudiation(repudiationId);
+
+				SettlementTransferPostDTO post = new SettlementTransferPostDTO(repudiation.AuthorId, new Money { Currency = CurrencyIso.EUR, Amount = 1 }, new Money { Currency = CurrencyIso.EUR, Amount = 0 });
+
+				transfer = Api.Disputes.CreateSettlementTransfer(post, repudiationId);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			Assert.IsNotNull(transfer);
+
+
+			SettlementDTO result = null;
+
+			try
+			{
+				result = Api.Disputes.GetSettlementTransfer(transfer.Id);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			Assert.IsNotNull(result);
+			Assert.IsInstanceOfType(result, typeof(SettlementDTO));
+			Assert.IsNotNull(result.RepudiationId);
+			Assert.AreEqual(result.RepudiationId, repudiation.Id);
+		}
     }
 }

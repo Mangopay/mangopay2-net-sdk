@@ -110,6 +110,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.DisputesRepudiationGet, new String[] { "/repudiations/{0}", RequestType.GET } },
 
 			{ MethodKey.DisputesRepudiationCreateSettlement, new String[] { "/repudiations/{0}/settlementtransfer", RequestType.POST } },
+			{ MethodKey.SettlementsGet, new String[] { "/settlements/{0}/", RequestType.GET } },
         };
 
         /// <summary>Creates new API instance.</summary>

@@ -146,6 +146,7 @@
     <Compile Include="Entities\GET\PayInPreauthorizedDirectDTO.cs" />
     <Compile Include="Entities\GET\PayOutBankWireDTO.cs" />
     <Compile Include="Entities\GET\RepudiationDTO.cs" />
+    <Compile Include="Entities\GET\SettlementDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\DisputeReason.cs" />
     <Compile Include="Entities\POST\DisputeDocumentPostDTO.cs" />
