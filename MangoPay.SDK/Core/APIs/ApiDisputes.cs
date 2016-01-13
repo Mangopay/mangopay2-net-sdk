@@ -212,5 +212,13 @@ namespace MangoPay.SDK.Core.APIs
 
 			this.CreateObject<DisputePageDTO, DisputePagePostDTO>(MethodKey.DisputesDocumentPageCreate, disputePage, disputeId, documentId);
 		}
+
+		/// <summary>Gets settlement transfer.</summary>
+		/// <param name="settlementId">Settlement transfer isentifier.</param>
+		/// <returns>Settlement instance returned from API.</returns>
+		public SettlementDTO GetSettlementTransfer(string settlementId)
+		{
+			return this.GetObject<SettlementDTO>(MethodKey.SettlementsGet, settlementId);
+		}
     }
 }
