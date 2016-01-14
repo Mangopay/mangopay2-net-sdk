@@ -76,5 +76,23 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+
+	[TestMethod]
+	public void Test_Client_GetWallets()
+	{
+		ListPaginated<WalletDTO> feesWallets = null;
+		ListPaginated<WalletDTO> creditWallets = null;
+		try
+		{
+			feesWallets = this.Api.Clients.GetWallets(FundsType.FEES, new Pagination(1, 100));
+			creditWallets = this.Api.Clients.GetWallets(FundsType.CREDIT, new Pagination(1, 100));
+		}
+		catch (Exception ex)
+		{
+			Assert.Fail(ex.Message);
+		}
+		Assert.IsNotNull(feesWallets);
+		Assert.IsNotNull(creditWallets);
+	}
     }
 }

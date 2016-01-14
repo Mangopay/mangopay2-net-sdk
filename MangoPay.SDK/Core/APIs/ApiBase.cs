@@ -88,6 +88,13 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.ClientGetKycDocuments, new String[] { "/KYC/documents", RequestType.GET } },
             { MethodKey.GetKycDocument, new String[] { "/KYC/documents/{0}", RequestType.GET } },
 
+{ MethodKey.ClientGetWalletsDefault, new String[] { "/clients/wallets", RequestType.GET } },
+			{ MethodKey.ClientGetWalletsFees, new String[] { "/clients/wallets/fees", RequestType.GET } },
+			{ MethodKey.ClientGetWalletsCredit, new String[] { "/clients/wallets/credit", RequestType.GET } },
+			{ MethodKey.ClientGetWalletsDefaultWithCurrency, new String[] { "/clients/wallets/{0}", RequestType.GET } },
+			{ MethodKey.ClientGetWalletsFeesWithCurrency, new String[] { "/clients/wallets/fees/{0}", RequestType.GET } },
+			{ MethodKey.ClientGetWalletsCreditWithCurrency, new String[] { "/clients/wallets/credit/{0}", RequestType.GET } },
+
 
 			{ MethodKey.DisputesGet, new String[] { "/disputes/{0}", RequestType.GET } },
 			{ MethodKey.DisputesSaveTag, new String[] { "/disputes/{0}", RequestType.PUT } },

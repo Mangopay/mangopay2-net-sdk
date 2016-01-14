@@ -75,6 +75,7 @@
     <Compile Include="Core\AuthorizationTokenManager.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\Enumerations\BankAccountType.cs" />
+    <Compile Include="Core\Enumerations\FundsType.cs" />
     <Compile Include="Core\Enumerations\CardType.cs" />
     <Compile Include="Core\Enumerations\CountryIso.cs" />
     <Compile Include="Core\Enumerations\CultureCode.cs" />
