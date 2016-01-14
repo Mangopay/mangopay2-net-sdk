@@ -374,7 +374,7 @@ namespace MangoPay.SDK.Tests
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED);
 
 			RepudiationDTO repudiation = null;
-			TransferDTO result = null;
+			SettlementDTO result = null;
 
 			if (dispute == null)
 				Assert.Fail("Cannot test creating settlement transfer because there's no closed disputes in the disputes list.");
@@ -505,7 +505,7 @@ namespace MangoPay.SDK.Tests
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED);
 
 			RepudiationDTO repudiation = null;
-			TransferDTO transfer = null;
+			SettlementDTO transfer = null;
 
 			if (dispute == null)
 				Assert.Fail("Cannot test getting settlement transfer because there's no closed disputes in the disputes list.");
