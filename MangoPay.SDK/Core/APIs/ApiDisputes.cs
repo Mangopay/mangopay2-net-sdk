@@ -125,10 +125,10 @@ namespace MangoPay.SDK.Core.APIs
 		/// <summary>Creates settlement transfer.</summary>
 		/// <param name="settlementTransfer">Settlement transfer.</param>
 		/// <param name="repudiationId">Repudiation identifier.</param>
-		/// <returns>Transfer instance returned from API.</returns>
-		public TransferDTO CreateSettlementTransfer(SettlementTransferPostDTO settlementTransfer, String repudiationId)
+		/// <returns>Transfer settlement instance returned from API.</returns>
+		public SettlementDTO CreateSettlementTransfer(SettlementTransferPostDTO settlementTransfer, String repudiationId)
 		{
-			return this.CreateObject<TransferDTO, SettlementTransferPostDTO>(MethodKey.DisputesRepudiationCreateSettlement, settlementTransfer, repudiationId);
+			return this.CreateObject<SettlementDTO, SettlementTransferPostDTO>(MethodKey.DisputesRepudiationCreateSettlement, settlementTransfer, repudiationId);
 		}
 
 		/// <summary>Updates dispute's tag.</summary>

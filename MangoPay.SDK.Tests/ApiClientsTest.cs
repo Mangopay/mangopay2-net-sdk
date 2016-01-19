@@ -96,5 +96,22 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(feesWallets);
 			Assert.IsNotNull(creditWallets);
 		}
+
+		[TestMethod]
+		public void Test_Client_GetTransactions()
+		{
+			ListPaginated<TransactionDTO> result = null;
+
+			try
+			{
+				result = this.Api.Clients.GetTransactions(null, null);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			Assert.IsNotNull(result);
+		}
     }
 }
