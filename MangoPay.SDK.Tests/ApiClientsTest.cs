@@ -77,22 +77,39 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-	[TestMethod]
-	public void Test_Client_GetWallets()
-	{
-		ListPaginated<WalletDTO> feesWallets = null;
-		ListPaginated<WalletDTO> creditWallets = null;
-		try
+		[TestMethod]
+		public void Test_Client_GetWallets()
 		{
-			feesWallets = this.Api.Clients.GetWallets(FundsType.FEES, new Pagination(1, 100));
-			creditWallets = this.Api.Clients.GetWallets(FundsType.CREDIT, new Pagination(1, 100));
+			ListPaginated<WalletDTO> feesWallets = null;
+			ListPaginated<WalletDTO> creditWallets = null;
+			try
+			{
+				feesWallets = this.Api.Clients.GetWallets(FundsType.FEES, new Pagination(1, 100));
+				creditWallets = this.Api.Clients.GetWallets(FundsType.CREDIT, new Pagination(1, 100));
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+			Assert.IsNotNull(feesWallets);
+			Assert.IsNotNull(creditWallets);
 		}
-		catch (Exception ex)
+
+		[TestMethod]
+		public void Test_Client_GetTransactions()
 		{
-			Assert.Fail(ex.Message);
+			ListPaginated<TransactionDTO> result = null;
+
+			try
+			{
+				result = this.Api.Clients.GetTransactions(null, null);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			Assert.IsNotNull(result);
 		}
-		Assert.IsNotNull(feesWallets);
-		Assert.IsNotNull(creditWallets);
-	}
     }
 }

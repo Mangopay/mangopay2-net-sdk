@@ -47,7 +47,12 @@ namespace MangoPay.SDK.Core.APIs
             return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, null, sort, filter.GetValues());
         }
 
-public ListPaginated<WalletDTO> GetWallets(FundsType fundsType, Pagination pagination, CurrencyIso currency = CurrencyIso.NotSpecified)
+		/// <summary>Gets client wallets.</summary>
+		/// <param name="fundsType">Type of funds.</param>
+		/// <param name="pagination">Pagination.</param>
+		/// <param name="currency">Currency.</param>
+		/// <returns>Collection of client's wallets.</returns>
+		public ListPaginated<WalletDTO> GetWallets(FundsType fundsType, Pagination pagination, CurrencyIso currency = CurrencyIso.NotSpecified)
 		{
 			string currencyParam = currency == CurrencyIso.NotSpecified ? "" : currency.ToString();
 
@@ -71,6 +76,18 @@ public ListPaginated<WalletDTO> GetWallets(FundsType fundsType, Pagination pagin
 
 			if (methodKey.HasValue) return this.GetList<WalletDTO>(methodKey.Value, pagination, currencyParam);
 			else return null;
+		}
+
+		/// <summary>Gets client transactions.</summary>
+		/// <param name="pagination">Pagination.</param>
+		/// <param name="filter">Filter.</param>
+		/// <param name="sort">Sort.</param>
+		/// <returns>Collection of client's transactions.</returns>
+		public ListPaginated<TransactionDTO> GetTransactions(Pagination pagination, FilterTransactions filter, Sort sort = null)
+		{
+			if (filter == null) filter = new FilterTransactions();
+
+			return this.GetList<TransactionDTO>(MethodKey.ClientGetTransactions, pagination, null, sort, filter.GetValues());
 		}
     }
 }
