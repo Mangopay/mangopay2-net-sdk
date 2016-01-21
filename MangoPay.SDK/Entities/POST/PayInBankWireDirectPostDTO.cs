@@ -6,6 +6,11 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn bank wire direct POST entity.</summary>
     public class PayInBankWireDirectPostDTO : EntityPostBase
     {
+        public PayInBankWireDirectPostDTO(string authorId, string creditedWalletId, Money declaredDebitedFunds, Money declaredFees)
+         : this(authorId, creditedWalletId, declaredDebitedFunds, declaredFees, null)
+        {
+        }
+        
         public PayInBankWireDirectPostDTO(string authorId, string creditedWalletId, Money declaredDebitedFunds, Money declaredFees, string creditedUserId)
         {
             AuthorId = authorId;
