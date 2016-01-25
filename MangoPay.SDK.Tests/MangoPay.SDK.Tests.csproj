@@ -76,6 +76,7 @@
     <Compile Include="ApiWalletsTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="DefaultStorageStrategyForTests.cs" />
+    <Compile Include="IdempotencyTest.cs" />
     <Compile Include="MangoPayApiTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TokensTest.cs" />

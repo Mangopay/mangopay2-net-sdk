@@ -95,6 +95,8 @@ namespace MangoPay.SDK.Core.Enumerations
 		DisputesRepudiationGet,
 
 		DisputesRepudiationCreateSettlement,
-		SettlementsGet
+		SettlementsGet,
+
+		IdempotencyResponseGet
     }
 }

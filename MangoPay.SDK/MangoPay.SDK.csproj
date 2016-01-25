@@ -62,6 +62,7 @@
     <Compile Include="Core\APIs\ApiClients.cs" />
     <Compile Include="Core\APIs\ApiEvents.cs" />
     <Compile Include="Core\APIs\ApiDisputes.cs" />
+    <Compile Include="Core\APIs\ApiIdempotency.cs" />
     <Compile Include="Core\APIs\ApiHooks.cs" />
     <Compile Include="Core\APIs\ApiOAuth.cs" />
     <Compile Include="Core\APIs\ApiPayIns.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Entities\GET\DocumentDTO.cs" />
     <Compile Include="Entities\GET\DisputeDocumentDTO.cs" />
     <Compile Include="Entities\GET\DisputePageDTO.cs" />
+    <Compile Include="Entities\GET\IdempotencyResponseDTO.cs" />
     <Compile Include="Entities\GET\KycPageDTO.cs" />
     <Compile Include="Entities\GET\PageDTO.cs" />
     <Compile Include="Entities\GET\PayInBankWireDirectDTO.cs" />

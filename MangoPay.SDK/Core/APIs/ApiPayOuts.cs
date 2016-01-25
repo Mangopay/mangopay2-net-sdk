@@ -17,8 +17,17 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Created PayOut object returned from API.</returns>
         public PayOutBankWireDTO CreateBankWire(PayOutBankWirePostDTO payOut)
         {
-            return this.CreateObject<PayOutBankWireDTO, PayOutBankWirePostDTO>(MethodKey.PayoutsBankwireCreate, payOut);
+            return CreateBankWire(null, payOut);
         }
+
+		/// <summary>Creates new PayOut object.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="payOut">The PayOut object to be created.</param>
+		/// <returns>Created PayOut object returned from API.</returns>
+		public PayOutBankWireDTO CreateBankWire(String idempotencyKey, PayOutBankWirePostDTO payOut)
+		{
+			return this.CreateObject<PayOutBankWireDTO, PayOutBankWirePostDTO>(idempotencyKey, MethodKey.PayoutsBankwireCreate, payOut);
+		}
 
         /// <summary>Gets PayOut entity by its identifier.</summary>
         /// <param name="payOutId">PayOut identifier.</param>

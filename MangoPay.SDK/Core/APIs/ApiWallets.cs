@@ -20,8 +20,17 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Wallet instance returned from API.</returns>
         public WalletDTO Create(WalletPostDTO wallet)
         {
-            return this.CreateObject<WalletDTO, WalletPostDTO>(MethodKey.WalletsCreate, wallet);
+			return Create(null, wallet);
         }
+
+		/// <summary>Creates new wallet.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="wallet">Wallet instance to be created.</param>
+		/// <returns>Wallet instance returned from API.</returns>
+		public WalletDTO Create(String idempotencyKey, WalletPostDTO wallet)
+		{
+			return this.CreateObject<WalletDTO, WalletPostDTO>(idempotencyKey, MethodKey.WalletsCreate, wallet);
+		}
 
         /// <summary>Gets wallet.</summary>
         /// <param name="walletId">Wallet identifier.</param>

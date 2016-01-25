@@ -18,8 +18,17 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Card registration instance returned from API.</returns>
         public CardPreAuthorizationDTO Create(CardPreAuthorizationPostDTO cardPreAuthorization)
         {
-            return this.CreateObject<CardPreAuthorizationDTO, CardPreAuthorizationPostDTO>(MethodKey.PreauthorizationCreate, cardPreAuthorization);
+            return Create(null, cardPreAuthorization);
         }
+
+		/// <summary>Creates new pre-authorization object.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="cardPreAuthorization">PreAuthorization object to be created.</param>
+		/// <returns>Card registration instance returned from API.</returns>
+		public CardPreAuthorizationDTO Create(String idempotencyKey, CardPreAuthorizationPostDTO cardPreAuthorization)
+		{
+			return this.CreateObject<CardPreAuthorizationDTO, CardPreAuthorizationPostDTO>(idempotencyKey, MethodKey.PreauthorizationCreate, cardPreAuthorization);
+		}
 
         /// <summary>Gets pre-authorization object.</summary>
         /// <param name="cardPreAuthorizationId">PreAuthorization identifier.</param>

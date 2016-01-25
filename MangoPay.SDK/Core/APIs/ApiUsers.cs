@@ -24,21 +24,39 @@ namespace MangoPay.SDK.Core.APIs
             return this.GetObject<UserDTO>(MethodKey.UsersGet, userId);
         }
 
-        /// <summary>Creates new user.</summary>
-        /// <param name="user">UserNatural object to be created.</param>
-        /// <returns>UserNatural instance returned from API.</returns>
-        public UserNaturalDTO Create(UserNaturalPostDTO user)
-        {
-            return this.CreateObject<UserNaturalDTO, UserNaturalPostDTO>(MethodKey.UsersCreateNaturals, user);
-        }
+		/// <summary>Creates new user.</summary>
+		/// <param name="user">UserNatural object to be created.</param>
+		/// <returns>UserNatural instance returned from API.</returns>
+		public UserNaturalDTO Create(UserNaturalPostDTO user)
+		{
+			return Create(null, user);
+		}
+
+		/// <summary>Creates new user.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="user">UserNatural object to be created.</param>
+		/// <returns>UserNatural instance returned from API.</returns>
+		public UserNaturalDTO Create(String idempotencyKey, UserNaturalPostDTO user)
+		{
+			return this.CreateObject<UserNaturalDTO, UserNaturalPostDTO>(idempotencyKey, MethodKey.UsersCreateNaturals, user);
+		}
 
         /// <summary>Creates new user.</summary>
         /// <param name="user">UserLegal object to be created.</param>
         /// <returns>UserLegal instance returned from API.</returns>
         public UserLegalDTO Create(UserLegalPostDTO user)
         {
-            return this.CreateObject<UserLegalDTO, UserLegalPostDTO>(MethodKey.UsersCreateLegals, user);
+            return Create(null, user);
         }
+
+		/// <summary>Creates new user.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="user">UserLegal object to be created.</param>
+		/// <returns>UserLegal instance returned from API.</returns>
+		public UserLegalDTO Create(String idempotencyKey, UserLegalPostDTO user)
+		{
+			return this.CreateObject<UserLegalDTO, UserLegalPostDTO>(idempotencyKey, MethodKey.UsersCreateLegals, user);
+		}
 
         /// <summary>Gets users.</summary>
         /// <param name="pagination">Pagination.</param>
@@ -106,8 +124,18 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account instance returned from API.</returns>
         public BankAccountCaDTO CreateBankAccountCa(String userId, BankAccountCaPostDTO bankAccount)
         {
-            return this.CreateObject<BankAccountCaDTO, BankAccountCaPostDTO>(MethodKey.UsersCreateBankAccountsCa, bankAccount, userId);
+			return CreateBankAccountCa(null, userId, bankAccount);
         }
+
+		/// <summary>Creates CA bank account.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="bankAccount">Bank account instance to be created.</param>
+		/// <returns>Bank account instance returned from API.</returns>
+		public BankAccountCaDTO CreateBankAccountCa(String idempotencyKey, String userId, BankAccountCaPostDTO bankAccount)
+		{
+			return this.CreateObject<BankAccountCaDTO, BankAccountCaPostDTO>(idempotencyKey, MethodKey.UsersCreateBankAccountsCa, bankAccount, userId);
+		}
 
         /// <summary>Creates GB bank account.</summary>
         /// <param name="userId">User identifier.</param>
@@ -115,8 +143,18 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account instance returned from API.</returns>
         public BankAccountGbDTO CreateBankAccountGb(String userId, BankAccountGbPostDTO bankAccount)
         {
-            return this.CreateObject<BankAccountGbDTO, BankAccountGbPostDTO>(MethodKey.UsersCreateBankAccountsGb, bankAccount, userId);
+            return CreateBankAccountGb(null, userId, bankAccount);
         }
+
+		/// <summary>Creates GB bank account.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="bankAccount">Bank account instance to be created.</param>
+		/// <returns>Bank account instance returned from API.</returns>
+		public BankAccountGbDTO CreateBankAccountGb(String idempotencyKey, String userId, BankAccountGbPostDTO bankAccount)
+		{
+			return this.CreateObject<BankAccountGbDTO, BankAccountGbPostDTO>(idempotencyKey, MethodKey.UsersCreateBankAccountsGb, bankAccount, userId);
+		}
 
         /// <summary>Creates IBAN bank account.</summary>
         /// <param name="userId">User identifier.</param>
@@ -124,8 +162,18 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account instance returned from API.</returns>
         public BankAccountIbanDTO CreateBankAccountIban(String userId, BankAccountIbanPostDTO bankAccount)
         {
-            return this.CreateObject<BankAccountIbanDTO, BankAccountIbanPostDTO>(MethodKey.UsersCreateBankAccountsIban, bankAccount, userId);
+            return CreateBankAccountIban(null, userId, bankAccount);
         }
+
+		/// <summary>Creates IBAN bank account.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="bankAccount">Bank account instance to be created.</param>
+		/// <returns>Bank account instance returned from API.</returns>
+		public BankAccountIbanDTO CreateBankAccountIban(String idempotencyKey, String userId, BankAccountIbanPostDTO bankAccount)
+		{
+			return this.CreateObject<BankAccountIbanDTO, BankAccountIbanPostDTO>(idempotencyKey, MethodKey.UsersCreateBankAccountsIban, bankAccount, userId);
+		}
 
         /// <summary>Creates OTHER bank account.</summary>
         /// <param name="userId">User identifier.</param>
@@ -133,8 +181,18 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account instance returned from API.</returns>
         public BankAccountOtherDTO CreateBankAccountOther(String userId, BankAccountOtherPostDTO bankAccount)
         {
-            return this.CreateObject<BankAccountOtherDTO, BankAccountOtherPostDTO>(MethodKey.UsersCreateBankAccountsOther, bankAccount, userId);
+            return CreateBankAccountOther(null, userId, bankAccount);
         }
+
+		/// <summary>Creates OTHER bank account.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="bankAccount">Bank account instance to be created.</param>
+		/// <returns>Bank account instance returned from API.</returns>
+		public BankAccountOtherDTO CreateBankAccountOther(String idempotencyKey, String userId, BankAccountOtherPostDTO bankAccount)
+		{
+			return this.CreateObject<BankAccountOtherDTO, BankAccountOtherPostDTO>(idempotencyKey, MethodKey.UsersCreateBankAccountsOther, bankAccount, userId);
+		}
 
         /// <summary>Creates US bank account.</summary>
         /// <param name="userId">User identifier.</param>
@@ -142,8 +200,18 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account instance returned from API.</returns>
         public BankAccountUsDTO CreateBankAccountUs(String userId, BankAccountUsPostDTO bankAccount)
         {
-            return this.CreateObject<BankAccountUsDTO, BankAccountUsPostDTO>(MethodKey.UsersCreateBankAccountsUs, bankAccount, userId);
+            return CreateBankAccountUs(null, userId, bankAccount);
         }
+
+		/// <summary>Creates US bank account.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="bankAccount">Bank account instance to be created.</param>
+		/// <returns>Bank account instance returned from API.</returns>
+		public BankAccountUsDTO CreateBankAccountUs(String idempotencyKey, String userId, BankAccountUsPostDTO bankAccount)
+		{
+			return this.CreateObject<BankAccountUsDTO, BankAccountUsPostDTO>(idempotencyKey, MethodKey.UsersCreateBankAccountsUs, bankAccount, userId);
+		}
 
         /// <summary>Gets all user's bank accounts.</summary>
         /// <param name="userId">User identifier to get bank accounts of.</param>
@@ -244,12 +312,22 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="binaryData">The byte array the KycPage will be created from.</param>
         public void CreateKycPage(String userId, String kycDocumentId, byte[] binaryData)
         {
-            String fileContent = Convert.ToBase64String(binaryData);
-
-            KycPagePostDTO kycPage = new KycPagePostDTO(fileContent);
-
-            this.CreateObject<KycPageDTO, KycPagePostDTO>(MethodKey.UsersCreateKycPage, kycPage, userId, kycDocumentId);
+			CreateKycPage(null, userId, kycDocumentId, binaryData);
         }
+
+		/// <summary>Creates KycPage from byte array.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="kycDocumentId">KycDocument identifier.</param>
+		/// <param name="binaryData">The byte array the KycPage will be created from.</param>
+		public void CreateKycPage(String idempotencyKey, String userId, String kycDocumentId, byte[] binaryData)
+		{
+			String fileContent = Convert.ToBase64String(binaryData);
+
+			KycPagePostDTO kycPage = new KycPagePostDTO(fileContent);
+
+			this.CreateObject<KycPageDTO, KycPagePostDTO>(idempotencyKey, MethodKey.UsersCreateKycPage, kycPage, userId, kycDocumentId);
+		}
 
         /// <summary>Creates KycPage from file.</summary>
         /// <param name="userId">User identifier.</param>
@@ -257,9 +335,19 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="filePath">Path to the file the KycPage will be created from.</param>
         public void CreateKycPage(String userId, String kycDocumentId, String filePath)
         {
-            byte[] fileArray = File.ReadAllBytes(filePath);
-            CreateKycPage(userId, kycDocumentId, fileArray);
+            CreateKycPage(null, userId, kycDocumentId, filePath);
         }
+
+		/// <summary>Creates KycPage from file.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="kycDocumentId">KycDocument identifier.</param>
+		/// <param name="filePath">Path to the file the KycPage will be created from.</param>
+		public void CreateKycPage(String idempotencyKey, String userId, String kycDocumentId, String filePath)
+		{
+			byte[] fileArray = File.ReadAllBytes(filePath);
+			CreateKycPage(idempotencyKey, userId, kycDocumentId, fileArray);
+		}
 
         /// <summary>Creates KycDocument.</summary>
         /// <param name="userId">User identifier.</param>
@@ -267,11 +355,21 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>KycDocument object returned from API.</returns>
         public KycDocumentDTO CreateKycDocument(String userId, KycDocumentType type, string tag = null)
         {
-            KycDocumentPostDTO kycDocument = new KycDocumentPostDTO(type);
-            kycDocument.Tag = tag;
-
-            return this.CreateObject<KycDocumentDTO, KycDocumentPostDTO>(MethodKey.UsersCreateKycDocument, kycDocument, userId);
+			return CreateKycDocument(null, userId, type, tag);
         }
+
+		/// <summary>Creates KycDocument.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="type">Type of KycDocument.</param>
+		/// <returns>KycDocument object returned from API.</returns>
+		public KycDocumentDTO CreateKycDocument(String idempotencyKey, String userId, KycDocumentType type, string tag = null)
+		{
+			KycDocumentPostDTO kycDocument = new KycDocumentPostDTO(type);
+			kycDocument.Tag = tag;
+
+			return this.CreateObject<KycDocumentDTO, KycDocumentPostDTO>(idempotencyKey, MethodKey.UsersCreateKycDocument, kycDocument, userId);
+		}
 
         /// <summary>Gets KycDocument.</summary>
         /// <param name="userId">User identifier.</param>
