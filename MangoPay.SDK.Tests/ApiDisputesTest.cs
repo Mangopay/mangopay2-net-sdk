@@ -60,11 +60,16 @@ namespace MangoPay.SDK.Tests
 		[TestMethod]
 		public void Test_GetTransactions()
 		{
+			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
+
+			if (dispute == null)
+				Assert.Fail("Cannot test getting transactions for dispute there's no not contestable disputes in the disputes list.");
+			
 			ListPaginated<TransactionDTO> result = null;
 
 			try
 			{
-				result = Api.Disputes.GetTransactions(_clientDisputes[0].Id, new Pagination(1, 10), null);
+				result = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 10), null);
 			}
 			catch (Exception ex)
 			{
@@ -104,9 +109,14 @@ namespace MangoPay.SDK.Tests
 		{
 			ListPaginated<DisputeDTO> result = null;
 
+			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
+			
+			if (dispute == null)
+				Assert.Fail("Cannot test getting disputes for user because there's no not contestable disputes in the disputes list.");
+
 			try
 			{
-				string userId = Api.Disputes.GetTransactions(_clientDisputes[0].Id, new Pagination(1, 1), null)[0].AuthorId;
+				string userId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1), null)[0].AuthorId;
 
 				result = Api.Disputes.GetDisputesForUser(userId, new Pagination(1, 20), null);
 			}
@@ -278,6 +288,9 @@ namespace MangoPay.SDK.Tests
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.SUBMITTED);
 
 			if (dispute == null)
+				Test_ContestDispute();
+
+			if (dispute == null)
 				Assert.Fail("Cannot test getting dispute's documents because there's no available disputes with SUBMITTED status in the disputes list.");
 
 			ListPaginated<DisputeDocumentDTO> result = null;
@@ -314,18 +327,44 @@ namespace MangoPay.SDK.Tests
 		[TestMethod]
 		public void Test_SubmitDisputeDocument()
 		{
-			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
+			DisputeDTO dispute = null;
+			DisputeDocumentDTO disputeDocument = null;
+
+			// search for dispute having any documents created
+			foreach (DisputeDTO d in _clientDisputes.Where(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION))
+			{
+				DisputeDocumentDTO dd = Api.Disputes.GetDocumentsForDispute(d.Id, new Pagination(1, 1), null).FirstOrDefault();
+
+				if (dd != null)
+				{// found
+					dispute = d;
+					disputeDocument = dd;
+					break;
+				}
+			}
 
 			if (dispute == null)
-				Assert.Fail("Cannot test submitting dispute's documents because there's no dispute with expected status in the disputes list.");
+			{
+				dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
 
-			DisputeDocumentDTO disputeDocument = null;
+				if (dispute == null)
+					Assert.Fail("Cannot test submitting dispute's documents because there's no dispute with expected status in the disputes list.");
+
+				DisputeDocumentPostDTO documentPost = new DisputeDocumentPostDTO(DisputeDocumentType.DELIVERY_PROOF);
+				disputeDocument = Api.Disputes.CreateDisputeDocument(documentPost, dispute.Id);
+			}
 
 			DisputeDocumentDTO result = null;
 
 			try
 			{
-				disputeDocument = Api.Disputes.GetDocumentsForDispute(dispute.Id, new Pagination(1, 1), null).First();
+				FilterDisputeDocuments filter = new FilterDisputeDocuments();
+				filter.Status = DisputeDocumentStatus.CREATED;
+
+				disputeDocument = Api.Disputes.GetDocumentsForDispute(dispute.Id, new Pagination(1, 1), filter).FirstOrDefault();
+
+				if (disputeDocument == null)
+					Assert.Fail("Cannot test submitting dispute's documents because the dispute does not have any documents.");
 
 				DisputeDocumentPutDTO disputeDocumentPut = new DisputeDocumentPutDTO
 				{
@@ -347,12 +386,12 @@ namespace MangoPay.SDK.Tests
 		[TestMethod]
 		public void Test_GetRepudiation()
 		{
-			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.InitialTransactionId != null);
+			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.InitialTransactionId != null && x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
 
 			RepudiationDTO result = null;
 
 			if (dispute == null)
-				Assert.Fail("Cannot test getting repudiation because there's no disputes with transaction ID in the disputes list.");
+				Assert.Fail("Cannot test getting repudiation because there's no not contestable disputes with transaction ID in the disputes list.");
 
 			try
 			{
@@ -371,7 +410,7 @@ namespace MangoPay.SDK.Tests
 		[TestMethod]
 		public void Test_CreateSettlementTransfer()
 		{
-			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED);
+			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED && x.DisputeType == DisputeType.NOT_CONTESTABLE);
 
 			RepudiationDTO repudiation = null;
 			SettlementDTO result = null;
@@ -502,13 +541,13 @@ namespace MangoPay.SDK.Tests
 		[TestMethod]
 		public void Test_GetSettlementTransfer()
 		{
-			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED);
+			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED && x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
 
 			RepudiationDTO repudiation = null;
 			SettlementDTO transfer = null;
 
 			if (dispute == null)
-				Assert.Fail("Cannot test getting settlement transfer because there's no closed disputes in the disputes list.");
+				Assert.Fail("Cannot test getting settlement transfer because there's no closed and not contestable disputes in the disputes list.");
 
 			try
 			{
