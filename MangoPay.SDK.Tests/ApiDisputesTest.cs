@@ -288,10 +288,15 @@ namespace MangoPay.SDK.Tests
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.SUBMITTED);
 
 			if (dispute == null)
+			{
 				Test_ContestDispute();
+				Initialize();
 
-			if (dispute == null)
-				Assert.Fail("Cannot test getting dispute's documents because there's no available disputes with SUBMITTED status in the disputes list.");
+				dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.SUBMITTED);
+				
+				if (dispute == null)
+					Assert.Fail("Cannot test getting dispute's documents because there's no available disputes with SUBMITTED status in the disputes list.");
+			}
 
 			ListPaginated<DisputeDocumentDTO> result = null;
 

@@ -8,7 +8,7 @@ using System;
 namespace MangoPay.SDK.Tests
 {
 	[TestClass]
-	public class IdempotencyTest : BaseTest
+	public class ApiIdempotencyTest : BaseTest
 	{
 		[TestMethod]
 		public void Test_Idempotency()
