@@ -335,10 +335,13 @@ namespace MangoPay.SDK.Tests
 			DisputeDTO dispute = null;
 			DisputeDocumentDTO disputeDocument = null;
 
+			FilterDisputeDocuments filter = new FilterDisputeDocuments();
+			filter.Status = DisputeDocumentStatus.CREATED;
+
 			// search for dispute having any documents created
 			foreach (DisputeDTO d in _clientDisputes.Where(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION))
 			{
-				DisputeDocumentDTO dd = Api.Disputes.GetDocumentsForDispute(d.Id, new Pagination(1, 1), null).FirstOrDefault();
+				DisputeDocumentDTO dd = Api.Disputes.GetDocumentsForDispute(d.Id, new Pagination(1, 1), filter).FirstOrDefault();
 
 				if (dd != null)
 				{// found
@@ -363,13 +366,8 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				FilterDisputeDocuments filter = new FilterDisputeDocuments();
-				filter.Status = DisputeDocumentStatus.CREATED;
-
-				disputeDocument = Api.Disputes.GetDocumentsForDispute(dispute.Id, new Pagination(1, 1), filter).FirstOrDefault();
-
 				if (disputeDocument == null)
-					Assert.Fail("Cannot test submitting dispute's documents because the dispute does not have any documents.");
+					Assert.Fail("Cannot test submitting dispute's documents because there's no dispute document that can be updated.");
 
 				DisputeDocumentPutDTO disputeDocumentPut = new DisputeDocumentPutDTO
 				{
