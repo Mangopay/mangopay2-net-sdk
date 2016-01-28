@@ -94,6 +94,7 @@ namespace MangoPay.SDK.Core
         /// <summary>Resolves to "last" string.</summary>
         public const string LINKS_LAST_ITEM = "last";
 
+<<<<<<< HEAD
         /// <summary>Resolves to "X-Content-Generator" string.</summary>
         public const string CONTENT_GENERATOR = "X-Content-Generator";
 
@@ -102,5 +103,12 @@ namespace MangoPay.SDK.Core
 
 	/// <summary>Resolves to "DisputeType" string.</summary>
 	public const string DISPUTE_TYPE = "DisputeType";
+=======
+		/// <summary>Resolves to "DisputeType" string.</summary>
+		public const string DISPUTE_TYPE = "DisputeType";
+
+		/// <summary>Resolves to "Idempotency-Key" string.</summary>
+		public const string IDEMPOTENCY_KEY = "Idempotency-Key";
+>>>>>>> e8d9e66cabf7face39856e4d710d3f550fc9fbc2
     }
 }

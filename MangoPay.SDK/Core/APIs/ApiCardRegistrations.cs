@@ -18,8 +18,17 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Card registration object returned from API.</returns>
         public CardRegistrationDTO Create(CardRegistrationPostDTO cardRegistration)
         {
-            return this.CreateObject<CardRegistrationDTO, CardRegistrationPostDTO>(MethodKey.CardRegistrationCreate, cardRegistration);
+            return Create(null, cardRegistration);
         }
+
+		/// <summary>Creates new card registration.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="cardRegistration">Card registration object to create.</param>
+		/// <returns>Card registration object returned from API.</returns>
+		public CardRegistrationDTO Create(String idempotencyKey, CardRegistrationPostDTO cardRegistration)
+		{
+			return this.CreateObject<CardRegistrationDTO, CardRegistrationPostDTO>(idempotencyKey, MethodKey.CardRegistrationCreate, cardRegistration);
+		}
 
         /// <summary>Gets card registration.</summary>
         /// <param name="cardRegistrationId">Card registration identifier.</param>

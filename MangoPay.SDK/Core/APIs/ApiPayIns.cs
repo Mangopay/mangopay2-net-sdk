@@ -17,40 +17,85 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Object instance returned from API.</returns>
         public PayInBankWireDirectDTO CreateBankWireDirect(PayInBankWireDirectPostDTO payIn)
         {
-            return this.CreateObject<PayInBankWireDirectDTO, PayInBankWireDirectPostDTO>(MethodKey.PayinsBankwireDirectCreate, payIn);
+            return CreateBankWireDirect(null, payIn);
         }
+
+		/// <summary>Creates new payin bankwire direct.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInBankWireDirectDTO CreateBankWireDirect(String idempotencyKey, PayInBankWireDirectPostDTO payIn)
+		{
+			return this.CreateObject<PayInBankWireDirectDTO, PayInBankWireDirectPostDTO>(idempotencyKey, MethodKey.PayinsBankwireDirectCreate, payIn);
+		}
 
         /// <summary>Creates new payin card direct.</summary>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
         public PayInCardDirectDTO CreateCardDirect(PayInCardDirectPostDTO payIn)
         {
-            return this.CreateObject<PayInCardDirectDTO, PayInCardDirectPostDTO>(MethodKey.PayinsCardDirectCreate, payIn);
+            return CreateCardDirect(null, payIn);
         }
+
+		/// <summary>Creates new payin card direct.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInCardDirectDTO CreateCardDirect(String idempotencyKey, PayInCardDirectPostDTO payIn)
+		{
+			return this.CreateObject<PayInCardDirectDTO, PayInCardDirectPostDTO>(idempotencyKey, MethodKey.PayinsCardDirectCreate, payIn);
+		}
 
         /// <summary>Creates new payin card web.</summary>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
         public PayInCardWebDTO CreateCardWeb(PayInCardWebPostDTO payIn)
         {
-            return this.CreateObject<PayInCardWebDTO, PayInCardWebPostDTO>(MethodKey.PayinsCardWebCreate, payIn);
+            return CreateCardWeb(null, payIn);
         }
+
+		/// <summary>Creates new payin card web.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInCardWebDTO CreateCardWeb(String idempotencyKey, PayInCardWebPostDTO payIn)
+		{
+			return this.CreateObject<PayInCardWebDTO, PayInCardWebPostDTO>(idempotencyKey, MethodKey.PayinsCardWebCreate, payIn);
+		}
 
         /// <summary>Creates new payin preauthorized direct.</summary>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
         public PayInPreauthorizedDirectDTO CreatePreauthorizedDirect(PayInPreauthorizedDirectPostDTO payIn)
         {
-            return this.CreateObject<PayInPreauthorizedDirectDTO, PayInPreauthorizedDirectPostDTO>(MethodKey.PayinsPreauthorizedDirectCreate, payIn);
+            return CreatePreauthorizedDirect(null, payIn);
         }
+
+		/// <summary>Creates new payin preauthorized direct.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInPreauthorizedDirectDTO CreatePreauthorizedDirect(String idempotencyKey, PayInPreauthorizedDirectPostDTO payIn)
+		{
+			return this.CreateObject<PayInPreauthorizedDirectDTO, PayInPreauthorizedDirectPostDTO>(idempotencyKey, MethodKey.PayinsPreauthorizedDirectCreate, payIn);
+		}
 
         /// <summary>Creates new payin direct debit.</summary>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
         public PayInDirectDebitDTO CreateDirectDebit(PayInDirectDebitPostDTO payIn)
         {
-            return this.CreateObject<PayInDirectDebitDTO, PayInDirectDebitPostDTO>(MethodKey.PayinsDirectDebitCreate, payIn);
+            return CreateDirectDebit(null, payIn);
         }
+
+		/// <summary>Creates new payin direct debit.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInDirectDebitDTO CreateDirectDebit(String idempotencyKey, PayInDirectDebitPostDTO payIn)
+		{
+			return this.CreateObject<PayInDirectDebitDTO, PayInDirectDebitPostDTO>(idempotencyKey, MethodKey.PayinsDirectDebitCreate, payIn);
+		}
 
         /// <summary>Gets PayIn entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
@@ -114,8 +159,18 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Refund entity instance returned from API.</returns>
         public RefundDTO CreateRefund(String payInId, RefundPayInPostDTO refund)
         {
-            return this.CreateObject<RefundDTO, RefundPayInPostDTO>(MethodKey.PayinsCreateRefunds, refund, payInId);
+            return CreateRefund(null, payInId, refund);
         }
+
+		/// <summary>Creates refund for PayIn object.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="payInId">PayIn identifier.</param>
+		/// <param name="refund">Refund object to be created.</param>
+		/// <returns>Refund entity instance returned from API.</returns>
+		public RefundDTO CreateRefund(String idempotencyKey, String payInId, RefundPayInPostDTO refund)
+		{
+			return this.CreateObject<RefundDTO, RefundPayInPostDTO>(idempotencyKey, MethodKey.PayinsCreateRefunds, refund, payInId);
+		}
 
         /// <summary>Gets refund for PayIn object.</summary>
         /// <param name="payInId">PayIn identifier.</param>

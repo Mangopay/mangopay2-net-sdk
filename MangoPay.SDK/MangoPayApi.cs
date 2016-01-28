@@ -31,7 +31,12 @@ namespace MangoPay.SDK
             CardPreAuthorizations = new ApiCardPreAuthorizations(this);
             Hooks = new ApiHooks(this);
             Kyc = new ApiKyc(this);
+<<<<<<< HEAD
 	    Disputes = new ApiDisputes(this);
+=======
+			Disputes = new ApiDisputes(this);
+			Idempotency = new ApiIdempotency(this);
+>>>>>>> e8d9e66cabf7face39856e4d710d3f550fc9fbc2
         }
 
         /// <summary>Provides authorization token methods.</summary>
@@ -86,6 +91,9 @@ namespace MangoPay.SDK
 
 		/// <summary>Provides Disputes methods.</summary>
 		public ApiDisputes Disputes;
+
+		/// <summary>Provides Idempotency methods.</summary>
+		public ApiIdempotency Idempotency;
 
         #endregion
     }

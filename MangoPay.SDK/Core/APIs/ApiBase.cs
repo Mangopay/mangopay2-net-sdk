@@ -121,6 +121,8 @@ namespace MangoPay.SDK.Core.APIs
 
 			{ MethodKey.DisputesRepudiationCreateSettlement, new String[] { "/repudiations/{0}/settlementtransfer", RequestType.POST } },
 			{ MethodKey.SettlementsGet, new String[] { "/settlements/{0}/", RequestType.GET } },
+
+			{ MethodKey.IdempotencyResponseGet, new String[] { "/responses/{0}/", RequestType.GET } },
         };
 
         /// <summary>Creates new API instance.</summary>
@@ -157,13 +159,14 @@ namespace MangoPay.SDK.Core.APIs
 
         /// <summary>Creates the DTO instance.</summary>
         /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+		/// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entity">DTO instance that is going to be sent.</param>
         /// <param name="entityId">Entity identifier.</param>
         /// <param name="secondEntityId">Second entity identifier.</param>
         /// <returns>The DTO instance returned from API.</returns>
-        protected U CreateObject<U, T>(MethodKey methodKey, T entity, String entityId, String secondEntityId)
+        protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity, String entityId, String secondEntityId)
             where U : EntityBase, new()
             where T : EntityPostBase
         {
@@ -177,36 +180,38 @@ namespace MangoPay.SDK.Core.APIs
                 urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
 
             RestTool restTool = new RestTool(this._root, true);
-            U result = restTool.Request<U, T>(urlMethod, this.GetRequestType(methodKey), null, null, entity);
+			U result = restTool.Request<U, T>(idempotencyKey, urlMethod, this.GetRequestType(methodKey), null, null, entity);
 
             return result;
         }
 
         /// <summary>Creates the DTO instance.</summary>
         /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+		/// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entity">DTO instance that is going to be sent.</param>
         /// <param name="entityId">Entity identifier.</param>
         /// <returns>The DTO instance returned from API.</returns>
-        protected U CreateObject<U, T>(MethodKey methodKey, T entity, string entityId)
+		protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity, string entityId)
             where U : EntityBase, new()
             where T : EntityPostBase
         {
-            return CreateObject<U, T>(methodKey, entity, entityId, "");
+            return CreateObject<U, T>(idempotencyKey, methodKey, entity, entityId, "");
         }
 
         /// <summary>Creates the DTO instance.</summary>
         /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+		/// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entity">DTO instance that is going to be sent.</param>
         /// <returns>The DTO instance returned from API.</returns>
-        protected U CreateObject<U, T>(MethodKey methodKey, T entity)
+		protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity)
             where U : EntityBase, new()
             where T : EntityPostBase
         {
-            return CreateObject<U, T>(methodKey, entity, "");
+			return CreateObject<U, T>(idempotencyKey, methodKey, entity, "");
         }
 
         /// <summary>Gets the DTO instance from API.</summary>
@@ -358,7 +363,7 @@ namespace MangoPay.SDK.Core.APIs
             }
 
             RestTool restTool = new RestTool(this._root, true);
-            return restTool.Request<U, T>(urlMethod, this.GetRequestType(methodKey), null, null, entity);
+            return restTool.Request<U, T>(null, urlMethod, this.GetRequestType(methodKey), null, null, entity);
         }
     }
 }

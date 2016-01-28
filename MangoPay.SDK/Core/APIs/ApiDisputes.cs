@@ -128,7 +128,17 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Transfer settlement instance returned from API.</returns>
 		public SettlementDTO CreateSettlementTransfer(SettlementTransferPostDTO settlementTransfer, String repudiationId)
 		{
-			return this.CreateObject<SettlementDTO, SettlementTransferPostDTO>(MethodKey.DisputesRepudiationCreateSettlement, settlementTransfer, repudiationId);
+			return CreateSettlementTransfer(null, settlementTransfer, repudiationId);
+		}
+
+		/// <summary>Creates settlement transfer.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="settlementTransfer">Settlement transfer.</param>
+		/// <param name="repudiationId">Repudiation identifier.</param>
+		/// <returns>Transfer settlement instance returned from API.</returns>
+		public SettlementDTO CreateSettlementTransfer(String idempotencyKey, SettlementTransferPostDTO settlementTransfer, String repudiationId)
+		{
+			return this.CreateObject<SettlementDTO, SettlementTransferPostDTO>(idempotencyKey, MethodKey.DisputesRepudiationCreateSettlement, settlementTransfer, repudiationId);
 		}
 
 		/// <summary>Updates dispute's tag.</summary>
@@ -187,7 +197,17 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Dispute document returned from API.</returns>
 		public DisputeDocumentDTO CreateDisputeDocument(DisputeDocumentPostDTO disputeDocument, string disputeId)
 		{
-			return this.CreateObject<DisputeDocumentDTO, DisputeDocumentPostDTO>(MethodKey.DisputesDocumentCreate, disputeDocument, disputeId);
+			return CreateDisputeDocument(null, disputeDocument, disputeId);
+		}
+
+		/// <summary>Creates document for dispute.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="disputeDocument">Dispute document to be created.</param>
+		/// <param name="disputeId">Dispute identifier.</param>
+		/// <returns>Dispute document returned from API.</returns>
+		public DisputeDocumentDTO CreateDisputeDocument(String idempotencyKey, DisputeDocumentPostDTO disputeDocument, string disputeId)
+		{
+			return this.CreateObject<DisputeDocumentDTO, DisputeDocumentPostDTO>(idempotencyKey, MethodKey.DisputesDocumentCreate, disputeDocument, disputeId);
 		}
 
 		/// <summary>Creates document's page for dispute.</summary>
@@ -206,11 +226,21 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="binaryData">The byte array the DisputePage will be created from.</param>
 		public void CreateDisputePage(string disputeId, string documentId, byte[] binaryData)
 		{
+			CreateDisputePage(null, disputeId, documentId, binaryData);
+		}
+
+		/// <summary>Creates document's page for dispute.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="disputeId">Dispute identifier.</param>
+		/// <param name="documentId">Dispute document identifier.</param>
+		/// <param name="binaryData">The byte array the DisputePage will be created from.</param>
+		public void CreateDisputePage(string idempotencyKey, string disputeId, string documentId, byte[] binaryData)
+		{
 			string fileContent = Convert.ToBase64String(binaryData);
 
 			DisputePagePostDTO disputePage = new DisputePagePostDTO(fileContent);
 
-			this.CreateObject<DisputePageDTO, DisputePagePostDTO>(MethodKey.DisputesDocumentPageCreate, disputePage, disputeId, documentId);
+			this.CreateObject<DisputePageDTO, DisputePagePostDTO>(idempotencyKey, MethodKey.DisputesDocumentPageCreate, disputePage, disputeId, documentId);
 		}
 
 		/// <summary>Gets settlement transfer.</summary>

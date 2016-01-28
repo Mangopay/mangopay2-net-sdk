@@ -20,8 +20,17 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Hook instance returned from API.</returns>
         public HookDTO Create(HookPostDTO hook)
         {
-            return this.CreateObject<HookDTO, HookPostDTO>(MethodKey.HooksCreate, hook);
+            return Create(null, hook);
         }
+
+		/// <summary>Creates new hook.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="hook">Hook instance to be created.</param>
+		/// <returns>Hook instance returned from API.</returns>
+		public HookDTO Create(String idempotencyKey, HookPostDTO hook)
+		{
+			return this.CreateObject<HookDTO, HookPostDTO>(idempotencyKey, MethodKey.HooksCreate, hook);
+		}
 
         /// <summary>Gets hook.</summary>
         /// <param name="hookId">Hook identifier.</param>
