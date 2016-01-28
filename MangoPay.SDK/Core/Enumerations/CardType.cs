@@ -29,6 +29,9 @@ namespace MangoPay.SDK.Core.Enumerations
         IDEAL,
         
         /// <summary>BCMC card type.</summary>
-        BCMC
+        BCMC,
+        
+        /// <summary>PAYLIB card type.</summary>
+        PAYLIB
     }
 }
