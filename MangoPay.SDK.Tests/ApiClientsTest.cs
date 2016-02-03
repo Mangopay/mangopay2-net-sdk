@@ -96,6 +96,81 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[TestMethod]
+		public void Test_Client_GetWallet()
+		{
+			ListPaginated<WalletDTO> feesWallets = null;
+			ListPaginated<WalletDTO> creditWallets = null;
+			ListPaginated<WalletDTO> defaultWallets = null;
+			try
+			{
+				feesWallets = this.Api.Clients.GetWallets(FundsType.FEES, new Pagination(1, 1));
+				creditWallets = this.Api.Clients.GetWallets(FundsType.CREDIT, new Pagination(1, 1));
+				defaultWallets = this.Api.Clients.GetWallets(FundsType.DEFAULT, new Pagination(1, 1));
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			if ((feesWallets == null || feesWallets.Count == 0) ||
+				(creditWallets == null || creditWallets.Count == 0) ||
+				(defaultWallets == null || defaultWallets.Count == 0))
+				Assert.Fail("Cannot test getting client's wallet because there is no any wallet for client.");
+
+			WalletDTO wallet = null;
+			WalletDTO result = null;
+			if (feesWallets != null && feesWallets.Count > 0)
+				wallet = feesWallets[0];
+			else if (creditWallets != null && creditWallets.Count > 0)
+				wallet = creditWallets[0];
+			else
+				wallet = defaultWallets[0];
+
+			result = this.Api.Clients.GetWallet(wallet.FundsType, wallet.Currency);
+
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.FundsType == wallet.FundsType);
+			Assert.IsTrue(result.Currency == wallet.Currency);
+		}
+
+		[TestMethod]
+		public void Test_Client_GetWalletTransactions()
+		{
+			ListPaginated<WalletDTO> feesWallets = null;
+			ListPaginated<WalletDTO> creditWallets = null;
+			ListPaginated<WalletDTO> defaultWallets = null;
+			try
+			{
+				feesWallets = this.Api.Clients.GetWallets(FundsType.FEES, new Pagination(1, 1));
+				creditWallets = this.Api.Clients.GetWallets(FundsType.CREDIT, new Pagination(1, 1));
+				defaultWallets = this.Api.Clients.GetWallets(FundsType.DEFAULT, new Pagination(1, 1));
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			if ((feesWallets == null || feesWallets.Count == 0) ||
+				(creditWallets == null || creditWallets.Count == 0) ||
+				(defaultWallets == null || defaultWallets.Count == 0))
+				Assert.Fail("Cannot test getting client's wallet transactions because there is no any wallet for client.");
+
+			WalletDTO wallet = null;
+			ListPaginated<TransactionDTO> result = null;
+			if (feesWallets != null && feesWallets.Count > 0)
+				wallet = feesWallets[0];
+			else if (creditWallets != null && creditWallets.Count > 0)
+				wallet = creditWallets[0];
+			else
+				wallet = defaultWallets[0];
+
+			result = this.Api.Clients.GetWalletTransactions(wallet.FundsType, wallet.Currency, new Pagination(1, 1), null);
+
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.Count > 0);
+		}
+
+		[TestMethod]
 		public void Test_Client_GetTransactions()
 		{
 			ListPaginated<TransactionDTO> result = null;
