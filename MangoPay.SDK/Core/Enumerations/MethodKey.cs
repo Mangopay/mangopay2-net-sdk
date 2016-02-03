@@ -73,6 +73,7 @@ namespace MangoPay.SDK.Core.Enumerations
 		ClientGetWalletsFeesWithCurrency,
 		ClientGetWalletsCreditWithCurrency,
 		ClientGetTransactions,
+		ClientGetWalletTransactions,
 		
 		DisputesGet,
 		DisputesSaveTag,

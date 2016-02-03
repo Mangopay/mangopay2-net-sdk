@@ -97,6 +97,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.ClientGetWalletsCreditWithCurrency, new String[] { "/clients/wallets/credit/{0}", RequestType.GET } },
 
 			{ MethodKey.ClientGetTransactions, new String[] { "/clients/transactions", RequestType.GET } },
+			{ MethodKey.ClientGetWalletTransactions, new String[] { "/clients/wallets/{0}/{1}/transactions", RequestType.GET } },
 
 
 			{ MethodKey.DisputesGet, new String[] { "/disputes/{0}", RequestType.GET } },
@@ -247,15 +248,18 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <param name="entityId">Entity identifier.</param>
+		/// <param name="secondEntityId">Entity identifier.</param>
         /// <param name="sort">Sort.</param>
         /// <param name="additionalUrlParams">Collection of key-value pairs of request parameters.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort, Dictionary<String, String> additionalUrlParams)
+        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, string secondEntityId, Sort sort, Dictionary<String, String> additionalUrlParams)
             where T : EntityBase, new()
         {
             string urlMethod = "";
 
-            if (!String.IsNullOrEmpty(entityId))
+			if (!String.IsNullOrEmpty(secondEntityId) && !String.IsNullOrEmpty(entityId))
+				urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
+            else if (!String.IsNullOrEmpty(entityId))
                 urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId);
             else
                 urlMethod = this.GetRequestUrl(methodKey);
@@ -278,6 +282,12 @@ namespace MangoPay.SDK.Core.APIs
             return restTool.RequestList<T>(urlMethod, this.GetRequestType(methodKey), additionalUrlParams, pagination);
         }
 
+		protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort, Dictionary<String, String> additionalUrlParams)
+            where T : EntityBase, new()
+		{
+			return this.GetList<T>(methodKey, pagination, entityId, null, sort, additionalUrlParams);
+		}
+
         /// <summary>Gets the collection of Dto instances from API.</summary>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
@@ -288,7 +298,7 @@ namespace MangoPay.SDK.Core.APIs
         protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort = null)
             where T : EntityBase, new()
         {
-            return GetList<T>(methodKey, pagination, entityId, sort, null);
+            return GetList<T>(methodKey, pagination, entityId, null, sort, null);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>

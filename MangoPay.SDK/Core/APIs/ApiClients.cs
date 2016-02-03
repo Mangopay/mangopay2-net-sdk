@@ -51,32 +51,55 @@ namespace MangoPay.SDK.Core.APIs
 		/// <summary>Gets client wallets.</summary>
 		/// <param name="fundsType">Type of funds.</param>
 		/// <param name="pagination">Pagination.</param>
-		/// <param name="currency">Currency.</param>
 		/// <returns>Collection of client's wallets.</returns>
-		public ListPaginated<WalletDTO> GetWallets(FundsType fundsType, Pagination pagination, CurrencyIso currency = CurrencyIso.NotSpecified)
+		public ListPaginated<WalletDTO> GetWallets(FundsType fundsType, Pagination pagination)
 		{
-			string currencyParam = currency == CurrencyIso.NotSpecified ? "" : currency.ToString();
-
-			MethodKey? methodKey = null;
-
-			if (fundsType == FundsType.FEES)
+			switch (fundsType)
 			{
-				if (currencyParam != "") methodKey = MethodKey.ClientGetWalletsFeesWithCurrency;
-				else methodKey = MethodKey.ClientGetWalletsFees;
-			}
-			else if (fundsType == FundsType.CREDIT)
-			{
-				if (currencyParam != "") methodKey = MethodKey.ClientGetWalletsCreditWithCurrency;
-				else methodKey = MethodKey.ClientGetWalletsCredit;
-			}
-			else if (fundsType == FundsType.DEFAULT)
-			{
-				if (currencyParam != "") methodKey = MethodKey.ClientGetWalletsDefaultWithCurrency;
-				else methodKey = MethodKey.ClientGetWalletsDefault;
+				case FundsType.DEFAULT:
+					return this.GetList<WalletDTO>(MethodKey.ClientGetWalletsDefault, pagination);
+				case FundsType.FEES:
+					return this.GetList<WalletDTO>(MethodKey.ClientGetWalletsFees, pagination);
+				case FundsType.CREDIT:
+					return this.GetList<WalletDTO>(MethodKey.ClientGetWalletsCredit, pagination);
 			}
 
-			if (methodKey.HasValue) return this.GetList<WalletDTO>(methodKey.Value, pagination, currencyParam);
-			else return null;
+			return null;
+		}
+
+		/// <summary>Gets client wallet.</summary>
+		/// <param name="fundsType">Type of funds.</param>
+		/// <param name="currency">Currency.</param>
+		/// <returns>Wallet with given funds type and currency.</returns>
+		public WalletDTO GetWallet(FundsType fundsType, CurrencyIso currency)
+		{
+			if (currency == CurrencyIso.NotSpecified) return null;
+
+			switch (fundsType)
+			{
+				case FundsType.DEFAULT:
+					return this.GetObject<WalletDTO>(MethodKey.ClientGetWalletsDefaultWithCurrency, currency.ToString());
+				case FundsType.FEES:
+					return this.GetObject<WalletDTO>(MethodKey.ClientGetWalletsFeesWithCurrency, currency.ToString());
+				case FundsType.CREDIT:
+					return this.GetObject<WalletDTO>(MethodKey.ClientGetWalletsCreditWithCurrency, currency.ToString());
+			}
+
+			return null;
+		}
+
+		/// <summary>Gets client wallet transactions.</summary>
+		/// <param name="fundsType">Type of funds.</param>
+		/// <param name="currency">Currency.</param>
+		/// <param name="pagination">Pagination.</param>
+		/// <param name="filter">Filter.</param>
+		/// <param name="sort">Sort.</param>
+		/// <returns></returns>
+		public ListPaginated<TransactionDTO> GetWalletTransactions(FundsType fundsType, CurrencyIso currency, Pagination pagination, FilterTransactions filter, Sort sort = null)
+		{
+			if (filter == null) filter = new FilterTransactions();
+
+			return this.GetList<TransactionDTO>(MethodKey.ClientGetWalletTransactions, pagination, fundsType.ToString(), currency.ToString(), sort, filter.GetValues());
 		}
 
 
