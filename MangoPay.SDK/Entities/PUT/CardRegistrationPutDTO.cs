@@ -8,5 +8,8 @@ namespace MangoPay.SDK.Entities.PUT
     {
         /// <summary>Registration data. This have to be prefixed by "data=".</summary>
         public String RegistrationData { get; set; }
+        
+        /// <summary>Custom data.</summary>
+        public String Tag { get; set; }
     }
 }
