@@ -283,7 +283,6 @@ namespace MangoPay.SDK.Tests
                 PayOutBankWirePostDTO payOut = new PayOutBankWirePostDTO(user.Id, wallet.Id, new Money { Amount = 10, Currency = CurrencyIso.EUR }, new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref");
                 payOut.Tag = "DefaultTag";
                 payOut.CreditedUserId = user.Id;
-                payOut.Communication = "Communication text";
 
                 BaseTest._johnsPayOutBankWire = this.Api.PayOuts.CreateBankWire(payOut);
             }
@@ -304,7 +303,6 @@ namespace MangoPay.SDK.Tests
                     new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref");
                 payOut.Tag = "DefaultTag";
                 payOut.CreditedUserId = payIn.AuthorId;
-                payOut.Communication = "Communication text";
 
                 BaseTest._johnsPayOutForCardDirect = this.Api.PayOuts.CreateBankWire(payOut);
             }

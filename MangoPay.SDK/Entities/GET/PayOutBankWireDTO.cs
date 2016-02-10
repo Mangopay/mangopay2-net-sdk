@@ -7,9 +7,6 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>Bank account identifier.</summary>
         public String BankAccountId { get; set; }
 
-        /// <summary>Communication.</summary>
-        public String Communication { get; set; }
-
         /// <summary>A custom reference you wish to appear on the user’s bank statement (your ClientId is already shown).</summary>
         public String BankWireRef { get; set; }
     }

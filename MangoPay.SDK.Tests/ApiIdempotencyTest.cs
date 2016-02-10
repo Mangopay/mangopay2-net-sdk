@@ -27,7 +27,6 @@ namespace MangoPay.SDK.Tests
 				PayOutBankWirePostDTO payOutPost = new PayOutBankWirePostDTO(user.Id, wallet.Id, new Money { Amount = 10, Currency = CurrencyIso.EUR }, new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref");
 				payOutPost.Tag = "DefaultTag";
 				payOutPost.CreditedUserId = user.Id;
-				payOutPost.Communication = "Communication text";
 
 				payOut = this.Api.PayOuts.CreateBankWire(key, payOutPost);
 			}
