@@ -367,6 +367,7 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO user = this.GetJohn();
 
 				CardRegistrationPostDTO cardRegistration = new CardRegistrationPostDTO(user.Id, CurrencyIso.EUR, cardType);
+                cardRegistration.Tag = "DefaultTag";
 
                 BaseTest._johnsCardRegistration = this.Api.CardRegistrations.Create(cardRegistration);
             }
