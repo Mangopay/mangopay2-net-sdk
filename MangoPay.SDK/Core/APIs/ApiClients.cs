@@ -1,6 +1,7 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
+using MangoPay.SDK.Entities.POST;
 using System;
 using System.Collections.Generic;
 
@@ -113,6 +114,23 @@ namespace MangoPay.SDK.Core.APIs
 			if (filter == null) filter = new FilterTransactions();
 
 			return this.GetList<TransactionDTO>(MethodKey.ClientGetTransactions, pagination, null, sort, filter.GetValues());
+		}
+
+		/// <summary>Creates new bankwire direct for client.</summary>
+		/// <param name="bankWireDirect">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInBankWireDirectDTO CreateBankWireDirect(ClientBankWireDirectPostDTO bankWireDirect)
+		{
+			return CreateBankWireDirect(null, bankWireDirect);
+		}
+
+		/// <summary>Creates new bankwire direct for client.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="bankWireDirect">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInBankWireDirectDTO CreateBankWireDirect(String idempotencyKey, ClientBankWireDirectPostDTO bankWireDirect)
+		{
+			return this.CreateObject<PayInBankWireDirectDTO, ClientBankWireDirectPostDTO>(idempotencyKey, MethodKey.ClientCreateBankwireDirect, bankWireDirect);
 		}
     }
 }

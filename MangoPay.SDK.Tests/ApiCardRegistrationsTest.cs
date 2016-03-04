@@ -27,7 +27,7 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual(CurrencyIso.EUR, cardRegistration_visa.Currency);
                 Assert.AreEqual("CREATED", cardRegistration_visa.Status);
 				Assert.AreEqual(CardType.CB_VISA_MASTERCARD, cardRegistration_visa.CardType);
-
+                Assert.AreEqual("DefaultTag", cardRegistration_visa.Tag);
 
 				CardRegistrationDTO cardRegistration_maestro = this.GetNewJohnsCardRegistration(CardType.MAESTRO);
 
@@ -75,6 +75,7 @@ namespace MangoPay.SDK.Tests
                 CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
                 String registrationData = this.GetPaylineCorrectRegistartionData(cardRegistration);
                 cardRegistrationPut.RegistrationData = registrationData;
+                cardRegistrationPut.Tag = "DefaultTag - Updated";
 
                 CardRegistrationDTO getCardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
 
@@ -82,6 +83,7 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(getCardRegistration.CardId);
                 Assert.AreEqual("VALIDATED", getCardRegistration.Status);
                 Assert.AreEqual("000000", getCardRegistration.ResultCode);
+                Assert.AreEqual(cardRegistrationPut.Tag, getCardRegistration.Tag);
             }
             catch (Exception ex)
             {

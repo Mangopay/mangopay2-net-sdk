@@ -2,6 +2,7 @@
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
+using MangoPay.SDK.Entities.POST;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -187,6 +188,30 @@ namespace MangoPay.SDK.Tests
 			}
 
 			Assert.IsNotNull(result);
+		}
+
+		[TestMethod]
+		public void Test_Client_CreateBankWireDirect()
+		{
+			try
+			{
+				ClientBankWireDirectPostDTO bankwireDirectPost = new ClientBankWireDirectPostDTO("CREDIT_EUR", new Money { Amount = 1000, Currency = CurrencyIso.EUR });
+
+				PayInDTO result = this.Api.Clients.CreateBankWireDirect(bankwireDirectPost);
+
+				Assert.IsTrue(result.Id.Length > 0);
+				Assert.AreEqual("CREDIT_EUR", result.CreditedWalletId);
+				Assert.AreEqual(PayInPaymentType.BANK_WIRE, result.PaymentType);
+				Assert.AreEqual(PayInExecutionType.DIRECT, result.ExecutionType);
+				Assert.AreEqual(TransactionStatus.CREATED, result.Status);
+				Assert.AreEqual(TransactionType.PAYIN, result.Type);
+				Assert.IsNotNull(((PayInBankWireDirectDTO)result).WireReference);
+				Assert.AreEqual(((PayInBankWireDirectDTO)result).BankAccount.Type, BankAccountType.IBAN);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
 		}
     }
 }

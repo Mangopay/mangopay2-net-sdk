@@ -98,6 +98,7 @@ namespace MangoPay.SDK.Core.APIs
 
 			{ MethodKey.ClientGetTransactions, new String[] { "/clients/transactions", RequestType.GET } },
 			{ MethodKey.ClientGetWalletTransactions, new String[] { "/clients/wallets/{0}/{1}/transactions", RequestType.GET } },
+			{ MethodKey.ClientCreateBankwireDirect, new String[] { "/clients/payins/bankwire/direct", RequestType.POST } },
 
 
 			{ MethodKey.DisputesGet, new String[] { "/disputes/{0}", RequestType.GET } },

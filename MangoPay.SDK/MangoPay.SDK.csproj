@@ -153,6 +153,7 @@
     <Compile Include="Entities\DisputeReason.cs" />
     <Compile Include="Entities\POST\DisputeDocumentPostDTO.cs" />
     <Compile Include="Entities\POST\DisputePagePostDTO.cs" />
+    <Compile Include="Entities\POST\ClientBankWireDirectPostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
     <Compile Include="Entities\PUT\DisputeContestPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeTagPutDTO.cs" />

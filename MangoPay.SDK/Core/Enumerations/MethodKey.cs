@@ -74,6 +74,7 @@ namespace MangoPay.SDK.Core.Enumerations
 		ClientGetWalletsCreditWithCurrency,
 		ClientGetTransactions,
 		ClientGetWalletTransactions,
+		ClientCreateBankwireDirect,
 		
 		DisputesGet,
 		DisputesSaveTag,
