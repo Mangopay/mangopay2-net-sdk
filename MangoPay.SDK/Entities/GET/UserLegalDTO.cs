@@ -13,7 +13,7 @@ namespace MangoPay.SDK.Entities.GET
         public String Name { get; set; }
 
         /// <summary>Type of legal user.</summary>
-        [JsonConverter(typeof(StringEnumConverter))]
+		[JsonConverter(typeof(StringEnumConverter))]
         public LegalPersonType LegalPersonType { get; set; }
 
         /// <summary>Headquarters address.</summary>
@@ -36,11 +36,11 @@ namespace MangoPay.SDK.Entities.GET
         public DateTime LegalRepresentativeBirthday { get; set; }
 
         /// <summary>Legal representative nationality.</summary>
-        [JsonConverter(typeof(StringEnumConverter))]
+		[JsonConverter(typeof(EnumerationConverter))]
         public CountryIso LegalRepresentativeNationality { get; set; }
 
         /// <summary>Legal representative country of residence.</summary>
-        [JsonConverter(typeof(StringEnumConverter))]
+		[JsonConverter(typeof(EnumerationConverter))]
         public CountryIso LegalRepresentativeCountryOfResidence { get; set; }
 
         /// <summary>Statute.</summary>

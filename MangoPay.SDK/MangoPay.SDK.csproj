@@ -75,6 +75,7 @@
     <Compile Include="Core\AuthenticationHelper.cs" />
     <Compile Include="Core\AuthorizationTokenManager.cs" />
     <Compile Include="Core\Constants.cs" />
+    <Compile Include="Core\EnumerationConverter.cs" />
     <Compile Include="Core\Enumerations\BankAccountType.cs" />
     <Compile Include="Core\Enumerations\FundsType.cs" />
     <Compile Include="Core\Enumerations\CardType.cs" />

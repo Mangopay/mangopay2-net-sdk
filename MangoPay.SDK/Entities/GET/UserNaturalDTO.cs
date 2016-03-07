@@ -26,11 +26,11 @@ namespace MangoPay.SDK.Entities.GET
         public String Birthplace { get; set; }
 
         /// <summary>User's country.</summary>
-        [JsonConverter(typeof(StringEnumConverter))]
+		[JsonConverter(typeof(EnumerationConverter))]
         public CountryIso Nationality { get; set; }
 
         /// <summary>Country of residence.</summary>
-        [JsonConverter(typeof(StringEnumConverter))]
+		[JsonConverter(typeof(EnumerationConverter))]
         public CountryIso CountryOfResidence { get; set; }
 
         /// <summary>User's occupation.</summary>
