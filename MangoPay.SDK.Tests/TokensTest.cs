@@ -40,5 +40,32 @@ namespace MangoPay.SDK.Tests
 
             Assert.AreEqual(token1.access_token, token2.access_token);
         }
+
+		[TestMethod]
+		public void Test_IsolateTokensBetweenEnvironments()
+		{
+			MangoPayApi api = new MangoPayApi();
+			api.Config.ClientId = "sdk-unit-tests";
+			api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
+			api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
+
+			OAuthTokenDTO token1 = api.OAuthTokenManager.GetToken();
+
+			api.Config.ClientId = "sdk_example";
+			api.Config.ClientPassword = "Vfp9eMKSzGkxivCwt15wE082pTTKsx90vBenc9hjLsf5K46ciF";
+			api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
+
+			OAuthTokenDTO token2 = api.OAuthTokenManager.GetToken();
+
+			Assert.AreNotEqual(token1.access_token, token2.access_token);
+
+			api.Config.ClientId = "sdk-unit-tests";
+			api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
+			api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
+
+			OAuthTokenDTO token3 = api.OAuthTokenManager.GetToken();
+
+			Assert.AreEqual(token1.access_token, token3.access_token);
+		}
     }
 }

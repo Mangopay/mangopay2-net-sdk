@@ -1,6 +1,8 @@
 ﻿using MangoPay.SDK.Core.APIs;
 using MangoPay.SDK.Core.Interfaces;
 using MangoPay.SDK.Entities;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MangoPay.SDK.Core
 {
@@ -24,21 +26,21 @@ namespace MangoPay.SDK.Core
         /// <returns>Valid OAuthToken instance.</returns>
         public OAuthTokenDTO GetToken()
         {
-            OAuthTokenDTO token = _storageStrategy.Get();
+			OAuthTokenDTO token = _storageStrategy.Get(GetEnvKey());
 
             if (token == null || token.IsExpired())
             {
                 StoreToken(this._root.AuthenticationManager.CreateToken());
             }
 
-            return _storageStrategy.Get();
+			return _storageStrategy.Get(GetEnvKey());
         }
 
         /// <summary>Stores authorization token passed as an argument in the underlying storage strategy implementation.</summary>
         /// <param name="token">Token instance to be stored.</param>
         public void StoreToken(OAuthTokenDTO token)
         {
-            _storageStrategy.Store(token);
+			_storageStrategy.Store(token, GetEnvKey());
         }
 
         /// <summary>Registers custom storage strategy implementation.
@@ -50,5 +52,21 @@ namespace MangoPay.SDK.Core
         {
             _storageStrategy = customStorageStrategy;
         }
+
+		private string GetEnvKey()
+		{
+			string input = _root.Config.BaseUrl + _root.Config.ClientId;
+
+			using (MD5 md5Hash = MD5.Create())
+			{
+				byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+				StringBuilder sBuilder = new StringBuilder();
+				for (int i = 0; i < data.Length; i++)
+				{
+					sBuilder.Append(data[i].ToString("x2"));
+				}
+				return sBuilder.ToString();
+			}
+		}
     }
 }
