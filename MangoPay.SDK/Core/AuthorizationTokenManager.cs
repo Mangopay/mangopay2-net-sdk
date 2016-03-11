@@ -55,7 +55,7 @@ namespace MangoPay.SDK.Core
 
 		private string GetEnvKey()
 		{
-			string input = _root.Config.BaseUrl + _root.Config.ClientId;
+			string input = _root.Config.BaseUrl + _root.Config.ClientId + _root.Config.ClientPassword;
 
 			using (MD5 md5Hash = MD5.Create())
 			{
