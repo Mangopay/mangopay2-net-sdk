@@ -99,6 +99,13 @@ namespace MangoPay.SDK.Core.Enumerations
 		DisputesRepudiationCreateSettlement,
 		SettlementsGet,
 
-		IdempotencyResponseGet
+		IdempotencyResponseGet,
+
+		MandateCreate,
+		MandateGet,
+		MandateCancel,
+		MandatesGetAll,
+		MandatesGetForUser,
+		MandatesGetForBankAccount
     }
 }
