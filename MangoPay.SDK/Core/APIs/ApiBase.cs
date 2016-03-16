@@ -42,6 +42,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsCreateRefunds, new String[] { "/payins/{0}/refunds", RequestType.POST } },
             { MethodKey.PayinsGetRefunds, new String[] { "/payins/{0}/refunds", RequestType.GET } },
         
+            { MethodKey.PayinsPayPalCreate, new String[] { "/payins/paypal/web", RequestType.POST } },
             { MethodKey.PayinsPreauthorizedDirectCreate, new String[] { "/payins/preauthorized/direct/", RequestType.POST } },
             { MethodKey.PayinsBankwireDirectCreate, new String[] { "/payins/bankwire/direct/", RequestType.POST } },
             { MethodKey.PayinsDirectDebitCreate, new String[] { "/payins/directdebit/web", RequestType.POST } },

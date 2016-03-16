@@ -54,6 +54,29 @@ namespace MangoPay.SDK.Tests
             }
         }
 
+		[TestMethod]
+		public void Test_PayIns_Create_PayPal()
+		{
+			try
+			{
+				PayInDTO payIn = null;
+				WalletDTO wallet = this.GetJohnsWallet();
+				UserNaturalDTO user = this.GetJohn();
+
+				PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
+
+				payIn = this.Api.PayIns.CreatePayPal(payInPost);
+
+				Assert.IsTrue(payIn.Id.Length > 0);
+				Assert.IsTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
+				Assert.IsTrue(payIn.ExecutionType == PayInExecutionType.WEB);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+
         [TestMethod]
         public void Test_PayIns_Create_CardDirect()
         {

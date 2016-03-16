@@ -63,6 +63,23 @@ namespace MangoPay.SDK.Core.APIs
 			return this.CreateObject<PayInCardWebDTO, PayInCardWebPostDTO>(idempotencyKey, MethodKey.PayinsCardWebCreate, payIn);
 		}
 
+		/// <summary>Creates new payin by PayPal.</summary>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInPayPalDTO CreatePayPal(PayInPayPalPostDTO payIn)
+		{
+			return CreatePayPal(null, payIn);
+		}
+
+		/// <summary>Creates new payin by PayPal.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInPayPalDTO CreatePayPal(String idempotencyKey, PayInPayPalPostDTO payIn)
+		{
+			return this.CreateObject<PayInPayPalDTO, PayInPayPalPostDTO>(idempotencyKey, MethodKey.PayinsPayPalCreate, payIn);
+		}
+
         /// <summary>Creates new payin preauthorized direct.</summary>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
