@@ -151,6 +151,7 @@
     <Compile Include="Entities\GET\MandateDTO.cs" />
     <Compile Include="Entities\GET\PageDTO.cs" />
     <Compile Include="Entities\GET\PayInBankWireDirectDTO.cs" />
+    <Compile Include="Entities\GET\PayInMandateDirectDTO.cs" />
     <Compile Include="Entities\GET\PayInCardDirectDTO.cs" />
     <Compile Include="Entities\GET\PayInDirectDebitDTO.cs" />
     <Compile Include="Entities\GET\PayInCardWebDTO.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Entities\POST\DisputePagePostDTO.cs" />
     <Compile Include="Entities\POST\ClientBankWireDirectPostDTO.cs" />
     <Compile Include="Entities\POST\MandatePostDTO.cs" />
+    <Compile Include="Entities\POST\PayInMandateDirectPostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
     <Compile Include="Entities\PUT\DisputeContestPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeTagPutDTO.cs" />

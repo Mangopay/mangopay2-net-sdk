@@ -45,6 +45,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsPreauthorizedDirectCreate, new String[] { "/payins/preauthorized/direct/", RequestType.POST } },
             { MethodKey.PayinsBankwireDirectCreate, new String[] { "/payins/bankwire/direct/", RequestType.POST } },
             { MethodKey.PayinsDirectDebitCreate, new String[] { "/payins/directdebit/web", RequestType.POST } },
+            { MethodKey.PayinsMandateDirectDebitCreate, new String[] { "/payins/directdebit/direct", RequestType.POST } },
         
             { MethodKey.PayoutsBankwireCreate, new String[] { "/payouts/bankwire/", RequestType.POST } },
             { MethodKey.PayoutsGet, new String[] { "/payouts/{0}", RequestType.GET } },

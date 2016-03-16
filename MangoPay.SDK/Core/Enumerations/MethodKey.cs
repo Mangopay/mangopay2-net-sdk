@@ -25,6 +25,7 @@ namespace MangoPay.SDK.Core.Enumerations
         PayinsGet,
         PayinsPreauthorizedDirectCreate,
         PayinsDirectDebitCreate,
+		PayinsMandateDirectDebitCreate,
         PayoutsBankwireCreate,
         PayoutsGet,
         PreauthorizationCreate,
