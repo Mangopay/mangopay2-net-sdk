@@ -165,9 +165,11 @@
     <Compile Include="Entities\POST\ClientBankWireDirectPostDTO.cs" />
     <Compile Include="Entities\POST\MandatePostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
+    <Compile Include="Entities\PUT\ClientLogoPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeContestPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeTagPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeDocumentPutDTO.cs" />
+    <Compile Include="Entities\PUT\ClientPutDTO.cs" />
     <Compile Include="Entities\RefundReason.cs" />
     <Compile Include="Entities\Money.cs" />
     <Compile Include="Entities\OAuthTokenDTO.cs" />
