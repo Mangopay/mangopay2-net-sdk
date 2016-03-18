@@ -125,7 +125,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.IdempotencyResponseGet, new String[] { "/responses/{0}/", RequestType.GET } },
 			
 			{ MethodKey.MandateCreate, new String[] { "/mandates/directdebit/web/", RequestType.POST } },
-			{ MethodKey.MandateCancel, new String[] { "/mandates/{0}/", RequestType.PUT } },
+			{ MethodKey.MandateCancel, new String[] { "/mandates/{0}/cancel/", RequestType.PUT } },
 			{ MethodKey.MandateGet, new String[] { "/mandates/{0}/", RequestType.GET } },
 			{ MethodKey.MandatesGetAll, new String[] { "/mandates/", RequestType.GET } },
 			{ MethodKey.MandatesGetForUser, new String[] { "/users/{0}/mandates/", RequestType.GET } },

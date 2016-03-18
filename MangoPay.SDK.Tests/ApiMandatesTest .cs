@@ -53,6 +53,31 @@ namespace MangoPay.SDK.Tests
             }
         }
 
+		[TestMethod]
+		public void test_Mandate_Cancel()
+		{
+			string bankAccountId = this.GetJohnsAccount().Id;
+			string returnUrl = "http://test.test";
+
+			MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
+        
+			MandateDTO mandate = this.Api.Mandates.Create(mandatePost);
+        
+			//	! IMPORTANT NOTE !
+			//	
+			//	In order to make this test pass, at this place you have to set a breakpoint,
+			//	navigate to URL the mandate.RedirectURL property points to and click "CONFIRM" button.
+        
+			mandate = this.Api.Mandates.Get(mandate.Id);
+
+			Assert.IsTrue(mandate.Status == MandateStatus.SUBMITTED, "In order to make this test pass, after creating mandate and before cancelling it you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.");
+        
+			mandate = this.Api.Mandates.Cancel(mandate.Id);
+        
+			Assert.IsNotNull(mandate);
+			Assert.IsTrue(mandate.Status == MandateStatus.FAILED);
+		}
+
         [TestMethod]
         public void Test_Mandates_GetAll()
         {
