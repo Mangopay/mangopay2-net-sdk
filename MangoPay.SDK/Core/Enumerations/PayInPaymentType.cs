@@ -17,6 +17,9 @@ namespace MangoPay.SDK.Core.Enumerations
         DIRECT_DEBIT,
 
         /// <summary>PREAUTHORIZED payment type.</summary>
-        PREAUTHORIZED
+        PREAUTHORIZED,
+
+		/// <summary>PAYPAL payment type.</summary>
+		PAYPAL
     }
 }

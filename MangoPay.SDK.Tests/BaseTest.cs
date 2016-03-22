@@ -51,9 +51,9 @@ namespace MangoPay.SDK.Tests
             return api;
         }
 
-        protected UserNaturalDTO GetJohn()
+        protected UserNaturalDTO GetJohn(bool recreate = false)
         {
-            if (BaseTest._john == null)
+            if (BaseTest._john == null || recreate)
             {
                 UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
                 user.Occupation = "programmer";
@@ -92,18 +92,18 @@ namespace MangoPay.SDK.Tests
             return BaseTest._matrix;
         }
 
-        protected BankAccountIbanDTO GetJohnsAccount()
-        {
-            if (BaseTest._johnsAccount == null)
-            {
-                UserNaturalDTO john = this.GetJohn();
-                BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154");
-                account.UserId = john.Id;
-                account.BIC = "CMBRFR2BCME";
-                BaseTest._johnsAccount = this.Api.Users.CreateBankAccountIban(john.Id, account);
-            }
-            return BaseTest._johnsAccount;
-        }
+		protected BankAccountIbanDTO GetJohnsAccount(bool recreate = false)
+		{
+			if (BaseTest._johnsAccount == null || recreate)
+			{
+				UserNaturalDTO john = this.GetJohn();
+				BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154");
+				account.UserId = john.Id;
+				account.BIC = "CMBRFR2BCME";
+				BaseTest._johnsAccount = this.Api.Users.CreateBankAccountIban(john.Id, account);
+			}
+			return BaseTest._johnsAccount;
+		}
 
         protected WalletDTO GetJohnsWallet()
         {

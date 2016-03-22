@@ -17,13 +17,14 @@ namespace MangoPay.SDK.Core
             _tempDir = tempDir;
         }
 
-        /// <summary>Gets the currently stored token.</summary>
+		/// <summary>Gets the currently stored token.</summary>
+		/// <param name="envKey">Environment key for token.</param>
         /// <returns>Currently stored token instance or null.</returns>
-        public OAuthTokenDTO Get()
+		public OAuthTokenDTO Get(string envKey)
         {
             try
             {
-                OAuthTokenDTO token = OAuthTokenDTO.Deserialize(File.ReadAllText(GetFilePath()));
+				OAuthTokenDTO token = OAuthTokenDTO.Deserialize(File.ReadAllText(GetFilePath(envKey)));
                 return token;
             }
             catch
@@ -33,14 +34,18 @@ namespace MangoPay.SDK.Core
         }
 
         /// <summary>Stores authorization token passed as an argument.</summary>
-        /// <param name="token">Token instance to be stored.</param>
-        public void Store(OAuthTokenDTO token)
+		/// <param name="token">Token instance to be stored.</param>
+		/// <param name="envKey">Environment key for token.</param>
+        public void Store(OAuthTokenDTO token, string envKey)
         {
             string serializedToken = token.Serialize();
 
-            File.WriteAllText(GetFilePath(), serializedToken);
+			File.WriteAllText(GetFilePath(envKey), serializedToken);
         }
 
-        private String GetFilePath() { return _tempDir + GetType().Name + Constants.TMP_FILE_EXTENSION; }
+		private String GetFilePath(string envKey) 
+		{ 
+			return _tempDir + GetType().Name + "." + envKey + Constants.TMP_FILE_EXTENSION; 
+		}
     }
 }

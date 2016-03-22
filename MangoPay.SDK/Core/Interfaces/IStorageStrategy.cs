@@ -5,8 +5,8 @@ namespace MangoPay.SDK.Core.Interfaces
     /// <summary>Storage strategy interface.</summary>
     public interface IStorageStrategy
     {
-        OAuthTokenDTO Get();
+        OAuthTokenDTO Get(string envKey);
 
-        void Store(OAuthTokenDTO token);
+        void Store(OAuthTokenDTO token, string envKey);
     }
 }

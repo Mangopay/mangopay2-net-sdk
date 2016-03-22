@@ -16,6 +16,7 @@ namespace MangoPay.SDK.Core.Enumerations
         HooksCreate,
         HooksGet,
         HooksSave,
+		PayinsPayPalCreate,
         PayinsBankwireDirectCreate,
         PayinsCardDirectCreate,
         PayinsCardWebCreate,
@@ -94,6 +95,13 @@ namespace MangoPay.SDK.Core.Enumerations
 		DisputesRepudiationCreateSettlement,
 		SettlementsGet,
 
-		IdempotencyResponseGet
+		IdempotencyResponseGet,
+
+		MandateCreate,
+		MandateGet,
+		MandateCancel,
+		MandatesGetAll,
+		MandatesGetForUser,
+		MandatesGetForBankAccount
     }
 }
