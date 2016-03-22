@@ -1,5 +1,4 @@
-﻿using MangoPay.SDK.Core;
-using System;
+﻿using System;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -17,5 +16,14 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Password for this client.</summary>
         public String Passphrase { get; set; }
+
+		/// <summary>Your branding colour to use for theme pages.</summary>
+		public String PrimaryThemeColour;
+
+		/// <summary>Your branding colour to use for call to action buttons.</summary>
+		public String PrimaryButtonColour;
+
+		/// <summary>The URL of your MANGOPAY hosted logo.</summary>
+		public String Logo;
     }
 }
