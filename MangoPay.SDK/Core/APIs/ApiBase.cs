@@ -46,6 +46,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsPreauthorizedDirectCreate, new String[] { "/payins/preauthorized/direct/", RequestType.POST } },
             { MethodKey.PayinsBankwireDirectCreate, new String[] { "/payins/bankwire/direct/", RequestType.POST } },
             { MethodKey.PayinsDirectDebitCreate, new String[] { "/payins/directdebit/web", RequestType.POST } },
+            { MethodKey.PayinsMandateDirectDebitCreate, new String[] { "/payins/directdebit/direct", RequestType.POST } },
         
             { MethodKey.PayoutsBankwireCreate, new String[] { "/payouts/bankwire/", RequestType.POST } },
             { MethodKey.PayoutsGet, new String[] { "/payouts/{0}", RequestType.GET } },
@@ -131,7 +132,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.IdempotencyResponseGet, new String[] { "/responses/{0}/", RequestType.GET } },
 			
 			{ MethodKey.MandateCreate, new String[] { "/mandates/directdebit/web/", RequestType.POST } },
-			{ MethodKey.MandateCancel, new String[] { "/mandates/{0}/", RequestType.PUT } },
+			{ MethodKey.MandateCancel, new String[] { "/mandates/{0}/cancel/", RequestType.PUT } },
 			{ MethodKey.MandateGet, new String[] { "/mandates/{0}/", RequestType.GET } },
 			{ MethodKey.MandatesGetAll, new String[] { "/mandates/", RequestType.GET } },
 			{ MethodKey.MandatesGetForUser, new String[] { "/users/{0}/mandates/", RequestType.GET } },
