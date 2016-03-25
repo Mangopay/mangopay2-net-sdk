@@ -194,7 +194,7 @@ namespace MangoPay.SDK.Tests
         }
 
 		[TestMethod]
-		public void Test_PayIns_MandateDirect_Create()
+		public void Test_PayIns_MandateDirect_Create_Get()
 		{
 			try
 			{
@@ -230,6 +230,11 @@ namespace MangoPay.SDK.Tests
 				Assert.AreEqual(TransactionType.PAYIN, createPayIn.Type);
 				Assert.IsNotNull(((PayInMandateDirectDTO)createPayIn).MandateId);
 				Assert.AreEqual(((PayInMandateDirectDTO)createPayIn).MandateId, mandate.Id);
+
+				PayInMandateDirectDTO getPayIn = this.Api.PayIns.GetMandateDirectDebit(createPayIn.Id);
+
+				Assert.IsNotNull(getPayIn);
+				Assert.IsTrue(getPayIn.Id == createPayIn.Id);
 			}
 			catch (Exception ex)
 			{
