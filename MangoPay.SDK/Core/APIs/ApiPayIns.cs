@@ -170,6 +170,14 @@ namespace MangoPay.SDK.Core.APIs
             return this.GetObject<PayInDirectDebitDTO>(MethodKey.PayinsGet, payInId);
         }
 
+		/// <summary>Gets PayIn PayPal entity by its identifier.</summary>
+		/// <param name="payInId">PayIn identifier.</param>
+		/// <returns>PayIn object returned from API.</returns>
+		public PayInPayPalDTO GetPayPal(String payInId)
+		{
+			return this.GetObject<PayInPayPalDTO>(MethodKey.PayinsGet, payInId);
+		}
+
         /// <summary>Creates refund for PayIn object.</summary>
         /// <param name="payInId">PayIn identifier.</param>
         /// <param name="refund">Refund object to be created.</param>
