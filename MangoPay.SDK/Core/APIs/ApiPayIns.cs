@@ -26,9 +26,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Object instance returned from API.</returns>
         public PayInBankWireDirectDTO CreateBankWireDirect(String idempotencyKey, PayInBankWireDirectPostDTO payIn)
         {
-            return this.CreateObject<PayInBankWireDirectDTO, PayInBankWireDirectPostDTO>
-
-(idempotencyKey, MethodKey.PayinsBankwireDirectCreate, payIn);
+            return this.CreateObject<PayInBankWireDirectDTO, PayInBankWireDirectPostDTO>(idempotencyKey, MethodKey.PayinsBankwireDirectCreate, payIn);
         }
 
         /// <summary>Creates new payin card direct.</summary>
@@ -45,9 +43,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Object instance returned from API.</returns>
         public PayInCardDirectDTO CreateCardDirect(String idempotencyKey, PayInCardDirectPostDTO payIn)
         {
-            return this.CreateObject<PayInCardDirectDTO, PayInCardDirectPostDTO>
-
-(idempotencyKey, MethodKey.PayinsCardDirectCreate, payIn);
+            return this.CreateObject<PayInCardDirectDTO, PayInCardDirectPostDTO>(idempotencyKey, MethodKey.PayinsCardDirectCreate, payIn);
         }
 
         /// <summary>Creates new payin card web.</summary>
@@ -123,9 +119,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Object instance returned from API.</returns>
         public PayInDirectDebitDTO CreateDirectDebit(String idempotencyKey, PayInDirectDebitPostDTO payIn)
         {
-            return this.CreateObject<PayInDirectDebitDTO, PayInDirectDebitPostDTO>
-
-(idempotencyKey, MethodKey.PayinsDirectDebitCreate, payIn);
+            return this.CreateObject<PayInDirectDebitDTO, PayInDirectDebitPostDTO>(idempotencyKey, MethodKey.PayinsDirectDebitCreate, payIn);
         }
 
         /// <summary>Creates new payin mandate direct debit.</summary>
@@ -142,9 +136,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Object instance returned from API.</returns>
         public PayInMandateDirectDTO CreateMandateDirectDebit(String idempotencyKey, PayInMandateDirectPostDTO payIn)
         {
-            return this.CreateObject<PayInMandateDirectDTO, PayInMandateDirectPostDTO>
-
-(idempotencyKey, MethodKey.PayinsMandateDirectDebitCreate, payIn);
+            return this.CreateObject<PayInMandateDirectDTO, PayInMandateDirectPostDTO>(idempotencyKey, MethodKey.PayinsMandateDirectDebitCreate, payIn);
         }
 
         /// <summary>Gets PayIn entity by its identifier.</summary>
