@@ -51,5 +51,8 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Shareholder declaration.</summary>
         public String ShareholderDeclaration { get; set; }
+
+        /// <summary>Legal Representative Proof Of Identity.</summary>
+        public String LegalRepresentativeProofOfIdentity { get; set; }
     }
 }

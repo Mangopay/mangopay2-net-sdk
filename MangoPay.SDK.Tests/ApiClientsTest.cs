@@ -105,12 +105,10 @@ namespace MangoPay.SDK.Tests
 		{
 			ListPaginated<WalletDTO> feesWallets = null;
 			ListPaginated<WalletDTO> creditWallets = null;
-			ListPaginated<WalletDTO> defaultWallets = null;
 			try
 			{
 				feesWallets = this.Api.Clients.GetWallets(FundsType.FEES, new Pagination(1, 1));
 				creditWallets = this.Api.Clients.GetWallets(FundsType.CREDIT, new Pagination(1, 1));
-				defaultWallets = this.Api.Clients.GetWallets(FundsType.DEFAULT, new Pagination(1, 1));
 			}
 			catch (Exception ex)
 			{
@@ -118,8 +116,7 @@ namespace MangoPay.SDK.Tests
 			}
 
 			if ((feesWallets == null || feesWallets.Count == 0) ||
-				(creditWallets == null || creditWallets.Count == 0) ||
-				(defaultWallets == null || defaultWallets.Count == 0))
+				(creditWallets == null || creditWallets.Count == 0))
 				Assert.Fail("Cannot test getting client's wallet because there is no any wallet for client.");
 
 			WalletDTO wallet = null;
@@ -128,8 +125,6 @@ namespace MangoPay.SDK.Tests
 				wallet = feesWallets[0];
 			else if (creditWallets != null && creditWallets.Count > 0)
 				wallet = creditWallets[0];
-			else
-				wallet = defaultWallets[0];
 
 			result = this.Api.Clients.GetWallet(wallet.FundsType, wallet.Currency);
 
@@ -143,12 +138,10 @@ namespace MangoPay.SDK.Tests
 		{
 			ListPaginated<WalletDTO> feesWallets = null;
 			ListPaginated<WalletDTO> creditWallets = null;
-			ListPaginated<WalletDTO> defaultWallets = null;
 			try
 			{
 				feesWallets = this.Api.Clients.GetWallets(FundsType.FEES, new Pagination(1, 1));
 				creditWallets = this.Api.Clients.GetWallets(FundsType.CREDIT, new Pagination(1, 1));
-				defaultWallets = this.Api.Clients.GetWallets(FundsType.DEFAULT, new Pagination(1, 1));
 			}
 			catch (Exception ex)
 			{
@@ -156,8 +149,7 @@ namespace MangoPay.SDK.Tests
 			}
 
 			if ((feesWallets == null || feesWallets.Count == 0) ||
-				(creditWallets == null || creditWallets.Count == 0) ||
-				(defaultWallets == null || defaultWallets.Count == 0))
+				(creditWallets == null || creditWallets.Count == 0))
 				Assert.Fail("Cannot test getting client's wallet transactions because there is no any wallet for client.");
 
 			WalletDTO wallet = null;
@@ -166,8 +158,6 @@ namespace MangoPay.SDK.Tests
 				wallet = feesWallets[0];
 			else if (creditWallets != null && creditWallets.Count > 0)
 				wallet = creditWallets[0];
-			else
-				wallet = defaultWallets[0];
 
 			result = this.Api.Clients.GetWalletTransactions(wallet.FundsType, wallet.Currency, new Pagination(1, 1), null);
 
