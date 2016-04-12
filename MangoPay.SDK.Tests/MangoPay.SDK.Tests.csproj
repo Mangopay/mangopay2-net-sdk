@@ -65,6 +65,7 @@
     <Compile Include="ApiCardRegistrationsTest.cs" />
     <Compile Include="ApiClientsTest.cs" />
     <Compile Include="ApiEventsTest.cs" />
+    <Compile Include="ApiMandatesTest .cs" />
     <Compile Include="ApiHooksTest.cs" />
     <Compile Include="ApiDisputesTest.cs" />
     <Compile Include="ApiKycTest.cs" />
