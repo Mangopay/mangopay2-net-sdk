@@ -41,7 +41,7 @@ namespace MangoPay.SDK.Core
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            object result = null;
+            object result = new DateTime();
             if (reader.TokenType == JsonToken.Integer)
             {
                 result = ConvertFromUnixFormat((long)reader.Value);
