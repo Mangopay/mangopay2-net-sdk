@@ -193,6 +193,55 @@ namespace MangoPay.SDK.Tests
             }
         }
 
+		[TestMethod]
+		public void Test_PayIns_MandateDirect_Create_Get()
+		{
+			try
+			{
+				WalletDTO wallet = this.GetJohnsWallet();
+				UserNaturalDTO user = this.GetJohn();
+
+				string bankAccountId = this.GetJohnsAccount().Id;
+				string returnUrl = "http://test.test";
+				MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
+				MandateDTO mandate = this.Api.Mandates.Create(mandatePost);
+
+				/*	
+				 *	! IMPORTANT NOTE !
+				 *	
+				 *	In order to make this test pass, at this place you have to set a breakpoint,
+				 *	navigate to URL the mandate.RedirectURL property points to and click "CONFIRM" button.
+				 * 
+				 */
+
+				PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test.test", mandate.Id);
+
+				PayInDTO createPayIn = this.Api.PayIns.CreateMandateDirectDebit(payIn);
+
+				Assert.IsNotNull(createPayIn);
+				Assert.AreNotEqual(TransactionStatus.FAILED, createPayIn.Status, "In order to make this test pass, after creating mandate and before creating the payin you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.");
+
+				Assert.IsTrue(createPayIn.Id.Length > 0);
+				Assert.AreEqual(wallet.Id, createPayIn.CreditedWalletId);
+				Assert.AreEqual(PayInPaymentType.DIRECT_DEBIT, createPayIn.PaymentType);
+				Assert.AreEqual(PayInExecutionType.DIRECT, createPayIn.ExecutionType);
+				Assert.AreEqual(user.Id, createPayIn.AuthorId);
+				Assert.AreEqual(TransactionStatus.CREATED, createPayIn.Status);
+				Assert.AreEqual(TransactionType.PAYIN, createPayIn.Type);
+				Assert.IsNotNull(((PayInMandateDirectDTO)createPayIn).MandateId);
+				Assert.AreEqual(((PayInMandateDirectDTO)createPayIn).MandateId, mandate.Id);
+
+				PayInMandateDirectDTO getPayIn = this.Api.PayIns.GetMandateDirectDebit(createPayIn.Id);
+
+				Assert.IsNotNull(getPayIn);
+				Assert.IsTrue(getPayIn.Id == createPayIn.Id);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+
         [TestMethod]
         public void Test_PayIns_BankWireDirect_Get()
         {
