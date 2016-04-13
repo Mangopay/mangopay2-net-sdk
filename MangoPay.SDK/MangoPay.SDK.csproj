@@ -64,6 +64,7 @@
     <Compile Include="Core\APIs\ApiDisputes.cs" />
     <Compile Include="Core\APIs\ApiIdempotency.cs" />
     <Compile Include="Core\APIs\ApiHooks.cs" />
+    <Compile Include="Core\APIs\ApiMandates.cs" />
     <Compile Include="Core\APIs\ApiOAuth.cs" />
     <Compile Include="Core\APIs\ApiPayIns.cs" />
     <Compile Include="Core\APIs\ApiPayOuts.cs" />
@@ -91,6 +92,10 @@
     <Compile Include="Core\Enumerations\DisputeStatus.cs" />
     <Compile Include="Core\Enumerations\KycLevel.cs" />
     <Compile Include="Core\Enumerations\DisputeDocumentStatus.cs" />
+    <Compile Include="Core\Enumerations\MandateExecutionType.cs" />
+    <Compile Include="Core\Enumerations\MandateScheme.cs" />
+    <Compile Include="Core\Enumerations\MandateStatus.cs" />
+    <Compile Include="Core\Enumerations\MandateType.cs" />
     <Compile Include="Core\Enumerations\MethodKey.cs" />
     <Compile Include="Core\Enumerations\PreAuthorizationPaymentType.cs" />
     <Compile Include="Core\Enumerations\SortDirection.cs" />
@@ -98,6 +103,7 @@
     <Compile Include="Core\FilterDisputeDocuments.cs" />
     <Compile Include="Core\FilterDisputes.cs" />
     <Compile Include="Core\FilterKycDocuments.cs" />
+    <Compile Include="Core\FilterMandates.cs" />
     <Compile Include="Core\MangoPayJsonSerializer.cs" />
     <Compile Include="Core\Sort.cs" />
     <Compile Include="Core\TemplateURLOptions.cs" />
@@ -142,8 +148,10 @@
     <Compile Include="Entities\GET\DisputePageDTO.cs" />
     <Compile Include="Entities\GET\IdempotencyResponseDTO.cs" />
     <Compile Include="Entities\GET\KycPageDTO.cs" />
+    <Compile Include="Entities\GET\MandateDTO.cs" />
     <Compile Include="Entities\GET\PageDTO.cs" />
     <Compile Include="Entities\GET\PayInBankWireDirectDTO.cs" />
+    <Compile Include="Entities\GET\PayInMandateDirectDTO.cs" />
     <Compile Include="Entities\GET\PayInCardDirectDTO.cs" />
     <Compile Include="Entities\GET\PayInDirectDebitDTO.cs" />
     <Compile Include="Entities\GET\PayInCardWebDTO.cs" />
@@ -156,10 +164,14 @@
     <Compile Include="Entities\POST\DisputeDocumentPostDTO.cs" />
     <Compile Include="Entities\POST\DisputePagePostDTO.cs" />
     <Compile Include="Entities\POST\ClientBankWireDirectPostDTO.cs" />
+    <Compile Include="Entities\POST\MandatePostDTO.cs" />
+    <Compile Include="Entities\POST\PayInMandateDirectPostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
+    <Compile Include="Entities\PUT\ClientLogoPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeContestPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeTagPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeDocumentPutDTO.cs" />
+    <Compile Include="Entities\PUT\ClientPutDTO.cs" />
     <Compile Include="Entities\RefundReason.cs" />
     <Compile Include="Entities\Money.cs" />
     <Compile Include="Entities\OAuthTokenDTO.cs" />

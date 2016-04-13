@@ -25,6 +25,7 @@ namespace MangoPay.SDK.Core.Enumerations
         PayinsGet,
         PayinsPreauthorizedDirectCreate,
         PayinsDirectDebitCreate,
+		PayinsMandateDirectDebitCreate,
         PayoutsBankwireCreate,
         PayoutsGet,
         PreauthorizationCreate,
@@ -75,6 +76,9 @@ namespace MangoPay.SDK.Core.Enumerations
 		ClientGetTransactions,
 		ClientGetWalletTransactions,
 		ClientCreateBankwireDirect,
+		ClientGet,
+		ClientSave,
+		ClientUploadLogo,
 		
 		DisputesGet,
 		DisputesSaveTag,
@@ -99,6 +103,13 @@ namespace MangoPay.SDK.Core.Enumerations
 		DisputesRepudiationCreateSettlement,
 		SettlementsGet,
 
-		IdempotencyResponseGet
+		IdempotencyResponseGet,
+
+		MandateCreate,
+		MandateGet,
+		MandateCancel,
+		MandatesGetAll,
+		MandatesGetForUser,
+		MandatesGetForBankAccount
     }
 }
