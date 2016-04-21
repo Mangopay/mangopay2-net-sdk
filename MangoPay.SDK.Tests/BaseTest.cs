@@ -61,6 +61,8 @@ namespace MangoPay.SDK.Tests
 				user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
 
                 BaseTest._john = this.Api.Users.Create(user);
+
+				BaseTest._johnsWallet = null;
             }
             return BaseTest._john;
         }
