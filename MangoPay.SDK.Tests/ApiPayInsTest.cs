@@ -46,7 +46,7 @@ namespace MangoPay.SDK.Tests
                 AssertEqualInputProps(payIn, getPayIn);
 
                 Assert.IsTrue(getPayIn.Status == TransactionStatus.CREATED);
-                Assert.IsTrue(getPayIn.ExecutionDate == null);
+                Assert.IsTrue(getPayIn.ExecutionDate == new DateTime());
             }
             catch (Exception ex)
             {
@@ -216,7 +216,11 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		[TestMethod]
+		/*
+		 * Uncomment the attribute below to test payins with a mandate
+		 * This test needs your manual confirmation on the web page (see note in test's body)
+		 */
+		//[TestMethod]
 		public void Test_PayIns_MandateDirect_Create_Get()
 		{
 			try

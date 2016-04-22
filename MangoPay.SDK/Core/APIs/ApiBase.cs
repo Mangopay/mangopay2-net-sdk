@@ -14,7 +14,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Array with REST URL and request type.</summary>
         private Dictionary<MethodKey, String[]> _methods = new Dictionary<MethodKey, String[]> 
         {
-            { MethodKey.AuthenticationBase, new String[] { "/api/clients/", RequestType.POST } },
+            { MethodKey.AuthenticationBase, new String[] { "/clients/", RequestType.POST } },
             { MethodKey.AuthenticationOAuth, new String[] { "/oauth/token", RequestType.POST } },
         
             { MethodKey.EventsAll, new String[] { "/events", RequestType.GET } },

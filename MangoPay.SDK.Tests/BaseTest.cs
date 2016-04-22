@@ -61,6 +61,8 @@ namespace MangoPay.SDK.Tests
                 user.Address = "Some Address";
 
                 BaseTest._john = this.Api.Users.Create(user);
+
+				BaseTest._johnsWallet = null;
             }
             return BaseTest._john;
         }

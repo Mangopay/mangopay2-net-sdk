@@ -53,7 +53,12 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		[TestMethod]
+
+		/*
+		 * Uncomment the attribute below to test mandate cancellation.
+		 * This test needs your manual confirmation on the web page (see note in test's body)
+		 */
+		//[TestMethod]
 		public void test_Mandate_Cancel()
 		{
 			string bankAccountId = this.GetJohnsAccount().Id;
