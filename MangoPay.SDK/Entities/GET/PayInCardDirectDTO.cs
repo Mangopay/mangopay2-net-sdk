@@ -21,5 +21,8 @@ namespace MangoPay.SDK.Entities.GET
         
         /// <summary>Secure mode needed.</summary>
         public String SecureModeNeeded { get; set; }
+
+        /// <summary>An optional value to be specified on the user's bank statement.</summary>
+        public String StatementDescriptor { get; set; }
     }
 }

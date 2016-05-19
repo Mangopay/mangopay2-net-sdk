@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn card direct POST entity.</summary>
     public class PayInCardDirectPostDTO : EntityPostBase
     {
-        public PayInCardDirectPostDTO(string authorId, string creditedUserId, Money debitedFunds, Money fees, string creditedWalletId, string secureModeReturnURL, string cardId)
+        public PayInCardDirectPostDTO(string authorId, string creditedUserId, Money debitedFunds, Money fees, string creditedWalletId, string secureModeReturnURL, string cardId, string statementDescriptor)
         {
             AuthorId = authorId;
             CreditedUserId = creditedUserId;
@@ -18,6 +18,7 @@ namespace MangoPay.SDK.Entities.POST
             CreditedWalletId = creditedWalletId;
             SecureModeReturnURL = secureModeReturnURL;
             CardId = cardId;
+            StatementDescriptor = statementDescriptor;
         }
 
         /// <summary>Author identifier.</summary>
@@ -48,5 +49,8 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Card type { CB_VISA_MASTERCARD, AMEX }.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public CardType? CardType { get; set; }
+
+        /// <summary>An optional value to be specified on the user's bank statement.</summary>
+        public String StatementDescriptor { get; set; }
     }
 }
