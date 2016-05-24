@@ -8,7 +8,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>Card pre-authorization POST entity.</summary>
     public class CardPreAuthorizationPostDTO : EntityPostBase
     {
-        public CardPreAuthorizationPostDTO(string authorId, Money debitedFunds, SecureMode secureMode, string cardId, string secureModeReturnURL, string statementDescriptor)
+        public CardPreAuthorizationPostDTO(string authorId, Money debitedFunds, SecureMode secureMode, string cardId, string secureModeReturnURL, string statementDescriptor = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;

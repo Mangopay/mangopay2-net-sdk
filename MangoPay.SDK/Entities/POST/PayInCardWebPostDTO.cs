@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn card web POST entity.</summary>
     public class PayInCardWebPostDTO : EntityPostBase
     {
-        public PayInCardWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CultureCode culture, CardType cardType, string statementDescriptor)
+        public PayInCardWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CultureCode culture, CardType cardType, string statementDescriptor = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
