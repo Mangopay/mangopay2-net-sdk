@@ -10,21 +10,23 @@ using System.Linq;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+
+	/* IMPORTANT NOTE!
+	 * 
+	 * Due to the fact the disputes CANNOT be created on user's side,
+	 * a special approach in testing is needed. 
+	 * In order to get the tests below pass, a bunch of disputes has
+	 * to be prepared on the API's side - if it's not, the tests won't pass.
+	 * 
+	 * Uncomment the TestClass attribute of ApiDisputesTest class to include
+	 * disputes unit tests into the testing queue.
+	 * 
+	 */
+
+
+	//[TestClass]
 	public class ApiDisputesTest : BaseTest
 	{
-
-		/* IMPORTANT NOTE!
-		 * 
-		 * Due to the fact the disputes CANNOT be created on user's side,
-		 * a special approach in testing is needed. 
-		 * In order to get the tests below pass, a bunch of disputes have
-		 * to be prepared on the API's side - if they're not, you can
-		 * just skip these tests, as they won't pass.
-		 * 
-		 */
-
-
 		private ListPaginated<DisputeDTO> _clientDisputes = null;
 
 		[TestInitialize]
