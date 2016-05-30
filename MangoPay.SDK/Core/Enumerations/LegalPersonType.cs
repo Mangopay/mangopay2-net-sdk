@@ -7,10 +7,13 @@ namespace MangoPay.SDK.Core.Enumerations
         /// <summary>Not specified.</summary>
         NotSpecified,
 
-        /// <summary>BUSINESS person type.</summary>
+        /// <summary>BUSINESS legal person type.</summary>
         BUSINESS,
 
-        /// <summary>ORGANIZATION person type.</summary>
-        ORGANIZATION
+        /// <summary>ORGANIZATION legal person type.</summary>
+        ORGANIZATION,
+        
+        /// <summary>SOLETRADER legal person type.</summary>
+        SOLETRADER
     }
 }
