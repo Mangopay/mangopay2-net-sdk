@@ -28,5 +28,8 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Return URL.</summary>
         public String ReturnURL { get; set; }
+
+        /// <summary>An optional value to be specified on the user's bank statement.</summary>
+        public String StatementDescriptor { get; set; }
     }
 }
