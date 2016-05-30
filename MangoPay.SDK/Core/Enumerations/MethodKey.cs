@@ -110,6 +110,10 @@ namespace MangoPay.SDK.Core.Enumerations
 		MandateCancel,
 		MandatesGetAll,
 		MandatesGetForUser,
-		MandatesGetForBankAccount
+		MandatesGetForBankAccount,
+
+		ReportRequest,
+		ReportGetAll,
+		ReportGet
     }
 }

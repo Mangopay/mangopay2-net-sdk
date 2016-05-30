@@ -99,5 +99,20 @@ namespace MangoPay.SDK.Core
 
 		/// <summary>Resolves to "Idempotency-Key" string.</summary>
 		public const string IDEMPOTENCY_KEY = "Idempotency-Key";
+
+		/// <summary>Resolves to "ResultCode" string.</summary>
+		public const string RESULT_CODE = "ResultCode";
+
+		/// <summary>Resolves to "MinDebitedFundsAmount" string.</summary>
+		public const string MIN_DEBITED_FUNDS_AMOUNT = "MinDebitedFundsAmount";
+
+		/// <summary>Resolves to "MinDebitedFundsCurrency" string.</summary>
+		public const string MIN_DEBITED_FUNDS_CURRENCY = "MinDebitedFundsCurrency";
+
+		/// <summary>Resolves to "MaxDebitedFundsAmount" string.</summary>
+		public const string MAX_DEBITED_FUNDS_AMOUNT = "MaxDebitedFundsAmount";
+
+		/// <summary>Resolves to "MaxDebitedFundsCurrency" string.</summary>
+		public const string MAX_DEBITED_FUNDS_CURRENCY = "MaxDebitedFundsCurrency";
     }
 }

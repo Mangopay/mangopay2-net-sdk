@@ -132,7 +132,11 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.MandateGet, new String[] { "/mandates/{0}/", RequestType.GET } },
 			{ MethodKey.MandatesGetAll, new String[] { "/mandates/", RequestType.GET } },
 			{ MethodKey.MandatesGetForUser, new String[] { "/users/{0}/mandates/", RequestType.GET } },
-			{ MethodKey.MandatesGetForBankAccount, new String[] { "/users/{0}/bankaccounts/{1}/mandates/", RequestType.GET } }
+			{ MethodKey.MandatesGetForBankAccount, new String[] { "/users/{0}/bankaccounts/{1}/mandates/", RequestType.GET } },
+
+			{ MethodKey.ReportRequest, new String[] { "/reports/{0}", RequestType.POST } },
+			{ MethodKey.ReportGetAll, new String[] { "/reports", RequestType.GET } },
+			{ MethodKey.ReportGet, new String[] { "/reports/{0}", RequestType.GET } }
         };
 
         /// <summary>Creates new API instance.</summary>

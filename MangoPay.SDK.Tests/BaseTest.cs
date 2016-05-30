@@ -29,6 +29,7 @@ namespace MangoPay.SDK.Tests
         private static KycDocumentDTO _johnsKycDocument;
         private static PayOutBankWireDTO _johnsPayOutForCardDirect;
         private static HookDTO _johnsHook;
+		private static ReportRequestDTO _johnsReport;
 
         public BaseTest()
         {
@@ -466,6 +467,17 @@ namespace MangoPay.SDK.Tests
 
             return BaseTest._johnsHook;
         }
+
+		protected ReportRequestDTO GetJohnsReport()
+		{
+			if (BaseTest._johnsReport == null)
+			{
+				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
+				BaseTest._johnsReport = this.Api.Reports.Create(reportPost);
+			}
+
+			return BaseTest._johnsReport;
+		}
 
         protected void AssertEqualInputProps<T>(T entity1, T entity2)
         {
