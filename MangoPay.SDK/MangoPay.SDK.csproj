@@ -110,6 +110,7 @@
     <Compile Include="Core\FilterKycDocuments.cs" />
     <Compile Include="Core\FilterMandates.cs" />
     <Compile Include="Core\FilterReports.cs" />
+    <Compile Include="Core\FilterReportsList.cs" />
     <Compile Include="Core\MangoPayJsonSerializer.cs" />
     <Compile Include="Core\Sort.cs" />
     <Compile Include="Core\TemplateURLOptions.cs" />
