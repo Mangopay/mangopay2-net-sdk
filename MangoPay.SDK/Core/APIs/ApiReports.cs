@@ -50,9 +50,11 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="pagination">Pagination.</param>
         /// <param name="sort">Sort.</param>
 		/// <returns>List of ReportRequest instances returned from API.</returns>
-		public ListPaginated<ReportRequestDTO> GetAll(Pagination pagination, Sort sort = null)
+		public ListPaginated<ReportRequestDTO> GetAll(Pagination pagination, FilterReportsList filters = null, Sort sort = null)
         {
-			ListPaginated<ReportRequestTransportDTO> resultTransport = this.GetList<ReportRequestTransportDTO>(MethodKey.ReportGetAll, pagination, sort);
+			if (filters == null) filters = new FilterReportsList();
+
+			ListPaginated<ReportRequestTransportDTO> resultTransport = this.GetList<ReportRequestTransportDTO>(MethodKey.ReportGetAll, pagination, null, sort, filters.GetValues());
 
 			List<ReportRequestDTO> result = new List<ReportRequestDTO>();
 			foreach (ReportRequestTransportDTO item in resultTransport)
