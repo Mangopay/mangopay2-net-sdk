@@ -119,6 +119,6 @@ namespace MangoPay.SDK.Core
 		public const string MAX_DEBITED_FUNDS_AMOUNT = "MaxDebitedFundsAmount";
 
 		/// <summary>Resolves to "MaxDebitedFundsCurrency" string.</summary>
-		public const string MAX_DEBITED_FUNDS_CURRENCY = "MaxDebitedFundsCurrency"
+		public const string MAX_DEBITED_FUNDS_CURRENCY = "MaxDebitedFundsCurrency";
     }
 }
