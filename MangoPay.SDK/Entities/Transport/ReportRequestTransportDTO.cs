@@ -66,7 +66,8 @@ namespace MangoPay.SDK.Entities.Transport
 				ReportType = this.ReportType,
 				Preview = this.Preview,
 				ResultCode = this.ResultCode,
-				ResultMessage = this.ResultMessage
+				ResultMessage = this.ResultMessage,
+				Sort = this.Sort
 			};
 
 			if (Columns != null) result.Columns = this.Columns.ToList<string>();
