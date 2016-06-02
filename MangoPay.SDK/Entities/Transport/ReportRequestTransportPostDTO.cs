@@ -65,7 +65,8 @@ namespace MangoPay.SDK.Entities.Transport
 
 			if (reportRequest.Filters != null) result.Filters = FilterReportsTransport.CreateFromBusinessObject(reportRequest.Filters);
 
-			if (String.IsNullOrWhiteSpace(reportRequest.Sort)) reportRequest.Sort = "CreationDate:asc";
+			if (String.IsNullOrWhiteSpace(reportRequest.Sort)) result.Sort = "CreationDate:ASC";
+			else result.Sort = reportRequest.Sort;
 
 			return result;
 		}
