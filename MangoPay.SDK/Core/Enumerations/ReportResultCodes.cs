@@ -156,7 +156,6 @@ namespace MangoPay.SDK.Core.Enumerations
 		PayOuts_The_author_is_not_the_wallet_owner = 121002,
 		PayOuts_Unsufficient_wallet_balance = 121003,
 		PayOuts_Specific_case_please_contact_our_Support_Team = 121004,
-		PayOuts_Other_reason = 121004,
 		PayOuts_Refused_due_to_the_Fraud_Policy = 121005,
 		PayOuts_The_associated_bank_account_is_not_active = 121006,
 		PayOuts_Voucher_PayOuts_temporarily_unavailable_please_try_again_later = 121007,
