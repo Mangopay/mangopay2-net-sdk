@@ -77,6 +77,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersGetKycDocument, new String[] { "/users/{0}/KYC/documents/{1}", RequestType.GET } },
             { MethodKey.UsersGetKycDocuments, new String[] { "/users/{0}/KYC/documents", RequestType.GET } },
             { MethodKey.UsersGetBankAccount, new String[] { "/users/{0}/bankaccounts/{1}", RequestType.GET } },
+            { MethodKey.UsersSaveBankAccount, new String[] { "/users/{0}/bankaccounts/{1}", RequestType.PUT } },
             { MethodKey.UsersSaveNaturals, new String[] { "/users/natural/{0}", RequestType.PUT } },
             { MethodKey.UsersSaveLegals, new String[] { "/users/legal/{0}", RequestType.PUT } },
             { MethodKey.UsersSaveKycDocument, new String[] { "/users/{0}/KYC/documents/{1}", RequestType.PUT } },

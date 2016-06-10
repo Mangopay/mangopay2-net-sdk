@@ -59,6 +59,7 @@ namespace MangoPay.SDK.Core.Enumerations
         UsersSaveKycDocument,
         UsersSaveLegals,
         UsersSaveNaturals,
+		UsersSaveBankAccount,
         WalletsAllTransactions,
         WalletsCreate,
         WalletsGet,
