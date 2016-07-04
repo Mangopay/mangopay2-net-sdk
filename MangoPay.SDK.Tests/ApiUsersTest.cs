@@ -500,6 +500,33 @@ namespace MangoPay.SDK.Tests
             }
         }
 
+		[TestMethod]
+		public void Test_Users_UpdateBankAccount() 
+		{
+			try
+			{
+				UserNaturalDTO john = this.GetJohn();
+				BankAccountIbanDTO account = this.GetJohnsAccount();
+
+				Assert.IsTrue(account.Id.Length > 0);
+				Assert.IsTrue(account.UserId == (john.Id));
+				Assert.IsTrue(account.Active);
+
+				// disactivate bank account
+				DisactivateBankAccountPutDTO disactivateBankAccount = new DisactivateBankAccountPutDTO();
+				disactivateBankAccount.Active = false;
+
+				BankAccountDTO result = this.Api.Users.UpdateBankAccount(john.Id, disactivateBankAccount, account.Id);
+
+				Assert.IsNotNull(result);
+				Assert.IsTrue(account.Id == result.Id);
+				Assert.IsFalse(result.Active);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
 
         [TestMethod]
         public void Test_Users_CreateKycDocument()

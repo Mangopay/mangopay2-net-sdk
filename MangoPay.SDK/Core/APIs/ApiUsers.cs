@@ -285,6 +285,16 @@ namespace MangoPay.SDK.Core.APIs
             return this.GetObject<BankAccountUsDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
         }
 
+		/// <summary>Updates bank account.</summary>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="bankAccount">Bank account instance to be updated.</param>
+		/// <param name="bankAccountId">Bank account identifier.</param>
+		/// <returns>Bank account object returned from API.</returns>
+		public BankAccountDTO UpdateBankAccount(String userId, DisactivateBankAccountPutDTO bankAccount, String bankAccountId)
+		{
+			return this.UpdateObject<BankAccountDTO, DisactivateBankAccountPutDTO>(MethodKey.UsersSaveBankAccount, bankAccount, userId, bankAccountId);
+		}
+
         /// <summary>Gets transactions for user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="pagination">Pagination.</param>

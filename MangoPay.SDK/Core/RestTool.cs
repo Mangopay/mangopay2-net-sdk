@@ -47,7 +47,7 @@ namespace MangoPay.SDK.Core
             this._root = root;
             this._authRequired = authRequired;
             LogManager.Adapter = this._root.Config.LoggerFactoryAdapter;
-            this._log = LogManager.GetCurrentClassLogger();
+            this._log = LogManager.GetLogger(this._root.Config.LoggerFactoryAdapter.GetType());
         }
 
         /// <summary>Adds HTTP headers as name/value pairs into the request.</summary>
