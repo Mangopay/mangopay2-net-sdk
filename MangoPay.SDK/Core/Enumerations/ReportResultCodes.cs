@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Core.Enumerations
 	/// <summary>Possible result codes for reports.</summary>
 	public enum ReportResultCode
 	{
-		Success = 000000,
+		Successful_Success = 000000,
 
 		ParameterError_Generic_Operation_Error_Operation_failed = 001999,
 		ParameterError_Unsufficient_wallet_balance = 001001,
