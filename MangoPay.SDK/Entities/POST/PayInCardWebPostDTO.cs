@@ -37,7 +37,7 @@ namespace MangoPay.SDK.Entities.POST
         public String ReturnURL { get; set; }
 
         /// <summary>The URL where iFramed template is hosted.</summary>
-        public String TemplateURLOptions { get; set; }
+        public TemplateURLOptions TemplateURLOptions { get; set; }
 
         /// <summary>Culture.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
