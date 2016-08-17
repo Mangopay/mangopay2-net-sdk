@@ -28,18 +28,15 @@ namespace MangoPay.SDK.Entities
 		[JsonConverter(typeof(StringEnumConverter))]
 		public CountryIso? Country;
 
-		/// <summary>
-		/// Provides information whether this Address instance is valid or not.
-		/// </summary>
-		/// <returns>Returns true if address is valid, otherwise returns false.</returns>
+		/// <summary>Helper method used internally.</summary>
 		public bool IsValid()
 		{
-			return AddressLine1 != null &&
-				AddressLine2 != null &&
-				City != null &&
-				Region != null &&
-				PostalCode != null &&
-				Country != null && Country != CountryIso.NotSpecified;
+			return AddressLine1 != null ||
+				AddressLine2 != null ||
+				City != null ||
+				Region != null ||
+				PostalCode != null ||
+				(Country != null && Country != CountryIso.NotSpecified);
 		}
 	}
 }
