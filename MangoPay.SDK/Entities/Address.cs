@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -26,5 +27,19 @@ namespace MangoPay.SDK.Entities
 		/// <summary>Country.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]
 		public CountryIso? Country;
+
+		/// <summary>
+		/// Provides information whether this Address instance is valid or not.
+		/// </summary>
+		/// <returns>Returns true if address is valid, otherwise returns false.</returns>
+		public bool IsValid()
+		{
+			return AddressLine1 != null &&
+				AddressLine2 != null &&
+				City != null &&
+				Region != null &&
+				PostalCode != null &&
+				Country != null && Country != CountryIso.NotSpecified;
+		}
 	}
 }

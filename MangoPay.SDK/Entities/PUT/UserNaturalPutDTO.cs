@@ -21,7 +21,7 @@ namespace MangoPay.SDK.Entities.PUT
         /// <summary>Last name.</summary>
         public String LastName { get; set; }
 
-        /// <summary>Address.</summary>
+		/// <summary>Address.</summary>
         public Address Address { get; set; }
 
         /// <summary>Date of birth.</summary>
@@ -58,5 +58,10 @@ namespace MangoPay.SDK.Entities.PUT
 
         /// <summary>Income range. One of UserNaturalPutDTO.IncomeRanges constants or null, if not specified.</summary>
         public int? IncomeRange { get; set; }
+
+		public bool ShouldSerializeAddress()
+		{
+			return Address != null && Address.IsValid();
+		}
     }
 }
