@@ -114,6 +114,7 @@
     <Compile Include="Core\MangoPayJsonSerializer.cs" />
     <Compile Include="Core\Sort.cs" />
     <Compile Include="Core\TemplateURLOptions.cs" />
+    <Compile Include="Core\UnixDefaultDateTimeConverter.cs" />
     <Compile Include="Core\UnixDateTimeConverter.cs" />
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\EntityPutBase.cs" />
