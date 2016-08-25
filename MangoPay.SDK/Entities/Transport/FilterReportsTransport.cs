@@ -28,6 +28,10 @@ namespace MangoPay.SDK.Entities.Transport
 
 		public String[] ResultCode { get; set; }
 
+		public String UserId { get; set; }
+
+		public String WalletId { get; set; }
+
 		public Int32? MinDebitedFundsAmount { get; set; }
 
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -50,7 +54,9 @@ namespace MangoPay.SDK.Entities.Transport
 				MinDebitedFundsCurrency = this.MinDebitedFundsCurrency,
 				Nature = new List<TransactionNature>(),
 				Status = new List<TransactionStatus>(),
-				Type = new List<TransactionType>()
+				Type = new List<TransactionType>(),
+				UserId = this.UserId,
+				WalletId = this.WalletId
 			};
 
 			if (Nature != null)
@@ -90,7 +96,9 @@ namespace MangoPay.SDK.Entities.Transport
 				MaxDebitedFundsAmount = filters.MaxDebitedFundsAmount,
 				MaxDebitedFundsCurrency = filters.MaxDebitedFundsCurrency,
 				MinDebitedFundsAmount = filters.MinDebitedFundsAmount,
-				MinDebitedFundsCurrency = filters.MinDebitedFundsCurrency
+				MinDebitedFundsCurrency = filters.MinDebitedFundsCurrency,
+				UserId = filters.UserId,
+				WalletId = filters.WalletId
 			};
 
 			if (filters.Nature != null)
