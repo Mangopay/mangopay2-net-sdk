@@ -48,5 +48,15 @@ namespace MangoPay.SDK.Entities.PUT
         /// <summary>Legal representative country of residence.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public CountryIso? LegalRepresentativeCountryOfResidence { get; set; }
+
+		public bool ShouldSerializeHeadquartersAddress()
+		{
+			return HeadquartersAddress != null && HeadquartersAddress.IsValid();
+		}
+
+		public bool ShouldSerializeLegalRepresentativeAddress()
+		{
+			return LegalRepresentativeAddress != null && LegalRepresentativeAddress.IsValid();
+		}
     }
 }

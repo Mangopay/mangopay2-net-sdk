@@ -71,5 +71,10 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Proof of address.</summary>
         public String ProofOfAddress { get; set; }
+
+		public bool ShouldSerializeAddress()
+		{
+			return Address != null && Address.IsValid();
+		}
     }
 }

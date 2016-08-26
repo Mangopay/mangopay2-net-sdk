@@ -5,9 +5,9 @@ using System;
 namespace MangoPay.SDK.Core
 {
     /// <summary>
-    /// Converter between .NET DateTime and unix datetime. This one puts NULL as a default value.
+    /// Converter between .NET DateTime and unix datetime. This one puts new DateTime() as a default value.
     /// </summary>
-    public class UnixDateTimeConverter : DateTimeConverterBase
+    public class UnixDefaultDateTimeConverter : DateTimeConverterBase
     {
         internal long? ConvertToUnixFormat(DateTime? dateTime)
         {
@@ -41,7 +41,7 @@ namespace MangoPay.SDK.Core
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            object result = null;
+            object result = new DateTime();
             if (reader.TokenType == JsonToken.Integer)
             {
                 result = ConvertFromUnixFormat((long)reader.Value);

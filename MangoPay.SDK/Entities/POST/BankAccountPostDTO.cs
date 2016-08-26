@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -18,7 +19,12 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Owner name.</summary>
         public String OwnerName { get; set; }
 
-        /// <summary>Owner address.</summary>
-        public String OwnerAddress { get; set; }
+		/// <summary>Owner address.</summary>
+		public String OwnerAddress { get; set; }
+
+		public bool ShouldSerializeOwnerAddress()
+		{
+			return OwnerAddress != null && OwnerAddress.IsValid();
+		}
     }
 }

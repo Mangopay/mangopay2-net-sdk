@@ -32,6 +32,10 @@ namespace MangoPay.SDK.Core
 
 		public List<ReportResultCode> ResultCode { get; set; }
 
+		public String UserId { get; set; }
+
+		public String WalletId { get; set; }
+
 		public Int32? MinDebitedFundsAmount { get; set; }
 
 		public CurrencyIso? MinDebitedFundsCurrency { get; set; }
