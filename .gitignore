@@ -23,4 +23,5 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 packages/
-TestResults/
+TestResult*
+testrunner/
