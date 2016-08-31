@@ -74,7 +74,7 @@ namespace MangoPay.SDK.Entities.POST
 
 		public bool ShouldSerializeAddress()
 		{
-			return Address != null && Address.IsValid();
+			return Address != null;
 		}
     }
 }

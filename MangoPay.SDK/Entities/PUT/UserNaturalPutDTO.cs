@@ -61,7 +61,7 @@ namespace MangoPay.SDK.Entities.PUT
 
 		public bool ShouldSerializeAddress()
 		{
-			return Address != null && Address.IsValid();
+			return Address != null;
 		}
     }
 }

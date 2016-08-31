@@ -72,12 +72,12 @@ namespace MangoPay.SDK.Entities.POST
 
 		public bool ShouldSerializeHeadquartersAddress()
 		{
-			return HeadquartersAddress != null && HeadquartersAddress.IsValid();
+			return HeadquartersAddress != null;
 		}
 
 		public bool ShouldSerializeLegalRepresentativeAddress()
 		{
-			return LegalRepresentativeAddress != null && LegalRepresentativeAddress.IsValid();
+			return LegalRepresentativeAddress != null;
 		}
     }
 }
