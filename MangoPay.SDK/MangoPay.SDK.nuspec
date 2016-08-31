@@ -2,22 +2,15 @@
 <package >
   <metadata>
     <id>mangopay2-sdk</id>
-    <version>1.0.1</version>
-    <authors>MANGOPAY</authors>
-    <owners>MANGOPAY</owners>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
     <projectUrl>https://github.com/MangoPay/mangopay2-net-sdk</projectUrl>
     <iconUrl>https://avatars1.githubusercontent.com/u/4931078</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>.Net SDK for access to Mangopay API v2</description>
-    <releaseNotes></releaseNotes>
+    <description>$description$</description>
+    <copyright>Copyright 2016</copyright>
     <tags>mangopay sdk payment wallet banking emoney</tags>
-    <dependencies>
-      <dependency id="Common.Logging" version="3.1.0" />
-      <dependency id="Newtonsoft.Json" version="6.0.3" />
-      <dependency id="RestSharp" version="104.4.0" />
-    </dependencies>
   </metadata>
-  <files>
-      <file src="bin\Release\MangoPay.SDK.dll" target="lib\MangoPay.SDK.dll" />
-  </files>
 </package>
