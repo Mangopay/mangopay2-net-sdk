@@ -1,12 +1,26 @@
-MangoPay.Tests/bin/*
-MangoPay.Tests/obj
-MangoPay/bin
-MangoPay/obj
-MangoPay.SDK/obj/
-MangoPay.SDK/bin/
-MangoPay.SDK.Tests/bin/
-MangoPay.SDK.Tests/obj/
-MangoPay.SDK.Tests/MangoPay.SDK.Tests.csproj.user
-MangoPay.SDK/MangoPay.SDK.csproj.user
-mangopay2-net-sdk.v12.suo
+Specify filepatterns you want git to ignore.
+
+Example:
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+packages/
 TestResults/
