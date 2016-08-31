@@ -4,7 +4,7 @@ using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,10 +12,10 @@ using System.Text;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiUsersTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateNatural()
         {
             try
@@ -30,7 +30,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateLegal()
         {
             try
@@ -45,7 +45,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateLegal_PassesIfRequiredPropsProvided()
         {
             try
@@ -66,7 +66,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_GetNatural()
         {
             try
@@ -86,7 +86,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_GetNatural_FailsForLegalUser()
         {
             UserLegalDTO matrix = null;
@@ -112,7 +112,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_GetLegal_FailsForNaturalUser()
         {
             UserNaturalDTO john = null;
@@ -138,7 +138,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_GetLegal()
         {
             try
@@ -155,7 +155,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_GetAll()
         {
             try
@@ -191,7 +191,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_Save_Natural()
         {
             try
@@ -216,7 +216,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_Save_Natural_NonASCII()
         {
             try
@@ -249,7 +249,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_Save_Legal()
         {
             try
@@ -284,7 +284,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateBankAccount_IBAN()
         {
             try
@@ -301,7 +301,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateBankAccount_GB()
         {
             try
@@ -324,7 +324,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateBankAccount_US()
         {
             try
@@ -357,7 +357,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateBankAccount_CA()
         {
             try
@@ -381,7 +381,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateBankAccount_OTHER()
         {
             try
@@ -407,7 +407,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateBankAccount()
         {
             try
@@ -424,7 +424,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_BankAccount()
         {
             try
@@ -442,7 +442,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_BankAccounts()
         {
             try
@@ -500,7 +500,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		[TestMethod]
+		[Test]
 		public void Test_Users_UpdateBankAccount() 
 		{
 			try
@@ -528,7 +528,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateKycDocument()
         {
             try
@@ -546,7 +546,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_SaveKycDocument()
         {
             try
@@ -571,7 +571,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_GetKycDocument()
         {
             try
@@ -592,7 +592,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_CreateKycPageFromFile()
         {
             try
@@ -609,8 +609,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
-        [DeploymentItem("TestKycPageFile.png")]
+        [Test]
         public void Test_Users_CreateKycPageFromBytes()
         {
             try
@@ -629,7 +628,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_AllCards()
         {
             try
@@ -670,7 +669,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_Transactions()
         {
             try
@@ -709,7 +708,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Users_GetKycDocuments()
         {
             ListPaginated<KycDocumentDTO> result = null;

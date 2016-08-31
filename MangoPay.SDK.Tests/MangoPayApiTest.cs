@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class MangoPayApiTest
     {
-        [TestMethod]
+        [Test]
         public void ApiAndUsersConstructionTest()
         {
             MangoPayApi api = new MangoPayApi();

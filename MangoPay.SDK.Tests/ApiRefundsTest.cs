@@ -1,13 +1,13 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities.GET;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiRefundsTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_Refund_GetForTransfer()
         {
             TransferDTO transfer = this.GetNewTransfer();
@@ -24,7 +24,7 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(getRefund.RefundReason.RefundReasonType, RefundReasonType.OTHER);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Refund_GetForPayIn()
         {
             PayInDTO payIn = this.GetNewPayInCardDirect();

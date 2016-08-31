@@ -3,15 +3,15 @@ using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiReportsTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_Report_Create()
         {
             try
@@ -28,7 +28,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Report_Get()
         {
             try
@@ -44,7 +44,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Reports_All()
         {
             try

@@ -4,7 +4,7 @@ using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Linq;
 
@@ -24,12 +24,12 @@ namespace MangoPay.SDK.Tests
 	 */
 
 
-	//[TestClass]
+	//[TestFixture]
 	public class ApiDisputesTest : BaseTest
 	{
 		private ListPaginated<DisputeDTO> _clientDisputes = null;
 
-		[TestInitialize]
+		[SetUp]
 		public void Initialize()
 		{
 			Sort sort = new Sort();
@@ -41,7 +41,7 @@ namespace MangoPay.SDK.Tests
 				Assert.Fail("INITIALIZATION FAILURE - cannot test disputes");
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetDispute()
 		{
 			DisputeDTO dispute = null;
@@ -59,7 +59,7 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(dispute.Id, _clientDisputes[0].Id);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetTransactions()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
@@ -82,7 +82,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsTrue(result.Count > 0);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetDisputesForWallet()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.InitialTransactionId != null);
@@ -106,7 +106,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(result);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetDisputesForUser()
 		{
 			ListPaginated<DisputeDTO> result = null;
@@ -131,7 +131,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsTrue(result.Count > 0);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_CreateDisputeDocument()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
@@ -156,7 +156,7 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(result.Type, DisputeDocumentType.DELIVERY_PROOF);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_CreateDisputePage()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
@@ -182,7 +182,7 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(result.Type, DisputeDocumentType.DELIVERY_PROOF);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_ContestDispute()
 		{
 			DisputeDTO notContestedDispute = _clientDisputes.FirstOrDefault(x => (x.DisputeType == DisputeType.CONTESTABLE || x.DisputeType == DisputeType.RETRIEVAL) 
@@ -208,7 +208,7 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(result.Id, notContestedDispute.Id);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_SaveTag()
 		{
 			DisputeDTO result = null;
@@ -228,7 +228,7 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(result.Tag, newTag);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_CloseDispute()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
@@ -250,7 +250,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(result);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetDocument()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
@@ -284,7 +284,7 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(result.DisputeId, document.DisputeId);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetDocumentsForDispute()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.SUBMITTED);
@@ -314,7 +314,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(result);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetDocumentsForClient()
 		{
 			ListPaginated<DisputeDocumentDTO> result = null;
@@ -331,7 +331,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(result);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_SubmitDisputeDocument()
 		{
 			DisputeDTO dispute = null;
@@ -388,7 +388,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsTrue(result.Status == DisputeDocumentStatus.VALIDATION_ASKED);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetRepudiation()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.InitialTransactionId != null && x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
@@ -412,7 +412,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(result);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_CreateSettlementTransfer()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED && x.DisputeType == DisputeType.NOT_CONTESTABLE);
@@ -441,7 +441,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(result);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetFilteredDisputes()
 		{
 			ListPaginated<DisputeDTO> result1 = null;
@@ -481,7 +481,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetFilteredDisputeDocuments()
 		{
 			ListPaginated<DisputeDocumentDTO> result1 = null;
@@ -520,7 +520,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_ResubmitDispute()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
@@ -543,7 +543,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsTrue(result.Status == DisputeStatus.SUBMITTED);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_GetSettlementTransfer()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED && x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
@@ -584,7 +584,7 @@ namespace MangoPay.SDK.Tests
 			}
 
 			Assert.IsNotNull(result);
-			Assert.IsInstanceOfType(result, typeof(SettlementDTO));
+            Assert.IsInstanceOf<SettlementDTO>(result);
 			Assert.IsNotNull(result.RepudiationId);
 			Assert.AreEqual(result.RepudiationId, repudiation.Id);
 		}

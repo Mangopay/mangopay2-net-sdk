@@ -2,15 +2,15 @@
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 
 namespace MangoPay.SDK.Tests
 {
-	[TestClass]
+	[TestFixture]
 	public class ApiIdempotencyTest : BaseTest
 	{
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency()
 		{
 			string key = DateTime.Now.Ticks.ToString();

@@ -4,16 +4,16 @@ using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.IO;
 
 namespace MangoPay.SDK.Tests
 {
-	[TestClass]
+	[TestFixture]
 	public class ApiClientsTest : BaseTest
 	{
-		[TestMethod]
+		[Test]
 		public void Test_ClientsCreateClient()
 		{
 			try
@@ -30,7 +30,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Clients_TryCreateInvalidClient()
 		{
 			ClientDTO client = null;
@@ -47,7 +47,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsTrue(client == null);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Client_GetKycDocuments()
 		{
 			ListPaginated<KycDocumentDTO> result = null;
@@ -80,7 +80,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Client_GetWallets()
 		{
 			ListPaginated<WalletDTO> feesWallets = null;
@@ -98,7 +98,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(creditWallets);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Client_GetWallet()
 		{
 			ListPaginated<WalletDTO> feesWallets = null;
@@ -131,7 +131,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsTrue(result.Currency == wallet.Currency);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Client_GetWalletTransactions()
 		{
 			ListPaginated<WalletDTO> feesWallets = null;
@@ -163,7 +163,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsTrue(result.Count > 0);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Client_GetTransactions()
 		{
 			ListPaginated<TransactionDTO> result = null;
@@ -180,7 +180,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(result);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Client_CreateBankWireDirect()
 		{
 			try
@@ -204,7 +204,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_ClientGet()
 		{
 			ClientDTO client = this.Api.Clients.Get();
@@ -213,7 +213,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsTrue("sdk-unit-tests".Equals(client.ClientId));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_ClientSave()
 		{
 			ClientPutDTO client = new ClientPutDTO();
@@ -232,7 +232,7 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(client.PrimaryThemeColour, clientNew.PrimaryThemeColour);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_ClientLogo()
 		{
 			string filePath = "TestKycPageFile.png";

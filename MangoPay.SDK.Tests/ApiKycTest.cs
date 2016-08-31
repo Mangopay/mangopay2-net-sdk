@@ -1,13 +1,13 @@
 ﻿using MangoPay.SDK.Entities.GET;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiKycTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_GetKycDocument()
         {
             try
