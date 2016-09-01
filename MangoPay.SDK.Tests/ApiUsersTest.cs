@@ -6,8 +6,10 @@ using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace MangoPay.SDK.Tests
@@ -600,8 +602,11 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
-                String filePath = "TestKycPageFile.png";
-                this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, filePath);
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+
+                this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
             }
             catch (Exception ex)
             {
@@ -611,14 +616,16 @@ namespace MangoPay.SDK.Tests
 
         [Test]
         public void Test_Users_CreateKycPageFromBytes()
-        {
+        {            
             try
             {
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
-                String filePath = "TestKycPageFile.png";
-                byte[] bytes = File.ReadAllBytes(filePath);
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+                byte[] bytes = File.ReadAllBytes(fi.FullName);
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
             }
