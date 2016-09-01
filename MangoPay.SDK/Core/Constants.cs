@@ -120,5 +120,11 @@ namespace MangoPay.SDK.Core
 
 		/// <summary>Resolves to "MaxDebitedFundsCurrency" string.</summary>
 		public const string MAX_DEBITED_FUNDS_CURRENCY = "MaxDebitedFundsCurrency";
+
+		/// <summary>Resolves to "UserId" string.</summary>
+		public const string USER_ID = "UserId";
+
+		/// <summary>Resolves to "WalletId" string.</summary>
+		public const string WALLET_ID = "WalletId";
     }
 }

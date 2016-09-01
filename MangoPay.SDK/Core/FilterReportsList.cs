@@ -10,7 +10,11 @@ namespace MangoPay.SDK.Core
         public DateTime? BeforeDate;
 
         /// <summary>Start date: return only transactions that have CreationDate AFTER this date.</summary>
-        public DateTime? AfterDate;
+		public DateTime? AfterDate;
+
+		public String UserId;
+
+		public String WalletId;
 
         /// <summary>Gets map of fields and values.</summary>
         /// <returns>Returns collection of field_name-field_value pairs.</returns>
@@ -21,7 +25,9 @@ namespace MangoPay.SDK.Core
             UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
 
             if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
-            if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());
+			if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());
+			if (!String.IsNullOrWhiteSpace(UserId)) result.Add(Constants.USER_ID, UserId);
+			if (!String.IsNullOrWhiteSpace(WalletId)) result.Add(Constants.WALLET_ID, UserId);
 
             return result;
         }
