@@ -7,6 +7,8 @@ using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace MangoPay.SDK.Tests
 {
@@ -235,10 +237,12 @@ namespace MangoPay.SDK.Tests
 		[Test]
 		public void Test_ClientLogo()
 		{
-			string filePath = "TestKycPageFile.png";
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
+            FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
 
-			this.Api.Clients.UploadLogo(filePath);
-			this.Api.Clients.UploadLogo(File.ReadAllBytes(filePath));
+			this.Api.Clients.UploadLogo(fi.FullName);
+			this.Api.Clients.UploadLogo(File.ReadAllBytes(fi.FullName));
 		}
 	}
 }
