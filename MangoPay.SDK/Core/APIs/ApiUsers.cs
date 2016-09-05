@@ -251,37 +251,57 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="userId">User identifier.</param>
         /// <param name="bankAccountId">Bank account identifier.</param>
         /// <returns>Bank account object returned from API.</returns>
-        public BankAccountDTO GetBankAccount(String userId, String bankAccountId)
-        {
-            return this.GetObject<BankAccountDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
-        }
+		public BankAccountDTO GetBankAccount(String userId, String bankAccountId)
+		{
+			return this.GetObject<BankAccountDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+		}
+
+		public BankAccountObsoleteDTO GetBankAccountObsolete(String userId, String bankAccountId)
+		{
+			return this.GetObject<BankAccountObsoleteDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+		}
 
         /// <summary>Gets CA bank account of user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="bankAccountId">Bank account identifier.</param>
         /// <returns>Bank account object returned from API.</returns>
-        public BankAccountCaDTO GetBankAccountCa(String userId, String bankAccountId)
-        {
-            return this.GetObject<BankAccountCaDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
-        }
+		public BankAccountCaDTO GetBankAccountCa(String userId, String bankAccountId)
+		{
+			return this.GetObject<BankAccountCaDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+		}
+
+		public BankAccountCaObsoleteDTO GetBankAccountCaObsolete(String userId, String bankAccountId)
+		{
+			return this.GetObject<BankAccountCaObsoleteDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+		}
 
         /// <summary>Gets GB bank account of user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="bankAccountId">Bank account identifier.</param>
         /// <returns>Bank account object returned from API.</returns>
-        public BankAccountGbDTO GetBankAccountGb(String userId, String bankAccountId)
-        {
-            return this.GetObject<BankAccountGbDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
-        }
+		public BankAccountGbDTO GetBankAccountGb(String userId, String bankAccountId)
+		{
+			return this.GetObject<BankAccountGbDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+		}
+
+		public BankAccountGbObsoleteDTO GetBankAccountGbObsolete(String userId, String bankAccountId)
+		{
+			return this.GetObject<BankAccountGbObsoleteDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+		}
 
         /// <summary>Gets IBAN bank account of user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="bankAccountId">Bank account identifier.</param>
         /// <returns>Bank account object returned from API.</returns>
-        public BankAccountIbanDTO GetBankAccountIban(String userId, String bankAccountId)
-        {
-            return this.GetObject<BankAccountIbanDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
-        }
+		public BankAccountIbanDTO GetBankAccountIban(String userId, String bankAccountId)
+		{
+			return this.GetObject<BankAccountIbanDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+		}
+
+		public BankAccountIbanObsoleteDTO GetBankAccountIbanObsolete(String userId, String bankAccountId)
+		{
+			return this.GetObject<BankAccountIbanObsoleteDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+		}
 
         /// <summary>Gets OTHER bank account of user.</summary>
         /// <param name="userId">User identifier.</param>
@@ -292,6 +312,11 @@ namespace MangoPay.SDK.Core.APIs
             return this.GetObject<BankAccountOtherDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
         }
 
+		public BankAccountOtherObsoleteDTO GetBankAccountOtherObsolete(String userId, String bankAccountId)
+		{
+			return this.GetObject<BankAccountOtherObsoleteDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+		}
+
         /// <summary>Gets US bank account of user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="bankAccountId">Bank account identifier.</param>
@@ -300,6 +325,11 @@ namespace MangoPay.SDK.Core.APIs
         {
             return this.GetObject<BankAccountUsDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
         }
+
+		public BankAccountUsObsoleteDTO GetBankAccountUsObsolete(String userId, String bankAccountId)
+		{
+			return this.GetObject<BankAccountUsObsoleteDTO>(MethodKey.UsersGetBankAccount, userId, bankAccountId);
+		}
 
 		/// <summary>Updates bank account.</summary>
 		/// <param name="userId">User identifier.</param>
