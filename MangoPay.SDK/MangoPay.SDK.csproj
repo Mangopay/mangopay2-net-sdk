@@ -145,9 +145,15 @@
     <Compile Include="Core\Enumerations\TransactionStatus.cs" />
     <Compile Include="Core\Enumerations\TransactionType.cs" />
     <Compile Include="Core\Enumerations\Validity.cs" />
+    <Compile Include="Entities\GET\BankAccountCaObsoleteDTO.cs" />
     <Compile Include="Entities\GET\BankAccountCaDTO.cs" />
+    <Compile Include="Entities\GET\BankAccountObsoleteDTO.cs" />
+    <Compile Include="Entities\GET\BankAccountGbObsoleteDTO.cs" />
     <Compile Include="Entities\GET\BankAccountGbDTO.cs" />
+    <Compile Include="Entities\GET\BankAccountIbanObsoleteDTO.cs" />
+    <Compile Include="Entities\GET\BankAccountOtherObsoleteDTO.cs" />
     <Compile Include="Entities\GET\BankAccountOtherDTO.cs" />
+    <Compile Include="Entities\GET\BankAccountUsObsoleteDTO.cs" />
     <Compile Include="Entities\GET\BankAccountUsDTO.cs" />
     <Compile Include="Entities\GET\BankAccountIbanDTO.cs" />
     <Compile Include="Entities\GET\DisputeDTO.cs" />
