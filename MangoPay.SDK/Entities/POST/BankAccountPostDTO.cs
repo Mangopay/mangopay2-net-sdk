@@ -20,7 +20,7 @@ namespace MangoPay.SDK.Entities.POST
         public String OwnerName { get; set; }
 
 		/// <summary>Owner address.</summary>
-		public String OwnerAddress { get; set; }
+		public Address OwnerAddress { get; set; }
 
 		public bool ShouldSerializeOwnerAddress()
 		{

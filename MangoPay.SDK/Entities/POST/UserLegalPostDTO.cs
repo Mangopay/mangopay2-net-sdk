@@ -32,7 +32,7 @@ namespace MangoPay.SDK.Entities.POST
         public LegalPersonType LegalPersonType { get; set; }
 
         /// <summary>Headquarters address.</summary>
-        public String HeadquartersAddress { get; set; }
+		public Address HeadquartersAddress { get; set; }
 
         /// <summary>Legal representative first name.</summary>
         public String LegalRepresentativeFirstName { get; set; }
@@ -41,7 +41,7 @@ namespace MangoPay.SDK.Entities.POST
         public String LegalRepresentativeLastName { get; set; }
 
         /// <summary>Legal representative address.</summary>
-        public String LegalRepresentativeAddress { get; set; }
+		public Address LegalRepresentativeAddress { get; set; }
 
         /// <summary>Legal representative email.</summary>
         public String LegalRepresentativeEmail { get; set; }
@@ -72,12 +72,12 @@ namespace MangoPay.SDK.Entities.POST
 
 		public bool ShouldSerializeHeadquartersAddress()
 		{
-			return HeadquartersAddress != null;
+			return HeadquartersAddress != null && HeadquartersAddress.IsValid();
 		}
 
 		public bool ShouldSerializeLegalRepresentativeAddress()
 		{
-			return LegalRepresentativeAddress != null;
+			return LegalRepresentativeAddress != null && LegalRepresentativeAddress.IsValid();
 		}
     }
 }

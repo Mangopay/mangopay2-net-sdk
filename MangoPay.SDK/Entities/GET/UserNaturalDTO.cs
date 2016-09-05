@@ -16,7 +16,7 @@ namespace MangoPay.SDK.Entities.GET
         public String LastName { get; set; }
 
         /// <summary>Address.</summary>
-        public String Address { get; set; }
+		public Address Address { get; set; }
 
         /// <summary>Date of birth (UNIX timestamp).</summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]

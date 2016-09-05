@@ -29,7 +29,7 @@ namespace MangoPay.SDK.Entities.POST
         public String LastName { get; set; }
 
         /// <summary>Address.</summary>
-        public String Address { get; set; }
+        public Address Address { get; set; }
 
         /// <summary>Date of birth.</summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]
@@ -74,7 +74,7 @@ namespace MangoPay.SDK.Entities.POST
 
 		public bool ShouldSerializeAddress()
 		{
-			return Address != null;
+			return Address != null && Address.IsValid();
 		}
     }
 }
