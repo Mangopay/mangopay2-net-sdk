@@ -169,6 +169,8 @@
     <Compile Include="Entities\GET\ReportRequestDTO.cs" />
     <Compile Include="Entities\GET\RepudiationDTO.cs" />
     <Compile Include="Entities\GET\SettlementDTO.cs" />
+    <Compile Include="Entities\GET\UserLegalObsoleteDTO.cs" />
+    <Compile Include="Entities\GET\UserNaturalObsoleteDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\DisputeReason.cs" />
     <Compile Include="Entities\POST\DisputeDocumentPostDTO.cs" />

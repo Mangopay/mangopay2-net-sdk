@@ -82,6 +82,14 @@ namespace MangoPay.SDK.Core.APIs
             return this.GetObject<UserNaturalDTO>(MethodKey.UsersGetNaturals, userId);
         }
 
+		/// <summary>TEMPORAL SOLUTION: Use this method only against API v2.</summary>
+		/// <param name="userId">UserNatural identifier.</param>
+		/// <returns>UserNaturalObsolete object returned from API</returns>
+		public UserNaturalObsoleteDTO GetNaturalObsolete(String userId)
+		{
+			return this.GetObject<UserNaturalObsoleteDTO>(MethodKey.UsersGetNaturals, userId);
+		}
+
         /// <summary>Gets legal user.</summary>
         /// <param name="userId">UserLegal identifier.</param>
         /// <returns>UserLegal object returned from API.</returns>
@@ -89,6 +97,14 @@ namespace MangoPay.SDK.Core.APIs
         {
             return this.GetObject<UserLegalDTO>(MethodKey.UsersGetLegals, userId);
         }
+
+		/// <summary>TEMPORAL SOLUTION: Use this method only against API v2.</summary>
+		/// <param name="userId">UserLegal identifier.</param>
+		/// <returns>UserLegalObsolete object returned from API</returns>
+		public UserLegalObsoleteDTO GetLegalObsolete(String userId)
+		{
+			return this.GetObject<UserLegalObsoleteDTO>(MethodKey.UsersGetLegals, userId);
+		}
 
         /// <summary>Updates the user.</summary>
         /// <param name="user">Instance of UserNatural class to be updated.</param>

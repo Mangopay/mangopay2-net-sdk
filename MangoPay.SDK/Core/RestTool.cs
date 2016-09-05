@@ -306,7 +306,7 @@ namespace MangoPay.SDK.Core
 			U responseObject = default(U);
 
             UrlTool urlTool = new UrlTool(_root);
-            String restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired, pagination, null);
+            String restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired, pagination, null, _root.Config.ApiVersion);
             
             string fullUrl = urlTool.GetFullUrl(restUrl);
             RestClient client = new RestClient(fullUrl);
@@ -399,7 +399,7 @@ namespace MangoPay.SDK.Core
             ListPaginated<T> responseObject = null;
 
             UrlTool urlTool = new UrlTool(_root);
-            string restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired, pagination, null);
+			string restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired, pagination, null, _root.Config.ApiVersion);
 
             if (this._requestData != null)
             {
