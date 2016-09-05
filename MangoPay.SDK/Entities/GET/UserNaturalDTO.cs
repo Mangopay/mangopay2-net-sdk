@@ -18,6 +18,8 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>Address.</summary>
 		public Address Address { get; set; }
 
+		public String AddressObsolete { get; set; }
+
         /// <summary>Date of birth (UNIX timestamp).</summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]
         public DateTime Birthday { get; set; }
