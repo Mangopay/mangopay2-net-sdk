@@ -369,7 +369,7 @@ namespace MangoPay.SDK.Core
                     _log.Debug("CurrentBody: /body is null/");
                 }
             }
-
+            
             IRestResponse<U> restResponse = client.Execute<U>(restRequest);
             responseObject = restResponse.Data;
 
@@ -389,9 +389,23 @@ namespace MangoPay.SDK.Core
                 _log.Debug("Response object: " + responseObject.ToString());
             }
 
+            SetLastRequestInfo(restRequest, restResponse);
+
             this.CheckResponseCode(restResponse.Content);
 
             return responseObject;
+        }
+
+        private void SetLastRequestInfo(IRestRequest request, IRestResponse response)
+        {
+            _root.LastRequestInfo = new LastRequestInfo() {Request = request, Response = response};
+
+            _root.LastRequestInfo.RateLimitingCallsAllowed =
+                response.Headers.FirstOrDefault(h => h.Name == "X-RateLimit-Limit")?.Value?.ToString();
+            _root.LastRequestInfo.RateLimitingCallsRemaining =
+                response.Headers.FirstOrDefault(h => h.Name == "X-RateLimit-Remaining")?.Value?.ToString();
+            _root.LastRequestInfo.RateLimitingTimeTillReset =
+                response.Headers.FirstOrDefault(h => h.Name == "X-RateLimit-Reset")?.Value?.ToString();
         }
 
         private ListPaginated<T> DoRequestList<T>(string urlMethod, Pagination pagination, Dictionary<String, String> additionalUrlParams)
@@ -462,6 +476,8 @@ namespace MangoPay.SDK.Core
 
                 _log.Debug("Response object: " + responseObject.ToString());
             }
+
+            SetLastRequestInfo(restRequest, restResponse);
 
             this.CheckResponseCode(restResponse.Content);
 
