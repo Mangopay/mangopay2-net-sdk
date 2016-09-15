@@ -32,7 +32,7 @@ namespace MangoPay.SDK.Core
 
 		public List<ReportResultCode> ResultCode { get; set; }
 
-		public String UserId { get; set; }
+		public String AuthorId { get; set; }
 
 		public String WalletId { get; set; }
 

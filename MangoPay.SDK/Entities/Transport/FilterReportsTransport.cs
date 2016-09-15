@@ -28,7 +28,7 @@ namespace MangoPay.SDK.Entities.Transport
 
 		public String[] ResultCode { get; set; }
 
-		public String UserId { get; set; }
+		public String AuthorId { get; set; }
 
 		public String WalletId { get; set; }
 
@@ -55,7 +55,7 @@ namespace MangoPay.SDK.Entities.Transport
 				Nature = new List<TransactionNature>(),
 				Status = new List<TransactionStatus>(),
 				Type = new List<TransactionType>(),
-				UserId = this.UserId,
+				AuthorId = this.AuthorId,
 				WalletId = this.WalletId
 			};
 
@@ -97,7 +97,7 @@ namespace MangoPay.SDK.Entities.Transport
 				MaxDebitedFundsCurrency = filters.MaxDebitedFundsCurrency,
 				MinDebitedFundsAmount = filters.MinDebitedFundsAmount,
 				MinDebitedFundsCurrency = filters.MinDebitedFundsCurrency,
-				UserId = filters.UserId,
+				AuthorId = filters.AuthorId,
 				WalletId = filters.WalletId
 			};
 
