@@ -6,7 +6,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>IBAN bank account POST entity.</summary>
     public class BankAccountIbanPostDTO : BankAccountPostDTO
     {
-        public BankAccountIbanPostDTO(String ownerName, String ownerAddress, String iban)
+		public BankAccountIbanPostDTO(String ownerName, Address ownerAddress, String iban)
         {
             Type = BankAccountType.IBAN;
             OwnerName = ownerName;

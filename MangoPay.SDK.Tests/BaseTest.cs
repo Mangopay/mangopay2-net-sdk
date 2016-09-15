@@ -44,6 +44,7 @@ namespace MangoPay.SDK.Tests
             api.Config.ClientId = "sdk-unit-tests";
             api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
             api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
+			api.Config.ApiVersion = "v2.01";
             api.Config.LoggerFactoryAdapter = new ConsoleOutLoggerFactoryAdapter();
 
             // register storage strategy for tests
@@ -59,7 +60,7 @@ namespace MangoPay.SDK.Tests
                 UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
                 user.Occupation = "programmer";
                 user.IncomeRange = 3;
-                user.Address = "Some Address";
+				user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
 
                 BaseTest._john = this.Api.Users.Create(user);
 
@@ -73,7 +74,7 @@ namespace MangoPay.SDK.Tests
             UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
             user.Occupation = "programmer";
             user.IncomeRange = 3;
-            user.Address = "Some Address";
+			user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
 
             return this.Api.Users.Create(user);
         }
@@ -84,7 +85,7 @@ namespace MangoPay.SDK.Tests
             {
                 UserNaturalDTO john = this.GetJohn();
                 UserLegalPostDTO user = new UserLegalPostDTO(john.Email, "MartixSampleOrg", LegalPersonType.BUSINESS, john.FirstName, john.LastName, john.Birthday, john.Nationality, john.CountryOfResidence);
-                user.HeadquartersAddress = "Some Address";
+				user.HeadquartersAddress = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
                 user.LegalRepresentativeAddress = john.Address;
                 user.LegalRepresentativeEmail = john.Email;
                 user.LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0);
