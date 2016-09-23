@@ -1,0 +1,13 @@
+﻿namespace MangoPay.SDK.Core.Enumerations
+{
+	public enum PlatformType
+	{
+		MARKETPLACE,
+		P2P_PAYMENT,
+		CROWDFUNDING_DONATION,
+		CROWDFUNDING_REWARD,
+		CROWDFUNDING_EQUITY,
+		CROWDFUNDING_LOAN,
+		OTHER
+	}
+}
