@@ -1,5 +1,6 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
+using MangoPay.SDK.Entities.GET;
 using System;
 using System.Collections.Generic;
 
@@ -35,25 +36,28 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.CardGet, new String[] { "/cards/{0}", RequestType.GET } },
             { MethodKey.CardSave, new String[] { "/cards/{0}", RequestType.PUT } },
         
-            { MethodKey.PayinsCardWebCreate, new String[] { "/payins/card/web/", RequestType.POST } },
+            { MethodKey.PayinsCardWebCreate, new String[] { "/payins/card/web", RequestType.POST } },
 			{ MethodKey.PayinsCardWebGetCardData, new String[] { "/payins/card/web/{0}/extended/", RequestType.GET } },
-            { MethodKey.PayinsCardDirectCreate, new String[] { "/payins/card/direct/", RequestType.POST } },
+            { MethodKey.PayinsCardDirectCreate, new String[] { "/payins/card/direct", RequestType.POST } },
             { MethodKey.PayinsGet, new String[] { "/payins/{0}", RequestType.GET } },
             { MethodKey.PayinsCreateRefunds, new String[] { "/payins/{0}/refunds", RequestType.POST } },
             { MethodKey.PayinsGetRefunds, new String[] { "/payins/{0}/refunds", RequestType.GET } },
         
             { MethodKey.PayinsPayPalCreate, new String[] { "/payins/paypal/web", RequestType.POST } },
+
             { MethodKey.PayinsPreauthorizedDirectCreate, new String[] { "/payins/preauthorized/direct/", RequestType.POST } },
+
             { MethodKey.PayinsBankwireDirectCreate, new String[] { "/payins/bankwire/direct/", RequestType.POST } },
+
             { MethodKey.PayinsDirectDebitCreate, new String[] { "/payins/directdebit/web", RequestType.POST } },
             { MethodKey.PayinsMandateDirectDebitCreate, new String[] { "/payins/directdebit/direct", RequestType.POST } },
         
-            { MethodKey.PayoutsBankwireCreate, new String[] { "/payouts/bankwire/", RequestType.POST } },
+            { MethodKey.PayoutsBankwireCreate, new String[] { "/payouts/bankwire", RequestType.POST } },
             { MethodKey.PayoutsGet, new String[] { "/payouts/{0}", RequestType.GET } },
         
             { MethodKey.RefundsGet, new String[] { "/refunds/{0}", RequestType.GET } },
         
-            { MethodKey.TransfersCreate, new String[] { "/transfers/", RequestType.POST } },
+            { MethodKey.TransfersCreate, new String[] { "/transfers", RequestType.POST } },
             { MethodKey.TransfersGet, new String[] { "/transfers/{0}", RequestType.GET } },
             { MethodKey.TransfersGetRefunds, new String[] { "/transfers/{0}/refunds", RequestType.GET } },
             { MethodKey.TransfersCreateRefunds, new String[] { "/transfers/{0}/refunds", RequestType.POST } },
@@ -132,7 +136,7 @@ namespace MangoPay.SDK.Core.APIs
 			
 			{ MethodKey.IdempotencyResponseGet, new String[] { "/responses/{0}/", RequestType.GET } },
 			
-			{ MethodKey.MandateCreate, new String[] { "/mandates/directdebit/web/", RequestType.POST } },
+			{ MethodKey.MandateCreate, new String[] { "/mandates/directdebit/web", RequestType.POST } },
 			{ MethodKey.MandateCancel, new String[] { "/mandates/{0}/cancel/", RequestType.PUT } },
 			{ MethodKey.MandateGet, new String[] { "/mandates/{0}/", RequestType.GET } },
 			{ MethodKey.MandatesGetAll, new String[] { "/mandates/", RequestType.GET } },
@@ -393,5 +397,10 @@ namespace MangoPay.SDK.Core.APIs
             RestTool restTool = new RestTool(this._root, true);
             return restTool.Request<U, T>(null, urlMethod, this.GetRequestType(methodKey), null, null, entity);
         }
-    }
+
+		protected Type GetObjectForIdempotencyUrl()
+		{
+			return typeof(UserNaturalDTO);
+		}
+	}
 }

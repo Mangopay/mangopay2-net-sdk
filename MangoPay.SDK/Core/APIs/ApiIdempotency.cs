@@ -5,6 +5,10 @@ using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -20,7 +24,67 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Idempotency response instance returned from API.</returns>
         public IdempotencyResponseDTO Get(String idempotencyKey)
         {
-			return this.GetObject<IdempotencyResponseDTO>(MethodKey.IdempotencyResponseGet, idempotencyKey);
+			var response = this.GetObject<IdempotencyResponseDTO>(MethodKey.IdempotencyResponseGet, idempotencyKey);
+			LoadResourceObject(response);
+			
+			return response;
         }
-    }
+
+		private void LoadResourceObject(IdempotencyResponseDTO response)
+		{
+			Type targetType = null;
+			var map = GetMapForResource();
+			foreach (var mapItem in map)
+			{
+				var sourceUrl = GetRequestUrl(mapItem.Key);
+				sourceUrl = String.Format(sourceUrl, "[0-9a-zA-Z]+", "[0-9a-zA-Z]+");
+				sourceUrl = sourceUrl.Replace("/", "\\/");
+				Regex ex = new Regex(sourceUrl);
+				if (ex.IsMatch(response.RequestUrl))
+				{
+					targetType = mapItem.Value;
+					break;
+				}
+			}
+
+			if (targetType == null)
+				return;
+
+			MethodInfo method = typeof(MangoPayJsonDeserializer).GetMethod("DeserializeString").MakeGenericMethod(targetType);
+			response.Resource = method.Invoke(new MangoPayJsonDeserializer(), new object[] { response.Resource });
+		}
+
+		private Dictionary<MethodKey, Type> GetMapForResource()
+		{
+			return new Dictionary<MethodKey, Type>
+			{
+				{ MethodKey.PreauthorizationCreate, typeof(CardPreAuthorizationDTO) },
+				{ MethodKey.HooksCreate, typeof(HookDTO) },
+				{ MethodKey.CardRegistrationCreate, typeof(CardRegistrationDTO) },
+				{ MethodKey.PayinsCardWebCreate, typeof(PayInCardWebDTO) },
+				{ MethodKey.PayinsCardDirectCreate, typeof(PayInCardDirectDTO) },
+				{ MethodKey.PayinsCreateRefunds, typeof(RefundDTO) },
+				{ MethodKey.PayinsPreauthorizedDirectCreate, typeof(PayInPreauthorizedDirectDTO) },
+				{ MethodKey.PayinsBankwireDirectCreate, typeof(PayInBankWireDirectDTO) },
+				{ MethodKey.PayinsDirectDebitCreate, typeof(PayInDirectDebitDTO) },
+				{ MethodKey.PayinsMandateDirectDebitCreate, typeof(PayInMandateDirectDTO) },
+				{ MethodKey.PayoutsBankwireCreate, typeof(PayOutBankWireDTO) },
+				{ MethodKey.TransfersCreateRefunds, typeof(RefundDTO) },
+				{ MethodKey.TransfersCreate, typeof(TransferDTO) },
+				{ MethodKey.UsersCreateNaturals, typeof(UserNaturalDTO) },
+				{ MethodKey.UsersCreateLegals, typeof(UserLegalDTO) },
+				{ MethodKey.UsersCreateKycDocument, typeof(KycDocumentDTO) },
+				{ MethodKey.UsersCreateBankAccountsIban, typeof(BankAccountIbanDTO) },
+				{ MethodKey.UsersCreateBankAccountsGb, typeof(BankAccountGbDTO) },
+				{ MethodKey.UsersCreateBankAccountsUs, typeof(BankAccountUsDTO) },
+				{ MethodKey.UsersCreateBankAccountsCa, typeof(BankAccountCaDTO) },
+				{ MethodKey.UsersCreateBankAccountsOther, typeof(BankAccountOtherDTO) },
+				{ MethodKey.WalletsCreate, typeof(WalletDTO) },
+				{ MethodKey.ClientCreateBankwireDirect, typeof(PayInBankWireDirectDTO) },
+				{ MethodKey.DisputesDocumentCreate, typeof(DisputeDocumentDTO) },
+				{ MethodKey.DisputesRepudiationCreateSettlement, typeof(SettlementDTO) },
+				{ MethodKey.MandateCreate, typeof(MandateDTO) }
+			};
+		}
+	}
 }

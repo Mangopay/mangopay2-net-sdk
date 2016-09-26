@@ -26,11 +26,17 @@ namespace MangoPay.SDK.Core
 				result.ContentLength = (string)token.SelectToken("ContentLength");
 				result.ContentType = (string)token.SelectToken("ContentType");
 				result.Date = (string)token.SelectToken("Date");
+				result.RequestUrl = (string)token.SelectToken("RequestUrl");
 				result.Resource = token.SelectToken("Resource") != null ? token.SelectToken("Resource").ToString() : "";
 
 				return (T)((object)result);
 			}
 			else return JsonConvert.DeserializeObject<T>(response.Content, new StringEnumConverter());
         }
-    }
+
+		public T DeserializeString<T>(object resource)
+		{
+			return JsonConvert.DeserializeObject<T>((string)resource, new StringEnumConverter());
+		}
+	}
 }
