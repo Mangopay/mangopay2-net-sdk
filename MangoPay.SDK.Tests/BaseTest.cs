@@ -42,8 +42,8 @@ namespace MangoPay.SDK.Tests
 
             // use test client credentails
             api.Config.ClientId = "sdk-unit-tests";
-            api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
-            api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
+            api.Config.ClientPassword = "9RMGpwVUwFLK0SurxObJ2yaadDcO0zeKFKxWmthjB93SQjFzy0";
+            api.Config.BaseUrl = "https://api-test.mangopay.com";
             api.Config.LoggerFactoryAdapter = new ConsoleOutLoggerFactoryAdapter();
 
             // register storage strategy for tests
@@ -241,10 +241,18 @@ namespace MangoPay.SDK.Tests
             return GetNewPayInCardDirect(null);
         }
 
-        /// <summary>Creates PayIn Card Direct object.</summary>
-        /// <param name="userId">User identifier.</param>
-        /// <returns>PayIn Card Direct instance returned from API.</returns>
-        protected PayInCardDirectDTO GetNewPayInCardDirect(String userId)
+		/// <summary>Creates PayIn Card Direct object.</summary>
+		/// <param name="userId">User identifier.</param>
+		/// <returns>PayIn Card Direct instance returned from API.</returns>
+		protected PayInCardDirectDTO GetNewPayInCardDirect(String userId)
+		{
+			return GetNewPayInCardDirect(userId, null);
+		}
+
+		/// <summary>Creates PayIn Card Direct object.</summary>
+		/// <param name="userId">User identifier.</param>
+		/// <returns>PayIn Card Direct instance returned from API.</returns>
+		protected PayInCardDirectDTO GetNewPayInCardDirect(String userId, string idempotencyKey)
         {
             WalletDTO wallet = this.GetJohnsWalletWithMoney();
 
@@ -256,7 +264,7 @@ namespace MangoPay.SDK.Tests
 
             CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(userId, CurrencyIso.EUR);
 
-            CardRegistrationDTO cardRegistration = this.Api.CardRegistrations.Create(cardRegistrationPost);
+            CardRegistrationDTO cardRegistration = this.Api.CardRegistrations.Create(idempotencyKey, cardRegistrationPost);
 
             CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
             cardRegistrationPut.RegistrationData = this.GetPaylineCorrectRegistartionData(cardRegistration);
@@ -339,10 +347,18 @@ namespace MangoPay.SDK.Tests
             return this.Api.Transfers.CreateRefund(transfer.Id, refund);
         }
 
-        /// <summary>Creates refund object for PayIn.</summary>
-        /// <param name="payIn">PayIn entity.</param>
-        /// <returns>Refund instance returned from API.</returns>
-        protected RefundDTO GetNewRefundForPayIn(PayInDTO payIn)
+		/// <summary>Creates refund object for PayIn.</summary>
+		/// <param name="payIn">PayIn entity.</param>
+		/// <returns>Refund instance returned from API.</returns>
+		protected RefundDTO GetNewRefundForPayIn(PayInDTO payIn)
+		{
+			return GetNewRefundForPayIn(payIn, null);
+		}
+
+		/// <summary>Creates refund object for PayIn.</summary>
+		/// <param name="payIn">PayIn entity.</param>
+		/// <returns>Refund instance returned from API.</returns>
+		protected RefundDTO GetNewRefundForPayIn(PayInDTO payIn, string idempotencyKey)
         {
             UserNaturalDTO user = this.GetJohn();
 
@@ -354,8 +370,7 @@ namespace MangoPay.SDK.Tests
             fees.Currency = payIn.Fees.Currency;
 
             RefundPayInPostDTO refund = new RefundPayInPostDTO(user.Id, fees, debitedFunds);
-
-            return this.Api.PayIns.CreateRefund(payIn.Id, refund);
+			return this.Api.PayIns.CreateRefund(idempotencyKey, payIn.Id, refund);
         }
 
 		/// <summary>Creates card registration object.</summary>
@@ -386,9 +401,16 @@ namespace MangoPay.SDK.Tests
 			return GetJohnsCardRegistration(cardType);
 		}
 
-        /// <summary>Creates card registration object.</summary>
-        /// <returns>CardPreAuthorization instance returned from API.</returns>
-        protected CardPreAuthorizationDTO GetJohnsCardPreAuthorization()
+		/// <summary>Creates card registration object.</summary>
+		/// <returns>CardPreAuthorization instance returned from API.</returns>
+		protected CardPreAuthorizationDTO GetJohnsCardPreAuthorization()
+		{
+			return GetJohnsCardPreAuthorization(null);
+		}
+
+		/// <summary>Creates card registration object.</summary>
+		/// <returns>CardPreAuthorization instance returned from API.</returns>
+		protected CardPreAuthorizationDTO GetJohnsCardPreAuthorization(string idempotencyKey)
         {
             UserNaturalDTO user = this.GetJohn();
             CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(user.Id, CurrencyIso.EUR);
@@ -401,7 +423,7 @@ namespace MangoPay.SDK.Tests
 
             CardPreAuthorizationPostDTO cardPreAuthorization = new CardPreAuthorizationPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, SecureMode.DEFAULT, getCardRegistration.CardId, "http://test.com");
 
-            return this.Api.CardPreAuthorizations.Create(cardPreAuthorization);
+            return this.Api.CardPreAuthorizations.Create(idempotencyKey, cardPreAuthorization);
         }
 
         protected KycDocumentDTO GetJohnsKycDocument()
