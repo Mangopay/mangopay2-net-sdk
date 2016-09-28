@@ -41,7 +41,7 @@ namespace MangoPay.SDK.Entities.PUT
 		public String PlatformDescription { get; set; }
 
 		/// <summary>The type of platform</summary>
-		public PlatformType PlatformType { get; set; }
+		public PlatformType? PlatformType { get; set; }
 
 		/// <summary>The URL for your website</summary>
 		public String PlatformURL { get; set; }
