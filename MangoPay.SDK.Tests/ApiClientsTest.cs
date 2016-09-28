@@ -242,6 +242,24 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[TestMethod]
+		public void Test_Client_SaveAddressNull()
+		{
+			ClientPutDTO client = new ClientPutDTO();
+
+			Random rand = new Random();
+			String color1 = (rand.Next(100000) + 100000).ToString();
+			String color2 = (rand.Next(100000) + 100000).ToString();
+
+			client.PrimaryButtonColour = "#" + color1;
+			client.PrimaryThemeColour = "#" + color2;
+			client.HeadquartersAddress = new Address();
+
+			ClientDTO clientNew = this.Api.Clients.Save(client);
+
+			Assert.IsNotNull(clientNew);			
+		}
+
+		[TestMethod]
 		public void Test_ClientLogo()
 		{
 			string filePath = "TestKycPageFile.png";
