@@ -51,5 +51,10 @@ namespace MangoPay.SDK.Entities.PUT
 
 		/// <summary>The tax (or VAT) number for your company</summary>
 		public String TaxNumber { get; set; }
+
+		public bool ShouldSerializeHeadquartersAddress()
+		{
+			return HeadquartersAddress != null && HeadquartersAddress.IsValid();
+		}
 	}
 }
