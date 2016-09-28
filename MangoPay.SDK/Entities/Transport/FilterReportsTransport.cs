@@ -80,6 +80,9 @@ namespace MangoPay.SDK.Entities.Transport
 			result.ResultCode = new List<ReportResultCode>();
 			foreach (string rc in ResultCode)
 			{
+				if (String.IsNullOrEmpty(rc))
+					continue;
+
 				int enumInt = Int32.Parse(rc);
 				result.ResultCode.Add((ReportResultCode)enumInt);
 			}
@@ -132,7 +135,7 @@ namespace MangoPay.SDK.Entities.Transport
 
 				for (int i = 0; i < filters.ResultCode.Count; i++)
 				{
-					result.ResultCode[i] = String.Format("{0:######}", (int)filters.ResultCode[i]);
+					result.ResultCode[i] = String.Format("{0:000000}", (int)filters.ResultCode[i]);
 				}
 			}
 
