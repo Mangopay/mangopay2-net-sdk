@@ -33,7 +33,7 @@ namespace MangoPay.SDK.Entities.GET
 
 		/// <summary>Legal representative birthday.</summary>
 		[JsonConverter(typeof(UnixDateTimeConverter))]
-		public DateTime LegalRepresentativeBirthday { get; set; }
+		public DateTime? LegalRepresentativeBirthday { get; set; }
 
 		/// <summary>Legal representative nationality.</summary>
 		[JsonConverter(typeof(EnumerationConverter))]

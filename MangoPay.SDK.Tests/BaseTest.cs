@@ -84,7 +84,8 @@ namespace MangoPay.SDK.Tests
             if (BaseTest._matrix == null)
             {
                 UserNaturalDTO john = this.GetJohn();
-                UserLegalPostDTO user = new UserLegalPostDTO(john.Email, "MartixSampleOrg", LegalPersonType.BUSINESS, john.FirstName, john.LastName, john.Birthday, john.Nationality, john.CountryOfResidence);
+				var birthday = john.Birthday.HasValue ? john.Birthday.Value : new DateTime();
+				UserLegalPostDTO user = new UserLegalPostDTO(john.Email, "MartixSampleOrg", LegalPersonType.BUSINESS, john.FirstName, john.LastName, birthday, john.Nationality, john.CountryOfResidence);
 				user.HeadquartersAddress = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
                 user.LegalRepresentativeAddress = john.Address;
                 user.LegalRepresentativeEmail = john.Email;
