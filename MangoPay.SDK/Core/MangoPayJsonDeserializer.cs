@@ -26,7 +26,7 @@ namespace MangoPay.SDK.Core
 				result.ContentLength = (string)token.SelectToken("ContentLength");
 				result.ContentType = (string)token.SelectToken("ContentType");
 				result.Date = (string)token.SelectToken("Date");
-				result.RequestUrl = (string)token.SelectToken("RequestUrl");
+				result.RequestURL = (string)token.SelectToken("RequestURL");
 				result.Resource = token.SelectToken("Resource") != null ? token.SelectToken("Resource").ToString() : "";
 
 				return (T)((object)result);
