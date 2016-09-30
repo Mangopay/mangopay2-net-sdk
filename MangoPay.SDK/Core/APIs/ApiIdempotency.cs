@@ -40,7 +40,7 @@ namespace MangoPay.SDK.Core.APIs
 				sourceUrl = String.Format(sourceUrl, "[0-9a-zA-Z]+", "[0-9a-zA-Z]+");
 				sourceUrl = sourceUrl.Replace("/", "\\/");
 				Regex ex = new Regex(sourceUrl);
-				if (ex.IsMatch(response.RequestUrl))
+				if (ex.IsMatch(response.RequestURL))
 				{
 					targetType = mapItem.Value;
 					break;

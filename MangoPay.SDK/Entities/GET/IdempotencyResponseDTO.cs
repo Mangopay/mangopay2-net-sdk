@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Entities.GET
 
         public String Date { get; set; }
 
-		public String RequestUrl { get; set; }
+		public String RequestURL { get; set; }
 
 		public object Resource { get; set; }
 	}
