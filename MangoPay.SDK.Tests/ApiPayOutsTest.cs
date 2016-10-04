@@ -1,14 +1,14 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities.GET;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiPayOutsTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_PayOuts_Create_BankWire()
         {
             try

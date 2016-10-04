@@ -3,18 +3,19 @@ using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
+using NUnit.Framework;
 using MangoPay.SDK.Entities.PUT;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MangoPay.SDK.Tests
 {
-	[TestClass]
+	[TestFixture]
 	public class ApiIdempotencyTest : BaseTest
 	{
-		[TestMethod]
+
+		[Test]
 		public void Test_Idempotency_PreauthorizationCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -25,7 +26,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(CardPreAuthorizationDTO));
 		}
 
-		/*[TestMethod]
+        /*[Test]
 		public void Test_Idempotency_HooksCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -37,7 +38,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(HookDTO));
 		}*/
 
-		[TestMethod]
+        [Test]
 		public void Test_Idempotency_CardRegistrationCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -48,7 +49,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(CardRegistrationDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_PayinsCardWebCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -62,7 +63,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(PayInCardWebDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_PayinsCardDirectCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -86,7 +87,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(PayInCardDirectDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_PayinsCreateRefunds()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -98,7 +99,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(RefundDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_PayinsPreauthorizedDirectCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -114,7 +115,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(PayInPreauthorizedDirectDTO));
 		}
 		
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_PayinsBankwireDirectCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -130,7 +131,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(PayInBankWireDirectDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_PayinsDirectDebitCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -146,7 +147,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(PayInDirectDebitDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_PayinsMandateDirectDebitCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -172,7 +173,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(PayInMandateDirectDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_PayoutsBankwireCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -189,7 +190,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(PayOutBankWireDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_TransfersCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -206,7 +207,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(TransferDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_TransfersCreateRefunds()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -220,7 +221,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(RefundDTO));
 		}
 		
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_UsersCreateNaturals()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -235,7 +236,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(UserNaturalDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_UsersCreateLegals()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -247,7 +248,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(UserLegalDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_UsersCreateKycDocument()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -259,7 +260,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(KycDocumentDTO));
 		}
 		
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_UsersCreateBankAccountsIban()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -274,7 +275,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(BankAccountIbanDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_UsersCreateBankAccountsGb()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -288,7 +289,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(BankAccountGbDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_UsersCreateBankAccountsUs()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -301,7 +302,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(BankAccountUsDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_UsersCreateBankAccountsCa()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -314,7 +315,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(BankAccountCaDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_UsersCreateBankAccountsOther()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -329,7 +330,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(BankAccountOtherDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_WalletsCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -342,7 +343,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(WalletDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_ClientCreateBankwireDirect()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -353,8 +354,8 @@ namespace MangoPay.SDK.Tests
 
 			Assert.IsInstanceOfType(result.Resource, typeof(PayInBankWireDirectDTO));
 		}
-		/*
-		[TestMethod]
+        /*
+		[Test]
 		public void Test_Idempotency_DisputesDocumentCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -374,7 +375,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(DisputeDocumentDTO));
 		}*/
 
-		[TestMethod]
+        [Test]
 		public void Test_Idempotency_DisputesRepudiationCreateSettlement()
 		{
 			string key = DateTime.Now.Ticks.ToString();
@@ -396,7 +397,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOfType(result.Resource, typeof(SettlementDTO));
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Idempotency_MandateCreate()
 		{
 			string key = DateTime.Now.Ticks.ToString();

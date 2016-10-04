@@ -1,13 +1,13 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities.GET;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiTransfersTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_Transfers_Create()
         {
             UserNaturalDTO john = this.GetJohn();
@@ -21,7 +21,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsTrue(creditedWallet.Balance.Amount == 100);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Transfers_Get()
         {
             UserNaturalDTO john = this.GetJohn();
@@ -35,7 +35,7 @@ namespace MangoPay.SDK.Tests
             AssertEqualInputProps(transfer, getTransfer);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Transfers_CreateRefund()
         {
             TransferDTO transfer = this.GetNewTransfer();
