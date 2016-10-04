@@ -43,6 +43,9 @@ namespace MangoPay.SDK
         /// <summary>Configuration instance with default settings (to be reset if required).</summary>
         public Configuration Config;
 
+        /// <summary>Stores the raw request and response of the last call from this Api instance, including information about rate-limiting.</summary>
+        public LastRequestInfo LastRequestInfo;
+
         #region API managers
 
         /// <summary>Provides OAuth methods.</summary>

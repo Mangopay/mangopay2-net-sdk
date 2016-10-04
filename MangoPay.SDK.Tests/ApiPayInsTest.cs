@@ -46,7 +46,7 @@ namespace MangoPay.SDK.Tests
                 AssertEqualInputProps(payIn, getPayIn);
 
                 Assert.IsTrue(getPayIn.Status == TransactionStatus.CREATED);
-                Assert.IsTrue(getPayIn.ExecutionDate == new DateTime());
+                Assert.IsNull(getPayIn.ExecutionDate);
             }
             catch (Exception ex)
             {

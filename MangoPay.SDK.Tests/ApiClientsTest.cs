@@ -6,6 +6,7 @@ using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,39 +16,6 @@ namespace MangoPay.SDK.Tests
 	[TestFixture]
 	public class ApiClientsTest : BaseTest
 	{
-		[Test]
-		public void Test_ClientsCreateClient()
-		{
-			try
-			{
-				Random rand = new Random();
-				String id = (rand.Next(1000000000) + 1).ToString();
-				ClientDTO client = this.Api.Clients.Create(id, "test", "test@o2.pl");
-				Assert.IsTrue("test" == (client.Name));
-				Assert.IsTrue(client.Passphrase.Length > 0);
-			}
-			catch (Exception ex)
-			{
-				Assert.Fail(ex.Message);
-			}
-		}
-
-		[Test]
-		public void Test_Clients_TryCreateInvalidClient()
-		{
-			ClientDTO client = null;
-			try
-			{
-				// invalid id
-				client = this.Api.Clients.Create("0", "test", "test@o2.pl");
-			}
-			catch (Exception ex)
-			{
-				Assert.IsTrue(ex is ResponseException);
-			}
-
-			Assert.IsTrue(client == null);
-		}
 
 		[Test]
 		public void Test_Client_GetKycDocuments()
@@ -226,12 +194,70 @@ namespace MangoPay.SDK.Tests
 
 			client.PrimaryButtonColour = "#" + color1;
 			client.PrimaryThemeColour = "#" + color2;
+			client.AdminEmails = new List<string> { "hugo@mangopay.com", "test@mangopay.com" };
+			client.BillingEmails = new List<string> { "hugo@mangopay.com", "test@mangopay.com" };
+			client.FraudEmails = new List<string> { "hugo@mangopay.com", "test@mangopay.com" };
+			client.TechEmails = new List<string> { "hugo@mangopay.com", "test@mangopay.com" };
+			client.TaxNumber = "123456";
+			client.PlatformDescription = "Description";
+			client.PlatformType = PlatformType.MARKETPLACE;
+			client.PlatformURL = "http://test.com";
+			client.HeadquartersAddress = new Address
+			{
+				AddressLine1 = "AddressLine1",
+				AddressLine2 = "AddressLine2",
+				City = "City",
+				Country = CountryIso.FR,
+				PostalCode = "51234",
+				Region = "Region"
+			};
 
 			ClientDTO clientNew = this.Api.Clients.Save(client);
 
 			Assert.IsNotNull(clientNew);
 			Assert.AreEqual(client.PrimaryButtonColour, clientNew.PrimaryButtonColour);
 			Assert.AreEqual(client.PrimaryThemeColour, clientNew.PrimaryThemeColour);
+			Assert.AreEqual(client.AdminEmails.Count, 2);
+			Assert.AreEqual(client.AdminEmails[0], "hugo@mangopay.com");
+			Assert.AreEqual(client.AdminEmails[1], "test@mangopay.com");
+			Assert.AreEqual(client.BillingEmails.Count, 2);
+			Assert.AreEqual(client.BillingEmails[0], "hugo@mangopay.com");
+			Assert.AreEqual(client.BillingEmails[1], "test@mangopay.com");
+			Assert.AreEqual(client.FraudEmails.Count, 2);
+			Assert.AreEqual(client.FraudEmails[0], "hugo@mangopay.com");
+			Assert.AreEqual(client.FraudEmails[1], "test@mangopay.com");
+			Assert.AreEqual(client.TechEmails.Count, 2);
+			Assert.AreEqual(client.TechEmails[0], "hugo@mangopay.com");
+			Assert.AreEqual(client.TechEmails[1], "test@mangopay.com");
+			Assert.AreEqual(client.TaxNumber, "123456");
+			Assert.AreEqual(client.PlatformDescription, "Description");
+			Assert.AreEqual(client.PlatformType, PlatformType.MARKETPLACE);
+			Assert.AreEqual(client.PlatformURL, "http://test.com");
+			Assert.IsNotNull(client.HeadquartersAddress);
+			Assert.AreEqual(client.HeadquartersAddress.AddressLine1, "AddressLine1");
+			Assert.AreEqual(client.HeadquartersAddress.AddressLine2, "AddressLine2");
+			Assert.AreEqual(client.HeadquartersAddress.City, "City");
+			Assert.AreEqual(client.HeadquartersAddress.Country, CountryIso.FR);
+			Assert.AreEqual(client.HeadquartersAddress.PostalCode, "51234");
+			Assert.AreEqual(client.HeadquartersAddress.Region, "Region");
+		}
+
+		[Test]
+		public void Test_Client_SaveAddressNull()
+		{
+			ClientPutDTO client = new ClientPutDTO();
+
+			Random rand = new Random();
+			String color1 = (rand.Next(100000) + 100000).ToString();
+			String color2 = (rand.Next(100000) + 100000).ToString();
+
+			client.PrimaryButtonColour = "#" + color1;
+			client.PrimaryThemeColour = "#" + color2;
+			client.HeadquartersAddress = new Address();
+
+			ClientDTO clientNew = this.Api.Clients.Save(client);
+
+			Assert.IsNotNull(clientNew);			
 		}
 
 		[Test]

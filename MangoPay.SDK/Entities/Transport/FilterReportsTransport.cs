@@ -28,7 +28,7 @@ namespace MangoPay.SDK.Entities.Transport
 
 		public String[] ResultCode { get; set; }
 
-		public String UserId { get; set; }
+		public String AuthorId { get; set; }
 
 		public String WalletId { get; set; }
 
@@ -55,7 +55,7 @@ namespace MangoPay.SDK.Entities.Transport
 				Nature = new List<TransactionNature>(),
 				Status = new List<TransactionStatus>(),
 				Type = new List<TransactionType>(),
-				UserId = this.UserId,
+				AuthorId = this.AuthorId,
 				WalletId = this.WalletId
 			};
 
@@ -80,6 +80,9 @@ namespace MangoPay.SDK.Entities.Transport
 			result.ResultCode = new List<ReportResultCode>();
 			foreach (string rc in ResultCode)
 			{
+				if (String.IsNullOrEmpty(rc))
+					continue;
+
 				int enumInt = Int32.Parse(rc);
 				result.ResultCode.Add((ReportResultCode)enumInt);
 			}
@@ -97,7 +100,7 @@ namespace MangoPay.SDK.Entities.Transport
 				MaxDebitedFundsCurrency = filters.MaxDebitedFundsCurrency,
 				MinDebitedFundsAmount = filters.MinDebitedFundsAmount,
 				MinDebitedFundsCurrency = filters.MinDebitedFundsCurrency,
-				UserId = filters.UserId,
+				AuthorId = filters.AuthorId,
 				WalletId = filters.WalletId
 			};
 
@@ -132,7 +135,7 @@ namespace MangoPay.SDK.Entities.Transport
 
 				for (int i = 0; i < filters.ResultCode.Count; i++)
 				{
-					result.ResultCode[i] = String.Format("{0:######}", (int)filters.ResultCode[i]);
+					result.ResultCode[i] = String.Format("{0:000000}", (int)filters.ResultCode[i]);
 				}
 			}
 

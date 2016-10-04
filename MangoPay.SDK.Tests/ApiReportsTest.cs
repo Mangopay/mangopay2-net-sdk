@@ -28,6 +28,32 @@ namespace MangoPay.SDK.Tests
             }
         }
 
+		[Test]
+		public void Test_Report_Filtered_Create()
+		{
+			try
+			{
+				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
+				string johnsId = this.GetJohn().Id;
+				string walletId = this.GetJohnsWallet().Id;
+				reportPost.Filters.AuthorId = johnsId;
+				reportPost.Filters.WalletId = walletId;
+
+				ReportRequestDTO report = this.Api.Reports.Create(reportPost);
+				Assert.IsNotNull(report);
+				Assert.IsNotNull(report.Filters);
+				Assert.IsNotNull(report.Filters.AuthorId);
+				Assert.AreEqual(johnsId, report.Filters.AuthorId);
+				Assert.IsNotNull(report.Filters.WalletId);
+				Assert.AreEqual(walletId, report.Filters.WalletId);
+				Assert.IsTrue(report.Id.Length > 0);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+
         [Test]
         public void Test_Report_Get()
         {
