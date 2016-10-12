@@ -63,6 +63,23 @@ namespace MangoPay.SDK.Core.APIs
 			return this.CreateObject<PayInCardWebDTO, PayInCardWebPostDTO>(idempotencyKey, MethodKey.PayinsCardWebCreate, payIn);
 		}
 
+		/// <summary>Creates new payin by PayPal.</summary>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInPayPalDTO CreatePayPal(PayInPayPalPostDTO payIn)
+		{
+			return CreatePayPal(null, payIn);
+		}
+
+		/// <summary>Creates new payin by PayPal.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInPayPalDTO CreatePayPal(String idempotencyKey, PayInPayPalPostDTO payIn)
+		{
+			return this.CreateObject<PayInPayPalDTO, PayInPayPalPostDTO>(idempotencyKey, MethodKey.PayinsPayPalCreate, payIn);
+		}
+
         /// <summary>Creates new payin preauthorized direct.</summary>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
@@ -168,6 +185,14 @@ namespace MangoPay.SDK.Core.APIs
         public PayInDirectDebitDTO GetDirectDebit(String payInId)
         {
             return this.GetObject<PayInDirectDebitDTO>(MethodKey.PayinsGet, payInId);
+        }
+
+        /// <summary>Gets PayIn PayPal entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public PayInPayPalDTO GetPayPal(String payInId)
+        {
+            return this.GetObject<PayInPayPalDTO>(MethodKey.PayinsGet, payInId);
         }
 
 		/// <summary>Gets PayIn direct debit direct entity by its identifier.</summary>

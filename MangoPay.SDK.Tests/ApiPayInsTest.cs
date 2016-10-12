@@ -54,6 +54,29 @@ namespace MangoPay.SDK.Tests
             }
         }
 
+		[Test]
+		public void Test_PayIns_Create_PayPal()
+		{
+			try
+			{
+				PayInDTO payIn = null;
+				WalletDTO wallet = this.GetJohnsWallet();
+				UserNaturalDTO user = this.GetJohn();
+
+				PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
+
+				payIn = this.Api.PayIns.CreatePayPal(payInPost);
+
+				Assert.IsTrue(payIn.Id.Length > 0);
+				Assert.IsTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
+				Assert.IsTrue(payIn.ExecutionType == PayInExecutionType.WEB);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+
         [Test]
         public void Test_PayIns_Create_CardDirect()
         {
@@ -325,5 +348,33 @@ namespace MangoPay.SDK.Tests
             Assert.IsTrue(getPayIn.Id == createPayIn.Id);
             Assert.IsTrue(getPayIn.Tag == createPayIn.Tag);
         }
+
+		[Test]
+		public void Test_PayIns_Get_PayPal()
+		{
+			try
+			{
+				PayInDTO payIn = null;
+				WalletDTO wallet = this.GetJohnsWallet();
+				UserNaturalDTO user = this.GetJohn();
+
+				PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
+
+				payIn = this.Api.PayIns.CreatePayPal(payInPost);
+
+				Assert.IsTrue(payIn.Id.Length > 0);
+				Assert.IsTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
+				Assert.IsTrue(payIn.ExecutionType == PayInExecutionType.WEB);
+
+				PayInPayPalDTO getPayIn = this.Api.PayIns.GetPayPal(payIn.Id);
+
+				Assert.IsNotNull(getPayIn);
+				Assert.IsTrue(getPayIn.Id == payIn.Id);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
     }
 }
