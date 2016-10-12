@@ -2,16 +2,16 @@
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Threading;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiMandatesTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_Mandate_Create()
         {
             try
@@ -30,7 +30,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Mandate_Get()
         {
             try
@@ -53,7 +53,37 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+
+		/*
+		 * Uncomment the attribute below to test mandate cancellation.
+		 * This test needs your manual confirmation on the web page (see note in test's body)
+		 */
+		//[Test]
+		public void test_Mandate_Cancel()
+		{
+			string bankAccountId = this.GetJohnsAccount().Id;
+			string returnUrl = "http://test.test";
+
+			MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
+        
+			MandateDTO mandate = this.Api.Mandates.Create(mandatePost);
+        
+			//	! IMPORTANT NOTE !
+			//	
+			//	In order to make this test pass, at this place you have to set a breakpoint,
+			//	navigate to URL the mandate.RedirectURL property points to and click "CONFIRM" button.
+        
+			mandate = this.Api.Mandates.Get(mandate.Id);
+
+			Assert.IsTrue(mandate.Status == MandateStatus.SUBMITTED, "In order to make this test pass, after creating mandate and before cancelling it you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.");
+        
+			mandate = this.Api.Mandates.Cancel(mandate.Id);
+        
+			Assert.IsNotNull(mandate);
+			Assert.IsTrue(mandate.Status == MandateStatus.FAILED);
+		}
+
+        [Test]
         public void Test_Mandates_GetAll()
         {
             try
@@ -69,7 +99,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		[TestMethod]
+		[Test]
 		public void Test_Mandate_GetForUser()
 		{
 			try
@@ -96,7 +126,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Mandate_GetForBankAccount()
 		{
 			try

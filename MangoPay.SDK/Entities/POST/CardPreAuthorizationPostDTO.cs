@@ -8,13 +8,14 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>Card pre-authorization POST entity.</summary>
     public class CardPreAuthorizationPostDTO : EntityPostBase
     {
-        public CardPreAuthorizationPostDTO(string authorId, Money debitedFunds, SecureMode secureMode, string cardId, string secureModeReturnURL)
+        public CardPreAuthorizationPostDTO(string authorId, Money debitedFunds, SecureMode secureMode, string cardId, string secureModeReturnURL, string statementDescriptor = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
             SecureMode = secureMode;
             CardId = cardId;
             SecureModeReturnURL = secureModeReturnURL;
+            StatementDescriptor = statementDescriptor;
         }
 
         /// <summary>Author identifier.</summary>
@@ -36,5 +37,8 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>The status of the payment after the PreAuthorization.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public PaymentStatus? PaymentStatus { get; set; }
+
+        /// <summary>An optional value to be specified on the user's bank statement.</summary>
+        public String StatementDescriptor { get; set; }
     }
 }

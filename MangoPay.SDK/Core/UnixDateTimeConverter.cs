@@ -5,7 +5,7 @@ using System;
 namespace MangoPay.SDK.Core
 {
     /// <summary>
-    /// Converter between .NET DateTime and unix datetime
+    /// Converter between .NET DateTime and unix datetime. This one puts NULL as a default value.
     /// </summary>
     public class UnixDateTimeConverter : DateTimeConverterBase
     {

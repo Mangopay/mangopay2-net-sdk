@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn card web POST entity.</summary>
     public class PayInCardWebPostDTO : EntityPostBase
     {
-        public PayInCardWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CultureCode culture, CardType cardType)
+        public PayInCardWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CultureCode culture, CardType cardType, string statementDescriptor = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
@@ -18,6 +18,7 @@ namespace MangoPay.SDK.Entities.POST
             ReturnURL = returnUrl;
             Culture = culture;
             CardType = cardType;
+            StatementDescriptor = statementDescriptor;
         }
 
         /// <summary>Author identifier.</summary>
@@ -36,7 +37,7 @@ namespace MangoPay.SDK.Entities.POST
         public String ReturnURL { get; set; }
 
         /// <summary>The URL where iFramed template is hosted.</summary>
-        public String TemplateURLOptions { get; set; }
+        public TemplateURLOptions TemplateURLOptions { get; set; }
 
         /// <summary>Culture.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -52,5 +53,8 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Credited user identifier.</summary>
         public String CreditedUserId { get; set; }
+
+        /// <summary>An optional value to be specified on the user's bank statement.</summary>
+        public String StatementDescriptor { get; set; }
     }
 }

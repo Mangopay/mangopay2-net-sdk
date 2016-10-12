@@ -31,7 +31,7 @@ namespace MangoPay.SDK.Entities.POST
         [JsonConverter(typeof(StringEnumConverter))]
         public LegalPersonType LegalPersonType { get; set; }
 
-        /// <summary>Headquarters address.</summary>
+		/// <summary>Headquarters address.</summary>
 		public Address HeadquartersAddress { get; set; }
 
         /// <summary>Legal representative first name.</summary>
@@ -40,7 +40,7 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Legal representative last name.</summary>
         public String LegalRepresentativeLastName { get; set; }
 
-        /// <summary>Legal representative address.</summary>
+		/// <summary>Legal representative address.</summary>
 		public Address LegalRepresentativeAddress { get; set; }
 
         /// <summary>Legal representative email.</summary>
@@ -66,5 +66,18 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Shareholder declaration.</summary>
         public String ShareholderDeclaration { get; set; }
+
+        /// <summary>Legal Representative Proof Of Identity.</summary>
+        public String LegalRepresentativeProofOfIdentity { get; set; }
+
+		public bool ShouldSerializeHeadquartersAddress()
+		{
+			return HeadquartersAddress != null && HeadquartersAddress.IsValid();
+		}
+
+		public bool ShouldSerializeLegalRepresentativeAddress()
+		{
+			return LegalRepresentativeAddress != null && LegalRepresentativeAddress.IsValid();
+		}
     }
 }

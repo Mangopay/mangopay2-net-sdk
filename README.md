@@ -1,4 +1,4 @@
-Mangopay SDK
+Mangopay SDK [![Build Status](https://travis-ci.org/Mangopay/mangopay2-net-sdk.svg?branch=master)](https://travis-ci.org/Mangopay/mangopay2-net-sdk)
 =================================================
 MangopaySDK is a Microsoft .NET client library to work with
 [Mangopay REST API](http://docs.mangopay.com/api-references/).
@@ -11,7 +11,7 @@ Since v1.0.47 of this SDK, you must be using at least v2.01 of the API ([more in
 
 Installation and package dependencies
 -------------------------------------------------
-SDK has been written in C#, for .NET Framework 4.5 and has 3 dependencies on external packages. These dependencies are:
+SDK has been written in C# 6.0, for .NET Framework 4.5 and has 3 dependencies on external packages. These dependencies are:
 - Common.Logging library (version 3.1.0)
 - Json.NET (version 6.0.3)
 - RestSharp (version 104.4.0)

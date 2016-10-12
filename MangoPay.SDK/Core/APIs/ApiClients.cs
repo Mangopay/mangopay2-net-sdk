@@ -2,51 +2,31 @@
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
+using MangoPay.SDK.Entities.PUT;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MangoPay.SDK.Core.APIs
 {
-    /// <summary>API for clients.</summary>
-    public class ApiClients : ApiBase
-    {
-        /// <summary>Instantiates new ApiClients object.</summary>
-        /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
-        public ApiClients(MangoPayApi root) : base(root) { }
+	/// <summary>API for clients.</summary>
+	public class ApiClients : ApiBase
+	{
+		/// <summary>Instantiates new ApiClients object.</summary>
+		/// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
+		public ApiClients(MangoPayApi root) : base(root) { }
 
-        /// <summary>Gets client data for Basic Access Authentication.</summary>
-        /// <param name="clientId">Client's identifier.</param>
-        /// <param name="clientName">Client's name for presentation.</param>
-        /// <param name="clientEmail">Client's email.</param>
-        /// <returns>Client instance returned from API.</returns>
-        public ClientDTO Create(String clientId, String clientName, String clientEmail)
-        {
-            String urlMethod = this.GetRequestUrl(MethodKey.AuthenticationBase);
-            String requestType = this.GetRequestType(MethodKey.AuthenticationBase);
+		/// <summary>***Now depreciated and soon to be removed from this class (already moved to ApiKyc.cs)*** Gets the list of all the uploaded documents for all users.</summary>
+		/// <param name="pagination">Pagination.</param>
+		/// <param name="filter">Filter.</param>
+		/// <param name="sort">Sort.</param>
+		/// <returns>Collection of all users' uploaded documents.</returns>
+		public ListPaginated<KycDocumentDTO> GetKycDocuments(Pagination pagination, FilterKycDocuments filter, Sort sort = null)
+		{
+			if (filter == null) filter = new FilterKycDocuments();
 
-            Dictionary<String, String> requestData = new Dictionary<String, String>
-            {
-                { Constants.CLIENT_ID, clientId },
-                { Constants.NAME, clientName },
-                { Constants.EMAIL, clientEmail }
-            };
-
-            RestTool restTool = new RestTool(this._root, false);
-            restTool.AddRequestHttpHeader(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
-            return restTool.Request<ClientDTO, ClientDTO>(urlMethod, requestType, requestData);
-        }
-
-        /// <summary>***Now depreciated and soon to be removed from this class (already moved to ApiKyc.cs)*** Gets the list of all the uploaded documents for all users.</summary>
-        /// <param name="pagination">Pagination.</param>
-        /// <param name="filter">Filter.</param>
-        /// <param name="sort">Sort.</param>
-        /// <returns>Collection of all users' uploaded documents.</returns>
-        public ListPaginated<KycDocumentDTO> GetKycDocuments(Pagination pagination, FilterKycDocuments filter, Sort sort = null)
-        {
-            if (filter == null) filter = new FilterKycDocuments();
-
-            return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, null, sort, filter.GetValues());
-        }
+			return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, null, sort, filter.GetValues());
+		}
 
 		/// <summary>Gets client wallets.</summary>
 		/// <param name="fundsType">Type of funds.</param>
@@ -130,5 +110,39 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			return this.CreateObject<PayInBankWireDirectDTO, ClientBankWireDirectPostDTO>(idempotencyKey, MethodKey.ClientCreateBankwireDirect, bankWireDirect);
 		}
-    }
+
+		/// <summary>Gets client entity.</summary>
+		/// <returns>Object instance returned from API.</returns>
+		public ClientDTO Get()
+		{
+			return this.GetObject<ClientDTO>(MethodKey.ClientGet, null);
+		}
+
+		/// <summary>Updates client information.</summary>
+		/// <param name="client">Client entity instance to be updated.</param>
+		/// <returns>Updated Client entity.</returns>
+		public ClientDTO Save(ClientPutDTO client)
+		{
+			return this.UpdateObject<ClientDTO, ClientPutDTO>(MethodKey.ClientSave, client);
+		}
+
+		/// <summary>Uploads logo for client.</summary>
+		/// <param name="binaryData">Binary file content (only GIF, PNG, JPG, JPEG, BMP, PDF and DOC formats are accepted).</param>
+		public void UploadLogo(byte[] binaryData)
+		{
+			String fileContent = Convert.ToBase64String(binaryData);
+
+			ClientLogoPutDTO logo = new ClientLogoPutDTO(fileContent);
+
+			this.UpdateObject<ClientDTO, ClientLogoPutDTO>(MethodKey.ClientUploadLogo, logo);
+		}
+
+		/// <summary>Uploads logo for client.</summary>
+		/// <param name="filePath">Path to logo file (only GIF, PNG, JPG, JPEG, BMP, PDF and DOC formats are accepted).</param>
+		public void UploadLogo(string filePath)
+		{
+			byte[] fileArray = File.ReadAllBytes(filePath);
+			UploadLogo(fileArray);
+		}
+	}
 }

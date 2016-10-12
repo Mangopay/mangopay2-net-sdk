@@ -28,7 +28,7 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Last name.</summary>
         public String LastName { get; set; }
 
-        /// <summary>Address.</summary>
+		/// <summary>Address.</summary>
 		public Address Address { get; set; }
 
         /// <summary>Date of birth.</summary>
@@ -71,5 +71,10 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Proof of address.</summary>
         public String ProofOfAddress { get; set; }
+
+		public bool ShouldSerializeAddress()
+		{
+			return Address != null && Address.IsValid();
+		}
     }
 }

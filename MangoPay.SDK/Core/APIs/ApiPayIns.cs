@@ -114,6 +114,23 @@ namespace MangoPay.SDK.Core.APIs
 			return this.CreateObject<PayInDirectDebitDTO, PayInDirectDebitPostDTO>(idempotencyKey, MethodKey.PayinsDirectDebitCreate, payIn);
 		}
 
+		/// <summary>Creates new payin mandate direct debit.</summary>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInMandateDirectDTO CreateMandateDirectDebit(PayInMandateDirectPostDTO payIn)
+		{
+			return CreateMandateDirectDebit(null, payIn);
+		}
+
+		/// <summary>Creates new payin mandate direct debit.</summary>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="payIn">Object instance to be created.</param>
+		/// <returns>Object instance returned from API.</returns>
+		public PayInMandateDirectDTO CreateMandateDirectDebit(String idempotencyKey, PayInMandateDirectPostDTO payIn)
+		{
+			return this.CreateObject<PayInMandateDirectDTO, PayInMandateDirectPostDTO>(idempotencyKey, MethodKey.PayinsMandateDirectDebitCreate, payIn);
+		}
+
         /// <summary>Gets PayIn entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
         /// <returns>PayIn object returned from API.</returns>
@@ -170,12 +187,20 @@ namespace MangoPay.SDK.Core.APIs
             return this.GetObject<PayInDirectDebitDTO>(MethodKey.PayinsGet, payInId);
         }
 
-		/// <summary>Gets PayIn PayPal entity by its identifier.</summary>
+        /// <summary>Gets PayIn PayPal entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public PayInPayPalDTO GetPayPal(String payInId)
+        {
+            return this.GetObject<PayInPayPalDTO>(MethodKey.PayinsGet, payInId);
+        }
+
+		/// <summary>Gets PayIn direct debit direct entity by its identifier.</summary>
 		/// <param name="payInId">PayIn identifier.</param>
 		/// <returns>PayIn object returned from API.</returns>
-		public PayInPayPalDTO GetPayPal(String payInId)
+		public PayInMandateDirectDTO GetMandateDirectDebit(String payInId)
 		{
-			return this.GetObject<PayInPayPalDTO>(MethodKey.PayinsGet, payInId);
+			return this.GetObject<PayInMandateDirectDTO>(MethodKey.PayinsGet, payInId);
 		}
 
         /// <summary>Creates refund for PayIn object.</summary>

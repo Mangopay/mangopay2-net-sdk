@@ -1,0 +1,170 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MangoPay.SDK.Core.Enumerations
+{
+	/// <summary>Possible result codes for reports.</summary>
+	public enum ReportResultCode
+	{
+		Successful_Success = 000000,
+
+		ParameterError_Generic_Operation_Error_Operation_failed = 001999,
+		ParameterError_Unsufficient_wallet_balance = 001001,
+		ParameterError_The_author_is_not_the_wallet_owner = 001002,
+		ParameterError_Transaction_amount_is_higher_than_maximum_permitted_amount = 001011,
+		ParameterError_Transaction_amount_is_lower_than_minimum_permitted_amount = 001012,
+		ParameterError_Invalid_transaction_amount = 001013,
+		ParameterError_CreditedFunds_must_be_more_than_0_DebitedFunds_can_not_equal_Fees = 001014,
+		ParameterError_Author_is_not_the_card_owner = 001023,
+		ParameterError_Author_is_not_the_Mandate_owner = 001024,
+		ParameterError_Insufficient_user_account_balance = 001003,
+		ParameterError_Maximum_users_reached_for_this_wallet = 011021,
+		ParameterError_Transaction_refused_the_Debited_Wallet_and_the_Credited_Wallet_must_be_different = 101108,
+		ParameterError_The_PayIn_DebitedFunds_cant_be_higher_than_the_PreAuthorization_amount = 001505,
+
+		UserError_User_has_not_been_redirected = 001030,
+		UserError_User_canceled_the_payment = 001031,
+		UserError_User_is_filling_in_the_payment_card_details = 001032,
+		UserError_User_has_not_been_redirected_then_the_payment_session_has_expired = 001033,
+		UserError_User_has_let_the_payment_session_expire_without_paying = 001034,
+		UserError_Transaction_cancelled_by_client = 001100,
+		UserError_The_user_does_not_complete_transaction = 101001,
+		UserError_The_transaction_has_been_cancelled_by_the_user = 101002,
+
+		RefundError_Refund_transaction_error = 001499,
+		RefundError_The_transaction_cannot_be_refunded = 001402,
+		RefundError_The_transaction_has_already_been_successfully_refunded = 001401,
+		RefundError_The_transaction_cannot_be_refunded_max_11_months = 001403,
+		RefundError_No_more_refunds_can_be_created_against_this_transaction = 001404,
+		RefundError_The_refund_cannot_exceed_initial_transaction_amount = 005403,
+		RefundError_The_refunded_fees_cannot_exceed_initial_fee_amount = 005404,
+		RefundError_The_transaction_cannot_be_refunded_because_the_voucher_has_already_been_used = 001405,
+		RefundError_Balance_of_client_fee_wallet_unsufficient = 005405,
+		RefundError_Duplicated_operation_you_cannot_reimburse_the_same_amount_more_than_once_for_a_transaction_during_the_same_day = 005407,
+		RefundError_The_total_DebitedFunds_settled_cannot_exceed_the_initial_transaction_DebitedFunds_available_for_settlement = 003010,
+		RefundError_The_total_Fees_settled_cannot_exceed_the_initial_transaction_Fees_available_for_settlement = 003011,
+		RefundError_The_repudiation_has_already_been_successfully_settled = 003012,
+
+		DirectDebitMandateError_The_bank_account_has_been_closed = 001801,
+		DirectDebitMandateError_The_bank_details_supplied_were_incorrect = 001802,
+		DirectDebitMandateError_Direct_debit_is_not_enabled_for_this_bank_account = 001803,
+		DirectDebitMandateError_The_user_has_disputed_the_authorisation_of_the_mandate = 001804,
+		DirectDebitMandateError_The_user_has_cancelled_the_mandate = 001805,
+		DirectDebitMandateError_The_client_has_cancelled_the_mandate = 001806,
+		DirectDebitMandateError_User_has_let_the_mandate_session_expire_without_confirming = 001807,
+
+		DirectDebitPayInError_There_are_insufficient_funds_in_the_bank_account = 001830,
+		DirectDebitPayInError_Contact_the_user = 001831,
+		DirectDebitPayInError_The_payment_has_been_cancelled = 001832,
+		DirectDebitPayInError_The_Status_of_this_Mandate_does_not_allow_for_payments = 001833,
+
+		PaypalPayInPayOutError_Paypal_account_balance_unsufficient = 201001,
+		PaypalPayInPayOutError_Paypal_related_payment_instrument_declined = 201002,
+		PaypalPayInPayOutError_Paypal_transaction_approval_has_expired = 201003,
+		PaypalPayInPayOutError_Paypal_accounts_owner_has_not_approved_payment = 201004,
+		PaypalPayInPayOutError_This_transaction_has_been_refused_by_PayPal_risk = 201051,
+		PaypalPayInPayOutError_Paypal_account_is_restricted = 201052,
+		PaypalPayInPayOutError_Paypal_account_locked_or_closed = 201053,
+
+		CardInputError_Input_datas_error = 005999,
+		CardInputError_Card_input_error = 105199,
+		CardInputError_Invalid_card_number = 105101,
+		CardInputError_Invalid_cardholder_name = 105102,
+		CardInputError_Invalid_PIN_code = 105103,
+		CardInputError_Invalid_PIN_format = 105104,
+		CardInputError_This_card_is_not_active = 101410,
+
+		CardRegistrationError_Token_input_Error = 105299,
+		CardRegistrationError_Card_number_invalid_format = 105202,
+		CardRegistrationError_Expiry_date_missing_or_invalid_format = 105203,
+		CardRegistrationError_CVV_missing_or_invalid_format = 105204,
+		CardRegistrationError_Callback_URL_Invalid_format = 105205,
+		CardRegistrationError_Registration_data_Invalid_format = 105206,
+		CardRegistrationError_Token_processing_error = 001599,
+		CardRegistrationError_CardRegistration_error = 101699,
+
+		GeneralPayInError_Transaction_Refused = 101199,
+		GeneralPayInError_Refused_by_the_bank_Do_not_honor = 101101,
+		GeneralPayInError_Refused_by_the_bank_Amount_limit = 101102,
+		GeneralPayInError_Refused_by_the_terminal = 101103,
+		GeneralPayInError_Refused_by_the_bank_card_limit_reached = 101104,
+		GeneralPayInError_The_card_has_expired = 101105,
+		GeneralPayInError_The_card_is_inactive = 101106,
+		GeneralPayInError_Used_card_not_allowed_ELV = 101107,
+
+		BankPayInBlockage_Maximum_number_of_attempts_reached = 101111,
+		BankPayInBlockage_Maximum_amount_exceeded = 101112,
+		BankPayInBlockage_Maximum_uses_exceeded = 101113,
+		BankPayInBlockage_Debit_limit_exceeded = 101115,
+		BankPayInBlockage_Debit_transaction_frequency_exceeded = 101116,
+		BankPayInBlockage_Exceeding_available_limit_ELV = 101117,
+		BankPayInBlockage_Card_holder_authentification_failed = 101250,
+
+		WebDirectDebitError_ELV_Sofort_Giropay = 101201,
+		WebDirectDebitError_Bank_not_supported_for_Giropay = 101202,
+		WebDirectDebitError_Account_not_enabled_for_Giropay = 101203,
+		WebDirectDebitError_Card_invalid_no_entry_in_authorization_database = 101204,
+		WebDirectDebitError_Bank_code_blocked_ELV = 101205,
+
+		PayIn3DSError_Secure_mode_3DSecure_authentication_is_not_available = 101399,
+		PayIn3DSError_Secure_mode_The_3DSecure_authentication_has_failed = 101301,
+		PayIn3DSError_Secure_mode_The_card_is_not_enrolled_with_3DSecure = 101302,
+		PayIn3DSError_Secure_mode_The_card_is_not_compatible_with_3DSecure = 101303,
+		PayIn3DSError_Secure_mode_The_3DSecure_authentication_session_has_expired = 101304,
+
+		KYCProblem_Blocked_due_to_a_Debited_Users_KYC_limitations_maximum_debited_or_credited_amount_reached = 002999,
+		KYCProblem_Blocked_due_to_the_Bank_Account_Owners_KYC_limitations_maximum_debited_or_credited_amount_reached = 002998,
+
+		FraudBlockage_Suspicion_of_fraud = 008999,
+		FraudBlockage_Counterfeit_Card = 008001,
+		FraudBlockage_Lost_Card = 008002,
+		FraudBlockage_Stolen_Card = 008003,
+		FraudBlockage_Card_bin_not_authorized = 008004,
+		FraudBlockage_Security_violation = 008005,
+		FraudBlockage_Fraud_suspected_by_the_bank = 008006,
+		FraudBlockage_Opposition_on_bank_account_Temporary = 008007,
+		FraudBlockage_Card_blocked = 008009,
+		FraudBlockage_Transaction_blocked_by_Fraud_Policy = 008500,
+		FraudBlockage_Transaction_blocked_due_to_blacklisted_country = 008501,
+		FraudBlockage_Transaction_blocked_due_to_blacklisted_IBAN = 008502,
+		FraudBlockage_Transaction_blocked_due_to_blacklisted_BIC = 008503,
+		FraudBlockage_Amount_of_the_transaction_exceeded_the_amount_permitted = 008504,
+		FraudBlockage_Number_of_accepted_transactions_exceeded_the_velocity_limit_set = 008505,
+		FraudBlockage_Unauthorized_IP_address_country = 008506,
+		FraudBlockage_Cumulative_value_of_transactions_exceeded = 008507,
+		FraudBlockage_Card_issuer_country_not_allowed = 008508,
+		FraudBlockage_Number_of_bank_cards_allowed_is_exceeded = 008509,
+		FraudBlockage_Number_of_clients_per_card_is_exceeded = 008510,
+		FraudBlockage_The3DSecure_authentication_failed = 008511,
+		FraudBlockage_Wallet_blocked_by_Fraud_policy = 008600,
+		FraudBlockage_User_blocked_by_Fraud_policy = 008700,
+
+		MANGOPAYPayInError_Technical_error = 009999,
+
+		PSPPayInError_PSP_technical_error = 009199,
+		PSPPayInError_PSP_timeout_please_try_later = 009101,
+		PSPPayInError_Tokenizer_internal_error = 109102,
+		PSPPayInError_PSP_configuration_error = 009103,
+
+		BankPayInError_Bank_technical_error = 009499,
+
+		PayOuts_Generic_payout_errors = 121999,
+		PayOuts_The_bank_wire_has_been_refused = 121001,
+		PayOuts_The_author_is_not_the_wallet_owner = 121002,
+		PayOuts_Unsufficient_wallet_balance = 121003,
+		PayOuts_Specific_case_please_contact_our_Support_Team = 121004,
+		PayOuts_Refused_due_to_the_Fraud_Policy = 121005,
+		PayOuts_The_associated_bank_account_is_not_active = 121006,
+		PayOuts_Voucher_PayOuts_temporarily_unavailable_please_try_again_later = 121007,
+		PayOuts_Insufficient_address_info_for_Payout_Author = 121008,
+		PayOuts_Insufficient_address_info_for_Bank_Account = 121009,
+		PayOuts_Transaction_refused_the_author_is_currently_blocked = 121010,
+		PayOuts_Transaction_refused_the_authors_wallet_is_currently_blocked = 121011,
+
+		Reporting_There_was_an_error_validating_your_report_request = 805001,
+		Reporting_There_was_an_error_executing_your_report_request = 809001
+	}
+}

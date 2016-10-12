@@ -3,14 +3,14 @@ using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.PUT;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiWalletsTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_Wallets_Create()
         {
             UserNaturalDTO john = this.GetJohn();
@@ -20,7 +20,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsTrue(wallet.Owners.Contains(john.Id));
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Wallets_Get()
         {
             UserNaturalDTO john = this.GetJohn();
@@ -32,7 +32,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsTrue(wallet.Owners.Contains(john.Id));
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Wallets_Save()
         {
             WalletDTO wallet = this.GetJohnsWallet();
@@ -47,7 +47,7 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(wallet.Description + " - changed", saveWallet.Description);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Wallets_Transactions()
         {
             UserNaturalDTO john = GetJohn();
@@ -66,7 +66,7 @@ namespace MangoPay.SDK.Tests
             AssertEqualInputProps(transactions[0], payIn);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Wallets_Transactions_With_Sorting()
         {
             WalletDTO wallet = this.GetJohnsWallet();

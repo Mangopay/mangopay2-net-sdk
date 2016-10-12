@@ -34,6 +34,7 @@ namespace MangoPay.SDK
 			Disputes = new ApiDisputes(this);
 			Idempotency = new ApiIdempotency(this);
 			Mandates = new ApiMandates(this);
+			Reports = new ApiReports(this);
         }
 
         /// <summary>Provides authorization token methods.</summary>
@@ -41,6 +42,9 @@ namespace MangoPay.SDK
 
         /// <summary>Configuration instance with default settings (to be reset if required).</summary>
         public Configuration Config;
+
+        /// <summary>Stores the raw request and response of the last call from this Api instance, including information about rate-limiting.</summary>
+        public LastRequestInfo LastRequestInfo;
 
         #region API managers
 
@@ -94,6 +98,9 @@ namespace MangoPay.SDK
 
 		/// <summary>Provides Mandates methods.</summary>
 		public ApiMandates Mandates;
+
+		/// <summary>Provides Reports methods.</summary>
+		public ApiReports Reports;
 
         #endregion
     }
