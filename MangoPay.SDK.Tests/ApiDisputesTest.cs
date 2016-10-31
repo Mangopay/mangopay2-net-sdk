@@ -18,13 +18,11 @@ namespace MangoPay.SDK.Tests
 	 * In order to get the tests below pass, a bunch of disputes has
 	 * to be prepared on the API's side - if it's not, the tests won't pass.
 	 * 
-	 * Uncomment the TestClass attribute of ApiDisputesTest class to include
-	 * disputes unit tests into the testing queue.
-	 * 
 	 */
 
 
-	//[TestFixture]
+	[TestFixture]
+    [Explicit]
 	public class ApiDisputesTest : BaseTest
 	{
 		private ListPaginated<DisputeDTO> _clientDisputes = null;
