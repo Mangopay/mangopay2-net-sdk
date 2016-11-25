@@ -76,16 +76,26 @@ namespace MangoPay.SDK.Tests
             try
             {
 				ReportRequestDTO report = this.GetJohnsReport();
-                Pagination pagination = new Pagination(1, 1);
+                Pagination pagination = new Pagination(1, 10);
 				Sort sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
 				ListPaginated<ReportRequestDTO> list = this.Api.Reports.GetAll(pagination, null, sort);
 
+				var exist = false;
+				for (int i = 0; i < pagination.ItemsPerPage; i++)
+				{
+					if (report.Id == list[i].Id)
+					{
+						exist = true;
+						break;
+					}
+				}
+
                 Assert.IsNotNull(list[0]);
-				Assert.AreEqual(report.Id, list[0].Id);
+				Assert.IsTrue(exist);
                 Assert.AreEqual(pagination.Page, 1);
-                Assert.AreEqual(pagination.ItemsPerPage, 1);
+				Assert.IsTrue(pagination.ItemsPerPage <= 10);
 
 				FilterReportsList filters = new FilterReportsList();
 				filters.AfterDate = list[0].CreationDate;

@@ -74,7 +74,7 @@ namespace MangoPay.SDK.Tests
 
 				Assert.IsNotNull(result);
 				Assert.IsTrue(result.Count > 1);
-				Assert.IsTrue(result[0].Date > result[1].Date);
+				Assert.IsTrue(result[0].Date >= result[1].Date);
 			}
 			catch (Exception ex)
 			{

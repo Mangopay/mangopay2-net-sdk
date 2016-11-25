@@ -10,7 +10,8 @@ namespace MangoPay.SDK.Tests
         [Test]
         public void Test_Refund_GetForTransfer()
         {
-            TransferDTO transfer = this.GetNewTransfer();
+			WalletDTO wallet = this.GetNewJohnsWalletWithMoney(10000);
+			TransferDTO transfer = this.GetNewTransfer(wallet);
             RefundDTO refund = this.GetNewRefundForTransfer(transfer);
             UserNaturalDTO user = this.GetJohn();
 
