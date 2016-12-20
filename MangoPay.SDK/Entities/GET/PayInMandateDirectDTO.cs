@@ -7,5 +7,8 @@ namespace MangoPay.SDK.Entities.GET
     {
         /// <summary>Mandate identifier.</summary>
         public String MandateId { get; set; }
+
+	/// <summary>An optional value to be specified on the user's bank statement.</summary>
+        public String StatementDescriptor { get; set; }
     }
 }

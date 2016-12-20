@@ -5,7 +5,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn mandate direct POST entity.</summary>
     public class PayInMandateDirectPostDTO : EntityPostBase
     {
-		public PayInMandateDirectPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, string mandateId)
+		public PayInMandateDirectPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, string mandateId, string statementDescriptor = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
@@ -13,6 +13,7 @@ namespace MangoPay.SDK.Entities.POST
             CreditedWalletId = creditedWalletId;
 			ReturnURL = returnUrl;
             MandateId = mandateId;
+	    StatementDescriptor = statementDescriptor;
         }
 
 		/// <summary>The user identifier of the Payin transaction’s author.</summary>
@@ -35,5 +36,8 @@ namespace MangoPay.SDK.Entities.POST
 
 		/// <summary>Credited user identifier.</summary>
 		public String CreditedUserId { get; set; }
+
+	/// <summary>An optional value to be specified on the user's bank statement.</summary>
+        public String StatementDescriptor { get; set; }
     }
 }
