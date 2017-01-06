@@ -21,6 +21,8 @@ namespace MangoPay.SDK.Core.Enumerations
         /// <summary>Armenia</summary> 
         AM,
         /// <summary>Angola</summary> 
+        AN,
+        /// <summary>Netherlands Antilles</summary> 
         AO,
         /// <summary>Antarctica</summary> 
         AQ,

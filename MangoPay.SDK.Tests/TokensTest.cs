@@ -1,12 +1,12 @@
 ﻿using MangoPay.SDK.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class TokensTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_ForceToken()
         {
             OAuthTokenDTO oldToken = this.Api.OAuthTokenManager.GetToken();
@@ -20,7 +20,7 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(newToken.access_token, storedToken.access_token);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_StandardUseToken()
         {
             this.Api.Users.GetAll();
@@ -30,7 +30,7 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(token.access_token, this.Api.OAuthTokenManager.GetToken().access_token);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_ShareTokenBetweenInstances()
         {
             MangoPayApi api = this.BuildNewMangoPayApi();
@@ -41,7 +41,7 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(token1.access_token, token2.access_token);
         }
 
-		[TestMethod]
+		[Test]
 		public void Test_IsolateTokensBetweenEnvironments()
 		{
 			MangoPayApi api = new MangoPayApi();

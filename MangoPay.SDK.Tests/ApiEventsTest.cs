@@ -2,15 +2,15 @@
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiEventsTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_Events_Get()
         {
             try
@@ -52,7 +52,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		[TestMethod]
+		[Test]
         public void Test_Events_GetAll_SortByCreationDate()
 		{
 			try
@@ -74,7 +74,7 @@ namespace MangoPay.SDK.Tests
 
 				Assert.IsNotNull(result);
 				Assert.IsTrue(result.Count > 1);
-				Assert.IsTrue(result[0].Date > result[1].Date);
+				Assert.IsTrue(result[0].Date >= result[1].Date);
 			}
 			catch (Exception ex)
 			{

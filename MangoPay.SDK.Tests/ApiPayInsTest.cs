@@ -3,15 +3,15 @@ using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiPayInsTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_PayIns_Create_CardWeb()
         {
             try
@@ -29,7 +29,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_PayIns_Get_CardWeb()
         {
             try
@@ -54,7 +54,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		[TestMethod]
+		[Test]
 		public void Test_PayIns_Create_PayPal()
 		{
 			try
@@ -77,7 +77,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-        [TestMethod]
+        [Test]
         public void Test_PayIns_Create_CardDirect()
         {
             try
@@ -107,7 +107,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_PayIns_Get_CardDirect()
         {
             try
@@ -128,7 +128,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_PayIns_CreateRefund_CardDirect()
         {
             try
@@ -152,7 +152,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_PayIns_PreAuthorizedDirect()
         {
             try
@@ -185,7 +185,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_PayIns_BankWireDirect_Create()
         {
             try
@@ -220,7 +220,7 @@ namespace MangoPay.SDK.Tests
 		 * Uncomment the attribute below to test payins with a mandate
 		 * This test needs your manual confirmation on the web page (see note in test's body)
 		 */
-		//[TestMethod]
+		//[Test]
 		public void Test_PayIns_MandateDirect_Create_Get()
 		{
 			try
@@ -269,7 +269,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-        [TestMethod]
+        [Test]
         public void Test_PayIns_BankWireDirect_Get()
         {
             try
@@ -300,7 +300,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_PayIns_DirectDebit_Create_Get()
         {
             WalletDTO wallet = this.GetJohnsWallet();
@@ -349,7 +349,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsTrue(getPayIn.Tag == createPayIn.Tag);
         }
 
-		[TestMethod]
+		[Test]
 		public void Test_PayIns_Get_PayPal()
 		{
 			try

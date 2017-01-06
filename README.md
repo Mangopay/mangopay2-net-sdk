@@ -1,4 +1,4 @@
-Mangopay SDK [![Build Status](https://travis-ci.org/Mangopay/mangopay2-net-sdk.svg?branch=master)](https://travis-ci.org/Mangopay/mangopay2-net-sdk)
+Mangopay .NET SDK [![Build Status](https://travis-ci.org/Mangopay/mangopay2-net-sdk.svg?branch=master)](https://travis-ci.org/Mangopay/mangopay2-net-sdk)
 =================================================
 MangopaySDK is a Microsoft .NET client library to work with
 [Mangopay REST API](http://docs.mangopay.com/api-references/).
@@ -32,7 +32,7 @@ Report bugs or suggest features using [issue tracker at GitHub](https://github.c
 
 Account creation
 -------------------------------------------------
-You can get yourself a [free sandbox account](https://www.mangopay.com/signup/create-sandbox/) or sign up for a [production account](https://www.mangopay.com/signup/submit-your-app/go-live/) (note that validation of your production account can take a few days, so think about doing it in advance of when you actually want to go live).
+You can get yourself a [free sandbox account](https://www.mangopay.com/signup/create-sandbox/) or sign up for a [production account](https://www.mangopay.com/signup/production-account/) (note that validation of your production account can take a few days, so think about doing it in advance of when you actually want to go live).
 
 
 Configuration

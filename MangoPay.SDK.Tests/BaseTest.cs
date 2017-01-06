@@ -4,7 +4,7 @@ using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -149,38 +149,46 @@ namespace MangoPay.SDK.Tests
         protected WalletDTO GetJohnsWalletWithMoney(int amount)
         {
             if (BaseTest._johnsWalletWithMoney == null)
-            {
-                UserNaturalDTO john = this.GetJohn();
+				BaseTest._johnsWalletWithMoney = GetNewJohnsWalletWithMoney(amount);
 
-                // create wallet with money
-                WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
-
-                BaseTest._johnsWalletWithMoney = this.Api.Wallets.Create(wallet);
-
-                CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(BaseTest._johnsWalletWithMoney.Owners[0], CurrencyIso.EUR);
-                CardRegistrationDTO cardRegistration = this.Api.CardRegistrations.Create(cardRegistrationPost);
-
-                CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
-                cardRegistrationPut.RegistrationData = this.GetPaylineCorrectRegistartionData(cardRegistration);
-                cardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
-
-                CardDTO card = this.Api.Cards.Get(cardRegistration.CardId);
-
-                // create pay-in CARD DIRECT
-                PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
-                    new Money { Amount = amount, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR },
-                    BaseTest._johnsWalletWithMoney.Id, "http://test.com", card.Id);
-
-                payIn.CardType = card.CardType;
-
-                // create Pay-In
-                this.Api.PayIns.CreateCardDirect(payIn);
-            }
-
-            return this.Api.Wallets.Get(BaseTest._johnsWalletWithMoney.Id);
+            return BaseTest._johnsWalletWithMoney;
         }
 
-        protected PayInCardWebDTO GetJohnsPayInCardWeb()
+		/// <summary>Creates new wallet for John.</summary>
+		/// <param name="amount">Initial wallet's money amount.</param>
+		/// <returns>Wallet entity instance returned from API.</returns>
+		protected WalletDTO GetNewJohnsWalletWithMoney(int amount)
+		{
+			UserNaturalDTO john = this.GetJohn();
+
+			// create wallet with money
+			WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
+
+			var johnsWalletWithMoney = this.Api.Wallets.Create(wallet);
+
+			CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(johnsWalletWithMoney.Owners[0], CurrencyIso.EUR);
+			CardRegistrationDTO cardRegistration = this.Api.CardRegistrations.Create(cardRegistrationPost);
+
+			CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
+			cardRegistrationPut.RegistrationData = this.GetPaylineCorrectRegistartionData(cardRegistration);
+			cardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
+
+			CardDTO card = this.Api.Cards.Get(cardRegistration.CardId);
+
+			// create pay-in CARD DIRECT
+			PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
+				new Money { Amount = amount, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR },
+				johnsWalletWithMoney.Id, "http://test.com", card.Id);
+
+			payIn.CardType = card.CardType;
+
+			// create Pay-In
+			this.Api.PayIns.CreateCardDirect(payIn);
+			
+			return this.Api.Wallets.Get(johnsWalletWithMoney.Id);
+		}
+
+		protected PayInCardWebDTO GetJohnsPayInCardWeb()
         {
             if (BaseTest._johnsPayInCardWeb == null)
             {
@@ -323,12 +331,14 @@ namespace MangoPay.SDK.Tests
             return BaseTest._johnsPayOutForCardDirect;
         }
 
-        protected TransferDTO GetNewTransfer()
+        protected TransferDTO GetNewTransfer(WalletDTO walletIn = null)
         {
-            WalletDTO walletWithMoney = this.GetJohnsWalletWithMoney();
-            UserNaturalDTO user = this.GetJohn();
+			WalletDTO walletWithMoney = walletIn;
+			if (walletWithMoney == null)
+				walletWithMoney = this.GetJohnsWalletWithMoney();
 
-            WalletPostDTO walletPost = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN EUR FOR TRANSFER", CurrencyIso.EUR);
+			UserNaturalDTO user = this.GetJohn();
+			WalletPostDTO walletPost = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN EUR FOR TRANSFER", CurrencyIso.EUR);
             WalletDTO wallet = this.Api.Wallets.Create(walletPost);
 
             TransferPostDTO transfer = new TransferPostDTO(user.Id, user.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletWithMoney.Id, wallet.Id);

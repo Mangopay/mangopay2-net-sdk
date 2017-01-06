@@ -1,31 +1,33 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities.GET;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiTransfersTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_Transfers_Create()
         {
             UserNaturalDTO john = this.GetJohn();
+            var wallet = this.GetNewJohnsWalletWithMoney(10000);
 
-            TransferDTO transfer = this.GetNewTransfer();
+			TransferDTO transfer = this.GetNewTransfer(wallet);
             WalletDTO creditedWallet = this.Api.Wallets.Get(transfer.CreditedWalletId);
 
             Assert.IsTrue(transfer.Id.Length > 0);
             Assert.AreEqual(transfer.AuthorId, john.Id);
             Assert.AreEqual(transfer.CreditedUserId, john.Id);
-            Assert.IsTrue(creditedWallet.Balance.Amount == 100);
+            Assert.AreEqual(100, creditedWallet.Balance.Amount);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Transfers_Get()
         {
             UserNaturalDTO john = this.GetJohn();
-            TransferDTO transfer = this.GetNewTransfer();
+			var wallet = this.GetNewJohnsWalletWithMoney(10000);
+			TransferDTO transfer = this.GetNewTransfer(wallet);
 
             TransferDTO getTransfer = this.Api.Transfers.Get(transfer.Id);
 
@@ -35,15 +37,14 @@ namespace MangoPay.SDK.Tests
             AssertEqualInputProps(transfer, getTransfer);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Transfers_CreateRefund()
         {
-            TransferDTO transfer = this.GetNewTransfer();
-            WalletDTO wallet = this.GetJohnsWalletWithMoney();
+			WalletDTO wallet = this.GetNewJohnsWalletWithMoney(10000);
+			TransferDTO transfer = this.GetNewTransfer(wallet);
             WalletDTO walletBefore = this.Api.Wallets.Get(wallet.Id);
 
-
-            RefundDTO refund = this.GetNewRefundForTransfer(transfer);
+			RefundDTO refund = this.GetNewRefundForTransfer(transfer);
             WalletDTO walletAfter = this.Api.Wallets.Get(wallet.Id);
 
             Assert.IsTrue(refund.Id.Length > 0);

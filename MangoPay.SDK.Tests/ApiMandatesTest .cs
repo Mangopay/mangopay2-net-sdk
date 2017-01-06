@@ -2,16 +2,16 @@
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Threading;
 
 namespace MangoPay.SDK.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ApiMandatesTest : BaseTest
     {
-        [TestMethod]
+        [Test]
         public void Test_Mandate_Create()
         {
             try
@@ -30,7 +30,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void Test_Mandate_Get()
         {
             try
@@ -58,7 +58,7 @@ namespace MangoPay.SDK.Tests
 		 * Uncomment the attribute below to test mandate cancellation.
 		 * This test needs your manual confirmation on the web page (see note in test's body)
 		 */
-		//[TestMethod]
+		//[Test]
 		public void test_Mandate_Cancel()
 		{
 			string bankAccountId = this.GetJohnsAccount().Id;
@@ -83,7 +83,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsTrue(mandate.Status == MandateStatus.FAILED);
 		}
 
-        [TestMethod]
+        [Test]
         public void Test_Mandates_GetAll()
         {
             try
@@ -99,7 +99,7 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		[TestMethod]
+		[Test]
 		public void Test_Mandate_GetForUser()
 		{
 			try
@@ -126,7 +126,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[TestMethod]
+		[Test]
 		public void Test_Mandate_GetForBankAccount()
 		{
 			try

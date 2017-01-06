@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>mangopay2-sdk</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/MangoPay/mangopay2-net-sdk</projectUrl>
+    <iconUrl>https://avatars1.githubusercontent.com/u/4931078</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2016</copyright>
+    <tags>mangopay sdk payment wallet banking emoney</tags>
+  </metadata>
+</package>

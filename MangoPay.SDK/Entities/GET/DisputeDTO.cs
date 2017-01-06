@@ -45,5 +45,8 @@ namespace MangoPay.SDK.Entities.GET
 
 		/// <summary>Free text that might be completed when the dispute is closed.</summary>
 		public String ResultMessage { get; set; }
+		
+		/// <summary>The ID of the associated repudiation transaction.</summary>
+		public String RepudiationId { get; set; }
     }
 }
