@@ -41,14 +41,9 @@ namespace MangoPay.SDK.Tests
             MangoPayApi api = new MangoPayApi();
 
             // use test client credentails
-            /*api.Config.ClientId = "sdk-unit-tests";
+            api.Config.ClientId = "sdk-unit-tests";
             api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
-            api.Config.BaseUrl = "https://api.sandbox.mangopay.com";*/
-
-			api.Config.ClientId = "sdk-unit-tests";
-			api.Config.ClientPassword = "9RMGpwVUwFLK0SurxObJ2yaadDcO0zeKFKxWmthjB93SQjFzy0";
-			api.Config.BaseUrl = "https://api-test.mangopay.com";
-
+            api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
 			api.Config.LoggerFactoryAdapter = new ConsoleOutLoggerFactoryAdapter();
 
             // register storage strategy for tests
