@@ -72,12 +72,14 @@
     <Compile Include="Core\APIs\ApiRefunds.cs" />
     <Compile Include="Core\APIs\ApiTransfers.cs" />
     <Compile Include="Core\APIs\ApiUsers.cs" />
+    <Compile Include="Core\APIs\ApiBankingAliases.cs" />
     <Compile Include="Core\APIs\ApiWallets.cs" />
     <Compile Include="Core\APIs\ApiKyc.cs" />
     <Compile Include="Core\AuthenticationHelper.cs" />
     <Compile Include="Core\AuthorizationTokenManager.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\EnumerationConverter.cs" />
+    <Compile Include="Core\Enumerations\BankingAliasType.cs" />
     <Compile Include="Core\Enumerations\BankAccountType.cs" />
     <Compile Include="Core\Enumerations\DownloadReportFormat.cs" />
     <Compile Include="Core\Enumerations\FundsType.cs" />
@@ -152,6 +154,8 @@
     <Compile Include="Entities\GET\BankAccountOtherDTO.cs" />
     <Compile Include="Entities\GET\BankAccountUsDTO.cs" />
     <Compile Include="Entities\GET\BankAccountIbanDTO.cs" />
+    <Compile Include="Entities\GET\BankingAliasIbanDTO.cs" />
+    <Compile Include="Entities\GET\BankingAliasDTO.cs" />
     <Compile Include="Entities\GET\DisputeDTO.cs" />
     <Compile Include="Entities\GET\DocumentDTO.cs" />
     <Compile Include="Entities\GET\DisputeDocumentDTO.cs" />
@@ -173,6 +177,8 @@
     <Compile Include="Entities\GET\SettlementDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\DisputeReason.cs" />
+    <Compile Include="Entities\POST\BankingAliasPostDTO.cs" />
+    <Compile Include="Entities\POST\BankingAliasIbanPostDTO.cs" />
     <Compile Include="Entities\POST\DisputeDocumentPostDTO.cs" />
     <Compile Include="Entities\POST\DisputePagePostDTO.cs" />
     <Compile Include="Entities\POST\ClientBankWireDirectPostDTO.cs" />
@@ -182,6 +188,7 @@
     <Compile Include="Entities\POST\ReportRequestPostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
     <Compile Include="Entities\PUT\ClientLogoPutDTO.cs" />
+    <Compile Include="Entities\PUT\BankingAliasPutDTO.cs" />
     <Compile Include="Entities\PUT\DisactivateBankAccountPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeContestPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeTagPutDTO.cs" />

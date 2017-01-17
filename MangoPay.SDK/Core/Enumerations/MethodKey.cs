@@ -64,9 +64,13 @@ namespace MangoPay.SDK.Core.Enumerations
         WalletsAllTransactions,
         WalletsCreate,
         WalletsGet,
-        WalletsSave,
+		WalletsSave,
+		BankingAliasCreateIban,
+		BankingAliasAll,
+		BankingAliasGet,
+		BankingAliasSave,
 
-        ClientGetKycDocuments,
+		ClientGetKycDocuments,
         GetKycDocument,
 
 		ClientGetWalletsDefault,
