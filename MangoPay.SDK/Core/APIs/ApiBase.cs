@@ -142,8 +142,13 @@ namespace MangoPay.SDK.Core.APIs
 
 			{ MethodKey.ReportRequest, new String[] { "/reports/{0}", RequestType.POST } },
 			{ MethodKey.ReportGetAll, new String[] { "/reports", RequestType.GET } },
-			{ MethodKey.ReportGet, new String[] { "/reports/{0}", RequestType.GET } }
-        };
+			{ MethodKey.ReportGet, new String[] { "/reports/{0}", RequestType.GET } },
+
+			{ MethodKey.SingleSignOnAll, new String[] { "/clients/ssos", RequestType.GET } },
+			{ MethodKey.SingleSignOnCreate, new String[] { "/clients/SSOs", RequestType.POST } },
+			{ MethodKey.SingleSignOnGet, new String[] { "/clients/ssos/{0}", RequestType.GET } },
+			{ MethodKey.SingleSignOnSave, new String[] { "/clients/ssos/{0}", RequestType.PUT } },
+		};
 
         /// <summary>Creates new API instance.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
