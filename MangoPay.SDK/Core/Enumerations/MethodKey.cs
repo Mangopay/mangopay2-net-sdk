@@ -120,6 +120,7 @@
 		SingleSignOnAll,
 		SingleSignOnCreate,
 		SingleSignOnGet,
-		SingleSignOnSave
+		SingleSignOnSave,
+		SingleSignOnExtendInvitation
 	}
 }

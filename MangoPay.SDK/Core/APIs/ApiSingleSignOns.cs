@@ -15,7 +15,7 @@ namespace MangoPay.SDK.Core.APIs
 		public ApiSingleSignOns(MangoPayApi root) : base(root) { }
 
 		/// <summary>Gets single sign on user.</summary>
-		/// <param name="userId">Single sign on user identifier.</param>
+		/// <param name="singleSignOnId">Single sign on user identifier.</param>
 		/// <returns>Single sign on user instance returned from API.</returns>
 		public SingleSignOnDTO Get(String singleSignOnId)
         {
@@ -23,7 +23,7 @@ namespace MangoPay.SDK.Core.APIs
         }
 
 		/// <summary>Creates new single sign on user.</summary>
-		/// <param name="user">Single sign on object to be created.</param>
+		/// <param name="singleSignOn">Single sign on object to be created.</param>
 		/// <returns>Single sign on instance returned from API.</returns>
 		public SingleSignOnDTO Create(SingleSignOnPostDTO singleSignOn)
 		{
@@ -32,7 +32,7 @@ namespace MangoPay.SDK.Core.APIs
 
 		/// <summary>Creates new user.</summary>
 		/// <param name="idempotencyKey">Idempotency key for this request.</param>
-		/// <param name="user">UserNatural object to be created.</param>
+		/// <param name="singleSignOn">SingleSignOn object to be created.</param>
 		/// <returns>UserNatural instance returned from API.</returns>
 		public SingleSignOnDTO Create(String idempotencyKey, SingleSignOnPostDTO singleSignOn)
 		{
@@ -56,12 +56,20 @@ namespace MangoPay.SDK.Core.APIs
         }
 
 		/// <summary>Updates the single sign on user.</summary>
-		/// <param name="user">Instance of single sign on class to be updated.</param>
-		/// <param name="userId">Single sign on user identifier.</param>
+		/// <param name="singleSignOn">Instance of single sign on class to be updated.</param>
+		/// <param name="singleSignOnId">Single sign on user identifier.</param>
 		/// <returns>Updated single sign on user object returned from API.</returns>
 		public SingleSignOnDTO Update(SingleSignOnPutDTO singleSignOn, String singleSignOnId)
         {
             return this.UpdateObject<SingleSignOnDTO, SingleSignOnPutDTO>(MethodKey.SingleSignOnSave, singleSignOn, singleSignOnId);
-        }        
-    }
+        }
+
+		/// <summary>Extend single sign on invitation.</summary>
+		/// <param name="singleSignOnId">Single sign on user identifier.</param>
+		/// <returns>Single sign on user object returned from API.</returns>
+		public SingleSignOnDTO ExtendInvitation(String singleSignOnId)
+		{
+			return this.UpdateObject<SingleSignOnDTO, SingleSignOnPutDTO>(MethodKey.SingleSignOnExtendInvitation, new SingleSignOnPutDTO(), singleSignOnId);
+		}
+	}
 }

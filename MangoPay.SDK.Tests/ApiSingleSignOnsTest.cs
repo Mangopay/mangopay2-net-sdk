@@ -176,5 +176,27 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+
+		[Test]
+		public void Test_SingleSignOns_ExtendInvitation()
+		{
+			try
+			{
+				var email = "email-ExtendInvitation_" + DateTime.Now.Ticks + "@email.com";
+				var singleSignOnPost = new SingleSignOnPostDTO("firstName-ExtendInvitation", "lastName-ExtendInvitation", email);
+				var singleSignOnCreated = this.Api.SingleSignOns.Create(singleSignOnPost);
+
+				var singleSignOn = this.Api.SingleSignOns.ExtendInvitation(singleSignOnCreated.Id);
+
+				Assert.IsTrue(singleSignOn.Id.Length > 0);
+				Assert.AreEqual("firstName-ExtendInvitation", singleSignOn.FirstName);
+				Assert.AreEqual("lastName-ExtendInvitation", singleSignOn.LastName);
+				Assert.AreEqual(email, singleSignOn.Email);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
 	}
 }
