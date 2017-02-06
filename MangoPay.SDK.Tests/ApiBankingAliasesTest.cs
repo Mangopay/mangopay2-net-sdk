@@ -21,7 +21,7 @@ namespace MangoPay.SDK.Tests
 				UserNaturalDTO john = this.GetJohn();
 				WalletDTO wallet = this.GetJohnsWallet();
 				BankingAliasIbanPostDTO bankingAliasIban = new BankingAliasIbanPostDTO(
-					john.FirstName + " " + john.LastName, CountryIso.FR)
+					john.FirstName + " " + john.LastName, CountryIso.LU)
 				{
 					Tag = "Tag test"
 				};
@@ -45,7 +45,7 @@ namespace MangoPay.SDK.Tests
 				WalletPostDTO walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
 				WalletDTO wallet = this.Api.Wallets.Create(walletPost);
 				BankingAliasIbanPostDTO bankingAliasIban = new BankingAliasIbanPostDTO(
-					john.FirstName + " " + john.LastName, CountryIso.FR)
+					john.FirstName + " " + john.LastName, CountryIso.LU)
 				{
 					Tag = "Tag test"
 				};
@@ -71,7 +71,7 @@ namespace MangoPay.SDK.Tests
 				WalletPostDTO walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
 				WalletDTO wallet = this.Api.Wallets.Create(walletPost);
 				BankingAliasIbanPostDTO bankingAliasIban = new BankingAliasIbanPostDTO(
-					john.FirstName + " " + john.LastName, CountryIso.FR)
+					john.FirstName + " " + john.LastName, CountryIso.LU)
 				{
 					Tag = "Tag test"
 				};
@@ -97,7 +97,7 @@ namespace MangoPay.SDK.Tests
 				WalletPostDTO walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
 				WalletDTO wallet = this.Api.Wallets.Create(walletPost);
 				BankingAliasIbanPostDTO bankingAliasIban = new BankingAliasIbanPostDTO(
-					john.FirstName + " " + john.LastName, CountryIso.FR)
+					john.FirstName + " " + john.LastName, CountryIso.LU)
 				{
 					Tag = "Tag test"
 				};
@@ -126,7 +126,7 @@ namespace MangoPay.SDK.Tests
 				WalletPostDTO walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
 				WalletDTO wallet = this.Api.Wallets.Create(walletPost);
 				BankingAliasIbanPostDTO bankingAliasIban = new BankingAliasIbanPostDTO(
-					john.FirstName + " " + john.LastName, CountryIso.FR)
+					john.FirstName + " " + john.LastName, CountryIso.LU)
 				{
 					Tag = "Tag test"
 				};
