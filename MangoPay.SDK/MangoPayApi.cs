@@ -88,7 +88,7 @@ namespace MangoPay.SDK
         /// <summary>Provides Hooks methods.</summary>
         public ApiHooks Hooks;
 
-        /// <summary>Provides KYC methods.</summary>
+		/// <summary>Provides KYC methods.</summary>
 		public ApiKyc Kyc;
 
 		/// <summary>Provides Disputes methods.</summary>

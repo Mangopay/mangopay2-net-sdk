@@ -65,6 +65,7 @@
     <Compile Include="Core\APIs\ApiReports.cs" />
     <Compile Include="Core\APIs\ApiIdempotency.cs" />
     <Compile Include="Core\APIs\ApiHooks.cs" />
+    <Compile Include="Core\APIs\ApiKyc.cs" />
     <Compile Include="Core\APIs\ApiMandates.cs" />
     <Compile Include="Core\APIs\ApiOAuth.cs" />
     <Compile Include="Core\APIs\ApiPayIns.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="Core\APIs\ApiUsers.cs" />
     <Compile Include="Core\APIs\ApiBankingAliases.cs" />
     <Compile Include="Core\APIs\ApiWallets.cs" />
-    <Compile Include="Core\APIs\ApiKyc.cs" />
     <Compile Include="Core\AuthenticationHelper.cs" />
     <Compile Include="Core\AuthorizationTokenManager.cs" />
     <Compile Include="Core\Constants.cs" />
@@ -149,9 +149,15 @@
     <Compile Include="Core\Enumerations\TransactionStatus.cs" />
     <Compile Include="Core\Enumerations\TransactionType.cs" />
     <Compile Include="Core\Enumerations\Validity.cs" />
+    <Compile Include="Entities\GET\BankAccountCaObsoleteDTO.cs" />
     <Compile Include="Entities\GET\BankAccountCaDTO.cs" />
+    <Compile Include="Entities\GET\BankAccountObsoleteDTO.cs" />
+    <Compile Include="Entities\GET\BankAccountGbObsoleteDTO.cs" />
     <Compile Include="Entities\GET\BankAccountGbDTO.cs" />
+    <Compile Include="Entities\GET\BankAccountIbanObsoleteDTO.cs" />
+    <Compile Include="Entities\GET\BankAccountOtherObsoleteDTO.cs" />
     <Compile Include="Entities\GET\BankAccountOtherDTO.cs" />
+    <Compile Include="Entities\GET\BankAccountUsObsoleteDTO.cs" />
     <Compile Include="Entities\GET\BankAccountUsDTO.cs" />
     <Compile Include="Entities\GET\BankAccountIbanDTO.cs" />
     <Compile Include="Entities\GET\BankingAliasIbanDTO.cs" />
@@ -177,6 +183,8 @@
     <Compile Include="Entities\GET\ReportRequestDTO.cs" />
     <Compile Include="Entities\GET\RepudiationDTO.cs" />
     <Compile Include="Entities\GET\SettlementDTO.cs" />
+    <Compile Include="Entities\GET\UserLegalObsoleteDTO.cs" />
+    <Compile Include="Entities\GET\UserNaturalObsoleteDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\DisputeReason.cs" />
     <Compile Include="Entities\POST\BankingAliasPostDTO.cs" />

@@ -19,6 +19,8 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>Headquarters address.</summary>
 		public Address HeadquartersAddress { get; set; }
 
+		public String HeadquartersAddressObsolete { get; set; }
+
         /// <summary>Legal representative first name.</summary>
         public String LegalRepresentativeFirstName { get; set; }
 
@@ -28,12 +30,14 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>Legal representative address.</summary>
 		public Address LegalRepresentativeAddress { get; set; }
 
+		public String LegalRepresentativeAddressObsolete { get; set; }
+
         /// <summary>Legal representative email.</summary>
         public String LegalRepresentativeEmail { get; set; }
 
         /// <summary>Legal representative birthday.</summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime LegalRepresentativeBirthday { get; set; }
+        public DateTime? LegalRepresentativeBirthday { get; set; }
 
         /// <summary>Legal representative nationality.</summary>
 		[JsonConverter(typeof(EnumerationConverter))]

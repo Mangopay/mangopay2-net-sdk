@@ -90,22 +90,17 @@ namespace MangoPay.SDK.Core.Enumerations
 		DisputesSaveTag,
 		DisputesSaveContestFunds,
 		DisputeSaveClose,
-
-		DisputesGetTransactions,
-		
+		DisputesGetTransactions,		
 		DisputesGetAll,
 		DisputesGetForWallet,
 		DisputesGetForUser,
-
 		DisputesDocumentCreate,
 		DisputesDocumentPageCreate,
 		DisputesDocumentSubmit,
 		DisputesDocumentGet,
 		DisputesDocumentGetForDispute,
 		DisputesDocumentGetForClient,
-
 		DisputesRepudiationGet,
-
 		DisputesRepudiationCreateSettlement,
 		SettlementsGet,
 

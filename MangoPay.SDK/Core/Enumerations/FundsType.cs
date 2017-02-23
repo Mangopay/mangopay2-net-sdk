@@ -1,4 +1,4 @@
-
+﻿
 namespace MangoPay.SDK.Core.Enumerations
 {
     /// <summary>Funds type enumeration.</summary>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -74,9 +74,9 @@
     <Compile Include="ApiPayOutsTest.cs" />
     <Compile Include="ApiRefundsTest.cs" />
     <Compile Include="ApiTransfersTest.cs" />
-    <Compile Include="ApiBankingAliasesTest.cs" />
     <Compile Include="ApiUsersTest.cs" />
     <Compile Include="ApiWalletsTest.cs" />
+    <Compile Include="ApiBankingAliasesTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="DefaultStorageStrategyForTests.cs" />
     <Compile Include="ApiIdempotencyTest.cs" />

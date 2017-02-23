@@ -28,6 +28,7 @@ namespace MangoPay.SDK.Core.APIs
 			return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, null, sort, filter.GetValues());
 		}
 
+
 		/// <summary>Gets client wallets.</summary>
 		/// <param name="fundsType">Type of funds.</param>
 		/// <param name="pagination">Pagination.</param>
@@ -81,6 +82,7 @@ namespace MangoPay.SDK.Core.APIs
 
 			return this.GetList<TransactionDTO>(MethodKey.ClientGetWalletTransactions, pagination, fundsType.ToString(), currency.ToString(), sort, filter.GetValues());
 		}
+
 
 		/// <summary>Gets client transactions.</summary>
 		/// <param name="pagination">Pagination.</param>
