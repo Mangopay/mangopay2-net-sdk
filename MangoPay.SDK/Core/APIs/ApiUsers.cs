@@ -458,5 +458,27 @@ namespace MangoPay.SDK.Core.APIs
 
             return this.GetList<KycDocumentDTO>(MethodKey.UsersGetKycDocuments, pagination, userId, sort, filter.GetValues());
         }
-    }
+
+		/// <summary>Gets Emoney object.</summary>
+		/// <param name="userId">User identifier.</param>
+		/// <returns>Emoney object returned from API.</returns>
+		public EmoneyDTO GetEmoney(String userId)
+		{
+			return GetEmoney(userId, CurrencyIso.NotSpecified);
+		}
+
+		/// <summary>Gets Emoney object.</summary>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="currency">Currency ISO code.</param>
+		/// <returns>Emoney object returned from API.</returns>
+		public EmoneyDTO GetEmoney(String userId, CurrencyIso currency)
+		{
+			var urlMethod = String.Format(GetRequestUrl(MethodKey.UsersEmoneyGet), userId);
+			var rest = new RestTool(_root, true);
+			var parameters = new Dictionary<string, string>();
+			if (currency != CurrencyIso.NotSpecified)
+				parameters.Add("currency", currency.ToString());
+			return rest.Request<EmoneyDTO, EmoneyDTO>(urlMethod, GetRequestType(MethodKey.UsersEmoneyGet), parameters);
+		}
+	}
 }

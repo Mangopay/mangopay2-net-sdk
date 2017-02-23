@@ -157,9 +157,11 @@ namespace MangoPay.SDK.Tests
 		/// <summary>Creates new wallet for John.</summary>
 		/// <param name="amount">Initial wallet's money amount.</param>
 		/// <returns>Wallet entity instance returned from API.</returns>
-		protected WalletDTO GetNewJohnsWalletWithMoney(int amount)
+		protected WalletDTO GetNewJohnsWalletWithMoney(int amount, UserNaturalDTO user = null)
 		{
-			UserNaturalDTO john = this.GetJohn();
+			UserNaturalDTO john = user;
+			if (john == null)
+				john = this.GetJohn();
 
 			// create wallet with money
 			WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);

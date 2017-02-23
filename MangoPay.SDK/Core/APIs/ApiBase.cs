@@ -86,8 +86,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersSaveNaturals, new String[] { "/users/natural/{0}", RequestType.PUT } },
             { MethodKey.UsersSaveLegals, new String[] { "/users/legal/{0}", RequestType.PUT } },
             { MethodKey.UsersSaveKycDocument, new String[] { "/users/{0}/KYC/documents/{1}", RequestType.PUT } },
-        
-            { MethodKey.WalletsCreate, new String[] { "/wallets", RequestType.POST } },
+			{ MethodKey.UsersEmoneyGet, new String[] { "/users/{0}/emoney", RequestType.GET } },
+
+			{ MethodKey.WalletsCreate, new String[] { "/wallets", RequestType.POST } },
             { MethodKey.WalletsAllTransactions, new String[] { "/wallets/{0}/transactions", RequestType.GET } },
             { MethodKey.WalletsGet, new String[] { "/wallets/{0}", RequestType.GET } },
 			{ MethodKey.WalletsSave, new String[] { "/wallets/{0}", RequestType.PUT } },
@@ -148,6 +149,8 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.ReportRequest, new String[] { "/reports/{0}", RequestType.POST } },
 			{ MethodKey.ReportGetAll, new String[] { "/reports", RequestType.GET } },
 			{ MethodKey.ReportGet, new String[] { "/reports/{0}", RequestType.GET } }
+
+			
         };
 
         /// <summary>Creates new API instance.</summary>
