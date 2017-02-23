@@ -427,14 +427,12 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Emoney object returned from API.</returns>
 		public EmoneyDTO GetEmoney(String userId, CurrencyIso currency)
 		{
-			string secondEntityId = currency == CurrencyIso.NotSpecified ? "" : currency.ToString();
-			var methodKey = currency == CurrencyIso.NotSpecified
-				? MethodKey.UsersEmoneyGet
-				: MethodKey.UsersEmoneyGetCurrency;
-			string urlMethod = String.Format(GetRequestUrl(methodKey), userId, secondEntityId);
+			var urlMethod = String.Format(GetRequestUrl(MethodKey.UsersEmoneyGet), userId);
 			var rest = new RestTool(_root, true);
-
-			return rest.Request<EmoneyDTO, EmoneyDTO>(urlMethod, GetRequestType(methodKey));
+			var parameters = new Dictionary<string, string>();
+			if (currency != CurrencyIso.NotSpecified)
+				parameters.Add("currency", currency.ToString());
+			return rest.Request<EmoneyDTO, EmoneyDTO>(urlMethod, GetRequestType(MethodKey.UsersEmoneyGet), parameters);
 		}
 	}
 }
