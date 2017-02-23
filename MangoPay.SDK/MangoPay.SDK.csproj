@@ -156,6 +156,7 @@
     <Compile Include="Entities\GET\DocumentDTO.cs" />
     <Compile Include="Entities\GET\DisputeDocumentDTO.cs" />
     <Compile Include="Entities\GET\DisputePageDTO.cs" />
+    <Compile Include="Entities\GET\EmoneyDTO.cs" />
     <Compile Include="Entities\GET\IdempotencyResponseDTO.cs" />
     <Compile Include="Entities\GET\KycPageDTO.cs" />
     <Compile Include="Entities\GET\MandateDTO.cs" />

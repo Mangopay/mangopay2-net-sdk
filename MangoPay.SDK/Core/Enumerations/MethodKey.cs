@@ -61,7 +61,10 @@ namespace MangoPay.SDK.Core.Enumerations
         UsersSaveLegals,
         UsersSaveNaturals,
 		UsersSaveBankAccount,
-        WalletsAllTransactions,
+		UsersEmoneyGet,
+		UsersEmoneyGetCurrency,
+
+		WalletsAllTransactions,
         WalletsCreate,
         WalletsGet,
         WalletsSave,
@@ -117,5 +120,5 @@ namespace MangoPay.SDK.Core.Enumerations
 		ReportRequest,
 		ReportGetAll,
 		ReportGet
-    }
+	}
 }
