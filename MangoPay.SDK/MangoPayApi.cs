@@ -35,7 +35,8 @@ namespace MangoPay.SDK
 			Idempotency = new ApiIdempotency(this);
 			Mandates = new ApiMandates(this);
 			Reports = new ApiReports(this);
-        }
+			BankingAlias = new ApiBankingAliases(this);
+		}
 
         /// <summary>Provides authorization token methods.</summary>
         public AuthorizationTokenManager OAuthTokenManager;
@@ -102,6 +103,9 @@ namespace MangoPay.SDK
 		/// <summary>Provides Reports methods.</summary>
 		public ApiReports Reports;
 
-        #endregion
-    }
+		/// <summary>Provides Users methods.</summary>
+		public ApiBankingAliases BankingAlias;
+
+		#endregion
+	}
 }

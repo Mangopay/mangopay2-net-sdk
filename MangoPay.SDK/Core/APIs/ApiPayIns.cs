@@ -147,10 +147,18 @@ namespace MangoPay.SDK.Core.APIs
             return this.GetObject<PayInBankWireDirectDTO>(MethodKey.PayinsGet, payInId);
         }
 
-        /// <summary>Gets PayIn card direct entity by its identifier.</summary>
-        /// <param name="payInId">PayIn identifier.</param>
-        /// <returns>PayIn object returned from API.</returns>
-        public PayInCardDirectDTO GetCardDirect(String payInId)
+		/// <summary>Gets PayIn bankwire external instruction entity by its identifier.</summary>
+		/// <param name="payInId">PayIn identifier.</param>
+		/// <returns>PayIn object returned from API.</returns>
+		public PayInBankWireExternalInstructionDTO GetBankWireExternalInstruction(String payInId)
+		{
+			return this.GetObject<PayInBankWireExternalInstructionDTO>(MethodKey.PayinsGet, payInId);
+		}
+
+		/// <summary>Gets PayIn card direct entity by its identifier.</summary>
+		/// <param name="payInId">PayIn identifier.</param>
+		/// <returns>PayIn object returned from API.</returns>
+		public PayInCardDirectDTO GetCardDirect(String payInId)
         {
             return this.GetObject<PayInCardDirectDTO>(MethodKey.PayinsGet, payInId);
         }

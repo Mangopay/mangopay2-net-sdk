@@ -90,11 +90,14 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.WalletsCreate, new String[] { "/wallets", RequestType.POST } },
             { MethodKey.WalletsAllTransactions, new String[] { "/wallets/{0}/transactions", RequestType.GET } },
             { MethodKey.WalletsGet, new String[] { "/wallets/{0}", RequestType.GET } },
-            { MethodKey.WalletsSave, new String[] { "/wallets/{0}", RequestType.PUT } },
+			{ MethodKey.WalletsSave, new String[] { "/wallets/{0}", RequestType.PUT } },
+			{ MethodKey.BankingAliasCreateIban, new String[] { "/wallets/{0}/bankingaliases/iban", RequestType.POST } },
+			{ MethodKey.BankingAliasAll, new String[] { "/wallets/{0}/bankingaliases", RequestType.GET } },
+			{ MethodKey.BankingAliasGet, new String[] { "/bankingaliases/{0}", RequestType.GET } },
+			{ MethodKey.BankingAliasSave, new String[] { "/bankingaliases/{0}", RequestType.PUT } },
 
-            { MethodKey.ClientGetKycDocuments, new String[] { "/KYC/documents", RequestType.GET } },
-
-	{ MethodKey.GetKycDocument, new String[] { "/KYC/documents/{0}", RequestType.GET } },
+      { MethodKey.ClientGetKycDocuments, new String[] { "/KYC/documents", RequestType.GET } },
+	    { MethodKey.GetKycDocument, new String[] { "/KYC/documents/{0}", RequestType.GET } },
 
 			{ MethodKey.ClientGetWalletsDefault, new String[] { "/clients/wallets", RequestType.GET } },
 			{ MethodKey.ClientGetWalletsFees, new String[] { "/clients/wallets/fees", RequestType.GET } },
@@ -109,7 +112,6 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.ClientGet, new String[] { "/clients", RequestType.GET } },
 			{ MethodKey.ClientSave, new String[] { "/clients", RequestType.PUT } },
 			{ MethodKey.ClientUploadLogo, new String[] { "/clients/logo", RequestType.PUT } },
-
 
 			{ MethodKey.DisputesGet, new String[] { "/disputes/{0}", RequestType.GET } },
 			{ MethodKey.DisputesSaveTag, new String[] { "/disputes/{0}", RequestType.PUT } },
