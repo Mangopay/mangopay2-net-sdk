@@ -92,13 +92,19 @@ namespace MangoPay.SDK.Core
         public const string LINKS_PREVIOUS_ITEM = "prev";
 
         /// <summary>Resolves to "last" string.</summary>
-		public const string LINKS_LAST_ITEM = "last";
+        public const string LINKS_LAST_ITEM = "last";
 
-		/// <summary>Resolves to "DisputeType" string.</summary>
-		public const string DISPUTE_TYPE = "DisputeType";
+        /// <summary>Resolves to "X-Content-Generator" string.</summary>
+        public const string CONTENT_GENERATOR = "X-Content-Generator";
 
-		/// <summary>Resolves to "Idempotency-Key" string.</summary>
-		public const string IDEMPOTENCY_KEY = "Idempotency-Key";
+        /// <summary>Resolves to "MANGOPAY-Dashboard" string.</summary>
+        public const string CONTENT_GENERATOR_VALUE = "MANGOPAY-Dashboard";
+
+	/// <summary>Resolves to "DisputeType" string.</summary>
+	public const string DISPUTE_TYPE = "DisputeType";
+
+	/// <summary>Resolves to "Idempotency-Key" string.</summary>
+	public const string IDEMPOTENCY_KEY = "Idempotency-Key";
 
 		/// <summary>Resolves to "ResultCode" string.</summary>
 		public const string RESULT_CODE = "ResultCode";
@@ -114,5 +120,11 @@ namespace MangoPay.SDK.Core
 
 		/// <summary>Resolves to "MaxDebitedFundsCurrency" string.</summary>
 		public const string MAX_DEBITED_FUNDS_CURRENCY = "MaxDebitedFundsCurrency";
+
+		/// <summary>Resolves to "UserId" string.</summary>
+		public const string USER_ID = "UserId";
+
+		/// <summary>Resolves to "WalletId" string.</summary>
+		public const string WALLET_ID = "WalletId";
     }
 }
