@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace MangoPay.SDK.Entities
+﻿namespace MangoPay.SDK.Entities
 {
-    /// <summary>Pagination class.</summary>
-    public class Pagination
+	/// <summary>Pagination class.</summary>
+	public class Pagination
     {
         /// <summary>Page number.</summary>
         public int Page;

@@ -1,5 +1,4 @@
-﻿
-namespace MangoPay.SDK.Core.Enumerations
+﻿namespace MangoPay.SDK.Core.Enumerations
 {
     /// <summary>Method key enumeration.</summary>
     public enum MethodKey
@@ -117,6 +116,12 @@ namespace MangoPay.SDK.Core.Enumerations
 
 		ReportRequest,
 		ReportGetAll,
-		ReportGet
+		ReportGet,
+
+		SingleSignOnAll,
+		SingleSignOnCreate,
+		SingleSignOnGet,
+		SingleSignOnSave,
+		SingleSignOnExtendInvitation
 	}
 }
