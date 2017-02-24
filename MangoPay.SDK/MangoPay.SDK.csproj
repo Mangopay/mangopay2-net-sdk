@@ -72,7 +72,6 @@
     <Compile Include="Core\APIs\ApiPayOuts.cs" />
     <Compile Include="Core\APIs\ApiRefunds.cs" />
     <Compile Include="Core\APIs\ApiTransfers.cs" />
-    <Compile Include="Core\APIs\ApiSingleSignOns.cs" />
     <Compile Include="Core\APIs\ApiUsers.cs" />
     <Compile Include="Core\APIs\ApiBankingAliases.cs" />
     <Compile Include="Core\APIs\ApiWallets.cs" />
@@ -95,7 +94,6 @@
     <Compile Include="Core\Enumerations\DisputeReasonType.cs" />
     <Compile Include="Core\Enumerations\DisputeType.cs" />
     <Compile Include="Core\Enumerations\DisputeStatus.cs" />
-    <Compile Include="Core\Enumerations\InvitationStatus.cs" />
     <Compile Include="Core\Enumerations\KycLevel.cs" />
     <Compile Include="Core\Enumerations\DisputeDocumentStatus.cs" />
     <Compile Include="Core\Enumerations\MandateExecutionType.cs" />
@@ -188,7 +186,6 @@
     <Compile Include="Entities\GET\SettlementDTO.cs" />
     <Compile Include="Entities\GET\UserLegalObsoleteDTO.cs" />
     <Compile Include="Entities\GET\UserNaturalObsoleteDTO.cs" />
-    <Compile Include="Entities\GET\SingleSignOnDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\DisputeReason.cs" />
     <Compile Include="Entities\POST\BankingAliasPostDTO.cs" />
@@ -201,7 +198,6 @@
     <Compile Include="Entities\POST\PayInMandateDirectPostDTO.cs" />
     <Compile Include="Entities\POST\ReportRequestPostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
-    <Compile Include="Entities\POST\SingleSignOnPostDTO.cs" />
     <Compile Include="Entities\PUT\ClientLogoPutDTO.cs" />
     <Compile Include="Entities\PUT\BankingAliasPutDTO.cs" />
     <Compile Include="Entities\PUT\DisactivateBankAccountPutDTO.cs" />
@@ -209,7 +205,6 @@
     <Compile Include="Entities\PUT\DisputeTagPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeDocumentPutDTO.cs" />
     <Compile Include="Entities\PUT\ClientPutDTO.cs" />
-    <Compile Include="Entities\PUT\SingleSignOnPutDTO.cs" />
     <Compile Include="Entities\RefundReason.cs" />
     <Compile Include="Entities\Money.cs" />
     <Compile Include="Entities\OAuthTokenDTO.cs" />
