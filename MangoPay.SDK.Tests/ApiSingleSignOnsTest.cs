@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Tests
             try
             {
 				var email = "email_" + DateTime.Now.Ticks + "@email.com";
-				var singleSignOnPost = new SingleSignOnPostDTO("firstName", "lastName", email);
+				var singleSignOnPost = new SingleSignOnPostDTO("firstName", "lastName", email, "READ");
 
 				var singleSignOn = this.Api.SingleSignOns.Create(singleSignOnPost);
 
@@ -25,6 +25,8 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual("firstName", singleSignOn.FirstName);
                 Assert.AreEqual("lastName", singleSignOn.LastName);
                 Assert.AreEqual(email, singleSignOn.Email);
+                Assert.AreEqual("READ", singleSignOn.PermissionGroupId);
+                Assert.AreEqual(Api.Config.ClientId, singleSignOn.ClientId);
 			}
             catch (Exception ex)
             {
@@ -38,7 +40,7 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				var email = "email_" + DateTime.Now.Ticks + "@email.com";
-				var singleSignOnPost = new SingleSignOnPostDTO("firstName", "lastName", email);
+				var singleSignOnPost = new SingleSignOnPostDTO("firstName", "lastName", email, "READ");
 				var idempotencyKey = "keysso" + DateTime.Now.Ticks.ToString();
 
 				var singleSignOn = this.Api.SingleSignOns.Create(idempotencyKey, singleSignOnPost);
@@ -60,7 +62,7 @@ namespace MangoPay.SDK.Tests
             try
             {
 				var email = "email-Get_" + DateTime.Now.Ticks + "@email.com";
-				var singleSignOnPost = new SingleSignOnPostDTO("firstName-Get", "lastName-Get", email);
+				var singleSignOnPost = new SingleSignOnPostDTO("firstName-Get", "lastName-Get", email, "READ");
 				var singleSignOnCreated = this.Api.SingleSignOns.Create(singleSignOnPost);
 
 				var singleSignOn = this.Api.SingleSignOns.Get(singleSignOnCreated.Id);
@@ -82,7 +84,7 @@ namespace MangoPay.SDK.Tests
             try
             {
 				var email = "email-GetAll_" + DateTime.Now.Ticks + "@email.com";
-				var singleSignOnPost = new SingleSignOnPostDTO("firstName-GetAll", "lastName-GetAll", email);
+				var singleSignOnPost = new SingleSignOnPostDTO("firstName-GetAll", "lastName-GetAll", email, "READ");
 				var singleSignOnCreated = this.Api.SingleSignOns.Create(singleSignOnPost);
 
 				var singleSignOns = this.Api.SingleSignOns.GetAll();
@@ -102,7 +104,7 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				var email = "email-GetAll_" + DateTime.Now.Ticks + "@email.com";
-				var singleSignOnPost = new SingleSignOnPostDTO("firstName-GetAll", "lastName-GetAll", email);
+				var singleSignOnPost = new SingleSignOnPostDTO("firstName-GetAll", "lastName-GetAll", email, "READ");
 				var singleSignOnCreated = this.Api.SingleSignOns.Create(singleSignOnPost);
 				var pagination = new Pagination(1, 1);
 				var sort = new Sort();
@@ -126,7 +128,7 @@ namespace MangoPay.SDK.Tests
             try
             {
 				var email = "email-Save_" + DateTime.Now.Ticks + "@email.com";
-				var singleSignOnPost = new SingleSignOnPostDTO("firstName-Save", "lastName-Save", email);
+				var singleSignOnPost = new SingleSignOnPostDTO("firstName-Save", "lastName-Save", email, "READ");
 				var singleSignOnCreated = this.Api.SingleSignOns.Create(singleSignOnPost);
 				var singleSignOnPut = new SingleSignOnPutDTO
 				{
@@ -155,7 +157,7 @@ namespace MangoPay.SDK.Tests
             try
             {
                	var email = "email-Save_" + DateTime.Now.Ticks + "@email.com";
-				var singleSignOnPost = new SingleSignOnPostDTO("firstName-Save", "lastName-Save", email);
+				var singleSignOnPost = new SingleSignOnPostDTO("firstName-Save", "lastName-Save", email, "READ");
 				var singleSignOnCreated = this.Api.SingleSignOns.Create(singleSignOnPost);
 				var singleSignOnPut = new SingleSignOnPutDTO
 				{
@@ -183,7 +185,7 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				var email = "email-ExtendInvitation_" + DateTime.Now.Ticks + "@email.com";
-				var singleSignOnPost = new SingleSignOnPostDTO("firstName-ExtendInvitation", "lastName-ExtendInvitation", email);
+				var singleSignOnPost = new SingleSignOnPostDTO("firstName-ExtendInvitation", "lastName-ExtendInvitation", email, "READ");
 				var singleSignOnCreated = this.Api.SingleSignOns.Create(singleSignOnPost);
 
 				var singleSignOn = this.Api.SingleSignOns.ExtendInvitation(singleSignOnCreated.Id);

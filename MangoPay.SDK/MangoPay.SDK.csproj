@@ -62,6 +62,7 @@
     <Compile Include="Core\APIs\ApiClients.cs" />
     <Compile Include="Core\APIs\ApiEvents.cs" />
     <Compile Include="Core\APIs\ApiDisputes.cs" />
+    <Compile Include="Core\APIs\ApiPermissionGroups.cs" />
     <Compile Include="Core\APIs\ApiReports.cs" />
     <Compile Include="Core\APIs\ApiIdempotency.cs" />
     <Compile Include="Core\APIs\ApiHooks.cs" />
@@ -170,18 +171,21 @@
     <Compile Include="Entities\GET\PayInCardWebDTO.cs" />
     <Compile Include="Entities\GET\PayInPreauthorizedDirectDTO.cs" />
     <Compile Include="Entities\GET\PayOutBankWireDTO.cs" />
+    <Compile Include="Entities\GET\PermissionGroupDTO.cs" />
     <Compile Include="Entities\GET\ReportRequestDTO.cs" />
     <Compile Include="Entities\GET\RepudiationDTO.cs" />
     <Compile Include="Entities\GET\SettlementDTO.cs" />
     <Compile Include="Entities\GET\SingleSignOnDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\DisputeReason.cs" />
+    <Compile Include="Entities\Permissions.cs" />
     <Compile Include="Entities\POST\DisputeDocumentPostDTO.cs" />
     <Compile Include="Entities\POST\DisputePagePostDTO.cs" />
     <Compile Include="Entities\POST\ClientBankWireDirectPostDTO.cs" />
     <Compile Include="Entities\POST\MandatePostDTO.cs" />
     <Compile Include="Entities\POST\PayInPayPalPostDTO.cs" />
     <Compile Include="Entities\POST\PayInMandateDirectPostDTO.cs" />
+    <Compile Include="Entities\POST\PermissionGroupPostDTO.cs" />
     <Compile Include="Entities\POST\ReportRequestPostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
     <Compile Include="Entities\POST\SingleSignOnPostDTO.cs" />
@@ -191,6 +195,7 @@
     <Compile Include="Entities\PUT\DisputeTagPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeDocumentPutDTO.cs" />
     <Compile Include="Entities\PUT\ClientPutDTO.cs" />
+    <Compile Include="Entities\PUT\PermissionGroupPutDTO.cs" />
     <Compile Include="Entities\PUT\SingleSignOnPutDTO.cs" />
     <Compile Include="Entities\RefundReason.cs" />
     <Compile Include="Entities\Money.cs" />
@@ -251,6 +256,7 @@
     <Compile Include="Entities\PUT\UserLegalPutDTO.cs" />
     <Compile Include="Entities\PUT\UserNaturalPutDTO.cs" />
     <Compile Include="Entities\PUT\WalletPutDTO.cs" />
+    <Compile Include="Entities\Scopes.cs" />
     <Compile Include="Entities\Transport\FilterReportsTransport.cs" />
     <Compile Include="Entities\Transport\ReportRequestTransportDTO.cs" />
     <Compile Include="Entities\Transport\ReportRequestTransportPostDTO.cs" />

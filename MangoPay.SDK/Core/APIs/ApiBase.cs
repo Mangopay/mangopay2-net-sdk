@@ -149,6 +149,12 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.SingleSignOnGet, new String[] { "/clients/ssos/{0}", RequestType.GET } },
 			{ MethodKey.SingleSignOnSave, new String[] { "/clients/ssos/{0}", RequestType.PUT } },
 			{ MethodKey.SingleSignOnExtendInvitation, new String[] { "/clients/ssos/{0}/extendinvitation", RequestType.PUT } },
+
+			{ MethodKey.PermissionGroupAll, new String[] { "/clients/permissiongroups", RequestType.GET } },
+			{ MethodKey.PermissionGroupAllSsos, new String[] { "/clients/permissiongroups/{0}/SSOs", RequestType.GET } },
+			{ MethodKey.PermissionGroupCreate, new String[] { "/clients/permissiongroups", RequestType.POST } },
+			{ MethodKey.PermissionGroupGet, new String[] { "/clients/permissiongroups/{0}", RequestType.GET } },
+			{ MethodKey.PermissionGroupSave, new String[] { "/clients/permissiongroups/{0}", RequestType.PUT } },
 		};
 
         /// <summary>Creates new API instance.</summary>

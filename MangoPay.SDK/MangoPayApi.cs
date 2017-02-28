@@ -36,6 +36,7 @@ namespace MangoPay.SDK
 			Mandates = new ApiMandates(this);
 			Reports = new ApiReports(this);
 			SingleSignOns = new ApiSingleSignOns(this);
+			PermissionGroups = new ApiPermissionGroups(this);
         }
 
         /// <summary>Provides authorization token methods.</summary>
@@ -105,6 +106,9 @@ namespace MangoPay.SDK
 
 		/// <summary>Provides SingleSignOns methods.</summary>
 		public ApiSingleSignOns SingleSignOns;
+
+		/// <summary>Provides SingleSignOns methods.</summary>
+		public ApiPermissionGroups PermissionGroups;
 
 		#endregion
 	}

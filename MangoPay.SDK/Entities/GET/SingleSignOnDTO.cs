@@ -25,5 +25,11 @@ namespace MangoPay.SDK.Entities.GET
 		/// <summary>Date of the latest authentification.</summary>
 		[JsonConverter(typeof(UnixDateTimeConverter))]
 		public DateTime? LastLoginDate { get; set; }
+
+		/// <summary>Permission group ID assigned to this SSO.</summary>
+		public String PermissionGroupId { get; set; }
+
+		/// <summary>An ID for the client.</summary>
+		public String ClientId { get; set; }
 	}
 }

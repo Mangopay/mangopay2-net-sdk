@@ -73,6 +73,7 @@
     <Compile Include="ApiPayInsTest.cs" />
     <Compile Include="ApiPayOutsTest.cs" />
     <Compile Include="ApiRefundsTest.cs" />
+    <Compile Include="ApiPermissionGroupsTests.cs" />
     <Compile Include="ApiTransfersTest.cs" />
     <Compile Include="ApiSingleSignOnsTest.cs" />
     <Compile Include="ApiUsersTest.cs" />

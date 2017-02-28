@@ -121,6 +121,12 @@
 		SingleSignOnCreate,
 		SingleSignOnGet,
 		SingleSignOnSave,
-		SingleSignOnExtendInvitation
+		SingleSignOnExtendInvitation,
+
+		PermissionGroupAll,
+		PermissionGroupAllSsos,
+		PermissionGroupCreate,
+		PermissionGroupGet,
+		PermissionGroupSave		
 	}
 }

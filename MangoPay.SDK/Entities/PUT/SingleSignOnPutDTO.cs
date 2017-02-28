@@ -14,6 +14,9 @@ namespace MangoPay.SDK.Entities.PUT
 		/// <summary>The last name of the user.</summary>
 		public String LastName { get; set; }
 
+		/// <summary>Permission group ID assigned to this SSO.</summary>
+		public String PermissionGroupId { get; set; }
+
 		/// <summary>Wheter the SSO is active or not.</summary>
 		public bool? Active { get; set; }
 	}
