@@ -102,6 +102,7 @@
     <Compile Include="Core\Enumerations\MandateStatus.cs" />
     <Compile Include="Core\Enumerations\MandateType.cs" />
     <Compile Include="Core\Enumerations\MethodKey.cs" />
+    <Compile Include="Core\Enumerations\PermissionGroupType.cs" />
     <Compile Include="Core\Enumerations\PlatformType.cs" />
     <Compile Include="Core\Enumerations\PreAuthorizationPaymentType.cs" />
     <Compile Include="Core\Enumerations\ReportResultCodes.cs" />
