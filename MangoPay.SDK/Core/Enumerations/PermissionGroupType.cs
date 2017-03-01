@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MangoPay.SDK.Core.Enumerations
+﻿namespace MangoPay.SDK.Core.Enumerations
 {
 	public enum PermissionGroupType
 	{
+		DEFAULT,
 		CUSTOM
 	}
 }
