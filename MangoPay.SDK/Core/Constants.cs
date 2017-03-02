@@ -94,12 +94,6 @@ namespace MangoPay.SDK.Core
         /// <summary>Resolves to "last" string.</summary>
         public const string LINKS_LAST_ITEM = "last";
 
-        /// <summary>Resolves to "X-Content-Generator" string.</summary>
-        public const string CONTENT_GENERATOR = "X-Content-Generator";
-
-        /// <summary>Resolves to "MANGOPAY-Dashboard" string.</summary>
-        public const string CONTENT_GENERATOR_VALUE = "MANGOPAY-Dashboard";
-
 	/// <summary>Resolves to "DisputeType" string.</summary>
 	public const string DISPUTE_TYPE = "DisputeType";
 
