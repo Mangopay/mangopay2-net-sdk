@@ -33,7 +33,7 @@ namespace MangoPay.SDK.Core
         /// <returns>Final REST url.</returns>
         public String GetRestUrl(String urlKey)
         {
-            return GetRestUrl(urlKey, true, null, null);
+			return GetRestUrl(urlKey, true, null, null, _root.Config.ApiVersion);
         }
 
         /// <summary>Gets REST url.</summary>
@@ -42,7 +42,7 @@ namespace MangoPay.SDK.Core
         /// <returns>Final REST url.</returns>
         public String GetRestUrl(String urlKey, Boolean addClientId)
         {
-            return GetRestUrl(urlKey, addClientId, null, null);
+			return GetRestUrl(urlKey, addClientId, null, null, _root.Config.ApiVersion);
         }
 
         /// <summary>Gets REST url.</summary>
@@ -52,7 +52,7 @@ namespace MangoPay.SDK.Core
         /// <returns>Final REST url.</returns>
         public String GetRestUrl(String urlKey, Boolean addClientId, Pagination pagination)
         {
-            return GetRestUrl(urlKey, addClientId, pagination, null);
+			return GetRestUrl(urlKey, addClientId, pagination, null, _root.Config.ApiVersion);
         }
 
         /// <summary>Gets REST url.</summary>
@@ -60,18 +60,19 @@ namespace MangoPay.SDK.Core
         /// <param name="addClientId">Denotes whether client identifier should be composed into final url.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <param name="additionalUrlParams">Additional parameters.</param>
+		/// <param name="apiVersion">API version (v2 or v2.01).</param>
         /// <returns>Final REST url.</returns>
-        public String GetRestUrl(String urlKey, Boolean addClientId, Pagination pagination, Dictionary<String, String> additionalUrlParams)
+        public String GetRestUrl(String urlKey, Boolean addClientId, Pagination pagination, Dictionary<String, String> additionalUrlParams, String apiVersion)
         {
             String url;
 
             if (!addClientId)
             {
-                url = "/v2.01" + urlKey;
+                url = "/" + apiVersion + urlKey;
             }
             else
             {
-                url = "/v2.01/" + _root.Config.ClientId + urlKey;
+                url = "/"+ apiVersion +"/" + _root.Config.ClientId + urlKey;
             }
 
             bool paramsAdded = false;

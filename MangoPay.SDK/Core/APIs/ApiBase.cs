@@ -37,7 +37,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.CardSave, new String[] { "/cards/{0}", RequestType.PUT } },
         
             { MethodKey.PayinsCardWebCreate, new String[] { "/payins/card/web", RequestType.POST } },
-			{ MethodKey.PayinsCardWebGetCardData, new String[] { "/payins/card/web/{0}/extended/", RequestType.GET } },
+            { MethodKey.PayinsCardWebGetCardData, new String[] { "/payins/card/web/{0}/extended/", RequestType.GET } },
             { MethodKey.PayinsCardDirectCreate, new String[] { "/payins/card/direct", RequestType.POST } },
             { MethodKey.PayinsGet, new String[] { "/payins/{0}", RequestType.GET } },
             { MethodKey.PayinsCreateRefunds, new String[] { "/payins/{0}/refunds", RequestType.POST } },
@@ -86,76 +86,83 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersSaveNaturals, new String[] { "/users/natural/{0}", RequestType.PUT } },
             { MethodKey.UsersSaveLegals, new String[] { "/users/legal/{0}", RequestType.PUT } },
             { MethodKey.UsersSaveKycDocument, new String[] { "/users/{0}/KYC/documents/{1}", RequestType.PUT } },
-        
+            { MethodKey.UsersEmoneyGet, new String[] { "/users/{0}/emoney", RequestType.GET } },
+
             { MethodKey.WalletsCreate, new String[] { "/wallets", RequestType.POST } },
             { MethodKey.WalletsAllTransactions, new String[] { "/wallets/{0}/transactions", RequestType.GET } },
             { MethodKey.WalletsGet, new String[] { "/wallets/{0}", RequestType.GET } },
             { MethodKey.WalletsSave, new String[] { "/wallets/{0}", RequestType.PUT } },
+            { MethodKey.BankingAliasCreateIban, new String[] { "/wallets/{0}/bankingaliases/iban", RequestType.POST } },
+            { MethodKey.BankingAliasAll, new String[] { "/wallets/{0}/bankingaliases", RequestType.GET } },
+            { MethodKey.BankingAliasGet, new String[] { "/bankingaliases/{0}", RequestType.GET } },
+            { MethodKey.BankingAliasSave, new String[] { "/bankingaliases/{0}", RequestType.PUT } },
 
-            { MethodKey.ClientGetKycDocuments, new String[] { "/KYC/documents", RequestType.GET } },
-            { MethodKey.GetKycDocument, new String[] { "/KYC/documents/{0}", RequestType.GET } },
+      { MethodKey.ClientGetKycDocuments, new String[] { "/KYC/documents", RequestType.GET } },
+        { MethodKey.GetKycDocument, new String[] { "/KYC/documents/{0}", RequestType.GET } },
 
-			{ MethodKey.ClientGetWalletsDefault, new String[] { "/clients/wallets", RequestType.GET } },
-			{ MethodKey.ClientGetWalletsFees, new String[] { "/clients/wallets/fees", RequestType.GET } },
-			{ MethodKey.ClientGetWalletsCredit, new String[] { "/clients/wallets/credit", RequestType.GET } },
-			{ MethodKey.ClientGetWalletsDefaultWithCurrency, new String[] { "/clients/wallets/{0}", RequestType.GET } },
-			{ MethodKey.ClientGetWalletsFeesWithCurrency, new String[] { "/clients/wallets/fees/{0}", RequestType.GET } },
-			{ MethodKey.ClientGetWalletsCreditWithCurrency, new String[] { "/clients/wallets/credit/{0}", RequestType.GET } },
-			{ MethodKey.ClientGetTransactions, new String[] { "/clients/transactions", RequestType.GET } },
-			{ MethodKey.ClientGetWalletTransactions, new String[] { "/clients/wallets/{0}/{1}/transactions", RequestType.GET } },
-			{ MethodKey.ClientCreateBankwireDirect, new String[] { "/clients/payins/bankwire/direct", RequestType.POST } },
-			{ MethodKey.ClientGet, new String[] { "/clients", RequestType.GET } },
-			{ MethodKey.ClientSave, new String[] { "/clients", RequestType.PUT } },
-			{ MethodKey.ClientUploadLogo, new String[] { "/clients/logo", RequestType.PUT } },
+            { MethodKey.ClientGetWalletsDefault, new String[] { "/clients/wallets", RequestType.GET } },
+            { MethodKey.ClientGetWalletsFees, new String[] { "/clients/wallets/fees", RequestType.GET } },
+            { MethodKey.ClientGetWalletsCredit, new String[] { "/clients/wallets/credit", RequestType.GET } },
+            { MethodKey.ClientGetWalletsDefaultWithCurrency, new String[] { "/clients/wallets/{0}", RequestType.GET } },
+            { MethodKey.ClientGetWalletsFeesWithCurrency, new String[] { "/clients/wallets/fees/{0}", RequestType.GET } },
+            { MethodKey.ClientGetWalletsCreditWithCurrency, new String[] { "/clients/wallets/credit/{0}", RequestType.GET } },
 
-			{ MethodKey.DisputesGet, new String[] { "/disputes/{0}", RequestType.GET } },
-			{ MethodKey.DisputesSaveTag, new String[] { "/disputes/{0}", RequestType.PUT } },
-			{ MethodKey.DisputesSaveContestFunds, new String[] { "/disputes/{0}/submit", RequestType.PUT } },
-			{ MethodKey.DisputeSaveClose, new String[] { "/disputes/{0}/close", RequestType.PUT } },
+            { MethodKey.ClientGetTransactions, new String[] { "/clients/transactions", RequestType.GET } },
+            { MethodKey.ClientGetWalletTransactions, new String[] { "/clients/wallets/{0}/{1}/transactions", RequestType.GET } },
+            { MethodKey.ClientCreateBankwireDirect, new String[] { "/clients/payins/bankwire/direct", RequestType.POST } },
+            { MethodKey.ClientGet, new String[] { "/clients", RequestType.GET } },
+            { MethodKey.ClientSave, new String[] { "/clients", RequestType.PUT } },
+            { MethodKey.ClientUploadLogo, new String[] { "/clients/logo", RequestType.PUT } },
 
-			{ MethodKey.DisputesGetTransactions, new String[] { "/disputes/{0}/transactions", RequestType.GET } },
+            { MethodKey.DisputesGet, new String[] { "/disputes/{0}", RequestType.GET } },
+            { MethodKey.DisputesSaveTag, new String[] { "/disputes/{0}", RequestType.PUT } },
+            { MethodKey.DisputesSaveContestFunds, new String[] { "/disputes/{0}/submit", RequestType.PUT } },
+            { MethodKey.DisputeSaveClose, new String[] { "/disputes/{0}/close", RequestType.PUT } },
 
-			{ MethodKey.DisputesGetAll, new String[] { "/disputes", RequestType.GET } },
-			{ MethodKey.DisputesGetForWallet, new String[] { "/wallets/{0}/disputes", RequestType.GET } },
-			{ MethodKey.DisputesGetForUser, new String[] { "/users/{0}/disputes", RequestType.GET } },
+            { MethodKey.DisputesGetTransactions, new String[] { "/disputes/{0}/transactions", RequestType.GET } },
 
-			{ MethodKey.DisputesDocumentCreate, new String[] { "/disputes/{0}/documents", RequestType.POST } },
-			{ MethodKey.DisputesDocumentPageCreate, new String[] { "/disputes/{0}/documents/{1}/pages", RequestType.POST } },
-			{ MethodKey.DisputesDocumentSubmit, new String[] { "/disputes/{0}/documents/{1}", RequestType.PUT } },
-			{ MethodKey.DisputesDocumentGet, new String[] { "/dispute-documents/{0}", RequestType.GET } },
-			{ MethodKey.DisputesDocumentGetForDispute, new String[] { "/disputes/{0}/documents", RequestType.GET } },
-			{ MethodKey.DisputesDocumentGetForClient, new String[] { "/dispute-documents", RequestType.GET } },
+            { MethodKey.DisputesGetAll, new String[] { "/disputes", RequestType.GET } },
+            { MethodKey.DisputesGetForWallet, new String[] { "/wallets/{0}/disputes", RequestType.GET } },
+            { MethodKey.DisputesGetForUser, new String[] { "/users/{0}/disputes", RequestType.GET } },
 
-			{ MethodKey.DisputesRepudiationGet, new String[] { "/repudiations/{0}", RequestType.GET } },
+            { MethodKey.DisputesDocumentCreate, new String[] { "/disputes/{0}/documents", RequestType.POST } },
+            { MethodKey.DisputesDocumentPageCreate, new String[] { "/disputes/{0}/documents/{1}/pages", RequestType.POST } },
+            { MethodKey.DisputesDocumentSubmit, new String[] { "/disputes/{0}/documents/{1}", RequestType.PUT } },
+            { MethodKey.DisputesDocumentGet, new String[] { "/dispute-documents/{0}", RequestType.GET } },
+            { MethodKey.DisputesDocumentGetForDispute, new String[] { "/disputes/{0}/documents", RequestType.GET } },
+            { MethodKey.DisputesDocumentGetForClient, new String[] { "/dispute-documents", RequestType.GET } },
 
-			{ MethodKey.DisputesRepudiationCreateSettlement, new String[] { "/repudiations/{0}/settlementtransfer", RequestType.POST } },
-			{ MethodKey.SettlementsGet, new String[] { "/settlements/{0}/", RequestType.GET } },
-			
-			{ MethodKey.IdempotencyResponseGet, new String[] { "/responses/{0}/", RequestType.GET } },
-			
-			{ MethodKey.MandateCreate, new String[] { "/mandates/directdebit/web", RequestType.POST } },
-			{ MethodKey.MandateCancel, new String[] { "/mandates/{0}/cancel/", RequestType.PUT } },
-			{ MethodKey.MandateGet, new String[] { "/mandates/{0}/", RequestType.GET } },
-			{ MethodKey.MandatesGetAll, new String[] { "/mandates/", RequestType.GET } },
-			{ MethodKey.MandatesGetForUser, new String[] { "/users/{0}/mandates/", RequestType.GET } },
-			{ MethodKey.MandatesGetForBankAccount, new String[] { "/users/{0}/bankaccounts/{1}/mandates/", RequestType.GET } },
+            { MethodKey.DisputesRepudiationGet, new String[] { "/repudiations/{0}", RequestType.GET } },
 
-			{ MethodKey.ReportRequest, new String[] { "/reports/{0}", RequestType.POST } },
-			{ MethodKey.ReportGetAll, new String[] { "/reports", RequestType.GET } },
-			{ MethodKey.ReportGet, new String[] { "/reports/{0}", RequestType.GET } },
+            { MethodKey.DisputesRepudiationCreateSettlement, new String[] { "/repudiations/{0}/settlementtransfer", RequestType.POST } },
+            { MethodKey.SettlementsGet, new String[] { "/settlements/{0}/", RequestType.GET } },
+            
+            { MethodKey.IdempotencyResponseGet, new String[] { "/responses/{0}/", RequestType.GET } },
+            
+            { MethodKey.MandateCreate, new String[] { "/mandates/directdebit/web", RequestType.POST } },
+            { MethodKey.MandateCancel, new String[] { "/mandates/{0}/cancel/", RequestType.PUT } },
+            { MethodKey.MandateGet, new String[] { "/mandates/{0}/", RequestType.GET } },
+            { MethodKey.MandatesGetAll, new String[] { "/mandates/", RequestType.GET } },
+            { MethodKey.MandatesGetForUser, new String[] { "/users/{0}/mandates/", RequestType.GET } },
+            { MethodKey.MandatesGetForBankAccount, new String[] { "/users/{0}/bankaccounts/{1}/mandates/", RequestType.GET } },
 
-			{ MethodKey.SingleSignOnAll, new String[] { "/clients/ssos", RequestType.GET } },
-			{ MethodKey.SingleSignOnCreate, new String[] { "/clients/ssos", RequestType.POST } },
-			{ MethodKey.SingleSignOnGet, new String[] { "/clients/ssos/{0}", RequestType.GET } },
-			{ MethodKey.SingleSignOnSave, new String[] { "/clients/ssos/{0}", RequestType.PUT } },
-			{ MethodKey.SingleSignOnExtendInvitation, new String[] { "/clients/ssos/{0}/extendinvitation", RequestType.PUT } },
+            { MethodKey.ReportRequest, new String[] { "/reports/{0}", RequestType.POST } },
+            { MethodKey.ReportGetAll, new String[] { "/reports", RequestType.GET } },
+            { MethodKey.ReportGet, new String[] { "/reports/{0}", RequestType.GET } },
 
-			{ MethodKey.PermissionGroupAll, new String[] { "/clients/permissiongroups", RequestType.GET } },
-			{ MethodKey.PermissionGroupAllSsos, new String[] { "/clients/permissiongroups/{0}/SSOs", RequestType.GET } },
-			{ MethodKey.PermissionGroupCreate, new String[] { "/clients/permissiongroups", RequestType.POST } },
-			{ MethodKey.PermissionGroupGet, new String[] { "/clients/permissiongroups/{0}", RequestType.GET } },
-			{ MethodKey.PermissionGroupSave, new String[] { "/clients/permissiongroups/{0}", RequestType.PUT } },
-		};
+            { MethodKey.SingleSignOnAll, new String[] { "/clients/ssos", RequestType.GET } },
+            { MethodKey.SingleSignOnCreate, new String[] { "/clients/ssos", RequestType.POST } },
+            { MethodKey.SingleSignOnGet, new String[] { "/clients/ssos/{0}", RequestType.GET } },
+            { MethodKey.SingleSignOnSave, new String[] { "/clients/ssos/{0}", RequestType.PUT } },
+            { MethodKey.SingleSignOnExtendInvitation, new String[] { "/clients/ssos/{0}/extendinvitation", RequestType.PUT } },
+
+            { MethodKey.PermissionGroupAll, new String[] { "/clients/permissiongroups", RequestType.GET } },
+            { MethodKey.PermissionGroupAllSsos, new String[] { "/clients/permissiongroups/{0}/SSOs", RequestType.GET } },
+            { MethodKey.PermissionGroupCreate, new String[] { "/clients/permissiongroups", RequestType.POST } },
+            { MethodKey.PermissionGroupGet, new String[] { "/clients/permissiongroups/{0}", RequestType.GET } },
+            { MethodKey.PermissionGroupSave, new String[] { "/clients/permissiongroups/{0}", RequestType.PUT } },
+        };
+
 
         /// <summary>Creates new API instance.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
@@ -191,8 +198,8 @@ namespace MangoPay.SDK.Core.APIs
 
         /// <summary>Creates the DTO instance.</summary>
         /// <typeparam name="U">Return type.</typeparam>
-		/// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="idempotencyKey">Idempotency key for this request.</param>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entity">DTO instance that is going to be sent.</param>
         /// <param name="entityId">Entity identifier.</param>
@@ -212,20 +219,20 @@ namespace MangoPay.SDK.Core.APIs
                 urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
 
             RestTool restTool = new RestTool(this._root, true);
-			U result = restTool.Request<U, T>(idempotencyKey, urlMethod, this.GetRequestType(methodKey), null, null, entity);
+            U result = restTool.Request<U, T>(idempotencyKey, urlMethod, this.GetRequestType(methodKey), null, null, entity);
 
             return result;
         }
 
         /// <summary>Creates the DTO instance.</summary>
         /// <typeparam name="U">Return type.</typeparam>
-		/// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="idempotencyKey">Idempotency key for this request.</param>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entity">DTO instance that is going to be sent.</param>
         /// <param name="entityId">Entity identifier.</param>
         /// <returns>The DTO instance returned from API.</returns>
-		protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity, string entityId)
+        protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity, string entityId)
             where U : EntityBase, new()
             where T : EntityPostBase
         {
@@ -234,16 +241,16 @@ namespace MangoPay.SDK.Core.APIs
 
         /// <summary>Creates the DTO instance.</summary>
         /// <typeparam name="U">Return type.</typeparam>
-		/// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="idempotencyKey">Idempotency key for this request.</param>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entity">DTO instance that is going to be sent.</param>
         /// <returns>The DTO instance returned from API.</returns>
-		protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity)
+        protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity)
             where U : EntityBase, new()
             where T : EntityPostBase
         {
-			return CreateObject<U, T>(idempotencyKey, methodKey, entity, "");
+            return CreateObject<U, T>(idempotencyKey, methodKey, entity, "");
         }
 
         /// <summary>Gets the DTO instance from API.</summary>
@@ -279,7 +286,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <param name="entityId">Entity identifier.</param>
-		/// <param name="secondEntityId">Entity identifier.</param>
+        /// <param name="secondEntityId">Entity identifier.</param>
         /// <param name="sort">Sort.</param>
         /// <param name="additionalUrlParams">Collection of key-value pairs of request parameters.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
@@ -288,8 +295,8 @@ namespace MangoPay.SDK.Core.APIs
         {
             string urlMethod = "";
 
-			if (!String.IsNullOrEmpty(secondEntityId) && !String.IsNullOrEmpty(entityId))
-				urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
+            if (!String.IsNullOrEmpty(secondEntityId) && !String.IsNullOrEmpty(entityId))
+                urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
             else if (!String.IsNullOrEmpty(entityId))
                 urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId);
             else
@@ -313,11 +320,11 @@ namespace MangoPay.SDK.Core.APIs
             return restTool.RequestList<T>(urlMethod, this.GetRequestType(methodKey), additionalUrlParams, pagination);
         }
 
-		protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort, Dictionary<String, String> additionalUrlParams)
+        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort, Dictionary<String, String> additionalUrlParams)
             where T : EntityBase, new()
-		{
-			return this.GetList<T>(methodKey, pagination, entityId, null, sort, additionalUrlParams);
-		}
+        {
+            return this.GetList<T>(methodKey, pagination, entityId, null, sort, additionalUrlParams);
+        }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
@@ -407,9 +414,9 @@ namespace MangoPay.SDK.Core.APIs
             return restTool.Request<U, T>(null, urlMethod, this.GetRequestType(methodKey), null, null, entity);
         }
 
-		protected Type GetObjectForIdempotencyUrl()
-		{
-			return typeof(UserNaturalDTO);
-		}
-	}
+        protected Type GetObjectForIdempotencyUrl()
+        {
+            return typeof(UserNaturalDTO);
+        }
+    }
 }

@@ -756,5 +756,44 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
-    }
+
+		[Test]
+		public void Test_Users_GetEmoney()
+		{
+			try
+			{
+				var user = GetNewJohn();
+				var wallet = GetNewJohnsWalletWithMoney(10000, user);
+
+				var emoney = Api.Users.GetEmoney(user.Id);
+
+				Assert.AreEqual(user.Id, emoney.UserId);
+				Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
+				Assert.AreEqual(CurrencyIso.EUR, emoney.CreditedEMoney.Currency);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+
+		[Test]
+		public void Test_Users_GetEmoneyWithCurrency()
+		{
+			try
+			{
+				var user = GetNewJohn();
+				var wallet = GetNewJohnsWalletWithMoney(10000, user);
+
+				var emoney = Api.Users.GetEmoney(user.Id, CurrencyIso.USD);
+
+				Assert.AreEqual(user.Id, emoney.UserId);
+				Assert.AreEqual(CurrencyIso.USD, emoney.CreditedEMoney.Currency);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+	}
 }

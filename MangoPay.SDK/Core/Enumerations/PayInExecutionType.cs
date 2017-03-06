@@ -11,6 +11,9 @@ namespace MangoPay.SDK.Core.Enumerations
         WEB, 
 
         /// <summary>DIRECT execution type.</summary>
-        DIRECT
-    }
+        DIRECT,
+
+		/// <summary>EXTERNAL_INSTRUCTION execution type.</summary>
+		EXTERNAL_INSTRUCTION
+	}
 }

@@ -6,7 +6,7 @@ using System;
 namespace MangoPay.SDK.Entities.GET
 {
     /// <summary>Bank Account base entity.</summary>
-    public class BankAccountDTO : EntityBase
+	public class BankAccountObsoleteDTO : EntityBase
     {
         /// <summary>User identifier.</summary>
         public String UserId { get; set; }
@@ -19,9 +19,7 @@ namespace MangoPay.SDK.Entities.GET
         public String OwnerName { get; set; }
 
         /// <summary>Owner address.</summary>
-		public Address OwnerAddress { get; set; }
-
-		public String OwnerAddressObsolete { get; set; }
+        public String OwnerAddress { get; set; }
 
 	/// <summary>Denotes whether the bank account is active or not.</summary>
 	public bool Active { get; set; }

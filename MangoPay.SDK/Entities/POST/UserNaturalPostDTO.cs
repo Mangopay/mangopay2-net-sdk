@@ -28,8 +28,8 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Last name.</summary>
         public String LastName { get; set; }
 
-		/// <summary>Address.</summary>
-		public Address Address { get; set; }
+        /// <summary>Address.</summary>
+        public Address Address { get; set; }
 
         /// <summary>Date of birth.</summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]
