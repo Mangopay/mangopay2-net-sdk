@@ -129,7 +129,6 @@ namespace MangoPay.SDK.Core.Enumerations
         PermissionGroupAllSsos,
         PermissionGroupCreate,
         PermissionGroupGet,
-        PermissionGroupSave     
-
+        PermissionGroupSave
     }
 }
