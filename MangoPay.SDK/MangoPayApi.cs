@@ -111,7 +111,7 @@ namespace MangoPay.SDK
 		/// <summary>Provides SingleSignOns methods.</summary>
 		public ApiSingleSignOns SingleSignOns;
 
-		/// <summary>Provides SingleSignOns methods.</summary>
+		/// <summary>Provides ApiPermissionGroups methods.</summary>
 		public ApiPermissionGroups PermissionGroups;
 
 		#endregion
