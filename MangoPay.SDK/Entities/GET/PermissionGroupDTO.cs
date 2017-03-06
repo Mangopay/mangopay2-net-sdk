@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.GET
 		public String Name { get; set; }
 
 		/// <summary>The type of permission group.</summary>
-		public PermissionGroupType GroupType { get; set; }
+		public PermissionGroupType Type { get; set; }
 		
 		/// <summary>The scopes of the permission.</summary>
 		public Scopes Scopes { get; set; }
