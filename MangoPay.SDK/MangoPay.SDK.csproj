@@ -62,6 +62,7 @@
     <Compile Include="Core\APIs\ApiClients.cs" />
     <Compile Include="Core\APIs\ApiEvents.cs" />
     <Compile Include="Core\APIs\ApiDisputes.cs" />
+    <Compile Include="Core\APIs\ApiPermissionGroups.cs" />
     <Compile Include="Core\APIs\ApiReports.cs" />
     <Compile Include="Core\APIs\ApiIdempotency.cs" />
     <Compile Include="Core\APIs\ApiHooks.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Core\APIs\ApiPayOuts.cs" />
     <Compile Include="Core\APIs\ApiRefunds.cs" />
     <Compile Include="Core\APIs\ApiTransfers.cs" />
+    <Compile Include="Core\APIs\ApiSingleSignOns.cs" />
     <Compile Include="Core\APIs\ApiUsers.cs" />
     <Compile Include="Core\APIs\ApiBankingAliases.cs" />
     <Compile Include="Core\APIs\ApiWallets.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Core\Enumerations\DisputeReasonType.cs" />
     <Compile Include="Core\Enumerations\DisputeType.cs" />
     <Compile Include="Core\Enumerations\DisputeStatus.cs" />
+    <Compile Include="Core\Enumerations\InvitationStatus.cs" />
     <Compile Include="Core\Enumerations\KycLevel.cs" />
     <Compile Include="Core\Enumerations\DisputeDocumentStatus.cs" />
     <Compile Include="Core\Enumerations\MandateExecutionType.cs" />
@@ -101,6 +104,7 @@
     <Compile Include="Core\Enumerations\MandateStatus.cs" />
     <Compile Include="Core\Enumerations\MandateType.cs" />
     <Compile Include="Core\Enumerations\MethodKey.cs" />
+    <Compile Include="Core\Enumerations\PermissionGroupType.cs" />
     <Compile Include="Core\Enumerations\PlatformType.cs" />
     <Compile Include="Core\Enumerations\PreAuthorizationPaymentType.cs" />
     <Compile Include="Core\Enumerations\ReportResultCodes.cs" />
@@ -181,13 +185,16 @@
     <Compile Include="Entities\GET\PayInCardWebDTO.cs" />
     <Compile Include="Entities\GET\PayInPreauthorizedDirectDTO.cs" />
     <Compile Include="Entities\GET\PayOutBankWireDTO.cs" />
+    <Compile Include="Entities\GET\PermissionGroupDTO.cs" />
     <Compile Include="Entities\GET\ReportRequestDTO.cs" />
     <Compile Include="Entities\GET\RepudiationDTO.cs" />
     <Compile Include="Entities\GET\SettlementDTO.cs" />
+    <Compile Include="Entities\GET\SingleSignOnDTO.cs" />
     <Compile Include="Entities\GET\UserLegalObsoleteDTO.cs" />
     <Compile Include="Entities\GET\UserNaturalObsoleteDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\DisputeReason.cs" />
+    <Compile Include="Entities\Permissions.cs" />
     <Compile Include="Entities\POST\BankingAliasPostDTO.cs" />
     <Compile Include="Entities\POST\BankingAliasIbanPostDTO.cs" />
     <Compile Include="Entities\POST\DisputeDocumentPostDTO.cs" />
@@ -196,8 +203,10 @@
     <Compile Include="Entities\POST\MandatePostDTO.cs" />
     <Compile Include="Entities\POST\PayInPayPalPostDTO.cs" />
     <Compile Include="Entities\POST\PayInMandateDirectPostDTO.cs" />
+    <Compile Include="Entities\POST\PermissionGroupPostDTO.cs" />
     <Compile Include="Entities\POST\ReportRequestPostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
+    <Compile Include="Entities\POST\SingleSignOnPostDTO.cs" />
     <Compile Include="Entities\PUT\ClientLogoPutDTO.cs" />
     <Compile Include="Entities\PUT\BankingAliasPutDTO.cs" />
     <Compile Include="Entities\PUT\DisactivateBankAccountPutDTO.cs" />
@@ -205,6 +214,8 @@
     <Compile Include="Entities\PUT\DisputeTagPutDTO.cs" />
     <Compile Include="Entities\PUT\DisputeDocumentPutDTO.cs" />
     <Compile Include="Entities\PUT\ClientPutDTO.cs" />
+    <Compile Include="Entities\PUT\PermissionGroupPutDTO.cs" />
+    <Compile Include="Entities\PUT\SingleSignOnPutDTO.cs" />
     <Compile Include="Entities\RefundReason.cs" />
     <Compile Include="Entities\Money.cs" />
     <Compile Include="Entities\OAuthTokenDTO.cs" />
@@ -264,6 +275,7 @@
     <Compile Include="Entities\PUT\UserLegalPutDTO.cs" />
     <Compile Include="Entities\PUT\UserNaturalPutDTO.cs" />
     <Compile Include="Entities\PUT\WalletPutDTO.cs" />
+    <Compile Include="Entities\Scopes.cs" />
     <Compile Include="Entities\Transport\FilterReportsTransport.cs" />
     <Compile Include="Entities\Transport\ReportRequestTransportDTO.cs" />
     <Compile Include="Entities\Transport\ReportRequestTransportPostDTO.cs" />
