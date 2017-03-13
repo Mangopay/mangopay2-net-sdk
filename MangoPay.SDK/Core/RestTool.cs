@@ -78,17 +78,9 @@ namespace MangoPay.SDK.Core
             if (this._responseCode != 200 && this._responseCode != 204)
             {
                 if (this._responseCode == 401)
-                {
                     throw new UnauthorizedAccessException(textResponse);
-                }
                 else
-                {
-                    ResponseError error = JsonConvert.DeserializeObject<ResponseError>(textResponse);
-                    ResponseException rex = new ResponseException(textResponse);
-                    rex.ResponseError = error;
-
-                    throw rex;
-                }
+					throw new ResponseException(textResponse, this._responseCode);
             }
         }
 

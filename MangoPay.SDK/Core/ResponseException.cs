@@ -9,15 +9,17 @@ namespace MangoPay.SDK.Core
         /// <summary>Instantiates new ResponseException object.</summary>
         public ResponseException() { }
 
-        /// <summary>Instantiates new ResponseException object.</summary>
-        /// <param name="message">JSON data that came as a response from API.</param>
-        public ResponseException(String message) : base(message) 
+		/// <summary>Instantiates new ResponseException object.</summary>
+		/// <param name="message">JSON data that came as a response from API.</param>
+		/// <param name="responseStatusCode">Response status code from API.</param>
+		public ResponseException(String message, int responseStatusCode) : base(message) 
         {
             try
             {
                 this.ResponseErrorRaw = message;
                 this.ResponseError = JsonConvert.DeserializeObject<ResponseError>(message);
-            }
+				this.ResponseStatusCode = responseStatusCode;
+			}
             catch (JsonException)
             {
                 // Intentionally suppress optional deserialize exception. //
@@ -29,5 +31,8 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Deserialized response error data.</summary>
         public ResponseError ResponseError = new ResponseError();
-    }
+
+		/// <summary>Response status code from API.</summary>
+		public int ResponseStatusCode;
+	}
 }
