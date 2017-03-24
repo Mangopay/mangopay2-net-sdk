@@ -1,6 +1,7 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 
 namespace MangoPay.SDK.Entities
 {
@@ -12,6 +13,6 @@ namespace MangoPay.SDK.Entities
         public CurrencyIso Currency;
 
         /// <summary>Amount of money.</summary>
-        public int Amount;
+        public Int64 Amount;
     }
 }
