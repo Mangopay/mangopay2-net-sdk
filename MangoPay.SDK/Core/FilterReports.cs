@@ -36,12 +36,20 @@ namespace MangoPay.SDK.Core
 
 		public String WalletId { get; set; }
 
-		public Int32? MinDebitedFundsAmount { get; set; }
+		public Int64? MinDebitedFundsAmount { get; set; }
 
 		public CurrencyIso? MinDebitedFundsCurrency { get; set; }
 
-		public Int32? MaxDebitedFundsAmount { get; set; }
+		public Int64? MaxDebitedFundsAmount { get; set; }
 
 		public CurrencyIso? MaxDebitedFundsCurrency { get; set; }
+
+		public Int64? MinFeesAmount { get; set; }
+
+		public CurrencyIso? MinFeesCurrency { get; set; }
+
+		public Int64? MaxFeesAmount { get; set; }
+
+		public CurrencyIso? MaxFeesCurrency { get; set; }
 	}
 }

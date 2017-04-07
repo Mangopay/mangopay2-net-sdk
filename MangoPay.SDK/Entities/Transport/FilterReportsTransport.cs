@@ -32,15 +32,25 @@ namespace MangoPay.SDK.Entities.Transport
 
 		public String WalletId { get; set; }
 
-		public Int32? MinDebitedFundsAmount { get; set; }
+		public Int64? MinDebitedFundsAmount { get; set; }
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public CurrencyIso? MinDebitedFundsCurrency { get; set; }
 
-		public Int32? MaxDebitedFundsAmount { get; set; }
+		public Int64? MaxDebitedFundsAmount { get; set; }
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public CurrencyIso? MaxDebitedFundsCurrency { get; set; }
+
+		public Int64? MinFeesAmount { get; set; }
+
+		[JsonConverter(typeof(StringEnumConverter))]
+		public CurrencyIso? MinFeesCurrency { get; set; }
+
+		public Int64? MaxFeesAmount { get; set; }
+
+		[JsonConverter(typeof(StringEnumConverter))]
+		public CurrencyIso? MaxFeesCurrency { get; set; }
 
 		public FilterReports GetBusinessObject()
 		{
@@ -52,6 +62,10 @@ namespace MangoPay.SDK.Entities.Transport
 				MaxDebitedFundsCurrency = this.MaxDebitedFundsCurrency,
 				MinDebitedFundsAmount = this.MinDebitedFundsAmount,
 				MinDebitedFundsCurrency = this.MinDebitedFundsCurrency,
+				MinFeesAmount = this.MinFeesAmount,
+				MinFeesCurrency = this.MinFeesCurrency,
+				MaxFeesAmount = this.MaxFeesAmount,
+				MaxFeesCurrency = this.MaxFeesCurrency,
 				Nature = new List<TransactionNature>(),
 				Status = new List<TransactionStatus>(),
 				Type = new List<TransactionType>(),
@@ -100,6 +114,10 @@ namespace MangoPay.SDK.Entities.Transport
 				MaxDebitedFundsCurrency = filters.MaxDebitedFundsCurrency,
 				MinDebitedFundsAmount = filters.MinDebitedFundsAmount,
 				MinDebitedFundsCurrency = filters.MinDebitedFundsCurrency,
+				MinFeesAmount = filters.MinFeesAmount,
+				MinFeesCurrency = filters.MinFeesCurrency,
+				MaxFeesAmount = filters.MaxFeesAmount,
+				MaxFeesCurrency = filters.MaxFeesCurrency,
 				AuthorId = filters.AuthorId,
 				WalletId = filters.WalletId
 			};
