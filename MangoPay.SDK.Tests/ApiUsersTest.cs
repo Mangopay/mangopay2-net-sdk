@@ -556,6 +556,12 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
 
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+
+                this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
+
                 KycDocumentPutDTO kycDocumentPut = new KycDocumentPutDTO 
                 {
                     Status = KycStatus.VALIDATION_ASKED
