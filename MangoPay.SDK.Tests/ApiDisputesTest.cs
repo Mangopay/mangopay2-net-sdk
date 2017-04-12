@@ -369,6 +369,8 @@ namespace MangoPay.SDK.Tests
 				if (disputeDocument == null)
 					Assert.Fail("Cannot test submitting dispute's documents because there's no dispute document that can be updated.");
 
+                Api.Disputes.CreateDisputePage(dispute.Id, disputeDocument.Id, "TestKycPageFile.png");
+
 				DisputeDocumentPutDTO disputeDocumentPut = new DisputeDocumentPutDTO
 				{
 					Status = DisputeDocumentStatus.VALIDATION_ASKED
