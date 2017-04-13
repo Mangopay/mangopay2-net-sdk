@@ -16,8 +16,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>OAuth object with token information.</returns>
         public OAuthTokenDTO CreateToken()
         {
-            String urlMethod = this.GetRequestUrl(MethodKey.AuthenticationOAuth);
-            String requestType = this.GetRequestType(MethodKey.AuthenticationOAuth);
+			var endPoint = GetApiEndPoint(MethodKey.AuthenticationOAuth);
             Dictionary<String, String> requestData = new Dictionary<String, String>
             {
                 { Constants.GRANT_TYPE, Constants.CLIENT_CREDENTIALS }
@@ -30,7 +29,7 @@ namespace MangoPay.SDK.Core.APIs
             restTool.AddRequestHttpHeader(Constants.AUTHORIZATION, String.Format("{0} {1}", Constants.BASIC, authHelper.GetHttpHeaderBasicKey()));
             restTool.AddRequestHttpHeader(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
 
-            OAuthTokenDTO response = restTool.Request<OAuthTokenDTO, OAuthTokenDTO>(urlMethod, requestType, requestData);
+            OAuthTokenDTO response = restTool.Request<OAuthTokenDTO, OAuthTokenDTO>(endPoint, requestData);
 
             return response;
         }

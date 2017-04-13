@@ -84,6 +84,7 @@
     <Compile Include="ApiIdempotencyTest.cs" />
     <Compile Include="MangoPayApiTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ApiEndPointClassTest.cs" />
     <Compile Include="TokensTest.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -36,8 +36,10 @@ namespace MangoPay.SDK.Core.APIs
 			var map = GetMapForResource();
 			foreach (var mapItem in map)
 			{
-				var sourceUrl = GetRequestUrl(mapItem.Key);
-				sourceUrl = String.Format(sourceUrl, "[0-9a-zA-Z]+", "[0-9a-zA-Z]+");
+				var endPoint = GetApiEndPoint(mapItem.Key);
+				endPoint.SetParameters("[0-9a-zA-Z]+", "[0-9a-zA-Z]+");
+
+				var sourceUrl = endPoint.GetUrl();
 				sourceUrl = sourceUrl.Replace("/", "\\/");
 				Regex ex = new Regex(sourceUrl);
 				if (ex.IsMatch(response.RequestURL))

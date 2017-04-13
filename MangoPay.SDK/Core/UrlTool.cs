@@ -1,12 +1,12 @@
-﻿using MangoPay.SDK.Core.Enumerations;
-using MangoPay.SDK.Entities;
+﻿using MangoPay.SDK.Entities;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace MangoPay.SDK.Core
 {
-    /// <summary>Helper class to manage URLs.</summary>
-    internal class UrlTool
+	/// <summary>Helper class to manage URLs.</summary>
+	internal class UrlTool
     {
         // root/parent instance that holds the OAuthToken and Configuration instance
         private MangoPayApi _root;
@@ -64,21 +64,21 @@ namespace MangoPay.SDK.Core
         /// <returns>Final REST url.</returns>
         public String GetRestUrl(String urlKey, Boolean addClientId, Pagination pagination, Dictionary<String, String> additionalUrlParams, String apiVersion)
         {
-            String url;
+			var url = new StringBuilder();
 
-            if (!addClientId)
-            {
-                url = "/" + apiVersion + urlKey;
-            }
-            else
-            {
-                url = "/"+ apiVersion +"/" + _root.Config.ClientId + urlKey;
-            }
+			url.Append(String.Format("/{0}", apiVersion));
+
+			if (addClientId)
+			{
+				url.Append(String.Format("/{0}", _root.Config.ClientId));
+			}
+
+			url.Append(urlKey);
 
             bool paramsAdded = false;
             if (pagination != null)
             {
-                url += "?page=" + pagination.Page + "&per_page=" + pagination.ItemsPerPage;
+				url.Append(String.Format("{0}page={1}&per_page={2}", Constants.URI_QUERY_SEPARATOR, pagination.Page, pagination.ItemsPerPage));
                 paramsAdded = true;
             }
 
@@ -86,14 +86,13 @@ namespace MangoPay.SDK.Core
             {
                 foreach (string key in additionalUrlParams.Keys)
                 {
-
-                    url += paramsAdded ? Constants.URI_QUERY_PARAMS_SEPARATOR : Constants.URI_QUERY_SEPARATOR;
-                    url += key + "=" + Uri.EscapeDataString(additionalUrlParams[key]);
+					url.Append(paramsAdded ? Constants.URI_QUERY_PARAMS_SEPARATOR : Constants.URI_QUERY_SEPARATOR);
+					url.Append(String.Format("{0}={1}", key, Uri.EscapeDataString(additionalUrlParams[key])));
                     paramsAdded = true;
                 }
             }
 
-            return url;
+            return url.ToString();
         }
 
         /// <summary>Gets complete url.</summary>

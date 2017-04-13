@@ -6,163 +6,166 @@ using System.Collections.Generic;
 
 namespace MangoPay.SDK.Core.APIs
 {
-    /// <summary>Base class for all Api classes.</summary>
-    public abstract class ApiBase
+	/// <summary>Base class for all Api classes.</summary>
+	public abstract class ApiBase
     {
         /// <summary>Root/parent instance that holds the OAuthToken and Configuration instance.</summary>
         protected MangoPayApi _root;
 
         /// <summary>Array with REST URL and request type.</summary>
-        private Dictionary<MethodKey, String[]> _methods = new Dictionary<MethodKey, String[]> 
+        private Dictionary<MethodKey, ApiEndPoint> _methods = new Dictionary<MethodKey, ApiEndPoint> 
         {
-            { MethodKey.AuthenticationBase, new String[] { "/clients/", RequestType.POST } },
-            { MethodKey.AuthenticationOAuth, new String[] { "/oauth/token", RequestType.POST } },
+			{ MethodKey.AuthenticationBase, new ApiEndPoint("/clients/", RequestType.POST)},
+			{ MethodKey.AuthenticationOAuth, new ApiEndPoint("/oauth/token", RequestType.POST)},
         
-            { MethodKey.EventsAll, new String[] { "/events", RequestType.GET } },
+			{ MethodKey.EventsAll, new ApiEndPoint("/events", RequestType.GET)},
         
-            { MethodKey.HooksCreate, new String[] { "/hooks", RequestType.POST } },
-            { MethodKey.HooksAll, new String[] { "/hooks", RequestType.GET } },
-            { MethodKey.HooksGet, new String[] { "/hooks/{0}", RequestType.GET } },
-            { MethodKey.HooksSave, new String[] { "/hooks/{0}", RequestType.PUT } },
+			{ MethodKey.HooksCreate, new ApiEndPoint("/hooks", RequestType.POST)},
+			{ MethodKey.HooksAll, new ApiEndPoint("/hooks", RequestType.GET)},
+			{ MethodKey.HooksGet, new ApiEndPoint("/hooks/{0}", RequestType.GET)},
+			{ MethodKey.HooksSave, new ApiEndPoint("/hooks/{0}", RequestType.PUT)},
      
-            { MethodKey.CardRegistrationCreate, new String[] { "/cardregistrations", RequestType.POST } },
-            { MethodKey.CardRegistrationGet, new String[] { "/cardregistrations/{0}", RequestType.GET } },
-            { MethodKey.CardRegistrationSave, new String[] { "/cardregistrations/{0}", RequestType.PUT } },
+			{ MethodKey.CardRegistrationCreate, new ApiEndPoint("/cardregistrations", RequestType.POST)},
+			{ MethodKey.CardRegistrationGet, new ApiEndPoint("/cardregistrations/{0}", RequestType.GET)},
+			{ MethodKey.CardRegistrationSave, new ApiEndPoint("/cardregistrations/{0}", RequestType.PUT)},
         
-            { MethodKey.PreauthorizationCreate, new String[] { "/preauthorizations/card/direct", RequestType.POST } },
-            { MethodKey.PreauthorizationGet, new String[] { "/preauthorizations/{0}", RequestType.GET } },
-            { MethodKey.PreauthorizationSave, new String[] { "/preauthorizations/{0}", RequestType.PUT } },
+			{ MethodKey.PreauthorizationCreate, new ApiEndPoint("/preauthorizations/card/direct", RequestType.POST)},
+			{ MethodKey.PreauthorizationGet, new ApiEndPoint("/preauthorizations/{0}", RequestType.GET)},
+			{ MethodKey.PreauthorizationSave, new ApiEndPoint("/preauthorizations/{0}", RequestType.PUT)},
         
-            { MethodKey.CardGet, new String[] { "/cards/{0}", RequestType.GET } },
-            { MethodKey.CardSave, new String[] { "/cards/{0}", RequestType.PUT } },
+			{ MethodKey.CardGet, new ApiEndPoint("/cards/{0}", RequestType.GET)},
+			{ MethodKey.CardSave, new ApiEndPoint("/cards/{0}", RequestType.PUT)},
         
-            { MethodKey.PayinsCardWebCreate, new String[] { "/payins/card/web", RequestType.POST } },
-            { MethodKey.PayinsCardWebGetCardData, new String[] { "/payins/card/web/{0}/extended/", RequestType.GET } },
-            { MethodKey.PayinsCardDirectCreate, new String[] { "/payins/card/direct", RequestType.POST } },
-            { MethodKey.PayinsGet, new String[] { "/payins/{0}", RequestType.GET } },
-            { MethodKey.PayinsCreateRefunds, new String[] { "/payins/{0}/refunds", RequestType.POST } },
-            { MethodKey.PayinsGetRefunds, new String[] { "/payins/{0}/refunds", RequestType.GET } },
+			{ MethodKey.PayinsCardWebCreate, new ApiEndPoint("/payins/card/web", RequestType.POST)},
+			{ MethodKey.PayinsCardWebGetCardData, new ApiEndPoint("/payins/card/web/{0}/extended/", RequestType.GET)},
+			{ MethodKey.PayinsCardDirectCreate, new ApiEndPoint("/payins/card/direct", RequestType.POST)},
+			{ MethodKey.PayinsGet, new ApiEndPoint("/payins/{0}", RequestType.GET)},
+			{ MethodKey.PayinsCreateRefunds, new ApiEndPoint("/payins/{0}/refunds", RequestType.POST)},
+			{ MethodKey.PayinsGetRefunds, new ApiEndPoint("/payins/{0}/refunds", RequestType.GET)},
         
-            { MethodKey.PayinsPayPalCreate, new String[] { "/payins/paypal/web", RequestType.POST } },
+			{ MethodKey.PayinsPayPalCreate, new ApiEndPoint("/payins/paypal/web", RequestType.POST)},
 
-            { MethodKey.PayinsPreauthorizedDirectCreate, new String[] { "/payins/preauthorized/direct", RequestType.POST } },
+			{ MethodKey.PayinsPreauthorizedDirectCreate, new ApiEndPoint("/payins/preauthorized/direct", RequestType.POST)},
 
-            { MethodKey.PayinsBankwireDirectCreate, new String[] { "/payins/bankwire/direct", RequestType.POST } },
+			{ MethodKey.PayinsBankwireDirectCreate, new ApiEndPoint("/payins/bankwire/direct", RequestType.POST)},
 
-            { MethodKey.PayinsDirectDebitCreate, new String[] { "/payins/directdebit/web", RequestType.POST } },
-            { MethodKey.PayinsMandateDirectDebitCreate, new String[] { "/payins/directdebit/direct", RequestType.POST } },
+			{ MethodKey.PayinsDirectDebitCreate, new ApiEndPoint("/payins/directdebit/web", RequestType.POST)},
+			{ MethodKey.PayinsMandateDirectDebitCreate, new ApiEndPoint("/payins/directdebit/direct", RequestType.POST)},
         
-            { MethodKey.PayoutsBankwireCreate, new String[] { "/payouts/bankwire", RequestType.POST } },
-            { MethodKey.PayoutsGet, new String[] { "/payouts/{0}", RequestType.GET } },
+			{ MethodKey.PayoutsBankwireCreate, new ApiEndPoint("/payouts/bankwire", RequestType.POST)},
+			{ MethodKey.PayoutsGet, new ApiEndPoint("/payouts/{0}", RequestType.GET)},
         
-            { MethodKey.RefundsGet, new String[] { "/refunds/{0}", RequestType.GET } },
+			{ MethodKey.RefundsGet, new ApiEndPoint("/refunds/{0}", RequestType.GET)},
         
-            { MethodKey.TransfersCreate, new String[] { "/transfers", RequestType.POST } },
-            { MethodKey.TransfersGet, new String[] { "/transfers/{0}", RequestType.GET } },
-            { MethodKey.TransfersGetRefunds, new String[] { "/transfers/{0}/refunds", RequestType.GET } },
-            { MethodKey.TransfersCreateRefunds, new String[] { "/transfers/{0}/refunds", RequestType.POST } },
+			{ MethodKey.TransfersCreate, new ApiEndPoint("/transfers", RequestType.POST)},
+			{ MethodKey.TransfersGet, new ApiEndPoint("/transfers/{0}", RequestType.GET)},
+			{ MethodKey.TransfersGetRefunds, new ApiEndPoint("/transfers/{0}/refunds", RequestType.GET)},
+			{ MethodKey.TransfersCreateRefunds, new ApiEndPoint("/transfers/{0}/refunds", RequestType.POST)},
         
-            { MethodKey.UsersAll, new String[] { "/users", RequestType.GET } },
-            { MethodKey.UsersAllWallets, new String[] { "/users/{0}/wallets", RequestType.GET } },
-            { MethodKey.UsersAllBankAccount, new String[] { "/users/{0}/bankaccounts", RequestType.GET } },
-            { MethodKey.UsersAllCards, new String[] { "/users/{0}/cards", RequestType.GET } },
-            { MethodKey.UsersAllTransactions, new String[] { "/users/{0}/transactions", RequestType.GET } },
-            { MethodKey.UsersCreateNaturals, new String[] { "/users/natural", RequestType.POST } },
-            { MethodKey.UsersCreateLegals, new String[] { "/users/legal", RequestType.POST } },
-            { MethodKey.UsersCreateKycDocument, new String[] { "/users/{0}/KYC/documents", RequestType.POST } },
-            { MethodKey.UsersCreateKycPage, new String[] { "/users/{0}/KYC/documents/{1}/pages", RequestType.POST } },
-            { MethodKey.UsersCreateBankAccountsIban, new String[] { "/users/{0}/bankaccounts/iban", RequestType.POST } },
-            { MethodKey.UsersCreateBankAccountsGb, new String[] { "/users/{0}/bankaccounts/gb", RequestType.POST } },
-            { MethodKey.UsersCreateBankAccountsUs, new String[] { "/users/{0}/bankaccounts/us", RequestType.POST } },
-            { MethodKey.UsersCreateBankAccountsCa, new String[] { "/users/{0}/bankaccounts/ca", RequestType.POST } },
-            { MethodKey.UsersCreateBankAccountsOther, new String[] { "/users/{0}/bankaccounts/other", RequestType.POST } },
-            { MethodKey.UsersGet, new String[] { "/users/{0}", RequestType.GET } },
-            { MethodKey.UsersGetNaturals, new String[] { "/users/natural/{0}", RequestType.GET } },
-            { MethodKey.UsersGetLegals, new String[] { "/users/legal/{0}", RequestType.GET } },
-            { MethodKey.UsersGetKycDocument, new String[] { "/users/{0}/KYC/documents/{1}", RequestType.GET } },
-            { MethodKey.UsersGetKycDocuments, new String[] { "/users/{0}/KYC/documents", RequestType.GET } },
-            { MethodKey.UsersGetBankAccount, new String[] { "/users/{0}/bankaccounts/{1}", RequestType.GET } },
-            { MethodKey.UsersSaveBankAccount, new String[] { "/users/{0}/bankaccounts/{1}", RequestType.PUT } },
-            { MethodKey.UsersSaveNaturals, new String[] { "/users/natural/{0}", RequestType.PUT } },
-            { MethodKey.UsersSaveLegals, new String[] { "/users/legal/{0}", RequestType.PUT } },
-            { MethodKey.UsersSaveKycDocument, new String[] { "/users/{0}/KYC/documents/{1}", RequestType.PUT } },
-            { MethodKey.UsersEmoneyGet, new String[] { "/users/{0}/emoney", RequestType.GET } },
+			{ MethodKey.UsersAll, new ApiEndPoint("/users", RequestType.GET)},
+			{ MethodKey.UsersAllWallets, new ApiEndPoint("/users/{0}/wallets", RequestType.GET)},
+			{ MethodKey.UsersAllBankAccount, new ApiEndPoint("/users/{0}/bankaccounts", RequestType.GET)},
+			{ MethodKey.UsersAllCards, new ApiEndPoint("/users/{0}/cards", RequestType.GET)},
+			{ MethodKey.UsersAllTransactions, new ApiEndPoint("/users/{0}/transactions", RequestType.GET)},
+			{ MethodKey.UsersCreateNaturals, new ApiEndPoint("/users/natural", RequestType.POST)},
+			{ MethodKey.UsersCreateLegals, new ApiEndPoint("/users/legal", RequestType.POST)},
+			{ MethodKey.UsersCreateKycDocument, new ApiEndPoint("/users/{0}/KYC/documents", RequestType.POST)},
+			{ MethodKey.UsersCreateKycPage, new ApiEndPoint("/users/{0}/KYC/documents/{1}/pages", RequestType.POST)},
+			{ MethodKey.UsersCreateBankAccountsIban, new ApiEndPoint("/users/{0}/bankaccounts/iban", RequestType.POST)},
+			{ MethodKey.UsersCreateBankAccountsGb, new ApiEndPoint("/users/{0}/bankaccounts/gb", RequestType.POST)},
+			{ MethodKey.UsersCreateBankAccountsUs, new ApiEndPoint("/users/{0}/bankaccounts/us", RequestType.POST)},
+			{ MethodKey.UsersCreateBankAccountsCa, new ApiEndPoint("/users/{0}/bankaccounts/ca", RequestType.POST)},
+			{ MethodKey.UsersCreateBankAccountsOther, new ApiEndPoint("/users/{0}/bankaccounts/other", RequestType.POST)},
+			{ MethodKey.UsersGet, new ApiEndPoint("/users/{0}", RequestType.GET)},
+			{ MethodKey.UsersGetNaturals, new ApiEndPoint("/users/natural/{0}", RequestType.GET)},
+			{ MethodKey.UsersGetLegals, new ApiEndPoint("/users/legal/{0}", RequestType.GET)},
 
-            { MethodKey.WalletsCreate, new String[] { "/wallets", RequestType.POST } },
-            { MethodKey.WalletsAllTransactions, new String[] { "/wallets/{0}/transactions", RequestType.GET } },
-            { MethodKey.WalletsGet, new String[] { "/wallets/{0}", RequestType.GET } },
-            { MethodKey.WalletsSave, new String[] { "/wallets/{0}", RequestType.PUT } },
-            { MethodKey.BankingAliasCreateIban, new String[] { "/wallets/{0}/bankingaliases/iban", RequestType.POST } },
-            { MethodKey.BankingAliasAll, new String[] { "/wallets/{0}/bankingaliases", RequestType.GET } },
-            { MethodKey.BankingAliasGet, new String[] { "/bankingaliases/{0}", RequestType.GET } },
-            { MethodKey.BankingAliasSave, new String[] { "/bankingaliases/{0}", RequestType.PUT } },
+			{ MethodKey.UsersGetKycDocument, new ApiEndPoint("/users/{0}/KYC/documents/{1}", RequestType.GET)},
+			{ MethodKey.UsersGetKycDocuments, new ApiEndPoint("/users/{0}/KYC/documents", RequestType.GET)},
+			{ MethodKey.UsersGetBankAccount, new ApiEndPoint("/users/{0}/bankaccounts/{1}", RequestType.GET)},
+			{ MethodKey.UsersSaveBankAccount, new ApiEndPoint("/users/{0}/bankaccounts/{1}", RequestType.PUT)},
+			{ MethodKey.UsersSaveNaturals, new ApiEndPoint("/users/natural/{0}", RequestType.PUT)},
+			{ MethodKey.UsersSaveLegals, new ApiEndPoint("/users/legal/{0}", RequestType.PUT)},
+			{ MethodKey.UsersSaveKycDocument, new ApiEndPoint("/users/{0}/KYC/documents/{1}", RequestType.PUT)},
+			{ MethodKey.UsersEmoneyGet, new ApiEndPoint("/users/{0}/emoney", RequestType.GET)},
 
-      { MethodKey.ClientGetKycDocuments, new String[] { "/KYC/documents", RequestType.GET } },
-        { MethodKey.GetKycDocument, new String[] { "/KYC/documents/{0}", RequestType.GET } },
+			{ MethodKey.WalletsCreate, new ApiEndPoint("/wallets", RequestType.POST)},
+			{ MethodKey.WalletsAllTransactions, new ApiEndPoint("/wallets/{0}/transactions", RequestType.GET)},
+			{ MethodKey.WalletsGet, new ApiEndPoint("/wallets/{0}", RequestType.GET)},
+			{ MethodKey.WalletsSave, new ApiEndPoint("/wallets/{0}", RequestType.PUT)},
+			{ MethodKey.BankingAliasCreateIban, new ApiEndPoint("/wallets/{0}/bankingaliases/iban", RequestType.POST)},
+			{ MethodKey.BankingAliasAll, new ApiEndPoint("/wallets/{0}/bankingaliases", RequestType.GET)},
+			{ MethodKey.BankingAliasGet, new ApiEndPoint("/bankingaliases/{0}", RequestType.GET)},
+			{ MethodKey.BankingAliasSave, new ApiEndPoint("/bankingaliases/{0}", RequestType.PUT)},
 
-            { MethodKey.ClientGetWalletsDefault, new String[] { "/clients/wallets", RequestType.GET } },
-            { MethodKey.ClientGetWalletsFees, new String[] { "/clients/wallets/fees", RequestType.GET } },
-            { MethodKey.ClientGetWalletsCredit, new String[] { "/clients/wallets/credit", RequestType.GET } },
-            { MethodKey.ClientGetWalletsDefaultWithCurrency, new String[] { "/clients/wallets/{0}", RequestType.GET } },
-            { MethodKey.ClientGetWalletsFeesWithCurrency, new String[] { "/clients/wallets/fees/{0}", RequestType.GET } },
-            { MethodKey.ClientGetWalletsCreditWithCurrency, new String[] { "/clients/wallets/credit/{0}", RequestType.GET } },
+			{ MethodKey.ClientGetKycDocuments, new ApiEndPoint("/KYC/documents", RequestType.GET)},
+			{ MethodKey.GetKycDocument, new ApiEndPoint("/KYC/documents/{0}", RequestType.GET)},
 
-            { MethodKey.ClientGetTransactions, new String[] { "/clients/transactions", RequestType.GET } },
-            { MethodKey.ClientGetWalletTransactions, new String[] { "/clients/wallets/{0}/{1}/transactions", RequestType.GET } },
-            { MethodKey.ClientCreateBankwireDirect, new String[] { "/clients/payins/bankwire/direct", RequestType.POST } },
-            { MethodKey.ClientGet, new String[] { "/clients", RequestType.GET } },
-            { MethodKey.ClientSave, new String[] { "/clients", RequestType.PUT } },
-            { MethodKey.ClientUploadLogo, new String[] { "/clients/logo", RequestType.PUT } },
+			{ MethodKey.ClientGetWalletsDefault, new ApiEndPoint("/clients/wallets", RequestType.GET)},
+			{ MethodKey.ClientGetWalletsFees, new ApiEndPoint("/clients/wallets/fees", RequestType.GET)},
+			{ MethodKey.ClientGetWalletsCredit, new ApiEndPoint("/clients/wallets/credit", RequestType.GET)},
+			{ MethodKey.ClientGetWalletsDefaultWithCurrency, new ApiEndPoint("/clients/wallets/{0}", RequestType.GET)},
+			{ MethodKey.ClientGetWalletsFeesWithCurrency, new ApiEndPoint("/clients/wallets/fees/{0}", RequestType.GET)},
+			{ MethodKey.ClientGetWalletsCreditWithCurrency, new ApiEndPoint("/clients/wallets/credit/{0}", RequestType.GET)},
 
-            { MethodKey.DisputesGet, new String[] { "/disputes/{0}", RequestType.GET } },
-            { MethodKey.DisputesSaveTag, new String[] { "/disputes/{0}", RequestType.PUT } },
-            { MethodKey.DisputesSaveContestFunds, new String[] { "/disputes/{0}/submit", RequestType.PUT } },
-            { MethodKey.DisputeSaveClose, new String[] { "/disputes/{0}/close", RequestType.PUT } },
+			{ MethodKey.ClientGetTransactions, new ApiEndPoint("/clients/transactions", RequestType.GET)},
+			{ MethodKey.ClientGetWalletTransactions, new ApiEndPoint("/clients/wallets/{0}/{1}/transactions", RequestType.GET)},
+			{ MethodKey.ClientCreateBankwireDirect, new ApiEndPoint("/clients/payins/bankwire/direct", RequestType.POST)},
+			{ MethodKey.ClientGet, new ApiEndPoint("/clients", RequestType.GET)},
+			{ MethodKey.ClientSave, new ApiEndPoint("/clients", RequestType.PUT)},
+			{ MethodKey.ClientUploadLogo, new ApiEndPoint("/clients/logo", RequestType.PUT)},
 
-            { MethodKey.DisputesGetTransactions, new String[] { "/disputes/{0}/transactions", RequestType.GET } },
+			{ MethodKey.DisputesGet, new ApiEndPoint("/disputes/{0}", RequestType.GET)},
+			{ MethodKey.DisputesSaveTag, new ApiEndPoint("/disputes/{0}", RequestType.PUT)},
+			{ MethodKey.DisputesSaveContestFunds, new ApiEndPoint("/disputes/{0}/submit", RequestType.PUT)},
+			{ MethodKey.DisputeSaveClose, new ApiEndPoint("/disputes/{0}/close", RequestType.PUT)},
 
-            { MethodKey.DisputesGetAll, new String[] { "/disputes", RequestType.GET } },
-            { MethodKey.DisputesGetForWallet, new String[] { "/wallets/{0}/disputes", RequestType.GET } },
-            { MethodKey.DisputesGetForUser, new String[] { "/users/{0}/disputes", RequestType.GET } },
+			{ MethodKey.DisputesGetTransactions, new ApiEndPoint("/disputes/{0}/transactions", RequestType.GET)},
 
-            { MethodKey.DisputesDocumentCreate, new String[] { "/disputes/{0}/documents", RequestType.POST } },
-            { MethodKey.DisputesDocumentPageCreate, new String[] { "/disputes/{0}/documents/{1}/pages", RequestType.POST } },
-            { MethodKey.DisputesDocumentSubmit, new String[] { "/disputes/{0}/documents/{1}", RequestType.PUT } },
-            { MethodKey.DisputesDocumentGet, new String[] { "/dispute-documents/{0}", RequestType.GET } },
-            { MethodKey.DisputesDocumentGetForDispute, new String[] { "/disputes/{0}/documents", RequestType.GET } },
-            { MethodKey.DisputesDocumentGetForClient, new String[] { "/dispute-documents", RequestType.GET } },
+			{ MethodKey.DisputesGetAll, new ApiEndPoint("/disputes", RequestType.GET)},
+			{ MethodKey.DisputesGetForWallet, new ApiEndPoint("/wallets/{0}/disputes", RequestType.GET)},
+			{ MethodKey.DisputesGetForUser, new ApiEndPoint("/users/{0}/disputes", RequestType.GET)},
 
-            { MethodKey.DisputesRepudiationGet, new String[] { "/repudiations/{0}", RequestType.GET } },
+			{ MethodKey.DisputesDocumentCreate, new ApiEndPoint("/disputes/{0}/documents", RequestType.POST)},
+			{ MethodKey.DisputesDocumentPageCreate, new ApiEndPoint("/disputes/{0}/documents/{1}/pages", RequestType.POST)},
+			{ MethodKey.DisputesDocumentSubmit, new ApiEndPoint("/disputes/{0}/documents/{1}", RequestType.PUT)},
+			{ MethodKey.DisputesDocumentGet, new ApiEndPoint("/dispute-documents/{0}", RequestType.GET)},
+			{ MethodKey.DisputesDocumentGetForDispute, new ApiEndPoint("/disputes/{0}/documents", RequestType.GET)},
+			{ MethodKey.DisputesDocumentGetForClient, new ApiEndPoint("/dispute-documents", RequestType.GET)},
 
-            { MethodKey.DisputesRepudiationCreateSettlement, new String[] { "/repudiations/{0}/settlementtransfer", RequestType.POST } },
-            { MethodKey.SettlementsGet, new String[] { "/settlements/{0}/", RequestType.GET } },
-            
-            { MethodKey.IdempotencyResponseGet, new String[] { "/responses/{0}/", RequestType.GET } },
-            
-            { MethodKey.MandateCreate, new String[] { "/mandates/directdebit/web", RequestType.POST } },
-            { MethodKey.MandateCancel, new String[] { "/mandates/{0}/cancel/", RequestType.PUT } },
-            { MethodKey.MandateGet, new String[] { "/mandates/{0}/", RequestType.GET } },
-            { MethodKey.MandatesGetAll, new String[] { "/mandates/", RequestType.GET } },
-            { MethodKey.MandatesGetForUser, new String[] { "/users/{0}/mandates/", RequestType.GET } },
-            { MethodKey.MandatesGetForBankAccount, new String[] { "/users/{0}/bankaccounts/{1}/mandates/", RequestType.GET } },
+			{ MethodKey.DisputesRepudiationGet, new ApiEndPoint("/repudiations/{0}", RequestType.GET)},
 
-            { MethodKey.ReportRequest, new String[] { "/reports/{0}", RequestType.POST } },
-            { MethodKey.ReportGetAll, new String[] { "/reports", RequestType.GET } },
-            { MethodKey.ReportGet, new String[] { "/reports/{0}", RequestType.GET } },
+			{ MethodKey.DisputesRepudiationCreateSettlement, new ApiEndPoint("/repudiations/{0}/settlementtransfer", RequestType.POST)},
+			{ MethodKey.SettlementsGet, new ApiEndPoint("/settlements/{0}/", RequestType.GET)},
 
-            { MethodKey.SingleSignOnAll, new String[] { "/clients/ssos", RequestType.GET } },
-            { MethodKey.SingleSignOnCreate, new String[] { "/clients/ssos", RequestType.POST } },
-            { MethodKey.SingleSignOnGet, new String[] { "/clients/ssos/{0}", RequestType.GET } },
-            { MethodKey.SingleSignOnSave, new String[] { "/clients/ssos/{0}", RequestType.PUT } },
-            { MethodKey.SingleSignOnExtendInvitation, new String[] { "/clients/ssos/{0}/extendinvitation", RequestType.PUT } },
+			{ MethodKey.IdempotencyResponseGet, new ApiEndPoint("/responses/{0}/", RequestType.GET)},
 
-            { MethodKey.PermissionGroupAll, new String[] { "/clients/permissiongroups", RequestType.GET } },
-            { MethodKey.PermissionGroupAllSsos, new String[] { "/clients/permissiongroups/{0}/SSOs", RequestType.GET } },
-            { MethodKey.PermissionGroupCreate, new String[] { "/clients/permissiongroups", RequestType.POST } },
-            { MethodKey.PermissionGroupGet, new String[] { "/clients/permissiongroups/{0}", RequestType.GET } },
-            { MethodKey.PermissionGroupSave, new String[] { "/clients/permissiongroups/{0}", RequestType.PUT } },
-        };
+			{ MethodKey.MandateCreate, new ApiEndPoint("/mandates/directdebit/web", RequestType.POST)},
+			{ MethodKey.MandateCancel, new ApiEndPoint("/mandates/{0}/cancel/", RequestType.PUT)},
+			{ MethodKey.MandateGet, new ApiEndPoint("/mandates/{0}/", RequestType.GET)},
+			{ MethodKey.MandatesGetAll, new ApiEndPoint("/mandates/", RequestType.GET)},
+			{ MethodKey.MandatesGetForUser, new ApiEndPoint("/users/{0}/mandates/", RequestType.GET)},
+			{ MethodKey.MandatesGetForBankAccount, new ApiEndPoint("/users/{0}/bankaccounts/{1}/mandates/", RequestType.GET)},
 
+			{ MethodKey.ReportRequest, new ApiEndPoint("/reports/{0}", RequestType.POST)},
+			{ MethodKey.ReportGetAll, new ApiEndPoint("/reports", RequestType.GET)},
+			{ MethodKey.ReportGet, new ApiEndPoint("/reports/{0}", RequestType.GET)},
+
+			{ MethodKey.SingleSignOnAll, new ApiEndPoint("/clients/ssos", RequestType.GET)},
+			{ MethodKey.SingleSignOnCreate, new ApiEndPoint("/clients/ssos", RequestType.POST)},
+			{ MethodKey.SingleSignOnGet, new ApiEndPoint("/clients/ssos/{0}", RequestType.GET)},
+			{ MethodKey.SingleSignOnSave, new ApiEndPoint("/clients/ssos/{0}", RequestType.PUT)},
+			{ MethodKey.SingleSignOnExtendInvitation, new ApiEndPoint("/clients/ssos/{0}/extendinvitation", RequestType.PUT)},
+
+			{ MethodKey.PermissionGroupAll, new ApiEndPoint("/clients/permissiongroups", RequestType.GET)},
+			{ MethodKey.PermissionGroupAllSsos, new ApiEndPoint("/clients/permissiongroups/{0}/SSOs", RequestType.GET)},
+			{ MethodKey.PermissionGroupCreate, new ApiEndPoint("/clients/permissiongroups", RequestType.POST)},
+			{ MethodKey.PermissionGroupGet, new ApiEndPoint("/clients/permissiongroups/{0}", RequestType.GET)},
+			{ MethodKey.PermissionGroupSave, new ApiEndPoint("/clients/permissiongroups/{0}", RequestType.PUT)},
+
+			{ MethodKey.SingleSignOnsMe, new ApiEndPoint("/ssos/me", RequestType.GET, false)},
+			{ MethodKey.SingleSignOnsMePermissionGroup , new ApiEndPoint("/ssos/me/permissiongroup", RequestType.GET, false)}
+		};
 
         /// <summary>Creates new API instance.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
@@ -171,55 +174,37 @@ namespace MangoPay.SDK.Core.APIs
             _root = root;
         }
 
-        /// <summary>Gets the URL of REST Mango Pay API.</summary>
-        /// <param name="key">The method key to get URL of.</param>
-        /// <returns>The URL string of given method.</returns>
-        protected String GetRequestUrl(MethodKey key)
-        {
-            String result = "";
-            try
-            {
-                result = this._methods[key][0];
-            }
-            catch
-            {
-                throw new Exception("Unknown method key: " + key);
-            }
-            return result;
-        }
+		/// <summary>Gets an instance of <see cref="ApiEndPoint"/> for given method key</summary>
+		/// <param name="key">The method key to get the end point details for</param>
+		/// <returns></returns>
+		protected ApiEndPoint GetApiEndPoint(MethodKey key)
+		{
+			if (!_methods.ContainsKey(key))
+			{
+				throw new Exception("Unknown method key: " + key);
+			}
 
-        /// <summary>Gets the HTTP request verb.</summary>
-        /// <param name="key">The method key.</param>
-        /// <returns>One of the HTTP verbs: GET, PUT or POST.</returns>
-        protected String GetRequestType(MethodKey key)
-        {
-            return this._methods[key][1];
-        }
+			return (ApiEndPoint)_methods[key].Clone();
+		}
 
-        /// <summary>Creates the DTO instance.</summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="idempotencyKey">Idempotency key for this request.</param>
-        /// <param name="methodKey">Relevant method key.</param>
-        /// <param name="entity">DTO instance that is going to be sent.</param>
-        /// <param name="entityId">Entity identifier.</param>
-        /// <param name="secondEntityId">Second entity identifier.</param>
-        /// <returns>The DTO instance returned from API.</returns>
-        protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity, String entityId, String secondEntityId)
+		/// <summary>Creates the DTO instance.</summary>
+		/// <typeparam name="U">Return type.</typeparam>
+		/// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+		/// <param name="idempotencyKey">Idempotency key for this request.</param>
+		/// <param name="methodKey">Relevant method key.</param>
+		/// <param name="entity">DTO instance that is going to be sent.</param>
+		/// <param name="entityId">Entity identifier.</param>
+		/// <param name="secondEntityId">Second entity identifier.</param>
+		/// <returns>The DTO instance returned from API.</returns>
+		protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity, String entityId, String secondEntityId)
             where U : EntityBase, new()
             where T : EntityPostBase
         {
-            String urlMethod;
-
-            if (String.IsNullOrEmpty(entityId))
-                urlMethod = this.GetRequestUrl(methodKey);
-            else if (String.IsNullOrEmpty(secondEntityId))
-                urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId);
-            else
-                urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
+			var endPoint = GetApiEndPoint(methodKey);
+			endPoint.SetParameters(entityId, secondEntityId);
 
             RestTool restTool = new RestTool(this._root, true);
-            U result = restTool.Request<U, T>(idempotencyKey, urlMethod, this.GetRequestType(methodKey), null, null, entity);
+            U result = restTool.Request<U, T>(idempotencyKey, endPoint, null, null, entity);
 
             return result;
         }
@@ -262,10 +247,11 @@ namespace MangoPay.SDK.Core.APIs
         protected T GetObject<T>(MethodKey methodKey, string entityId, string secondEntityId)
             where T : EntityBase, new()
         {
-            string urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
+			var endPoint = GetApiEndPoint(methodKey);
+			endPoint.SetParameters(entityId, secondEntityId);
 
             RestTool rest = new RestTool(this._root, true);
-            T response = rest.Request<T, T>(urlMethod, this.GetRequestType(methodKey));
+            T response = rest.Request<T, T>(endPoint);
 
             return response;
         }
@@ -293,14 +279,8 @@ namespace MangoPay.SDK.Core.APIs
         protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, string secondEntityId, Sort sort, Dictionary<String, String> additionalUrlParams)
             where T : EntityBase, new()
         {
-            string urlMethod = "";
-
-            if (!String.IsNullOrEmpty(secondEntityId) && !String.IsNullOrEmpty(entityId))
-                urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
-            else if (!String.IsNullOrEmpty(entityId))
-                urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId);
-            else
-                urlMethod = this.GetRequestUrl(methodKey);
+			var endPoint = GetApiEndPoint(methodKey);
+			endPoint.SetParameters(entityId, secondEntityId);
 
             if (pagination == null)
             {
@@ -317,7 +297,7 @@ namespace MangoPay.SDK.Core.APIs
 
             RestTool restTool = new RestTool(this._root, true);
 
-            return restTool.RequestList<T>(urlMethod, this.GetRequestType(methodKey), additionalUrlParams, pagination);
+            return restTool.RequestList<T>(endPoint, additionalUrlParams, pagination);
         }
 
         protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort, Dictionary<String, String> additionalUrlParams)
@@ -401,17 +381,11 @@ namespace MangoPay.SDK.Core.APIs
             where U : EntityBase, new()
             where T : EntityPutBase
         {
-            String urlMethod;
-
-            if (String.IsNullOrEmpty(secondEntityId))
-                urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId);
-            else
-            {
-                urlMethod = String.Format(this.GetRequestUrl(methodKey), entityId, secondEntityId);
-            }
+			var endPoint = GetApiEndPoint(methodKey);
+			endPoint.SetParameters(entityId, secondEntityId);
 
             RestTool restTool = new RestTool(this._root, true);
-            return restTool.Request<U, T>(null, urlMethod, this.GetRequestType(methodKey), null, null, entity);
+            return restTool.Request<U, T>(null, endPoint, null, null, entity);
         }
 
         protected Type GetObjectForIdempotencyUrl()

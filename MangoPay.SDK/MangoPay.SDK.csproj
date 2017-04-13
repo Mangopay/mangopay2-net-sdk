@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ApiEndPoint.cs" />
     <Compile Include="Core\APIs\ApiBase.cs" />
     <Compile Include="Core\APIs\ApiCardPreauthorizations.cs" />
     <Compile Include="Core\APIs\ApiCardRegistrations.cs" />
