@@ -71,5 +71,21 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			return this.UpdateObject<SingleSignOnDTO, SingleSignOnPutDTO>(MethodKey.SingleSignOnExtendInvitation, new SingleSignOnPutDTO(), singleSignOnId);
 		}
+
+		/// <summary>Gets single sign on for the current user.</summary>
+		/// <returns>Single sign on user instance returned from API.</returns>
+		/// <remarks>Requires an API token associated with an SSO based authorization</remarks>
+		public SingleSignOnDTO GetSsoForCurrentUser()
+		{
+			return this.GetObject<SingleSignOnDTO>(MethodKey.SingleSignOnsMe, null);
+		}
+
+		/// <summary>Gets permission group for the current user.</summary>
+		/// <returns>Instance of permission group returned from API.</returns>
+		/// <remarks>Requires an API token associated with an SSO based authorization</remarks>
+		public PermissionGroupDTO GetPermissionGroupForCurrentUser()
+		{
+			return this.GetObject<PermissionGroupDTO>(MethodKey.SingleSignOnsMePermissionGroup, null);
+		}
 	}
 }
