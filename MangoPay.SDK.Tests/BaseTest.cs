@@ -29,12 +29,14 @@ namespace MangoPay.SDK.Tests
         private static KycDocumentDTO _johnsKycDocument;
         private static PayOutBankWireDTO _johnsPayOutForCardDirect;
         private static HookDTO _johnsHook;
-		private static ReportRequestDTO _johnsReport;
+		private static Dictionary<ReportType, ReportRequestDTO> _johnsReports;
 
         public BaseTest()
         {
             this.Api = BuildNewMangoPayApi();
-        }
+			_johnsReports = new Dictionary<ReportType, ReportRequestDTO>();
+
+		}
 
         protected MangoPayApi BuildNewMangoPayApi()
         {
@@ -504,15 +506,15 @@ namespace MangoPay.SDK.Tests
             return BaseTest._johnsHook;
         }
 
-		protected ReportRequestDTO GetJohnsReport()
+		protected ReportRequestDTO GetJohnsReport(ReportType reportType)
 		{
-			if (BaseTest._johnsReport == null)
+			if (!BaseTest._johnsReports.ContainsKey(reportType))
 			{
 				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
-				BaseTest._johnsReport = this.Api.Reports.Create(reportPost);
+				BaseTest._johnsReports.Add(reportType, this.Api.Reports.Create(reportPost));
 			}
 
-			return BaseTest._johnsReport;
+			return BaseTest._johnsReports[reportType];
 		}
 
         protected void AssertEqualInputProps<T>(T entity1, T entity2)

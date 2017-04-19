@@ -7,7 +7,10 @@ namespace MangoPay.SDK.Core.Enumerations
 		/// <summary>Not specified.</summary>
 		NotSpecified = 0,
 
-		/// <summary>Transactions type.</summary>
-		TRANSACTIONS
+		/// <summary>Transactions report type.</summary>
+		TRANSACTIONS,
+
+		/// <summary>Wallets report type.</summary>
+		WALLETS
 	}
 }

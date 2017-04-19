@@ -18,6 +18,8 @@ namespace MangoPay.SDK.Entities.POST
 			if (reportType == Core.Enumerations.ReportType.NotSpecified)
 				reportType = Core.Enumerations.ReportType.TRANSACTIONS;
 
+			ReportType = reportType;
+
 			if (sort == null)
 			{
 				sort = new Sort();

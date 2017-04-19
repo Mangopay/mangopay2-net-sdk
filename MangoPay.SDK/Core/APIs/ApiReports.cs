@@ -35,7 +35,7 @@ namespace MangoPay.SDK.Core.APIs
 
 			ReportRequestTransportPostDTO reportRequestTransport = ReportRequestTransportPostDTO.CreateFromBusinessObject(reportRequest);
 
-			return this.CreateObject<ReportRequestTransportDTO, ReportRequestTransportPostDTO>(idempotencyKey, MethodKey.ReportRequest, reportRequestTransport, reportRequestTransport.ReportType.ToString()).GetBusinessObject();
+			return this.CreateObject<ReportRequestTransportDTO, ReportRequestTransportPostDTO>(idempotencyKey, MethodKey.ReportRequest, reportRequestTransport, reportRequestTransport.ReportType.ToString().ToLower()).GetBusinessObject();
 		}
 
 		/// <summary>Gets report request.</summary>

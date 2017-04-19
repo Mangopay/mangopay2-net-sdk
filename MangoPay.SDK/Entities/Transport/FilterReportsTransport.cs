@@ -9,14 +9,7 @@ namespace MangoPay.SDK.Entities.Transport
 {
 	internal class FilterReportsTransport
 	{
-		/// <summary>Transaction status.</summary>
-		public String[] Status;
-
-		/// <summary>Transaction type.</summary>
-		public String[] Type;
-
-		/// <summary>Transaction nature.</summary>
-		public String[] Nature;
+		#region Common report filters
 
 		/// <summary>End date: return only transactions that have CreationDate BEFORE this date.</summary>
 		[JsonConverter(typeof(UnixDateTimeConverter))]
@@ -26,11 +19,18 @@ namespace MangoPay.SDK.Entities.Transport
 		[JsonConverter(typeof(UnixDateTimeConverter))]
 		public DateTime? AfterDate;
 
-		public String[] ResultCode { get; set; }
+		#endregion
 
-		public String AuthorId { get; set; }
+		#region Transactions report filters
 
-		public String WalletId { get; set; }
+		/// <summary>Transaction type.</summary>
+		public String[] Type;
+
+		/// <summary>Transaction status.</summary>
+		public String[] Status;
+
+		/// <summary>Transaction nature.</summary>
+		public String[] Nature;
 
 		public Int64? MinDebitedFundsAmount { get; set; }
 
@@ -52,54 +52,91 @@ namespace MangoPay.SDK.Entities.Transport
 		[JsonConverter(typeof(StringEnumConverter))]
 		public CurrencyIso? MaxFeesCurrency { get; set; }
 
+		public String AuthorId { get; set; }
+
+		public String WalletId { get; set; }
+
+		public String[] ResultCode { get; set; }
+
+		#endregion
+
+		#region Wallets report filters
+
+		public String OwnerId { get; set; }
+
+		public Int64? MinBalanceAmount { get; set; }
+
+		[JsonConverter(typeof(StringEnumConverter))]
+		public CurrencyIso? MinBalanceCurrency { get; set; }
+
+		public Int64? MaxBalanceAmount { get; set; }
+
+		[JsonConverter(typeof(StringEnumConverter))]
+		public CurrencyIso? MaxBalanceCurrency { get; set; }
+
+		[JsonConverter(typeof(StringEnumConverter))]
+		public CurrencyIso? Currency { get; set; }
+
+		#endregion
+
 		public FilterReports GetBusinessObject()
 		{
-			FilterReports result = new FilterReports
-			{
-				AfterDate = this.AfterDate,
-				BeforeDate = this.BeforeDate,
-				MaxDebitedFundsAmount = this.MaxDebitedFundsAmount,
-				MaxDebitedFundsCurrency = this.MaxDebitedFundsCurrency,
-				MinDebitedFundsAmount = this.MinDebitedFundsAmount,
-				MinDebitedFundsCurrency = this.MinDebitedFundsCurrency,
-				MinFeesAmount = this.MinFeesAmount,
-				MinFeesCurrency = this.MinFeesCurrency,
-				MaxFeesAmount = this.MaxFeesAmount,
-				MaxFeesCurrency = this.MaxFeesCurrency,
-				Nature = new List<TransactionNature>(),
-				Status = new List<TransactionStatus>(),
-				Type = new List<TransactionType>(),
-				AuthorId = this.AuthorId,
-				WalletId = this.WalletId
-			};
+			FilterReports result = new FilterReports();
 
-			if (Nature != null)
-				foreach (var n in Nature)
-				{
-					result.Nature.Add((TransactionNature)Enum.Parse(typeof(TransactionNature), n));
-				}
-			
-			if (Status != null)
-				foreach (var s in Status)
-				{
-					result.Status.Add((TransactionStatus)Enum.Parse(typeof(TransactionStatus), s));
-				}
+			// Common report filters
+			result.BeforeDate = BeforeDate;
+			result.AfterDate = AfterDate;
 
+			// Transactions report filters
 			if (Type != null)
 				foreach (var t in Type)
 				{
 					result.Type.Add((TransactionType)Enum.Parse(typeof(TransactionType), t));
 				}
 
-			result.ResultCode = new List<ReportResultCode>();
-			foreach (string rc in ResultCode)
-			{
-				if (String.IsNullOrEmpty(rc))
-					continue;
+			if (Status != null)
+				foreach (var s in Status)
+				{
+					result.Status.Add((TransactionStatus)Enum.Parse(typeof(TransactionStatus), s));
+				}
 
-				int enumInt = Int32.Parse(rc);
-				result.ResultCode.Add((ReportResultCode)enumInt);
-			}
+			if (Nature != null)
+				foreach (var n in Nature)
+				{
+					result.Nature.Add((TransactionNature)Enum.Parse(typeof(TransactionNature), n));
+				}
+
+			result.MinDebitedFundsAmount = MinDebitedFundsAmount;
+			result.MinDebitedFundsCurrency = MinDebitedFundsCurrency;
+			result.MaxDebitedFundsAmount = MaxDebitedFundsAmount;
+			result.MaxDebitedFundsCurrency = MaxDebitedFundsCurrency;
+			result.MinFeesAmount = MinFeesAmount;
+			result.MinFeesCurrency = MinFeesCurrency;
+			result.MaxFeesAmount = MaxFeesAmount;
+			result.MaxFeesCurrency = MaxFeesCurrency;
+			result.AuthorId = AuthorId;
+			result.WalletId = WalletId;
+
+			if (ResultCode != null)
+				foreach (string rc in ResultCode)
+				{
+					if (String.IsNullOrEmpty(rc))
+						continue;
+
+					int enumInt = Int32.Parse(rc);
+					result.ResultCode.Add((ReportResultCode)enumInt);
+				}
+
+			#region Wallets report filters
+
+			result.OwnerId = OwnerId;
+			result.MinBalanceAmount = MinBalanceAmount;
+			result.MinBalanceCurrency = MinBalanceCurrency;
+			result.MaxBalanceAmount = MaxBalanceAmount;
+			result.MaxBalanceCurrency = MaxBalanceCurrency;
+			result.Currency = Currency;
+
+			#endregion
 
 			return result;
 		}
@@ -118,6 +155,12 @@ namespace MangoPay.SDK.Entities.Transport
 				MinFeesCurrency = filters.MinFeesCurrency,
 				MaxFeesAmount = filters.MaxFeesAmount,
 				MaxFeesCurrency = filters.MaxFeesCurrency,
+				MinBalanceAmount = filters.MinBalanceAmount,
+				MinBalanceCurrency = filters.MinBalanceCurrency,
+				MaxBalanceAmount = filters.MaxBalanceAmount,
+				MaxBalanceCurrency = filters.MaxBalanceCurrency,
+				Currency = filters.Currency,
+				OwnerId = filters.OwnerId,
 				AuthorId = filters.AuthorId,
 				WalletId = filters.WalletId
 			};
