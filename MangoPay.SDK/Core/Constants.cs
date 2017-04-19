@@ -28,8 +28,11 @@ namespace MangoPay.SDK.Core
         /// <summary>Resolves to "X-Number-Of-Items" string.</summary>
         public const string X_NUMBER_OF_ITEMS = "X-Number-Of-Items";
 
-        /// <summary>Resolves to "Link" string.</summary>
-        public const string LINK = "Link";
+		/// <summary>Resolves to "User-Agent" string.</summary>
+		public const string USER_AGENT = "User-Agent";
+
+		/// <summary>Resolves to "Link" string.</summary>
+		public const string LINK = "Link";
 
         /// <summary>Resolves to "Status" string.</summary>
         public const string STATUS = "Status";

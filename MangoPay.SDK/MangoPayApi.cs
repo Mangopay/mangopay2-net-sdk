@@ -1,5 +1,6 @@
 ﻿using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.APIs;
+using System;
 
 namespace MangoPay.SDK
 {
@@ -114,6 +115,29 @@ namespace MangoPay.SDK
 		/// <summary>Provides ApiPermissionGroups methods.</summary>
 		public ApiPermissionGroups PermissionGroups;
 
+		#endregion
+
+		#region Internal and private
+
+		private Version _version { get; set; }
+
+		/// <summary>
+		/// Gets the current SDK <see cref="Version"/>
+		/// </summary>
+		/// <returns>The current SDK <see cref="Version"/></returns>
+		internal Version GetVersion()
+		{
+			// Get the cached version to avoid using reflection
+			if (_version != null)
+			{
+				return _version;
+			}
+
+			_version = typeof(MangoPayApi).Assembly?.GetName()?.Version ?? new Version(0, 0, 0);
+
+			return _version;
+		}
+		
 		#endregion
 	}
 }

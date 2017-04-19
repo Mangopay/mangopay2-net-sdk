@@ -435,7 +435,7 @@ namespace MangoPay.SDK.Core
                     _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
             }
 
-            if (pagination != null)
+			if (pagination != null)
             {
                 this._pagination = pagination;
             }
@@ -539,8 +539,11 @@ namespace MangoPay.SDK.Core
             // content type
             httpHeaders.Add(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
 
-            // AuthenticationHelper http header
-            if (this._authRequired)
+			// User agent header
+			httpHeaders.Add(Constants.USER_AGENT, String.Format("MangoPay V2 .NET/{0}", _root.GetVersion()));
+
+			// AuthenticationHelper http header
+			if (this._authRequired)
             {
                 AuthenticationHelper authHlp = new AuthenticationHelper(_root);
                 foreach (KeyValuePair<string, string> item in authHlp.GetHttpHeaderKey())
@@ -549,7 +552,7 @@ namespace MangoPay.SDK.Core
                 }
             }
 
-            return httpHeaders;
+			return httpHeaders;
         }
     }
 }
