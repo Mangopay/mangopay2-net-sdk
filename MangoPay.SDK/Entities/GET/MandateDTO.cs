@@ -11,6 +11,9 @@ namespace MangoPay.SDK.Entities.GET
 		/// <summary>The bank account ID to associate this mandate against (and hence from where the payins will come from).</summary>
 		public String BankAccountId { get; set; }
 
+		/// <summary>Bank reference for the mandate.</summary>
+		public String BankReference { get; set; }
+
 		/// <summary>The type of mandate – it will be <code>SEPA</code> or <code>BACS</code> but will only be completed once the mandate has been submitted.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]
 		public MandateScheme? Scheme { get; set; }
