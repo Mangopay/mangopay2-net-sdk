@@ -31,5 +31,8 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Credited user identifier.</summary>
         public String CreditedUserId { get; set; }
-    }
+
+		/// <summary>The shipping address for PayPal PayIn.</summary>
+		public ShippingAddress ShippingAddress { get; set; }
+	}
 }

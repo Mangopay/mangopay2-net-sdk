@@ -77,7 +77,45 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-        [Test]
+		[Test]
+		public void Test_PayIns_Create_PayPal_WithShippingAddress()
+		{
+			try
+			{
+				PayInPayPalDTO payIn = null;
+				WalletDTO wallet = this.GetJohnsWallet();
+				UserNaturalDTO user = this.GetJohn();
+				Address AddressForShippingAddress = new Address
+				{
+					AddressLine1 = "Address line 1",
+					AddressLine2 = "Address line 2",
+					City = "City",
+					Country = CountryIso.PL,
+					PostalCode = "11222",
+					Region = "Region"
+				};
+				PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
+				payInPost.ShippingAddress = new ShippingAddress("recipient name", AddressForShippingAddress);
+
+				payIn = this.Api.PayIns.CreatePayPal(payInPost);
+
+				Assert.IsNotNull(payIn.ShippingAddress);
+				Assert.AreEqual("recipient name", payIn.ShippingAddress.RecipientName);
+				Assert.IsNotNull(payIn.ShippingAddress.Address);				
+				Assert.AreEqual("Address line 1", payIn.ShippingAddress.Address.AddressLine1);
+				Assert.AreEqual("Address line 2", payIn.ShippingAddress.Address.AddressLine2);
+				Assert.AreEqual("City", payIn.ShippingAddress.Address.City);
+				Assert.AreEqual(CountryIso.PL, payIn.ShippingAddress.Address.Country);
+				Assert.AreEqual("11222", payIn.ShippingAddress.Address.PostalCode);
+				Assert.AreEqual("Region", payIn.ShippingAddress.Address.Region);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+
+		[Test]
         public void Test_PayIns_Create_CardDirect()
         {
             try
@@ -376,5 +414,44 @@ namespace MangoPay.SDK.Tests
 				Assert.Fail(ex.Message);
 			}
 		}
-    }
+
+		[Test]
+		public void Test_PayIns_Get_PayPal_WithShippingAddress()
+		{
+			try
+			{
+				PayInDTO payIn = null;
+				WalletDTO wallet = this.GetJohnsWallet();
+				UserNaturalDTO user = this.GetJohn();
+				Address AddressForShippingAddress = new Address
+				{
+					AddressLine1 = "Address line 1",
+					AddressLine2 = "Address line 2",
+					City = "City",
+					Country = CountryIso.PL,
+					PostalCode = "11222",
+					Region = "Region"
+				};
+				PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
+				payInPost.ShippingAddress = new ShippingAddress("recipient name", AddressForShippingAddress);
+				payIn = this.Api.PayIns.CreatePayPal(payInPost);
+
+				PayInPayPalDTO getPayIn = this.Api.PayIns.GetPayPal(payIn.Id);
+
+				Assert.IsNotNull(getPayIn.ShippingAddress);
+				Assert.AreEqual("recipient name", getPayIn.ShippingAddress.RecipientName);
+				Assert.IsNotNull(getPayIn.ShippingAddress.Address);
+				Assert.AreEqual("Address line 1", getPayIn.ShippingAddress.Address.AddressLine1);
+				Assert.AreEqual("Address line 2", getPayIn.ShippingAddress.Address.AddressLine2);
+				Assert.AreEqual("City", getPayIn.ShippingAddress.Address.City);
+				Assert.AreEqual(CountryIso.PL, getPayIn.ShippingAddress.Address.Country);
+				Assert.AreEqual("11222", getPayIn.ShippingAddress.Address.PostalCode);
+				Assert.AreEqual("Region", getPayIn.ShippingAddress.Address.Region);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+	}
 }

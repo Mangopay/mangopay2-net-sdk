@@ -277,6 +277,7 @@
     <Compile Include="Entities\PUT\UserNaturalPutDTO.cs" />
     <Compile Include="Entities\PUT\WalletPutDTO.cs" />
     <Compile Include="Entities\Scopes.cs" />
+    <Compile Include="Entities\ShippingAddress.cs" />
     <Compile Include="Entities\Transport\FilterReportsTransport.cs" />
     <Compile Include="Entities\Transport\ReportRequestTransportDTO.cs" />
     <Compile Include="Entities\Transport\ReportRequestTransportPostDTO.cs" />
