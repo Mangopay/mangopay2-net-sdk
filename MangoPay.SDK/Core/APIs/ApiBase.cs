@@ -100,6 +100,7 @@ namespace MangoPay.SDK.Core.APIs
 
 			{ MethodKey.ClientGetKycDocuments, new ApiEndPoint("/KYC/documents", RequestType.GET)},
 			{ MethodKey.GetKycDocument, new ApiEndPoint("/KYC/documents/{0}", RequestType.GET)},
+			{ MethodKey.KycDocumentConsult, new ApiEndPoint("/KYC/documents/{0}/consult", RequestType.POST)},
 
 			{ MethodKey.ClientGetWalletsDefault, new ApiEndPoint("/clients/wallets", RequestType.GET)},
 			{ MethodKey.ClientGetWalletsFees, new ApiEndPoint("/clients/wallets/fees", RequestType.GET)},
@@ -132,6 +133,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.DisputesDocumentGet, new ApiEndPoint("/dispute-documents/{0}", RequestType.GET)},
 			{ MethodKey.DisputesDocumentGetForDispute, new ApiEndPoint("/disputes/{0}/documents", RequestType.GET)},
 			{ MethodKey.DisputesDocumentGetForClient, new ApiEndPoint("/dispute-documents", RequestType.GET)},
+			{ MethodKey.DisputesDocumentConsult, new ApiEndPoint("/dispute-documents/{0}/consult", RequestType.POST)},
 
 			{ MethodKey.DisputesRepudiationGet, new ApiEndPoint("/repudiations/{0}", RequestType.GET)},
 

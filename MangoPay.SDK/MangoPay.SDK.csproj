@@ -169,6 +169,7 @@
     <Compile Include="Entities\GET\BankingAliasDTO.cs" />
     <Compile Include="Entities\GET\DebitedBankAccountDTO.cs" />
     <Compile Include="Entities\GET\DisputeDTO.cs" />
+    <Compile Include="Entities\GET\DocumentConsultationDTO.cs" />
     <Compile Include="Entities\GET\DocumentDTO.cs" />
     <Compile Include="Entities\GET\DisputeDocumentDTO.cs" />
     <Compile Include="Entities\GET\DisputePageDTO.cs" />

@@ -32,5 +32,18 @@ namespace MangoPay.SDK.Core.APIs
         {
 			return this.GetObject<KycDocumentDTO>(MethodKey.GetKycDocument, kycDocumentId);
         }
-    }
+
+		/// <summary>
+		/// Get consultation for all KYC documents or a Dispute document 
+		/// </summary>
+		/// <param name="kycDocumentId">KYC document identifier.</param>
+		/// <returns>Document consultation list</returns>
+		public ListPaginated<DocumentConsultationDTO> GetDocumentConsultations(String kycDocumentId)
+		{
+			var endPoint = GetApiEndPoint(MethodKey.KycDocumentConsult);
+			endPoint.SetParameters(kycDocumentId);
+			var rest = new RestTool(_root, true);
+			return rest.RequestList<DocumentConsultationDTO>(endPoint);
+		}
+	}
 }

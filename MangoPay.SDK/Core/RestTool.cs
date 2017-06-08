@@ -537,7 +537,7 @@ namespace MangoPay.SDK.Core
             Dictionary<String, String> httpHeaders = new Dictionary<String, String>();
 
             // content type
-            httpHeaders.Add(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            httpHeaders.Add(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);
 
 			// User agent header
 			httpHeaders.Add(Constants.USER_AGENT, String.Format("MangoPay V2 .NET/{0}", _root.GetVersion()));
