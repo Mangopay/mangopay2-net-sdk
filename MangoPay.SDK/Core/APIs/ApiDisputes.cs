@@ -4,6 +4,7 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace MangoPay.SDK.Core.APIs
@@ -250,5 +251,18 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			return this.GetObject<SettlementDTO>(MethodKey.SettlementsGet, settlementId);
 		}
-    }
+
+		/// <summary>
+		/// Get consultation for all dispute documents
+		/// </summary>
+		/// <param name="disputeDocumentId">Dispute document identifier.</param>
+		/// <returns>Document consultation list</returns>
+		public ListPaginated<DocumentConsultationDTO> GetDocumentConsultations(String disputeDocumentId)
+		{
+			var endPoint = GetApiEndPoint(MethodKey.DisputesDocumentConsult);
+			endPoint.SetParameters(disputeDocumentId);
+			var rest = new RestTool(_root, true);
+			return rest.RequestList<DocumentConsultationDTO>(endPoint);
+		}
+	}
 }

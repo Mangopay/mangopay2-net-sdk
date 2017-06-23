@@ -74,8 +74,9 @@ namespace MangoPay.SDK.Core.Enumerations
 
         ClientGetKycDocuments,
         GetKycDocument,
+		KycDocumentConsult,
 
-        ClientGetWalletsDefault,
+		ClientGetWalletsDefault,
         ClientGetWalletsFees,
         ClientGetWalletsCredit,
         ClientGetWalletsDefaultWithCurrency,
@@ -104,7 +105,8 @@ namespace MangoPay.SDK.Core.Enumerations
         DisputesDocumentGetForClient,
         DisputesRepudiationGet,
         DisputesRepudiationCreateSettlement,
-        SettlementsGet,
+		DisputesDocumentConsult,
+		SettlementsGet,
 
         IdempotencyResponseGet,
 

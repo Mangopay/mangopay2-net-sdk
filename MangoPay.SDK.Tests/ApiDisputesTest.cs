@@ -6,7 +6,9 @@ using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace MangoPay.SDK.Tests
 {
@@ -588,5 +590,36 @@ namespace MangoPay.SDK.Tests
 			Assert.IsNotNull(result.RepudiationId);
 			Assert.AreEqual(result.RepudiationId, repudiation.Id);
 		}
-    }
+
+		[Test]
+		public void Test_GetDocumentConsultations()
+		{
+			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
+
+			if (dispute == null)
+				Assert.Fail("Cannot test creating dispute document page because there's no dispute with expected status in the disputes list.");
+			
+			try
+			{
+				DisputeDocumentPostDTO documentPost = new DisputeDocumentPostDTO(DisputeDocumentType.DELIVERY_PROOF);
+				var disputeDocument = Api.Disputes.CreateDisputeDocument(documentPost, dispute.Id);
+				Assembly assembly = Assembly.GetExecutingAssembly();
+				FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
+				FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+				byte[] bytes = File.ReadAllBytes(fi.FullName);
+				Api.Disputes.CreateDisputePage(dispute.Id, disputeDocument.Id, bytes);
+
+				var result = Api.Disputes.GetDocumentConsultations(disputeDocument.Id);
+
+				Assert.AreEqual(1, result.Count);
+				Assert.IsInstanceOf<DateTime>(result.First().ExpirationDate);
+				Assert.IsInstanceOf<String>(result.First().Url);
+				Assert.IsNotEmpty(result.First().Url);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}		
+	}
 }
