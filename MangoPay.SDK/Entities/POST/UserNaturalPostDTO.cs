@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>User natural POST entity.</summary>
     public class UserNaturalPostDTO : EntityPostBase
     {
-        public UserNaturalPostDTO(string email, string firstName, string lastName, DateTime birthday, CountryIso nationality, CountryIso countryOfResidence)
+        public UserNaturalPostDTO(string email, string firstName, string lastName, DateTime birthday, CountryIso nationality, CountryIso countryOfResidence, CapacityType capacity)
         {
             Email = email;
             FirstName = firstName;
@@ -17,10 +17,13 @@ namespace MangoPay.SDK.Entities.POST
             Birthday = birthday;
             Nationality = nationality;
             CountryOfResidence = countryOfResidence;
+			Capacity = capacity;
         }
 
-        /// <summary>Email address.</summary>
-        public String Email { get; set; }
+		public CapacityType Capacity { get; set; }
+
+		/// <summary>Email address.</summary>
+		public String Email { get; set; }
 
         /// <summary>First name.</summary>
         public String FirstName { get; set; }

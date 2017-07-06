@@ -75,6 +75,7 @@
     <Compile Include="Core\APIs\ApiRefunds.cs" />
     <Compile Include="Core\APIs\ApiTransfers.cs" />
     <Compile Include="Core\APIs\ApiSingleSignOns.cs" />
+    <Compile Include="Core\APIs\ApiUboDeclarations.cs" />
     <Compile Include="Core\APIs\ApiUsers.cs" />
     <Compile Include="Core\APIs\ApiBankingAliases.cs" />
     <Compile Include="Core\APIs\ApiWallets.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Core\EnumerationConverter.cs" />
     <Compile Include="Core\Enumerations\BankingAliasType.cs" />
     <Compile Include="Core\Enumerations\BankAccountType.cs" />
+    <Compile Include="Core\Enumerations\CapacityType.cs" />
     <Compile Include="Core\Enumerations\DownloadReportFormat.cs" />
     <Compile Include="Core\Enumerations\FundsType.cs" />
     <Compile Include="Core\Enumerations\CardType.cs" />
@@ -113,6 +115,9 @@
     <Compile Include="Core\Enumerations\ReportType.cs" />
     <Compile Include="Core\Enumerations\SortDirection.cs" />
     <Compile Include="Core\Enumerations\RefundReasonType.cs" />
+    <Compile Include="Core\Enumerations\UboDeclarationType.cs" />
+    <Compile Include="Core\Enumerations\UboRefusedReasonType.cs" />
+    <Compile Include="Core\Enumerations\UboValidationStatusType.cs" />
     <Compile Include="Core\FilterDisputeDocuments.cs" />
     <Compile Include="Core\FilterDisputes.cs" />
     <Compile Include="Core\FilterKycDocuments.cs" />
@@ -192,8 +197,10 @@
     <Compile Include="Entities\GET\RepudiationDTO.cs" />
     <Compile Include="Entities\GET\SettlementDTO.cs" />
     <Compile Include="Entities\GET\SingleSignOnDTO.cs" />
+    <Compile Include="Entities\GET\UboDeclarationDTO.cs" />
     <Compile Include="Entities\GET\UserLegalObsoleteDTO.cs" />
     <Compile Include="Entities\GET\UserNaturalObsoleteDTO.cs" />
+    <Compile Include="Entities\GET\UserValidationStatusDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\DisputeReason.cs" />
     <Compile Include="Entities\Permissions.cs" />
@@ -209,6 +216,7 @@
     <Compile Include="Entities\POST\ReportRequestPostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
     <Compile Include="Entities\POST\SingleSignOnPostDTO.cs" />
+    <Compile Include="Entities\POST\UboDeclarationPostDTO.cs" />
     <Compile Include="Entities\PUT\ClientLogoPutDTO.cs" />
     <Compile Include="Entities\PUT\BankingAliasPutDTO.cs" />
     <Compile Include="Entities\PUT\DisactivateBankAccountPutDTO.cs" />
@@ -218,6 +226,7 @@
     <Compile Include="Entities\PUT\ClientPutDTO.cs" />
     <Compile Include="Entities\PUT\PermissionGroupPutDTO.cs" />
     <Compile Include="Entities\PUT\SingleSignOnPutDTO.cs" />
+    <Compile Include="Entities\PUT\UboDeclarationPutDTO.cs" />
     <Compile Include="Entities\RefundReason.cs" />
     <Compile Include="Entities\Money.cs" />
     <Compile Include="Entities\OAuthTokenDTO.cs" />

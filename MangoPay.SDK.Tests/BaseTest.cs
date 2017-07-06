@@ -59,7 +59,7 @@ namespace MangoPay.SDK.Tests
         {
             if (BaseTest._john == null || recreate)
             {
-                UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
+                UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR, CapacityType.DECLARATIVE);
                 user.Occupation = "programmer";
                 user.IncomeRange = 3;
 				user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
@@ -73,7 +73,7 @@ namespace MangoPay.SDK.Tests
 
         protected UserNaturalDTO GetNewJohn()
         {
-            UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
+            UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR, CapacityType.DECLARATIVE);
             user.Occupation = "programmer";
             user.IncomeRange = 3;
 			user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
