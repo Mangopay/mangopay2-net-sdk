@@ -26,7 +26,7 @@ namespace MangoPay.SDK.Core.APIs
 		public UboDeclarationDTO Update(UboDeclarationPutDTO uboDeclaration)
 		{
 			return UpdateObject<UboDeclarationDTO, UboDeclarationPutDTO>(
-			  MethodKey.HooksSave,
+			  MethodKey.UboDeclarationUpdate,
 			  uboDeclaration,
 			  uboDeclaration.ID
 			);

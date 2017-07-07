@@ -111,13 +111,13 @@ namespace MangoPay.SDK.Tests
 
 			var userLegal = Api.Users.Create(CreateUserLegalPost());
 
-			UboDeclarationPostDTO uboDeclarationPost = CreateUboDeclarationPost(userLegal, RefusedReasons);
+			var uboDeclarationPost = CreateUboDeclarationPost(userLegal, RefusedReasons);
 
 			UboDeclarationDTO result = null;
 
 			Assert.DoesNotThrow(() => result = Api.UboDeclarations.Create(null, uboDeclarationPost));
 			Assert.That(result.Status == UboDeclarationType.CREATED);
-			Assert.That(result.CreationDate != null);
+			Assert.That(result.CreationDate != DateTime.MinValue);
 		}
 
 		[Test]
@@ -127,13 +127,14 @@ namespace MangoPay.SDK.Tests
 
 			var userLegal = Api.Users.Create(CreateUserLegalPost());
 
-			UboDeclarationPostDTO uboDeclarationPost = CreateUboDeclarationPost(userLegal, RefusedReasons);
+			var uboDeclarationPost = CreateUboDeclarationPost(userLegal, RefusedReasons);
 
 			var uboDeclaration = Api.UboDeclarations.Create(null, uboDeclarationPost);
 
 			UboDeclarationPutDTO ubodeclarationPut = new UboDeclarationPutDTO()
 			{
 				ID = uboDeclaration.Id,
+				Status = UboDeclarationType.VALIDATION_ASKED,
 				RefusedReasonMessage = "New Refused Message",
 				RefusedReasonTypes = new UboRefusedReasonType[] { UboRefusedReasonType.MISSING_UBO }
 			};
@@ -142,6 +143,8 @@ namespace MangoPay.SDK.Tests
 
 			Assert.DoesNotThrow(() => result = Api.UboDeclarations.Update(ubodeclarationPut));
 			Assert.That(result != null);
+			Assert.That(result.Status == UboDeclarationType.VALIDATION_ASKED);
+			Assert.That(result.CreationDate != DateTime.MinValue);
 		}
 
 		private UboDeclarationPostDTO CreateUboDeclarationPost(UserLegalDTO userLegal, UboRefusedReasonType[] refusedResons)
