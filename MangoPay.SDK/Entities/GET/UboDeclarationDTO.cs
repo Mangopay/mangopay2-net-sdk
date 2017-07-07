@@ -8,12 +8,6 @@ namespace MangoPay.SDK.Entities.GET
 		{
 		}
 
-		public UboDeclarationDTO(UboRefusedReasonType[] refusedReasonTypes, string refusedReasonMessage)
-		{
-			RefusedReasonTypes = refusedReasonTypes;
-			RefusedReasonMessage = refusedReasonMessage;
-		}
-
 		public string ID { get; set; }
 
 		public string UserId { get; set; }

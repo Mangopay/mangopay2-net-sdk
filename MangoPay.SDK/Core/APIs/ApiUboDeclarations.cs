@@ -13,6 +13,11 @@ namespace MangoPay.SDK.Core.APIs
 		{
 		}
 
+		public UboDeclarationDTO Create(UboDeclarationPostDTO uboDeclaration)
+		{
+			return Create(null, uboDeclaration);
+		}
+
 		public UboDeclarationDTO Create(String idempotencyKey, UboDeclarationPostDTO uboDeclaration)
 		{
 			return CreateObject<UboDeclarationDTO, UboDeclarationPostDTO>(
@@ -23,13 +28,13 @@ namespace MangoPay.SDK.Core.APIs
 			);
 		}
 
-		public UboDeclarationDTO Update(UboDeclarationPutDTO uboDeclaration)
+		public UboDeclarationDTO Update(UboDeclarationPutDTO uboDeclaration, String UboDeclarationId)
 		{
 			return UpdateObject<UboDeclarationDTO, UboDeclarationPutDTO>(
 			  MethodKey.UboDeclarationUpdate,
 			  uboDeclaration,
-			  uboDeclaration.ID
+			  UboDeclarationId
 			);
-		}
+		}		
 	}
 }
