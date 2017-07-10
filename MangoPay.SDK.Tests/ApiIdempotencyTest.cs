@@ -229,6 +229,8 @@ namespace MangoPay.SDK.Tests
             user.Occupation = "programmer";
             user.IncomeRange = 3;
             user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
+			user.Capacity = CapacityType.DECLARATIVE;
+
             Api.Users.Create(key, user);
 
             var result = Api.Idempotency.Get(key);
