@@ -444,8 +444,7 @@ namespace MangoPay.SDK.Tests
 
 			var result = Api.Idempotency.Get(key);
 
-			////TODO - should return UboDeclarationDTO in Resource???
-			Assert.IsInstanceOf<UserLegalDTO>(result.Resource);
+			Assert.IsInstanceOf<UboDeclarationDTO>(result.Resource);
 		}
 	}
 }

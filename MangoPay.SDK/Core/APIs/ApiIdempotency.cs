@@ -1,19 +1,14 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
-using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
-using MangoPay.SDK.Entities.POST;
-using MangoPay.SDK.Entities.PUT;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace MangoPay.SDK.Core.APIs
 {
-    /// <summary>API for Idempotency.</summary>
-    public class ApiIdempotency : ApiBase
+	/// <summary>API for Idempotency.</summary>
+	public class ApiIdempotency : ApiBase
     {
 		/// <summary>Instantiates new ApiIdempotency object.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
@@ -73,6 +68,7 @@ namespace MangoPay.SDK.Core.APIs
 				{ MethodKey.PayoutsBankwireCreate, typeof(PayOutBankWireDTO) },
 				{ MethodKey.TransfersCreateRefunds, typeof(RefundDTO) },
 				{ MethodKey.TransfersCreate, typeof(TransferDTO) },
+				{ MethodKey.UboDeclarationCreate, typeof(UboDeclarationDTO)},
 				{ MethodKey.UsersCreateNaturals, typeof(UserNaturalDTO) },
 				{ MethodKey.UsersCreateLegals, typeof(UserLegalDTO) },
 				{ MethodKey.UsersCreateKycDocument, typeof(KycDocumentDTO) },
