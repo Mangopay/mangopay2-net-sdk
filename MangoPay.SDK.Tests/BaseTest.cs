@@ -474,7 +474,10 @@ namespace MangoPay.SDK.Tests
             request.AddParameter("cardExpirationDate", "1218");
             request.AddParameter("cardCvx", "123");
 
-            IRestResponse response = client.Execute(request);
+			// Payline requires TLS
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+			IRestResponse response = client.Execute(request);
 
             String responseString = response.Content;
 
