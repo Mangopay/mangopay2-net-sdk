@@ -134,6 +134,9 @@ namespace MangoPay.SDK.Core.Enumerations
         PermissionGroupSave,
 
 		SingleSignOnsMe,
-		SingleSignOnsMePermissionGroup
+		SingleSignOnsMePermissionGroup,
+
+		UboDeclarationCreate,
+		UboDeclarationUpdate
 	}
 }
