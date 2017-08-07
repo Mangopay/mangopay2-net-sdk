@@ -74,16 +74,20 @@ namespace MangoPay.SDK.Core
             AddRequestHttpHeader(new Dictionary<String, String> { { key, value } });
         }
 
-        /// <summary>Checks the HTTP response code and if it's neither 200 nor 204 throws a ResponseException.</summary>
-        /// <param name="message">Text response.</param>
-        private void CheckResponseCode(String textResponse)
+		/// <summary>Checks the HTTP response and if it's neither 200 nor 204 throws a ResponseException.</summary>
+		/// <param name="restResponse">Rest response object</param>
+		private void CheckResponseCode(IRestResponse restResponse)
         {
-            if (this._responseCode != 200 && this._responseCode != 204)
+			var responseCode = (int)restResponse.StatusCode;
+
+			if (responseCode != 200 && responseCode != 204)
             {
-                if (this._responseCode == 401)
-                    throw new UnauthorizedAccessException(textResponse);
-                else
-					throw new ResponseException(textResponse, this._responseCode);
+				if (responseCode == 401)
+					throw new UnauthorizedAccessException(restResponse.Content);
+				else if (restResponse.ResponseStatus == ResponseStatus.TimedOut)
+					throw new TimeoutException(restResponse.ErrorMessage);
+				else
+					throw new ResponseException(restResponse.Content, responseCode);
             }
         }
 
@@ -307,6 +311,12 @@ namespace MangoPay.SDK.Core
             restRequest.JsonSerializer = new MangoPayJsonSerializer();
             restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
 
+			if (_root.Config.Timeout > 0)
+			{
+				client.Timeout = _root.Config.Timeout;
+				restRequest.Timeout = _root.Config.Timeout;
+			}
+			
             foreach (KeyValuePair<string, string> h in this.GetHttpHeaders(restUrl))
             {
                 restRequest.AddHeader(h.Key, h.Value);
@@ -377,7 +387,7 @@ namespace MangoPay.SDK.Core
 
             SetLastRequestInfo(restRequest, restResponse);
 
-            this.CheckResponseCode(restResponse.Content);
+            this.CheckResponseCode(restResponse);
 
             return responseObject;
         }
@@ -465,7 +475,7 @@ namespace MangoPay.SDK.Core
 
             SetLastRequestInfo(restRequest, restResponse);
 
-            this.CheckResponseCode(restResponse.Content);
+            this.CheckResponseCode(restResponse);
 
             return responseObject;
         }
