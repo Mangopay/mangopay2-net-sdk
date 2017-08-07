@@ -17,6 +17,7 @@ namespace MangoPay.SDK.Core
         /// <summary>Base URL to MangoPay API.</summary>
         public string BaseUrl = "https://api.sandbox.mangopay.com";
 
+		/// <summary>Timeout in miliseconds to use for API calls, set to zero to use the default .NET <see cref="HttpWebRequest"/> timeout of 100 seconds</summary>
 		public int Timeout = 0;
 
 		/// <summary>API version (added in dashboard's SDK only in order to handle both old and new address fields).</summary>
