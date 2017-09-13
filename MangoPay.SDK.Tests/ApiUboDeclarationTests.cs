@@ -112,8 +112,9 @@ namespace MangoPay.SDK.Tests
 
 			foreach (var user in userNaturalCollection)
 			{
-				var userNatural = Api.Users.Create(user);
-				UserNaturallCollection.Add(userNatural);
+                user.Capacity = CapacityType.DECLARATIVE;
+                var userNatural = Api.Users.Create(user);                
+                UserNaturallCollection.Add(userNatural);
 			}
 		}		
 
