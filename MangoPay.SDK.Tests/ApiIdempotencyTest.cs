@@ -427,7 +427,8 @@ namespace MangoPay.SDK.Tests
 
 			foreach (var user in UserNaturalPostCollection)
 			{
-				var userNatural = Api.Users.Create(user);
+                user.Capacity = CapacityType.DECLARATIVE;
+                var userNatural = Api.Users.Create(user);
 				userNaturallCollection.Add(userNatural);
 			}
 
