@@ -62,7 +62,7 @@ namespace MangoPay.SDK.Tests
 					},
 					Occupation = "programmer1",
 					IncomeRange = 5,
-					Capacity = CapacityType.DECLARATIVE
+					Capacity = CapacityType.NORMAL
 					},
 
 					new UserNaturalPostDTO(
@@ -84,8 +84,8 @@ namespace MangoPay.SDK.Tests
 					},
 					Occupation = "programmer2",
 					IncomeRange = 3,
-					Capacity = CapacityType.DECLARATIVE
-					}
+					Capacity = CapacityType.NORMAL
+                    }
 				};
 			}
 		}
