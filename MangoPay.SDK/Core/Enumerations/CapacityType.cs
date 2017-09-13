@@ -4,7 +4,7 @@
 	{
 		NotSpecified = 0,
 
-		DEFAULT = 1,
+		NORMAL = 1,
 
 		DECLARATIVE = 2
 	}
