@@ -2,10 +2,8 @@
 {
 	public enum CapacityType
 	{
-		NotSpecified = 0,
+		NORMAL = 0,
 
-		NORMAL = 1,
-
-		DECLARATIVE = 2
+		DECLARATIVE = 1
 	}
 }
