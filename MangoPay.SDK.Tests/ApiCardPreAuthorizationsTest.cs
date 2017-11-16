@@ -1,4 +1,6 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
@@ -67,5 +69,59 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
-    }
+
+		[Test]
+		public void Test_CardPreAuthorizations_GetPreAuthorizationsForUser()
+		{
+			try
+			{
+				var cardPreAuthorization = GetJohnsCardPreAuthorization();
+
+				var pagination = new Pagination(1, 1);
+
+				var filter = new FilterPreAuthorizations();
+				filter.ResultCode = cardPreAuthorization.ResultCode;
+				filter.PaymentStatus = cardPreAuthorization.PaymentStatus;
+				filter.Status = cardPreAuthorization.Status;
+
+				var sort = new Sort();
+				sort.AddField("CreationDate", SortDirection.desc);
+
+				var preAuthorizations = Api.CardPreAuthorizations.GetPreAuthorizationsForUser(cardPreAuthorization.AuthorId, pagination, filter, sort);
+
+				Assert.IsTrue(preAuthorizations.Count > 0);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+
+		[Test]
+		public void Test_CardPreAuthorizations_GetPreAuthorizationsForCard()
+		{
+			try
+			{
+				var cardPreAuthorization = GetJohnsCardPreAuthorization();
+
+				var pagination = new Pagination(1, 1);
+
+				var filter = new FilterPreAuthorizations();
+				filter.ResultCode = cardPreAuthorization.ResultCode;
+				filter.PaymentStatus = cardPreAuthorization.PaymentStatus;
+				filter.Status = cardPreAuthorization.Status;
+
+				var sort = new Sort();
+				sort.AddField("CreationDate", SortDirection.desc);
+
+				var preAuthorizations = Api.CardPreAuthorizations.GetPreAuthorizationsForCard(cardPreAuthorization.CardId, pagination, filter, sort);
+
+				Assert.IsTrue(preAuthorizations.Count > 0);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+	}
 }

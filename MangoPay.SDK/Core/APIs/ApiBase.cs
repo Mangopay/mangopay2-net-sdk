@@ -35,6 +35,7 @@ namespace MangoPay.SDK.Core.APIs
 
 			{ MethodKey.CardGet, new ApiEndPoint("/cards/{0}", RequestType.GET)},
 			{ MethodKey.CardSave, new ApiEndPoint("/cards/{0}", RequestType.PUT)},
+			{ MethodKey.CardPreauthorizations, new ApiEndPoint("/cards/{0}/preauthorizations", RequestType.GET)},
 
 			{ MethodKey.PayinsCardWebCreate, new ApiEndPoint("/payins/card/web", RequestType.POST)},
 			{ MethodKey.PayinsCardWebGetCardData, new ApiEndPoint("/payins/card/web/{0}/extended/", RequestType.GET)},
@@ -79,6 +80,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.UsersGet, new ApiEndPoint("/users/{0}", RequestType.GET)},
 			{ MethodKey.UsersGetNaturals, new ApiEndPoint("/users/natural/{0}", RequestType.GET)},
 			{ MethodKey.UsersGetLegals, new ApiEndPoint("/users/legal/{0}", RequestType.GET)},
+			{ MethodKey.UsersPreauthorizations, new ApiEndPoint("/users/{0}/preauthorizations", RequestType.GET)},
 
 			{ MethodKey.UsersGetKycDocument, new ApiEndPoint("/users/{0}/KYC/documents/{1}", RequestType.GET)},
 			{ MethodKey.UsersGetKycDocuments, new ApiEndPoint("/users/{0}/KYC/documents", RequestType.GET)},
