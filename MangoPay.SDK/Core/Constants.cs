@@ -40,6 +40,9 @@ namespace MangoPay.SDK.Core
 		/// <summary>Resolves to "PaymentStatus" string.</summary>
 		public const string PAYMENT_STATUS = "PaymentStatus";
 
+        /// <summary>Resolves to "TransactionStatus" string.</summary>
+        public const string TRANSACTION_STATUS = "TransactionStatus";
+
         /// <summary>Resolves to "Type" string.</summary>
         public const string TYPE = "Type";
 

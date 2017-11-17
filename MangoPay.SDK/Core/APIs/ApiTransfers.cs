@@ -55,13 +55,5 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			return this.CreateObject<RefundDTO, RefundTransferPostDTO>(idempotencyKey, MethodKey.TransfersCreateRefunds, refund, transferId);
 		}
-
-        /// <summary>Gets refund for transfer object.</summary>
-        /// <param name="transferId">Transfer identifier.</param>
-        /// <returns>Refund entity instance returned from API.</returns>
-        public RefundDTO GetRefund(String transferId)
-        {
-            return this.GetObject<RefundDTO>(MethodKey.TransfersGetRefunds, transferId);
-        }
     }
 }

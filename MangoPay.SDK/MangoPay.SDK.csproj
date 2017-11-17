@@ -122,6 +122,7 @@
     <Compile Include="Core\FilterDisputes.cs" />
     <Compile Include="Core\FilterKycDocuments.cs" />
     <Compile Include="Core\FilterMandates.cs" />
+    <Compile Include="Core\FilterRefunds.cs" />
     <Compile Include="Core\FilterPreAuthorizations.cs" />
     <Compile Include="Core\FilterReports.cs" />
     <Compile Include="Core\FilterReportsList.cs" />

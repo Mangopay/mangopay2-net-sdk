@@ -229,13 +229,5 @@ namespace MangoPay.SDK.Core.APIs
         {
             return this.CreateObject<RefundDTO, RefundPayInPostDTO>(idempotencyKey, MethodKey.PayinsCreateRefunds, refund, payInId);
         }
-
-        /// <summary>Gets refund for PayIn object.</summary>
-        /// <param name="payInId">PayIn identifier.</param>
-        /// <returns>Refund entity instance returned from API.</returns>
-        public RefundDTO GetRefund(String payInId)
-        {
-            return this.GetObject<RefundDTO>(MethodKey.PayinsGetRefunds, payInId);
-        }
     }
 }

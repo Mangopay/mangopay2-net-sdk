@@ -55,6 +55,7 @@ namespace MangoPay.SDK.Core.APIs
 
 			{ MethodKey.PayoutsBankwireCreate, new ApiEndPoint("/payouts/bankwire", RequestType.POST)},
 			{ MethodKey.PayoutsGet, new ApiEndPoint("/payouts/{0}", RequestType.GET)},
+			{ MethodKey.PayoutsGetRefunds, new ApiEndPoint("/payouts/{0}/refunds", RequestType.GET)},
 
 			{ MethodKey.RefundsGet, new ApiEndPoint("/refunds/{0}", RequestType.GET)},
 
@@ -138,6 +139,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.DisputesDocumentConsult, new ApiEndPoint("/dispute-documents/{0}/consult", RequestType.POST)},
 
 			{ MethodKey.DisputesRepudiationGet, new ApiEndPoint("/repudiations/{0}", RequestType.GET)},
+			{ MethodKey.DisputesRepudiationGetRefunds, new ApiEndPoint("/repudiations/{0}/refunds", RequestType.GET)},
 
 			{ MethodKey.DisputesRepudiationCreateSettlement, new ApiEndPoint("/repudiations/{0}/settlementtransfer", RequestType.POST)},
 			{ MethodKey.SettlementsGet, new ApiEndPoint("/settlements/{0}/", RequestType.GET)},
