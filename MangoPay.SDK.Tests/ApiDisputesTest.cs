@@ -131,6 +131,23 @@ namespace MangoPay.SDK.Tests
 			Assert.IsTrue(result.Count > 0);
 		}
 
+	    [Test]
+	    public void Test_GetDisputesPendingSettlement()
+	    {
+	        ListPaginated<DisputeDTO> result = null;
+
+	        try
+	        {
+	            result = Api.Disputes.GetDisputesPendingSettlement(new Pagination(1, 10), null);
+	        }
+	        catch (Exception ex)
+	        {
+	            Assert.Fail(ex.Message);
+	        }
+
+            Assert.IsNotNull(result);
+	    }
+
 		[Test]
 		public void Test_CreateDisputeDocument()
 		{
