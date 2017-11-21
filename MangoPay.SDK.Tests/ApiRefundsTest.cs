@@ -46,33 +46,27 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(getRefund.RefundReason.RefundReasonType, RefundReasonType.INITIALIZED_BY_CLIENT);
         }
 
-		/*
 		[Test]
 		public void Test_Refund_GetRefundsForPayOut()
 		{
 			try
 			{
-				////var cardPreAuthorization = GetJohnsCardPreAuthorization();
-				PayOutDTO payOut = this.GetNewPayOutCardDirect();
+				var payOut = GetJohnsPayOutBankWire();
 
 				var pagination = new Pagination(1, 1);
 
 				var filter = new FilterRefunds();
-				filter.ResultCode = payOut.ResultCode;
-				filter.Status = payOut.Status;
 
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
 				var refunds = Api.Refunds.GetRefundsForPayOut(payOut.Id, pagination, filter, sort);
-
-				Assert.IsTrue(refunds.Count > 0);
 			}
 			catch (Exception ex)
 			{
 				Assert.Fail(ex.Message);
 			}
-		}*/
+		}
 
 		[Test]
 		public void Test_Refund_GetRefundsForPayIn()
@@ -133,45 +127,28 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		/*
 		[Test]
 		public void Test_Refund_GetRefundsForRepudiation()
 		{
 			try
 			{
-				//Sort sort = new Sort();
-				//sort.AddField("CreationDate", SortDirection.desc);
-
-				//var _clientDisputes = Api.Disputes.GetAll(new Pagination(1, 100), null, sort);
-				//DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.InitialTransactionId != null && x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
-
-				//string repudiationId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1), null)[0].Id;
-				//result = Api.Disputes.GetRepudiation(repudiationId);
-
-
-				var wallet = this.GetNewJohnsWalletWithMoney(10000);
-				TransferDTO transfer = this.GetNewTransfer(wallet);
-				RefundDTO refund = this.GetNewRefundForTransfer(transfer);
-
-				var pagination = new Pagination(1, 1);
-
-				var filter = new FilterRefunds
-				{
-					ResultCode = transfer.ResultCode,
-					Status = transfer.Status
-				};
-
-				var sort = new Sort();
+				Sort sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				var refunds = Api.Refunds.GetRefundsForRepudiation(transfer.Id, pagination, filter, sort);
+				var _clientDisputes = Api.Disputes.GetAll(new Pagination(1, 100), null, sort);
+				DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.InitialTransactionId != null && x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
+				
+				string repudiationId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1), null)[0].Id;
+				
+				var pagination = new Pagination(1, 1);
+				var filter = new FilterRefunds();
 
-				Assert.IsTrue(refunds.Count > 0);
+				var refunds = Api.Refunds.GetRefundsForRepudiation(repudiationId, pagination, filter, sort);
 			}
 			catch (Exception ex)
 			{
 				Assert.Fail(ex.Message);
 			}
-		}*/
+		}
 	}
 }

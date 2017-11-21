@@ -393,8 +393,8 @@ namespace MangoPay.SDK.Tests
         {
             if (BaseTest._johnsPayOutBankWire == null)
             {
-                WalletDTO wallet = this.GetJohnsWallet();
-                UserNaturalDTO user = this.GetJohn();
+				WalletDTO wallet = this.GetJohnsWalletWithMoney();
+				UserNaturalDTO user = this.GetJohn();
                 BankAccountDTO account = this.GetJohnsAccount();
 
                 PayOutBankWirePostDTO payOut = new PayOutBankWirePostDTO(user.Id, wallet.Id, new Money { Amount = 10, Currency = CurrencyIso.EUR }, new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref");
