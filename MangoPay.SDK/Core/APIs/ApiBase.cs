@@ -120,6 +120,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.DisputesSaveTag, new ApiEndPoint("/disputes/{0}", RequestType.PUT)},
 			{ MethodKey.DisputesSaveContestFunds, new ApiEndPoint("/disputes/{0}/submit", RequestType.PUT)},
 			{ MethodKey.DisputeSaveClose, new ApiEndPoint("/disputes/{0}/close", RequestType.PUT)},
+            { MethodKey.DisputesGetPendingSettlement, new ApiEndPoint("/disputes/pendingsettlement", RequestType.GET)},
 
 			{ MethodKey.DisputesGetTransactions, new ApiEndPoint("/disputes/{0}/transactions", RequestType.GET)},
 

@@ -82,6 +82,15 @@ namespace MangoPay.SDK.Core.APIs
 			return this.GetList<DisputeDTO>(MethodKey.DisputesGetForUser, pagination, userId, sort, filters.GetValues());
 		}
 
+        /// <summary>Gets Disputes which need settling.</summary>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of Dispute instances returned from API.</returns>
+        public ListPaginated<DisputeDTO> GetDisputesPendingSettlement(Pagination pagination, Sort sort = null)
+        {
+            return this.GetList<DisputeDTO>(MethodKey.DisputesGetPendingSettlement, pagination, sort);
+        }
+
 		/// <summary>Gets dispute's document.</summary>
 		/// <param name="documentId">Dispute's document identifier.</param>
 		/// <returns>Dispute's document object returned from API.</returns>
