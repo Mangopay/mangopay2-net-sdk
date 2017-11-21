@@ -755,5 +755,15 @@ namespace MangoPay.SDK.Tests
                 throw new ArgumentException("Unsupported type.");
             }
         }
-    }
+
+		protected MandateDTO GetNewMandate()
+		{
+			string bankAccountId = GetJohnsAccount().Id;
+			string returnUrl = "http://test.test";
+			MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
+			MandateDTO mandate = Api.Mandates.Create(mandatePost);
+
+			return mandate;
+		}
+	}
 }

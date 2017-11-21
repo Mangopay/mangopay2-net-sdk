@@ -90,5 +90,18 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			return this.UpdateObject<MandateDTO, EntityPutBase>(MethodKey.MandateCancel, new EntityPutBase(), mandateId);
 		}
+
+		/// <summary>Lists transactions for a mandate</summary>
+		/// <param name="mandateId">Id of the mandate to get transactions</param>
+		/// <param name="pagination">Pagination.</param>
+		/// <param name="filter">Filter.</param>
+		/// <param name="sort">Sort.</param>
+		/// <returns>List of transactions for a mandate</returns>
+		public ListPaginated<TransactionDTO> GetTransactionsForMandate(string mandateId, Pagination pagination, FilterTransactions filters, Sort sort = null)
+		{
+			if (filters == null) filters = new FilterTransactions();
+
+			return GetList<TransactionDTO>(MethodKey.MandatesGetTransactions, pagination, mandateId, sort, filters.GetValues());
+		}
 	}
 }

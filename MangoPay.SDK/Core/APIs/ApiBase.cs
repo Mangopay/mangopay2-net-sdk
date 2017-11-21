@@ -36,6 +36,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.CardGet, new ApiEndPoint("/cards/{0}", RequestType.GET)},
 			{ MethodKey.CardSave, new ApiEndPoint("/cards/{0}", RequestType.PUT)},
 			{ MethodKey.CardPreauthorizations, new ApiEndPoint("/cards/{0}/preauthorizations", RequestType.GET)},
+			{ MethodKey.CardTransactions, new ApiEndPoint("/cards/{0}/transactions", RequestType.GET)},
 
 			{ MethodKey.PayinsCardWebCreate, new ApiEndPoint("/payins/card/web", RequestType.POST)},
 			{ MethodKey.PayinsCardWebGetCardData, new ApiEndPoint("/payins/card/web/{0}/extended/", RequestType.GET)},
@@ -150,6 +151,7 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.MandateCancel, new ApiEndPoint("/mandates/{0}/cancel/", RequestType.PUT)},
 			{ MethodKey.MandateGet, new ApiEndPoint("/mandates/{0}/", RequestType.GET)},
 			{ MethodKey.MandatesGetAll, new ApiEndPoint("/mandates/", RequestType.GET)},
+			{ MethodKey.MandatesGetTransactions, new ApiEndPoint("/mandates/{0}/transactions", RequestType.GET)},
 			{ MethodKey.MandatesGetForUser, new ApiEndPoint("/users/{0}/mandates/", RequestType.GET)},
 			{ MethodKey.MandatesGetForBankAccount, new ApiEndPoint("/users/{0}/bankaccounts/{1}/mandates/", RequestType.GET)},
 
@@ -172,7 +174,9 @@ namespace MangoPay.SDK.Core.APIs
 			{ MethodKey.SingleSignOnsMe, new ApiEndPoint("/ssos/me", RequestType.GET, false)},
 			{ MethodKey.SingleSignOnsMePermissionGroup , new ApiEndPoint("/ssos/me/permissiongroup", RequestType.GET, false)},
 			{ MethodKey.UboDeclarationCreate, new ApiEndPoint("/users/legal/{0}/ubodeclarations", RequestType.POST)},
-			{ MethodKey.UboDeclarationUpdate, new ApiEndPoint("/ubodeclarations/{0}", RequestType.PUT)}
+			{ MethodKey.UboDeclarationUpdate, new ApiEndPoint("/ubodeclarations/{0}", RequestType.PUT)},
+
+			{ MethodKey.BankAccountsGetTransactions, new ApiEndPoint("/bankaccounts/{0}/transactions", RequestType.GET)},
 		};
 
 		/// <summary>Creates new API instance.</summary>

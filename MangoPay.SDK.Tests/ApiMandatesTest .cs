@@ -5,6 +5,8 @@ using MangoPay.SDK.Entities.POST;
 using NUnit.Framework;
 using System;
 using System.Threading;
+using MangoPay.SDK.Core;
+using System.Linq;
 
 namespace MangoPay.SDK.Tests
 {
@@ -152,5 +154,32 @@ namespace MangoPay.SDK.Tests
 				Assert.Fail(ex.Message);
 			}
 		}
-    }
+
+		[Test]
+		public void Test_Mandate_GetTransactionsForMandate()
+		{
+			try
+			{
+				var mandate = GetNewMandate();
+
+				WalletDTO wallet = GetJohnsWallet();
+				UserNaturalDTO user = GetJohn();
+				PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test.test", mandate.Id);
+				PayInDTO createPayIn = this.Api.PayIns.CreateMandateDirectDebit(payIn);
+
+				var pagination = new Pagination(1, 1);
+				var filter = new FilterTransactions();
+				var sort = new Sort();
+				sort.AddField("CreationDate", SortDirection.desc);
+
+				var transactions = Api.Mandates.GetTransactionsForMandate(mandate.Id, pagination, filter, sort);
+
+				Assert.IsTrue(transactions.Count > 0);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+	}
 }

@@ -12,6 +12,7 @@ namespace MangoPay.SDK.Core.Enumerations
         CardRegistrationGet,
         CardRegistrationSave,
         CardPreauthorizations,
+        CardTransactions,
         EventsAll,
         HooksAll,
         HooksCreate,
@@ -118,6 +119,7 @@ namespace MangoPay.SDK.Core.Enumerations
         MandateGet,
         MandateCancel,
         MandatesGetAll,
+		MandatesGetTransactions,
         MandatesGetForUser,
         MandatesGetForBankAccount,
 
@@ -141,6 +143,8 @@ namespace MangoPay.SDK.Core.Enumerations
 		SingleSignOnsMePermissionGroup,
 
 		UboDeclarationCreate,
-		UboDeclarationUpdate
+		UboDeclarationUpdate,
+
+		BankAccountsGetTransactions
 	}
 }

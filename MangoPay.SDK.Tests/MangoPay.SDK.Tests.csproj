@@ -62,6 +62,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ApiCardPreAuthorizationsTest.cs" />
+    <Compile Include="ApiCardsTest.cs" />
     <Compile Include="ApiCardRegistrationsTest.cs" />
     <Compile Include="ApiClientsTest.cs" />
     <Compile Include="ApiEventsTest.cs" />
