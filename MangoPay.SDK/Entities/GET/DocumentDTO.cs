@@ -1,4 +1,6 @@
 ﻿using System;
+using MangoPay.SDK.Core;
+using Newtonsoft.Json;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -9,5 +11,9 @@ namespace MangoPay.SDK.Entities.GET
 
 		/// <summary>Refused reason message.</summary>
 		public String RefusedReasonMessage { get; set; }
-	}
+
+	    /// <summary>Date when the document was processed.</summary>
+	    [JsonConverter(typeof(UnixDateTimeConverter))]
+	    public DateTime ProcessedDate { get; set; }
+    }
 }
