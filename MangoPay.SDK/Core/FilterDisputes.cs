@@ -27,9 +27,9 @@ namespace MangoPay.SDK.Core
 
             UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
 
-			if (Status != DisputeStatus.NotSpecified) result.Add(Constants.STATUS, Status.ToString());
-			if (Type != DisputeType.NotSpecified) result.Add(Constants.DISPUTE_TYPE, Type.ToString());
-            if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
+			if (Status != DisputeStatus.NotSpecified) result.Add(Constants.STATUS, Status.ToString("G").Replace(" ", ""));
+			if (Type != DisputeType.NotSpecified) result.Add(Constants.DISPUTE_TYPE, Type.ToString("G").Replace(" ", ""));
+			if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
             if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());
 
             return result;

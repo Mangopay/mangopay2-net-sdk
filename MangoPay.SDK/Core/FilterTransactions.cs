@@ -33,10 +33,10 @@ namespace MangoPay.SDK.Core
 
             UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
 
-            if (Status.HasValue) result.Add(Constants.STATUS, Status.Value.ToString());
-            if (Type.HasValue) result.Add(Constants.TYPE, Type.Value.ToString());
-            if (Nature.HasValue) result.Add(Constants.NATURE, Nature.Value.ToString());
-            if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
+			if (Status.HasValue && Status.Value != TransactionStatus.NotSpecified) result.Add(Constants.STATUS, Status.Value.ToString("G").Replace(" ", ""));
+			if (Type.HasValue && Type.Value != TransactionType.NotSpecified) result.Add(Constants.TYPE, Type.Value.ToString("G").Replace(" ", ""));
+			if (Nature.HasValue && Nature != TransactionNature.NotSpecified) result.Add(Constants.NATURE, Nature.Value.ToString("G").Replace(" ", ""));
+			if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
             if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());
 			if (!String.IsNullOrEmpty(ResultCode)) result.Add(Constants.RESULT_CODE, ResultCode.ToString());
 
