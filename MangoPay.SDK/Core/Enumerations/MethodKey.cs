@@ -11,6 +11,8 @@ namespace MangoPay.SDK.Core.Enumerations
         CardRegistrationCreate,
         CardRegistrationGet,
         CardRegistrationSave,
+        CardPreauthorizations,
+        CardTransactions,
         EventsAll,
         HooksAll,
         HooksCreate,
@@ -29,6 +31,7 @@ namespace MangoPay.SDK.Core.Enumerations
         PayinsMandateDirectDebitCreate,
         PayoutsBankwireCreate,
         PayoutsGet,
+        PayoutsGetRefunds,
         PreauthorizationCreate,
         PreauthorizationGet,
         PreauthorizationSave,
@@ -42,6 +45,7 @@ namespace MangoPay.SDK.Core.Enumerations
         UsersAllCards,
         UsersAllTransactions,
         UsersAllWallets,
+        UsersPreauthorizations,
         UsersCreateBankAccountsCa,
         UsersCreateBankAccountsGb,
         UsersCreateBankAccountsIban,
@@ -105,6 +109,7 @@ namespace MangoPay.SDK.Core.Enumerations
         DisputesDocumentGetForDispute,
         DisputesDocumentGetForClient,
         DisputesRepudiationGet,
+        DisputesRepudiationGetRefunds,
         DisputesRepudiationCreateSettlement,
 		DisputesDocumentConsult,
 		SettlementsGet,
@@ -115,6 +120,7 @@ namespace MangoPay.SDK.Core.Enumerations
         MandateGet,
         MandateCancel,
         MandatesGetAll,
+		MandatesGetTransactions,
         MandatesGetForUser,
         MandatesGetForBankAccount,
 
@@ -138,6 +144,8 @@ namespace MangoPay.SDK.Core.Enumerations
 		SingleSignOnsMePermissionGroup,
 
 		UboDeclarationCreate,
-		UboDeclarationUpdate
+		UboDeclarationUpdate,
+
+		BankAccountsGetTransactions
 	}
 }

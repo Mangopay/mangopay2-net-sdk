@@ -1,4 +1,5 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
@@ -46,5 +47,31 @@ namespace MangoPay.SDK.Core.APIs
         {
             return this.UpdateObject<CardPreAuthorizationDTO, CardPreAuthorizationPutDTO>(MethodKey.PreauthorizationSave, cardPreAuthorization, cardPreAuthorizationId);
         }
-    }
+
+		/// <summary>Lists PreAuthorizations for a user</summary>
+		/// <param name="userId">Id of the user to get PreAuthorizations for</param>
+		/// <param name="pagination">Pagination.</param>
+		/// <param name="filter">Filter.</param>
+		/// <param name="sort">Sort.</param>
+		/// <returns>List of PreAuthorizations for a user</returns>
+		public ListPaginated<CardPreAuthorizationDTO> GetPreAuthorizationsForUser(String userId, Pagination pagination, FilterPreAuthorizations filters, Sort sort = null)
+		{
+			if (filters == null) filters = new FilterPreAuthorizations();
+
+			return GetList<CardPreAuthorizationDTO>(MethodKey.UsersPreauthorizations, pagination, userId, sort, filters.GetValues());
+		}
+
+		/// <summary>Lists PreAuthorizations for a card</summary>
+		/// <param name="cardId">Id of the card to get PreAuthorizations for</param>
+		/// <param name="pagination">Pagination.</param>
+		/// <param name="filter">Filter.</param>
+		/// <param name="sort">Sort.</param>
+		/// <returns>List of PreAuthorizations for a card</returns>
+		public ListPaginated<CardPreAuthorizationDTO> GetPreAuthorizationsForCard(String cardId, Pagination pagination, FilterPreAuthorizations filters, Sort sort = null)
+		{
+			if (filters == null) filters = new FilterPreAuthorizations();
+
+			return GetList<CardPreAuthorizationDTO>(MethodKey.CardPreauthorizations, pagination, cardId, sort, filters.GetValues());
+		}
+	}
 }

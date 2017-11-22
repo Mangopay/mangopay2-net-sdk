@@ -2,6 +2,7 @@
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.PUT;
 using System;
+using MangoPay.SDK.Entities;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -28,5 +29,18 @@ namespace MangoPay.SDK.Core.APIs
         {
             return this.UpdateObject<CardDTO, CardPutDTO>(MethodKey.CardSave, card, cardId);
         }
-    }
+
+		/// <summary>Lists transactions for a card</summary>
+		/// <param name="cardId">Id of the card to get transactions</param>
+		/// <param name="pagination">Pagination.</param>
+		/// <param name="filter">Filter.</param>
+		/// <param name="sort">Sort.</param>
+		/// <returns>List of transactions for a card</returns>
+		public ListPaginated<TransactionDTO> GetTransactionsForCard(string cardId, Pagination pagination, FilterTransactions filters, Sort sort = null)
+		{
+			if (filters == null) filters = new FilterTransactions();
+
+			return GetList<TransactionDTO>(MethodKey.CardTransactions, pagination, cardId, sort, filters.GetValues());
+		}
+	}
 }

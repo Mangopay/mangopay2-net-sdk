@@ -22,9 +22,12 @@ namespace MangoPay.SDK.Core
         /// <summary>Start date: return only transactions that have CreationDate AFTER this date.</summary>
         public DateTime? AfterDate;
 
-        /// <summary>Gets map of fields and values.</summary>
-        /// <returns>Returns collection of field_name-field_value pairs.</returns>
-        public Dictionary<String, String> GetValues()
+		/// <summary>Transaction ResultCode.</summary>
+		public string ResultCode;
+
+		/// <summary>Gets map of fields and values.</summary>
+		/// <returns>Returns collection of field_name-field_value pairs.</returns>
+		public Dictionary<String, String> GetValues()
         {
             Dictionary<String, String> result = new Dictionary<String, String>();
 
@@ -35,8 +38,9 @@ namespace MangoPay.SDK.Core
             if (Nature.HasValue) result.Add(Constants.NATURE, Nature.Value.ToString());
             if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
             if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());
+			if (!String.IsNullOrEmpty(ResultCode)) result.Add(Constants.RESULT_CODE, ResultCode.ToString());
 
-            return result;
+			return result;
         }
     }
 }
