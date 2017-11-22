@@ -14,6 +14,6 @@ namespace MangoPay.SDK.Entities.GET
 
 	    /// <summary>Date when the document was processed.</summary>
 	    [JsonConverter(typeof(UnixDateTimeConverter))]
-	    public DateTime ProcessedDate { get; set; }
+	    public DateTime? ProcessedDate { get; set; }
     }
 }
