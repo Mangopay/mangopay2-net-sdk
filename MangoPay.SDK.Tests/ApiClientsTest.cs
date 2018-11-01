@@ -243,6 +243,7 @@ namespace MangoPay.SDK.Tests
 			Assert.AreEqual(client.HeadquartersAddress.PostalCode, "51234");
 			Assert.AreEqual(client.HeadquartersAddress.Region, "Region");
             Assert.IsNotNull(client.HeadquartersPhoneNumber);
+            Assert.AreEqual(headquartersPhoneNumber, client.HeadquartersPhoneNumber);
         }
 
 		[Test]
