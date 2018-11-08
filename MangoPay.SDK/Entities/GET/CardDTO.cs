@@ -10,7 +10,7 @@ namespace MangoPay.SDK.Entities.GET
     {
         /// <summary>Country.</summary>
         public String Country { get; set; }
-        
+
         /// <summary>Expiration date.</summary>
         public String ExpirationDate { get; set; }
 
@@ -43,5 +43,8 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>Validity.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public Validity Validity { get; set; }
+
+        ///<summary>Card's fingerprint, which is unique per 16-digit card number.</summary>
+        public String Fingerprint { get; set; }
     }
 }
