@@ -58,7 +58,10 @@ namespace MangoPay.SDK.Entities.GET
 		/// <summary>The address of the company’s headquarters</summary>
 		public Address HeadquartersAddress { get; set; }
 
-		/// <summary>The tax (or VAT) number for your company</summary>
-		public String TaxNumber { get; set; }
+        ///<summary>The phone number of the company's headquarters</summary>
+        public String HeadquartersPhoneNumber { get; set; }
+
+        /// <summary>The tax (or VAT) number for your company</summary>
+        public String TaxNumber { get; set; }
 	}
 }
