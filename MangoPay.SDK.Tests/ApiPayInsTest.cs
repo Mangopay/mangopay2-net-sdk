@@ -54,68 +54,68 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		[Test]
-		public void Test_PayIns_Create_PayPal()
-		{
-			try
-			{
-				PayInDTO payIn = null;
-				WalletDTO wallet = this.GetJohnsWallet();
-				UserNaturalDTO user = this.GetJohn();
+        [Test]
+        public void Test_PayIns_Create_PayPal()
+        {
+            try
+            {
+                PayInDTO payIn = null;
+                WalletDTO wallet = this.GetJohnsWallet();
+                UserNaturalDTO user = this.GetJohn();
 
-				PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
+                PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
 
-				payIn = this.Api.PayIns.CreatePayPal(payInPost);
+                payIn = this.Api.PayIns.CreatePayPal(payInPost);
 
-				Assert.IsTrue(payIn.Id.Length > 0);
-				Assert.IsTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
-				Assert.IsTrue(payIn.ExecutionType == PayInExecutionType.WEB);
-			}
-			catch (Exception ex)
-			{
-				Assert.Fail(ex.Message);
-			}
-		}
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.IsTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
+                Assert.IsTrue(payIn.ExecutionType == PayInExecutionType.WEB);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
-		[Test]
-		public void Test_PayIns_Create_PayPal_WithShippingAddress()
-		{
-			try
-			{
-				PayInPayPalDTO payIn = null;
-				WalletDTO wallet = this.GetJohnsWallet();
-				UserNaturalDTO user = this.GetJohn();
-				Address AddressForShippingAddress = new Address
-				{
-					AddressLine1 = "Address line 1",
-					AddressLine2 = "Address line 2",
-					City = "City",
-					Country = CountryIso.PL,
-					PostalCode = "11222",
-					Region = "Region"
-				};
-				PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
-				payInPost.ShippingAddress = new ShippingAddress("recipient name", AddressForShippingAddress);
+        [Test]
+        public void Test_PayIns_Create_PayPal_WithShippingAddress()
+        {
+            try
+            {
+                PayInPayPalDTO payIn = null;
+                WalletDTO wallet = this.GetJohnsWallet();
+                UserNaturalDTO user = this.GetJohn();
+                Address AddressForShippingAddress = new Address
+                {
+                    AddressLine1 = "Address line 1",
+                    AddressLine2 = "Address line 2",
+                    City = "City",
+                    Country = CountryIso.PL,
+                    PostalCode = "11222",
+                    Region = "Region"
+                };
+                PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
+                payInPost.ShippingAddress = new ShippingAddress("recipient name", AddressForShippingAddress);
 
-				payIn = this.Api.PayIns.CreatePayPal(payInPost);
+                payIn = this.Api.PayIns.CreatePayPal(payInPost);
 
-				Assert.IsNotNull(payIn.ShippingAddress);
-				Assert.AreEqual("recipient name", payIn.ShippingAddress.RecipientName);
-				Assert.IsNotNull(payIn.ShippingAddress.Address);				
-				Assert.AreEqual("Address line 1", payIn.ShippingAddress.Address.AddressLine1);
-				Assert.AreEqual("Address line 2", payIn.ShippingAddress.Address.AddressLine2);
-				Assert.AreEqual("City", payIn.ShippingAddress.Address.City);
-				Assert.AreEqual(CountryIso.PL, payIn.ShippingAddress.Address.Country);
-				Assert.AreEqual("11222", payIn.ShippingAddress.Address.PostalCode);
-				Assert.AreEqual("Region", payIn.ShippingAddress.Address.Region);
-			}
-			catch (Exception ex)
-			{
-				Assert.Fail(ex.Message);
-			}
-		}
+                Assert.IsNotNull(payIn.ShippingAddress);
+                Assert.AreEqual("recipient name", payIn.ShippingAddress.RecipientName);
+                Assert.IsNotNull(payIn.ShippingAddress.Address);
+                Assert.AreEqual("Address line 1", payIn.ShippingAddress.Address.AddressLine1);
+                Assert.AreEqual("Address line 2", payIn.ShippingAddress.Address.AddressLine2);
+                Assert.AreEqual("City", payIn.ShippingAddress.Address.City);
+                Assert.AreEqual(CountryIso.PL, payIn.ShippingAddress.Address.Country);
+                Assert.AreEqual("11222", payIn.ShippingAddress.Address.PostalCode);
+                Assert.AreEqual("Region", payIn.ShippingAddress.Address.Region);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
-		[Test]
+        [Test]
         public void Test_PayIns_Create_CardDirect()
         {
             try
@@ -138,6 +138,38 @@ namespace MangoPay.SDK.Tests
                 Assert.IsTrue(wallet.Balance.Amount == beforeWallet.Balance.Amount + payIn.CreditedFunds.Amount);
                 Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
                 Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public void Test_Payins_CardDirect_Create_WithBilling()
+        {
+            try
+            {
+                WalletDTO johnWallet = this.GetJohnsWalletWithMoney();
+                WalletDTO wallet = this.Api.Wallets.Get(johnWallet.Id);
+                UserNaturalDTO user = this.GetJohn();
+
+                PayInCardDirectDTO payIn = this.GetNewPayInCardDirectWithBilling();
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(wallet.Id, payIn.CreditedWalletId);
+                Assert.AreEqual(PayInPaymentType.CARD, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.DIRECT, payIn.ExecutionType);
+                Assert.IsTrue(payIn.DebitedFunds is Money);
+                Assert.IsTrue(payIn.CreditedFunds is Money);
+                Assert.IsTrue(payIn.Fees is Money);
+                Assert.AreEqual(user.Id, payIn.AuthorId);
+                Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+                Assert.IsNotNull(payIn.Billing);
+                Assert.IsNotNull(payIn.SecurityInfo);
+                Assert.IsNotNull(payIn.SecurityInfo.AVSResult);
+                Assert.AreEqual(payIn.SecurityInfo.AVSResult, AVSResult.ADDRESS_MATCH_ONLY);
             }
             catch (Exception ex)
             {
@@ -201,7 +233,7 @@ namespace MangoPay.SDK.Tests
 
                 // create pay-in PRE-AUTHORIZED DIRECT
                 PayInPreauthorizedDirectPostDTO payIn = new PayInPreauthorizedDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, cardPreAuthorization.Id);
-               
+
                 payIn.SecureModeReturnURL = "http://test.com";
 
                 PayInPreauthorizedDirectDTO createPayIn = this.Api.PayIns.CreatePreauthorizedDirect(payIn);
@@ -254,24 +286,24 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		/*
+        /*
 		 * Uncomment the attribute below to test payins with a mandate
 		 * This test needs your manual confirmation on the web page (see note in test's body)
 		 */
-		//[Test]
-		public void Test_PayIns_MandateDirect_Create_Get()
-		{
-			try
-			{
-				WalletDTO wallet = this.GetJohnsWallet();
-				UserNaturalDTO user = this.GetJohn();
+        //[Test]
+        public void Test_PayIns_MandateDirect_Create_Get()
+        {
+            try
+            {
+                WalletDTO wallet = this.GetJohnsWallet();
+                UserNaturalDTO user = this.GetJohn();
 
-				string bankAccountId = this.GetJohnsAccount().Id;
-				string returnUrl = "http://test.test";
-				MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
-				MandateDTO mandate = this.Api.Mandates.Create(mandatePost);
+                string bankAccountId = this.GetJohnsAccount().Id;
+                string returnUrl = "http://test.test";
+                MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
+                MandateDTO mandate = this.Api.Mandates.Create(mandatePost);
 
-				/*	
+                /*	
 				 *	! IMPORTANT NOTE !
 				 *	
 				 *	In order to make this test pass, at this place you have to set a breakpoint,
@@ -279,33 +311,33 @@ namespace MangoPay.SDK.Tests
 				 * 
 				 */
 
-				PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test.test", mandate.Id);
+                PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test.test", mandate.Id);
 
-				PayInDTO createPayIn = this.Api.PayIns.CreateMandateDirectDebit(payIn);
+                PayInDTO createPayIn = this.Api.PayIns.CreateMandateDirectDebit(payIn);
 
-				Assert.IsNotNull(createPayIn);
-				Assert.AreNotEqual(TransactionStatus.FAILED, createPayIn.Status, "In order to make this test pass, after creating mandate and before creating the payin you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.");
+                Assert.IsNotNull(createPayIn);
+                Assert.AreNotEqual(TransactionStatus.FAILED, createPayIn.Status, "In order to make this test pass, after creating mandate and before creating the payin you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.");
 
-				Assert.IsTrue(createPayIn.Id.Length > 0);
-				Assert.AreEqual(wallet.Id, createPayIn.CreditedWalletId);
-				Assert.AreEqual(PayInPaymentType.DIRECT_DEBIT, createPayIn.PaymentType);
-				Assert.AreEqual(PayInExecutionType.DIRECT, createPayIn.ExecutionType);
-				Assert.AreEqual(user.Id, createPayIn.AuthorId);
-				Assert.AreEqual(TransactionStatus.CREATED, createPayIn.Status);
-				Assert.AreEqual(TransactionType.PAYIN, createPayIn.Type);
-				Assert.IsNotNull(((PayInMandateDirectDTO)createPayIn).MandateId);
-				Assert.AreEqual(((PayInMandateDirectDTO)createPayIn).MandateId, mandate.Id);
+                Assert.IsTrue(createPayIn.Id.Length > 0);
+                Assert.AreEqual(wallet.Id, createPayIn.CreditedWalletId);
+                Assert.AreEqual(PayInPaymentType.DIRECT_DEBIT, createPayIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.DIRECT, createPayIn.ExecutionType);
+                Assert.AreEqual(user.Id, createPayIn.AuthorId);
+                Assert.AreEqual(TransactionStatus.CREATED, createPayIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, createPayIn.Type);
+                Assert.IsNotNull(((PayInMandateDirectDTO)createPayIn).MandateId);
+                Assert.AreEqual(((PayInMandateDirectDTO)createPayIn).MandateId, mandate.Id);
 
-				PayInMandateDirectDTO getPayIn = this.Api.PayIns.GetMandateDirectDebit(createPayIn.Id);
+                PayInMandateDirectDTO getPayIn = this.Api.PayIns.GetMandateDirectDebit(createPayIn.Id);
 
-				Assert.IsNotNull(getPayIn);
-				Assert.IsTrue(getPayIn.Id == createPayIn.Id);
-			}
-			catch (Exception ex)
-			{
-				Assert.Fail(ex.Message);
-			}
-		}
+                Assert.IsNotNull(getPayIn);
+                Assert.IsTrue(getPayIn.Id == createPayIn.Id);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         [Test]
         public void Test_PayIns_BankWireDirect_Get()
@@ -387,71 +419,71 @@ namespace MangoPay.SDK.Tests
             Assert.IsTrue(getPayIn.Tag == createPayIn.Tag);
         }
 
-		[Test]
-		public void Test_PayIns_Get_PayPal()
-		{
-			try
-			{
-				PayInDTO payIn = null;
-				WalletDTO wallet = this.GetJohnsWallet();
-				UserNaturalDTO user = this.GetJohn();
+        [Test]
+        public void Test_PayIns_Get_PayPal()
+        {
+            try
+            {
+                PayInDTO payIn = null;
+                WalletDTO wallet = this.GetJohnsWallet();
+                UserNaturalDTO user = this.GetJohn();
 
-				PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
+                PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
 
-				payIn = this.Api.PayIns.CreatePayPal(payInPost);
+                payIn = this.Api.PayIns.CreatePayPal(payInPost);
 
-				Assert.IsTrue(payIn.Id.Length > 0);
-				Assert.IsTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
-				Assert.IsTrue(payIn.ExecutionType == PayInExecutionType.WEB);
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.IsTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
+                Assert.IsTrue(payIn.ExecutionType == PayInExecutionType.WEB);
 
-				PayInPayPalDTO getPayIn = this.Api.PayIns.GetPayPal(payIn.Id);
+                PayInPayPalDTO getPayIn = this.Api.PayIns.GetPayPal(payIn.Id);
 
-				Assert.IsNotNull(getPayIn);
-				Assert.IsTrue(getPayIn.Id == payIn.Id);
-			}
-			catch (Exception ex)
-			{
-				Assert.Fail(ex.Message);
-			}
-		}
+                Assert.IsNotNull(getPayIn);
+                Assert.IsTrue(getPayIn.Id == payIn.Id);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
-		[Test]
-		public void Test_PayIns_Get_PayPal_WithShippingAddress()
-		{
-			try
-			{
-				PayInDTO payIn = null;
-				WalletDTO wallet = this.GetJohnsWallet();
-				UserNaturalDTO user = this.GetJohn();
-				Address AddressForShippingAddress = new Address
-				{
-					AddressLine1 = "Address line 1",
-					AddressLine2 = "Address line 2",
-					City = "City",
-					Country = CountryIso.PL,
-					PostalCode = "11222",
-					Region = "Region"
-				};
-				PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
-				payInPost.ShippingAddress = new ShippingAddress("recipient name", AddressForShippingAddress);
-				payIn = this.Api.PayIns.CreatePayPal(payInPost);
+        [Test]
+        public void Test_PayIns_Get_PayPal_WithShippingAddress()
+        {
+            try
+            {
+                PayInDTO payIn = null;
+                WalletDTO wallet = this.GetJohnsWallet();
+                UserNaturalDTO user = this.GetJohn();
+                Address AddressForShippingAddress = new Address
+                {
+                    AddressLine1 = "Address line 1",
+                    AddressLine2 = "Address line 2",
+                    City = "City",
+                    Country = CountryIso.PL,
+                    PostalCode = "11222",
+                    Region = "Region"
+                };
+                PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
+                payInPost.ShippingAddress = new ShippingAddress("recipient name", AddressForShippingAddress);
+                payIn = this.Api.PayIns.CreatePayPal(payInPost);
 
-				PayInPayPalDTO getPayIn = this.Api.PayIns.GetPayPal(payIn.Id);
+                PayInPayPalDTO getPayIn = this.Api.PayIns.GetPayPal(payIn.Id);
 
-				Assert.IsNotNull(getPayIn.ShippingAddress);
-				Assert.AreEqual("recipient name", getPayIn.ShippingAddress.RecipientName);
-				Assert.IsNotNull(getPayIn.ShippingAddress.Address);
-				Assert.AreEqual("Address line 1", getPayIn.ShippingAddress.Address.AddressLine1);
-				Assert.AreEqual("Address line 2", getPayIn.ShippingAddress.Address.AddressLine2);
-				Assert.AreEqual("City", getPayIn.ShippingAddress.Address.City);
-				Assert.AreEqual(CountryIso.PL, getPayIn.ShippingAddress.Address.Country);
-				Assert.AreEqual("11222", getPayIn.ShippingAddress.Address.PostalCode);
-				Assert.AreEqual("Region", getPayIn.ShippingAddress.Address.Region);
-			}
-			catch (Exception ex)
-			{
-				Assert.Fail(ex.Message);
-			}
-		}
-	}
+                Assert.IsNotNull(getPayIn.ShippingAddress);
+                Assert.AreEqual("recipient name", getPayIn.ShippingAddress.RecipientName);
+                Assert.IsNotNull(getPayIn.ShippingAddress.Address);
+                Assert.AreEqual("Address line 1", getPayIn.ShippingAddress.Address.AddressLine1);
+                Assert.AreEqual("Address line 2", getPayIn.ShippingAddress.Address.AddressLine2);
+                Assert.AreEqual("City", getPayIn.ShippingAddress.Address.City);
+                Assert.AreEqual(CountryIso.PL, getPayIn.ShippingAddress.Address.Country);
+                Assert.AreEqual("11222", getPayIn.ShippingAddress.Address.PostalCode);
+                Assert.AreEqual("Region", getPayIn.ShippingAddress.Address.Region);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+    }
 }
