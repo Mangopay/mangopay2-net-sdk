@@ -1,4 +1,4 @@
-﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
@@ -138,6 +138,38 @@ namespace MangoPay.SDK.Tests
                 Assert.IsTrue(wallet.Balance.Amount == beforeWallet.Balance.Amount + payIn.CreditedFunds.Amount);
                 Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
                 Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public void Test_Payins_CardDirect_Create_WithBilling()
+        {
+            try
+            {
+                WalletDTO johnWallet = this.GetJohnsWalletWithMoney();
+                WalletDTO wallet = this.Api.Wallets.Get(johnWallet.Id);
+                UserNaturalDTO user = this.GetJohn();
+
+                PayInCardDirectDTO payIn = this.GetNewPayInCardDirectWithBilling();
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(wallet.Id, payIn.CreditedWalletId);
+                Assert.AreEqual(PayInPaymentType.CARD, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.DIRECT, payIn.ExecutionType);
+                Assert.IsTrue(payIn.DebitedFunds is Money);
+                Assert.IsTrue(payIn.CreditedFunds is Money);
+                Assert.IsTrue(payIn.Fees is Money);
+                Assert.AreEqual(user.Id, payIn.AuthorId);
+                Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+                Assert.IsNotNull(payIn.Billing);
+                Assert.IsNotNull(payIn.SecurityInfo);
+                Assert.IsNotNull(payIn.SecurityInfo.AVSResult);
+                Assert.AreEqual(payIn.SecurityInfo.AVSResult, AVSResult.ADDRESS_MATCH_ONLY);
             }
             catch (Exception ex)
             {
@@ -474,6 +506,5 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
-
     }
 }
