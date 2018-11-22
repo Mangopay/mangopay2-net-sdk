@@ -86,6 +86,7 @@
     <Compile Include="Core\AuthorizationTokenManager.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\EnumerationConverter.cs" />
+    <Compile Include="Core\Enumerations\AVSResult.cs" />
     <Compile Include="Core\Enumerations\BankingAliasType.cs" />
     <Compile Include="Core\Enumerations\BankAccountType.cs" />
     <Compile Include="Core\Enumerations\CapacityType.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Core\UnixDefaultDateTimeConverter.cs" />
     <Compile Include="Core\UnixDateTimeConverter.cs" />
     <Compile Include="Entities\Address.cs" />
+    <Compile Include="Entities\Billing.cs" />
     <Compile Include="Entities\EntityPutBase.cs" />
     <Compile Include="Entities\EntityPostBase.cs" />
     <Compile Include="Core\Enumerations\EventType.cs" />
@@ -292,6 +294,7 @@
     <Compile Include="Entities\PUT\UserNaturalPutDTO.cs" />
     <Compile Include="Entities\PUT\WalletPutDTO.cs" />
     <Compile Include="Entities\Scopes.cs" />
+    <Compile Include="Entities\SecurityInfo.cs" />
     <Compile Include="Entities\ShippingAddress.cs" />
     <Compile Include="Entities\Transport\FilterReportsTransport.cs" />
     <Compile Include="Entities\Transport\ReportRequestTransportDTO.cs" />

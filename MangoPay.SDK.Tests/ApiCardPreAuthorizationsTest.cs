@@ -2,6 +2,7 @@
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
+using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
@@ -24,6 +25,37 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual(cardPreAuthorization.ExecutionType, PreAuthorizationExecutionType.DIRECT);
                 Assert.AreEqual(cardPreAuthorization.PaymentType, PreAuthorizationPaymentType.CARD);
                 Assert.IsNull(cardPreAuthorization.PayInId);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public void Test_CardPreAuthorization_Create_WithBilling()
+        {
+            try
+            {
+                CardPreAuthorizationPostDTO cardPreAuthorization = getPreAuthorization(GetJohn().Id);
+                Billing billing = new Billing();
+                Address address = new Address();
+                address.City = "Test city";
+                address.AddressLine1 = "Test address line 1";
+                address.AddressLine2 = "Test address line 2";
+                address.Country = CountryIso.RO;
+                address.PostalCode = "65400";
+                billing.Address = address;
+                cardPreAuthorization.Billing = billing;
+
+                CardPreAuthorizationDTO cardPreAuthorizationWithBilling = this.Api.CardPreAuthorizations.Create(cardPreAuthorization);
+
+                Assert.IsNotNull(cardPreAuthorizationWithBilling);
+                Assert.IsNotNull(cardPreAuthorizationWithBilling.Billing);
+                Assert.IsNotNull(cardPreAuthorizationWithBilling.SecurityInfo);
+                Assert.IsNotNull(cardPreAuthorizationWithBilling.SecurityInfo.AVSResult);
+                Assert.AreEqual(cardPreAuthorizationWithBilling.SecurityInfo.AVSResult, AVSResult.ADDRESS_MATCH_ONLY);
+
             }
             catch (Exception ex)
             {
@@ -70,58 +102,58 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		[Test]
-		public void Test_CardPreAuthorizations_GetPreAuthorizationsForUser()
-		{
-			try
-			{
-				var cardPreAuthorization = GetJohnsCardPreAuthorization();
+        [Test]
+        public void Test_CardPreAuthorizations_GetPreAuthorizationsForUser()
+        {
+            try
+            {
+                var cardPreAuthorization = GetJohnsCardPreAuthorization();
 
-				var pagination = new Pagination(1, 1);
+                var pagination = new Pagination(1, 1);
 
-				var filter = new FilterPreAuthorizations();
-				filter.ResultCode = cardPreAuthorization.ResultCode;
-				filter.PaymentStatus = cardPreAuthorization.PaymentStatus;
-				filter.Status = cardPreAuthorization.Status;
+                var filter = new FilterPreAuthorizations();
+                filter.ResultCode = cardPreAuthorization.ResultCode;
+                filter.PaymentStatus = cardPreAuthorization.PaymentStatus;
+                filter.Status = cardPreAuthorization.Status;
 
-				var sort = new Sort();
-				sort.AddField("CreationDate", SortDirection.desc);
+                var sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.desc);
 
-				var preAuthorizations = Api.CardPreAuthorizations.GetPreAuthorizationsForUser(cardPreAuthorization.AuthorId, pagination, filter, sort);
+                var preAuthorizations = Api.CardPreAuthorizations.GetPreAuthorizationsForUser(cardPreAuthorization.AuthorId, pagination, filter, sort);
 
-				Assert.IsTrue(preAuthorizations.Count > 0);
-			}
-			catch (Exception ex)
-			{
-				Assert.Fail(ex.Message);
-			}
-		}
+                Assert.IsTrue(preAuthorizations.Count > 0);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
-		[Test]
-		public void Test_CardPreAuthorizations_GetPreAuthorizationsForCard()
-		{
-			try
-			{
-				var cardPreAuthorization = GetJohnsCardPreAuthorization();
+        [Test]
+        public void Test_CardPreAuthorizations_GetPreAuthorizationsForCard()
+        {
+            try
+            {
+                var cardPreAuthorization = GetJohnsCardPreAuthorization();
 
-				var pagination = new Pagination(1, 1);
+                var pagination = new Pagination(1, 1);
 
-				var filter = new FilterPreAuthorizations();
-				filter.ResultCode = cardPreAuthorization.ResultCode;
-				filter.PaymentStatus = cardPreAuthorization.PaymentStatus;
-				filter.Status = cardPreAuthorization.Status;
+                var filter = new FilterPreAuthorizations();
+                filter.ResultCode = cardPreAuthorization.ResultCode;
+                filter.PaymentStatus = cardPreAuthorization.PaymentStatus;
+                filter.Status = cardPreAuthorization.Status;
 
-				var sort = new Sort();
-				sort.AddField("CreationDate", SortDirection.desc);
+                var sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.desc);
 
-				var preAuthorizations = Api.CardPreAuthorizations.GetPreAuthorizationsForCard(cardPreAuthorization.CardId, pagination, filter, sort);
+                var preAuthorizations = Api.CardPreAuthorizations.GetPreAuthorizationsForCard(cardPreAuthorization.CardId, pagination, filter, sort);
 
-				Assert.IsTrue(preAuthorizations.Count > 0);
-			}
-			catch (Exception ex)
-			{
-				Assert.Fail(ex.Message);
-			}
-		}
-	}
+                Assert.IsTrue(preAuthorizations.Count > 0);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+    }
 }
