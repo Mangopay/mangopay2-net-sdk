@@ -18,6 +18,9 @@ namespace MangoPay.SDK.Entities.PUT
         /// <summary>Name of this user.</summary>
         public String Name { get; set; }
 
+        /// <summary>Company Number</summary>
+        public String CompanyNumber { get; set; }
+
         /// <summary>Type of legal user.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public LegalPersonType? LegalPersonType { get; set; }
