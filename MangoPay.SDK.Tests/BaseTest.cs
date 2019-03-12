@@ -609,7 +609,7 @@ namespace MangoPay.SDK.Tests
             request.AddParameter("data", cardRegistration.PreregistrationData);
             request.AddParameter("accessKeyRef", cardRegistration.AccessKey);
             request.AddParameter("cardNumber", "4970100000000154");
-            request.AddParameter("cardExpirationDate", "1218");
+            request.AddParameter("cardExpirationDate", "1226");
             request.AddParameter("cardCvx", "123");
 
             // Payline requires TLS
