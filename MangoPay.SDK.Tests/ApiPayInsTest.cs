@@ -1,4 +1,4 @@
-﻿using MangoPay.SDK.Core;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
@@ -479,6 +479,27 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual(CountryIso.PL, getPayIn.ShippingAddress.Address.Country);
                 Assert.AreEqual("11222", getPayIn.ShippingAddress.Address.PostalCode);
                 Assert.AreEqual("Region", getPayIn.ShippingAddress.Address.Region);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public void Test_PayIns_Get_PayPal_WithPayPalBuyerAccountEmail()
+        {
+            try
+            {
+                string payInId = "54088959";
+                string payPalBuyerEmail = "paypal-buyer-user@mangopay.com";
+                PayInPayPalDTO payIn = Api.PayIns.GetPayPal(payInId);
+
+                Assert.NotNull(payIn);
+                Assert.NotNull(payIn.Id);
+                Assert.NotNull(payIn.PaypalBuyerAccountEmail);
+                Assert.AreEqual(payInId, payIn.Id);
+                Assert.AreEqual(payPalBuyerEmail, payIn.PaypalBuyerAccountEmail);
             }
             catch (Exception ex)
             {
