@@ -1,22 +1,25 @@
 ﻿
+using System;
+
 namespace MangoPay.SDK.Core.Enumerations
 {
-    /// <summary>KYC document status enumeration.</summary>
-    public enum KycStatus
-    {
-        /// <summary>Not specified.</summary>
-        NotSpecified,
+	/// <summary>KYC document status enumeration.</summary>
+	[Flags]
+	public enum KycStatus
+	{
+		/// <summary>Not specified.</summary>
+		NotSpecified = 0x00,
 
-        /// <summary>CREATED KYC status.</summary>
-        CREATED, 
+		/// <summary>CREATED KYC status.</summary>
+		CREATED = 0x01,
 
-        /// <summary>VALIDATION ASKED KYC status.</summary>
-        VALIDATION_ASKED, 
+		/// <summary>VALIDATION ASKED KYC status.</summary>
+		VALIDATION_ASKED = 0x02,
 
-        /// <summary>VALIDATED KYC status.</summary>
-        VALIDATED, 
+		/// <summary>VALIDATED KYC status.</summary>
+		VALIDATED = 0x04,
 
-        /// <summary>REFUSED KYC status.</summary>
-        REFUSED
-    }
+		/// <summary>REFUSED KYC status.</summary>
+		REFUSED = 0x08
+	}
 }

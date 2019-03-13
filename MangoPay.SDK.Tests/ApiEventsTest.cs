@@ -61,7 +61,7 @@ namespace MangoPay.SDK.Tests
 				PayInCardWebDTO payIn2 = GetJohnsNewPayInCardWeb();
 
 				FilterEvents eventsFilter = new FilterEvents();
-				eventsFilter.BeforeDate = payIn2.CreationDate;
+				eventsFilter.BeforeDate = payIn2.CreationDate.AddSeconds(1);
 				eventsFilter.AfterDate = payIn1.CreationDate;
 				eventsFilter.Type = EventType.PAYIN_NORMAL_CREATED;
 

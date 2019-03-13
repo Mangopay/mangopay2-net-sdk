@@ -801,5 +801,28 @@ namespace MangoPay.SDK.Tests
 				Assert.Fail(ex.Message);
 			}
 		}
+
+		[Test]
+		public void Test_Users_GetTransactionsForBankAccount()
+		{
+			try
+			{
+				var payOut = GetJohnsPayOutBankWire();
+				string bankAccountId = GetJohnsAccount().Id;
+
+				var pagination = new Pagination(1, 1);
+				var filter = new FilterTransactions();
+				var sort = new Sort();
+				sort.AddField("CreationDate", SortDirection.desc);
+
+				var transactions = Api.Users.GetTransactionsForBankAccount(bankAccountId, pagination, filter, sort);
+
+				Assert.IsTrue(transactions.Count > 0);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
 	}
 }

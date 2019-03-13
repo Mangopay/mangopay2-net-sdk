@@ -1,13 +1,16 @@
-﻿namespace MangoPay.SDK.Core.Enumerations
+﻿using System;
+
+namespace MangoPay.SDK.Core.Enumerations
 {
+	[Flags]
 	public enum UboRefusedReasonType
 	{
-		NotSpecified = 0,
+		NotSpecified			= 0x00,
 
-		MISSING_UBO = 1,
+		MISSING_UBO				= 0x01,
 
-		INVALID_DECLARED_UBO = 2,
+		INVALID_DECLARED_UBO	= 0x02,
 
-		INVALID_UBO_DETAILS = 3
+		INVALID_UBO_DETAILS		= 0x04
 	}
 }

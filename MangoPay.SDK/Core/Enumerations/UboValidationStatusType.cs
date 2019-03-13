@@ -1,13 +1,16 @@
-﻿namespace MangoPay.SDK.Core.Enumerations
+﻿using System;
+
+namespace MangoPay.SDK.Core.Enumerations
 {
+	[Flags]
 	public enum UboValidationStatusType
 	{
-		NotSpecified = 0,
+		NotSpecified	= 0x00,
 
-		CREATED = 1,
+		CREATED			= 0x01,
 
-		VALIDATED = 2,
+		VALIDATED		= 0x02,
 
-		REFUSED = 3
+		REFUSED			= 0x04
 	}
 }

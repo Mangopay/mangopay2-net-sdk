@@ -1,19 +1,22 @@
 ﻿
+using System;
+
 namespace MangoPay.SDK.Core.Enumerations
 {
     /// <summary>Transaction status enumeration.</summary>
+	[Flags]
     public enum TransactionStatus
     {
         /// <summary>Not specified.</summary>
-        NotSpecified,
+        NotSpecified	= 0x00,
 
         /// <summary>CREATED transaction status.</summary>
-        CREATED, 
+        CREATED			= 0x01, 
 
         /// <summary>SUCCEEDED transaction status.</summary>
-        SUCCEEDED, 
+        SUCCEEDED		= 0x02, 
 
         /// <summary>FAILED transaction status.</summary>
-        FAILED
+        FAILED			= 0x04
     }
 }

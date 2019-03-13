@@ -1,4 +1,4 @@
-Mangopay .NET SDK [![Build Status](https://travis-ci.org/Mangopay/mangopay2-net-sdk.svg?branch=master)](https://travis-ci.org/Mangopay/mangopay2-net-sdk)
+MANGOPAY .NET SDK [![Build Status](https://travis-ci.org/Mangopay/mangopay2-net-sdk.svg?branch=master)](https://travis-ci.org/Mangopay/mangopay2-net-sdk)
 =================================================
 MangopaySDK is a Microsoft .NET client library to work with
 [Mangopay REST API](http://docs.mangopay.com/api-references/).
@@ -37,7 +37,7 @@ You can get yourself a [free sandbox account](https://www.mangopay.com/signup/cr
 
 Configuration
 -------------------------------------------------
-Using the credential info from the signup process above, you should then set `api.Config.ClientId` to your Mangopay Client ID and `api.Config.ClientPassword` to your passphrase.
+Using the credential info from the signup process above, you should then set `api.Config.ClientId` to your MANGOPAY Client ID and `api.Config.ClientPassword` to your apiKey.
 
 `api.Config.BaseUrl` is set to sandbox environment by default. To enable production environment, set it to `https://api.mangopay.com`:
 
@@ -52,7 +52,7 @@ Below is the example showing how to configure SDK:
 
     // configure client credentails..
     api.Config.ClientId = "your-client-id";
-    api.Config.ClientPassword = "your-client-passphrase";
+    api.Config.ClientPassword = "your-client-api-key";
     api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
 	
 	// ..and optionally, set the logger you want (here, the console logger is used)
@@ -69,7 +69,7 @@ Sample usage (get, update and save an entity)
 
     // configuration
     api.Config.ClientId = "your-client-id";
-    api.Config.ClientPassword = "your-client-passphrase";
+    api.Config.ClientPassword = "your-client-api-key";
 
     // get some Natural user
     UserNaturalDTO user = api.Users.GetNatural(someUserId);

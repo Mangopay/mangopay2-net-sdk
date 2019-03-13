@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -11,6 +12,8 @@
     <AssemblyName>MangoPay.SDK</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,6 +86,7 @@
     <Compile Include="Core\AuthorizationTokenManager.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\EnumerationConverter.cs" />
+    <Compile Include="Core\Enumerations\AVSResult.cs" />
     <Compile Include="Core\Enumerations\BankingAliasType.cs" />
     <Compile Include="Core\Enumerations\BankAccountType.cs" />
     <Compile Include="Core\Enumerations\CapacityType.cs" />
@@ -122,6 +126,8 @@
     <Compile Include="Core\FilterDisputes.cs" />
     <Compile Include="Core\FilterKycDocuments.cs" />
     <Compile Include="Core\FilterMandates.cs" />
+    <Compile Include="Core\FilterRefunds.cs" />
+    <Compile Include="Core\FilterPreAuthorizations.cs" />
     <Compile Include="Core\FilterReports.cs" />
     <Compile Include="Core\FilterReportsList.cs" />
     <Compile Include="Core\LastRequestInfo.cs" />
@@ -131,6 +137,7 @@
     <Compile Include="Core\UnixDefaultDateTimeConverter.cs" />
     <Compile Include="Core\UnixDateTimeConverter.cs" />
     <Compile Include="Entities\Address.cs" />
+    <Compile Include="Entities\Billing.cs" />
     <Compile Include="Entities\EntityPutBase.cs" />
     <Compile Include="Entities\EntityPostBase.cs" />
     <Compile Include="Core\Enumerations\EventType.cs" />
@@ -287,6 +294,7 @@
     <Compile Include="Entities\PUT\UserNaturalPutDTO.cs" />
     <Compile Include="Entities\PUT\WalletPutDTO.cs" />
     <Compile Include="Entities\Scopes.cs" />
+    <Compile Include="Entities\SecurityInfo.cs" />
     <Compile Include="Entities\ShippingAddress.cs" />
     <Compile Include="Entities\Transport\FilterReportsTransport.cs" />
     <Compile Include="Entities\Transport\ReportRequestTransportDTO.cs" />
@@ -299,6 +307,12 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

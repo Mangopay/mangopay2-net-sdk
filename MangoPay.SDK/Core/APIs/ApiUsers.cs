@@ -341,13 +341,26 @@ namespace MangoPay.SDK.Core.APIs
 			return this.UpdateObject<BankAccountDTO, DisactivateBankAccountPutDTO>(MethodKey.UsersSaveBankAccount, bankAccount, userId, bankAccountId);
 		}
 
-        /// <summary>Gets transactions for user.</summary>
-        /// <param name="userId">User identifier.</param>
-        /// <param name="pagination">Pagination.</param>
-        /// <param name="filter">Filter.</param>
-        /// <param name="sort">Sort.</param>
-        /// <returns>Collection of user's transactions.</returns>
-        public ListPaginated<TransactionDTO> GetTransactions(String userId, Pagination pagination, FilterTransactions filter, Sort sort = null)
+		/// <summary>Lists transactions for a bank account</summary>
+		/// <param name="bankAccountId">Id of the bank account to get transactions</param>
+		/// <param name="pagination">Pagination.</param>
+		/// <param name="filter">Filter.</param>
+		/// <param name="sort">Sort.</param>
+		/// <returns>List of transactions for a bank account</returns>
+		public ListPaginated<TransactionDTO> GetTransactionsForBankAccount(string bankAccountId, Pagination pagination, FilterTransactions filters, Sort sort = null)
+		{
+			if (filters == null) filters = new FilterTransactions();
+
+			return GetList<TransactionDTO>(MethodKey.BankAccountsGetTransactions, pagination, bankAccountId, sort, filters.GetValues());
+		}
+
+		/// <summary>Gets transactions for user.</summary>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="pagination">Pagination.</param>
+		/// <param name="filter">Filter.</param>
+		/// <param name="sort">Sort.</param>
+		/// <returns>Collection of user's transactions.</returns>
+		public ListPaginated<TransactionDTO> GetTransactions(String userId, Pagination pagination, FilterTransactions filter, Sort sort = null)
         {
             return this.GetList<TransactionDTO>(MethodKey.UsersAllTransactions, pagination, userId, sort, filter.GetValues());
         }

@@ -29,106 +29,106 @@ namespace MangoPay.SDK.Tests
         private static KycDocumentDTO _johnsKycDocument;
         private static PayOutBankWireDTO _johnsPayOutForCardDirect;
         private static HookDTO _johnsHook;
-		private static Dictionary<ReportType, ReportRequestDTO> _johnsReports;
+        private static Dictionary<ReportType, ReportRequestDTO> _johnsReports;
 
         public BaseTest()
         {
             this.Api = BuildNewMangoPayApi();
-			_johnsReports = new Dictionary<ReportType, ReportRequestDTO>();
+            _johnsReports = new Dictionary<ReportType, ReportRequestDTO>();
 
-		}
+        }
 
-		protected static List<UserNaturalPostDTO> UserNaturalPostCollection
-		{
-			get
-			{
-				return new List<UserNaturalPostDTO>(){
-					new UserNaturalPostDTO(
-					"john.doenatural@natual1.com",
-					"JohnNatural1",
-					"DoeNatural1",
-					new DateTime(1985, 12, 21, 0, 0, 0),
-					CountryIso.DE,
-					CountryIso.DE)
-					{
-					Address = new Address()
-					{
-						AddressLine1 = "Address line Natural1 1",
-						AddressLine2 = "Address line Natural1 2",
-						City = "CityNatural1",
-						Country = CountryIso.PL,
-						PostalCode = "11222",
-						Region = "RegionNatural1"
-					},
-					Occupation = "programmer1",
-					IncomeRange = 5,
-					Capacity = CapacityType.NORMAL
-					},
+        protected static List<UserNaturalPostDTO> UserNaturalPostCollection
+        {
+            get
+            {
+                return new List<UserNaturalPostDTO>(){
+                    new UserNaturalPostDTO(
+                    "john.doenatural@natual1.com",
+                    "JohnNatural1",
+                    "DoeNatural1",
+                    new DateTime(1985, 12, 21, 0, 0, 0),
+                    CountryIso.DE,
+                    CountryIso.DE)
+                    {
+                    Address = new Address()
+                    {
+                        AddressLine1 = "Address line Natural1 1",
+                        AddressLine2 = "Address line Natural1 2",
+                        City = "CityNatural1",
+                        Country = CountryIso.PL,
+                        PostalCode = "11222",
+                        Region = "RegionNatural1"
+                    },
+                    Occupation = "programmer1",
+                    IncomeRange = 5,
+                    Capacity = CapacityType.NORMAL
+                    },
 
-					new UserNaturalPostDTO(
-					"john.doenatural@natual2.com",
-					"JohnNatural2",
-					"DoeNatural2",
-					new DateTime(1985, 12, 21, 0, 0, 0),
-					CountryIso.DE,
-					CountryIso.DE)
-					{
-					Address = new Address()
-					{
-						AddressLine1 = "Address line Natural2 1",
-						AddressLine2 = "Address line Natural2 2",
-						City = "CityNatural2",
-						Country = CountryIso.PL,
-						PostalCode = "11222",
-						Region = "RegionNatural2"
-					},
-					Occupation = "programmer2",
-					IncomeRange = 3,
-					Capacity = CapacityType.NORMAL
+                    new UserNaturalPostDTO(
+                    "john.doenatural@natual2.com",
+                    "JohnNatural2",
+                    "DoeNatural2",
+                    new DateTime(1985, 12, 21, 0, 0, 0),
+                    CountryIso.DE,
+                    CountryIso.DE)
+                    {
+                    Address = new Address()
+                    {
+                        AddressLine1 = "Address line Natural2 1",
+                        AddressLine2 = "Address line Natural2 2",
+                        City = "CityNatural2",
+                        Country = CountryIso.PL,
+                        PostalCode = "11222",
+                        Region = "RegionNatural2"
+                    },
+                    Occupation = "programmer2",
+                    IncomeRange = 3,
+                    Capacity = CapacityType.NORMAL
                     }
-				};
-			}
-		}
+                };
+            }
+        }
 
-		protected static UserLegalPostDTO CreateUserLegalPost()
-		{
-			UserLegalPostDTO user = new UserLegalPostDTO(
-			  "john.doe@sample.org",
-			  "MartixSampleOrg",
-			  LegalPersonType.BUSINESS,
-			  "JohnUbo",
-			  "DoeUbo",
-			  new DateTime(1975, 12, 21, 0, 0, 0),
-			  CountryIso.PL,
-			  CountryIso.PL);
+        protected static UserLegalPostDTO CreateUserLegalPost()
+        {
+            UserLegalPostDTO user = new UserLegalPostDTO(
+              "john.doe@sample.org",
+              "MartixSampleOrg",
+              LegalPersonType.BUSINESS,
+              "JohnUbo",
+              "DoeUbo",
+              new DateTime(1975, 12, 21, 0, 0, 0),
+              CountryIso.PL,
+              CountryIso.PL);
 
-			user.HeadquartersAddress = new Address
-			{
-				AddressLine1 = "Address line ubo 1",
-				AddressLine2 = "Address line ubo 2",
-				City = "CityUbo",
-				Country = CountryIso.PL,
-				PostalCode = "11222",
-				Region = "RegionUbo"
-			};
+            user.HeadquartersAddress = new Address
+            {
+                AddressLine1 = "Address line ubo 1",
+                AddressLine2 = "Address line ubo 2",
+                City = "CityUbo",
+                Country = CountryIso.PL,
+                PostalCode = "11222",
+                Region = "RegionUbo"
+            };
 
-			user.LegalRepresentativeAddress = new Address
-			{
-				AddressLine1 = "Address line ubo 1",
-				AddressLine2 = "Address line ubo 2",
-				City = "CityUbo",
-				Country = CountryIso.PL,
-				PostalCode = "11222",
-				Region = "RegionUbo"
-			};
+            user.LegalRepresentativeAddress = new Address
+            {
+                AddressLine1 = "Address line ubo 1",
+                AddressLine2 = "Address line ubo 2",
+                City = "CityUbo",
+                Country = CountryIso.PL,
+                PostalCode = "11222",
+                Region = "RegionUbo"
+            };
 
-			user.LegalRepresentativeEmail = "john.doe@sample.org";
-			user.LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0);
-			user.Email = "john.doe@sample.org";
-			return user;
-		}
+            user.LegalRepresentativeEmail = "john.doe@sample.org";
+            user.LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0);
+            user.Email = "john.doe@sample.org";
+            return user;
+        }
 
-		protected MangoPayApi BuildNewMangoPayApi()
+        protected MangoPayApi BuildNewMangoPayApi()
         {
             MangoPayApi api = new MangoPayApi();
 
@@ -136,7 +136,7 @@ namespace MangoPay.SDK.Tests
             api.Config.ClientId = "sdk-unit-tests";
             api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
             api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
-			      api.Config.ApiVersion = "v2.01";
+            api.Config.ApiVersion = "v2.01";
             api.Config.LoggerFactoryAdapter = new ConsoleOutLoggerFactoryAdapter();
 
             // register storage strategy for tests
@@ -152,12 +152,12 @@ namespace MangoPay.SDK.Tests
                 UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
                 user.Occupation = "programmer";
                 user.IncomeRange = 3;
-				user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
-				user.Capacity = CapacityType.DECLARATIVE;
+                user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
+                user.Capacity = CapacityType.DECLARATIVE;
 
                 BaseTest._john = this.Api.Users.Create(user);
 
-				BaseTest._johnsWallet = null;
+                BaseTest._johnsWallet = null;
             }
             return BaseTest._john;
         }
@@ -167,10 +167,10 @@ namespace MangoPay.SDK.Tests
             UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
             user.Occupation = "programmer";
             user.IncomeRange = 3;
-			user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
-			user.Capacity = CapacityType.DECLARATIVE;
+            user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
+            user.Capacity = CapacityType.DECLARATIVE;
 
-			return this.Api.Users.Create(user);
+            return this.Api.Users.Create(user);
         }
 
         protected UserLegalDTO GetMatrix()
@@ -178,9 +178,9 @@ namespace MangoPay.SDK.Tests
             if (BaseTest._matrix == null)
             {
                 UserNaturalDTO john = this.GetJohn();
-				var birthday = john.Birthday.HasValue ? john.Birthday.Value : new DateTime();
-				UserLegalPostDTO user = new UserLegalPostDTO(john.Email, "MartixSampleOrg", LegalPersonType.BUSINESS, john.FirstName, john.LastName, birthday, john.Nationality, john.CountryOfResidence);
-				user.HeadquartersAddress = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
+                var birthday = john.Birthday.HasValue ? john.Birthday.Value : new DateTime();
+                UserLegalPostDTO user = new UserLegalPostDTO(john.Email, "MartixSampleOrg", LegalPersonType.BUSINESS, john.FirstName, john.LastName, birthday, john.Nationality, john.CountryOfResidence);
+                user.HeadquartersAddress = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
                 user.LegalRepresentativeAddress = john.Address;
                 user.LegalRepresentativeEmail = john.Email;
                 user.LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0);
@@ -191,18 +191,18 @@ namespace MangoPay.SDK.Tests
             return BaseTest._matrix;
         }
 
-		protected BankAccountIbanDTO GetJohnsAccount(bool recreate = false)
-		{
-			if (BaseTest._johnsAccount == null || recreate)
-			{
-				UserNaturalDTO john = this.GetJohn();
-				BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154");
-				account.UserId = john.Id;
-				account.BIC = "CMBRFR2BCME";
-				BaseTest._johnsAccount = this.Api.Users.CreateBankAccountIban(john.Id, account);
-			}
-			return BaseTest._johnsAccount;
-		}
+        protected BankAccountIbanDTO GetJohnsAccount(bool recreate = false)
+        {
+            if (BaseTest._johnsAccount == null || recreate)
+            {
+                UserNaturalDTO john = this.GetJohn();
+                BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154");
+                account.UserId = john.Id;
+                account.BIC = "CMBRFR2BCME";
+                BaseTest._johnsAccount = this.Api.Users.CreateBankAccountIban(john.Id, account);
+            }
+            return BaseTest._johnsAccount;
+        }
 
         protected WalletDTO GetJohnsWallet()
         {
@@ -243,55 +243,55 @@ namespace MangoPay.SDK.Tests
         protected WalletDTO GetJohnsWalletWithMoney(int amount)
         {
             if (BaseTest._johnsWalletWithMoney == null)
-				BaseTest._johnsWalletWithMoney = GetNewJohnsWalletWithMoney(amount);
+                BaseTest._johnsWalletWithMoney = GetNewJohnsWalletWithMoney(amount);
 
             return BaseTest._johnsWalletWithMoney;
         }
 
-		/// <summary>Creates new wallet for John.</summary>
-		/// <param name="amount">Initial wallet's money amount.</param>
-		/// <returns>Wallet entity instance returned from API.</returns>
-		protected WalletDTO GetNewJohnsWalletWithMoney(int amount, UserNaturalDTO user = null)
-		{
-			UserNaturalDTO john = user;
-			if (john == null)
-				john = this.GetJohn();
+        /// <summary>Creates new wallet for John.</summary>
+        /// <param name="amount">Initial wallet's money amount.</param>
+        /// <returns>Wallet entity instance returned from API.</returns>
+        protected WalletDTO GetNewJohnsWalletWithMoney(int amount, UserNaturalDTO user = null)
+        {
+            UserNaturalDTO john = user;
+            if (john == null)
+                john = this.GetJohn();
 
-			// create wallet with money
-			WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
+            // create wallet with money
+            WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
 
-			var johnsWalletWithMoney = this.Api.Wallets.Create(wallet);
+            var johnsWalletWithMoney = this.Api.Wallets.Create(wallet);
 
-			CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(johnsWalletWithMoney.Owners[0], CurrencyIso.EUR);
-			CardRegistrationDTO cardRegistration = this.Api.CardRegistrations.Create(cardRegistrationPost);
+            CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(johnsWalletWithMoney.Owners[0], CurrencyIso.EUR);
+            CardRegistrationDTO cardRegistration = this.Api.CardRegistrations.Create(cardRegistrationPost);
 
-			CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
-			cardRegistrationPut.RegistrationData = this.GetPaylineCorrectRegistartionData(cardRegistration);
-			cardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
+            CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
+            cardRegistrationPut.RegistrationData = this.GetPaylineCorrectRegistartionData(cardRegistration);
+            cardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
 
-			CardDTO card = this.Api.Cards.Get(cardRegistration.CardId);
+            CardDTO card = this.Api.Cards.Get(cardRegistration.CardId);
 
-			// create pay-in CARD DIRECT
-			PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
-				new Money { Amount = amount, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR },
-				johnsWalletWithMoney.Id, "http://test.com", card.Id);
+            // create pay-in CARD DIRECT
+            PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
+                new Money { Amount = amount, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR },
+                johnsWalletWithMoney.Id, "http://test.com", card.Id);
 
-			payIn.CardType = card.CardType;
+            payIn.CardType = card.CardType;
 
-			// create Pay-In
-			this.Api.PayIns.CreateCardDirect(payIn);
-			
-			return this.Api.Wallets.Get(johnsWalletWithMoney.Id);
-		}
+            // create Pay-In
+            this.Api.PayIns.CreateCardDirect(payIn);
 
-		protected PayInCardWebDTO GetJohnsPayInCardWeb()
+            return this.Api.Wallets.Get(johnsWalletWithMoney.Id);
+        }
+
+        protected PayInCardWebDTO GetJohnsPayInCardWeb()
         {
             if (BaseTest._johnsPayInCardWeb == null)
             {
                 WalletDTO wallet = this.GetJohnsWallet();
                 UserNaturalDTO user = this.GetJohn();
 
-				PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
+                PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
                 BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
             }
@@ -299,12 +299,12 @@ namespace MangoPay.SDK.Tests
             return BaseTest._johnsPayInCardWeb;
         }
 
-		protected PayInCardWebDTO GetJohnsNewPayInCardWeb()
-		{
-			BaseTest._johnsPayInCardWeb = null;
+        protected PayInCardWebDTO GetJohnsNewPayInCardWeb()
+        {
+            BaseTest._johnsPayInCardWeb = null;
 
-			return GetJohnsPayInCardWeb();
-		}
+            return GetJohnsPayInCardWeb();
+        }
 
         protected PayInCardWebDTO GetJohnsPayInCardWeb(string walletId)
         {
@@ -312,7 +312,7 @@ namespace MangoPay.SDK.Tests
             {
                 UserNaturalDTO user = this.GetJohn();
 
-				PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
+                PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
                 BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
             }
@@ -325,7 +325,7 @@ namespace MangoPay.SDK.Tests
 
             UserNaturalDTO user = this.GetJohn();
 
-			PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
+            PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
             return this.Api.PayIns.CreateCardWeb(payIn);
         }
@@ -335,7 +335,7 @@ namespace MangoPay.SDK.Tests
             WalletDTO wallet = this.GetJohnsWallet();
             UserNaturalDTO user = this.GetJohn();
 
-			PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
+            PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
             BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
 
@@ -346,19 +346,57 @@ namespace MangoPay.SDK.Tests
         {
             return GetNewPayInCardDirect(null);
         }
+        protected PayInCardDirectDTO GetNewPayInCardDirectWithBilling()
+        {
+            return GetNewPayInCardDirectWithBilling(null);
+        }
 
-		/// <summary>Creates PayIn Card Direct object.</summary>
-		/// <param name="userId">User identifier.</param>
-		/// <returns>PayIn Card Direct instance returned from API.</returns>
-		protected PayInCardDirectDTO GetNewPayInCardDirect(String userId)
-		{
-			return GetNewPayInCardDirect(userId, null);
-		}
+        /// <summary>Creates PayIn Card Direct object.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>PayIn Card Direct instance returned from API.</returns>
+        protected PayInCardDirectDTO GetNewPayInCardDirect(String userId)
+        {
+            return GetNewPayInCardDirect(userId, null);
+        }
+        /// <summary>Creates PayIn Card Direct object with billing information.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>PayIn Card Direct instance returned from API.</returns>
+        protected PayInCardDirectDTO GetNewPayInCardDirectWithBilling(String userId)
+        {
+            return GetNewPayInCardDirectWithBilling(userId, null);
+        }
 
-		/// <summary>Creates PayIn Card Direct object.</summary>
-		/// <param name="userId">User identifier.</param>
-		/// <returns>PayIn Card Direct instance returned from API.</returns>
-		protected PayInCardDirectDTO GetNewPayInCardDirect(String userId, string idempotencyKey)
+        /// <summary>Creates PayIn Card Direct object.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>PayIn Card Direct instance returned from API.</returns>
+        protected PayInCardDirectDTO GetNewPayInCardDirect(String userId, string idempotencyKey)
+        {
+
+            PayInCardDirectPostDTO payIn = GetPayInCardDirectPost(userId, idempotencyKey);
+            return this.Api.PayIns.CreateCardDirect(payIn);
+        }
+
+        /// <summary>Creates PayIn Card Direct object with billing details.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>PayIn Card Direct instance returned from API.</returns>
+        protected PayInCardDirectDTO GetNewPayInCardDirectWithBilling(String userId, string idempotencyKey)
+        {
+
+            PayInCardDirectPostDTO payIn = GetPayInCardDirectPost(userId, idempotencyKey);
+            Billing billing = new Billing();
+            Address address = new Address();
+            address.AddressLine1 = "Test address line 1";
+            address.AddressLine2 = "Test address line 2";
+            address.City = "Test city";
+            address.Country = CountryIso.RO;
+            address.PostalCode = "65400";
+            billing.Address = address;
+            payIn.Billing = billing;
+
+            return this.Api.PayIns.CreateCardDirect(payIn);
+        }
+
+        protected PayInCardDirectPostDTO GetPayInCardDirectPost(String userId, string idempotencyKey)
         {
             WalletDTO wallet = this.GetJohnsWalletWithMoney();
 
@@ -386,14 +424,14 @@ namespace MangoPay.SDK.Tests
             // payment type as CARD
             payIn.CardType = card.CardType;
 
-            return this.Api.PayIns.CreateCardDirect(payIn);
+            return payIn;
         }
 
         protected PayOutBankWireDTO GetJohnsPayOutBankWire()
         {
             if (BaseTest._johnsPayOutBankWire == null)
             {
-                WalletDTO wallet = this.GetJohnsWallet();
+                WalletDTO wallet = this.GetJohnsWalletWithMoney();
                 UserNaturalDTO user = this.GetJohn();
                 BankAccountDTO account = this.GetJohnsAccount();
 
@@ -429,12 +467,12 @@ namespace MangoPay.SDK.Tests
 
         protected TransferDTO GetNewTransfer(WalletDTO walletIn = null)
         {
-			WalletDTO walletWithMoney = walletIn;
-			if (walletWithMoney == null)
-				walletWithMoney = this.GetJohnsWalletWithMoney();
+            WalletDTO walletWithMoney = walletIn;
+            if (walletWithMoney == null)
+                walletWithMoney = this.GetJohnsWalletWithMoney();
 
-			UserNaturalDTO user = this.GetJohn();
-			WalletPostDTO walletPost = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN EUR FOR TRANSFER", CurrencyIso.EUR);
+            UserNaturalDTO user = this.GetJohn();
+            WalletPostDTO walletPost = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN EUR FOR TRANSFER", CurrencyIso.EUR);
             WalletDTO wallet = this.Api.Wallets.Create(walletPost);
 
             TransferPostDTO transfer = new TransferPostDTO(user.Id, user.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletWithMoney.Id, wallet.Id);
@@ -455,18 +493,18 @@ namespace MangoPay.SDK.Tests
             return this.Api.Transfers.CreateRefund(transfer.Id, refund);
         }
 
-		/// <summary>Creates refund object for PayIn.</summary>
-		/// <param name="payIn">PayIn entity.</param>
-		/// <returns>Refund instance returned from API.</returns>
-		protected RefundDTO GetNewRefundForPayIn(PayInDTO payIn)
-		{
-			return GetNewRefundForPayIn(payIn, null);
-		}
+        /// <summary>Creates refund object for PayIn.</summary>
+        /// <param name="payIn">PayIn entity.</param>
+        /// <returns>Refund instance returned from API.</returns>
+        protected RefundDTO GetNewRefundForPayIn(PayInDTO payIn)
+        {
+            return GetNewRefundForPayIn(payIn, null);
+        }
 
-		/// <summary>Creates refund object for PayIn.</summary>
-		/// <param name="payIn">PayIn entity.</param>
-		/// <returns>Refund instance returned from API.</returns>
-		protected RefundDTO GetNewRefundForPayIn(PayInDTO payIn, string idempotencyKey)
+        /// <summary>Creates refund object for PayIn.</summary>
+        /// <param name="payIn">PayIn entity.</param>
+        /// <returns>Refund instance returned from API.</returns>
+        protected RefundDTO GetNewRefundForPayIn(PayInDTO payIn, string idempotencyKey)
         {
             UserNaturalDTO user = this.GetJohn();
 
@@ -478,11 +516,11 @@ namespace MangoPay.SDK.Tests
             fees.Currency = payIn.Fees.Currency;
 
             RefundPayInPostDTO refund = new RefundPayInPostDTO(user.Id, fees, debitedFunds);
-			return this.Api.PayIns.CreateRefund(idempotencyKey, payIn.Id, refund);
+            return this.Api.PayIns.CreateRefund(idempotencyKey, payIn.Id, refund);
         }
 
-		/// <summary>Creates card registration object.</summary>
-		/// <param name="cardType">Card type.</param>
+        /// <summary>Creates card registration object.</summary>
+        /// <param name="cardType">Card type.</param>
         /// <returns>CardRegistration instance returned from API.</returns>
         protected CardRegistrationDTO GetJohnsCardRegistration(CardType cardType = CardType.CB_VISA_MASTERCARD)
         {
@@ -490,7 +528,7 @@ namespace MangoPay.SDK.Tests
             {
                 UserNaturalDTO user = this.GetJohn();
 
-				CardRegistrationPostDTO cardRegistration = new CardRegistrationPostDTO(user.Id, CurrencyIso.EUR, cardType);
+                CardRegistrationPostDTO cardRegistration = new CardRegistrationPostDTO(user.Id, CurrencyIso.EUR, cardType);
                 cardRegistration.Tag = "DefaultTag";
 
                 BaseTest._johnsCardRegistration = this.Api.CardRegistrations.Create(cardRegistration);
@@ -499,29 +537,36 @@ namespace MangoPay.SDK.Tests
             return BaseTest._johnsCardRegistration;
         }
 
-		/// <summary>Creates new card registration object.</summary>
-		/// <param name="cardType">Card type.</param>
-		/// <returns>CardRegistration instance returned from API.</returns>
-		protected CardRegistrationDTO GetNewJohnsCardRegistration(CardType cardType = CardType.CB_VISA_MASTERCARD)
-		{
-			BaseTest._johnsCardRegistration = null;
+        /// <summary>Creates new card registration object.</summary>
+        /// <param name="cardType">Card type.</param>
+        /// <returns>CardRegistration instance returned from API.</returns>
+        protected CardRegistrationDTO GetNewJohnsCardRegistration(CardType cardType = CardType.CB_VISA_MASTERCARD)
+        {
+            BaseTest._johnsCardRegistration = null;
 
-			return GetJohnsCardRegistration(cardType);
-		}
+            return GetJohnsCardRegistration(cardType);
+        }
 
-		/// <summary>Creates card registration object.</summary>
-		/// <returns>CardPreAuthorization instance returned from API.</returns>
-		protected CardPreAuthorizationDTO GetJohnsCardPreAuthorization()
-		{
-			return GetJohnsCardPreAuthorization(null);
-		}
+        /// <summary>Creates card registration object.</summary>
+        /// <returns>CardPreAuthorization instance returned from API.</returns>
+        protected CardPreAuthorizationDTO GetJohnsCardPreAuthorization()
+        {
+            return GetJohnsCardPreAuthorization(null);
+        }
 
-		/// <summary>Creates card registration object.</summary>
-		/// <returns>CardPreAuthorization instance returned from API.</returns>
-		protected CardPreAuthorizationDTO GetJohnsCardPreAuthorization(string idempotencyKey)
+        /// <summary>Creates card registration object.</summary>
+        /// <returns>CardPreAuthorization instance returned from API.</returns>
+        protected CardPreAuthorizationDTO GetJohnsCardPreAuthorization(string idempotencyKey)
         {
             UserNaturalDTO user = this.GetJohn();
-            CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(user.Id, CurrencyIso.EUR);
+            CardPreAuthorizationPostDTO cardPreAuthorization = getPreAuthorization(user.Id);
+
+            return this.Api.CardPreAuthorizations.Create(idempotencyKey, cardPreAuthorization);
+        }
+
+        protected CardPreAuthorizationPostDTO getPreAuthorization(string userId)
+        {
+            CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(userId, CurrencyIso.EUR);
             CardRegistrationDTO newCardRegistration = this.Api.CardRegistrations.Create(cardRegistrationPost);
 
             CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
@@ -529,9 +574,10 @@ namespace MangoPay.SDK.Tests
             cardRegistrationPut.RegistrationData = registrationData;
             CardRegistrationDTO getCardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, newCardRegistration.Id);
 
-            CardPreAuthorizationPostDTO cardPreAuthorization = new CardPreAuthorizationPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, SecureMode.DEFAULT, getCardRegistration.CardId, "http://test.com");
+            CardPreAuthorizationPostDTO cardPreAuthorization = new CardPreAuthorizationPostDTO(userId, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, SecureMode.DEFAULT, getCardRegistration.CardId, "http://test.com");
 
-            return this.Api.CardPreAuthorizations.Create(idempotencyKey, cardPreAuthorization);
+            return cardPreAuthorization;
+
         }
 
         protected KycDocumentDTO GetJohnsKycDocument()
@@ -563,13 +609,13 @@ namespace MangoPay.SDK.Tests
             request.AddParameter("data", cardRegistration.PreregistrationData);
             request.AddParameter("accessKeyRef", cardRegistration.AccessKey);
             request.AddParameter("cardNumber", "4970100000000154");
-            request.AddParameter("cardExpirationDate", "1218");
+            request.AddParameter("cardExpirationDate", "1226");
             request.AddParameter("cardCvx", "123");
 
-			// Payline requires TLS
-			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            // Payline requires TLS
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-			IRestResponse response = client.Execute(request);
+            IRestResponse response = client.Execute(request);
 
             String responseString = response.Content;
 
@@ -601,16 +647,16 @@ namespace MangoPay.SDK.Tests
             return BaseTest._johnsHook;
         }
 
-		protected ReportRequestDTO GetJohnsReport(ReportType reportType)
-		{
-			if (!BaseTest._johnsReports.ContainsKey(reportType))
-			{
-				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
-				BaseTest._johnsReports.Add(reportType, this.Api.Reports.Create(reportPost));
-			}
+        protected ReportRequestDTO GetJohnsReport(ReportType reportType)
+        {
+            if (!BaseTest._johnsReports.ContainsKey(reportType))
+            {
+                ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
+                BaseTest._johnsReports.Add(reportType, this.Api.Reports.Create(reportPost));
+            }
 
-			return BaseTest._johnsReports[reportType];
-		}
+            return BaseTest._johnsReports[reportType];
+        }
 
         protected void AssertEqualInputProps<T>(T entity1, T entity2)
         {
@@ -624,13 +670,13 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual((entity1 as UserNaturalDTO).FirstName, (entity2 as UserNaturalDTO).FirstName);
                 Assert.AreEqual((entity1 as UserNaturalDTO).LastName, (entity2 as UserNaturalDTO).LastName);
                 Assert.AreEqual((entity1 as UserNaturalDTO).Email, (entity2 as UserNaturalDTO).Email);
-				Assert.AreEqual((entity1 as UserNaturalDTO).Address.AddressLine1, (entity2 as UserNaturalDTO).Address.AddressLine1);
-				Assert.AreEqual((entity1 as UserNaturalDTO).Address.AddressLine2, (entity2 as UserNaturalDTO).Address.AddressLine2);
-				Assert.AreEqual((entity1 as UserNaturalDTO).Address.City, (entity2 as UserNaturalDTO).Address.City);
-				Assert.AreEqual((entity1 as UserNaturalDTO).Address.Country, (entity2 as UserNaturalDTO).Address.Country);
-				Assert.AreEqual((entity1 as UserNaturalDTO).Address.PostalCode, (entity2 as UserNaturalDTO).Address.PostalCode);
-				Assert.AreEqual((entity1 as UserNaturalDTO).Address.Region, (entity2 as UserNaturalDTO).Address.Region);
-				Assert.AreEqual((entity1 as UserNaturalDTO).Birthday, (entity2 as UserNaturalDTO).Birthday);
+                Assert.AreEqual((entity1 as UserNaturalDTO).Address.AddressLine1, (entity2 as UserNaturalDTO).Address.AddressLine1);
+                Assert.AreEqual((entity1 as UserNaturalDTO).Address.AddressLine2, (entity2 as UserNaturalDTO).Address.AddressLine2);
+                Assert.AreEqual((entity1 as UserNaturalDTO).Address.City, (entity2 as UserNaturalDTO).Address.City);
+                Assert.AreEqual((entity1 as UserNaturalDTO).Address.Country, (entity2 as UserNaturalDTO).Address.Country);
+                Assert.AreEqual((entity1 as UserNaturalDTO).Address.PostalCode, (entity2 as UserNaturalDTO).Address.PostalCode);
+                Assert.AreEqual((entity1 as UserNaturalDTO).Address.Region, (entity2 as UserNaturalDTO).Address.Region);
+                Assert.AreEqual((entity1 as UserNaturalDTO).Birthday, (entity2 as UserNaturalDTO).Birthday);
                 Assert.AreEqual((entity1 as UserNaturalDTO).Nationality, (entity2 as UserNaturalDTO).Nationality);
                 Assert.AreEqual((entity1 as UserNaturalDTO).CountryOfResidence, (entity2 as UserNaturalDTO).CountryOfResidence);
                 Assert.AreEqual((entity1 as UserNaturalDTO).Occupation, (entity2 as UserNaturalDTO).Occupation);
@@ -641,13 +687,13 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual((entity1 as UserLegalDTO).Tag, (entity2 as UserLegalDTO).Tag);
                 Assert.AreEqual((entity1 as UserLegalDTO).PersonType, (entity2 as UserLegalDTO).PersonType);
                 Assert.AreEqual((entity1 as UserLegalDTO).Name, (entity2 as UserLegalDTO).Name);
-				Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.AddressLine1, (entity2 as UserLegalDTO).HeadquartersAddress.AddressLine1);
-				Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.AddressLine2, (entity2 as UserLegalDTO).HeadquartersAddress.AddressLine2);
-				Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.City, (entity2 as UserLegalDTO).HeadquartersAddress.City);
-				Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.Country, (entity2 as UserLegalDTO).HeadquartersAddress.Country);
-				Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.PostalCode, (entity2 as UserLegalDTO).HeadquartersAddress.PostalCode);
-				Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.Region, (entity2 as UserLegalDTO).HeadquartersAddress.Region);
-				Assert.AreEqual((entity1 as UserLegalDTO).LegalRepresentativeFirstName, (entity2 as UserLegalDTO).LegalRepresentativeFirstName);
+                Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.AddressLine1, (entity2 as UserLegalDTO).HeadquartersAddress.AddressLine1);
+                Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.AddressLine2, (entity2 as UserLegalDTO).HeadquartersAddress.AddressLine2);
+                Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.City, (entity2 as UserLegalDTO).HeadquartersAddress.City);
+                Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.Country, (entity2 as UserLegalDTO).HeadquartersAddress.Country);
+                Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.PostalCode, (entity2 as UserLegalDTO).HeadquartersAddress.PostalCode);
+                Assert.AreEqual((entity1 as UserLegalDTO).HeadquartersAddress.Region, (entity2 as UserLegalDTO).HeadquartersAddress.Region);
+                Assert.AreEqual((entity1 as UserLegalDTO).LegalRepresentativeFirstName, (entity2 as UserLegalDTO).LegalRepresentativeFirstName);
                 Assert.AreEqual((entity1 as UserLegalDTO).LegalRepresentativeLastName, (entity2 as UserLegalDTO).LegalRepresentativeLastName);
                 //Assert.AreEqual("***** TEMPORARY API ISSUE: RETURNED OBJECT MISSES THIS PROP AFTER CREATION *****", (entity1 as UserLegal).LegalRepresentativeAddress, (entity2 as UserLegal).LegalRepresentativeAddress);
                 Assert.AreEqual((entity1 as UserLegalDTO).LegalRepresentativeEmail, (entity2 as UserLegalDTO).LegalRepresentativeEmail);
@@ -662,13 +708,13 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual((entity1 as BankAccountDTO).UserId, (entity2 as BankAccountDTO).UserId);
                 Assert.AreEqual((entity1 as BankAccountDTO).Type, (entity2 as BankAccountDTO).Type);
                 Assert.AreEqual((entity1 as BankAccountDTO).OwnerName, (entity2 as BankAccountDTO).OwnerName);
-				Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.AddressLine1, (entity2 as BankAccountDTO).OwnerAddress.AddressLine1);
-				Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.AddressLine2, (entity2 as BankAccountDTO).OwnerAddress.AddressLine2);
-				Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.City, (entity2 as BankAccountDTO).OwnerAddress.City);
-				Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.Country, (entity2 as BankAccountDTO).OwnerAddress.Country);
-				Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.PostalCode, (entity2 as BankAccountDTO).OwnerAddress.PostalCode);
-				Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.Region, (entity2 as BankAccountDTO).OwnerAddress.Region);
-				if ((entity1 as BankAccountDTO).Type == BankAccountType.IBAN)
+                Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.AddressLine1, (entity2 as BankAccountDTO).OwnerAddress.AddressLine1);
+                Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.AddressLine2, (entity2 as BankAccountDTO).OwnerAddress.AddressLine2);
+                Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.City, (entity2 as BankAccountDTO).OwnerAddress.City);
+                Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.Country, (entity2 as BankAccountDTO).OwnerAddress.Country);
+                Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.PostalCode, (entity2 as BankAccountDTO).OwnerAddress.PostalCode);
+                Assert.AreEqual((entity1 as BankAccountDTO).OwnerAddress.Region, (entity2 as BankAccountDTO).OwnerAddress.Region);
+                if ((entity1 as BankAccountDTO).Type == BankAccountType.IBAN)
                 {
                     Assert.AreEqual((entity1 as BankAccountIbanDTO).IBAN, (entity2 as BankAccountIbanDTO).IBAN);
                     Assert.AreEqual((entity1 as BankAccountIbanDTO).BIC, (entity2 as BankAccountIbanDTO).BIC);
@@ -754,6 +800,16 @@ namespace MangoPay.SDK.Tests
             {
                 throw new ArgumentException("Unsupported type.");
             }
+        }
+
+        protected MandateDTO GetNewMandate()
+        {
+            string bankAccountId = GetJohnsAccount().Id;
+            string returnUrl = "http://test.test";
+            MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
+            MandateDTO mandate = Api.Mandates.Create(mandatePost);
+
+            return mandate;
         }
     }
 }

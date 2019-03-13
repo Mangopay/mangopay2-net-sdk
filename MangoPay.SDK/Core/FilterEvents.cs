@@ -24,9 +24,9 @@ namespace MangoPay.SDK.Core
             Dictionary<String, String> result = new Dictionary<String, String>();
 
 			if (Type != EventType.All)
-				result.Add(Constants.EVENTTYPE, Type.ToString());
+				result.Add(Constants.EVENTTYPE, Type.ToString("G").Replace(" ", ""));
 
-            UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
+			UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
 
             if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
             if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());
