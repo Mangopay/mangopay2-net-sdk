@@ -1,4 +1,4 @@
-MANGOPAY .NET SDK [![Build Status](https://travis-ci.org/Mangopay/mangopay2-net-sdk.svg?branch=master)](https://travis-ci.org/Mangopay/mangopay2-net-sdk)
+MANGOPAY .NET SDK [![Build status](https://ci.appveyor.com/api/projects/status/tjqm45kib3jf7n99/branch/master?svg=true)](https://ci.appveyor.com/project/Mangopay/mangopay2-net-sdk/branch/master)
 =================================================
 MangopaySDK is a Microsoft .NET client library to work with
 [Mangopay REST API](http://docs.mangopay.com/api-references/).
