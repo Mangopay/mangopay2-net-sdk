@@ -24,20 +24,5 @@ namespace MangoPay.SDK.Entities.GET
 		/// <summary>Whether the banking alias is active or not.</summary>
 		public bool Active { get; set; }
 
-	    /// <summary>
-	    /// IBAN generated
-	    /// </summary>
-	    public string IBAN { get; set; }
-
-	    /// <summary>
-	    /// BIC generated
-	    /// </summary>
-	    public string BIC { get; set; }
-
-	    /// <summary>
-	    /// Country (FR or LU)
-	    /// </summary>
-	    [JsonConverter(typeof(EnumerationConverter))]
-	    public CountryIso Country { get; set; }
     }
 }
