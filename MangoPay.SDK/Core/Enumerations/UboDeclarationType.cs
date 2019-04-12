@@ -2,8 +2,8 @@
 {
 	public enum UboDeclarationType
 	{
-		NotSpecified = 0,
-
+		INCOMPLETE =0,
+		
 		CREATED = 1,
 
 		VALIDATION_ASKED = 2,

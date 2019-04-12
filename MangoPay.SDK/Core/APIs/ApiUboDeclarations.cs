@@ -1,5 +1,6 @@
 ﻿using System;
 using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
@@ -13,28 +14,83 @@ namespace MangoPay.SDK.Core.APIs
 		{
 		}
 
-		public UboDeclarationDTO Create(UboDeclarationPostDTO uboDeclaration)
+		public UboDeclarationDTO Create(String userId)
 		{
-			return Create(null, uboDeclaration);
+			return CreateUboDeclaration(null, userId);
 		}
 
-		public UboDeclarationDTO Create(String idempotencyKey, UboDeclarationPostDTO uboDeclaration)
+		public ListPaginated<UboDeclarationDTO> GetUboDeclarationByUserId(String userId, Pagination pagination, Sort sort=null)
+		{
+			return GetList<UboDeclarationDTO>(
+				MethodKey.UboDeclarationsGet,
+				pagination,
+				sort,
+				userId
+				);
+		}
+
+		public UboDeclarationDTO GetUboDeclarationById(String userId, String uboDeclarationId)
+		{
+			return GetObject<UboDeclarationDTO>(
+				MethodKey.UboDeclarationGet, 
+				userId, 
+				uboDeclarationId
+			);
+		}
+
+		public UboDeclarationDTO CreateUboDeclaration(String idempotencyKey, String userId)
 		{
 			return CreateObject<UboDeclarationDTO, UboDeclarationPostDTO>(
 			  idempotencyKey,
 			  MethodKey.UboDeclarationCreate,
-			  uboDeclaration,
-			  uboDeclaration.UserId
+			  null,
+			  userId
 			);
 		}
 
-		public UboDeclarationDTO Update(UboDeclarationPutDTO uboDeclaration, String UboDeclarationId)
+		public UboDeclarationDTO UpdateUboDeclaration(UboDeclarationPutDTO uboDeclaration, String userId, String uboDeclarationId)
 		{
 			return UpdateObject<UboDeclarationDTO, UboDeclarationPutDTO>(
 			  MethodKey.UboDeclarationUpdate,
 			  uboDeclaration,
-			  UboDeclarationId
+			  userId,
+			 uboDeclarationId
 			);
-		}		
+		}
+		
+		public UboDTO GetUbo(String userId, String uboDeclarationId, String uboId)
+		{
+			return GetObject<UboDTO>(
+				MethodKey.UboGet, 
+				userId, 
+				uboDeclarationId, 
+				uboId);
+		}
+
+		public UboDTO CreateUbo(UboPostDTO ubo, String userId, String uboDeclarationId)
+		{
+			return CreateUbo(null, ubo, userId, uboDeclarationId);
+		}
+
+		public UboDTO CreateUbo(String idempotencyKey, UboPostDTO ubo, String userId, String uboDeclarationId)
+		{
+			return CreateObject<UboDTO, UboPostDTO>(
+				idempotencyKey,
+				MethodKey.UboCreate,
+				ubo,
+				userId,
+				uboDeclarationId);
+		}
+
+		public UboDTO UpdateUbo(UboPutDTO ubo, String userId, String uboDeclarationId, String uboId)
+		{
+			return UpdateObject<UboDTO, UboPutDTO>(
+				MethodKey.UboUpdate,
+				ubo,
+				userId,
+				uboDeclarationId,
+				uboId
+			);
+		}
 	}
 }

@@ -54,7 +54,7 @@ namespace MangoPay.SDK.Core.APIs
         {
 			if (filters == null) filters = new FilterReportsList();
 
-			ListPaginated<ReportRequestTransportDTO> resultTransport = this.GetList<ReportRequestTransportDTO>(MethodKey.ReportGetAll, pagination, null, sort, filters.GetValues());
+			ListPaginated<ReportRequestTransportDTO> resultTransport = this.GetList<ReportRequestTransportDTO>(MethodKey.ReportGetAll, pagination, sort, filters.GetValues());
 
 			List<ReportRequestDTO> result = new List<ReportRequestDTO>();
 			foreach (ReportRequestTransportDTO item in resultTransport)

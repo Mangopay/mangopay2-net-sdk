@@ -22,7 +22,7 @@ namespace MangoPay.SDK.Core.APIs
         {
             if (filter == null) filter = new FilterKycDocuments();
 
-            return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, null, sort, filter.GetValues());
+            return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, sort, filter.GetValues());
         }
 
         /// <summary>Gets KYC document.</summary>
@@ -41,7 +41,7 @@ namespace MangoPay.SDK.Core.APIs
 		public ListPaginated<DocumentConsultationDTO> GetDocumentConsultations(String kycDocumentId)
 		{
 			var endPoint = GetApiEndPoint(MethodKey.KycDocumentConsult);
-			endPoint.SetParameters(kycDocumentId);
+			endPoint.SetParameters(new []{kycDocumentId});
 			var rest = new RestTool(_root, true);
 			return rest.RequestList<DocumentConsultationDTO>(endPoint);
 		}
