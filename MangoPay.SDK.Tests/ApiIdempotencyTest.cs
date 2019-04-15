@@ -419,31 +419,20 @@ namespace MangoPay.SDK.Tests
 			string key = DateTime.Now.Ticks.ToString();
 
 			var refusedReasons = new UboRefusedReasonType[] {
-				UboRefusedReasonType.INVALID_DECLARED_UBO,
-				UboRefusedReasonType.INVALID_UBO_DETAILS
+				UboRefusedReasonType.MISSING_UBO,
+				UboRefusedReasonType.DECLARATION_DO_NOT_MATCH_UBO_INFORMATION
 			};
-
-			var userNaturallCollection = new List<UserNaturalDTO> { };
-
-			foreach (var user in UserNaturalPostCollection)
-			{
-                user.Capacity = CapacityType.DECLARATIVE;
-                var userNatural = Api.Users.Create(user);
-				userNaturallCollection.Add(userNatural);
-			}
-
+			
 			var userLegal = Api.Users.Create(CreateUserLegalPost());
 
 			UboDeclarationPostDTO uboDeclaration = new UboDeclarationPostDTO()
 			{
-				UserId = userLegal.Id,
 				Status = UboDeclarationType.CREATED,
-				DeclaredUBOs = userNaturallCollection.Select(x => x.Id).ToArray(),
-				RefusedReasonTypes = refusedReasons,
-				RefusedReasonMessage = "Refused Reason Message"
+				Reason = refusedReasons,
+				Message = "Refused Reason Message"
 			};
 
-			Api.UboDeclarations.Create(key, uboDeclaration);
+			Api.UboDeclarations.CreateUboDeclaration(key, userLegal.Id);
 
 			var result = Api.Idempotency.Get(key);
 

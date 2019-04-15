@@ -46,7 +46,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Collection of banking aliases instances.</returns>
 		public ListPaginated<BankingAliasDTO> GetAll(string walletId, Pagination pagination, Sort sort = null)
 		{
-			return this.GetList<BankingAliasDTO>(MethodKey.BankingAliasAll, pagination, walletId, sort);
+			return this.GetList<BankingAliasDTO>(MethodKey.BankingAliasAll, pagination, sort, walletId);
 		}
 
 		/// <summary>Updates bank account.</summary>

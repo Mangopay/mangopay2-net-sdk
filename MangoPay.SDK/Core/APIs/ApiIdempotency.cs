@@ -32,7 +32,7 @@ namespace MangoPay.SDK.Core.APIs
 			foreach (var mapItem in map)
 			{
 				var endPoint = GetApiEndPoint(mapItem.Key);
-				endPoint.SetParameters("[0-9a-zA-Z]+", "[0-9a-zA-Z]+");
+				endPoint.SetParameters(new []{"[0-9a-zA-Z]+", "[0-9a-zA-Z]+"});
 
 				var sourceUrl = endPoint.GetUrl();
 				sourceUrl = sourceUrl.Replace("/", "\\/");

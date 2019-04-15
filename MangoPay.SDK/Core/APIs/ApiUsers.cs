@@ -131,7 +131,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Collection of user's wallets.</returns>
         public ListPaginated<WalletDTO> GetWallets(String userId, Pagination pagination, Sort sort = null)
 		{
-			return this.GetList<WalletDTO>(MethodKey.UsersAllWallets, pagination, userId, sort);
+			return this.GetList<WalletDTO>(MethodKey.UsersAllWallets, pagination, sort,userId);
 		}
 
         /// <summary>Creates CA bank account.</summary>
@@ -236,7 +236,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Collection of user's bank accounts.</returns>
         public ListPaginated<BankAccountDTO> GetBankAccounts(String userId, Pagination pagination, Sort sort = null)
         {
-            return this.GetList<BankAccountDTO>(MethodKey.UsersAllBankAccount, pagination, userId, sort);
+            return this.GetList<BankAccountDTO>(MethodKey.UsersAllBankAccount, pagination, sort,userId);
         }
 
         /// <summary>Gets first page of all bank accounts of user.</summary>
@@ -351,7 +351,7 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			if (filters == null) filters = new FilterTransactions();
 
-			return GetList<TransactionDTO>(MethodKey.BankAccountsGetTransactions, pagination, bankAccountId, sort, filters.GetValues());
+			return GetList<TransactionDTO>(MethodKey.BankAccountsGetTransactions, pagination, sort, filters.GetValues(),bankAccountId);
 		}
 
 		/// <summary>Gets transactions for user.</summary>
@@ -362,7 +362,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Collection of user's transactions.</returns>
 		public ListPaginated<TransactionDTO> GetTransactions(String userId, Pagination pagination, FilterTransactions filter, Sort sort = null)
         {
-            return this.GetList<TransactionDTO>(MethodKey.UsersAllTransactions, pagination, userId, sort, filter.GetValues());
+            return this.GetList<TransactionDTO>(MethodKey.UsersAllTransactions, pagination, sort, filter.GetValues(), userId);
         }
 
         /// <summary>Gets all cards for user.</summary>
@@ -372,7 +372,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Collection of user's cards.</returns>
         public ListPaginated<CardDTO> GetCards(String userId, Pagination pagination, Sort sort = null)
         {
-            return this.GetList<CardDTO>(MethodKey.UsersAllCards, pagination, userId, sort);
+            return this.GetList<CardDTO>(MethodKey.UsersAllCards, pagination, sort,userId);
         }
 
         /// <summary>Creates KycPage from byte array.</summary>
@@ -469,7 +469,7 @@ namespace MangoPay.SDK.Core.APIs
         {
             if (filter == null) filter = new FilterKycDocuments();
 
-            return this.GetList<KycDocumentDTO>(MethodKey.UsersGetKycDocuments, pagination, userId, sort, filter.GetValues());
+            return this.GetList<KycDocumentDTO>(MethodKey.UsersGetKycDocuments, pagination, sort, filter.GetValues(),userId);
         }
 
 		/// <summary>Gets Emoney object.</summary>
@@ -487,7 +487,7 @@ namespace MangoPay.SDK.Core.APIs
 		public EmoneyDTO GetEmoney(String userId, CurrencyIso currency)
 		{
 			var endPoint = GetApiEndPoint(MethodKey.UsersEmoneyGet);
-			endPoint.SetParameters(userId);
+			endPoint.SetParameters(new []{userId});
 			var rest = new RestTool(_root, true);
 			var parameters = new Dictionary<string, string>();
 			if (currency != CurrencyIso.NotSpecified)

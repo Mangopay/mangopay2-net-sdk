@@ -20,9 +20,9 @@ namespace MangoPay.SDK.Core.APIs
         public ListPaginated<EventDTO> GetAll(Pagination pagination, FilterEvents filter = null, Sort sort = null)
         {
 			if (filter == null)
-				return this.GetList<EventDTO>(MethodKey.EventsAll, pagination, "");
+				return this.GetList<EventDTO>(MethodKey.EventsAll, pagination);
 
-            return this.GetList<EventDTO>(MethodKey.EventsAll, pagination, "", sort, filter.GetValues());
+            return this.GetList<EventDTO>(MethodKey.EventsAll, pagination, sort, filter.GetValues());
         }
     }
 }

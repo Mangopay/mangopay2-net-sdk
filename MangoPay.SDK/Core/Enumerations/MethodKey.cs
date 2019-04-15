@@ -146,6 +146,11 @@ namespace MangoPay.SDK.Core.Enumerations
 
 		UboDeclarationCreate,
 		UboDeclarationUpdate,
+		UboDeclarationsGet,
+		UboDeclarationGet,
+		UboGet,
+		UboCreate,
+		UboUpdate,
 
 		BankAccountsGetTransactions
 	}
