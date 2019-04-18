@@ -175,9 +175,15 @@ namespace MangoPay.SDK.Core.APIs
 
             { MethodKey.SingleSignOnsMe, new ApiEndPoint("/ssos/me", RequestType.GET, false)},
             { MethodKey.SingleSignOnsMePermissionGroup , new ApiEndPoint("/ssos/me/permissiongroup", RequestType.GET, false)},
-            { MethodKey.UboDeclarationCreate, new ApiEndPoint("/users/legal/{0}/ubodeclarations", RequestType.POST)},
-            { MethodKey.UboDeclarationUpdate, new ApiEndPoint("/ubodeclarations/{0}", RequestType.PUT)},
-
+            
+            { MethodKey.UboDeclarationCreate, new ApiEndPoint("/users/{0}/kyc/ubodeclarations", RequestType.POST)},
+            { MethodKey.UboDeclarationUpdate, new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}", RequestType.PUT)},
+            { MethodKey.UboDeclarationsGet, new ApiEndPoint("/users/{0}/kyc/ubodeclarations",RequestType.GET)},
+            { MethodKey.UboDeclarationGet, new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}",RequestType.GET)},
+            { MethodKey.UboGet,new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}/ubos/{2}",RequestType.GET)},
+            { MethodKey.UboCreate,new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}/ubos",RequestType.POST)},
+            { MethodKey.UboUpdate,new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}/ubos/{2}",RequestType.PUT) },
+            
             { MethodKey.BankAccountsGetTransactions, new ApiEndPoint("/bankaccounts/{0}/transactions", RequestType.GET)},
         };
 
@@ -207,15 +213,14 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="idempotencyKey">Idempotency key for this request.</param>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entity">DTO instance that is going to be sent.</param>
-        /// <param name="entityId">Entity identifier.</param>
-        /// <param name="secondEntityId">Second entity identifier.</param>
+        /// <param name="entitiesId">Entity identifier.</param>
         /// <returns>The DTO instance returned from API.</returns>
-        protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity, String entityId, String secondEntityId)
+        protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity, params string[] entitiesId)
             where U : EntityBase, new()
             where T : EntityPostBase
         {
             var endPoint = GetApiEndPoint(methodKey);
-            endPoint.SetParameters(entityId, secondEntityId);
+            endPoint.SetParameters(entitiesId);
 
             RestTool restTool = new RestTool(this._root, true);
             U result = restTool.Request<U, T>(idempotencyKey, endPoint, null, null, entity);
@@ -223,46 +228,15 @@ namespace MangoPay.SDK.Core.APIs
             return result;
         }
 
-        /// <summary>Creates the DTO instance.</summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="idempotencyKey">Idempotency key for this request.</param>
-        /// <param name="methodKey">Relevant method key.</param>
-        /// <param name="entity">DTO instance that is going to be sent.</param>
-        /// <param name="entityId">Entity identifier.</param>
-        /// <returns>The DTO instance returned from API.</returns>
-        protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity, string entityId)
-            where U : EntityBase, new()
-            where T : EntityPostBase
-        {
-            return CreateObject<U, T>(idempotencyKey, methodKey, entity, entityId, "");
-        }
-
-        /// <summary>Creates the DTO instance.</summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="idempotencyKey">Idempotency key for this request.</param>
-        /// <param name="methodKey">Relevant method key.</param>
-        /// <param name="entity">DTO instance that is going to be sent.</param>
-        /// <returns>The DTO instance returned from API.</returns>
-        protected U CreateObject<U, T>(String idempotencyKey, MethodKey methodKey, T entity)
-            where U : EntityBase, new()
-            where T : EntityPostBase
-        {
-            return CreateObject<U, T>(idempotencyKey, methodKey, entity, "");
-        }
-
         /// <summary>Gets the DTO instance from API.</summary>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
-        /// <param name="entityId">Entity identifier.</param>
-        /// <param name="secondEntityId">Second entity identifier.</param>
+        /// <param name="entitiesId">Entities identifier.</param>
         /// <returns>The DTO instance returned from API.</returns>
-        protected T GetObject<T>(MethodKey methodKey, string entityId, string secondEntityId)
-            where T : EntityBase, new()
+        protected T GetObject<T>(MethodKey methodKey, params string[] entitiesId) where T:EntityBase, new()
         {
             var endPoint = GetApiEndPoint(methodKey);
-            endPoint.SetParameters(entityId, secondEntityId);
+            endPoint.SetParameters(entitiesId);
 
             RestTool rest = new RestTool(this._root, true);
             T response = rest.Request<T, T>(endPoint);
@@ -270,31 +244,19 @@ namespace MangoPay.SDK.Core.APIs
             return response;
         }
 
-        /// <summary>Gets the Dto instance from API.</summary>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="methodKey">Relevant method key.</param>
-        /// <param name="entityId">Entity identifier.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        protected T GetObject<T>(MethodKey methodKey, string entityId)
-            where T : EntityBase, new()
-        {
-            return GetObject<T>(methodKey, entityId, "");
-        }
-
         /// <summary>Gets the collection of Dto instances from API.</summary>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="pagination">Pagination object.</param>
-        /// <param name="entityId">Entity identifier.</param>
-        /// <param name="secondEntityId">Entity identifier.</param>
+        /// <param name="entitiesId">Entities identifier.</param>
         /// <param name="sort">Sort.</param>
         /// <param name="additionalUrlParams">Collection of key-value pairs of request parameters.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, string secondEntityId, Sort sort, Dictionary<String, String> additionalUrlParams)
+        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, Sort sort, Dictionary<String, String> additionalUrlParams, params string[] entitiesId)
             where T : EntityBase, new()
         {
             var endPoint = GetApiEndPoint(methodKey);
-            endPoint.SetParameters(entityId, secondEntityId);
+            endPoint.SetParameters(entitiesId);
 
             if (pagination == null)
             {
@@ -314,23 +276,17 @@ namespace MangoPay.SDK.Core.APIs
             return restTool.RequestList<T>(endPoint, additionalUrlParams, pagination);
         }
 
-        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort, Dictionary<String, String> additionalUrlParams)
-            where T : EntityBase, new()
-        {
-            return this.GetList<T>(methodKey, pagination, entityId, null, sort, additionalUrlParams);
-        }
-
         /// <summary>Gets the collection of Dto instances from API.</summary>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="pagination">Pagination object.</param>
-        /// <param name="entityId">Entity identifier.</param>
+        /// <param name="entitiesId">Entities identifier.</param>
         /// <param name="sort">Sort.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, string entityId, Sort sort = null)
+        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination,  Sort sort = null, params string[] entitiesId)
             where T : EntityBase, new()
         {
-            return GetList<T>(methodKey, pagination, entityId, null, sort, null);
+            return GetList<T>(methodKey, pagination, sort,null,entitiesId);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
@@ -342,7 +298,7 @@ namespace MangoPay.SDK.Core.APIs
         protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, Sort sort = null)
             where T : EntityBase, new()
         {
-            return GetList<T>(methodKey, pagination, "", sort);
+            return GetList<T>(methodKey, pagination,sort, additionalUrlParams:null);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
@@ -353,7 +309,7 @@ namespace MangoPay.SDK.Core.APIs
         protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination)
             where T : EntityBase, new()
         {
-            return GetList<T>(methodKey, pagination, sort: null);
+            return GetList<T>(methodKey, pagination, sort: null, additionalUrlParams:null);
         }
 
         /// <summary>Saves the Dto instance.</summary>
@@ -361,42 +317,14 @@ namespace MangoPay.SDK.Core.APIs
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entity">Dto instance that is going to be sent.</param>
+        /// <param name="entitiesId">Entities identifier.</param>
         /// <returns>The Dto instance returned from API.</returns>
-        protected U UpdateObject<U, T>(MethodKey methodKey, T entity)
-            where U : EntityBase, new()
-            where T : EntityPutBase
-        {
-            return UpdateObject<U, T>(methodKey, entity, "");
-        }
-
-        /// <summary>Saves the Dto instance.</summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="methodKey">Relevant method key.</param>
-        /// <param name="entity">Dto instance that is going to be sent.</param>
-        /// <param name="entityId">Entity identifier.</param>
-        /// <returns></returns>
-        protected U UpdateObject<U, T>(MethodKey methodKey, T entity, string entityId)
-            where U : EntityBase, new()
-            where T : EntityPutBase
-        {
-            return UpdateObject<U, T>(methodKey, entity, entityId, "");
-        }
-
-        /// <summary>Saves the Dto instance.</summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="methodKey">Relevant method key.</param>
-        /// <param name="entity">Dto instance that is going to be sent.</param>
-        /// <param name="entityId">Entity identifier.</param>
-        /// <param name="secondEntityId">Second entity identifier.</param>
-        /// <returns>The Dto instance returned from API.</returns>
-        protected U UpdateObject<U, T>(MethodKey methodKey, T entity, string entityId, string secondEntityId)
+        protected U UpdateObject<U, T>(MethodKey methodKey, T entity, params string[] entitiesId)
             where U : EntityBase, new()
             where T : EntityPutBase
         {
             var endPoint = GetApiEndPoint(methodKey);
-            endPoint.SetParameters(entityId, secondEntityId);
+            endPoint.SetParameters(entitiesId);
 
             RestTool restTool = new RestTool(this._root, true);
             return restTool.Request<U, T>(null, endPoint, null, null, entity);

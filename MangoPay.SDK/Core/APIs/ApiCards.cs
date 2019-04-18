@@ -40,7 +40,7 @@ namespace MangoPay.SDK.Core.APIs
         {
             if (filters == null) filters = new FilterTransactions();
 
-            return GetList<TransactionDTO>(MethodKey.CardTransactions, pagination, cardId, sort, filters.GetValues());
+            return GetList<TransactionDTO>(MethodKey.CardTransactions, pagination,sort, filters.GetValues(),cardId);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns></returns>
         public ListPaginated<CardDTO> GetCardsByFingerprint(string fingerprint, Pagination pagination, Sort sort)
         {
-            return GetList<CardDTO>(MethodKey.CardByFingerprintGet, pagination, fingerprint, sort);
+            return GetList<CardDTO>(MethodKey.CardByFingerprintGet, pagination, sort, fingerprint);
         }
     }
 }

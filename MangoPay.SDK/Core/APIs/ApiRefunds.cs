@@ -30,7 +30,7 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			if (filters == null) filters = new FilterRefunds();
 
-			return GetList<RefundDTO>(MethodKey.PayoutsGetRefunds, pagination, payOutId, sort, filters.GetValues());
+			return GetList<RefundDTO>(MethodKey.PayoutsGetRefunds, pagination, sort, filters.GetValues(), payOutId);
 		}
 
 		/// <summary>Lists refunds for a payin</summary>
@@ -43,7 +43,7 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			if (filters == null) filters = new FilterRefunds();
 
-			return GetList<RefundDTO>(MethodKey.PayinsGetRefunds, pagination, payInId, sort, filters.GetValues());
+			return GetList<RefundDTO>(MethodKey.PayinsGetRefunds, pagination, sort, filters.GetValues(),payInId);
 		}
 
 		/// <summary>Lists refunds for a transfer</summary>
@@ -56,7 +56,7 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			if (filters == null) filters = new FilterRefunds();
 
-			return GetList<RefundDTO>(MethodKey.TransfersGetRefunds, pagination, transferId, sort, filters.GetValues());
+			return GetList<RefundDTO>(MethodKey.TransfersGetRefunds, pagination, sort, filters.GetValues(),transferId);
 		}
 
 		/// <summary>Lists refunds for a repudiation</summary>
@@ -69,7 +69,7 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			if (filters == null) filters = new FilterRefunds();
 
-			return GetList<RefundDTO>(MethodKey.DisputesRepudiationGetRefunds, pagination, repudiationId, sort, filters.GetValues());
+			return GetList<RefundDTO>(MethodKey.DisputesRepudiationGetRefunds, pagination, sort, filters.GetValues(),repudiationId);
 		}
 	}
 }

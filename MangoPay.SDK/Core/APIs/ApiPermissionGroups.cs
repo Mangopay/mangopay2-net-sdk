@@ -61,7 +61,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Collection of permission group instances.</returns>
 		public ListPaginated<SingleSignOnDTO> GetSingleSignOns(String permissionGroupId, Pagination pagination, Sort sort = null)
 		{
-			return this.GetList<SingleSignOnDTO>(MethodKey.PermissionGroupAllSsos, pagination, permissionGroupId, sort);
+			return this.GetList<SingleSignOnDTO>(MethodKey.PermissionGroupAllSsos, pagination, sort,permissionGroupId);
 		}
 
 		/// <summary>Updates the permission group.</summary>

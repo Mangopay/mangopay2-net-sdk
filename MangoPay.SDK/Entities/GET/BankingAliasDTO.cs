@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
+using MangoPay.SDK.Core;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -22,5 +23,6 @@ namespace MangoPay.SDK.Entities.GET
 
 		/// <summary>Whether the banking alias is active or not.</summary>
 		public bool Active { get; set; }
-	}
+
+    }
 }

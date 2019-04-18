@@ -25,7 +25,7 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			if (filter == null) filter = new FilterKycDocuments();
 
-			return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, null, sort, filter.GetValues());
+			return this.GetList<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, sort, filter.GetValues());
 		}
 
 
@@ -80,7 +80,7 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			if (filter == null) filter = new FilterTransactions();
 
-			return this.GetList<TransactionDTO>(MethodKey.ClientGetWalletTransactions, pagination, fundsType.ToString(), currency.ToString(), sort, filter.GetValues());
+			return this.GetList<TransactionDTO>(MethodKey.ClientGetWalletTransactions, pagination, sort, filter.GetValues(),fundsType.ToString(), currency.ToString());
 		}
 
 
@@ -93,7 +93,7 @@ namespace MangoPay.SDK.Core.APIs
 		{
 			if (filter == null) filter = new FilterTransactions();
 
-			return this.GetList<TransactionDTO>(MethodKey.ClientGetTransactions, pagination, null, sort, filter.GetValues());
+			return this.GetList<TransactionDTO>(MethodKey.ClientGetTransactions, pagination, sort, filter.GetValues());
 		}
 
 		/// <summary>Creates new bankwire direct for client.</summary>

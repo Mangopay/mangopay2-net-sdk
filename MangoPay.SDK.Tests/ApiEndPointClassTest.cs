@@ -15,10 +15,10 @@ namespace MangoPay.SDK.Tests
 			var endPoint = new ApiEndPoint(urlFragment, "GET");
 			Assert.AreEqual(urlFragment, endPoint.GetUrl());
 
-			endPoint.SetParameters("ignore");
+			endPoint.SetParameters(new []{"ignore"});
 			Assert.AreEqual(urlFragment, endPoint.GetUrl());
 
-			endPoint.SetParameters("ignore", "ignore");
+			endPoint.SetParameters(new []{"ignore", "ignore"});
 			Assert.AreEqual(urlFragment, endPoint.GetUrl());
 
 			// One parameter
@@ -26,10 +26,10 @@ namespace MangoPay.SDK.Tests
 			endPoint = new ApiEndPoint(urlFragment, "GET");
 			Assert.AreEqual(urlFragment, endPoint.GetUrl());
 
-			endPoint.SetParameters("123");
+			endPoint.SetParameters(new []{"123"});
 			Assert.AreEqual("/foo/123/bar", endPoint.GetUrl());
 
-			endPoint.SetParameters("123", "ignore");
+			endPoint.SetParameters(new []{"123", "ignore"});
 			Assert.AreEqual("/foo/123/bar", endPoint.GetUrl());
 
 			// Two parameters
@@ -37,7 +37,7 @@ namespace MangoPay.SDK.Tests
 			endPoint = new ApiEndPoint(urlFragment, "GET");
 			Assert.AreEqual(urlFragment, endPoint.GetUrl());
 
-			endPoint.SetParameters("123", "456");
+			endPoint.SetParameters(new []{"123", "456"});
 			Assert.AreEqual("/foo/123/bar/456", endPoint.GetUrl());
 		}
     }
