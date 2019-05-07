@@ -8,6 +8,8 @@ namespace MangoPay.SDK.Core.Enumerations
 		DECLARATION_DO_NOT_MATCH_UBO_INFORMATION			= 0x00,
 
 		MISSING_UBO											= 0x01,
-		
-	}
+
+	    WRONG_UBO_INFORMATION                               = 0x02
+
+    }
 }
