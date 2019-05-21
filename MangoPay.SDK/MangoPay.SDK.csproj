@@ -225,7 +225,6 @@
     <Compile Include="Entities\POST\ReportRequestPostDTO.cs" />
     <Compile Include="Entities\POST\SettlementTransferPostDTO.cs" />
     <Compile Include="Entities\POST\SingleSignOnPostDTO.cs" />
-    <Compile Include="Entities\POST\UboDeclarationPostDTO.cs" />
     <Compile Include="Entities\POST\UboPostDTO.cs" />
     <Compile Include="Entities\PUT\ClientLogoPutDTO.cs" />
     <Compile Include="Entities\PUT\BankingAliasPutDTO.cs" />
