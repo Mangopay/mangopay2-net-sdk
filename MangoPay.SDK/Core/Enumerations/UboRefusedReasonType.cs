@@ -2,12 +2,15 @@
 
 namespace MangoPay.SDK.Core.Enumerations
 {
-	[Flags]
 	public enum UboRefusedReasonType
 	{
-		DECLARATION_DO_NOT_MATCH_UBO_INFORMATION			= 0x00,
-
-		MISSING_UBO											= 0x01,
-		
-	}
+        MISSING_UBO,
+        WRONG_UBO_INFORMATION,
+        UBO_IDENTITY_NEEDED,
+        SHAREHOLDERS_DECLARATION_NEEDED,
+        ORGANIZATION_CHART_NEEDED,
+        DOCUMENTS_NEEDED,
+        DECLARATION_DO_NOT_MATCH_UBO_INFORMATION,
+        SPECIFIC_CASE
+    }
 }

@@ -58,13 +58,14 @@ namespace MangoPay.SDK.Core.Enumerations
 		UBO_DECLARATION_CREATED					= 0x400000000000,
 		UBO_DECLARATION_VALIDATION_ASKED		= 0x800000000000,
 		UBO_DECLARATION_REFUSED					= 0x1000000000000,
-		UBO_DECLARATION_VALIDATED				= 0x2000000000000
+		UBO_DECLARATION_VALIDATED				= 0x2000000000000,
+        UBO_DECLARATION_INCOMPLETE              = 0x4000000000000
 
-		/* IMPORTANT!
+        /* IMPORTANT!
 		 * 
 		 * Anyone who will extend this enum: please note that this enum is FLAGS-attributed. 
 		 * Pay attention to the numbers when adding new items, next value must be two times bigger.
 		 * 
 		 */
-	}
+    }
 }
