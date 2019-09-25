@@ -783,7 +783,52 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[Test]
+        [Test]
+        public void Test_User_GetEmoneyForYear()
+        {
+            try
+            {
+                var user = GetNewJohn();
+                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+
+                var emoney = Api.Users.GetEmoneyForYear(user.Id,"2019");
+
+                Assert.AreEqual(user.Id, emoney.UserId);
+                Assert.AreEqual("2019","2019");
+                Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
+                Assert.AreEqual(CurrencyIso.EUR, emoney.CreditedEMoney.Currency);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        [Test]
+        public void GetTest_User_GetEmoneyForYearAndMonth()
+        {
+            try
+            {
+                var user = GetNewJohn();
+                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+
+                var emoney = Api.Users.GetEmoneyForYearAndMonth(user.Id,"2019","04");
+
+                Assert.AreEqual(user.Id, emoney.UserId);
+                Assert.AreEqual("2019","2019");
+                Assert.AreEqual("04","04");
+                Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
+                Assert.AreEqual(CurrencyIso.EUR, emoney.CreditedEMoney.Currency);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        [Test]
 		public void Test_Users_GetEmoneyWithCurrency()
 		{
 			try

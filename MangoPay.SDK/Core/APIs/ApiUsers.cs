@@ -494,5 +494,57 @@ namespace MangoPay.SDK.Core.APIs
 				parameters.Add("currency", currency.ToString());
 			return rest.Request<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
 		}
-	}
+		
+		/// <summary>Gets Emoney object.</summary>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="year">Emoney accounts for year</param>
+		/// <returns>Emoney object returned from API.</returns>
+		public EmoneyDTO GetEmoneyForYear(String userId, String year)
+		{
+			return GetEmoneyForYear(userId, year, CurrencyIso.NotSpecified);
+		}
+
+		/// <summary>Gets Emoney object.</summary>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="year">Emoney accounts for year</param>
+		/// <param name="currency">Currency ISO code.</param>
+		/// <returns>Emoney object returned from API.</returns>
+		public EmoneyDTO GetEmoneyForYear(String userId, String year, CurrencyIso currencyIso)
+		{
+			var endPoint = GetApiEndPoint(MethodKey.UsersEmoneyYearGet);
+			endPoint.SetParameters(new []{userId, year});
+			var rest = new RestTool(_root, true);
+			var parameters = new Dictionary<string, string>();
+			if (currencyIso != CurrencyIso.NotSpecified)
+				parameters.Add("currency", currencyIso.ToString());
+			return rest.Request<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
+		}
+
+		/// <summary>Gets Emoney object.</summary>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="year">Emoney accounts for year</param>
+		/// <param name="month">Emoney accounts for month</param>
+		/// <returns>Emoney object returned from API.</returns>
+		public EmoneyDTO GetEmoneyForYearAndMonth(String userId, String year, String month)
+		{
+			return GetEmoneyForYearAndMonth(userId, year, month, CurrencyIso.NotSpecified);
+		}
+
+		/// <summary>Gets Emoney object.</summary>
+		/// <param name="userId">User identifier.</param>
+		/// <param name="year">Emoney accounts for year</param>
+		/// <param name="month">Emoney accounts for month</param>
+		/// <param name="currency">Currency ISO code.</param>
+		/// <returns>Emoney object returned from API.</returns>
+		public EmoneyDTO GetEmoneyForYearAndMonth(String userId, String year, String month, CurrencyIso currencyIso)
+		{
+			var endPoint = GetApiEndPoint(MethodKey.UsersEmoneyYearGet);
+			endPoint.SetParameters(new []{userId, year, month});
+			var rest = new RestTool(_root, true);
+			var parameters = new Dictionary<string, string>();
+			if (currencyIso != CurrencyIso.NotSpecified)
+				parameters.Add("currency", currencyIso.ToString());
+			return rest.Request<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
+		}
+    }
 }
