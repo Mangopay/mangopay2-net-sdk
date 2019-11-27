@@ -169,7 +169,7 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(payIn.Billing);
                 Assert.IsNotNull(payIn.SecurityInfo);
                 Assert.IsNotNull(payIn.SecurityInfo.AVSResult);
-                Assert.AreEqual(payIn.SecurityInfo.AVSResult, AVSResult.ADDRESS_MATCH_ONLY);
+                Assert.AreEqual(payIn.SecurityInfo.AVSResult, AVSResult.NO_CHECK);
             }
             catch (Exception ex)
             {
