@@ -167,6 +167,7 @@
     <Compile Include="Core\Enumerations\TransactionStatus.cs" />
     <Compile Include="Core\Enumerations\TransactionType.cs" />
     <Compile Include="Core\Enumerations\Validity.cs" />
+    <Compile Include="Entities\GET\ApplePayDirectPayInDTO.cs" />
     <Compile Include="Entities\GET\BankAccountCaObsoleteDTO.cs" />
     <Compile Include="Entities\GET\BankAccountCaDTO.cs" />
     <Compile Include="Entities\GET\BankAccountObsoleteDTO.cs" />
@@ -212,7 +213,9 @@
     <Compile Include="Entities\GET\UserValidationStatusDTO.cs" />
     <Compile Include="Entities\ListPaginated.cs" />
     <Compile Include="Entities\DisputeReason.cs" />
+    <Compile Include="Entities\PaymentData.cs" />
     <Compile Include="Entities\Permissions.cs" />
+    <Compile Include="Entities\POST\ApplePayDirectPayInPostDTO.cs" />
     <Compile Include="Entities\POST\BankingAliasPostDTO.cs" />
     <Compile Include="Entities\POST\BankingAliasIbanPostDTO.cs" />
     <Compile Include="Entities\POST\DisputeDocumentPostDTO.cs" />

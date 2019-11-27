@@ -47,6 +47,7 @@ namespace MangoPay.SDK.Tests
 			RefundDTO refund = this.GetNewRefundForTransfer(transfer);
             WalletDTO walletAfter = this.Api.Wallets.Get(wallet.Id);
 
+            Assert.IsNotNull(walletBefore);
             Assert.IsTrue(refund.Id.Length > 0);
             Assert.IsTrue(refund.DebitedFunds.Amount == transfer.DebitedFunds.Amount);
             Assert.IsTrue(walletBefore.Balance.Amount == (walletAfter.Balance.Amount - transfer.DebitedFunds.Amount));

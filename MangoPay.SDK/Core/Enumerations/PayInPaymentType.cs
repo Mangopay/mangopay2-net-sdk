@@ -20,6 +20,9 @@ namespace MangoPay.SDK.Core.Enumerations
         PREAUTHORIZED,
 
 		/// <summary>PAYPAL payment type.</summary>
-		PAYPAL
+		PAYPAL,
+
+        /// <summary> APPLEPAY payment type </summary>
+        APPLEPAY,
     }
 }
