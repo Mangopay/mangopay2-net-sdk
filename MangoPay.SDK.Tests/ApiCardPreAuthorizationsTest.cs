@@ -54,7 +54,7 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(cardPreAuthorizationWithBilling.Billing);
                 Assert.IsNotNull(cardPreAuthorizationWithBilling.SecurityInfo);
                 Assert.IsNotNull(cardPreAuthorizationWithBilling.SecurityInfo.AVSResult);
-                Assert.AreEqual(cardPreAuthorizationWithBilling.SecurityInfo.AVSResult, AVSResult.ADDRESS_MATCH_ONLY);
+                Assert.AreEqual(cardPreAuthorizationWithBilling.SecurityInfo.AVSResult, AVSResult.NO_CHECK);
 
             }
             catch (Exception ex)
