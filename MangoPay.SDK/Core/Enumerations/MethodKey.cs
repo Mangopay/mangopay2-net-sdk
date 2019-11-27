@@ -6,6 +6,7 @@ namespace MangoPay.SDK.Core.Enumerations
     {
         AuthenticationBase,
         AuthenticationOAuth,
+        ApplePayinsDirectCreate,
         CardGet,
         CardSave,
         CardRegistrationCreate,
