@@ -695,7 +695,6 @@ namespace MangoPay.SDK.Tests
 
                 Assert.IsTrue(transactions.Count > 0);
 
-
                 // test sorting
                 ListPaginated<TransactionDTO> result = null;
                 ListPaginated<TransactionDTO> result2 = null;
