@@ -792,6 +792,7 @@ namespace MangoPay.SDK.Tests
 
                 var emoney = Api.Users.GetEmoneyForYear(user.Id,"2019");
 
+                Assert.IsNotNull(emoney);
                 Assert.AreEqual(user.Id, emoney.UserId);
                 Assert.AreEqual("2019","2019");
                 Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
@@ -799,8 +800,7 @@ namespace MangoPay.SDK.Tests
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                Assert.Fail(e.Message);
             }
         }
 
@@ -822,8 +822,7 @@ namespace MangoPay.SDK.Tests
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                Assert.Fail(e.Message);
             }
         }
 
