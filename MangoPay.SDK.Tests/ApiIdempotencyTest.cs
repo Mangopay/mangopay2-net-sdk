@@ -234,6 +234,7 @@ namespace MangoPay.SDK.Tests
         public void Test_Idempotency_PayinsPreauthorizedDirectCreate()
         {
             string key = DateTime.Now.Ticks.ToString();
+            string okCode = "200";
             CardPreAuthorizationDTO cardPreAuthorization = this.GetJohnsCardPreAuthorization();
             WalletDTO wallet = this.GetJohnsWalletWithMoney();
             UserNaturalDTO user = this.GetJohn();
@@ -245,6 +246,7 @@ namespace MangoPay.SDK.Tests
 
             var result = Api.Idempotency.Get(key);
 
+            Assert.AreEqual(result.StatusCode, okCode);
             Assert.IsInstanceOf<PayInPreauthorizedDirectDTO>(result.Resource);
         }
 
