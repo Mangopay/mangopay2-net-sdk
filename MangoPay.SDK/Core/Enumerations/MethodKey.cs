@@ -16,6 +16,7 @@ namespace MangoPay.SDK.Core.Enumerations
         CardTransactions,
         CardByFingerprintGet,
         EventsAll,
+        GooglePayinsDirectCreate,
         HooksAll,
         HooksCreate,
         HooksGet,
