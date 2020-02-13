@@ -25,7 +25,7 @@ namespace MangoPay.SDK.Entities.PUT
         public Address Address { get; set; }
 
         /// <summary>Date of birth.</summary>
-        [JsonConverter(typeof(UnixDateTimeConverter))]
+        [JsonConverter(typeof(Core.UnixDateTimeConverter))]
         public DateTime? Birthday { get; set; }
 
         /// <summary>User's country.</summary>

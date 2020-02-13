@@ -11,7 +11,7 @@ namespace MangoPay.SDK.Entities.GET
 	public class ReportRequestDTO : EntityBase
 	{
 		/// <summary>Date of when the report was requested.</summary>
-		[JsonConverter(typeof(UnixDateTimeConverter))]
+		[JsonConverter(typeof(Core.UnixDateTimeConverter))]
 		public DateTime? ReportDate { get; set; }
 
 		/// <summary>Status of the report.</summary>

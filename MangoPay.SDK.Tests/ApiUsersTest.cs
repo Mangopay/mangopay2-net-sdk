@@ -556,9 +556,9 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
 
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+                string workingDirectory = Environment.CurrentDirectory;
+                FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
 
@@ -608,9 +608,9 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+                string workingDirectory = Environment.CurrentDirectory;
+                FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
             }
@@ -628,9 +628,9 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+                string workingDirectory = Environment.CurrentDirectory;
+                FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
                 byte[] bytes = File.ReadAllBytes(fi.FullName);
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);

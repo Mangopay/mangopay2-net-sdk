@@ -35,7 +35,7 @@ namespace MangoPay.SDK.Entities.GET
 		public String ResultMessage { get; set; }
 
 		/// <summary>The execution date of the repudiation.</summary>
-		[JsonConverter(typeof(UnixDateTimeConverter))]
+		[JsonConverter(typeof(Core.UnixDateTimeConverter))]
 		public DateTime? ExecutionDate { get; set; }
 
 		/// <summary>The Id of the dispute to which this repudation corresponds. Note that this value may be null (if it was created before the Dispute objects started to be used – October 2015).</summary>

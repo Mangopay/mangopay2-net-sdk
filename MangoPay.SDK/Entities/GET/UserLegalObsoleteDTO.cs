@@ -32,7 +32,7 @@ namespace MangoPay.SDK.Entities.GET
 		public String LegalRepresentativeEmail { get; set; }
 
 		/// <summary>Legal representative birthday.</summary>
-		[JsonConverter(typeof(UnixDateTimeConverter))]
+		[JsonConverter(typeof(Core.UnixDateTimeConverter))]
 		public DateTime? LegalRepresentativeBirthday { get; set; }
 
 		/// <summary>Legal representative nationality.</summary>

@@ -267,9 +267,9 @@ namespace MangoPay.SDK.Tests
 		[Test]
 		public void Test_ClientLogo()
 		{
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
-            FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+            string workingDirectory = Environment.CurrentDirectory;
+            FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
+            FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
 
 			this.Api.Clients.UploadLogo(fi.FullName);
 			this.Api.Clients.UploadLogo(File.ReadAllBytes(fi.FullName));

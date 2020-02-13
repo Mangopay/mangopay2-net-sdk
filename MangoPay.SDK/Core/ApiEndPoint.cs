@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Policy;
 
 namespace MangoPay.SDK.Core
 {

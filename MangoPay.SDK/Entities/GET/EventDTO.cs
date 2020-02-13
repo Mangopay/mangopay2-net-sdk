@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Entities.GET
         public EventType EventType { get; set; }
 
         /// <summary>Date.</summary>
-        [JsonConverter(typeof(UnixDateTimeConverter))]
+        [JsonConverter(typeof(Core.UnixDateTimeConverter))]
         public DateTime Date { get; set; }
     }
 }

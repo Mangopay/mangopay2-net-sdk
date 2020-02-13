@@ -12,11 +12,11 @@ namespace MangoPay.SDK.Entities.Transport
 		#region Common report filters
 
 		/// <summary>End date: return only transactions that have CreationDate BEFORE this date.</summary>
-		[JsonConverter(typeof(UnixDateTimeConverter))]
+		[JsonConverter(typeof(Core.UnixDateTimeConverter))]
 		public DateTime? BeforeDate;
 
 		/// <summary>Start date: return only transactions that have CreationDate AFTER this date.</summary>
-		[JsonConverter(typeof(UnixDateTimeConverter))]
+		[JsonConverter(typeof(Core.UnixDateTimeConverter))]
 		public DateTime? AfterDate;
 
 		#endregion
