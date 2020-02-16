@@ -19,7 +19,7 @@ namespace MangoPay.SDK.Core.Enumerations
 		/// <summary>The mandate has failed for a variety of reasons and is no longer available for payments.</summary>
 		FAILED,
 		
-		/// <summary>The mandate his expired and is no longer available for Payins. A new mandate must be created</summary>
+		/// <summary>The mandate has expired and is no longer available for Payins. A new mandate must be created</summary>
 		EXPIRED
 		
 		
