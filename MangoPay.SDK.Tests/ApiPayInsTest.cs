@@ -552,5 +552,51 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [Test]
+        public void Test_PayIns_GetBankWireExternalInstructionIBAN()
+        {
+            try
+            {
+                var payInId = "74980101";
+
+                var payIn = this.Api.PayIns.Get(payInId);
+
+                Assert.IsNotNull(payIn);
+
+                Assert.True(payIn.Type == TransactionType.PAYIN);
+                Assert.True(payIn.PaymentType == PayInPaymentType.BANK_WIRE);
+                Assert.True(payIn.ExecutionType == PayInExecutionType.EXTERNAL_INSTRUCTION);
+
+                Assert.True(payIn.Status == TransactionStatus.SUCCEEDED);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public void Test_PayIns_GetBankWireExternalInstructionAccountNumber()
+        {
+            try
+            {
+                var payInId = "74981216";
+
+                var payIn = this.Api.PayIns.Get(payInId);
+
+                Assert.IsNotNull(payIn);
+
+                Assert.True(payIn.Type == TransactionType.PAYIN);
+                Assert.True(payIn.PaymentType == PayInPaymentType.BANK_WIRE);
+                Assert.True(payIn.ExecutionType == PayInExecutionType.EXTERNAL_INSTRUCTION);
+
+                Assert.True(payIn.Status == TransactionStatus.SUCCEEDED);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }
