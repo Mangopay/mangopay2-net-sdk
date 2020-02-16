@@ -39,6 +39,8 @@ namespace MangoPay.SDK.Entities.GET
 		/// <code>SUBMITTED</code> (the mandate has been submitted to the banks and you can now do payments with this mandate),
 		/// <code>ACTIVE</code> (the mandate is active and has been accepted by the banks and/or successfully used in a payment),
 		/// <code>FAILED</code> (the mandate has failed for a variety of reasons and is no longer available for payments).</summary>
+		/// <code>EXPIRED</code> (the mandate has expired and is no longer available for Payins. A new mandate must be created).</summary>
+
 		[JsonConverter(typeof(StringEnumConverter))]
 		public MandateStatus Status { get; set; }
 
