@@ -496,6 +496,8 @@ namespace MangoPay.SDK.Core.Enumerations
         WF,
         /// <summary>Samoa</summary> 
         WS,
+        /// <summary>Kosovo</summary> 
+        XK,
         /// <summary>Yemen</summary> 
         YE,
         /// <summary>Mayotte</summary> 
