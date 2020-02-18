@@ -24,8 +24,10 @@ dotnet: 2.2
 install:
 - export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.5/
 - dotnet restore
+- nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
 script:
 - dotnet build
+- mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/MangoPay.SDK.Tests.dll
 after_success:
   - nuget pack -Properties Configuration=Release ./MangoPay.SDK/MangoPay.SDK.csproj
 deploy:
