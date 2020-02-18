@@ -18,9 +18,9 @@
 #     branch: release
 
 language: csharp
-dist: trusty
+dist: xenial
 mono: none
-dotnet: 2.1.0
+dotnet: 2.2
 install:
 - dotnet restore
 script:
