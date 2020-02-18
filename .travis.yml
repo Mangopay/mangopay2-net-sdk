@@ -3,8 +3,8 @@ language: csharp
 mono: none
 dotnet: 2.1
 install:
-  - nuget restore mangopay2-net-sdk.sln
-  - nuget install NUnit.ConsoleRunner -Version 3.4.1 -OutputDirectory testrunner
+  - dotnet restore mangopay2-net-sdk.sln
+  - dotnet install NUnit.ConsoleRunner -Version 3.4.1 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release mangopay2-net-sdk.sln
   - mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/MangoPay.SDK.Tests.dll
