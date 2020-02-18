@@ -1,22 +1,3 @@
-
-# language: csharp
-# mono: none
-# dotnet: 2.1
-# install:
-#   - nuget restore mangopay2-net-sdk.sln
-#   - nuget install NUnit.ConsoleRunner -Version 3.4.1 -OutputDirectory testrunner
-# script:
-#   - xbuild /p:Configuration=Release mangopay2-net-sdk.sln
-#   - mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/MangoPay.SDK.Tests.dll
-# after_success:
-#   - nuget pack -Properties Configuration=Release ./MangoPay.SDK/MangoPay.SDK.csproj
-# deploy:
-#   skip_cleanup: true
-#   provider: script
-#   script: nuget push ./MangoPay.SDK/mangopay2-sdk.*.nupkg -ApiKey $NUGET_API_KEY
-#   on:
-#     branch: release
-
 language: csharp
 dist: xenial
 mono: 5.2.0
