@@ -137,7 +137,7 @@ namespace MangoPay.SDK.Tests
             api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
             api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
             api.Config.ApiVersion = "v2.01";
-#if NET462
+#if NET461
             api.Config.LoggerFactoryAdapter = new ConsoleOutLoggerFactoryAdapter();
 #endif
 
