@@ -26,3 +26,11 @@ install:
 - dotnet restore
 script:
 - dotnet build
+after_success:
+  - nuget pack -Properties Configuration=Release ./MangoPay.SDK/MangoPay.SDK.csproj
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: nuget push ./MangoPay.SDK/mangopay2-sdk.*.nupkg -ApiKey $NUGET_API_KEY
+  on:
+    branch: release
