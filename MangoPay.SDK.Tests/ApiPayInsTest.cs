@@ -465,6 +465,49 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(getPayIn.Status, TransactionStatus.SUCCEEDED);
         }
 
+        [Ignore("Cannot test Google Pay")]
+        public void TestGooglePayIn()
+        {
+            var wallet = GetJohnsWallet();
+            var user = GetNewJohn();
+            var paymentData = new PaymentData
+            {
+                Network = "VISA",
+                TransactionId = "061EB32181A2D9CA42AD16031B476EEBAA62A9A095AD660E2759FBA52B51A61",
+                TokenData = "tokenData"
+            };
+            var googlePayIn = new GooglePayDirectPayInPostDTO
+            {
+                CreditedWalletId = wallet.Id,
+                AuthorId = user.Id,
+                CreditedUserId = user.Id,
+                DebitedFunds = new Money
+                {
+                    Amount = 200,
+                    Currency = CurrencyIso.EUR
+                },
+                Fees = new Money
+                {
+                    Amount = 0,
+                    Currency = CurrencyIso.EUR
+                },
+                Tag = "Create an GooglePay card direct Payin",
+                PaymentData = paymentData,
+                StatementDescriptor = "Bob",
+                Billing = new Billing
+                {
+                    Address = user.Address
+                }
+            };
+
+            var getPayIn = Api.PayIns.CreateGooglePay(null, googlePayIn);
+
+            Assert.IsNotNull(getPayIn);
+            Assert.AreEqual(getPayIn.AuthorId, googlePayIn.AuthorId);
+            Assert.AreEqual(getPayIn.PaymentType, PayInPaymentType.GOOGLEPAY);
+            Assert.AreEqual(getPayIn.Status, TransactionStatus.SUCCEEDED);
+        }
+
         [Test]
         public void Test_PayIns_Get_PayPal()
         {

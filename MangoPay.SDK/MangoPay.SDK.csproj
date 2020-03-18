@@ -188,6 +188,7 @@
     <Compile Include="Entities\GET\DisputeDocumentDTO.cs" />
     <Compile Include="Entities\GET\DisputePageDTO.cs" />
     <Compile Include="Entities\GET\EmoneyDTO.cs" />
+    <Compile Include="Entities\GET\GooglePayDirectPayInDTO.cs" />
     <Compile Include="Entities\GET\IdempotencyResponseDTO.cs" />
     <Compile Include="Entities\GET\KycPageDTO.cs" />
     <Compile Include="Entities\GET\MandateDTO.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="Entities\POST\DisputeDocumentPostDTO.cs" />
     <Compile Include="Entities\POST\DisputePagePostDTO.cs" />
     <Compile Include="Entities\POST\ClientBankWireDirectPostDTO.cs" />
+    <Compile Include="Entities\POST\GooglePayDirectPayInPostDTO.cs" />
     <Compile Include="Entities\POST\MandatePostDTO.cs" />
     <Compile Include="Entities\POST\PayInPayPalPostDTO.cs" />
     <Compile Include="Entities\POST\PayInMandateDirectPostDTO.cs" />
