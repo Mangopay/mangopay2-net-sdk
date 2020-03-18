@@ -142,6 +142,7 @@ namespace MangoPay.SDK.Tests
 
 				ListPaginated<MandateDTO> mandates = this.Api.Mandates.GetForBankAccount(user.Id, bankAccountId, new Pagination(1, 1), null);
 
+                Assert.IsNotNull(mandateCreated);
 				Assert.IsNotNull(mandates);
 				Assert.IsTrue(mandates.Count > 0);
 

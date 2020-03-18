@@ -24,5 +24,8 @@ namespace MangoPay.SDK.Core.Enumerations
 
         /// <summary> APPLEPAY payment type </summary>
         APPLEPAY,
+
+        /// <summary> GooglePay payment type </summary>
+        GOOGLEPAY
     }
 }
