@@ -65,6 +65,9 @@
 		/// <summary>API endpoints linked to KYC documents.</summary>
 		public Permissions KYCDocuments { get; set; }
 
+		/// <sumary>API endpoints linked to UBO Declarations.</summary>
+        public Permissions UboDeclarations { get; set; }
+
 		/// <summary>API endpoints linked to disputes.</summary>
 		public Permissions Disputes { get; set; }
 
