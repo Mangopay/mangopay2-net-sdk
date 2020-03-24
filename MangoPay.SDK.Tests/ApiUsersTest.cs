@@ -802,7 +802,50 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[Test]
+        [Test]
+        public void Test_Users_GetEmoneyWithYearAndCurrency()
+        {
+            try
+            {
+                var user = GetNewJohn();
+                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+                var year = DateTime.Now.Year.ToString();
+
+                var emoney = Api.Users.GetEmoney(user.Id, year, CurrencyIso.USD);
+
+                Assert.NotNull(emoney);
+                Assert.AreEqual(user.Id, emoney.UserId);
+                Assert.AreEqual(CurrencyIso.USD, emoney.CreditedEMoney.Currency);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public void Test_Users_GetEmoneyWithYearAndMonthAndCurrency()
+        {
+            try
+            {
+                var user = GetNewJohn();
+                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+                var year = DateTime.Now.Year.ToString();
+                var month = DateTime.Now.Month.ToString();
+
+                var emoney = Api.Users.GetEmoney(user.Id, year, month, CurrencyIso.USD);
+
+                Assert.NotNull(emoney);
+                Assert.AreEqual(user.Id, emoney.UserId);
+                Assert.AreEqual(CurrencyIso.USD, emoney.CreditedEMoney.Currency);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
 		public void Test_Users_GetTransactionsForBankAccount()
 		{
 			try
