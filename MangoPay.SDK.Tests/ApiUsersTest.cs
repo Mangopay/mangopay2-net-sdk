@@ -792,7 +792,7 @@ namespace MangoPay.SDK.Tests
 		var year = DateTime.Now.Year.ToString();
 
 
-                var emoney = Api.Users.GetEmoneyForYear(user.Id,year);
+                var emoney = Api.Users.GetEmoneyForYear(user.Id, year);
 
                 Assert.IsNotNull(emoney);
                 Assert.AreEqual(user.Id, emoney.UserId);
@@ -816,7 +816,7 @@ namespace MangoPay.SDK.Tests
 		var year = DateTime.Now.Year.ToString();
                 var month = DateTime.Now.Month.ToString();
 
-                var emoney = Api.Users.GetEmoneyForYearAndMonth(year, month);
+                var emoney = Api.Users.GetEmoneyForYearAndMonth(user.Id, year, month);
 
                 Assert.AreEqual(user.Id, emoney.UserId);
                 //Assert.AreEqual("2019","2019");
