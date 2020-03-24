@@ -56,11 +56,11 @@ namespace MangoPay.SDK.Entities.GET
         public String SecureModeReturnURL { get; set; }
 
         /// <summary>The date when the preauth expires.</summary>
-        [JsonConverter(typeof(UnixDateTimeConverter))]
+        [JsonConverter(typeof(Core.UnixDateTimeConverter))]
         public DateTime? ExpirationDate { get; set; }
 
         /// <summary>The date when the payment has been processed.</summary>
-        [JsonConverter(typeof(UnixDateTimeConverter))]
+        [JsonConverter(typeof(Core.UnixDateTimeConverter))]
         public DateTime? AuthorizationDate { get; set; }
 
         /// <summary>Identifier of the associated PayIn.</summary>

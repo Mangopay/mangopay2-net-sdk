@@ -42,7 +42,7 @@ namespace MangoPay.SDK.Entities.GET
         public String ResultMessage { get; set; }
 
         /// <summary>Execution date.</summary>
-        [JsonConverter(typeof(UnixDateTimeConverter))]
+        [JsonConverter(typeof(Core.UnixDateTimeConverter))]
         public DateTime? ExecutionDate { get; set; }
 
         /// <summary>Transaction type.</summary>
