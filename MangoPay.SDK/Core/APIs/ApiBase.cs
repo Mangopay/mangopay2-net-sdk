@@ -56,6 +56,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsMandateDirectDebitCreate, new ApiEndPoint("/payins/directdebit/direct", RequestType.POST)},
             
             { MethodKey.ApplePayinsDirectCreate, new ApiEndPoint("/payins/applepay/direct", RequestType.POST)},
+            { MethodKey.GooglePayinsDirectCreate, new ApiEndPoint("/payins/googlepay/direct", RequestType.POST)},
 
             { MethodKey.PayoutsBankwireCreate, new ApiEndPoint("/payouts/bankwire", RequestType.POST)},
             { MethodKey.PayoutsGet, new ApiEndPoint("/payouts/{0}", RequestType.GET)},
@@ -97,6 +98,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersEmoneyGet, new ApiEndPoint("/users/{0}/emoney", RequestType.GET)},
             { MethodKey.UsersEmoneyYearGet, new ApiEndPoint("/users/{0}/emoney/{1}", RequestType.GET)},
             { MethodKey.UsersEmoneyYearMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
+            { MethodKey.UsersEmoneyMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
+
 
             { MethodKey.WalletsCreate, new ApiEndPoint("/wallets", RequestType.POST)},
             { MethodKey.WalletsAllTransactions, new ApiEndPoint("/wallets/{0}/transactions", RequestType.GET)},
