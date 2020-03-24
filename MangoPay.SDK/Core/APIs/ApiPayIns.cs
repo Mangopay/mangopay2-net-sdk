@@ -235,6 +235,11 @@ namespace MangoPay.SDK.Core.APIs
         {
             return this.CreateObject<ApplePayDirectPayinDTO, ApplePayDirectPayInPostDTO>(idempotencyKey, MethodKey.ApplePayinsDirectCreate, payIn);
         }
+
+        public GooglePayDirectPayInDTO CreateGooglePay(String idempotencyKey, GooglePayDirectPayInPostDTO payIn)
+        {
+            return this.CreateObject<GooglePayDirectPayInDTO, GooglePayDirectPayInPostDTO>(idempotencyKey, MethodKey.GooglePayinsDirectCreate, payIn);
+        }
     }
 }
 

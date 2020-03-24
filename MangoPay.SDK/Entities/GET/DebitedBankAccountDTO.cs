@@ -1,25 +1,53 @@
-﻿using System;
+using MangoPay.SDK.Core.Enumerations;
+using System;
 
 namespace MangoPay.SDK.Entities.GET
 {
 	public class DebitedBankAccountDTO
 	{
-        /// <summary>The name of the owner of the bank account</summary>
-		public string OwnerName { get; set; }
+        public DebitedBankAccountDTO()
+        {
+
+        }
+
+        public DebitedBankAccountDTO(String OwnerName, String AccountNumber, String IBAN, String BIC, String Country, BankAccountType Type)
+        {
+            this.OwnerName = OwnerName;
+            this.AccountNumber = AccountNumber;
+            this.IBAN = IBAN;
+            this.BIC = BIC;
+            this.Country = Country;
+            this.Type = Type;
+        }
+
+		    /// <summary>
+        /// Owner name.
+        /// </summary>
+		    public String OwnerName { get; set; }
 
         /// <summary>
-        /// The type of bank account
+        /// The account number
         /// </summary>
-        public string Type { get; set; }
+        public String AccountNumber { get; set; }
 
         /// <summary>
-        /// The IBAN of the bank account
+        /// IBAN
         /// </summary>
-        public string IBAN { get; set; }
+        public String IBAN { get; set; }
+        
+        /// <summary>
+        /// BIC
+        /// </summary>
+        public String BIC { get; set; }
 
         /// <summary>
-        /// The BIC of the bank account
+        /// Country
         /// </summary>
-        public string BIC { get; set; }
-	}
+        public String Country { get; set; }
+
+        /// <summary>
+        /// The type of bankAccount
+        /// </summary>
+        public BankAccountType Type { get; set; }
+    }
 }
