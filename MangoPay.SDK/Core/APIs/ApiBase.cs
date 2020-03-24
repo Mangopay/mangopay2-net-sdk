@@ -97,7 +97,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersSaveKycDocument, new ApiEndPoint("/users/{0}/KYC/documents/{1}", RequestType.PUT)},
             { MethodKey.UsersEmoneyGet, new ApiEndPoint("/users/{0}/emoney", RequestType.GET)},
             { MethodKey.UsersEmoneyYearGet, new ApiEndPoint("/users/{0}/emoney/{1}", RequestType.GET)},
+            { MethodKey.UsersEmoneyYearMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
             { MethodKey.UsersEmoneyMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
+
 
             { MethodKey.WalletsCreate, new ApiEndPoint("/wallets", RequestType.POST)},
             { MethodKey.WalletsAllTransactions, new ApiEndPoint("/wallets/{0}/transactions", RequestType.GET)},
