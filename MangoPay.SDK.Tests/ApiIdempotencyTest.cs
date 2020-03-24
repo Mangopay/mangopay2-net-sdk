@@ -70,7 +70,7 @@ namespace MangoPay.SDK.Tests
 			Assert.IsInstanceOf<DisputeDocumentDTO>(result.Resource);
 		}*/
 
-        [Test]
+       /* [Test]
         public void Test_Idempotency_DisputesRepudiationCreateSettlement()
         {
             string key = DateTime.Now.Ticks.ToString();
@@ -94,7 +94,7 @@ namespace MangoPay.SDK.Tests
 
             Assert.IsInstanceOf<SettlementDTO>(result.Resource);
         }
-
+*/
         [Test]
         public void Test_Idempotency_MandateCreate()
         {
