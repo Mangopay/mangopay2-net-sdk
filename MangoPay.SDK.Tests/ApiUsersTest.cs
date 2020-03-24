@@ -789,12 +789,14 @@ namespace MangoPay.SDK.Tests
             {
                 var user = GetNewJohn();
                 var wallet = GetNewJohnsWalletWithMoney(10000, user);
+		var year = DateTime.Now.Year.ToString();
 
-                var emoney = Api.Users.GetEmoneyForYear(user.Id,"2019");
+
+                var emoney = Api.Users.GetEmoneyForYear(user.Id, year);
 
                 Assert.IsNotNull(emoney);
                 Assert.AreEqual(user.Id, emoney.UserId);
-                Assert.AreEqual("2019","2019");
+                //Assert.AreEqual("2019","2019");
                 Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
                 Assert.AreEqual(CurrencyIso.EUR, emoney.CreditedEMoney.Currency);
             }
@@ -811,12 +813,14 @@ namespace MangoPay.SDK.Tests
             {
                 var user = GetNewJohn();
                 var wallet = GetNewJohnsWalletWithMoney(10000, user);
+		var year = DateTime.Now.Year.ToString();
+                var month = DateTime.Now.Month.ToString();
 
-                var emoney = Api.Users.GetEmoneyForYearAndMonth(user.Id,"2019","04");
+                var emoney = Api.Users.GetEmoneyForYearAndMonth(user.Id, year, month);
 
                 Assert.AreEqual(user.Id, emoney.UserId);
-                Assert.AreEqual("2019","2019");
-                Assert.AreEqual("04","04");
+                //Assert.AreEqual("2019","2019");
+                //Assert.AreEqual("04","04");
                 Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
                 Assert.AreEqual(CurrencyIso.EUR, emoney.CreditedEMoney.Currency);
             }
