@@ -378,7 +378,7 @@ namespace MangoPay.SDK.Tests
             // create pay-in DIRECT DEBIT
             PayInDirectDebitPostDTO payIn = new PayInDirectDebitPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 100, Currency = CurrencyIso.EUR }, wallet.Id, "http://www.mysite.com/returnURL/", CultureCode.FR, DirectDebitType.GIROPAY);
 
-            payIn.TemplateURLOptions = new TemplateURLOptions { PAYLINE = "https://www.maysite.com/payline_template/" };
+            payIn.TemplateURLOptions = new TemplateURLOptions { PAYLINEV2 = "https://www.maysite.com/payline_template/" };
             payIn.Tag = "DirectDebit test tag";
 
             PayInDirectDebitDTO createPayIn = this.Api.PayIns.CreateDirectDebit(payIn);
