@@ -315,6 +315,8 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO user = this.GetJohn();
 
                 PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
+                //Add TemplateURLOptionsCard for tests
+                payIn.TemplateURLOptionsCard = new TemplateURLOptionsCard { PAYLINEV2 = "https://www.maysite.com/payline_template/" };
 
                 BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
             }
