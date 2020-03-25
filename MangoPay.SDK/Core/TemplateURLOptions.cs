@@ -1,15 +1,12 @@
-﻿using System;
+using System;
 
 namespace MangoPay.SDK.Core
 {
     /// <summary>Template URL options class.</summary>
     public class TemplateURLOptions
     {
-        /// <summary>PAYLINE: will be deprecated on April 30th in production and ignored. Please use PAYLINEV2 parameter</summary>
-        [ObsoleteAttribute("PAYLINE attribute is now obsolete. Please use PAYLINEV2 instead", false)] 
+        /// <summary>PAYLINE: could be use for DirectDebitWeb payments only. Use TemplateURLOptionsCard and PAYLINEV2 for Payin Web</summary>
         public String PAYLINE;
         
-        /// <summary>PAYLINEV2: should be set to apply your own template on our new payment widget for Payin Card Web</summary>
-        public String PAYLINEV2;
     }
 }
