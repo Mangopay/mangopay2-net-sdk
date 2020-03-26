@@ -119,6 +119,20 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(uboDeclaration.Id, result.Id);
         }
 
+        [Test]
+        public void ApiUboDeclaration_GetById_UboDeclaration_Valid()
+        {
+            var userLegal = Api.Users.Create(CreateUserLegalPost());
+
+            UboDeclarationDTO uboDeclaration = null;
+            Assert.DoesNotThrow(() => uboDeclaration = Api.UboDeclarations.Create(userLegal.Id));
+
+            UboDeclarationDTO result = null;
+            Assert.DoesNotThrow(() => result = Api.UboDeclarations.GetUboDeclarationById(uboDeclaration.Id));
+            Assert.NotNull(result);
+            Assert.AreEqual(uboDeclaration.Id, result.Id);
+        }
+
         //UboDeclarations test
         [Test]
         public void ApiUboDeclaration_GetAll_UboDeclaration_Valid()

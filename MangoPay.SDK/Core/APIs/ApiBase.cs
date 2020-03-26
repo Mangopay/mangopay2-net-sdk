@@ -187,6 +187,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UboDeclarationUpdate, new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}", RequestType.PUT)},
             { MethodKey.UboDeclarationsGet, new ApiEndPoint("/users/{0}/kyc/ubodeclarations",RequestType.GET)},
             { MethodKey.UboDeclarationGet, new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}",RequestType.GET)},
+            { MethodKey.UboDeclarationGetById, new ApiEndPoint("/kyc/ubodeclarations/{0}",RequestType.GET)},
             { MethodKey.UboGet,new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}/ubos/{2}",RequestType.GET)},
             { MethodKey.UboCreate,new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}/ubos",RequestType.POST)},
             { MethodKey.UboUpdate,new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}/ubos/{2}",RequestType.PUT) },
