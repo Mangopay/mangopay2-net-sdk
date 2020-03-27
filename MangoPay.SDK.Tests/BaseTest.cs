@@ -1,4 +1,5 @@
 ﻿using Common.Logging.Simple;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
