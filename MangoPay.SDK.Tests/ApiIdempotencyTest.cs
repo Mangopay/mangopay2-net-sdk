@@ -278,6 +278,7 @@ namespace MangoPay.SDK.Tests
             var result = Api.Idempotency.Get(key);
 
             Assert.IsInstanceOf<CardPreAuthorizationDTO>(result.Resource);
+            Assert.AreEqual(result.StatusCode, "200");
         }
 
         [Test]
