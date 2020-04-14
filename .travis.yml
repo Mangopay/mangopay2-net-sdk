@@ -14,6 +14,6 @@ after_success:
 deploy:
   skip_cleanup: true
   provider: script
-  script: "./deploy.sh"
+  script: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg -ApiKey $NUGET_API_KEY
   on:
     branch: release
