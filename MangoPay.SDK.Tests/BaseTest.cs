@@ -1,4 +1,5 @@
 ﻿using Common.Logging.Simple;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
@@ -137,7 +138,9 @@ namespace MangoPay.SDK.Tests
             api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
             api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
             api.Config.ApiVersion = "v2.01";
+#if NET461
             api.Config.LoggerFactoryAdapter = new ConsoleOutLoggerFactoryAdapter();
+#endif
 
             // register storage strategy for tests
             api.OAuthTokenManager.RegisterCustomStorageStrategy(new DefaultStorageStrategyForTests());
@@ -313,6 +316,8 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO user = this.GetJohn();
 
                 PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
+                //Add TemplateURLOptionsCard for tests
+                payIn.TemplateURLOptionsCard = new TemplateURLOptionsCard { PAYLINEV2 = "https://www.maysite.com/payline_template/" };
 
                 BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
             }

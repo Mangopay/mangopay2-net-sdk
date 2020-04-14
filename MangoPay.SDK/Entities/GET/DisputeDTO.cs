@@ -21,7 +21,7 @@ namespace MangoPay.SDK.Entities.GET
 		public DisputeType? DisputeType { get; set; }
 
 		/// <summary>The date by which you must submit docs if they wish to contest the dispute.</summary>
-		[JsonConverter(typeof(UnixDateTimeConverter))]
+		[JsonConverter(typeof(Core.UnixDateTimeConverter))]
 		public DateTime? ContestDeadlineDate { get; set; }
 
 		/// <summary>Dispute's reason.</summary>

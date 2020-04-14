@@ -6,6 +6,7 @@ namespace MangoPay.SDK.Core.Enumerations
     {
         AuthenticationBase,
         AuthenticationOAuth,
+        ApplePayinsDirectCreate,
         CardGet,
         CardSave,
         CardRegistrationCreate,
@@ -15,6 +16,7 @@ namespace MangoPay.SDK.Core.Enumerations
         CardTransactions,
         CardByFingerprintGet,
         EventsAll,
+        GooglePayinsDirectCreate,
         HooksAll,
         HooksCreate,
         HooksGet,
@@ -67,7 +69,9 @@ namespace MangoPay.SDK.Core.Enumerations
         UsersSaveNaturals,
         UsersSaveBankAccount,
         UsersEmoneyGet,
-
+        UsersEmoneyYearGet,
+        UsersEmoneyYearMonthGet,
+        UsersEmoneyMonthGet,
         WalletsAllTransactions,
         WalletsCreate,
         WalletsGet,
@@ -148,10 +152,11 @@ namespace MangoPay.SDK.Core.Enumerations
 		UboDeclarationUpdate,
 		UboDeclarationsGet,
 		UboDeclarationGet,
-		UboGet,
+        UboDeclarationGetById,
+        UboGet,
 		UboCreate,
 		UboUpdate,
 
-		BankAccountsGetTransactions
-	}
+		BankAccountsGetTransactions,
+    }
 }

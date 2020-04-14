@@ -301,7 +301,7 @@ namespace MangoPay.SDK.Core
             string fullUrl = urlTool.GetFullUrl(restUrl);
             RestClient client = new RestClient(fullUrl);
 
-            client.AddHandler(Constants.APPLICATION_JSON, new MangoPayJsonDeserializer());
+            client.AddHandler(Constants.APPLICATION_JSON, () => { return new MangoPayJsonDeserializer(); });
 
             _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
 
@@ -339,7 +339,7 @@ namespace MangoPay.SDK.Core
             {
                 if (entity != null)
                 {
-                    restRequest.AddBody(entity);
+                    restRequest.AddJsonBody(entity);
                 }
                 if (this._requestData != null)
                 {
@@ -427,7 +427,7 @@ namespace MangoPay.SDK.Core
             string fullUrl = urlTool.GetFullUrl(restUrl);
             RestClient client = new RestClient(fullUrl);
 
-            client.AddHandler(Constants.APPLICATION_JSON, new MangoPayJsonDeserializer());
+            client.AddHandler(Constants.APPLICATION_JSON, () => { return new MangoPayJsonDeserializer(); });
 
             _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
 

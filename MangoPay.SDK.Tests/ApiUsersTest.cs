@@ -556,9 +556,9 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
 
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+                string workingDirectory = Environment.CurrentDirectory;
+                FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
 
@@ -608,9 +608,9 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+                string workingDirectory = Environment.CurrentDirectory;
+                FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
             }
@@ -628,9 +628,9 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+                string workingDirectory = Environment.CurrentDirectory;
+                FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
                 byte[] bytes = File.ReadAllBytes(fi.FullName);
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
@@ -694,7 +694,6 @@ namespace MangoPay.SDK.Tests
                 ListPaginated<TransactionDTO> transactions = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions());
 
                 Assert.IsTrue(transactions.Count > 0);
-
 
                 // test sorting
                 ListPaginated<TransactionDTO> result = null;
@@ -783,7 +782,55 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[Test]
+        [Test]
+        public void Test_User_GetEmoneyForYear()
+        {
+            try
+            {
+                var user = GetNewJohn();
+                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+		var year = DateTime.Now.Year.ToString();
+
+
+                var emoney = Api.Users.GetEmoneyForYear(user.Id, year);
+
+                Assert.IsNotNull(emoney);
+                Assert.AreEqual(user.Id, emoney.UserId);
+                //Assert.AreEqual("2019","2019");
+                Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
+                Assert.AreEqual(CurrencyIso.EUR, emoney.CreditedEMoney.Currency);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+
+        [Test]
+        public void GetTest_User_GetEmoneyForYearAndMonth()
+        {
+            try
+            {
+                var user = GetNewJohn();
+                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+		var year = DateTime.Now.Year.ToString();
+                var month = DateTime.Now.Month.ToString();
+
+                var emoney = Api.Users.GetEmoneyForYearAndMonth(user.Id, year, month);
+
+                Assert.AreEqual(user.Id, emoney.UserId);
+                //Assert.AreEqual("2019","2019");
+                //Assert.AreEqual("04","04");
+                Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
+                Assert.AreEqual(CurrencyIso.EUR, emoney.CreditedEMoney.Currency);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+
+        [Test]
 		public void Test_Users_GetEmoneyWithCurrency()
 		{
 			try
@@ -802,7 +849,50 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
-		[Test]
+        [Test]
+        public void Test_Users_GetEmoneyWithYearAndCurrency()
+        {
+            try
+            {
+                var user = GetNewJohn();
+                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+                var year = DateTime.Now.Year.ToString();
+
+                var emoney = Api.Users.GetEmoney(user.Id, year, CurrencyIso.USD);
+
+                Assert.NotNull(emoney);
+                Assert.AreEqual(user.Id, emoney.UserId);
+                Assert.AreEqual(CurrencyIso.USD, emoney.CreditedEMoney.Currency);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public void Test_Users_GetEmoneyWithYearAndMonthAndCurrency()
+        {
+            try
+            {
+                var user = GetNewJohn();
+                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+                var year = DateTime.Now.Year.ToString();
+                var month = DateTime.Now.Month.ToString();
+
+                var emoney = Api.Users.GetEmoney(user.Id, year, month, CurrencyIso.USD);
+
+                Assert.NotNull(emoney);
+                Assert.AreEqual(user.Id, emoney.UserId);
+                Assert.AreEqual(CurrencyIso.USD, emoney.CreditedEMoney.Currency);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
 		public void Test_Users_GetTransactionsForBankAccount()
 		{
 			try

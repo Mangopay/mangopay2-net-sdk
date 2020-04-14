@@ -54,6 +54,9 @@ namespace MangoPay.SDK.Core.APIs
 
             { MethodKey.PayinsDirectDebitCreate, new ApiEndPoint("/payins/directdebit/web", RequestType.POST)},
             { MethodKey.PayinsMandateDirectDebitCreate, new ApiEndPoint("/payins/directdebit/direct", RequestType.POST)},
+            
+            { MethodKey.ApplePayinsDirectCreate, new ApiEndPoint("/payins/applepay/direct", RequestType.POST)},
+            { MethodKey.GooglePayinsDirectCreate, new ApiEndPoint("/payins/googlepay/direct", RequestType.POST)},
 
             { MethodKey.PayoutsBankwireCreate, new ApiEndPoint("/payouts/bankwire", RequestType.POST)},
             { MethodKey.PayoutsGet, new ApiEndPoint("/payouts/{0}", RequestType.GET)},
@@ -93,6 +96,10 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersSaveLegals, new ApiEndPoint("/users/legal/{0}", RequestType.PUT)},
             { MethodKey.UsersSaveKycDocument, new ApiEndPoint("/users/{0}/KYC/documents/{1}", RequestType.PUT)},
             { MethodKey.UsersEmoneyGet, new ApiEndPoint("/users/{0}/emoney", RequestType.GET)},
+            { MethodKey.UsersEmoneyYearGet, new ApiEndPoint("/users/{0}/emoney/{1}", RequestType.GET)},
+            { MethodKey.UsersEmoneyYearMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
+            { MethodKey.UsersEmoneyMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
+
 
             { MethodKey.WalletsCreate, new ApiEndPoint("/wallets", RequestType.POST)},
             { MethodKey.WalletsAllTransactions, new ApiEndPoint("/wallets/{0}/transactions", RequestType.GET)},
@@ -180,6 +187,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UboDeclarationUpdate, new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}", RequestType.PUT)},
             { MethodKey.UboDeclarationsGet, new ApiEndPoint("/users/{0}/kyc/ubodeclarations",RequestType.GET)},
             { MethodKey.UboDeclarationGet, new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}",RequestType.GET)},
+            { MethodKey.UboDeclarationGetById, new ApiEndPoint("/kyc/ubodeclarations/{0}",RequestType.GET)},
             { MethodKey.UboGet,new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}/ubos/{2}",RequestType.GET)},
             { MethodKey.UboCreate,new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}/ubos",RequestType.POST)},
             { MethodKey.UboUpdate,new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}/ubos/{2}",RequestType.PUT) },

@@ -2,6 +2,7 @@
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using System;
+using System.Collections.Generic;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -229,5 +230,70 @@ namespace MangoPay.SDK.Core.APIs
         {
             return this.CreateObject<RefundDTO, RefundPayInPostDTO>(idempotencyKey, MethodKey.PayinsCreateRefunds, refund, payInId);
         }
+
+        public ApplePayDirectPayinDTO CreateApplePay(String idempotencyKey, ApplePayDirectPayInPostDTO payIn)
+        {
+            return this.CreateObject<ApplePayDirectPayinDTO, ApplePayDirectPayInPostDTO>(idempotencyKey, MethodKey.ApplePayinsDirectCreate, payIn);
+        }
+
+        public GooglePayDirectPayInDTO CreateGooglePay(String idempotencyKey, GooglePayDirectPayInPostDTO payIn)
+        {
+            return this.CreateObject<GooglePayDirectPayInDTO, GooglePayDirectPayInPostDTO>(idempotencyKey, MethodKey.GooglePayinsDirectCreate, payIn);
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

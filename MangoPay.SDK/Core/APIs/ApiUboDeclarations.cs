@@ -39,6 +39,15 @@ namespace MangoPay.SDK.Core.APIs
             );
         }
 
+        public UboDeclarationDTO GetUboDeclarationById(String uboDeclarationId)
+        {
+       //     return new UboDeclarationDTO();
+            return GetObject<UboDeclarationDTO>(
+                MethodKey.UboDeclarationGetById,
+                uboDeclarationId
+            );
+        }
+
         public UboDeclarationDTO CreateUboDeclaration(String idempotencyKey, String userId)
         {
             return CreateObject<UboDeclarationDTO, EntityPostBase>(
