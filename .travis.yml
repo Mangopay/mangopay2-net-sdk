@@ -10,10 +10,10 @@ script:
 - dotnet build -c Release
 - mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/net461/MangoPay.SDK.Tests.dll
 after_success:
-  - nuget pack -Properties Configuration=Release ./MangoPay.SDK/MangoPay.SDK.csproj
+  - dotnet pack -c Release ./MangoPay.SDK/MangoPay.SDK.csproj
 deploy:
   skip_cleanup: true
   provider: script
-  script: nuget push ./MangoPay.SDK.2.0.0.nupkg -ApiKey $NUGET_API_KEY -Source $NUGET_SOURCE
+  script: "./deploy.sh"
   on:
     branch: release
