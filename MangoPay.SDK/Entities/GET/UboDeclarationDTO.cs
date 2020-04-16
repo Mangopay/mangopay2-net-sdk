@@ -21,6 +21,8 @@ namespace MangoPay.SDK.Entities.GET
 
         public UboRefusedReasonType Reason { get; set; }
 
+        public string UserId { get; set; }
+
         public string Message { get; set; }
 
         public UboDTO[] Ubos { get; set; }
