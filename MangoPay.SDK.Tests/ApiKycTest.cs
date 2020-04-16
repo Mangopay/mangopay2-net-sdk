@@ -39,7 +39,7 @@ namespace MangoPay.SDK.Tests
 
                 string workingDirectory = Environment.CurrentDirectory;
                 FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).FirstOrDefault();
                 byte[] bytes = File.ReadAllBytes(fi.FullName);
 				Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
 				Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);

@@ -558,11 +558,43 @@ namespace MangoPay.SDK.Tests
 
                 string workingDirectory = Environment.CurrentDirectory;
                 FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).FirstOrDefault();
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
 
                 KycDocumentPutDTO kycDocumentPut = new KycDocumentPutDTO 
+                {
+                    Status = KycStatus.VALIDATION_ASKED
+                };
+
+                KycDocumentDTO result = this.Api.Users.UpdateKycDocument(john.Id, kycDocumentPut, kycDocument.Id);
+
+                Assert.IsNotNull(result);
+                Assert.IsTrue(kycDocument.Type == result.Type);
+                Assert.IsTrue(result.Status == KycStatus.VALIDATION_ASKED);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public void Test_Users_CreateKycPageWithIdempotencyKeyAndFilepath()
+        {
+            try
+            {
+                UserNaturalDTO john = this.GetJohn();
+                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
+
+                string workingDirectory = Environment.CurrentDirectory;
+                FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).FirstOrDefault();
+
+                string key = DateTime.Now.Ticks.ToString();
+                this.Api.Users.CreateKycPage(key, john.Id, kycDocument.Id, fi.FullName);
+
+                KycDocumentPutDTO kycDocumentPut = new KycDocumentPutDTO
                 {
                     Status = KycStatus.VALIDATION_ASKED
                 };
@@ -610,7 +642,7 @@ namespace MangoPay.SDK.Tests
 
                 string workingDirectory = Environment.CurrentDirectory;
                 FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).FirstOrDefault();
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
             }
@@ -630,10 +662,43 @@ namespace MangoPay.SDK.Tests
 
                 string workingDirectory = Environment.CurrentDirectory;
                 FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).FirstOrDefault();
                 byte[] bytes = File.ReadAllBytes(fi.FullName);
 
                 this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public void Test_Users_CreateKycPageWithByteArrayAndIdempotencyKey()
+        {
+            try
+            {
+                UserNaturalDTO john = this.GetJohn();
+                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
+
+                string workingDirectory = Environment.CurrentDirectory;
+                FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).FirstOrDefault();
+
+                string key = DateTime.Now.Ticks.ToString();
+                byte[] fileArray = File.ReadAllBytes(fi.FullName);
+                this.Api.Users.CreateKycPage(key, john.Id, kycDocument.Id, fileArray);
+
+                KycDocumentPutDTO kycDocumentPut = new KycDocumentPutDTO
+                {
+                    Status = KycStatus.VALIDATION_ASKED
+                };
+
+                KycDocumentDTO result = this.Api.Users.UpdateKycDocument(john.Id, kycDocumentPut, kycDocument.Id);
+
+                Assert.IsNotNull(result);
+                Assert.IsTrue(kycDocument.Type == result.Type);
+                Assert.IsTrue(result.Status == KycStatus.VALIDATION_ASKED);
             }
             catch (Exception ex)
             {
@@ -675,6 +740,39 @@ namespace MangoPay.SDK.Tests
                 Assert.IsTrue(result2.Count > 0);
 
                 Assert.IsTrue(result[0].Id != result2[0].Id);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+
+        [Test]
+        public void Test_Users_CreateKycPageWithByteArrayWithoutIdempotencyKey()
+        {
+            try
+            {
+                UserNaturalDTO john = this.GetJohn();
+                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
+
+                string workingDirectory = Environment.CurrentDirectory;
+                FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
+                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).FirstOrDefault();
+
+                byte[] fileArray = File.ReadAllBytes(fi.FullName);
+                this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fileArray);
+
+                KycDocumentPutDTO kycDocumentPut = new KycDocumentPutDTO
+                {
+                    Status = KycStatus.VALIDATION_ASKED
+                };
+
+                KycDocumentDTO result = this.Api.Users.UpdateKycDocument(john.Id, kycDocumentPut, kycDocument.Id);
+
+                Assert.IsNotNull(result);
+                Assert.IsTrue(kycDocument.Type == result.Type);
+                Assert.IsTrue(result.Status == KycStatus.VALIDATION_ASKED);
             }
             catch (Exception ex)
             {

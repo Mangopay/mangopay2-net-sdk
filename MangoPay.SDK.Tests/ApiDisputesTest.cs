@@ -622,7 +622,7 @@ namespace MangoPay.SDK.Tests
 				var disputeDocument = Api.Disputes.CreateDisputeDocument(documentPost, dispute.Id);
 				Assembly assembly = Assembly.GetExecutingAssembly();
 				FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
-				FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+				FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").FirstOrDefault();
 				byte[] bytes = File.ReadAllBytes(fi.FullName);
 				Api.Disputes.CreateDisputePage(dispute.Id, disputeDocument.Id, bytes);
 
