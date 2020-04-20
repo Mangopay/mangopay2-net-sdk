@@ -1,6 +1,12 @@
 ## [Unreleased]
 
-## [3.0.0]
+## [2.0.1]
+## Fixed
+- Add missing `UserID` parameter in UBODeclarationDTO.
+- Fix typo for version number in CHANGELOG.md (3.x vs. 2.x)
+
+
+## [2.0.0]
 ### Breaking changes
 - `PAYLINEV2` parameter is now supported for Payin Web Card (only!) and replace `PAYLINE` deprecated parameter. You must now use `TemplateURLOptionsCard` instead of `TemplateURLOptions` for Payin Web Cards only. For Payin Web Direct Debit, `TemplateURLOptions` and its `PAYLINE` parameter should be always used.
 
