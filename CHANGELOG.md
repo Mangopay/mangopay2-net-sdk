@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [2.0.2]
+## Added
+- Add new `USER_KYC_REGULAR` value for `EventType`
+
 ## [2.0.1]
 ## Fixed
 - Add missing `UserID` parameter in UBODeclarationDTO.
