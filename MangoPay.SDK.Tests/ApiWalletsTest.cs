@@ -66,6 +66,18 @@ namespace MangoPay.SDK.Tests
             AssertEqualInputProps(transactions[0], payIn);
         }
 
+        [Test]
+        public void Test_Issue47()
+        {
+            var wallet = this.GetJohnsWallet();
+            var mpSort = new Sort();
+            mpSort.AddField("CreationDate", SortDirection.desc);
+
+            var result = Api.Wallets.GetTransactions(wallet.Id, new Pagination(2, 4), new FilterTransactions(), mpSort);
+
+            Assert.NotNull(result);
+        }
+
         /** FIXME: backend error to fix
         [Test]
         public void Test_Wallets_Transactions_With_Sorting()
