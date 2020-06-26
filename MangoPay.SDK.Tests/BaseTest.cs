@@ -167,11 +167,13 @@ namespace MangoPay.SDK.Tests
 
         protected UserNaturalDTO GetNewJohn()
         {
-            UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
-            user.Occupation = "programmer";
-            user.IncomeRange = 3;
-            user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
-            user.Capacity = CapacityType.DECLARATIVE;
+            UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR)
+            {
+                Occupation = "programmer",
+                IncomeRange = 3,
+                Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" },
+                Capacity = CapacityType.DECLARATIVE
+            };
 
             return this.Api.Users.Create(user);
         }
@@ -181,13 +183,15 @@ namespace MangoPay.SDK.Tests
             if (BaseTest._matrix == null)
             {
                 UserNaturalDTO john = this.GetJohn();
-                var birthday = john.Birthday.HasValue ? john.Birthday.Value : new DateTime();
-                UserLegalPostDTO user = new UserLegalPostDTO(john.Email, "MartixSampleOrg", LegalPersonType.BUSINESS, john.FirstName, john.LastName, birthday, john.Nationality, john.CountryOfResidence);
-                user.HeadquartersAddress = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
-                user.LegalRepresentativeAddress = john.Address;
-                user.LegalRepresentativeEmail = john.Email;
-                user.LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0);
-                user.Email = john.Email;
+                var birthday = john.Birthday ?? new DateTime();
+                UserLegalPostDTO user = new UserLegalPostDTO(john.Email, "MartixSampleOrg", LegalPersonType.BUSINESS, john.FirstName, john.LastName, birthday, john.Nationality, john.CountryOfResidence)
+                {
+                    HeadquartersAddress = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" },
+                    LegalRepresentativeAddress = john.Address,
+                    LegalRepresentativeEmail = john.Email,
+                    LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                    Email = john.Email
+                };
 
                 BaseTest._matrix = this.Api.Users.Create(user);
             }
@@ -199,9 +203,11 @@ namespace MangoPay.SDK.Tests
             if (BaseTest._johnsAccount == null || recreate)
             {
                 UserNaturalDTO john = this.GetJohn();
-                BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154");
-                account.UserId = john.Id;
-                account.BIC = "CMBRFR2BCME";
+                BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154")
+                {
+                    UserId = john.Id,
+                    BIC = "CMBRFR2BCME"
+                };
                 BaseTest._johnsAccount = this.Api.Users.CreateBankAccountIban(john.Id, account);
             }
             return BaseTest._johnsAccount;
@@ -282,7 +288,7 @@ namespace MangoPay.SDK.Tests
             payIn.CardType = card.CardType;
 
             // create Pay-In
-            this.Api.PayIns.CreateCardDirect(payIn);
+            var result = this.Api.PayIns.CreateCardDirect(payIn);
 
             return this.Api.Wallets.Get(johnsWalletWithMoney.Id);
         }
@@ -613,8 +619,8 @@ namespace MangoPay.SDK.Tests
             RestRequest request = new RestRequest(Method.POST);
             request.AddParameter("data", cardRegistration.PreregistrationData);
             request.AddParameter("accessKeyRef", cardRegistration.AccessKey);
-            request.AddParameter("cardNumber", "4970100000000154");
-            request.AddParameter("cardExpirationDate", "1226");
+            request.AddParameter("cardNumber", "4972485830400056");
+            request.AddParameter("cardExpirationDate", "1224");
             request.AddParameter("cardCvx", "123");
 
             // Payline requires TLS

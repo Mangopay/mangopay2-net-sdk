@@ -556,7 +556,7 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
 
-                string workingDirectory = Environment.CurrentDirectory;
+                var workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
                 FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
                 FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
 
@@ -608,7 +608,7 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
-                string workingDirectory = Environment.CurrentDirectory;
+                var workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
                 FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
                 FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
 
@@ -628,7 +628,7 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO john = this.GetJohn();
                 KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
-                string workingDirectory = Environment.CurrentDirectory;
+                var workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
                 FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
                 FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
                 byte[] bytes = File.ReadAllBytes(fi.FullName);
@@ -813,7 +813,7 @@ namespace MangoPay.SDK.Tests
             {
                 var user = GetNewJohn();
                 var wallet = GetNewJohnsWalletWithMoney(10000, user);
-		var year = DateTime.Now.Year.ToString();
+		        var year = DateTime.Now.Year.ToString();
                 var month = DateTime.Now.Month.ToString();
 
                 var emoney = Api.Users.GetEmoneyForYearAndMonth(user.Id, year, month);

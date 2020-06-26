@@ -267,7 +267,7 @@ namespace MangoPay.SDK.Tests
 		[Test]
 		public void Test_ClientLogo()
 		{
-            string workingDirectory = Environment.CurrentDirectory;
+            var workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
             FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
             FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
 
