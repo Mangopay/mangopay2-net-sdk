@@ -37,9 +37,8 @@ namespace MangoPay.SDK.Tests
 				UserNaturalDTO john = this.GetJohn();
 				KycDocumentDTO kycDocument = this.GetNewKycDocument();
 
-                var workingDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
-                FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
-                FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
+                var assembly = Assembly.GetExecutingAssembly();
+                var fi = this.GetFileInfoOfFile(assembly.Location);
                 byte[] bytes = File.ReadAllBytes(fi.FullName);
 				Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
 				Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);

@@ -9,6 +9,8 @@ using NUnit.Framework;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace MangoPay.SDK.Tests
@@ -634,6 +636,27 @@ namespace MangoPay.SDK.Tests
                 return responseString;
             else
                 throw new Exception(responseString);
+        }
+
+        protected FileInfo GetFileInfoOfFile(string location)
+        {
+            bool exit = false;
+            var fi = new FileInfo(location);
+            var directory = Directory.GetParent(location);
+            do
+            {
+                fi = directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).SingleOrDefault();
+                if (fi == null)
+                {
+                    directory = Directory.GetParent(directory.FullName);
+                }
+                else
+                {
+                    exit = true;
+                }
+            } while (exit == false);
+
+            return fi;
         }
 
         protected HookDTO GetJohnsHook()
