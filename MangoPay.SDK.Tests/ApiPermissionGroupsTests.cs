@@ -122,7 +122,6 @@ namespace MangoPay.SDK.Tests
 
 				Assert.IsNotNull(permissionGroups);
 				Assert.AreEqual(1, permissionGroups.Count);
-				Assert.IsTrue(permissionGroups.TotalItems > 0);
 			}
 			catch (Exception ex)
 			{

@@ -113,8 +113,7 @@ namespace MangoPay.SDK.Tests
 				var singleSignOns = this.Api.SingleSignOns.GetAll(pagination, sort);
 
 				Assert.IsNotNull(singleSignOns);
-				Assert.AreEqual(1, singleSignOns.Count);
-				Assert.IsTrue(singleSignOns.TotalItems > 0);				
+				Assert.AreEqual(1, singleSignOns.Count);			
 			}
 			catch (Exception ex)
 			{
