@@ -1,13 +1,13 @@
 ﻿using MangoPay.SDK.Core.Interfaces;
 using MangoPay.SDK.Entities;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace MangoPay.SDK.Core
 {
     /// <summary>Default token storage strategy implementation.</summary>
     public class DefaultStorageStrategy : IStorageStrategy
     {
-		private static Dictionary<string, OAuthTokenDTO> _oAuthToken = new Dictionary<string, OAuthTokenDTO>();
+		private static ConcurrentDictionary<string, OAuthTokenDTO> _oAuthToken = new ConcurrentDictionary<string, OAuthTokenDTO>();
 
 		/// <summary>Gets the currently stored token.</summary>
 		/// <param name="envKey">Environment key for token.</param>
@@ -25,7 +25,7 @@ namespace MangoPay.SDK.Core
 		public void Store(OAuthTokenDTO token, string envKey)
 		{
 			if (_oAuthToken.ContainsKey(envKey)) _oAuthToken[envKey] = token;
-			else _oAuthToken.Add(envKey, token);
+			else _oAuthToken.TryAdd(envKey, token);
 		}
     }
 }
