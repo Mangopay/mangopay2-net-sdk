@@ -267,11 +267,10 @@ namespace MangoPay.SDK.Tests
 		[Test]
 		public void Test_ClientLogo()
 		{
-            string workingDirectory = Environment.CurrentDirectory;
-            FileInfo assemblyFileInfo = new FileInfo(workingDirectory);
-            FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).Single();
+            var assembly = Assembly.GetExecutingAssembly();
+            var fi = this.GetFileInfoOfFile(assembly.Location);
 
-			this.Api.Clients.UploadLogo(fi.FullName);
+            this.Api.Clients.UploadLogo(fi.FullName);
 			this.Api.Clients.UploadLogo(File.ReadAllBytes(fi.FullName));
 		}
 	}
