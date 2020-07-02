@@ -60,8 +60,10 @@ namespace MangoPay.SDK.Core.Enumerations
 		UBO_DECLARATION_REFUSED					= 0x1000000000000,
 		UBO_DECLARATION_VALIDATED				= 0x2000000000000,
         UBO_DECLARATION_INCOMPLETE              = 0x4000000000000,
-	MANDATE_EXPIRED = 0x8000000000000,
-	USER_KYC_REGULAR = 0x10000000000000
+	    MANDATE_EXPIRED                         = 0x8000000000000,
+	    USER_KYC_REGULAR                        = 0x10000000000000,
+        KYC_OUTDATED                            = 0x20000000000000,
+        USER_KYC_LIGHT                          = 0x40000000000000
 
         /* IMPORTANT!
 		 * 
