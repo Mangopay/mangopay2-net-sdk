@@ -2,13 +2,14 @@ language: csharp
 dist: xenial
 mono: 5.2.0
 dotnet: 2.2
+before_install:
+- sudo apt-get update
+- sudo apt-get install nuget
 install:
 - export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.5/
 - dotnet restore
 - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
 script:
-# see version of nuget
-- nuget help
 - dotnet build -c Release
 - mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/net461/MangoPay.SDK.Tests.dll
 after_success:
