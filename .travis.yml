@@ -7,6 +7,8 @@ install:
 - dotnet restore
 - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
 script:
+# see version of nuget
+- nuget help
 - dotnet build -c Release
 - mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/net461/MangoPay.SDK.Tests.dll
 after_success:
