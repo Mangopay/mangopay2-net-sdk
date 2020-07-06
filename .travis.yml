@@ -17,6 +17,6 @@ after_success:
 deploy:
   skip_cleanup: true
   provider: script
-  script: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -Source $NUGET_SOURCE -Verbosity detailed
+  script: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -Source https://api.nuget.org/v3/index.json -Verbosity detailed
   on:
     branch: release
