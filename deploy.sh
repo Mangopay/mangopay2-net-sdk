@@ -1,4 +1,4 @@
 #!/bin/bash
 
-PACKAGE_FILE=`find . -type f -name MangoPay.SDK.*.nupkg | sort -r | head -n 1`
-nuget push $PACKAGE_FILE -ApiKey $NUGET_API_KEY -Source $NUGET_SOURCE
+nuget setapikey $NUGET_API_KEY -Source $NUGET_URL
+dotnet nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -s $NUGET_SOURCE
