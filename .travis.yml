@@ -21,6 +21,6 @@ deploy:
       branch: release
   - provider: script
     skip_cleanup: true
-    script: dotnet nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -s $NUGET_SOURCE
+    script: dotnet nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -s $NUGET_URL
     on:
       branch: release
