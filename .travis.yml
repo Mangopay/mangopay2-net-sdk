@@ -5,7 +5,6 @@ dotnet: 2.2
 before_install:
 - sudo apt-get update
 - sudo apt-get install nuget
-- nuget setapikey $NUGET_API_KEY -Source $NUGET_URL
 install:
 - export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.5/
 - dotnet restore
@@ -16,8 +15,12 @@ script:
 after_success:
   - dotnet pack -c Release ./MangoPay.SDK/MangoPay.SDK.csproj
 deploy:
-  skip_cleanup: true
-  provider: script
-  script: dotnet nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -s $NUGET_SOURCE
-  on:
-    branch: release
+  - provider: script
+    script: nuget setapikey $NUGET_API_KEY -Source $NUGET_URL
+    on:
+      branch: release
+  - provider: script
+    skip_cleanup: true
+    script: dotnet nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -s $NUGET_SOURCE
+    on:
+      branch: release
