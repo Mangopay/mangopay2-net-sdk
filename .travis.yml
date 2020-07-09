@@ -1,8 +1,9 @@
 language: csharp
 dist: bionic
-mono: 6.10.0
+mono: latest
 dotnet: 2.2
 before_install:
+- mono --version
 - sudo apt-get update
 - sudo apt-get install nuget
 install:
