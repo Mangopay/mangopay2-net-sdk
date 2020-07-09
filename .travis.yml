@@ -1,6 +1,6 @@
 language: csharp
 dist: bionic
-mono: 5.2.0
+mono: 6.10.0
 dotnet: 2.2
 before_install:
 - sudo apt-get update
@@ -17,6 +17,6 @@ after_success:
 deploy:
   skip_cleanup: true
   provider: script
-  script: bash ./deploy.sh
+  script: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -Source $NUGET_SOURCE -Verbosity detailed
   on:
     branch: release
