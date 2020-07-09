@@ -458,7 +458,7 @@ namespace MangoPay.SDK.Tests
                 PaymentData = paymentData
             };
 
-            var getPayIn = Api.PayIns.CreateApplePay(null, applePayIn);
+            var getPayIn = Api.PayIns.CreateApplePay(DateTime.Now.Ticks.ToString(), applePayIn);
 
             Assert.IsNotNull(getPayIn);
             Assert.AreEqual(getPayIn.AuthorId, applePayIn.AuthorId);
