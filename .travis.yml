@@ -12,12 +12,12 @@ install:
 - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
 script:
 - dotnet build -c Release
-#- mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/net461/MangoPay.SDK.Tests.dll
+- mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/net461/MangoPay.SDK.Tests.dll
 after_success:
   - dotnet pack -c Release ./MangoPay.SDK/MangoPay.SDK.csproj
 deploy:
   skip_cleanup: true
   provider: script
-  script: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -Source $NUGET_SOURCE -Verbosity detailed
+  script: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -Source $NUGET_SOURCE -SkipDuplicate -Verbosity detailed
   on:
     branch: release
