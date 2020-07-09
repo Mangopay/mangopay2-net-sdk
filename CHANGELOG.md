@@ -1,4 +1,6 @@
-
+## [2.0.4]
+- Added new `KYC_OUTDATED` value for `EventType`
+- Added new `USER_KYC_LIGHT` value for `EventType`
 
 ## [2.0.2]
 ## Added
