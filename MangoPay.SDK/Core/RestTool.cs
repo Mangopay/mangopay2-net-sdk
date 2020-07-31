@@ -1,11 +1,11 @@
 ﻿using Common.Logging;
 using MangoPay.SDK.Entities;
-using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core
 {
@@ -104,14 +104,14 @@ namespace MangoPay.SDK.Core
 		/// <param name="pagination">Pagination object.</param>
 		/// <param name="entity">Instance of DTO class that is going to be sent in case of PUTting or POSTing.</param>
 		/// <returns>The DTO instance returned from API.</returns>
-		public U Request<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination, T entity)
+		public async Task<U> Request<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination, T entity)
             where U : new()
         {
             this._requestType = endPoint.RequestType;
 			this._includeClientId = endPoint.IncludeClientId;
 			this._requestData = requestData;
 
-			U responseResult = this.DoRequest<U, T>(idempotencyKey, endPoint.GetUrl(), pagination, entity);
+			U responseResult = await this.DoRequest<U, T>(idempotencyKey, endPoint.GetUrl(), pagination, entity);
 
             return responseResult;
         }
@@ -125,10 +125,10 @@ namespace MangoPay.SDK.Core
 		/// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
 		/// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
 		/// <returns>The DTO instance returned from API.</returns>
-		public U Request<U, T>(ApiEndPoint endPoint)
+		public async Task<U> Request<U, T>(ApiEndPoint endPoint)
             where U : new()
         {
-            return Request<U, T>(null, endPoint, null, null, default(T));
+            return await Request<U, T>(null, endPoint, null, null, default(T));
         }
 
 		/// <summary>Makes a call to the MangoPay API.
@@ -141,10 +141,10 @@ namespace MangoPay.SDK.Core
 		/// <param name="idempotencyKey">Idempotency key for this request.</param>
 		/// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
 		/// <returns>The DTO instance returned from API.</returns>
-		public U Request<U, T>(String idempotencyKey, ApiEndPoint endPoint)
+		public async Task<U> Request<U, T>(String idempotencyKey, ApiEndPoint endPoint)
 			where U : new()
 		{
-			return Request<U, T>(idempotencyKey, endPoint, null, null, default(T));
+			return await Request<U, T>(idempotencyKey, endPoint, null, null, default(T));
 		}
 
 		/// <summary>Makes a call to the MangoPay API.
@@ -157,10 +157,10 @@ namespace MangoPay.SDK.Core
 		/// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
 		/// <param name="requestData">Collection of key-value pairs of request parameters.</param>
 		/// <returns>The DTO instance returned from API.</returns>
-		public U Request<U, T>(ApiEndPoint endPoint, Dictionary<String, String> requestData)
+		public async Task<U> Request<U, T>(ApiEndPoint endPoint, Dictionary<String, String> requestData)
             where U : new()
         {
-            return Request<U, T>(null, endPoint, requestData, null, default(T));
+            return await Request<U, T>(null, endPoint, requestData, null, default(T));
         }
 
 		/// <summary>Makes a call to the MangoPay API.
@@ -174,10 +174,10 @@ namespace MangoPay.SDK.Core
 		/// <param name="requestType">HTTP request term, one of the GET, PUT or POST.</param>
 		/// <param name="requestData">Collection of key-value pairs of request parameters.</param>
 		/// <returns>The DTO instance returned from API.</returns>
-		public U Request<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData)
+		public async Task<U> Request<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData)
 			where U : new()
 		{
-			return Request<U, T>(idempotencyKey, endPoint, requestData, null, default(T));
+			return await Request<U, T>(idempotencyKey, endPoint, requestData, null, default(T));
 		}
 
 		/// <summary>Makes a call to the MangoPay API.
@@ -191,10 +191,10 @@ namespace MangoPay.SDK.Core
 		/// <param name="requestData">Collection of key-value pairs of request parameters.</param>
 		/// <param name="pagination">Pagination object.</param>
 		/// <returns>The DTO instance returned from API.</returns>
-		public U Request<U, T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
+		public async Task<U> Request<U, T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
             where U : new()
         {
-            return Request<U, T>(null, endPoint, requestData, pagination, default(T));
+            return await Request<U, T>(null, endPoint, requestData, pagination, default(T));
         }
 
 		/// <summary>Makes a call to the MangoPay API.
@@ -209,10 +209,10 @@ namespace MangoPay.SDK.Core
 		/// <param name="requestData">Collection of key-value pairs of request parameters.</param>
 		/// <param name="pagination">Pagination object.</param>
 		/// <returns>The DTO instance returned from API.</returns>
-		public U Request<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
+		public async Task<U> Request<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
 			where U : new()
 		{
-			return Request<U, T>(idempotencyKey, endPoint, requestData, pagination, default(T));
+			return await Request<U, T>(idempotencyKey, endPoint, requestData, pagination, default(T));
 		}
 
 		/// <summary>Makes a call to the MangoPay API. 
@@ -226,14 +226,14 @@ namespace MangoPay.SDK.Core
 		/// <param name="pagination">Pagination object.</param>
 		/// <param name="additionalUrlParams"></param>
 		/// <returns>Collection of DTO instances returned from API.</returns>
-		public ListPaginated<T> RequestList<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination, Dictionary<String, String> additionalUrlParams)
+		public async Task<ListPaginated<T>> RequestList<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination, Dictionary<String, String> additionalUrlParams)
             where T : new()
         {
             this._requestType = endPoint.RequestType;
 			this._includeClientId = endPoint.IncludeClientId;
 			this._requestData = requestData;
 
-            ListPaginated<T> responseResult = this.DoRequestList<T>(endPoint.GetUrl(), pagination, additionalUrlParams);
+            ListPaginated<T> responseResult = await this.DoRequestList<T>(endPoint.GetUrl(), pagination, additionalUrlParams);
 
             return responseResult;
         }
@@ -246,10 +246,10 @@ namespace MangoPay.SDK.Core
 		/// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
 		/// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
 		/// <returns>Collection of DTO instances returned from API.</returns>
-		public ListPaginated<T> RequestList<T>(ApiEndPoint endPoint)
+		public async Task<ListPaginated<T>> RequestList<T>(ApiEndPoint endPoint)
             where T : new()
         {
-            return RequestList<T>(endPoint, null, null, null);
+            return await RequestList<T>(endPoint, null, null, null);
         }
 
 		/// <summary>Makes a call to the MangoPay API. 
@@ -261,10 +261,10 @@ namespace MangoPay.SDK.Core
 		/// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
 		/// <param name="requestData">Collection of key-value pairs of request parameters.</param>
 		/// <returns>Collection of DTO instances returned from API.</returns>
-		public ListPaginated<T> RequestList<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData)
+		public async Task<ListPaginated<T>> RequestList<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData)
             where T : new()
         {
-            return RequestList<T>(endPoint, requestData, null, null);
+            return await RequestList<T>(endPoint, requestData, null, null);
         }
 
 		/// <summary>Makes a call to the MangoPay API. 
@@ -277,20 +277,20 @@ namespace MangoPay.SDK.Core
 		/// <param name="requestData">Collection of key-value pairs of request parameters.</param>
 		/// <param name="pagination">Pagination object.</param>
 		/// <returns>Collection of DTO instances returned from API.</returns>
-		public ListPaginated<T> RequestList<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
+		public async Task<ListPaginated<T>> RequestList<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
             where T : new()
         {
-            return RequestList<T>(endPoint, requestData, pagination, null);
+            return await RequestList<T>(endPoint, requestData, pagination, null);
         }
 
-        private U DoRequest<U, T>(String idempotencyKey, String urlMethod, Pagination pagination)
+        private async Task<U> DoRequest<U, T>(String idempotencyKey, String urlMethod, Pagination pagination)
             where T : new()
             where U : new()
         {
-			return DoRequest<U, T>(idempotencyKey, urlMethod, pagination, default(T));
+			return await DoRequest<U, T>(idempotencyKey, urlMethod, pagination, default(T));
         }
 
-        private U DoRequest<U, T>(String idempotencyKey, String urlMethod, Pagination pagination, T entity)
+        private async Task<U> DoRequest<U, T>(String idempotencyKey, String urlMethod, Pagination pagination, T entity)
             where U : new()
         {
 			U responseObject = default(U);
@@ -366,7 +366,7 @@ namespace MangoPay.SDK.Core
                 }
             }
             
-            IRestResponse<U> restResponse = client.Execute<U>(restRequest);
+            IRestResponse<U> restResponse = await client.ExecuteAsync<U>(restRequest);
             responseObject = restResponse.Data;
 
             this._responseCode = (int)restResponse.StatusCode;
@@ -404,7 +404,7 @@ namespace MangoPay.SDK.Core
                 response.Headers.FirstOrDefault(h => h.Name == "X-RateLimit-Reset")?.Value?.ToString();
         }
 
-        private ListPaginated<T> DoRequestList<T>(string urlMethod, Pagination pagination, Dictionary<String, String> additionalUrlParams)
+        private async Task<ListPaginated<T>> DoRequestList<T>(string urlMethod, Pagination pagination, Dictionary<String, String> additionalUrlParams)
         {
             ListPaginated<T> responseObject = null;
 
@@ -452,7 +452,7 @@ namespace MangoPay.SDK.Core
 
             _log.Debug("RequestType: " + this._requestType);
 
-            IRestResponse<List<T>> restResponse = client.Execute<List<T>>(restRequest);
+            IRestResponse<List<T>> restResponse = await client.ExecuteAsync<List<T>>(restRequest);
             responseObject = new ListPaginated<T>(restResponse.Data);
 
             this._responseCode = (int)restResponse.StatusCode;
