@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -17,9 +18,9 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets idempotency response.</summary>
 		/// <param name="idempotencyKey">Idempotency key for .</param>
 		/// <returns>Idempotency response instance returned from API.</returns>
-        public IdempotencyResponseDTO Get(String idempotencyKey)
+        public async Task<IdempotencyResponseDTO> Get(String idempotencyKey)
         {
-			var response = this.GetObject<IdempotencyResponseDTO>(MethodKey.IdempotencyResponseGet, idempotencyKey);
+			var response = await this.GetObject<IdempotencyResponseDTO>(MethodKey.IdempotencyResponseGet, idempotencyKey);
 			LoadResourceObject(response);
 			
 			return response;

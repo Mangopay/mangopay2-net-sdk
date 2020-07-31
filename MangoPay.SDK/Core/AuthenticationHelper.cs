@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core
 {
@@ -20,9 +21,9 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Gets HTTP header value with authorization string.</summary>
         /// <returns></returns>
-        public Dictionary<String, String> GetHttpHeaderKey()
+        public async Task<Dictionary<String, String>> GetHttpHeaderKey()
         {
-            return GetHttpHeaderStrong();
+            return await GetHttpHeaderStrong();
         }
 
         /// <summary>Gets basic key for HTTP header.</summary>
@@ -41,9 +42,9 @@ namespace MangoPay.SDK.Core
         }
 
         // gets HTTP header value with authorization string for strong authentication
-        private Dictionary<String, String> GetHttpHeaderStrong()
+        private async Task<Dictionary<String, String>> GetHttpHeaderStrong()
         {
-            OAuthTokenDTO token = _root.OAuthTokenManager.GetToken();
+            OAuthTokenDTO token = await _root.OAuthTokenManager.GetToken();
 
             if (token == null || String.IsNullOrEmpty(token.access_token) || String.IsNullOrEmpty(token.token_type))
                 throw new Exception("OAuth token is not created (or is invalid) for strong authentication");

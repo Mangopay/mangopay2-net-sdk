@@ -5,6 +5,7 @@ using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.Transport;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -18,59 +19,62 @@ namespace MangoPay.SDK.Core.APIs
 		/// <summary>Creates new report request.</summary>
 		/// <param name="hook">Report request instance to be created.</param>
 		/// <returns>Report request instance returned from API.</returns>
-		public ReportRequestDTO Create(ReportRequestPostDTO reportRequest)
+		public async Task<ReportRequestDTO> Create(ReportRequestPostDTO reportRequest)
         {
 			if (!reportRequest.ReportType.HasValue) reportRequest.ReportType = ReportType.TRANSACTIONS;
 
-			return Create(null, reportRequest);
+			return await Create(null, reportRequest);
         }
 
 		/// <summary>Creates new report request.</summary>
 		/// <param name="idempotencyKey">Idempotency key for this request.</param>
 		/// <param name="hook">Report request instance to be created.</param>
 		/// <returns>Report request instance returned from API.</returns>
-		public ReportRequestDTO Create(String idempotencyKey, ReportRequestPostDTO reportRequest)
+		public async Task<ReportRequestDTO> Create(String idempotencyKey, ReportRequestPostDTO reportRequest)
 		{
 			if (!reportRequest.ReportType.HasValue) reportRequest.ReportType = ReportType.TRANSACTIONS;
 
-			ReportRequestTransportPostDTO reportRequestTransport = ReportRequestTransportPostDTO.CreateFromBusinessObject(reportRequest);
+			var reportRequestTransport = ReportRequestTransportPostDTO.CreateFromBusinessObject(reportRequest);
 
-			return this.CreateObject<ReportRequestTransportDTO, ReportRequestTransportPostDTO>(idempotencyKey, MethodKey.ReportRequest, reportRequestTransport, reportRequestTransport.ReportType.ToString().ToLower()).GetBusinessObject();
-		}
+			var reportRequestTransportDTO = await this.CreateObject<ReportRequestTransportDTO, ReportRequestTransportPostDTO>(idempotencyKey, MethodKey.ReportRequest, reportRequestTransport, reportRequestTransport.ReportType.ToString().ToLower());
+
+            return reportRequestTransportDTO.GetBusinessObject();
+        }
 
 		/// <summary>Gets report request.</summary>
 		/// <param name="hookId">Report request identifier.</param>
 		/// <returns>Report request instance returned from API.</returns>
-		public ReportRequestDTO Get(String reportId)
+		public async Task<ReportRequestDTO> Get(String reportId)
         {
-			return this.GetObject<ReportRequestTransportDTO>(MethodKey.ReportGet, reportId).GetBusinessObject();
+            var reportRequestTransportDTO = await this.GetObject<ReportRequestTransportDTO>(MethodKey.ReportGet, reportId);
+
+            return reportRequestTransportDTO.GetBusinessObject();
         }
 
 		/// <summary>Gets all report requests.</summary>
         /// <param name="pagination">Pagination.</param>
         /// <param name="sort">Sort.</param>
 		/// <returns>List of ReportRequest instances returned from API.</returns>
-		public ListPaginated<ReportRequestDTO> GetAll(Pagination pagination, FilterReportsList filters = null, Sort sort = null)
+		public async Task<ListPaginated<ReportRequestDTO>> GetAll(Pagination pagination, FilterReportsList filters = null, Sort sort = null)
         {
 			if (filters == null) filters = new FilterReportsList();
 
-			ListPaginated<ReportRequestTransportDTO> resultTransport = this.GetList<ReportRequestTransportDTO>(MethodKey.ReportGetAll, pagination, sort, filters.GetValues());
+			var resultTransport = await this.GetList<ReportRequestTransportDTO>(MethodKey.ReportGetAll, pagination, sort, filters.GetValues());
 
-			List<ReportRequestDTO> result = new List<ReportRequestDTO>();
+			var result = new List<ReportRequestDTO>();
 			foreach (ReportRequestTransportDTO item in resultTransport)
 			{
 				result.Add(item.GetBusinessObject());
 			}
 
-			ListPaginated<ReportRequestDTO> resultPaginated = new ListPaginated<ReportRequestDTO>(result, resultTransport.TotalPages, resultTransport.TotalItems);
-			return resultPaginated;
+            return new ListPaginated<ReportRequestDTO>(result, resultTransport.TotalPages, resultTransport.TotalItems);
         }
 
         /// <summary>Gets all report requests.</summary>
         /// <returns>List of ReportRequest instances returned from API.</returns>
-		public ListPaginated<ReportRequestDTO> GetAll()
+		public async Task<ListPaginated<ReportRequestDTO>> GetAll()
         {
-            return this.GetAll(null);
+            return await this.GetAll(null);
         }
     }
 }

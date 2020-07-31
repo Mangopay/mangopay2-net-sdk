@@ -6,6 +6,7 @@ using MangoPay.SDK.Entities.PUT;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -19,9 +20,9 @@ namespace MangoPay.SDK.Core.APIs
 		/// <summary>Gets dispute.</summary>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <returns>Dispute instance returned from API.</returns>
-		public DisputeDTO Get(String disputeId)
+		public async Task<DisputeDTO> Get(String disputeId)
 		{
-			return this.GetObject<DisputeDTO>(MethodKey.DisputesGet, disputeId);
+			return await this.GetObject<DisputeDTO>(MethodKey.DisputesGet, disputeId);
 		}
 
 		/// <summary>Gets all disputes.</summary>
@@ -29,18 +30,18 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of Dispute instances returned from API.</returns>
-		public ListPaginated<DisputeDTO> GetAll(Pagination pagination, FilterDisputes filters, Sort sort = null)
+		public async Task<ListPaginated<DisputeDTO>> GetAll(Pagination pagination, FilterDisputes filters, Sort sort = null)
 		{
 			if (filters == null) filters = new FilterDisputes();
 
-			return this.GetList<DisputeDTO>(MethodKey.DisputesGetAll, pagination, sort, filters.GetValues());
+			return await this.GetList<DisputeDTO>(MethodKey.DisputesGetAll, pagination, sort, filters.GetValues());
 		}
 
 		/// <summary>Gets all disputes.</summary>
 		/// <returns>List of Dispute instances returned from API.</returns>
-		public ListPaginated<DisputeDTO> GetAll()
+		public async Task<ListPaginated<DisputeDTO>> GetAll()
 		{
-			return this.GetAll(null, null);
+			return await this.GetAll(null, null);
 		}
 
 		/// <summary>Gets dispute's transactions.</summary>
@@ -49,11 +50,11 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of Transaction instances returned from API.</returns>
-		public ListPaginated<TransactionDTO> GetTransactions(String disputeId, Pagination pagination, FilterTransactions filters, Sort sort = null)
+		public async Task<ListPaginated<TransactionDTO>> GetTransactions(String disputeId, Pagination pagination, FilterTransactions filters, Sort sort = null)
 		{
 			if (filters == null) filters = new FilterTransactions();
 
-			return this.GetList<TransactionDTO>(MethodKey.DisputesGetTransactions, pagination,sort, filters.GetValues(), disputeId);
+			return await this.GetList<TransactionDTO>(MethodKey.DisputesGetTransactions, pagination,sort, filters.GetValues(), disputeId);
 		}
 
 		/// <summary>Gets dispute's documents for wallet.</summary>
@@ -62,11 +63,11 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of dispute instances returned from API.</returns>
-		public ListPaginated<DisputeDTO> GetDisputesForWallet(String walletId, Pagination pagination, FilterDisputes filters, Sort sort = null)
+		public async Task<ListPaginated<DisputeDTO>> GetDisputesForWallet(String walletId, Pagination pagination, FilterDisputes filters, Sort sort = null)
 		{
 			if (filters == null) filters = new FilterDisputes();
 
-			return this.GetList<DisputeDTO>(MethodKey.DisputesGetForWallet, pagination, sort, filters.GetValues(), walletId);
+			return await this.GetList<DisputeDTO>(MethodKey.DisputesGetForWallet, pagination, sort, filters.GetValues(), walletId);
 		}
 
 		/// <summary>Gets user's disputes.</summary>
@@ -75,28 +76,28 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of Dispute instances returned from API.</returns>
-		public ListPaginated<DisputeDTO> GetDisputesForUser(String userId, Pagination pagination, FilterDisputes filters, Sort sort = null)
+		public async Task<ListPaginated<DisputeDTO>> GetDisputesForUser(String userId, Pagination pagination, FilterDisputes filters, Sort sort = null)
 		{
 			if (filters == null) filters = new FilterDisputes();
 
-			return this.GetList<DisputeDTO>(MethodKey.DisputesGetForUser, pagination, sort, filters.GetValues(), userId);
+			return await this.GetList<DisputeDTO>(MethodKey.DisputesGetForUser, pagination, sort, filters.GetValues(), userId);
 		}
 
         /// <summary>Gets Disputes which need settling.</summary>
         /// <param name="pagination">Pagination.</param>
         /// <param name="sort">Sort.</param>
         /// <returns>List of Dispute instances returned from API.</returns>
-        public ListPaginated<DisputeDTO> GetDisputesPendingSettlement(Pagination pagination, Sort sort = null)
+        public async Task<ListPaginated<DisputeDTO>> GetDisputesPendingSettlement(Pagination pagination, Sort sort = null)
         {
-            return this.GetList<DisputeDTO>(MethodKey.DisputesGetPendingSettlement, pagination, sort);
+            return await this.GetList<DisputeDTO>(MethodKey.DisputesGetPendingSettlement, pagination, sort);
         }
 
 		/// <summary>Gets dispute's document.</summary>
 		/// <param name="documentId">Dispute's document identifier.</param>
 		/// <returns>Dispute's document object returned from API.</returns>
-		public DisputeDocumentDTO GetDocument(String documentId)
+		public async Task<DisputeDocumentDTO> GetDocument(String documentId)
 		{
-			return this.GetObject<DisputeDocumentDTO>(MethodKey.DisputesDocumentGet, documentId);
+			return await this.GetObject<DisputeDocumentDTO>(MethodKey.DisputesDocumentGet, documentId);
 		}
 
 		/// <summary>Gets documents for dispute.</summary>
@@ -105,11 +106,11 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of DisputeDocument instances returned from API.</returns>
-		public ListPaginated<DisputeDocumentDTO> GetDocumentsForDispute(String disputeId, Pagination pagination, FilterDisputeDocuments filters, Sort sort = null)
+		public async Task<ListPaginated<DisputeDocumentDTO>> GetDocumentsForDispute(String disputeId, Pagination pagination, FilterDisputeDocuments filters, Sort sort = null)
 		{
 			if (filters == null) filters = new FilterDisputeDocuments();
 
-			return this.GetList<DisputeDocumentDTO>(MethodKey.DisputesDocumentGetForDispute, pagination, sort, filters.GetValues(),disputeId);
+			return await this.GetList<DisputeDocumentDTO>(MethodKey.DisputesDocumentGetForDispute, pagination, sort, filters.GetValues(),disputeId);
 		}
 
 		/// <summary>Gets dispute's documents for client.</summary>
@@ -117,28 +118,28 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="filters">Filters.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of dispute documents returned from API.</returns>
-		public ListPaginated<DisputeDocumentDTO> GetDocumentsForClient(Pagination pagination, FilterDisputeDocuments filters, Sort sort = null)
+		public async Task<ListPaginated<DisputeDocumentDTO>> GetDocumentsForClient(Pagination pagination, FilterDisputeDocuments filters, Sort sort = null)
 		{
 			if (filters == null) filters = new FilterDisputeDocuments();
 
-			return this.GetList<DisputeDocumentDTO>(MethodKey.DisputesDocumentGetForClient, pagination, sort, filters.GetValues());
+			return await this.GetList<DisputeDocumentDTO>(MethodKey.DisputesDocumentGetForClient, pagination, sort, filters.GetValues());
 		}
 
 		/// <summary>Gets repudiation.</summary>
 		/// <param name="repudiationId">Repudiation identifier.</param>
 		/// <returns>Repudiation instance returned from API.</returns>
-		public RepudiationDTO GetRepudiation(String repudiationId)
+		public async Task<RepudiationDTO> GetRepudiation(String repudiationId)
 		{
-			return this.GetObject<RepudiationDTO>(MethodKey.DisputesRepudiationGet, repudiationId);
+			return await this.GetObject<RepudiationDTO>(MethodKey.DisputesRepudiationGet, repudiationId);
 		}
 
 		/// <summary>Creates settlement transfer.</summary>
 		/// <param name="settlementTransfer">Settlement transfer.</param>
 		/// <param name="repudiationId">Repudiation identifier.</param>
 		/// <returns>Transfer settlement instance returned from API.</returns>
-		public SettlementDTO CreateSettlementTransfer(SettlementTransferPostDTO settlementTransfer, String repudiationId)
+		public async Task<SettlementDTO> CreateSettlementTransfer(SettlementTransferPostDTO settlementTransfer, String repudiationId)
 		{
-			return CreateSettlementTransfer(null, settlementTransfer, repudiationId);
+			return await CreateSettlementTransfer(null, settlementTransfer, repudiationId);
 		}
 
 		/// <summary>Creates settlement transfer.</summary>
@@ -146,20 +147,20 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="settlementTransfer">Settlement transfer.</param>
 		/// <param name="repudiationId">Repudiation identifier.</param>
 		/// <returns>Transfer settlement instance returned from API.</returns>
-		public SettlementDTO CreateSettlementTransfer(String idempotencyKey, SettlementTransferPostDTO settlementTransfer, String repudiationId)
+		public async Task<SettlementDTO> CreateSettlementTransfer(String idempotencyKey, SettlementTransferPostDTO settlementTransfer, String repudiationId)
 		{
-			return this.CreateObject<SettlementDTO, SettlementTransferPostDTO>(idempotencyKey, MethodKey.DisputesRepudiationCreateSettlement, settlementTransfer, repudiationId);
+			return await this.CreateObject<SettlementDTO, SettlementTransferPostDTO>(idempotencyKey, MethodKey.DisputesRepudiationCreateSettlement, settlementTransfer, repudiationId);
 		}
 
 		/// <summary>Updates dispute's tag.</summary>
 		/// <param name="tag">New tag text.</param>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <returns>Dispute instance returned from API.</returns>
-		public DisputeDTO UpdateTag(String tag, String disputeId)
+		public async Task<DisputeDTO> UpdateTag(String tag, String disputeId)
 		{
 			DisputeTagPutDTO disputeTag = new DisputeTagPutDTO { Tag = tag };
 
-			return this.UpdateObject<DisputeDTO, DisputeTagPutDTO>(MethodKey.DisputesSaveTag, disputeTag, disputeId);
+			return await this.UpdateObject<DisputeDTO, DisputeTagPutDTO>(MethodKey.DisputesSaveTag, disputeTag, disputeId);
 		}
 
 		/// <summary>Submits dispute document.</summary>
@@ -167,47 +168,49 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <param name="disputeDocumentId">Dispute document identifier.</param>
 		/// <returns>Dispute document instance returned from API.</returns>
-		public DisputeDocumentDTO SubmitDisputeDocument(DisputeDocumentPutDTO disputeDocument, String disputeId, String disputeDocumentId)
+		public async Task<DisputeDocumentDTO> SubmitDisputeDocument(DisputeDocumentPutDTO disputeDocument, String disputeId, String disputeDocumentId)
 		{
-			return this.UpdateObject<DisputeDocumentDTO, DisputeDocumentPutDTO>(MethodKey.DisputesDocumentSubmit, disputeDocument, disputeId, disputeDocumentId);
+			return await this.UpdateObject<DisputeDocumentDTO, DisputeDocumentPutDTO>(MethodKey.DisputesDocumentSubmit, disputeDocument, disputeId, disputeDocumentId);
 		}
 
 		/// <summary>Contests dispute.</summary>
 		/// <param name="contestedFunds">Contested funds.</param>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <returns>Dispute instance returned from API.</returns>
-		public DisputeDTO ContestDispute(Money contestedFunds, String disputeId)
+		public async Task<DisputeDTO> ContestDispute(Money contestedFunds, String disputeId)
 		{
-			DisputeContestPutDTO disputeContest = new DisputeContestPutDTO();
-			disputeContest.ContestedFunds = contestedFunds;
+            var disputeContest = new DisputeContestPutDTO
+            {
+                ContestedFunds = contestedFunds
+            };
 
-			return this.UpdateObject<DisputeDTO, DisputeContestPutDTO>(MethodKey.DisputesSaveContestFunds, disputeContest, disputeId);
+            return await this.UpdateObject<DisputeDTO, DisputeContestPutDTO>(MethodKey.DisputesSaveContestFunds, disputeContest, disputeId);
 		}
 
 		/// <summary>Resubmits dispute.</summary>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <returns>Dispute instance returned from API.</returns>
-		public DisputeDTO ResubmitDispute(String disputeId)
+		public async Task<DisputeDTO> ResubmitDispute(String disputeId)
 		{
-			DisputeContestPutDTO dispute = new DisputeContestPutDTO();
-			return this.UpdateObject<DisputeDTO, DisputeContestPutDTO>(MethodKey.DisputesSaveContestFunds, dispute, disputeId);
+			var dispute = new DisputeContestPutDTO();
+			return await this.UpdateObject<DisputeDTO, DisputeContestPutDTO>(MethodKey.DisputesSaveContestFunds, dispute, disputeId);
 		}
 
 		/// <summary>Closes dispute.</summary>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <returns>Dispute instance returned from API.</returns>
-		public DisputeDTO CloseDispute(String disputeId)
+		public async Task<DisputeDTO> CloseDispute(String disputeId)
 		{
-			return this.UpdateObject<DisputeDTO, EntityPutBase>(MethodKey.DisputeSaveClose, new EntityPutBase(), disputeId);
+			return await this.UpdateObject<DisputeDTO, EntityPutBase>(MethodKey.DisputeSaveClose, new EntityPutBase(), disputeId);
 		}
 
 		/// <summary>Creates document for dispute.</summary>
 		/// <param name="disputeDocument">Dispute document to be created.</param>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <returns>Dispute document returned from API.</returns>
-		public DisputeDocumentDTO CreateDisputeDocument(DisputeDocumentPostDTO disputeDocument, string disputeId)
+		public async Task<DisputeDocumentDTO> CreateDisputeDocument(DisputeDocumentPostDTO disputeDocument, string disputeId)
 		{
-			return CreateDisputeDocument(null, disputeDocument, disputeId);
+			return await CreateDisputeDocument(null, disputeDocument, disputeId);
 		}
 
 		/// <summary>Creates document for dispute.</summary>
@@ -215,28 +218,28 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="disputeDocument">Dispute document to be created.</param>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <returns>Dispute document returned from API.</returns>
-		public DisputeDocumentDTO CreateDisputeDocument(String idempotencyKey, DisputeDocumentPostDTO disputeDocument, string disputeId)
+		public async Task<DisputeDocumentDTO> CreateDisputeDocument(String idempotencyKey, DisputeDocumentPostDTO disputeDocument, string disputeId)
 		{
-			return this.CreateObject<DisputeDocumentDTO, DisputeDocumentPostDTO>(idempotencyKey, MethodKey.DisputesDocumentCreate, disputeDocument, disputeId);
+			return await this.CreateObject<DisputeDocumentDTO, DisputeDocumentPostDTO>(idempotencyKey, MethodKey.DisputesDocumentCreate, disputeDocument, disputeId);
 		}
 
 		/// <summary>Creates document's page for dispute.</summary>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <param name="documentId">Dispute document identifier.</param>
 		/// <param name="filePath">Path to the file the DisputePage will be created from.</param>
-		public void CreateDisputePage(string disputeId, string documentId, string filePath)
+		public async Task<bool> CreateDisputePage(string disputeId, string documentId, string filePath)
 		{
 			byte[] fileArray = File.ReadAllBytes(filePath);
-			CreateDisputePage(disputeId, documentId, fileArray);
+			return await CreateDisputePage(disputeId, documentId, fileArray);
 		}
 
 		/// <summary>Creates document's page for dispute.</summary>
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <param name="documentId">Dispute document identifier.</param>
 		/// <param name="binaryData">The byte array the DisputePage will be created from.</param>
-		public void CreateDisputePage(string disputeId, string documentId, byte[] binaryData)
+		public async Task<bool> CreateDisputePage(string disputeId, string documentId, byte[] binaryData)
 		{
-			CreateDisputePage(null, disputeId, documentId, binaryData);
+			return await CreateDisputePage(null, disputeId, documentId, binaryData);
 		}
 
 		/// <summary>Creates document's page for dispute.</summary>
@@ -244,21 +247,23 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="disputeId">Dispute identifier.</param>
 		/// <param name="documentId">Dispute document identifier.</param>
 		/// <param name="binaryData">The byte array the DisputePage will be created from.</param>
-		public void CreateDisputePage(string idempotencyKey, string disputeId, string documentId, byte[] binaryData)
+		public async Task<bool> CreateDisputePage(string idempotencyKey, string disputeId, string documentId, byte[] binaryData)
 		{
-			string fileContent = Convert.ToBase64String(binaryData);
+			var fileContent = Convert.ToBase64String(binaryData);
 
-			DisputePagePostDTO disputePage = new DisputePagePostDTO(fileContent);
+			var disputePage = new DisputePagePostDTO(fileContent);
 
-			this.CreateObject<DisputePageDTO, DisputePagePostDTO>(idempotencyKey, MethodKey.DisputesDocumentPageCreate, disputePage, disputeId, documentId);
+			var result = await this.CreateObject<DisputePageDTO, DisputePagePostDTO>(idempotencyKey, MethodKey.DisputesDocumentPageCreate, disputePage, disputeId, documentId);
+
+            return result != null;
 		}
 
 		/// <summary>Gets settlement transfer.</summary>
 		/// <param name="settlementId">Settlement transfer isentifier.</param>
 		/// <returns>Settlement instance returned from API.</returns>
-		public SettlementDTO GetSettlementTransfer(string settlementId)
+		public async Task<SettlementDTO> GetSettlementTransfer(string settlementId)
 		{
-			return this.GetObject<SettlementDTO>(MethodKey.SettlementsGet, settlementId);
+			return await this.GetObject<SettlementDTO>(MethodKey.SettlementsGet, settlementId);
 		}
 
 		/// <summary>
@@ -266,12 +271,12 @@ namespace MangoPay.SDK.Core.APIs
 		/// </summary>
 		/// <param name="disputeDocumentId">Dispute document identifier.</param>
 		/// <returns>Document consultation list</returns>
-		public ListPaginated<DocumentConsultationDTO> GetDocumentConsultations(String disputeDocumentId)
+		public async Task<ListPaginated<DocumentConsultationDTO>> GetDocumentConsultations(String disputeDocumentId)
 		{
 			var endPoint = GetApiEndPoint(MethodKey.DisputesDocumentConsult);
 			endPoint.SetParameters(new []{disputeDocumentId});
 			var rest = new RestTool(_root, true);
-			return rest.RequestList<DocumentConsultationDTO>(endPoint);
+			return await rest.RequestList<DocumentConsultationDTO>(endPoint);
 		}
 	}
 }

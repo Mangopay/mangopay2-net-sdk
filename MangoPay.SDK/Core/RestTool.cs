@@ -306,9 +306,11 @@ namespace MangoPay.SDK.Core
             _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
 
             Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
-            RestRequest restRequest = new RestRequest(method);
-            restRequest.RequestFormat = DataFormat.Json;
-            restRequest.JsonSerializer = new MangoPayJsonSerializer();
+            RestRequest restRequest = new RestRequest(method)
+            {
+                RequestFormat = DataFormat.Json,
+                JsonSerializer = new MangoPayJsonSerializer()
+            };
             restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
 
 			if (_root.Config.Timeout > 0)
@@ -316,8 +318,9 @@ namespace MangoPay.SDK.Core
 				client.Timeout = _root.Config.Timeout;
 				restRequest.Timeout = _root.Config.Timeout;
 			}
-			
-            foreach (KeyValuePair<string, string> h in this.GetHttpHeaders(restUrl))
+
+            var headers = await this.GetHttpHeaders(restUrl);
+            foreach (KeyValuePair<string, string> h in headers)
             {
                 restRequest.AddHeader(h.Key, h.Value);
 
@@ -432,12 +435,15 @@ namespace MangoPay.SDK.Core
             _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
 
             Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
-            RestRequest restRequest = new RestRequest(method);
-            restRequest.RequestFormat = DataFormat.Json;
-            restRequest.JsonSerializer = new MangoPayJsonSerializer();
+            RestRequest restRequest = new RestRequest(method)
+            {
+                RequestFormat = DataFormat.Json,
+                JsonSerializer = new MangoPayJsonSerializer()
+            };
             restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
 
-            foreach (KeyValuePair<string, string> h in this.GetHttpHeaders(restUrl))
+            var headers = await this.GetHttpHeaders(restUrl);
+            foreach (KeyValuePair<string, string> h in headers)
             {
                 restRequest.AddHeader(h.Key, h.Value);
 
@@ -537,26 +543,28 @@ namespace MangoPay.SDK.Core
         /// <summary>Gets HTTP header to use in request.</summary>
         /// <param name="restUrl">The REST API URL.</param>
         /// <returns>Collection of headers name-value pairs.</returns>
-        private Dictionary<String, String> GetHttpHeaders(String restUrl)
+        private async Task<Dictionary<String, String>> GetHttpHeaders(String restUrl)
         {
             // return if already created...
             if (this._requestHttpHeaders != null)
                 return this._requestHttpHeaders;
 
             // ...or initialize with default headers
-            Dictionary<String, String> httpHeaders = new Dictionary<String, String>();
+            Dictionary<String, String> httpHeaders = new Dictionary<String, String>
+            {
+                // content type
+                { Constants.CONTENT_TYPE, Constants.APPLICATION_JSON },
 
-            // content type
-            httpHeaders.Add(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);
+                // User agent header
+                { Constants.USER_AGENT, String.Format("MangoPay V2 .NET/{0}", _root.GetVersion()) }
+            };
 
-			// User agent header
-			httpHeaders.Add(Constants.USER_AGENT, String.Format("MangoPay V2 .NET/{0}", _root.GetVersion()));
-
-			// AuthenticationHelper http header
-			if (this._authRequired)
+            // AuthenticationHelper http header
+            if (this._authRequired)
             {
                 AuthenticationHelper authHlp = new AuthenticationHelper(_root);
-                foreach (KeyValuePair<string, string> item in authHlp.GetHttpHeaderKey())
+                var httpHelper = await authHlp.GetHttpHeaderKey();
+                foreach (KeyValuePair<string, string> item in httpHelper)
                 {
                     httpHeaders.Add(item.Key, item.Value);
                 }
