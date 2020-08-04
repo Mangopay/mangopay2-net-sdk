@@ -380,9 +380,9 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="userId">User identifier.</param>
         /// <param name="kycDocumentId">KycDocument identifier.</param>
         /// <param name="binaryData">The byte array the KycPage will be created from.</param>
-        public async Task<bool> CreateKycPage(String userId, String kycDocumentId, byte[] binaryData)
+        public async Task CreateKycPage(String userId, String kycDocumentId, byte[] binaryData)
         {
-			return await CreateKycPage(null, userId, kycDocumentId, binaryData);
+			await CreateKycPage(null, userId, kycDocumentId, binaryData);
         }
 
 		/// <summary>Creates KycPage from byte array.</summary>
@@ -390,24 +390,22 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="userId">User identifier.</param>
 		/// <param name="kycDocumentId">KycDocument identifier.</param>
 		/// <param name="binaryData">The byte array the KycPage will be created from.</param>
-		public async Task<bool> CreateKycPage(String idempotencyKey, String userId, String kycDocumentId, byte[] binaryData)
+		public async Task CreateKycPage(String idempotencyKey, String userId, String kycDocumentId, byte[] binaryData)
 		{
 			String fileContent = Convert.ToBase64String(binaryData);
 
 			KycPagePostDTO kycPage = new KycPagePostDTO(fileContent);
 
 			var result = await this.CreateObject<KycPageDTO, KycPagePostDTO>(idempotencyKey, MethodKey.UsersCreateKycPage, kycPage, userId, kycDocumentId);
-
-            return result != null;
 		}
 
         /// <summary>Creates KycPage from file.</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="kycDocumentId">KycDocument identifier.</param>
         /// <param name="filePath">Path to the file the KycPage will be created from.</param>
-        public async Task<bool> CreateKycPage(String userId, String kycDocumentId, String filePath)
+        public async Task CreateKycPage(String userId, String kycDocumentId, String filePath)
         {
-            return await CreateKycPage(null, userId, kycDocumentId, filePath);
+            await CreateKycPage(null, userId, kycDocumentId, filePath);
         }
 
 		/// <summary>Creates KycPage from file.</summary>
@@ -415,10 +413,10 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="userId">User identifier.</param>
 		/// <param name="kycDocumentId">KycDocument identifier.</param>
 		/// <param name="filePath">Path to the file the KycPage will be created from.</param>
-		public async Task<bool> CreateKycPage(String idempotencyKey, String userId, String kycDocumentId, String filePath)
+		public async Task CreateKycPage(String idempotencyKey, String userId, String kycDocumentId, String filePath)
 		{
 			byte[] fileArray = File.ReadAllBytes(filePath);
-			return await CreateKycPage(idempotencyKey, userId, kycDocumentId, fileArray);
+			await CreateKycPage(idempotencyKey, userId, kycDocumentId, fileArray);
 		}
 
         /// <summary>Creates KycDocument.</summary>

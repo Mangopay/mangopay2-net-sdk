@@ -562,9 +562,7 @@ namespace MangoPay.SDK.Tests
                 var assembly = Assembly.GetExecutingAssembly();
                 var fi = this.GetFileInfoOfFile(assembly.Location);
 
-                var booleanResult = await this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
-
-                Assert.IsTrue(booleanResult);
+                await this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
 
                 KycDocumentPutDTO kycDocumentPut = new KycDocumentPutDTO 
                 {
@@ -771,7 +769,7 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				var user = await GetNewJohn();
-				var wallet = GetNewJohnsWalletWithMoney(10000, user);
+				var wallet = await GetNewJohnsWalletWithMoney(10000, user);
 
 				var emoney = await Api.Users.GetEmoney(user.Id);
 
