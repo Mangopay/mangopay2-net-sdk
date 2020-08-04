@@ -7,6 +7,7 @@ using System;
 using System.Threading;
 using MangoPay.SDK.Core;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -14,15 +15,16 @@ namespace MangoPay.SDK.Tests
     public class ApiMandatesTest : BaseTest
     {
         [Test]
-        public void Test_Mandate_Create()
+        public async Task Test_Mandate_Create()
         {
             try
             {
-				string bankAccountId = this.GetJohnsAccount().Id;
+				var bankAccount = await this.GetJohnsAccount();
+                var bankAccountId = bankAccount.Id;
 				string returnUrl = "http://test.test";
 				MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
 
-				MandateDTO mandate = this.Api.Mandates.Create(mandatePost);
+				MandateDTO mandate = await this.Api.Mandates.Create(mandatePost);
 				Assert.IsNotNull(mandate);
                 Assert.IsFalse(String.IsNullOrEmpty(mandate.Id));
             }
@@ -33,17 +35,18 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Mandate_Get()
+        public async Task Test_Mandate_Get()
         {
             try
             {
-				string bankAccountId = this.GetJohnsAccount().Id;
+				var bankAccount = await this.GetJohnsAccount();
+                string bankAccountId = bankAccount.Id;
 				string returnUrl = "http://test.test";
 				MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
 
-				MandateDTO mandateCreated = this.Api.Mandates.Create(mandatePost);
+				MandateDTO mandateCreated = await this.Api.Mandates.Create(mandatePost);
 
-				MandateDTO mandate = this.Api.Mandates.Get(mandateCreated.Id);
+				MandateDTO mandate = await this.Api.Mandates.Get(mandateCreated.Id);
 
 				Assert.IsNotNull(mandate);
 				Assert.IsFalse(String.IsNullOrEmpty(mandate.Id));
@@ -61,36 +64,37 @@ namespace MangoPay.SDK.Tests
 		 * This test needs your manual confirmation on the web page (see note in test's body)
 		 */
 		//[Test]
-		public void test_Mandate_Cancel()
+		public async Task Test_Mandate_Cancel()
 		{
-			string bankAccountId = this.GetJohnsAccount().Id;
+            var johnsAccount = await GetJohnsAccount();
+			string bankAccountId = johnsAccount.Id;
 			string returnUrl = "http://test.test";
 
 			MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
         
-			MandateDTO mandate = this.Api.Mandates.Create(mandatePost);
+			MandateDTO mandate = await this.Api.Mandates.Create(mandatePost);
         
 			//	! IMPORTANT NOTE !
 			//	
 			//	In order to make this test pass, at this place you have to set a breakpoint,
 			//	navigate to URL the mandate.RedirectURL property points to and click "CONFIRM" button.
         
-			mandate = this.Api.Mandates.Get(mandate.Id);
+			mandate = await this.Api.Mandates.Get(mandate.Id);
 
 			Assert.IsTrue(mandate.Status == MandateStatus.SUBMITTED, "In order to make this test pass, after creating mandate and before cancelling it you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.");
         
-			mandate = this.Api.Mandates.Cancel(mandate.Id);
+			mandate = await this.Api.Mandates.Cancel(mandate.Id);
         
 			Assert.IsNotNull(mandate);
 			Assert.IsTrue(mandate.Status == MandateStatus.FAILED);
 		}
 
         [Test]
-        public void Test_Mandates_GetAll()
+        public async Task Test_Mandates_GetAll()
         {
             try
             {
-				ListPaginated<MandateDTO> mandates = this.Api.Mandates.GetAll();
+				ListPaginated<MandateDTO> mandates = await this.Api.Mandates.GetAll();
 
 				Assert.IsNotNull(mandates);
 				Assert.IsTrue(mandates.Count > 0);
@@ -102,18 +106,19 @@ namespace MangoPay.SDK.Tests
         }
 
 		[Test]
-		public void Test_Mandate_GetForUser()
+		public async Task Test_Mandate_GetForUser()
 		{
 			try
 			{
-				UserNaturalDTO user = this.GetJohn(true);
-				string bankAccountId = this.GetJohnsAccount(true).Id;
+				UserNaturalDTO user = await this.GetJohn(true);
+                var johnsAccount = await GetJohnsAccount(true);
+				string bankAccountId = johnsAccount.Id;
 				string returnUrl = "http://test.test";
 				MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
 
-				MandateDTO mandateCreated = this.Api.Mandates.Create(mandatePost);
+				MandateDTO mandateCreated = await this.Api.Mandates.Create(mandatePost);
 
-				ListPaginated<MandateDTO> mandates = this.Api.Mandates.GetForUser(user.Id, new Pagination(1, 1), null);
+				ListPaginated<MandateDTO> mandates = await this.Api.Mandates.GetForUser(user.Id, new Pagination(1, 1), null);
 
 				Assert.IsNotNull(mandates);
 				Assert.IsTrue(mandates.Count > 0);
@@ -129,18 +134,19 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_Mandate_GetForBankAccount()
+		public async Task Test_Mandate_GetForBankAccount()
 		{
 			try
 			{
-				UserNaturalDTO user = this.GetJohn(true);
-				string bankAccountId = this.GetJohnsAccount(true).Id;
+				UserNaturalDTO user = await this.GetJohn(true);
+                var johnsAccount = await GetJohnsAccount(true);
+				string bankAccountId = johnsAccount.Id;
 				string returnUrl = "http://test.test";
 				MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
 
-				MandateDTO mandateCreated = this.Api.Mandates.Create(mandatePost);
+				MandateDTO mandateCreated = await this.Api.Mandates.Create(mandatePost);
 
-				ListPaginated<MandateDTO> mandates = this.Api.Mandates.GetForBankAccount(user.Id, bankAccountId, new Pagination(1, 1), null);
+				ListPaginated<MandateDTO> mandates = await this.Api.Mandates.GetForBankAccount(user.Id, bankAccountId, new Pagination(1, 1), null);
 
                 Assert.IsNotNull(mandateCreated);
 				Assert.IsNotNull(mandates);
@@ -157,23 +163,23 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_Mandate_GetTransactionsForMandate()
+		public async Task Test_Mandate_GetTransactionsForMandate()
 		{
 			try
 			{
-				var mandate = GetNewMandate();
+				var mandate = await GetNewMandate();
 
-				WalletDTO wallet = GetJohnsWallet();
-				UserNaturalDTO user = GetJohn();
+				WalletDTO wallet = await GetJohnsWallet();
+				UserNaturalDTO user = await GetJohn();
 				PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test.test", mandate.Id);
-				PayInDTO createPayIn = this.Api.PayIns.CreateMandateDirectDebit(payIn);
+				PayInDTO createPayIn = await this.Api.PayIns.CreateMandateDirectDebit(payIn);
 
 				var pagination = new Pagination(1, 1);
 				var filter = new FilterTransactions();
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				var transactions = Api.Mandates.GetTransactionsForMandate(mandate.Id, pagination, filter, sort);
+				var transactions = await Api.Mandates.GetTransactionsForMandate(mandate.Id, pagination, filter, sort);
 
 				Assert.IsTrue(transactions.Count > 0);
 			}

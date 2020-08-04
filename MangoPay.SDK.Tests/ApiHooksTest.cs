@@ -3,6 +3,7 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -34,12 +35,12 @@ namespace MangoPay.SDK.Tests
          */ 
 
         [Test]
-        public void Test_Hooks_Get()
+        public async Task Test_Hooks_Get()
         {
             try
             {
-                HookDTO hook = this.GetJohnsHook();
-                HookDTO getHook = this.Api.Hooks.Get(hook.Id);
+                HookDTO hook = await this.GetJohnsHook();
+                HookDTO getHook = await this.Api.Hooks.Get(hook.Id);
 
                 Assert.AreEqual(getHook.Id, hook.Id);
             }
@@ -50,16 +51,18 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Hooks_Update()
+        public async Task Test_Hooks_Update()
         {
             try
             {
-                HookDTO hook = this.GetJohnsHook();
-                HookPutDTO hookPut = new HookPutDTO();
-                hookPut.Status = hook.Status;
-                hookPut.Url = String.Format("http://test{0}.com", DateTime.Now.Ticks);
+                HookDTO hook = await this.GetJohnsHook();
+                HookPutDTO hookPut = new HookPutDTO
+                {
+                    Status = hook.Status,
+                    Url = String.Format("http://test{0}.com", DateTime.Now.Ticks)
+                };
 
-                HookDTO saveHook = this.Api.Hooks.Update(hookPut, hook.Id);
+                HookDTO saveHook = await this.Api.Hooks.Update(hookPut, hook.Id);
 
                 Assert.AreEqual(saveHook.Id, hook.Id);
                 Assert.AreEqual(hookPut.Url, saveHook.Url);
@@ -71,14 +74,14 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Hooks_All()
+        public async Task Test_Hooks_All()
         {
             try
             {
-                HookDTO hook = this.GetJohnsHook();
+                HookDTO hook = await this.GetJohnsHook();
                 Pagination pagination = new Pagination(1, 1);
 
-                ListPaginated<HookDTO> list = this.Api.Hooks.GetAll(pagination);
+                ListPaginated<HookDTO> list = await this.Api.Hooks.GetAll(pagination);
 
                 Assert.IsNotNull(list[0]);
                 Assert.IsTrue(list[0] is HookDTO);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
@@ -12,14 +13,14 @@ namespace MangoPay.SDK.Tests
     public class ApiRefundsTest : BaseTest
     {
         [Test]
-        public void Test_Refund_GetForTransfer()
+        public async Task Test_Refund_GetForTransfer()
         {
-			WalletDTO wallet = this.GetNewJohnsWalletWithMoney(10000);
-			TransferDTO transfer = this.GetNewTransfer(wallet);
-            RefundDTO refund = this.GetNewRefundForTransfer(transfer);
-            UserNaturalDTO user = this.GetJohn();
+			WalletDTO wallet = await this.GetNewJohnsWalletWithMoney(10000);
+			TransferDTO transfer = await this.GetNewTransfer(wallet);
+            RefundDTO refund = await this.GetNewRefundForTransfer(transfer);
+            UserNaturalDTO user = await this.GetJohn();
 
-            RefundDTO getRefund = this.Api.Refunds.Get(refund.Id);
+            RefundDTO getRefund = await this.Api.Refunds.Get(refund.Id);
 
             Assert.AreEqual(getRefund.Id, refund.Id);
             Assert.AreEqual(getRefund.InitialTransactionId, transfer.Id);
@@ -30,13 +31,13 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Refund_GetForPayIn()
+        public async Task Test_Refund_GetForPayIn()
         {
-            PayInDTO payIn = this.GetNewPayInCardDirect();
-            RefundDTO refund = this.GetNewRefundForPayIn(payIn);
-            UserNaturalDTO user = this.GetJohn();
+            PayInDTO payIn = await this.GetNewPayInCardDirect();
+            RefundDTO refund = await this.GetNewRefundForPayIn(payIn);
+            UserNaturalDTO user = await this.GetJohn();
 
-            RefundDTO getRefund = this.Api.Refunds.Get(refund.Id);
+            RefundDTO getRefund = await this.Api.Refunds.Get(refund.Id);
 
             Assert.AreEqual(getRefund.Id, refund.Id);
             Assert.AreEqual(getRefund.InitialTransactionId, payIn.Id);
@@ -47,11 +48,11 @@ namespace MangoPay.SDK.Tests
         }
 
 		[Test]
-		public void Test_Refund_GetRefundsForPayOut()
+		public async Task Test_Refund_GetRefundsForPayOut()
 		{
 			try
 			{
-				var payOut = GetJohnsPayOutBankWire();
+				var payOut = await GetJohnsPayOutBankWire();
 
 				var pagination = new Pagination(1, 1);
 
@@ -60,7 +61,7 @@ namespace MangoPay.SDK.Tests
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				var refunds = Api.Refunds.GetRefundsForPayOut(payOut.Id, pagination, filter, sort);
+				var refunds = await Api.Refunds.GetRefundsForPayOut(payOut.Id, pagination, filter, sort);
 			}
 			catch (Exception ex)
 			{
@@ -69,12 +70,12 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_Refund_GetRefundsForPayIn()
+		public async Task Test_Refund_GetRefundsForPayIn()
 		{
 			try
 			{
-				PayInDTO payIn = GetNewPayInCardDirect();
-				RefundDTO refund = GetNewRefundForPayIn(payIn);
+				PayInDTO payIn = await GetNewPayInCardDirect();
+				RefundDTO refund = await GetNewRefundForPayIn(payIn);
 
 				var pagination = new Pagination(1, 1);
 
@@ -87,7 +88,7 @@ namespace MangoPay.SDK.Tests
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				var refunds = Api.Refunds.GetRefundsForPayIn(payIn.Id, pagination, filter, sort);
+				var refunds = await Api.Refunds.GetRefundsForPayIn(payIn.Id, pagination, filter, sort);
 
 				Assert.IsTrue(refunds.Count > 0);
 			}
@@ -98,13 +99,13 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_Refund_GetRefundsForTransfer()
+		public async Task Test_Refund_GetRefundsForTransfer()
 		{
 			try
 			{
-				var wallet = this.GetNewJohnsWalletWithMoney(10000);
-				TransferDTO transfer = this.GetNewTransfer(wallet);
-				RefundDTO refund = this.GetNewRefundForTransfer(transfer);
+				var wallet = await this.GetNewJohnsWalletWithMoney(10000);
+				TransferDTO transfer = await this.GetNewTransfer(wallet);
+				RefundDTO refund = await this.GetNewRefundForTransfer(transfer);
 
 				var pagination = new Pagination(1, 1);
 
@@ -117,7 +118,7 @@ namespace MangoPay.SDK.Tests
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				var refunds = Api.Refunds.GetRefundsForTransfer(transfer.Id, pagination, filter, sort);
+				var refunds = await Api.Refunds.GetRefundsForTransfer(transfer.Id, pagination, filter, sort);
 
 				Assert.IsTrue(refunds.Count > 0);
 			}
