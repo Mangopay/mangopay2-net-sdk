@@ -789,10 +789,8 @@ namespace MangoPay.SDK.Tests
             try
             {
                 var user = await GetNewJohn();
-                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+                var wallet = await GetNewJohnsWalletWithMoney(10000, user);
 		        var year = DateTime.Now.Year.ToString();
-
-
                 var emoney = await Api.Users.GetEmoneyForYear(user.Id, year);
 
                 Assert.IsNotNull(emoney);
@@ -813,7 +811,7 @@ namespace MangoPay.SDK.Tests
             try
             {
                 var user = await GetNewJohn();
-                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+                var wallet = await GetNewJohnsWalletWithMoney(10000, user);
 		        var year = DateTime.Now.Year.ToString();
                 var month = DateTime.Now.Month.ToString();
 

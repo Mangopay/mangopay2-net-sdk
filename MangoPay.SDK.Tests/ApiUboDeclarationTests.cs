@@ -59,7 +59,7 @@ namespace MangoPay.SDK.Tests
             var uboDeclaration = await Api.UboDeclarations.CreateUboDeclaration(null, userLegal.Id);
             var uboDto = UboPostDtoCollection[0];
             UboDTO result = null;
-            Assert.DoesNotThrow(async () => result = await Api.UboDeclarations.CreateUbo(uboDto, userLegal.Id, uboDeclaration.Id));
+            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.CreateUbo(uboDto, userLegal.Id, uboDeclaration.Id));
             Assert.NotNull(result);
         }
 
@@ -87,7 +87,7 @@ namespace MangoPay.SDK.Tests
             };
             var uboPutDto = new UboPutDTO("JohnNatural1", "DoeNatural1", address, CountryIso.DE, birthDate, birthPlace);
             UboDTO result = null;
-            Assert.DoesNotThrow(async () =>
+            Assert.DoesNotThrowAsync(async () =>
                 result = await Api.UboDeclarations.UpdateUbo(uboPutDto, userLegal.Id, uboDeclaration.Id, ubo.Id));
             Assert.NotNull(result);
             Assert.AreEqual(ubo.Id, result.Id);
@@ -101,7 +101,7 @@ namespace MangoPay.SDK.Tests
 
             UboDeclarationDTO result = null;
 
-            Assert.DoesNotThrow(async () => result = await Api.UboDeclarations.CreateUboDeclaration(null, userLegal.Id));
+            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.CreateUboDeclaration(null, userLegal.Id));
             Assert.That(result.Status == UboDeclarationType.CREATED);
             Assert.That(result.CreationDate != DateTime.MinValue);
         }
@@ -112,9 +112,9 @@ namespace MangoPay.SDK.Tests
             var userLegal = await Api.Users.Create(CreateUserLegalPost());
 
             UboDeclarationDTO uboDeclaration = null;
-            Assert.DoesNotThrow(async () => uboDeclaration = await Api.UboDeclarations.Create(userLegal.Id));
+            Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.Create(userLegal.Id));
             UboDeclarationDTO result = null;
-            Assert.DoesNotThrow(async () =>
+            Assert.DoesNotThrowAsync(async () =>
                 result = await Api.UboDeclarations.GetUboDeclarationById(userLegal.Id, uboDeclaration.Id));
             Assert.NotNull(result);
             Assert.AreEqual(uboDeclaration.Id, result.Id);
@@ -126,10 +126,10 @@ namespace MangoPay.SDK.Tests
             var userLegal = await Api.Users.Create(CreateUserLegalPost());
 
             UboDeclarationDTO uboDeclaration = null;
-            Assert.DoesNotThrow(async () => uboDeclaration = await Api.UboDeclarations.Create(userLegal.Id));
+            Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.Create(userLegal.Id));
 
             UboDeclarationDTO result = null;
-            Assert.DoesNotThrow(async () => result = await Api.UboDeclarations.GetUboDeclarationById(uboDeclaration.Id));
+            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.GetUboDeclarationById(uboDeclaration.Id));
             Assert.NotNull(result);
             Assert.AreEqual(uboDeclaration.Id, result.Id);
         }
@@ -143,7 +143,7 @@ namespace MangoPay.SDK.Tests
 
             ListPaginated<UboDeclarationDTO> result = null;
             Pagination pagination = new Pagination(1, 1);
-            Assert.DoesNotThrow(async () => result = await Api.UboDeclarations.GetUboDeclarationByUserId(userLegal.Id, pagination));
+            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.GetUboDeclarationByUserId(userLegal.Id, pagination));
             Assert.NotNull(result);
             Assert.IsTrue(result.Count > 0);
             Assert.AreEqual(uboDeclarationDto.Id, result[0].Id);
@@ -170,7 +170,7 @@ namespace MangoPay.SDK.Tests
 
             UboDeclarationDTO result = null;
 
-            Assert.DoesNotThrow(async () =>
+            Assert.DoesNotThrowAsync(async () =>
                 result = await Api.UboDeclarations.UpdateUboDeclaration(ubodeclarationPut, userLegal.Id, uboDeclaration.Id));
             Assert.That(result != null);
             Assert.AreEqual(uboDeclaration.Id, result.Id);

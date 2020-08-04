@@ -296,7 +296,7 @@ namespace MangoPay.SDK.Tests
             payIn.CardType = card.CardType;
 
             // create Pay-In
-            var result = this.Api.PayIns.CreateCardDirect(payIn);
+            var result = await this.Api.PayIns.CreateCardDirect(payIn);
 
             return await this.Api.Wallets.Get(johnsWalletWithMoney.Id);
         }
