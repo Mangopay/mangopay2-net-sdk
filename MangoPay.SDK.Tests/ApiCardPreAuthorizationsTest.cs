@@ -74,6 +74,7 @@ namespace MangoPay.SDK.Tests
 
                 Assert.AreEqual(cardPreAuthorization.Id, getCardPreAuthorization.Id);
                 Assert.AreEqual(getCardPreAuthorization.ResultCode, "000000");
+                Assert.IsNotNull(getCardPreAuthorization.MultiCapture);
             }
             catch (Exception ex)
             {
