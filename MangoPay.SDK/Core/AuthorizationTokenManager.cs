@@ -3,6 +3,7 @@ using MangoPay.SDK.Core.Interfaces;
 using MangoPay.SDK.Entities;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core
 {
@@ -24,13 +25,14 @@ namespace MangoPay.SDK.Core
         /// If currently stored token is expired, this method creates a new one.
         /// </summary>
         /// <returns>Valid OAuthToken instance.</returns>
-        public OAuthTokenDTO GetToken()
+        public async Task<OAuthTokenDTO> GetToken()
         {
 			OAuthTokenDTO token = _storageStrategy.Get(GetEnvKey());
 
             if (token == null || token.IsExpired())
             {
-                StoreToken(this._root.AuthenticationManager.CreateToken());
+                var result = await this._root.AuthenticationManager.CreateToken();
+                StoreToken(result);
             }
 
 			return _storageStrategy.Get(GetEnvKey());

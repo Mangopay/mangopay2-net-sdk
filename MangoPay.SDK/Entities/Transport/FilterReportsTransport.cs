@@ -81,14 +81,16 @@ namespace MangoPay.SDK.Entities.Transport
 
 		public FilterReports GetBusinessObject()
 		{
-			FilterReports result = new FilterReports();
+            FilterReports result = new FilterReports
+            {
 
-			// Common report filters
-			result.BeforeDate = BeforeDate;
-			result.AfterDate = AfterDate;
+                // Common report filters
+                BeforeDate = BeforeDate,
+                AfterDate = AfterDate
+            };
 
-			// Transactions report filters
-			if (Type != null)
+            // Transactions report filters
+            if (Type != null)
 				foreach (var t in Type)
 				{
 					result.Type.Add((TransactionType)Enum.Parse(typeof(TransactionType), t));

@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -11,12 +12,12 @@ namespace MangoPay.SDK.Tests
     public class ApiKycTest : BaseTest
     {
         [Test]
-        public void Test_GetKycDocument()
+        public async Task Test_GetKycDocument()
         {
             try
             {
-				KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
-				KycDocumentDTO result = this.Api.Kyc.Get(kycDocument.Id);
+				KycDocumentDTO kycDocument = await this.GetJohnsKycDocument();
+				KycDocumentDTO result = await this.Api.Kyc.Get(kycDocument.Id);
 
 				Assert.IsNotNull(result);
 				Assert.IsTrue(result.Id.Equals(kycDocument.Id));
@@ -30,20 +31,20 @@ namespace MangoPay.SDK.Tests
         }
 
 		[Test]
-		public void Test_Users_CreateKycPageFromBytes()
+		public async Task Test_Users_CreateKycPageFromBytes()
 		{
 			try
 			{
-				UserNaturalDTO john = this.GetJohn();
-				KycDocumentDTO kycDocument = this.GetNewKycDocument();
+				UserNaturalDTO john = await this.GetJohn();
+				KycDocumentDTO kycDocument = await this.GetNewKycDocument();
 
                 var assembly = Assembly.GetExecutingAssembly();
                 var fi = this.GetFileInfoOfFile(assembly.Location);
                 byte[] bytes = File.ReadAllBytes(fi.FullName);
-				Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
-				Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
+				await Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
+				await Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
 
-				var result = Api.Kyc.GetDocumentConsultations(kycDocument.Id);
+				var result = await Api.Kyc.GetDocumentConsultations(kycDocument.Id);
 
 				Assert.AreEqual(2, result.Count);
 				Assert.IsInstanceOf<DateTime>(result.First().ExpirationDate);

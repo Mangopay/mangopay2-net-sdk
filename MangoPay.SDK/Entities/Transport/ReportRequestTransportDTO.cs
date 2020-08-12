@@ -72,7 +72,7 @@ namespace MangoPay.SDK.Entities.Transport
 
 			if (Columns != null) result.Columns = this.Columns.ToList<string>();
 
-			if (Filters != null) result.Filters = this.Filters != null ? this.Filters.GetBusinessObject() : null;
+			if (Filters != null) result.Filters = Filters != null ? this.Filters.GetBusinessObject() : null;
 
 			return result;
 		}

@@ -4,6 +4,7 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using System;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -16,42 +17,42 @@ namespace MangoPay.SDK.Core.APIs
 		/// <summary>Gets permission group by ID.</summary>
 		/// <param name="permissionGroupId">Permission group identifier.</param>
 		/// <returns>Permission group instance returned from API.</returns>
-		public PermissionGroupDTO Get(String permissionGroupId)
+		public async Task<PermissionGroupDTO> Get(String permissionGroupId)
 		{
-			return this.GetObject<PermissionGroupDTO>(MethodKey.PermissionGroupGet, permissionGroupId);
+			return await this.GetObject<PermissionGroupDTO>(MethodKey.PermissionGroupGet, permissionGroupId);
 		}
 
 		/// <summary>Creates new permission group.</summary>
 		/// <param name="permissionGroup">Permission group object to be created.</param>
 		/// <returns>Permission group instance returned from API.</returns>
-		public PermissionGroupDTO Create(PermissionGroupPostDTO permissionGroup)
+		public async Task<PermissionGroupDTO> Create(PermissionGroupPostDTO permissionGroup)
 		{
-			return Create(null, permissionGroup);
+			return await Create(null, permissionGroup);
 		}
 
 		/// <summary>Creates new permission group.</summary>
 		/// <param name="idempotencyKey">Idempotency key for this request.</param>
 		/// <param name="permissionGroup">Permission group object to be created.</param>
 		/// <returns>Permission group instance returned from API.</returns>
-		public PermissionGroupDTO Create(String idempotencyKey, PermissionGroupPostDTO permissionGroup)
+		public async Task<PermissionGroupDTO> Create(String idempotencyKey, PermissionGroupPostDTO permissionGroup)
 		{
-			return this.CreateObject<PermissionGroupDTO, PermissionGroupPostDTO>(idempotencyKey, MethodKey.PermissionGroupCreate, permissionGroup);
+			return await this.CreateObject<PermissionGroupDTO, PermissionGroupPostDTO>(idempotencyKey, MethodKey.PermissionGroupCreate, permissionGroup);
 		}
 
 		/// <summary>Gets permission groups.</summary>
 		/// <param name="pagination">Pagination.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>Collection of permission group instances.</returns>
-		public ListPaginated<PermissionGroupDTO> GetAll(Pagination pagination, Sort sort = null)
+		public async Task<ListPaginated<PermissionGroupDTO>> GetAll(Pagination pagination, Sort sort = null)
 		{
-			return this.GetList<PermissionGroupDTO>(MethodKey.PermissionGroupAll, pagination, sort);
+			return await this.GetList<PermissionGroupDTO>(MethodKey.PermissionGroupAll, pagination, sort);
 		}
 
 		/// <summary>Gets first page of permission groups.</summary>
 		/// <returns>Collection of permission group instances.</returns>
-		public ListPaginated<PermissionGroupDTO> GetAll()
+		public async Task<ListPaginated<PermissionGroupDTO>> GetAll()
 		{
-			return GetAll(null);
+			return await GetAll(null);
 		}
 
 		/// <summary>Gets SSOs for a permission group.</summary>
@@ -59,18 +60,18 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="pagination">Pagination.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>Collection of permission group instances.</returns>
-		public ListPaginated<SingleSignOnDTO> GetSingleSignOns(String permissionGroupId, Pagination pagination, Sort sort = null)
+		public async Task<ListPaginated<SingleSignOnDTO>> GetSingleSignOns(String permissionGroupId, Pagination pagination, Sort sort = null)
 		{
-			return this.GetList<SingleSignOnDTO>(MethodKey.PermissionGroupAllSsos, pagination, sort,permissionGroupId);
+			return await this.GetList<SingleSignOnDTO>(MethodKey.PermissionGroupAllSsos, pagination, sort,permissionGroupId);
 		}
 
 		/// <summary>Updates the permission group.</summary>
 		/// <param name="permissionGroup">Instance of permission group class to be updated.</param>
 		/// <param name="permissionGroupId">Permission group user identifier.</param>
 		/// <returns>Updated permission group object returned from API.</returns>
-		public PermissionGroupDTO Update(PermissionGroupPutDTO permissionGroup, String permissionGroupId)
+		public async Task<PermissionGroupDTO> Update(PermissionGroupPutDTO permissionGroup, String permissionGroupId)
 		{
-			return this.UpdateObject<PermissionGroupDTO, PermissionGroupPutDTO>(MethodKey.PermissionGroupSave, permissionGroup, permissionGroupId);
+			return await this.UpdateObject<PermissionGroupDTO, PermissionGroupPutDTO>(MethodKey.PermissionGroupSave, permissionGroup, permissionGroupId);
 		}
 	}
 }

@@ -5,6 +5,7 @@ using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -18,51 +19,51 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Creates new hook.</summary>
         /// <param name="hook">Hook instance to be created.</param>
         /// <returns>Hook instance returned from API.</returns>
-        public HookDTO Create(HookPostDTO hook)
+        public async Task<HookDTO> Create(HookPostDTO hook)
         {
-            return Create(null, hook);
+            return await Create(null, hook);
         }
 
 		/// <summary>Creates new hook.</summary>
 		/// <param name="idempotencyKey">Idempotency key for this request.</param>
 		/// <param name="hook">Hook instance to be created.</param>
 		/// <returns>Hook instance returned from API.</returns>
-		public HookDTO Create(String idempotencyKey, HookPostDTO hook)
+		public async Task<HookDTO> Create(String idempotencyKey, HookPostDTO hook)
 		{
-			return this.CreateObject<HookDTO, HookPostDTO>(idempotencyKey, MethodKey.HooksCreate, hook);
+			return await this.CreateObject<HookDTO, HookPostDTO>(idempotencyKey, MethodKey.HooksCreate, hook);
 		}
 
         /// <summary>Gets hook.</summary>
         /// <param name="hookId">Hook identifier.</param>
         /// <returns>Hook instance returned from API.</returns>
-        public HookDTO Get(String hookId)
+        public async Task<HookDTO> Get(String hookId)
         {
-            return this.GetObject<HookDTO>(MethodKey.HooksGet, hookId);
+            return await this.GetObject<HookDTO>(MethodKey.HooksGet, hookId);
         }
 
         /// <summary>Saves a hook.</summary>
         /// <param name="hook">Hook instance to save.</param>
         /// <param name="hookId">Hook identifier.</param>
         /// <returns>Hook instance returned from API.</returns>
-        public HookDTO Update(HookPutDTO hook, String hookId)
+        public async Task<HookDTO> Update(HookPutDTO hook, String hookId)
         {
-            return this.UpdateObject<HookDTO, HookPutDTO>(MethodKey.HooksSave, hook, hookId);
+            return await this.UpdateObject<HookDTO, HookPutDTO>(MethodKey.HooksSave, hook, hookId);
         }
 
         /// <summary>Gets all hooks.</summary>
         /// <param name="pagination">Pagination.</param>
         /// <param name="sort">Sort.</param>
         /// <returns>List of Hook instances returned from API.</returns>
-        public ListPaginated<HookDTO> GetAll(Pagination pagination, Sort sort = null)
+        public async Task<ListPaginated<HookDTO>> GetAll(Pagination pagination, Sort sort = null)
         {
-            return this.GetList<HookDTO>(MethodKey.HooksAll, pagination, sort);
+            return await this.GetList<HookDTO>(MethodKey.HooksAll, pagination, sort);
         }
 
         /// <summary>Gets all hooks.</summary>
         /// <returns>List of Hook instances returned from API.</returns>
-        public ListPaginated<HookDTO> GetAll()
+        public async Task<ListPaginated<HookDTO>> GetAll()
         {
-            return this.GetAll(null);
+            return await this.GetAll(null);
         }
     }
 }
