@@ -276,7 +276,7 @@ namespace MangoPay.SDK.Core.APIs
 			var endPoint = GetApiEndPoint(MethodKey.DisputesDocumentConsult);
 			endPoint.SetParameters(new []{disputeDocumentId});
 			var rest = new RestTool(_root, true);
-			return await rest.RequestList<DocumentConsultationDTO>(endPoint);
+			return await rest.RequestListAsync<DocumentConsultationDTO>(endPoint);
 		}
 	}
 }

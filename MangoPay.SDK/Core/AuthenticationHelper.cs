@@ -21,9 +21,14 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Gets HTTP header value with authorization string.</summary>
         /// <returns></returns>
-        public async Task<Dictionary<String, String>> GetHttpHeaderKey()
+        public Dictionary<String, String> GetHttpHeaderKey()
         {
-            return await GetHttpHeaderStrong();
+            return GetHttpHeaderStrong();
+        }
+
+        public async Task<Dictionary<String, String>> GetHttpHeaderKeyAsync()
+        {
+            return await GetHttpHeaderStrongAsync();
         }
 
         /// <summary>Gets basic key for HTTP header.</summary>
@@ -42,9 +47,22 @@ namespace MangoPay.SDK.Core
         }
 
         // gets HTTP header value with authorization string for strong authentication
-        private async Task<Dictionary<String, String>> GetHttpHeaderStrong()
+        private Dictionary<String, String> GetHttpHeaderStrong()
         {
-            OAuthTokenDTO token = await _root.OAuthTokenManager.GetToken();
+            OAuthTokenDTO token = _root.OAuthTokenManager.GetToken();
+
+            if (token == null || String.IsNullOrEmpty(token.access_token) || String.IsNullOrEmpty(token.token_type))
+                throw new Exception("OAuth token is not created (or is invalid) for strong authentication");
+
+            return new Dictionary<String, String>
+            {
+                { Constants.AUTHORIZATION, token.token_type + " " + token.access_token }
+            };
+        }
+
+        private async Task<Dictionary<String, String>> GetHttpHeaderStrongAsync()
+        {
+            OAuthTokenDTO token = await _root.OAuthTokenManager.GetTokenAsync();
 
             if (token == null || String.IsNullOrEmpty(token.access_token) || String.IsNullOrEmpty(token.token_type))
                 throw new Exception("OAuth token is not created (or is invalid) for strong authentication");

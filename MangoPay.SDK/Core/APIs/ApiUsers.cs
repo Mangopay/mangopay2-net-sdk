@@ -498,7 +498,7 @@ namespace MangoPay.SDK.Core.APIs
                 parameters.Add("currency", currency.ToString());
             }
 
-			return await rest.Request<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
+			return await rest.RequestAsync<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
 		}
 		
 		/// <summary>Gets Emoney object.</summary>
@@ -526,7 +526,7 @@ namespace MangoPay.SDK.Core.APIs
                 parameters.Add("currency", currencyIso.ToString());
             }
 
-			return await rest.Request<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
+			return await rest.RequestAsync<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
 		}
 
 		/// <summary>Gets Emoney object.</summary>
@@ -556,7 +556,7 @@ namespace MangoPay.SDK.Core.APIs
                 parameters.Add("currency", currencyIso.ToString());
             }
 
-			return await rest.Request<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
+			return await rest.RequestAsync<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
 		}
 
         /// <summary>Gets Emoney object.</summary>
@@ -575,7 +575,7 @@ namespace MangoPay.SDK.Core.APIs
                 parameters.Add("currency", currency.ToString());
             }
 
-            return await rest.Request<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
+            return await rest.RequestAsync<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
         }
 
         /// <summary>Gets Emoney object.</summary>
@@ -595,7 +595,7 @@ namespace MangoPay.SDK.Core.APIs
                 parameters.Add("currency", currency.ToString());
             }
 
-            return await rest.Request<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
+            return await rest.RequestAsync<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
         }
     }
 }

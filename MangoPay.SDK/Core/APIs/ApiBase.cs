@@ -232,7 +232,7 @@ namespace MangoPay.SDK.Core.APIs
             endPoint.SetParameters(entitiesId);
 
             var restTool = new RestTool(this._root, true);
-            return await restTool.Request<U, T>(idempotencyKey, endPoint, null, null, entity);
+            return await restTool.RequestAsync<U, T>(idempotencyKey, endPoint, null, null, entity);
         }
 
         /// <summary>Gets the DTO instance from API.</summary>
@@ -246,7 +246,7 @@ namespace MangoPay.SDK.Core.APIs
             endPoint.SetParameters(entitiesId);
 
             var rest = new RestTool(this._root, true);
-            return await rest.Request<T, T>(endPoint);
+            return await rest.RequestAsync<T, T>(endPoint);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
@@ -278,7 +278,7 @@ namespace MangoPay.SDK.Core.APIs
 
             var restTool = new RestTool(this._root, true);
 
-            return await restTool.RequestList<T>(endPoint, additionalUrlParams, pagination);
+            return await restTool.RequestListAsync<T>(endPoint, additionalUrlParams, pagination);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
@@ -332,7 +332,7 @@ namespace MangoPay.SDK.Core.APIs
             endPoint.SetParameters(entitiesId);
 
             var restTool = new RestTool(this._root, true);
-            return await restTool.Request<U, T>(null, endPoint, null, null, entity);
+            return await restTool.RequestAsync<U, T>(null, endPoint, null, null, entity);
         }
 
         protected Type GetObjectForIdempotencyUrl()

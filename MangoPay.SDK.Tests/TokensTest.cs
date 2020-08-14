@@ -10,13 +10,13 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_ForceToken()
         {
-            OAuthTokenDTO oldToken = await this.Api.OAuthTokenManager.GetToken();
-            OAuthTokenDTO newToken = await this.Api.AuthenticationManager.CreateToken();
+            OAuthTokenDTO oldToken = await this.Api.OAuthTokenManager.GetTokenAsync();
+            OAuthTokenDTO newToken = await this.Api.AuthenticationManager.CreateTokenAsync();
 
             Assert.IsFalse(oldToken.access_token == newToken.access_token);
 
             this.Api.OAuthTokenManager.StoreToken(newToken);
-            OAuthTokenDTO storedToken = await this.Api.OAuthTokenManager.GetToken();
+            OAuthTokenDTO storedToken = await this.Api.OAuthTokenManager.GetTokenAsync();
 
             Assert.AreEqual(newToken.access_token, storedToken.access_token);
         }
@@ -25,10 +25,10 @@ namespace MangoPay.SDK.Tests
         public async Task Test_StandardUseToken()
         {
             await this.Api.Users.GetAll();
-            OAuthTokenDTO token = await this.Api.OAuthTokenManager.GetToken();
+            OAuthTokenDTO token = await this.Api.OAuthTokenManager.GetTokenAsync();
             await this.Api.Users.GetAll();
 
-            var tok = await this.Api.OAuthTokenManager.GetToken();
+            var tok = await this.Api.OAuthTokenManager.GetTokenAsync();
 
             Assert.AreEqual(token.access_token, tok.access_token);
         }
@@ -38,8 +38,8 @@ namespace MangoPay.SDK.Tests
         {
             MangoPayApi api = this.BuildNewMangoPayApi();
 
-            OAuthTokenDTO token1 = await this.Api.OAuthTokenManager.GetToken();
-            OAuthTokenDTO token2 = await api.OAuthTokenManager.GetToken();
+            OAuthTokenDTO token1 = await this.Api.OAuthTokenManager.GetTokenAsync();
+            OAuthTokenDTO token2 = await api.OAuthTokenManager.GetTokenAsync();
 
             Assert.AreEqual(token1.access_token, token2.access_token);
         }
@@ -52,13 +52,13 @@ namespace MangoPay.SDK.Tests
 			api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
 			api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
 
-			OAuthTokenDTO token1 = await api.OAuthTokenManager.GetToken();
+			OAuthTokenDTO token1 = await api.OAuthTokenManager.GetTokenAsync();
 
 			api.Config.ClientId = "sdk_example";
 			api.Config.ClientPassword = "Vfp9eMKSzGkxivCwt15wE082pTTKsx90vBenc9hjLsf5K46ciF";
 			api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
 
-			OAuthTokenDTO token2 = await api.OAuthTokenManager.GetToken();
+			OAuthTokenDTO token2 = await api.OAuthTokenManager.GetTokenAsync();
 
 			Assert.AreNotEqual(token1.access_token, token2.access_token);
 
@@ -66,7 +66,7 @@ namespace MangoPay.SDK.Tests
 			api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
 			api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
 
-			OAuthTokenDTO token3 = await api.OAuthTokenManager.GetToken();
+			OAuthTokenDTO token3 = await api.OAuthTokenManager.GetTokenAsync();
 
 			Assert.AreEqual(token1.access_token, token3.access_token);
 		}

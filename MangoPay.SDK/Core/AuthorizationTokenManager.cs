@@ -25,13 +25,26 @@ namespace MangoPay.SDK.Core
         /// If currently stored token is expired, this method creates a new one.
         /// </summary>
         /// <returns>Valid OAuthToken instance.</returns>
-        public async Task<OAuthTokenDTO> GetToken()
+        public OAuthTokenDTO GetToken()
+        {
+            OAuthTokenDTO token = _storageStrategy.Get(GetEnvKey());
+
+            if (token == null || token.IsExpired())
+            {
+                var result = this._root.AuthenticationManager.CreateToken();
+                StoreToken(result);
+            }
+
+            return _storageStrategy.Get(GetEnvKey());
+        }
+
+        public async Task<OAuthTokenDTO> GetTokenAsync()
         {
 			OAuthTokenDTO token = _storageStrategy.Get(GetEnvKey());
 
             if (token == null || token.IsExpired())
             {
-                var result = await this._root.AuthenticationManager.CreateToken();
+                var result = await this._root.AuthenticationManager.CreateTokenAsync();
                 StoreToken(result);
             }
 
