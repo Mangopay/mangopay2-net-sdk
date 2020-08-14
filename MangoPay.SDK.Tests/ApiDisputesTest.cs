@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -30,25 +31,25 @@ namespace MangoPay.SDK.Tests
 		private ListPaginated<DisputeDTO> _clientDisputes = null;
 
 		[SetUp]
-		public void Initialize()
+		public async Task Initialize()
 		{
 			Sort sort = new Sort();
 			sort.AddField("CreationDate", SortDirection.desc);
 
-			_clientDisputes = Api.Disputes.GetAll(new Pagination(1, 100), null, sort);
+			_clientDisputes = await Api.Disputes.GetAllAsync(new Pagination(1, 100), null, sort);
 
 			if (_clientDisputes == null || _clientDisputes.Count == 0)
 				Assert.Fail("INITIALIZATION FAILURE - cannot test disputes");
 		}
 
 		[Test]
-		public void Test_GetDispute()
+		public async Task Test_GetDispute()
 		{
 			DisputeDTO dispute = null;
 
 			try
 			{
-				dispute = Api.Disputes.Get(_clientDisputes[0].Id);
+				dispute = await Api.Disputes.GetAsync(_clientDisputes[0].Id);
 			}
 			catch (Exception ex)
 			{
@@ -60,7 +61,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetTransactions()
+		public async Task Test_GetTransactions()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
 
@@ -71,7 +72,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 10), null);
+				result = await Api.Disputes.GetTransactionsAsync(dispute.Id, new Pagination(1, 10), null);
 			}
 			catch (Exception ex)
 			{
@@ -83,7 +84,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetDisputesForWallet()
+		public async Task Test_GetDisputesForWallet()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.InitialTransactionId != null);
 
@@ -94,9 +95,10 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				string walletId = Api.PayIns.Get(dispute.InitialTransactionId).CreditedWalletId;
+                var wallet = await Api.PayIns.GetAsync(dispute.InitialTransactionId);
+				string walletId = wallet.CreditedWalletId;
 
-				result = Api.Disputes.GetDisputesForWallet(walletId, new Pagination(1, 10), null);
+				result = await Api.Disputes.GetDisputesForWalletAsync(walletId, new Pagination(1, 10), null);
 			}
 			catch (Exception ex)
 			{
@@ -107,7 +109,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetDisputesForUser()
+		public async Task Test_GetDisputesForUser()
 		{
 			ListPaginated<DisputeDTO> result = null;
 
@@ -118,9 +120,11 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				string userId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1), null)[0].AuthorId;
+                var user = await Api.Disputes.GetTransactionsAsync(dispute.Id, new Pagination(1, 1), null);
 
-				result = Api.Disputes.GetDisputesForUser(userId, new Pagination(1, 20), null);
+                string userId = user[0].AuthorId;
+
+				result = await Api.Disputes.GetDisputesForUserAsync(userId, new Pagination(1, 20), null);
 			}
 			catch (Exception ex)
 			{
@@ -132,13 +136,13 @@ namespace MangoPay.SDK.Tests
 		}
 
 	    [Test]
-	    public void Test_GetDisputesPendingSettlement()
+	    public async Task Test_GetDisputesPendingSettlement()
 	    {
 	        ListPaginated<DisputeDTO> result = null;
 
 	        try
 	        {
-	            result = Api.Disputes.GetDisputesPendingSettlement(new Pagination(1, 10), null);
+	            result = await Api.Disputes.GetDisputesPendingSettlementAsync(new Pagination(1, 10), null);
 	        }
 	        catch (Exception ex)
 	        {
@@ -149,7 +153,7 @@ namespace MangoPay.SDK.Tests
 	    }
 
 		[Test]
-		public void Test_CreateDisputeDocument()
+		public async Task Test_CreateDisputeDocument()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
 
@@ -162,7 +166,7 @@ namespace MangoPay.SDK.Tests
 			{
 				DisputeDocumentPostDTO documentPost = new DisputeDocumentPostDTO(DisputeDocumentType.DELIVERY_PROOF);
 
-				result = Api.Disputes.CreateDisputeDocument(documentPost, dispute.Id);
+				result = await Api.Disputes.CreateDisputeDocumentAsync(documentPost, dispute.Id);
 			}
 			catch (Exception ex)
 			{
@@ -174,7 +178,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_CreateDisputePage()
+		public async Task Test_CreateDisputePage()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
 
@@ -186,9 +190,9 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				DisputeDocumentPostDTO documentPost = new DisputeDocumentPostDTO(DisputeDocumentType.DELIVERY_PROOF);
-				result = Api.Disputes.CreateDisputeDocument(documentPost, dispute.Id);
+				result = await Api.Disputes.CreateDisputeDocumentAsync(documentPost, dispute.Id);
 
-				Api.Disputes.CreateDisputePage(dispute.Id, result.Id, "TestKycPageFile.png");
+				await Api.Disputes.CreateDisputePageAsync(dispute.Id, result.Id, "TestKycPageFile.png");
 			}
 			catch (Exception ex)
 			{
@@ -200,7 +204,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_ContestDispute()
+		public async Task Test_ContestDispute()
 		{
 			DisputeDTO notContestedDispute = _clientDisputes.FirstOrDefault(x => (x.DisputeType == DisputeType.CONTESTABLE || x.DisputeType == DisputeType.RETRIEVAL) 
 				&& (x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION));
@@ -214,7 +218,7 @@ namespace MangoPay.SDK.Tests
 			{
 				Money contestedFunds = notContestedDispute.Status == DisputeStatus.PENDING_CLIENT_ACTION ? new Money { Amount = 100, Currency = CurrencyIso.EUR } : null;
 
-				result = Api.Disputes.ContestDispute(contestedFunds, notContestedDispute.Id);
+				result = await Api.Disputes.ContestDisputeAsync(contestedFunds, notContestedDispute.Id);
 			}
 			catch (Exception ex)
 			{
@@ -226,7 +230,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_SaveTag()
+		public async Task Test_SaveTag()
 		{
 			DisputeDTO result = null;
 
@@ -234,7 +238,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = Api.Disputes.UpdateTag(newTag, _clientDisputes[0].Id);
+				result = await Api.Disputes.UpdateTagAsync(newTag, _clientDisputes[0].Id);
 			}
 			catch (Exception ex)
 			{
@@ -246,7 +250,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_CloseDispute()
+		public async Task Test_CloseDispute()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
 
@@ -257,7 +261,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = Api.Disputes.CloseDispute(dispute.Id);
+				result = await Api.Disputes.CloseDisputeAsync(dispute.Id);
 			}
 			catch (Exception ex)
 			{
@@ -268,7 +272,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetDocument()
+		public async Task Test_GetDocument()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
 
@@ -281,9 +285,9 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				DisputeDocumentPostDTO documentPost = new DisputeDocumentPostDTO(DisputeDocumentType.OTHER);
-				document = Api.Disputes.CreateDisputeDocument(documentPost, dispute.Id);
+				document = await Api.Disputes.CreateDisputeDocumentAsync(documentPost, dispute.Id);
 
-				result = Api.Disputes.GetDocument(document.Id);
+				result = await Api.Disputes.GetDocumentAsync(document.Id);
 			}
 			catch (Exception ex)
 			{
@@ -302,14 +306,14 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetDocumentsForDispute()
+		public async Task Test_GetDocumentsForDispute()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.SUBMITTED);
 
 			if (dispute == null)
 			{
-				Test_ContestDispute();
-				Initialize();
+				await Test_ContestDispute();
+				await Initialize();
 
 				dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.SUBMITTED);
 				
@@ -321,7 +325,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = Api.Disputes.GetDocumentsForDispute(dispute.Id, new Pagination(1, 1), null);
+				result = await Api.Disputes.GetDocumentsForDisputeAsync(dispute.Id, new Pagination(1, 1), null);
 			}
 			catch (Exception ex)
 			{
@@ -332,13 +336,13 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetDocumentsForClient()
+		public async Task Test_GetDocumentsForClient()
 		{
 			ListPaginated<DisputeDocumentDTO> result = null;
 
 			try
 			{
-				result = Api.Disputes.GetDocumentsForClient(new Pagination(1, 1), null);
+				result = await Api.Disputes.GetDocumentsForClientAsync(new Pagination(1, 1), null);
 			}
 			catch (Exception ex)
 			{
@@ -349,7 +353,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_SubmitDisputeDocument()
+		public async Task Test_SubmitDisputeDocument()
 		{
 			DisputeDTO dispute = null;
 			DisputeDocumentDTO disputeDocument = null;
@@ -360,7 +364,8 @@ namespace MangoPay.SDK.Tests
 			// search for dispute having any documents created
 			foreach (DisputeDTO d in _clientDisputes.Where(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION))
 			{
-				DisputeDocumentDTO dd = Api.Disputes.GetDocumentsForDispute(d.Id, new Pagination(1, 1), filter).FirstOrDefault();
+                var docs = await Api.Disputes.GetDocumentsForDisputeAsync(d.Id, new Pagination(1, 1), filter);
+				DisputeDocumentDTO dd = docs.FirstOrDefault();
 
 				if (dd != null)
 				{// found
@@ -378,7 +383,7 @@ namespace MangoPay.SDK.Tests
 					Assert.Fail("Cannot test submitting dispute's documents because there's no dispute with expected status in the disputes list.");
 
 				DisputeDocumentPostDTO documentPost = new DisputeDocumentPostDTO(DisputeDocumentType.DELIVERY_PROOF);
-				disputeDocument = Api.Disputes.CreateDisputeDocument(documentPost, dispute.Id);
+				disputeDocument = await Api.Disputes.CreateDisputeDocumentAsync(documentPost, dispute.Id);
 			}
 
 			DisputeDocumentDTO result = null;
@@ -388,14 +393,14 @@ namespace MangoPay.SDK.Tests
 				if (disputeDocument == null)
 					Assert.Fail("Cannot test submitting dispute's documents because there's no dispute document that can be updated.");
 
-                Api.Disputes.CreateDisputePage(dispute.Id, disputeDocument.Id, "TestKycPageFile.png");
+                await Api.Disputes.CreateDisputePageAsync(dispute.Id, disputeDocument.Id, "TestKycPageFile.png");
 
 				DisputeDocumentPutDTO disputeDocumentPut = new DisputeDocumentPutDTO
 				{
 					Status = DisputeDocumentStatus.VALIDATION_ASKED
 				};
 
-				result = Api.Disputes.SubmitDisputeDocument(disputeDocumentPut, dispute.Id, disputeDocument.Id);
+				result = await Api.Disputes.SubmitDisputeDocumentAsync(disputeDocumentPut, dispute.Id, disputeDocument.Id);
 			}
 			catch (Exception ex)
 			{
@@ -408,7 +413,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetRepudiation()
+		public async Task Test_GetRepudiation()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.InitialTransactionId != null && x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
 
@@ -419,9 +424,10 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				string repudiationId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1), null)[0].Id;
+                var transactionsDTO = await Api.Disputes.GetTransactionsAsync(dispute.Id, new Pagination(1, 1), null);
+				string repudiationId = transactionsDTO[0].Id;
 
-				result = Api.Disputes.GetRepudiation(repudiationId);
+				result = await Api.Disputes.GetRepudiationAsync(repudiationId);
 			}
 			catch (Exception ex)
 			{
@@ -432,7 +438,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_CreateSettlementTransfer()
+		public async Task Test_CreateSettlementTransfer()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED && x.DisputeType == DisputeType.NOT_CONTESTABLE);
 
@@ -444,13 +450,14 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				string repudiationId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1), null)[0].Id;
+                var transactionDTOs = await Api.Disputes.GetTransactionsAsync(dispute.Id, new Pagination(1, 1), null);
+				string repudiationId = transactionDTOs[0].Id;
 
-				repudiation = Api.Disputes.GetRepudiation(repudiationId);
+				repudiation = await Api.Disputes.GetRepudiationAsync(repudiationId);
 
 				SettlementTransferPostDTO post = new SettlementTransferPostDTO(repudiation.AuthorId, new Money { Currency = CurrencyIso.EUR, Amount = 1 }, new Money { Currency = CurrencyIso.EUR, Amount = 0 });
 
-				result = Api.Disputes.CreateSettlementTransfer(post, repudiationId);
+				result = await Api.Disputes.CreateSettlementTransferAsync(post, repudiationId);
 			}
 			catch (Exception ex)
 			{
@@ -461,7 +468,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetFilteredDisputes()
+		public async Task Test_GetFilteredDisputes()
 		{
 			ListPaginated<DisputeDTO> result1 = null;
 			ListPaginated<DisputeDTO> result2 = null;
@@ -470,10 +477,10 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result1 = Api.Disputes.GetAll(new Pagination(1, 100), new FilterDisputes { AfterDate = DateTime.Now });
-				result2 = Api.Disputes.GetAll(new Pagination(1, 100), new FilterDisputes { BeforeDate = DateTime.Now });
-				result3 = Api.Disputes.GetAll(new Pagination(1, 100), new FilterDisputes { Type = DisputeType.CONTESTABLE });
-				result4 = Api.Disputes.GetAll(new Pagination(1, 100), new FilterDisputes { Status = DisputeStatus.SUBMITTED });
+				result1 = await Api.Disputes.GetAllAsync(new Pagination(1, 100), new FilterDisputes { AfterDate = DateTime.Now });
+				result2 = await Api.Disputes.GetAllAsync(new Pagination(1, 100), new FilterDisputes { BeforeDate = DateTime.Now });
+				result3 = await Api.Disputes.GetAllAsync(new Pagination(1, 100), new FilterDisputes { Type = DisputeType.CONTESTABLE });
+				result4 = await Api.Disputes.GetAllAsync(new Pagination(1, 100), new FilterDisputes { Status = DisputeStatus.SUBMITTED });
 			}
 			catch (Exception ex)
 			{
@@ -501,7 +508,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetFilteredDisputeDocuments()
+		public async Task Test_GetFilteredDisputeDocuments()
 		{
 			ListPaginated<DisputeDocumentDTO> result1 = null;
 			ListPaginated<DisputeDocumentDTO> result2 = null;
@@ -509,8 +516,8 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result1 = Api.Disputes.GetDocumentsForClient(new Pagination(1, 100), new FilterDisputeDocuments { AfterDate = DateTime.Now });
-				result2 = Api.Disputes.GetDocumentsForClient(new Pagination(1, 100), new FilterDisputeDocuments { BeforeDate = DateTime.Now });
+				result1 = await Api.Disputes.GetDocumentsForClientAsync(new Pagination(1, 100), new FilterDisputeDocuments { AfterDate = DateTime.Now });
+				result2 = await Api.Disputes.GetDocumentsForClientAsync(new Pagination(1, 100), new FilterDisputeDocuments { BeforeDate = DateTime.Now });
 			}
 			catch (Exception ex)
 			{
@@ -524,7 +531,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result3 = Api.Disputes.GetDocumentsForClient(new Pagination(1, 100), new FilterDisputeDocuments { Type = result2[0].Type });
+				result3 = await Api.Disputes.GetDocumentsForClientAsync(new Pagination(1, 100), new FilterDisputeDocuments { Type = result2[0].Type });
 			}
 			catch (Exception ex)
 			{
@@ -540,7 +547,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_ResubmitDispute()
+		public async Task Test_ResubmitDispute()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
 
@@ -551,7 +558,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = Api.Disputes.ResubmitDispute(dispute.Id);
+				result = await Api.Disputes.ResubmitDisputeAsync(dispute.Id);
 			}
 			catch (Exception ex)
 			{
@@ -563,7 +570,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetSettlementTransfer()
+		public async Task Test_GetSettlementTransfer()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.CLOSED && x.DisputeType.HasValue && x.DisputeType.Value == DisputeType.NOT_CONTESTABLE);
 
@@ -575,13 +582,14 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				string repudiationId = Api.Disputes.GetTransactions(dispute.Id, new Pagination(1, 1), null)[0].Id;
+                var transactions = await Api.Disputes.GetTransactionsAsync(dispute.Id, new Pagination(1, 1), null);
+				string repudiationId = transactions[0].Id;
 
-				repudiation = Api.Disputes.GetRepudiation(repudiationId);
+				repudiation = await Api.Disputes.GetRepudiationAsync(repudiationId);
 
 				SettlementTransferPostDTO post = new SettlementTransferPostDTO(repudiation.AuthorId, new Money { Currency = CurrencyIso.EUR, Amount = 1 }, new Money { Currency = CurrencyIso.EUR, Amount = 0 });
 
-				transfer = Api.Disputes.CreateSettlementTransfer(post, repudiationId);
+				transfer = await Api.Disputes.CreateSettlementTransferAsync(post, repudiationId);
 			}
 			catch (Exception ex)
 			{
@@ -595,7 +603,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = Api.Disputes.GetSettlementTransfer(transfer.Id);
+				result = await Api.Disputes.GetSettlementTransferAsync(transfer.Id);
 			}
 			catch (Exception ex)
 			{
@@ -609,7 +617,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
-		public void Test_GetDocumentConsultations()
+		public async Task Test_GetDocumentConsultations()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
 
@@ -619,14 +627,14 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				DisputeDocumentPostDTO documentPost = new DisputeDocumentPostDTO(DisputeDocumentType.DELIVERY_PROOF);
-				var disputeDocument = Api.Disputes.CreateDisputeDocument(documentPost, dispute.Id);
+				var disputeDocument = await Api.Disputes.CreateDisputeDocumentAsync(documentPost, dispute.Id);
 				Assembly assembly = Assembly.GetExecutingAssembly();
 				FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
 				FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
 				byte[] bytes = File.ReadAllBytes(fi.FullName);
-				Api.Disputes.CreateDisputePage(dispute.Id, disputeDocument.Id, bytes);
+				await Api.Disputes.CreateDisputePageAsync(dispute.Id, disputeDocument.Id, bytes);
 
-				var result = Api.Disputes.GetDocumentConsultations(disputeDocument.Id);
+				var result = await Api.Disputes.GetDocumentConsultationsAsync(disputeDocument.Id);
 
 				Assert.AreEqual(1, result.Count);
 				Assert.IsInstanceOf<DateTime>(result.First().ExpirationDate);

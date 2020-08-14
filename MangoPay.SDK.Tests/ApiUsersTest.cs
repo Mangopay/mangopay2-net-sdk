@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -18,11 +19,11 @@ namespace MangoPay.SDK.Tests
     public class ApiUsersTest : BaseTest
     {
         [Test]
-        public void Test_Users_CreateNatural()
+        public async Task Test_Users_CreateNatural()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
+                UserNaturalDTO john = await this.GetJohn();
                 Assert.IsTrue(john.Id.Length > 0);
                 Assert.IsTrue(john.PersonType == PersonType.NATURAL);
             }
@@ -33,11 +34,11 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_CreateLegal()
+        public async Task Test_Users_CreateLegal()
         {
             try
             {
-                UserLegalDTO matrix = this.GetMatrix();
+                UserLegalDTO matrix = await this.GetMatrix();
                 Assert.IsTrue(matrix.Id.Length > 0);
                 Assert.IsTrue(matrix.PersonType == PersonType.LEGAL);
             }
@@ -48,15 +49,15 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_CreateLegal_PassesIfRequiredPropsProvided()
+        public async Task Test_Users_CreateLegal_PassesIfRequiredPropsProvided()
         {
             try
             {
                 UserLegalPostDTO userPost = new UserLegalPostDTO("email@email.org", "SomeOtherSampleOrg", LegalPersonType.BUSINESS, "RepFName", "RepLName", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
 
-                UserLegalDTO userCreated = this.Api.Users.Create(userPost);
+                UserLegalDTO userCreated = await this.Api.Users.CreateAsync(userPost);
 
-                UserLegalDTO userGet = this.Api.Users.GetLegal(userCreated.Id);
+                UserLegalDTO userGet = await this.Api.Users.GetLegalAsync(userCreated.Id);
 
                 Assert.IsTrue(userCreated.Id.Length > 0, "Created successfully after required props set.");
 
@@ -69,13 +70,13 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_GetNatural()
+        public async Task Test_Users_GetNatural()
         {
             try
             {
-                UserNaturalDTO john = this.GetNewJohn();
+                UserNaturalDTO john = await this.GetNewJohn();
 
-                UserNaturalDTO userNatural = this.Api.Users.GetNatural(john.Id);
+                UserNaturalDTO userNatural = await this.Api.Users.GetNaturalAsync(john.Id);
 
                 Assert.IsTrue(userNatural.PersonType == PersonType.NATURAL);
                 Assert.IsTrue(userNatural.Id == john.Id);
@@ -89,12 +90,12 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_GetNatural_FailsForLegalUser()
+        public async Task Test_Users_GetNatural_FailsForLegalUser()
         {
             UserLegalDTO matrix = null;
             try
             {
-                matrix = this.GetMatrix();
+                matrix = await this.GetMatrix();
             }
             catch (Exception ex)
             {
@@ -104,7 +105,7 @@ namespace MangoPay.SDK.Tests
             UserNaturalDTO user = null;
             try
             {
-                user = this.Api.Users.GetNatural(matrix.Id);
+                user = await this.Api.Users.GetNaturalAsync(matrix.Id);
 
                 Assert.Fail("GetUser() should throw an exception when called with legal user id.");
             }
@@ -115,12 +116,12 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_GetLegal_FailsForNaturalUser()
+        public async Task Test_Users_GetLegal_FailsForNaturalUser()
         {
             UserNaturalDTO john = null;
             try
             {
-                john = this.GetJohn();
+                john = await this.GetJohn();
             }
             catch (Exception ex)
             {
@@ -130,7 +131,7 @@ namespace MangoPay.SDK.Tests
             UserDTO user = null;
             try
             {
-                user = this.Api.Users.GetLegal(john.Id);
+                user = await this.Api.Users.GetLegalAsync(john.Id);
 
                 Assert.IsTrue(false, "GetLegal() should throw an exception when called with natural user id");
             }
@@ -141,13 +142,13 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_GetLegal()
+        public async Task Test_Users_GetLegal()
         {
             try
             {
-                UserLegalDTO matrix = this.GetMatrix();
+                UserLegalDTO matrix = await this.GetMatrix();
 
-                UserDTO userLegal = this.Api.Users.GetLegal(matrix.Id);
+                UserDTO userLegal = await this.Api.Users.GetLegalAsync(matrix.Id);
 
                 AssertEqualInputProps((UserLegalDTO)userLegal, matrix);
             }
@@ -158,11 +159,11 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_GetAll()
+        public async Task Test_Users_GetAll()
         {
             try
             {
-                ListPaginated<UserDTO> users = this.Api.Users.GetAll();
+                ListPaginated<UserDTO> users = await this.Api.Users.GetAllAsync();
 
                 Assert.IsNotNull(users);
                 Assert.IsTrue(users.Count > 0);
@@ -175,13 +176,13 @@ namespace MangoPay.SDK.Tests
                 Pagination pagination = new Pagination(1, 2);
                 Sort sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.asc);
-                result = this.Api.Users.GetAll(pagination, sort);
+                result = await this.Api.Users.GetAllAsync(pagination, sort);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
 
                 sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
-                result2 = this.Api.Users.GetAll(pagination, sort);
+                result2 = await this.Api.Users.GetAllAsync(pagination, sort);
                 Assert.IsNotNull(result2);
                 Assert.IsTrue(result2.Count > 0);
 
@@ -194,11 +195,11 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_Save_Natural()
+        public async Task Test_Users_Save_Natural()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
+                UserNaturalDTO john = await this.GetJohn();
 
                 UserNaturalPutDTO johnPut = new UserNaturalPutDTO
                 {
@@ -206,8 +207,8 @@ namespace MangoPay.SDK.Tests
 					Nationality = CountryIso.DK
                 };
 
-                UserNaturalDTO userSaved = this.Api.Users.UpdateNatural(johnPut, john.Id);
-                UserNaturalDTO userFetched = this.Api.Users.GetNatural(john.Id);
+                UserNaturalDTO userSaved = await this.Api.Users.UpdateNaturalAsync(johnPut, john.Id);
+                UserNaturalDTO userFetched = await this.Api.Users.GetNaturalAsync(john.Id);
 
                 Assert.AreEqual(johnPut.LastName, userSaved.LastName);
                 AssertEqualInputProps(userSaved, userFetched);
@@ -219,11 +220,11 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_Save_Natural_NonASCII()
+        public async Task Test_Users_Save_Natural_NonASCII()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
+                UserNaturalDTO john = await this.GetJohn();
 
                 UserNaturalPutDTO johnPut = new UserNaturalPutDTO
                 {
@@ -239,8 +240,8 @@ namespace MangoPay.SDK.Tests
                     IncomeRange = john.IncomeRange
                 };
 
-                UserNaturalDTO userSaved = this.Api.Users.UpdateNatural(johnPut, john.Id);
-                UserNaturalDTO userFetched = this.Api.Users.GetNatural(john.Id);
+                UserNaturalDTO userSaved = await this.Api.Users.UpdateNaturalAsync(johnPut, john.Id);
+                UserNaturalDTO userFetched = await this.Api.Users.GetNaturalAsync(john.Id);
 
                 Assert.AreEqual(johnPut.LastName, userSaved.LastName);
                 AssertEqualInputProps(userSaved, userFetched);
@@ -252,11 +253,11 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_Save_Legal()
+        public async Task Test_Users_Save_Legal()
         {
             try
             {
-                UserLegalDTO matrix = this.GetMatrix();
+                UserLegalDTO matrix = await this.GetMatrix();
 
                 UserLegalPutDTO matrixPut = new UserLegalPutDTO
                 {
@@ -274,8 +275,8 @@ namespace MangoPay.SDK.Tests
                     LegalRepresentativeCountryOfResidence = matrix.LegalRepresentativeCountryOfResidence
                 };
 
-                UserLegalDTO userSaved = this.Api.Users.UpdateLegal(matrixPut, matrix.Id);
-                UserLegalDTO userFetched = this.Api.Users.GetLegal(userSaved.Id);
+                UserLegalDTO userSaved = await this.Api.Users.UpdateLegalAsync(matrixPut, matrix.Id);
+                UserLegalDTO userFetched = await this.Api.Users.GetLegalAsync(userSaved.Id);
 
                 Assert.AreEqual(matrixPut.LegalRepresentativeLastName, userFetched.LegalRepresentativeLastName);
                 AssertEqualInputProps(userSaved, userFetched);
@@ -287,12 +288,12 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_CreateBankAccount_IBAN()
+        public async Task Test_Users_CreateBankAccount_IBAN()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                BankAccountDTO account = this.GetJohnsAccount();
+                UserNaturalDTO john = await this.GetJohn();
+                BankAccountDTO account = await this.GetJohnsAccount();
 
                 Assert.IsTrue(account.Id.Length > 0);
                 Assert.AreEqual(account.UserId, john.Id);
@@ -304,15 +305,17 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_CreateBankAccount_GB()
+        public async Task Test_Users_CreateBankAccount_GB()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                BankAccountGbPostDTO account = new BankAccountGbPostDTO(john.FirstName + " " + john.LastName, john.Address, "63956474");
-                account.SortCode = "200000";
+                UserNaturalDTO john = await this.GetJohn();
+                BankAccountGbPostDTO account = new BankAccountGbPostDTO(john.FirstName + " " + john.LastName, john.Address, "63956474")
+                {
+                    SortCode = "200000"
+                };
 
-                BankAccountDTO createAccount = this.Api.Users.CreateBankAccountGb(john.Id, account);
+                BankAccountDTO createAccount = await this.Api.Users.CreateBankAccountGbAsync(john.Id, account);
 
                 Assert.IsTrue(createAccount.Id.Length > 0);
                 Assert.IsTrue(createAccount.UserId == (john.Id));
@@ -327,14 +330,14 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_CreateBankAccount_US()
+        public async Task Test_Users_CreateBankAccount_US()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
+                UserNaturalDTO john = await this.GetJohn();
                 BankAccountUsPostDTO account = new BankAccountUsPostDTO(john.FirstName + " " + john.LastName, john.Address, "234234234234", "234334789");
 
-				BankAccountDTO createAccount = this.Api.Users.CreateBankAccountUs(john.Id, account);
+				BankAccountDTO createAccount = await this.Api.Users.CreateBankAccountUsAsync(john.Id, account);
 
 				Assert.IsTrue(createAccount.Id.Length > 0);
 				Assert.IsTrue(createAccount.UserId == (john.Id));
@@ -344,7 +347,7 @@ namespace MangoPay.SDK.Tests
 				Assert.IsTrue(((BankAccountUsDTO)createAccount).DepositAccountType == DepositAccountType.CHECKING);
 
 				account.DepositAccountType = DepositAccountType.SAVINGS;
-				BankAccountDTO createAccountSavings = this.Api.Users.CreateBankAccountUs(john.Id, account);
+				BankAccountDTO createAccountSavings = await this.Api.Users.CreateBankAccountUsAsync(john.Id, account);
 
 				Assert.IsTrue(createAccountSavings.Id.Length > 0);
 				Assert.IsTrue(createAccountSavings.UserId == (john.Id));
@@ -360,14 +363,14 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_CreateBankAccount_CA()
+        public async Task Test_Users_CreateBankAccount_CA()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
+                UserNaturalDTO john = await this.GetJohn();
                 BankAccountCaPostDTO account = new BankAccountCaPostDTO(john.FirstName + " " + john.LastName, john.Address, "TestBankName", "123", "12345", "234234234234");
 
-                BankAccountDTO createAccount = this.Api.Users.CreateBankAccountCa(john.Id, account);
+                BankAccountDTO createAccount = await this.Api.Users.CreateBankAccountCaAsync(john.Id, account);
 
                 Assert.IsTrue(createAccount.Id.Length > 0);
                 Assert.IsTrue(createAccount.UserId == (john.Id));
@@ -384,16 +387,16 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_CreateBankAccount_OTHER()
+        public async Task Test_Users_CreateBankAccount_OTHER()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
+                UserNaturalDTO john = await this.GetJohn();
                 BankAccountOtherPostDTO account = new BankAccountOtherPostDTO(john.FirstName + " " + john.LastName, john.Address, "234234234234", "BINAADADXXX");
                 account.Type = BankAccountType.OTHER;
                 account.Country = CountryIso.FR;
 
-                BankAccountDTO createAccount = this.Api.Users.CreateBankAccountOther(john.Id, account);
+                BankAccountDTO createAccount = await this.Api.Users.CreateBankAccountOtherAsync(john.Id, account);
 
                 Assert.IsTrue(createAccount.Id.Length > 0);
                 Assert.IsTrue(createAccount.UserId == (john.Id));
@@ -410,12 +413,12 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_CreateBankAccount()
+        public async Task Test_Users_CreateBankAccount()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                BankAccountIbanDTO account = this.GetJohnsAccount();
+                UserNaturalDTO john = await this.GetJohn();
+                BankAccountIbanDTO account = await this.GetJohnsAccount();
 
                 Assert.IsTrue(account.Id.Length > 0);
                 Assert.IsTrue(account.UserId == (john.Id));
@@ -427,14 +430,14 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_BankAccount()
+        public async Task Test_Users_BankAccount()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                BankAccountIbanDTO account = this.GetJohnsAccount();
+                UserNaturalDTO john = await this.GetJohn();
+                BankAccountIbanDTO account = await this.GetJohnsAccount();
 
-                BankAccountIbanDTO accountFetched = this.Api.Users.GetBankAccountIban(john.Id, account.Id);
+                BankAccountIbanDTO accountFetched = await this.Api.Users.GetBankAccountIbanAsync(john.Id, account.Id);
 
                 AssertEqualInputProps(account, accountFetched);
             }
@@ -445,15 +448,15 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_BankAccounts()
+        public async Task Test_Users_BankAccounts()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                BankAccountIbanDTO account = this.GetJohnsAccount();
+                UserNaturalDTO john = await this.GetJohn();
+                BankAccountIbanDTO account = await this.GetJohnsAccount();
                 Pagination pagination = new Pagination(1, 12);
 
-                ListPaginated<BankAccountDTO> list = this.Api.Users.GetBankAccounts(john.Id, pagination);
+                ListPaginated<BankAccountDTO> list = await this.Api.Users.GetBankAccountsAsync(john.Id, pagination);
 
                 int listIndex;
                 for (listIndex = 0; listIndex < list.Count; listIndex++)
@@ -463,7 +466,7 @@ namespace MangoPay.SDK.Tests
 
                 Assert.IsTrue(list[listIndex] is BankAccountDTO);
 
-                BankAccountIbanDTO castedBankAccount = this.Api.Users.GetBankAccountIban(john.Id, list[listIndex].Id);
+                BankAccountIbanDTO castedBankAccount = await this.Api.Users.GetBankAccountIbanAsync(john.Id, list[listIndex].Id);
 
                 Assert.IsTrue(account.Id == castedBankAccount.Id);
                 AssertEqualInputProps(account, castedBankAccount);
@@ -479,18 +482,18 @@ namespace MangoPay.SDK.Tests
                 account2.Type = BankAccountType.OTHER;
                 account2.Country = CountryIso.FR;
 
-                this.Api.Users.CreateBankAccountOther(john.Id, account2);
+                var other = await this.Api.Users.CreateBankAccountOtherAsync(john.Id, account2);
 
                 pagination = new Pagination(1, 2);
                 Sort sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.asc);
-                result = this.Api.Users.GetBankAccounts(john.Id, pagination, sort);
+                result = await this.Api.Users.GetBankAccountsAsync(john.Id, pagination, sort);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
 
                 sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
-                result2 = this.Api.Users.GetBankAccounts(john.Id, pagination, sort);
+                result2 = await this.Api.Users.GetBankAccountsAsync(john.Id, pagination, sort);
                 Assert.IsNotNull(result2);
                 Assert.IsTrue(result2.Count > 0);
 
@@ -503,12 +506,12 @@ namespace MangoPay.SDK.Tests
         }
 
 		[Test]
-		public void Test_Users_UpdateBankAccount() 
+		public async Task Test_Users_UpdateBankAccount() 
 		{
 			try
 			{
-				UserNaturalDTO john = this.GetJohn();
-				BankAccountIbanDTO account = this.GetJohnsAccount();
+				UserNaturalDTO john = await this.GetJohn();
+				BankAccountIbanDTO account = await this.GetJohnsAccount();
 
 				Assert.IsTrue(account.Id.Length > 0);
 				Assert.IsTrue(account.UserId == (john.Id));
@@ -518,7 +521,7 @@ namespace MangoPay.SDK.Tests
 				DisactivateBankAccountPutDTO disactivateBankAccount = new DisactivateBankAccountPutDTO();
 				disactivateBankAccount.Active = false;
 
-				BankAccountDTO result = this.Api.Users.UpdateBankAccount(john.Id, disactivateBankAccount, account.Id);
+				BankAccountDTO result = await this.Api.Users.UpdateBankAccountAsync(john.Id, disactivateBankAccount, account.Id);
 
 				Assert.IsNotNull(result);
 				Assert.IsTrue(account.Id == result.Id);
@@ -531,11 +534,11 @@ namespace MangoPay.SDK.Tests
 		}
 
         [Test]
-        public void Test_Users_CreateKycDocument()
+        public async Task Test_Users_CreateKycDocument()
         {
             try
             {
-                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
+                KycDocumentDTO kycDocument = await this.GetJohnsKycDocument();
 
                 Assert.IsNotNull(kycDocument);
                 Assert.IsTrue(kycDocument.Id.Length > 0);
@@ -549,24 +552,24 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_SaveKycDocument()
+        public async Task Test_Users_SaveKycDocument()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
+                UserNaturalDTO john = await this.GetJohn();
+                KycDocumentDTO kycDocument = await this.GetJohnsKycDocument();
 
                 var assembly = Assembly.GetExecutingAssembly();
                 var fi = this.GetFileInfoOfFile(assembly.Location);
 
-                this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
+                await this.Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, fi.FullName);
 
                 KycDocumentPutDTO kycDocumentPut = new KycDocumentPutDTO 
                 {
                     Status = KycStatus.VALIDATION_ASKED
                 };
 
-                KycDocumentDTO result = this.Api.Users.UpdateKycDocument(john.Id, kycDocumentPut, kycDocument.Id);
+                KycDocumentDTO result = await this.Api.Users.UpdateKycDocumentAsync(john.Id, kycDocumentPut, kycDocument.Id);
 
                 Assert.IsNotNull(result);
                 Assert.IsTrue(kycDocument.Type == result.Type);
@@ -579,14 +582,14 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_GetKycDocument()
+        public async Task Test_Users_GetKycDocument()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
+                UserNaturalDTO john = await this.GetJohn();
+                KycDocumentDTO kycDocument = await this.GetJohnsKycDocument();
 
-                KycDocumentDTO result = this.Api.Users.GetKycDocument(john.Id, kycDocument.Id);
+                KycDocumentDTO result = await this.Api.Users.GetKycDocumentAsync(john.Id, kycDocument.Id);
 
                 Assert.IsNotNull(result);
                 Assert.IsTrue(kycDocument.Id == (result.Id));
@@ -600,17 +603,17 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_CreateKycPageFromFile()
+        public async Task Test_Users_CreateKycPageFromFile()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                KycDocumentDTO kycDocument = this.GetNewKycDocument();
+                UserNaturalDTO john = await this.GetJohn();
+                KycDocumentDTO kycDocument = await this.GetNewKycDocument();
 
                 var assembly = Assembly.GetExecutingAssembly();
                 var fi = this.GetFileInfoOfFile(assembly.Location);
 
-                this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, fi.FullName);
+                await this.Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, fi.FullName);
             }
             catch (Exception ex)
             {
@@ -619,18 +622,18 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_CreateKycPageFromBytes()
+        public async Task Test_Users_CreateKycPageFromBytes()
         {            
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                KycDocumentDTO kycDocument = this.GetNewKycDocument();
+                UserNaturalDTO john = await this.GetJohn();
+                KycDocumentDTO kycDocument = await this.GetNewKycDocument();
 
                 var assembly = Assembly.GetExecutingAssembly();
                 var fi = this.GetFileInfoOfFile(assembly.Location);
                 byte[] bytes = File.ReadAllBytes(fi.FullName);
 
-                this.Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
+                await this.Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, bytes);
             }
             catch (Exception ex)
             {
@@ -639,15 +642,15 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_AllCards()
+        public async Task Test_Users_AllCards()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                PayInCardDirectDTO payIn = this.GetNewPayInCardDirect();
+                UserNaturalDTO john = await this.GetJohn();
+                PayInCardDirectDTO payIn = await this.GetNewPayInCardDirect();
                 Pagination pagination = new Pagination(1, 1);
-                CardDTO card = this.Api.Cards.Get(payIn.CardId);
-                ListPaginated<CardDTO> cards = this.Api.Users.GetCards(john.Id, pagination);
+                CardDTO card = await this.Api.Cards.GetAsync(payIn.CardId);
+                ListPaginated<CardDTO> cards = await this.Api.Users.GetCardsAsync(john.Id, pagination);
 
                 Assert.IsTrue(cards.Count == 1);
                 Assert.IsTrue(cards[0].CardType != CardType.NotSpecified);
@@ -661,13 +664,13 @@ namespace MangoPay.SDK.Tests
                 pagination = new Pagination(1, 2);
                 Sort sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.asc);
-                result = this.Api.Users.GetCards(john.Id, pagination, sort);
+                result = await this.Api.Users.GetCardsAsync(john.Id, pagination, sort);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
 
                 sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
-                result2 = this.Api.Users.GetCards(john.Id, pagination, sort);
+                result2 = await this.Api.Users.GetCardsAsync(john.Id, pagination, sort);
                 Assert.IsNotNull(result2);
                 Assert.IsTrue(result2.Count > 0);
 
@@ -680,15 +683,15 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_Transactions()
+        public async Task Test_Users_Transactions()
         {
             try
             {
-                UserNaturalDTO john = this.GetJohn();
-                TransferDTO transfer = this.GetNewTransfer();
+                UserNaturalDTO john = await this.GetJohn();
+                TransferDTO transfer = await this.GetNewTransfer();
                 Pagination pagination = new Pagination(1, 1);
 
-                ListPaginated<TransactionDTO> transactions = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions());
+                ListPaginated<TransactionDTO> transactions = await this.Api.Users.GetTransactionsAsync(john.Id, pagination, new FilterTransactions());
 
                 Assert.IsTrue(transactions.Count > 0);
 
@@ -699,13 +702,13 @@ namespace MangoPay.SDK.Tests
                 pagination = new Pagination(1, 2);
                 Sort sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.asc);
-                result = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions(), sort);
+                result = await this.Api.Users.GetTransactionsAsync(john.Id, pagination, new FilterTransactions(), sort);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
 
                 sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
-                result2 = this.Api.Users.GetTransactions(john.Id, pagination, new FilterTransactions(), sort);
+                result2 = await this.Api.Users.GetTransactionsAsync(john.Id, pagination, new FilterTransactions(), sort);
                 Assert.IsNotNull(result2);
                 Assert.IsTrue(result2.Count > 0);
 
@@ -718,36 +721,36 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_GetKycDocuments()
+        public async Task Test_Users_GetKycDocuments()
         {
             ListPaginated<KycDocumentDTO> result = null;
 
-            UserNaturalDTO john = this.GetJohn();
-            KycDocumentDTO kycDocument = this.GetJohnsKycDocument();
+            UserNaturalDTO john = await this.GetJohn();
+            KycDocumentDTO kycDocument = await this.GetJohnsKycDocument();
 
             try
             {
-                result = this.Api.Users.GetKycDocuments(john.Id, null, null);
+                result = await this.Api.Users.GetKycDocumentsAsync(john.Id, null, null);
 
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
 
 
                 // test sorting
-                GetNewKycDocument();
+                await GetNewKycDocument();
                 result = null;
                 ListPaginated<KycDocumentDTO> result2 = null;
 
                 Pagination pagination = new Pagination(1, 2);
                 Sort sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.asc);
-                result = this.Api.Users.GetKycDocuments(john.Id, pagination, null, sort);
+                result = await this.Api.Users.GetKycDocumentsAsync(john.Id, pagination, null, sort);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
 
                 sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
-                result2 = this.Api.Users.GetKycDocuments(john.Id, pagination, null, sort);
+                result2 = await this.Api.Users.GetKycDocumentsAsync(john.Id, pagination, null, sort);
                 Assert.IsNotNull(result2);
                 Assert.IsTrue(result2.Count > 0);
 
@@ -761,14 +764,14 @@ namespace MangoPay.SDK.Tests
         }
 
 		[Test]
-		public void Test_Users_GetEmoney()
+		public async Task Test_Users_GetEmoney()
 		{
 			try
 			{
-				var user = GetNewJohn();
-				var wallet = GetNewJohnsWalletWithMoney(10000, user);
+				var user = await GetNewJohn();
+				var wallet = await GetNewJohnsWalletWithMoney(10000, user);
 
-				var emoney = Api.Users.GetEmoney(user.Id);
+				var emoney = await Api.Users.GetEmoneyAsync(user.Id);
 
 				Assert.AreEqual(user.Id, emoney.UserId);
 				Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
@@ -781,16 +784,14 @@ namespace MangoPay.SDK.Tests
 		}
 
         [Test]
-        public void Test_User_GetEmoneyForYear()
+        public async Task Test_User_GetEmoneyForYear()
         {
             try
             {
-                var user = GetNewJohn();
-                var wallet = GetNewJohnsWalletWithMoney(10000, user);
-		var year = DateTime.Now.Year.ToString();
-
-
-                var emoney = Api.Users.GetEmoneyForYear(user.Id, year);
+                var user = await GetNewJohn();
+                var wallet = await GetNewJohnsWalletWithMoney(10000, user);
+		        var year = DateTime.Now.Year.ToString();
+                var emoney = await Api.Users.GetEmoneyForYearAsync(user.Id, year);
 
                 Assert.IsNotNull(emoney);
                 Assert.AreEqual(user.Id, emoney.UserId);
@@ -805,16 +806,16 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void GetTest_User_GetEmoneyForYearAndMonth()
+        public async Task GetTest_User_GetEmoneyForYearAndMonth()
         {
             try
             {
-                var user = GetNewJohn();
-                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+                var user = await GetNewJohn();
+                var wallet = await GetNewJohnsWalletWithMoney(10000, user);
 		        var year = DateTime.Now.Year.ToString();
                 var month = DateTime.Now.Month.ToString();
 
-                var emoney = Api.Users.GetEmoneyForYearAndMonth(user.Id, year, month);
+                var emoney = await Api.Users.GetEmoneyForYearAndMonthAsync(user.Id, year, month);
 
                 Assert.AreEqual(user.Id, emoney.UserId);
                 //Assert.AreEqual("2019","2019");
@@ -829,14 +830,14 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-		public void Test_Users_GetEmoneyWithCurrency()
+		public async Task Test_Users_GetEmoneyWithCurrency()
 		{
 			try
 			{
-				var user = GetNewJohn();
+				var user = await GetNewJohn();
 				var wallet = GetNewJohnsWalletWithMoney(10000, user);
 
-				var emoney = Api.Users.GetEmoney(user.Id, CurrencyIso.USD);
+				var emoney = await Api.Users.GetEmoneyAsync(user.Id, CurrencyIso.USD);
 
 				Assert.AreEqual(user.Id, emoney.UserId);
 				Assert.AreEqual(CurrencyIso.USD, emoney.CreditedEMoney.Currency);
@@ -848,15 +849,15 @@ namespace MangoPay.SDK.Tests
 		}
 
         [Test]
-        public void Test_Users_GetEmoneyWithYearAndCurrency()
+        public async Task Test_Users_GetEmoneyWithYearAndCurrency()
         {
             try
             {
-                var user = GetNewJohn();
+                var user = await GetNewJohn();
                 var wallet = GetNewJohnsWalletWithMoney(10000, user);
                 var year = DateTime.Now.Year.ToString();
 
-                var emoney = Api.Users.GetEmoney(user.Id, year, CurrencyIso.USD);
+                var emoney = await Api.Users.GetEmoneyAsync(user.Id, year, CurrencyIso.USD);
 
                 Assert.NotNull(emoney);
                 Assert.AreEqual(user.Id, emoney.UserId);
@@ -869,16 +870,16 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Users_GetEmoneyWithYearAndMonthAndCurrency()
+        public async Task Test_Users_GetEmoneyWithYearAndMonthAndCurrency()
         {
             try
             {
-                var user = GetNewJohn();
+                var user = await GetNewJohn();
                 var wallet = GetNewJohnsWalletWithMoney(10000, user);
                 var year = DateTime.Now.Year.ToString();
                 var month = DateTime.Now.Month.ToString();
 
-                var emoney = Api.Users.GetEmoney(user.Id, year, month, CurrencyIso.USD);
+                var emoney = await Api.Users.GetEmoneyAsync(user.Id, year, month, CurrencyIso.USD);
 
                 Assert.NotNull(emoney);
                 Assert.AreEqual(user.Id, emoney.UserId);
@@ -891,19 +892,20 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-		public void Test_Users_GetTransactionsForBankAccount()
+		public async Task Test_Users_GetTransactionsForBankAccount()
 		{
 			try
 			{
-				var payOut = GetJohnsPayOutBankWire();
-				string bankAccountId = GetJohnsAccount().Id;
+				var payOut = await GetJohnsPayOutBankWire();
+                var johnsAccount = await GetJohnsAccount();
+				string bankAccountId = johnsAccount.Id;
 
 				var pagination = new Pagination(1, 1);
 				var filter = new FilterTransactions();
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				var transactions = Api.Users.GetTransactionsForBankAccount(bankAccountId, pagination, filter, sort);
+				var transactions = await Api.Users.GetTransactionsForBankAccountAsync(bankAccountId, pagination, filter, sort);
 
 				Assert.IsTrue(transactions.Count > 0);
 			}

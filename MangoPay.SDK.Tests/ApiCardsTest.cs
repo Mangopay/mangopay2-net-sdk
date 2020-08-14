@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Core;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -12,18 +13,18 @@ namespace MangoPay.SDK.Tests
     public class ApiCardsTest : BaseTest
     {
         [Test]
-        public void Test_Card_GetTransactionsForCard()
+        public async Task Test_Card_GetTransactionsForCard()
         {
             try
             {
-                PayInCardDirectDTO payIn = GetNewPayInCardDirect();
+                PayInCardDirectDTO payIn = await GetNewPayInCardDirect();
 
                 var pagination = new Pagination(1, 1);
                 var filter = new FilterTransactions();
                 var sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
 
-                var transactions = Api.Cards.GetTransactionsForCard(payIn.CardId, pagination, filter, sort);
+                var transactions = await Api.Cards.GetTransactionsForCardAsync(payIn.CardId, pagination, filter, sort);
 
                 Assert.IsTrue(transactions.Count > 0);
             }
@@ -34,17 +35,17 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Card_GetByFingerprint()
+        public async Task Test_Card_GetByFingerprint()
         {
-            PayInCardDirectDTO payIn = GetNewPayInCardDirect();
+            PayInCardDirectDTO payIn = await GetNewPayInCardDirect();
             Assert.IsNotNull(payIn, "PayIn object is null!");
-            CardDTO card = Api.Cards.Get(payIn.CardId);
+            CardDTO card = await Api.Cards.GetAsync(payIn.CardId);
 
             Assert.IsNotNull(card, "Card is null!");
             Assert.IsNotNull(card.Fingerprint, "Card fingerprint is null!");
             Assert.IsNotEmpty(card.Fingerprint, "Card fingerprint is empty!");
 
-            ListPaginated<CardDTO> cards = Api.Cards.GetCardsByFingerprint(card.Fingerprint);
+            ListPaginated<CardDTO> cards = await Api.Cards.GetCardsByFingerprintAsync(card.Fingerprint);
 
             Assert.True(cards.Count > 0, "Card lsit is empty");
 
@@ -55,18 +56,18 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Card_GetByFingerprint_Paginated()
+        public async Task Test_Card_GetByFingerprint_Paginated()
         {
-            PayInCardDirectDTO payIn = GetNewPayInCardDirect();
+            PayInCardDirectDTO payIn = await GetNewPayInCardDirect();
             Assert.IsNotNull(payIn, "PayIn object is null!");
-            CardDTO card = Api.Cards.Get(payIn.CardId);
+            CardDTO card = await Api.Cards.GetAsync(payIn.CardId);
 
             Assert.IsNotNull(card, "Card is null!");
             Assert.IsNotNull(card.Fingerprint, "Card fingerprint is null!");
             Assert.IsNotEmpty(card.Fingerprint, "Card fingerprint is empty!");
 
             Pagination pagination = new Pagination(1, 1);
-            ListPaginated<CardDTO> cards = Api.Cards.GetCardsByFingerprint(card.Fingerprint, pagination, null);
+            ListPaginated<CardDTO> cards = await Api.Cards.GetCardsByFingerprintAsync(card.Fingerprint, pagination, null);
 
             Assert.True(cards.Count == 1, String.Format("Requested 1 entity, got {0}", cards.Count));
 

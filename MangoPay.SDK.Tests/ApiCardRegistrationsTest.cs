@@ -3,6 +3,7 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -10,12 +11,12 @@ namespace MangoPay.SDK.Tests
     public class ApiCardRegistrationsTest : BaseTest
     {
         [Test]
-        public void Test_CardRegistrations_Create()
+        public async Task Test_CardRegistrations_Create()
         {
             try
             {
-                CardRegistrationDTO cardRegistration_visa = this.GetJohnsCardRegistration();
-                UserNaturalDTO user = this.GetJohn();
+                CardRegistrationDTO cardRegistration_visa = await this.GetJohnsCardRegistration();
+                UserNaturalDTO user = await this.GetJohn();
 
                 Assert.IsNotNull(cardRegistration_visa.Id);
                 Assert.IsTrue(cardRegistration_visa.Id.Length > 0);
@@ -29,7 +30,7 @@ namespace MangoPay.SDK.Tests
 				Assert.AreEqual(CardType.CB_VISA_MASTERCARD, cardRegistration_visa.CardType);
                 Assert.AreEqual("DefaultTag", cardRegistration_visa.Tag);
 
-				CardRegistrationDTO cardRegistration_maestro = this.GetNewJohnsCardRegistration(CardType.MAESTRO);
+				CardRegistrationDTO cardRegistration_maestro = await this.GetNewJohnsCardRegistration(CardType.MAESTRO);
 
 				Assert.IsNotNull(cardRegistration_maestro.Id);
 				Assert.IsTrue(cardRegistration_maestro.Id.Length > 0);
@@ -49,13 +50,13 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_CardRegistrations_Get()
+        public async Task Test_CardRegistrations_Get()
         {
             try
             {
-                CardRegistrationDTO cardRegistration = this.GetJohnsCardRegistration();
+                CardRegistrationDTO cardRegistration = await this.GetJohnsCardRegistration();
 
-                CardRegistrationDTO getCardRegistration = this.Api.CardRegistrations.Get(cardRegistration.Id);
+                CardRegistrationDTO getCardRegistration = await this.Api.CardRegistrations.GetAsync(cardRegistration.Id);
 
                 Assert.IsTrue(getCardRegistration.Id.Length > 0);
                 Assert.AreEqual(cardRegistration.Id, getCardRegistration.Id);
@@ -67,17 +68,17 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_CardRegistrations_Update()
+        public async Task Test_CardRegistrations_Update()
         {
             try
             {
-                CardRegistrationDTO cardRegistration = this.GetJohnsCardRegistration();
+                CardRegistrationDTO cardRegistration = await this.GetJohnsCardRegistration();
                 CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
-                String registrationData = this.GetPaylineCorrectRegistartionData(cardRegistration);
+                String registrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
                 cardRegistrationPut.RegistrationData = registrationData;
                 cardRegistrationPut.Tag = "DefaultTag - Updated";
 
-                CardRegistrationDTO getCardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
+                CardRegistrationDTO getCardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
 
                 Assert.AreEqual(registrationData, getCardRegistration.RegistrationData);
                 Assert.IsNotNull(getCardRegistration.CardId);
