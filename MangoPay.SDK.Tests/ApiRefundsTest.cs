@@ -20,7 +20,7 @@ namespace MangoPay.SDK.Tests
             RefundDTO refund = await this.GetNewRefundForTransfer(transfer);
             UserNaturalDTO user = await this.GetJohn();
 
-            RefundDTO getRefund = await this.Api.Refunds.Get(refund.Id);
+            RefundDTO getRefund = await this.Api.Refunds.GetAsync(refund.Id);
 
             Assert.AreEqual(getRefund.Id, refund.Id);
             Assert.AreEqual(getRefund.InitialTransactionId, transfer.Id);
@@ -37,7 +37,7 @@ namespace MangoPay.SDK.Tests
             RefundDTO refund = await this.GetNewRefundForPayIn(payIn);
             UserNaturalDTO user = await this.GetJohn();
 
-            RefundDTO getRefund = await this.Api.Refunds.Get(refund.Id);
+            RefundDTO getRefund = await this.Api.Refunds.GetAsync(refund.Id);
 
             Assert.AreEqual(getRefund.Id, refund.Id);
             Assert.AreEqual(getRefund.InitialTransactionId, payIn.Id);
@@ -61,7 +61,7 @@ namespace MangoPay.SDK.Tests
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				var refunds = await Api.Refunds.GetRefundsForPayOut(payOut.Id, pagination, filter, sort);
+				var refunds = await Api.Refunds.GetRefundsForPayOutAsync(payOut.Id, pagination, filter, sort);
 			}
 			catch (Exception ex)
 			{
@@ -88,7 +88,7 @@ namespace MangoPay.SDK.Tests
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				var refunds = await Api.Refunds.GetRefundsForPayIn(payIn.Id, pagination, filter, sort);
+				var refunds = await Api.Refunds.GetRefundsForPayInAsync(payIn.Id, pagination, filter, sort);
 
 				Assert.IsTrue(refunds.Count > 0);
 			}
@@ -118,7 +118,7 @@ namespace MangoPay.SDK.Tests
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				var refunds = await Api.Refunds.GetRefundsForTransfer(transfer.Id, pagination, filter, sort);
+				var refunds = await Api.Refunds.GetRefundsForTransferAsync(transfer.Id, pagination, filter, sort);
 
 				Assert.IsTrue(refunds.Count > 0);
 			}

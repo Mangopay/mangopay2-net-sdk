@@ -55,21 +55,21 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUbo_Create_Ubo_Valid()
         {
-            var userLegal = await Api.Users.Create(CreateUserLegalPost());
-            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclaration(null, userLegal.Id);
+            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(null, userLegal.Id);
             var uboDto = UboPostDtoCollection[0];
             UboDTO result = null;
-            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.CreateUbo(uboDto, userLegal.Id, uboDeclaration.Id));
+            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.CreateUboAsync(uboDto, userLegal.Id, uboDeclaration.Id));
             Assert.NotNull(result);
         }
 
         [Test]
         public async Task ApiUbo_Update_Ubo_Valid()
         {
-            var userLegal = await Api.Users.Create(CreateUserLegalPost());
-            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclaration(null, userLegal.Id);
+            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(null, userLegal.Id);
             var uboDto = UboPostDtoCollection[1];
-            var ubo = await Api.UboDeclarations.CreateUbo(uboDto, userLegal.Id, uboDeclaration.Id);
+            var ubo = await Api.UboDeclarations.CreateUboAsync(uboDto, userLegal.Id, uboDeclaration.Id);
             var address = new Address
             {
                 AddressLine1 = "Address line Natural1 1",
@@ -88,7 +88,7 @@ namespace MangoPay.SDK.Tests
             var uboPutDto = new UboPutDTO("JohnNatural1", "DoeNatural1", address, CountryIso.DE, birthDate, birthPlace);
             UboDTO result = null;
             Assert.DoesNotThrowAsync(async () =>
-                result = await Api.UboDeclarations.UpdateUbo(uboPutDto, userLegal.Id, uboDeclaration.Id, ubo.Id));
+                result = await Api.UboDeclarations.UpdateUboAsync(uboPutDto, userLegal.Id, uboDeclaration.Id, ubo.Id));
             Assert.NotNull(result);
             Assert.AreEqual(ubo.Id, result.Id);
             Assert.AreEqual(uboPutDto.FirstName, result.FirstName);
@@ -97,11 +97,11 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUboDeclaration_Create_UboDeclaration_Valid()
         {
-            var userLegal = await Api.Users.Create(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
 
             UboDeclarationDTO result = null;
 
-            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.CreateUboDeclaration(null, userLegal.Id));
+            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.CreateUboDeclarationAsync(null, userLegal.Id));
             Assert.That(result.Status == UboDeclarationType.CREATED);
             Assert.That(result.CreationDate != DateTime.MinValue);
         }
@@ -109,13 +109,13 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUboDeclaration_Get_UboDeclaration_Valid()
         {
-            var userLegal = await Api.Users.Create(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
 
             UboDeclarationDTO uboDeclaration = null;
-            Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.Create(userLegal.Id));
+            Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.CreateAsync(userLegal.Id));
             UboDeclarationDTO result = null;
             Assert.DoesNotThrowAsync(async () =>
-                result = await Api.UboDeclarations.GetUboDeclarationById(userLegal.Id, uboDeclaration.Id));
+                result = await Api.UboDeclarations.GetUboDeclarationByIdAsync(userLegal.Id, uboDeclaration.Id));
             Assert.NotNull(result);
             Assert.AreEqual(uboDeclaration.Id, result.Id);
         }
@@ -123,13 +123,13 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUboDeclaration_GetById_UboDeclaration_Valid()
         {
-            var userLegal = await Api.Users.Create(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
 
             UboDeclarationDTO uboDeclaration = null;
-            Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.Create(userLegal.Id));
+            Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.CreateAsync(userLegal.Id));
 
             UboDeclarationDTO result = null;
-            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.GetUboDeclarationById(uboDeclaration.Id));
+            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.GetUboDeclarationByIdAsync(uboDeclaration.Id));
             Assert.NotNull(result);
             Assert.AreEqual(uboDeclaration.Id, result.Id);
         }
@@ -138,12 +138,12 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUboDeclaration_GetAll_UboDeclaration_Valid()
         {
-            var userLegal = await Api.Users.Create(CreateUserLegalPost());
-            var uboDeclarationDto = await Api.UboDeclarations.Create(userLegal.Id);
+            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var uboDeclarationDto = await Api.UboDeclarations.CreateAsync(userLegal.Id);
 
             ListPaginated<UboDeclarationDTO> result = null;
             Pagination pagination = new Pagination(1, 1);
-            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.GetUboDeclarationByUserId(userLegal.Id, pagination));
+            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.GetUboDeclarationByUserIdAsync(userLegal.Id, pagination));
             Assert.NotNull(result);
             Assert.IsTrue(result.Count > 0);
             Assert.AreEqual(uboDeclarationDto.Id, result[0].Id);
@@ -152,16 +152,16 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUboDeclaration_Update_UboDeclaration_Valid()
         {
-            var userLegal = await Api.Users.Create(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
 
-            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclaration(null, userLegal.Id);
+            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(null, userLegal.Id);
 
             List<UboPostDTO> ubopostDtos = UboPostDtoCollection;
             List<UboDTO> uboDtos = new List<UboDTO>();
 
             foreach (var uboPost in ubopostDtos)
             {
-                var ubo = await Api.UboDeclarations.CreateUbo(null, uboPost, userLegal.Id, uboDeclaration.Id);
+                var ubo = await Api.UboDeclarations.CreateUboAsync(null, uboPost, userLegal.Id, uboDeclaration.Id);
                 uboDtos.Add(ubo);
             }
 
@@ -171,7 +171,7 @@ namespace MangoPay.SDK.Tests
             UboDeclarationDTO result = null;
 
             Assert.DoesNotThrowAsync(async () =>
-                result = await Api.UboDeclarations.UpdateUboDeclaration(ubodeclarationPut, userLegal.Id, uboDeclaration.Id));
+                result = await Api.UboDeclarations.UpdateUboDeclarationAsync(ubodeclarationPut, userLegal.Id, uboDeclaration.Id));
             Assert.That(result != null);
             Assert.AreEqual(uboDeclaration.Id, result.Id);
             Assert.That(result.Status == UboDeclarationType.VALIDATION_ASKED);

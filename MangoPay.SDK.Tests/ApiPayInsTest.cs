@@ -37,7 +37,7 @@ namespace MangoPay.SDK.Tests
             {
                 PayInDTO payIn = await this.GetJohnsPayInCardWeb();
 
-                PayInDTO getPayIn = await this.Api.PayIns.Get(payIn.Id);
+                PayInDTO getPayIn = await this.Api.PayIns.GetAsync(payIn.Id);
 
                 Assert.IsTrue(payIn.Id == getPayIn.Id);
                 Assert.IsTrue(payIn.PaymentType == PayInPaymentType.CARD);
@@ -64,7 +64,7 @@ namespace MangoPay.SDK.Tests
 
                 PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
 
-                var payIn = await this.Api.PayIns.CreatePayPal(payInPost);
+                var payIn = await this.Api.PayIns.CreatePayPalAsync(payInPost);
 
                 Assert.IsTrue(payIn.Id.Length > 0);
                 Assert.IsTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
@@ -95,7 +95,7 @@ namespace MangoPay.SDK.Tests
                 PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
                 payInPost.ShippingAddress = new ShippingAddress("recipient name", AddressForShippingAddress);
 
-                var payIn = await this.Api.PayIns.CreatePayPal(payInPost);
+                var payIn = await this.Api.PayIns.CreatePayPalAsync(payInPost);
 
                 Assert.IsNotNull(payIn.ShippingAddress);
                 Assert.AreEqual("recipient name", payIn.ShippingAddress.RecipientName);
@@ -119,10 +119,10 @@ namespace MangoPay.SDK.Tests
             try
             {
                 WalletDTO johnWallet = await this.GetJohnsWalletWithMoney();
-                WalletDTO beforeWallet = await this.Api.Wallets.Get(johnWallet.Id);
+                WalletDTO beforeWallet = await this.Api.Wallets.GetAsync(johnWallet.Id);
 
                 PayInDTO payIn = await this.GetNewPayInCardDirect();
-                WalletDTO wallet = await this.Api.Wallets.Get(johnWallet.Id);
+                WalletDTO wallet = await this.Api.Wallets.GetAsync(johnWallet.Id);
                 UserNaturalDTO user = await this.GetJohn();
 
                 Assert.IsTrue(payIn.Id.Length > 0);
@@ -149,7 +149,7 @@ namespace MangoPay.SDK.Tests
             try
             {
                 WalletDTO johnWallet = await this.GetJohnsWalletWithMoney();
-                WalletDTO wallet = await this.Api.Wallets.Get(johnWallet.Id);
+                WalletDTO wallet = await this.Api.Wallets.GetAsync(johnWallet.Id);
                 UserNaturalDTO user = await this.GetJohn();
 
                 PayInCardDirectDTO payIn = await this.GetNewPayInCardDirectWithBilling();
@@ -182,7 +182,7 @@ namespace MangoPay.SDK.Tests
             {
                 PayInCardDirectDTO payIn = await this.GetNewPayInCardDirect();
 
-                PayInCardDirectDTO getPayIn = await this.Api.PayIns.GetCardDirect(payIn.Id);
+                PayInCardDirectDTO getPayIn = await this.Api.PayIns.GetCardDirectAsync(payIn.Id);
 
                 Assert.IsTrue(payIn.Id == getPayIn.Id);
                 Assert.IsTrue(payIn.PaymentType == PayInPaymentType.CARD);
@@ -203,10 +203,10 @@ namespace MangoPay.SDK.Tests
             {
                 PayInDTO payIn = await this.GetNewPayInCardDirect();
                 WalletDTO wallet = await this.GetJohnsWalletWithMoney();
-                WalletDTO walletBefore = await this.Api.Wallets.Get(wallet.Id);
+                WalletDTO walletBefore = await this.Api.Wallets.GetAsync(wallet.Id);
 
                 RefundDTO refund = await this.GetNewRefundForPayIn(payIn);
-                WalletDTO walletAfter = await this.Api.Wallets.Get(wallet.Id);
+                WalletDTO walletAfter = await this.Api.Wallets.GetAsync(wallet.Id);
 
                 Assert.IsTrue(refund.Id.Length > 0);
                 Assert.IsTrue(refund.DebitedFunds.Amount == payIn.DebitedFunds.Amount);
@@ -235,7 +235,7 @@ namespace MangoPay.SDK.Tests
                     SecureModeReturnURL = "http://test.com"
                 };
 
-                PayInPreauthorizedDirectDTO createPayIn = await this.Api.PayIns.CreatePreauthorizedDirect(payIn);
+                PayInPreauthorizedDirectDTO createPayIn = await this.Api.PayIns.CreatePreauthorizedDirectAsync(payIn);
 
                 Assert.IsTrue("" != createPayIn.Id);
                 Assert.AreEqual(wallet.Id, createPayIn.CreditedWalletId);
@@ -269,7 +269,7 @@ namespace MangoPay.SDK.Tests
                     AuthorId = user.Id
                 };
 
-                PayInDTO createPayIn = await this.Api.PayIns.CreateBankWireDirect(payIn);
+                PayInDTO createPayIn = await this.Api.PayIns.CreateBankWireDirectAsync(payIn);
 
                 Assert.IsTrue(createPayIn.Id.Length > 0);
                 Assert.AreEqual(wallet.Id, createPayIn.CreditedWalletId);
@@ -303,7 +303,7 @@ namespace MangoPay.SDK.Tests
                 string bankAccountId = johnsAccount.Id;
                 string returnUrl = "http://test.test";
                 MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
-                MandateDTO mandate = await this.Api.Mandates.Create(mandatePost);
+                MandateDTO mandate = await this.Api.Mandates.CreateAsync(mandatePost);
 
                 /*	
 				 *	! IMPORTANT NOTE !
@@ -315,7 +315,7 @@ namespace MangoPay.SDK.Tests
 
                 PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test.test", mandate.Id);
 
-                PayInDTO createPayIn = await this.Api.PayIns.CreateMandateDirectDebit(payIn);
+                PayInDTO createPayIn = await this.Api.PayIns.CreateMandateDirectDebitAsync(payIn);
 
                 Assert.IsNotNull(createPayIn);
                 Assert.AreNotEqual(TransactionStatus.FAILED, createPayIn.Status, "In order to make this test pass, after creating mandate and before creating the payin you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.");
@@ -330,7 +330,7 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(((PayInMandateDirectDTO)createPayIn).MandateId);
                 Assert.AreEqual(((PayInMandateDirectDTO)createPayIn).MandateId, mandate.Id);
 
-                PayInMandateDirectDTO getPayIn = await this.Api.PayIns.GetMandateDirectDebit(createPayIn.Id);
+                PayInMandateDirectDTO getPayIn = await this.Api.PayIns.GetMandateDirectDebitAsync(createPayIn.Id);
 
                 Assert.IsNotNull(getPayIn);
                 Assert.IsTrue(getPayIn.Id == createPayIn.Id);
@@ -354,9 +354,9 @@ namespace MangoPay.SDK.Tests
                 payIn.CreditedWalletId = wallet.Id;
                 payIn.AuthorId = user.Id;
 
-                PayInBankWireDirectDTO createdPayIn = await this.Api.PayIns.CreateBankWireDirect(payIn);
+                PayInBankWireDirectDTO createdPayIn = await this.Api.PayIns.CreateBankWireDirectAsync(payIn);
 
-                PayInBankWireDirectDTO getPayIn = await this.Api.PayIns.GetBankWireDirect(createdPayIn.Id);
+                PayInBankWireDirectDTO getPayIn = await this.Api.PayIns.GetBankWireDirectAsync(createdPayIn.Id);
 
                 Assert.AreEqual(getPayIn.Id, createdPayIn.Id);
                 Assert.AreEqual(PayInPaymentType.BANK_WIRE, getPayIn.PaymentType);
@@ -384,7 +384,7 @@ namespace MangoPay.SDK.Tests
                 Tag = "DirectDebit test tag"
             };
 
-            PayInDirectDebitDTO createPayIn = await this.Api.PayIns.CreateDirectDebit(payIn);
+            PayInDirectDebitDTO createPayIn = await this.Api.PayIns.CreateDirectDebitAsync(payIn);
 
             Assert.IsNotNull(createPayIn);
             Assert.IsTrue(createPayIn.Id.Length > 0);
@@ -415,7 +415,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(createPayIn.TemplateURL);
 
 
-            PayInDirectDebitDTO getPayIn = await this.Api.PayIns.GetDirectDebit(createPayIn.Id);
+            PayInDirectDebitDTO getPayIn = await this.Api.PayIns.GetDirectDebitAsync(createPayIn.Id);
 
             Assert.IsNotNull(getPayIn);
             Assert.IsTrue(getPayIn.Id == createPayIn.Id);
@@ -460,7 +460,7 @@ namespace MangoPay.SDK.Tests
                 PaymentData = paymentData
             };
 
-            var getPayIn = await Api.PayIns.CreateApplePay(DateTime.Now.Ticks.ToString(), applePayIn);
+            var getPayIn = await Api.PayIns.CreateApplePayAsync(DateTime.Now.Ticks.ToString(), applePayIn);
 
             Assert.IsNotNull(getPayIn);
             Assert.AreEqual(getPayIn.AuthorId, applePayIn.AuthorId);
@@ -503,7 +503,7 @@ namespace MangoPay.SDK.Tests
                 }
             };
 
-            var getPayIn = await Api.PayIns.CreateGooglePay(null, googlePayIn);
+            var getPayIn = await Api.PayIns.CreateGooglePayAsync(null, googlePayIn);
 
             Assert.IsNotNull(getPayIn);
             Assert.AreEqual(getPayIn.AuthorId, googlePayIn.AuthorId);
@@ -522,13 +522,13 @@ namespace MangoPay.SDK.Tests
 
                 PayInPayPalPostDTO payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test");
 
-                payIn = await this.Api.PayIns.CreatePayPal(payInPost);
+                payIn = await this.Api.PayIns.CreatePayPalAsync(payInPost);
 
                 Assert.IsTrue(payIn.Id.Length > 0);
                 Assert.IsTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
                 Assert.IsTrue(payIn.ExecutionType == PayInExecutionType.WEB);
 
-                PayInPayPalDTO getPayIn = await this.Api.PayIns.GetPayPal(payIn.Id);
+                PayInPayPalDTO getPayIn = await this.Api.PayIns.GetPayPalAsync(payIn.Id);
 
                 Assert.IsNotNull(getPayIn);
                 Assert.IsTrue(getPayIn.Id == payIn.Id);
@@ -560,9 +560,9 @@ namespace MangoPay.SDK.Tests
                 {
                     ShippingAddress = new ShippingAddress("recipient name", AddressForShippingAddress)
                 };
-                payIn = await this.Api.PayIns.CreatePayPal(payInPost);
+                payIn = await this.Api.PayIns.CreatePayPalAsync(payInPost);
 
-                PayInPayPalDTO getPayIn = await this.Api.PayIns.GetPayPal(payIn.Id);
+                PayInPayPalDTO getPayIn = await this.Api.PayIns.GetPayPalAsync(payIn.Id);
 
                 Assert.IsNotNull(getPayIn.ShippingAddress);
                 Assert.AreEqual("recipient name", getPayIn.ShippingAddress.RecipientName);
@@ -587,7 +587,7 @@ namespace MangoPay.SDK.Tests
             {
                 string payInId = "54088959";
                 string payPalBuyerEmail = "paypal-buyer-user@mangopay.com";
-                PayInPayPalDTO payIn = await Api.PayIns.GetPayPal(payInId);
+                PayInPayPalDTO payIn = await Api.PayIns.GetPayPalAsync(payInId);
 
                 Assert.NotNull(payIn);
                 Assert.NotNull(payIn.Id);
@@ -608,7 +608,7 @@ namespace MangoPay.SDK.Tests
             {
                 var payInId = "74980101";
 
-                var payIn = await this.Api.PayIns.Get(payInId);
+                var payIn = await this.Api.PayIns.GetAsync(payInId);
 
                 Assert.IsNotNull(payIn);
 
@@ -631,7 +631,7 @@ namespace MangoPay.SDK.Tests
             {
                 var payInId = "74981216";
 
-                var payIn = await this.Api.PayIns.Get(payInId);
+                var payIn = await this.Api.PayIns.GetAsync(payInId);
 
                 Assert.IsNotNull(payIn);
 

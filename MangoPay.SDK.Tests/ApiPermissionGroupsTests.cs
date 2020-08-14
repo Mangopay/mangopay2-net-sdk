@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-				var permissionGroups = await Api.PermissionGroups.Get("ADMIN");
+				var permissionGroups = await Api.PermissionGroups.GetAsync("ADMIN");
 
                 Assert.IsTrue(permissionGroups.Id.Length > 0);
                 Assert.AreEqual("Admin", permissionGroups.Name);
@@ -42,7 +42,7 @@ namespace MangoPay.SDK.Tests
                         Cards = new Permissions(false, true, false)
                     }
                 };
-                var permissionGroup = await Api.PermissionGroups.Create(group);
+                var permissionGroup = await Api.PermissionGroups.CreateAsync(group);
 
 				Assert.IsTrue(permissionGroup.Id.Length > 0);
 				Assert.AreEqual("Test name", permissionGroup.Name);
@@ -75,7 +75,7 @@ namespace MangoPay.SDK.Tests
                     }
                 };
                 var idempotencyKey = "keypergroup" + DateTime.Now.Ticks.ToString();
-				var permissionGroup = await Api.PermissionGroups.Create(idempotencyKey, group);
+				var permissionGroup = await Api.PermissionGroups.CreateAsync(idempotencyKey, group);
 
 				Assert.IsTrue(permissionGroup.Id.Length > 0);
 				Assert.AreEqual("Test name", permissionGroup.Name);
@@ -99,7 +99,7 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				var group = new PermissionGroupPostDTO("Test name");
-			    await Api.PermissionGroups.Create(group);
+			    await Api.PermissionGroups.CreateAsync(group);
 
 				var permissionGroups = await Api.SingleSignOns.GetAll();
 
@@ -118,7 +118,7 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				var group = new PermissionGroupPostDTO("Test name");
-				await Api.PermissionGroups.Create(group);
+				await Api.PermissionGroups.CreateAsync(group);
 				var pagination = new Pagination(1, 1);
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.asc);
@@ -140,7 +140,7 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				var group = new PermissionGroupPostDTO("Test name");
-				var createdGroup = await Api.PermissionGroups.Create(group);
+				var createdGroup = await Api.PermissionGroups.CreateAsync(group);
 				var email = "email_" + DateTime.Now.Ticks + "@email.com";
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName", "lastName", email, createdGroup.Id);
 				var singleSignOn = await this.Api.SingleSignOns.Create(singleSignOnPost);
@@ -148,7 +148,7 @@ namespace MangoPay.SDK.Tests
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.asc);
 
-				var singleSignOns = await Api.PermissionGroups.GetSingleSignOns(createdGroup.Id, pagination, sort);
+				var singleSignOns = await Api.PermissionGroups.GetSingleSignOnsAsync(createdGroup.Id, pagination, sort);
 
 				Assert.IsNotNull(singleSignOns);
 				Assert.AreEqual(1, singleSignOns.Count);
@@ -173,7 +173,7 @@ namespace MangoPay.SDK.Tests
                         Cards = new Permissions(false, true, false)
                     }
                 };
-                var createdGroup = await Api.PermissionGroups.Create(group);
+                var createdGroup = await Api.PermissionGroups.CreateAsync(group);
 
 				var putGroup = new PermissionGroupPutDTO
 				{
@@ -186,7 +186,7 @@ namespace MangoPay.SDK.Tests
 					}
 				};
 
-				var permissionGroup = await Api.PermissionGroups.Update(putGroup, createdGroup.Id);
+				var permissionGroup = await Api.PermissionGroups.UpdateAsync(putGroup, createdGroup.Id);
 				
 				Assert.IsTrue(permissionGroup.Id.Length > 0);
 				Assert.AreEqual("New name test", permissionGroup.Name);

@@ -18,7 +18,7 @@ namespace MangoPay.SDK.Tests
             {
 				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
 
-				ReportRequestDTO report = await this.Api.Reports.Create(reportPost);
+				ReportRequestDTO report = await this.Api.Reports.CreateAsync(reportPost);
 				Assert.IsNotNull(report);
 				Assert.AreEqual(ReportType.TRANSACTIONS, report.ReportType);
 				Assert.IsTrue(report.Id.Length > 0);
@@ -54,7 +54,7 @@ namespace MangoPay.SDK.Tests
 				reportPost.Filters.MaxFeesAmount = maxFees.Amount;
 				reportPost.Filters.MaxFeesCurrency = maxFees.Currency;
 
-				ReportRequestDTO report = await this.Api.Reports.Create(reportPost);
+				ReportRequestDTO report = await this.Api.Reports.CreateAsync(reportPost);
 				Assert.IsNotNull(report);
 				Assert.AreEqual(ReportType.TRANSACTIONS, report.ReportType);
 				Assert.IsNotNull(report.Filters);
@@ -84,7 +84,7 @@ namespace MangoPay.SDK.Tests
             try
             {
 				ReportRequestDTO report = await this.GetJohnsReport(ReportType.TRANSACTIONS);
-				ReportRequestDTO getReport = await this.Api.Reports.Get(report.Id);
+				ReportRequestDTO getReport = await this.Api.Reports.GetAsync(report.Id);
 
 				Assert.AreEqual(getReport.Id, report.Id);
             }

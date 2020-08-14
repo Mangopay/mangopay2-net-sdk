@@ -33,6 +33,8 @@ namespace MangoPay.SDK.Core.APIs
             return restTool.Request<OAuthTokenDTO, OAuthTokenDTO>(endPoint, requestData);
         }
 
+        /// <summary>Async gets the new token used for requests authentication.</summary>
+        /// <returns>OAuth object with token information.</returns>
         public async Task<OAuthTokenDTO> CreateTokenAsync()
         {
 			var endPoint = GetApiEndPoint(MethodKey.AuthenticationOAuth);

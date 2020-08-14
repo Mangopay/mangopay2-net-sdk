@@ -24,9 +24,9 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_StandardUseToken()
         {
-            await this.Api.Users.GetAll();
+            await this.Api.Users.GetAllAsync();
             OAuthTokenDTO token = await this.Api.OAuthTokenManager.GetTokenAsync();
-            await this.Api.Users.GetAll();
+            await this.Api.Users.GetAllAsync();
 
             var tok = await this.Api.OAuthTokenManager.GetTokenAsync();
 

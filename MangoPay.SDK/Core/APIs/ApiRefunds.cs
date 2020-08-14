@@ -16,9 +16,9 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets refund.</summary>
         /// <param name="refundId">Refund identifier.</param>
         /// <returns>Refund entity instance returned from API.</returns>
-        public async Task<RefundDTO> Get(string refundId)
+        public async Task<RefundDTO> GetAsync(string refundId)
         {
-            return await this.GetObject<RefundDTO>(MethodKey.RefundsGet, refundId);
+            return await this.GetObjectAsync<RefundDTO>(MethodKey.RefundsGet, refundId);
         }
 
 		/// <summary>Lists refunds for a payout</summary>
@@ -27,11 +27,11 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="filter">Filter.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of refunds for a payout</returns>
-		public async Task<ListPaginated<RefundDTO>> GetRefundsForPayOut(String payOutId, Pagination pagination, FilterRefunds filters, Sort sort = null)
+		public async Task<ListPaginated<RefundDTO>> GetRefundsForPayOutAsync(String payOutId, Pagination pagination, FilterRefunds filters, Sort sort = null)
 		{
 			if (filters == null) filters = new FilterRefunds();
 
-			return await GetList<RefundDTO>(MethodKey.PayoutsGetRefunds, pagination, sort, filters.GetValues(), payOutId);
+			return await GetListAsync<RefundDTO>(MethodKey.PayoutsGetRefunds, pagination, sort, filters.GetValues(), payOutId);
 		}
 
 		/// <summary>Lists refunds for a payin</summary>
@@ -40,11 +40,11 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="filter">Filter.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of refunds for a payin</returns>
-		public async Task<ListPaginated<RefundDTO>> GetRefundsForPayIn(String payInId, Pagination pagination, FilterRefunds filters, Sort sort = null)
+		public async Task<ListPaginated<RefundDTO>> GetRefundsForPayInAsync(String payInId, Pagination pagination, FilterRefunds filters, Sort sort = null)
 		{
 			if (filters == null) filters = new FilterRefunds();
 
-			return await GetList<RefundDTO>(MethodKey.PayinsGetRefunds, pagination, sort, filters.GetValues(),payInId);
+			return await GetListAsync<RefundDTO>(MethodKey.PayinsGetRefunds, pagination, sort, filters.GetValues(),payInId);
 		}
 
 		/// <summary>Lists refunds for a transfer</summary>
@@ -53,11 +53,11 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="filter">Filter.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of refunds for a transfer</returns>
-		public async Task<ListPaginated<RefundDTO>> GetRefundsForTransfer(String transferId, Pagination pagination, FilterRefunds filters, Sort sort = null)
+		public async Task<ListPaginated<RefundDTO>> GetRefundsForTransferAsync(String transferId, Pagination pagination, FilterRefunds filters, Sort sort = null)
 		{
 			if (filters == null) filters = new FilterRefunds();
 
-			return await GetList<RefundDTO>(MethodKey.TransfersGetRefunds, pagination, sort, filters.GetValues(),transferId);
+			return await GetListAsync<RefundDTO>(MethodKey.TransfersGetRefunds, pagination, sort, filters.GetValues(),transferId);
 		}
 
 		/// <summary>Lists refunds for a repudiation</summary>
@@ -66,11 +66,71 @@ namespace MangoPay.SDK.Core.APIs
 		/// <param name="filter">Filter.</param>
 		/// <param name="sort">Sort.</param>
 		/// <returns>List of refunds for a repudiation</returns>
-		public async Task<ListPaginated<RefundDTO>> GetRefundsForRepudiation(String repudiationId, Pagination pagination, FilterRefunds filters, Sort sort = null)
+		public async Task<ListPaginated<RefundDTO>> GetRefundsForRepudiationAsync(String repudiationId, Pagination pagination, FilterRefunds filters, Sort sort = null)
 		{
 			if (filters == null) filters = new FilterRefunds();
 
-			return await GetList<RefundDTO>(MethodKey.DisputesRepudiationGetRefunds, pagination, sort, filters.GetValues(),repudiationId);
+			return await GetListAsync<RefundDTO>(MethodKey.DisputesRepudiationGetRefunds, pagination, sort, filters.GetValues(),repudiationId);
 		}
-	}
+
+        /// <summary>Gets refund.</summary>
+        /// <param name="refundId">Refund identifier.</param>
+        /// <returns>Refund entity instance returned from API.</returns>
+        public RefundDTO Get(string refundId)
+        {
+            return this.GetObject<RefundDTO>(MethodKey.RefundsGet, refundId);
+        }
+
+        /// <summary>Lists refunds for a payout</summary>
+        /// <param name="payOutId">Id of the payout to get refunds for</param>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="filter">Filter.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of refunds for a payout</returns>
+        public ListPaginated<RefundDTO> GetRefundsForPayOut(String payOutId, Pagination pagination, FilterRefunds filters, Sort sort = null)
+        {
+            if (filters == null) filters = new FilterRefunds();
+
+            return GetList<RefundDTO>(MethodKey.PayoutsGetRefunds, pagination, sort, filters.GetValues(), payOutId);
+        }
+
+        /// <summary>Lists refunds for a payin</summary>
+        /// <param name="payInId">Id of the payin to get refunds for</param>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="filter">Filter.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of refunds for a payin</returns>
+        public ListPaginated<RefundDTO> GetRefundsForPayIn(String payInId, Pagination pagination, FilterRefunds filters, Sort sort = null)
+        {
+            if (filters == null) filters = new FilterRefunds();
+
+            return GetList<RefundDTO>(MethodKey.PayinsGetRefunds, pagination, sort, filters.GetValues(), payInId);
+        }
+
+        /// <summary>Lists refunds for a transfer</summary>
+        /// <param name="transferId">Id of the transfer to get refunds for</param>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="filter">Filter.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of refunds for a transfer</returns>
+        public ListPaginated<RefundDTO> GetRefundsForTransfer(String transferId, Pagination pagination, FilterRefunds filters, Sort sort = null)
+        {
+            if (filters == null) filters = new FilterRefunds();
+
+            return GetList<RefundDTO>(MethodKey.TransfersGetRefunds, pagination, sort, filters.GetValues(), transferId);
+        }
+
+        /// <summary>Lists refunds for a repudiation</summary>
+        /// <param name="repudiationId">Id of the repudiation to get refunds for</param>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="filter">Filter.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of refunds for a repudiation</returns>
+        public ListPaginated<RefundDTO> GetRefundsForRepudiation(String repudiationId, Pagination pagination, FilterRefunds filters, Sort sort = null)
+        {
+            if (filters == null) filters = new FilterRefunds();
+
+            return GetList<RefundDTO>(MethodKey.DisputesRepudiationGetRefunds, pagination, sort, filters.GetValues(), repudiationId);
+        }
+    }
 }

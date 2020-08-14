@@ -33,7 +33,7 @@ namespace MangoPay.SDK.Tests
             string key = DateTime.Now.Ticks.ToString();
             await GetNewPayInCardDirect(null, key);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<CardRegistrationDTO>(result.Resource);
         }
@@ -44,9 +44,9 @@ namespace MangoPay.SDK.Tests
             string key = DateTime.Now.Ticks.ToString();
             var bankwireDirectPost =
                 new ClientBankWireDirectPostDTO("CREDIT_EUR", new Money {Amount = 1000, Currency = CurrencyIso.EUR});
-            await Api.Clients.CreateBankWireDirect(key, bankwireDirectPost);
+            await Api.Clients.CreateBankWireDirectAsync(key, bankwireDirectPost);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<PayInBankWireDirectDTO>(result.Resource);
         }
@@ -103,9 +103,9 @@ namespace MangoPay.SDK.Tests
             var bankAccount = await this.GetJohnsAccount();
             string returnUrl = "http://test.test";
             MandatePostDTO mandatePost = new MandatePostDTO(bankAccount.Id, CultureCode.EN, returnUrl);
-            await Api.Mandates.Create(key, mandatePost);
+            await Api.Mandates.CreateAsync(key, mandatePost);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<MandateDTO>(result.Resource);
         }
@@ -121,9 +121,9 @@ namespace MangoPay.SDK.Tests
                 new Money {Amount = 0, Currency = CurrencyIso.EUR});
             payIn.CreditedWalletId = wallet.Id;
             payIn.AuthorId = user.Id;
-            await Api.PayIns.CreateBankWireDirect(key, payIn);
+            await Api.PayIns.CreateBankWireDirectAsync(key, payIn);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<PayInBankWireDirectDTO>(result.Resource);
         }
@@ -135,22 +135,22 @@ namespace MangoPay.SDK.Tests
             UserNaturalDTO john = await this.GetJohn();
             WalletPostDTO wallet =
                 new WalletPostDTO(new List<string> {john.Id}, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
-            var johnsWallet = await this.Api.Wallets.Create(wallet);
+            var johnsWallet = await this.Api.Wallets.CreateAsync(wallet);
             CardRegistrationPostDTO cardRegistrationPost =
                 new CardRegistrationPostDTO(johnsWallet.Owners[0], CurrencyIso.EUR);
-            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.Create(cardRegistrationPost);
+            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
             CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
             cardRegistrationPut.RegistrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
-            cardRegistration = await this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
-            CardDTO card = await this.Api.Cards.Get(cardRegistration.CardId);
+            cardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
+            CardDTO card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
             PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
                 new Money {Amount = 1000, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR},
                 johnsWallet.Id, "http://test.com", card.Id);
             payIn.CardType = card.CardType;
-            await Api.PayIns.CreateCardDirect(key, payIn);
+            await Api.PayIns.CreateCardDirectAsync(key, payIn);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<PayInCardDirectDTO>(result.Resource);
         }
@@ -165,9 +165,9 @@ namespace MangoPay.SDK.Tests
                 new Money {Amount = 1000, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, "https://test.com", CultureCode.FR,
                 CardType.CB_VISA_MASTERCARD);
-            await Api.PayIns.CreateCardWeb(key, payIn);
+            await Api.PayIns.CreateCardWebAsync(key, payIn);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<PayInCardWebDTO>(result.Resource);
         }
@@ -179,7 +179,7 @@ namespace MangoPay.SDK.Tests
             PayInDTO payIn = await this.GetNewPayInCardDirect();
             RefundDTO refund = await this.GetNewRefundForPayIn(payIn, key);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<RefundDTO>(result.Resource);
         }
@@ -196,9 +196,9 @@ namespace MangoPay.SDK.Tests
                 CultureCode.FR, DirectDebitType.GIROPAY);
             payIn.TemplateURLOptions = new TemplateURLOptions {PAYLINE = "https://www.maysite.com/payline_template/"};
             payIn.Tag = "DirectDebit test tag";
-            await Api.PayIns.CreateDirectDebit(key, payIn);
+            await Api.PayIns.CreateDirectDebitAsync(key, payIn);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<PayInDirectDebitDTO>(result.Resource);
         }
@@ -212,7 +212,7 @@ namespace MangoPay.SDK.Tests
             var bankAccount = await this.GetJohnsAccount();
             string returnUrl = "http://test.test";
             MandatePostDTO mandatePost = new MandatePostDTO(bankAccount.Id, CultureCode.EN, returnUrl);
-            MandateDTO mandate = await this.Api.Mandates.Create(mandatePost);
+            MandateDTO mandate = await this.Api.Mandates.CreateAsync(mandatePost);
 
             /*	
 			 *	! IMPORTANT NOTE !
@@ -224,9 +224,9 @@ namespace MangoPay.SDK.Tests
             PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id,
                 new Money {Amount = 10000, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, "http://test.test", mandate.Id);
-            await Api.PayIns.CreateMandateDirectDebit(key, payIn);
+            await Api.PayIns.CreateMandateDirectDebitAsync(key, payIn);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<PayInMandateDirectDTO>(result.Resource);
         }
@@ -243,9 +243,9 @@ namespace MangoPay.SDK.Tests
                 new Money {Amount = 10000, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, cardPreAuthorization.Id);
             payIn.SecureModeReturnURL = "http://test.com";
-            await Api.PayIns.CreatePreauthorizedDirect(key, payIn);
+            await Api.PayIns.CreatePreauthorizedDirectAsync(key, payIn);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.AreEqual(result.StatusCode, okCode);
             Assert.IsInstanceOf<PayInPreauthorizedDirectDTO>(result.Resource);
@@ -263,9 +263,9 @@ namespace MangoPay.SDK.Tests
                 account.Id, "Johns bank wire ref");
             payOut.Tag = "DefaultTag";
             payOut.CreditedUserId = user.Id;
-            await Api.PayOuts.CreateBankWire(key, payOut);
+            await Api.PayOuts.CreateBankWireAsync(key, payOut);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<PayOutBankWireDTO>(result.Resource);
         }
@@ -276,7 +276,7 @@ namespace MangoPay.SDK.Tests
             string key = DateTime.Now.Ticks.ToString();
             await GetJohnsCardPreAuthorization(key);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<CardPreAuthorizationDTO>(result.Resource);
             Assert.AreEqual(result.StatusCode, "200");
@@ -290,14 +290,14 @@ namespace MangoPay.SDK.Tests
             UserNaturalDTO user = await this.GetJohn();
             WalletPostDTO walletPost =
                 new WalletPostDTO(new List<string> {user.Id}, "WALLET IN EUR FOR TRANSFER", CurrencyIso.EUR);
-            WalletDTO wallet = await this.Api.Wallets.Create(walletPost);
+            WalletDTO wallet = await this.Api.Wallets.CreateAsync(walletPost);
             TransferPostDTO transfer = new TransferPostDTO(user.Id, user.Id,
                 new Money {Amount = 100, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR}, walletWithMoney.Id, wallet.Id);
             transfer.Tag = "DefaultTag";
-            await Api.Transfers.Create(key, transfer);
+            await Api.Transfers.CreateAsync(key, transfer);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<TransferDTO>(result.Resource);
         }
@@ -309,9 +309,9 @@ namespace MangoPay.SDK.Tests
             TransferDTO transfer = await this.GetNewTransfer();
             UserNaturalDTO user = await this.GetJohn();
             RefundTransferPostDTO refund = new RefundTransferPostDTO(user.Id);
-            await Api.Transfers.CreateRefund(key, transfer.Id, refund);
+            await Api.Transfers.CreateRefundAsync(key, transfer.Id, refund);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<RefundDTO>(result.Resource);
         }
@@ -327,11 +327,11 @@ namespace MangoPay.SDK.Tests
                 UboRefusedReasonType.DECLARATION_DO_NOT_MATCH_UBO_INFORMATION
             };
 
-            var userLegal = await Api.Users.Create(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
 
-            await Api.UboDeclarations.CreateUboDeclaration(key, userLegal.Id);
+            await Api.UboDeclarations.CreateUboDeclarationAsync(key, userLegal.Id);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<UboDeclarationDTO>(result.Resource);
         }
@@ -343,9 +343,9 @@ namespace MangoPay.SDK.Tests
             var john = await this.GetJohn();
             var account = new BankAccountCaPostDTO(john.FirstName + " " + john.LastName, john.Address, "TestBankName",
                 "123", "12345", "234234234234");
-            await Api.Users.CreateBankAccountCa(key, john.Id, account);
+            await Api.Users.CreateBankAccountCaAsync(key, john.Id, account);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<BankAccountCaDTO>(result.Resource);
         }
@@ -357,9 +357,9 @@ namespace MangoPay.SDK.Tests
             var john = await this.GetJohn();
             var account = new BankAccountGbPostDTO(john.FirstName + " " + john.LastName, john.Address, "63956474");
             account.SortCode = "200000";
-            await Api.Users.CreateBankAccountGb(key, john.Id, account);
+            await Api.Users.CreateBankAccountGbAsync(key, john.Id, account);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<BankAccountGbDTO>(result.Resource);
         }
@@ -373,9 +373,9 @@ namespace MangoPay.SDK.Tests
                 "FR7618829754160173622224154");
             account.UserId = john.Id;
             account.BIC = "CMBRFR2BCME";
-            await Api.Users.CreateBankAccountIban(key, john.Id, account);
+            await Api.Users.CreateBankAccountIbanAsync(key, john.Id, account);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<BankAccountIbanDTO>(result.Resource);
         }
@@ -389,9 +389,9 @@ namespace MangoPay.SDK.Tests
                 "234234234234", "BINAADADXXX");
             account.Type = BankAccountType.OTHER;
             account.Country = CountryIso.FR;
-            await Api.Users.CreateBankAccountOther(key, john.Id, account);
+            await Api.Users.CreateBankAccountOtherAsync(key, john.Id, account);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<BankAccountOtherDTO>(result.Resource);
         }
@@ -403,9 +403,9 @@ namespace MangoPay.SDK.Tests
             var john = await this.GetJohn();
             var account = new BankAccountUsPostDTO(john.FirstName + " " + john.LastName, john.Address, "234234234234",
                 "234334789");
-            await Api.Users.CreateBankAccountUs(key, john.Id, account);
+            await Api.Users.CreateBankAccountUsAsync(key, john.Id, account);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<BankAccountUsDTO>(result.Resource);
         }
@@ -415,9 +415,9 @@ namespace MangoPay.SDK.Tests
         {
             string key = DateTime.Now.Ticks.ToString();
             var john = await GetJohn();
-            await Api.Users.CreateKycDocument(key, john.Id, KycDocumentType.IDENTITY_PROOF);
+            await Api.Users.CreateKycDocumentAsync(key, john.Id, KycDocumentType.IDENTITY_PROOF);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<KycDocumentDTO>(result.Resource);
         }
@@ -428,9 +428,9 @@ namespace MangoPay.SDK.Tests
             string key = DateTime.Now.Ticks.ToString();
             var userPost = new UserLegalPostDTO("email@email.org", "SomeOtherSampleOrg", LegalPersonType.BUSINESS,
                 "RepFName", "RepLName", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
-            await Api.Users.Create(key, userPost);
+            await Api.Users.CreateAsync(key, userPost);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<UserLegalDTO>(result.Resource);
         }
@@ -450,9 +450,9 @@ namespace MangoPay.SDK.Tests
             };
             user.Capacity = CapacityType.NORMAL;
 
-            await Api.Users.Create(key, user);
+            await Api.Users.CreateAsync(key, user);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<UserNaturalDTO>(result.Resource);
         }
@@ -463,9 +463,9 @@ namespace MangoPay.SDK.Tests
             string key = DateTime.Now.Ticks.ToString();
             var john = await this.GetJohn();
             var wallet = new WalletPostDTO(new List<string> {john.Id}, "WALLET IN EUR", CurrencyIso.EUR);
-            await Api.Wallets.Create(key, wallet);
+            await Api.Wallets.CreateAsync(key, wallet);
 
-            var result = await Api.Idempotency.Get(key);
+            var result = await Api.Idempotency.GetAsync(key);
 
             Assert.IsInstanceOf<WalletDTO>(result.Resource);
         }

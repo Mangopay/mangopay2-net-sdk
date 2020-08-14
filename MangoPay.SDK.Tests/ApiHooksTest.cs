@@ -40,7 +40,7 @@ namespace MangoPay.SDK.Tests
             try
             {
                 HookDTO hook = await this.GetJohnsHook();
-                HookDTO getHook = await this.Api.Hooks.Get(hook.Id);
+                HookDTO getHook = await this.Api.Hooks.GetAsync(hook.Id);
 
                 Assert.AreEqual(getHook.Id, hook.Id);
             }
@@ -62,7 +62,7 @@ namespace MangoPay.SDK.Tests
                     Url = String.Format("http://test{0}.com", DateTime.Now.Ticks)
                 };
 
-                HookDTO saveHook = await this.Api.Hooks.Update(hookPut, hook.Id);
+                HookDTO saveHook = await this.Api.Hooks.UpdateAsync(hookPut, hook.Id);
 
                 Assert.AreEqual(saveHook.Id, hook.Id);
                 Assert.AreEqual(hookPut.Url, saveHook.Url);
@@ -81,7 +81,7 @@ namespace MangoPay.SDK.Tests
                 HookDTO hook = await this.GetJohnsHook();
                 Pagination pagination = new Pagination(1, 1);
 
-                ListPaginated<HookDTO> list = await this.Api.Hooks.GetAll(pagination);
+                ListPaginated<HookDTO> list = await this.Api.Hooks.GetAllAsync(pagination);
 
                 Assert.IsNotNull(list[0]);
                 Assert.IsTrue(list[0] is HookDTO);

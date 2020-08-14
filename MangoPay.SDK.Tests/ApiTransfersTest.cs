@@ -15,7 +15,7 @@ namespace MangoPay.SDK.Tests
             var wallet = await this.GetNewJohnsWalletWithMoney(10000);
 
             TransferDTO transfer = await this.GetNewTransfer(wallet);
-            WalletDTO creditedWallet = await this.Api.Wallets.Get(transfer.CreditedWalletId);
+            WalletDTO creditedWallet = await this.Api.Wallets.GetAsync(transfer.CreditedWalletId);
 
             Assert.IsTrue(transfer.Id.Length > 0);
             Assert.AreEqual(transfer.AuthorId, john.Id);
@@ -30,7 +30,7 @@ namespace MangoPay.SDK.Tests
 			var wallet = await this.GetNewJohnsWalletWithMoney(10000);
 			TransferDTO transfer = await this.GetNewTransfer(wallet);
 
-            TransferDTO getTransfer = await this.Api.Transfers.Get(transfer.Id);
+            TransferDTO getTransfer = await this.Api.Transfers.GetAsync(transfer.Id);
 
             Assert.AreEqual(transfer.Id, getTransfer.Id);
             Assert.AreEqual(getTransfer.AuthorId, john.Id);
@@ -43,10 +43,10 @@ namespace MangoPay.SDK.Tests
         {
 			WalletDTO wallet = await this.GetNewJohnsWalletWithMoney(10000);
             TransferDTO transfer = await this.GetNewTransfer(wallet);
-            WalletDTO walletBefore = await this.Api.Wallets.Get(wallet.Id);
+            WalletDTO walletBefore = await this.Api.Wallets.GetAsync(wallet.Id);
 
 			RefundDTO refund = await this.GetNewRefundForTransfer(transfer);
-            WalletDTO walletAfter = await this.Api.Wallets.Get(wallet.Id);
+            WalletDTO walletAfter = await this.Api.Wallets.GetAsync(wallet.Id);
 
             Assert.IsNotNull(walletBefore);
             Assert.IsTrue(refund.Id.Length > 0);

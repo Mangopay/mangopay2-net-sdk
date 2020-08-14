@@ -17,14 +17,29 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="filter">Filters for events.</param>
         /// <param name="sort">Sort.</param>
         /// <returns>List of events matching passed filter criteria.</returns>
-        public async Task<ListPaginated<EventDTO>> GetAll(Pagination pagination, FilterEvents filter = null, Sort sort = null)
+        public async Task<ListPaginated<EventDTO>> GetAllAsync(Pagination pagination, FilterEvents filter = null, Sort sort = null)
         {
             if (filter == null)
             {
-                return await this.GetList<EventDTO>(MethodKey.EventsAll, pagination);
+                return await this.GetListAsync<EventDTO>(MethodKey.EventsAll, pagination);
             }
 
-            return await this.GetList<EventDTO>(MethodKey.EventsAll, pagination, sort, filter.GetValues());
+            return await this.GetListAsync<EventDTO>(MethodKey.EventsAll, pagination, sort, filter.GetValues());
+        }
+
+        /// <summary>Gets events.</summary>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="filter">Filters for events.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of events matching passed filter criteria.</returns>
+        public ListPaginated<EventDTO> GetAll(Pagination pagination, FilterEvents filter = null, Sort sort = null)
+        {
+            if (filter == null)
+            {
+                return this.GetList<EventDTO>(MethodKey.EventsAll, pagination);
+            }
+
+            return this.GetList<EventDTO>(MethodKey.EventsAll, pagination, sort, filter.GetValues());
         }
     }
 }

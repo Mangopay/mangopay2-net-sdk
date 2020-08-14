@@ -52,7 +52,7 @@ namespace MangoPay.SDK.Tests
                 billing.Address = address;
                 cardPreAuthorization.Billing = billing;
 
-                CardPreAuthorizationDTO cardPreAuthorizationWithBilling = await this.Api.CardPreAuthorizations.Create(cardPreAuthorization);
+                CardPreAuthorizationDTO cardPreAuthorizationWithBilling = await this.Api.CardPreAuthorizations.CreateAsync(cardPreAuthorization);
 
                 Assert.IsNotNull(cardPreAuthorizationWithBilling);
                 Assert.IsNotNull(cardPreAuthorizationWithBilling.Billing);
@@ -74,7 +74,7 @@ namespace MangoPay.SDK.Tests
             {
                 CardPreAuthorizationDTO cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
 
-                CardPreAuthorizationDTO getCardPreAuthorization = await this.Api.CardPreAuthorizations.Get(cardPreAuthorization.Id);
+                CardPreAuthorizationDTO getCardPreAuthorization = await this.Api.CardPreAuthorizations.GetAsync(cardPreAuthorization.Id);
 
                 Assert.AreEqual(cardPreAuthorization.Id, getCardPreAuthorization.Id);
                 Assert.AreEqual(getCardPreAuthorization.ResultCode, "000000");
@@ -98,7 +98,7 @@ namespace MangoPay.SDK.Tests
                     PaymentStatus = PaymentStatus.CANCELED
                 };
 
-                CardPreAuthorizationDTO resultCardPreAuthorization = await this.Api.CardPreAuthorizations.Update(cardPreAuthorizationPut, cardPreAuthorization.Id);
+                CardPreAuthorizationDTO resultCardPreAuthorization = await this.Api.CardPreAuthorizations.UpdateAsync(cardPreAuthorizationPut, cardPreAuthorization.Id);
 
                 Assert.AreEqual(resultCardPreAuthorization.Status, PreAuthorizationStatus.SUCCEEDED);
                 Assert.AreEqual(resultCardPreAuthorization.PaymentStatus, PaymentStatus.CANCELED);
@@ -128,7 +128,7 @@ namespace MangoPay.SDK.Tests
                 var sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
 
-                var preAuthorizations = await Api.CardPreAuthorizations.GetPreAuthorizationsForUser(cardPreAuthorization.AuthorId, pagination, filter, sort);
+                var preAuthorizations = await Api.CardPreAuthorizations.GetPreAuthorizationsForUserAsync(cardPreAuthorization.AuthorId, pagination, filter, sort);
 
                 Assert.IsTrue(preAuthorizations.Count > 0);
             }
@@ -157,7 +157,7 @@ namespace MangoPay.SDK.Tests
                 var sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
 
-                var preAuthorizations = await Api.CardPreAuthorizations.GetPreAuthorizationsForCard(cardPreAuthorization.CardId, pagination, filter, sort);
+                var preAuthorizations = await Api.CardPreAuthorizations.GetPreAuthorizationsForCardAsync(cardPreAuthorization.CardId, pagination, filter, sort);
 
                 Assert.IsTrue(preAuthorizations.Count > 0);
             }

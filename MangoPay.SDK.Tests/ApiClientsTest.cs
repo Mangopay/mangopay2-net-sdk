@@ -26,20 +26,20 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = await this.Api.Clients.GetKycDocuments(null, null);
+				result = await this.Api.Clients.GetKycDocumentsAsync(null, null);
 				Assert.IsNotNull(result);
 				Assert.IsTrue(result.Count > 0);
 
 				Pagination pagination = new Pagination(1, 2);
 				Sort sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.asc);
-				result = await this.Api.Clients.GetKycDocuments(pagination, null, sort);
+				result = await this.Api.Clients.GetKycDocumentsAsync(pagination, null, sort);
 				Assert.IsNotNull(result);
 				Assert.IsTrue(result.Count > 0);
 
 				sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
-				result2 = await this.Api.Clients.GetKycDocuments(pagination, null, sort);
+				result2 = await this.Api.Clients.GetKycDocumentsAsync(pagination, null, sort);
 				Assert.IsNotNull(result2);
 				Assert.IsTrue(result2.Count > 0);
 
@@ -58,8 +58,8 @@ namespace MangoPay.SDK.Tests
 			ListPaginated<WalletDTO> creditWallets = null;
 			try
 			{
-				feesWallets = await this.Api.Clients.GetWallets(FundsType.FEES, new Pagination(1, 100));
-				creditWallets = await this.Api.Clients.GetWallets(FundsType.CREDIT, new Pagination(1, 100));
+				feesWallets = await this.Api.Clients.GetWalletsAsync(FundsType.FEES, new Pagination(1, 100));
+				creditWallets = await this.Api.Clients.GetWalletsAsync(FundsType.CREDIT, new Pagination(1, 100));
 			}
 			catch (Exception ex)
 			{
@@ -76,8 +76,8 @@ namespace MangoPay.SDK.Tests
 			ListPaginated<WalletDTO> creditWallets = null;
 			try
 			{
-				feesWallets = await this.Api.Clients.GetWallets(FundsType.FEES, new Pagination(1, 1));
-				creditWallets = await this.Api.Clients.GetWallets(FundsType.CREDIT, new Pagination(1, 1));
+				feesWallets = await this.Api.Clients.GetWalletsAsync(FundsType.FEES, new Pagination(1, 1));
+				creditWallets = await this.Api.Clients.GetWalletsAsync(FundsType.CREDIT, new Pagination(1, 1));
 			}
 			catch (Exception ex)
 			{
@@ -95,7 +95,7 @@ namespace MangoPay.SDK.Tests
 			else if (creditWallets != null && creditWallets.Count > 0)
 				wallet = creditWallets[0];
 
-			result = await this.Api.Clients.GetWallet(wallet.FundsType, wallet.Currency);
+			result = await this.Api.Clients.GetWalletAsync(wallet.FundsType, wallet.Currency);
 
 			Assert.IsNotNull(result);
 			Assert.IsTrue(result.FundsType == wallet.FundsType);
@@ -109,8 +109,8 @@ namespace MangoPay.SDK.Tests
 			ListPaginated<WalletDTO> creditWallets = null;
 			try
 			{
-				feesWallets = await this.Api.Clients.GetWallets(FundsType.FEES, new Pagination(1, 1));
-				creditWallets = await this.Api.Clients.GetWallets(FundsType.CREDIT, new Pagination(1, 1));
+				feesWallets = await this.Api.Clients.GetWalletsAsync(FundsType.FEES, new Pagination(1, 1));
+				creditWallets = await this.Api.Clients.GetWalletsAsync(FundsType.CREDIT, new Pagination(1, 1));
 			}
 			catch (Exception ex)
 			{
@@ -128,7 +128,7 @@ namespace MangoPay.SDK.Tests
 			else if (creditWallets != null && creditWallets.Count > 0)
 				wallet = creditWallets[0];
 
-			result = await this.Api.Clients.GetWalletTransactions(wallet.FundsType, wallet.Currency, new Pagination(1, 1), null);
+			result = await this.Api.Clients.GetWalletTransactionsAsync(wallet.FundsType, wallet.Currency, new Pagination(1, 1), null);
 
 			Assert.IsNotNull(result);
 			Assert.IsTrue(result.Count > 0);
@@ -141,7 +141,7 @@ namespace MangoPay.SDK.Tests
 
 			try
 			{
-				result = await this.Api.Clients.GetTransactions(null, null);
+				result = await this.Api.Clients.GetTransactionsAsync(null, null);
 			}
 			catch (Exception ex)
 			{
@@ -158,7 +158,7 @@ namespace MangoPay.SDK.Tests
 			{
 				ClientBankWireDirectPostDTO bankwireDirectPost = new ClientBankWireDirectPostDTO("CREDIT_EUR", new Money { Amount = 1000, Currency = CurrencyIso.EUR });
 
-				PayInDTO result = await this.Api.Clients.CreateBankWireDirect(bankwireDirectPost);
+				PayInDTO result = await this.Api.Clients.CreateBankWireDirectAsync(bankwireDirectPost);
 
 				Assert.IsTrue(result.Id.Length > 0);
 				Assert.AreEqual("CREDIT_EUR", result.CreditedWalletId);
@@ -178,7 +178,7 @@ namespace MangoPay.SDK.Tests
 		[Test]
 		public async Task Test_ClientGet()
 		{
-			ClientDTO client = await this.Api.Clients.Get();
+			ClientDTO client = await this.Api.Clients.GetAsync();
 
 			Assert.IsNotNull(client);
 			Assert.IsTrue("sdk-unit-tests".Equals(client.ClientId));
@@ -215,7 +215,7 @@ namespace MangoPay.SDK.Tests
 			};
             client.HeadquartersPhoneNumber = headquartersPhoneNumber;
 
-            ClientDTO clientNew = await this.Api.Clients.Save(client);
+            ClientDTO clientNew = await this.Api.Clients.SaveAsync(client);
 
 			Assert.IsNotNull(clientNew);
 			Assert.AreEqual(client.PrimaryButtonColour, clientNew.PrimaryButtonColour);
@@ -260,7 +260,7 @@ namespace MangoPay.SDK.Tests
 			client.PrimaryThemeColour = "#" + color2;
 			client.HeadquartersAddress = new Address();
 
-			ClientDTO clientNew = await this.Api.Clients.Save(client);
+			ClientDTO clientNew = await this.Api.Clients.SaveAsync(client);
 
 			Assert.IsNotNull(clientNew);			
 		}
@@ -271,8 +271,8 @@ namespace MangoPay.SDK.Tests
             var assembly = Assembly.GetExecutingAssembly();
             var fi = this.GetFileInfoOfFile(assembly.Location);
 
-            await this.Api.Clients.UploadLogo(fi.FullName);
-			await this.Api.Clients.UploadLogo(File.ReadAllBytes(fi.FullName));
+            await this.Api.Clients.UploadLogoAsync(fi.FullName);
+			await this.Api.Clients.UploadLogoAsync(File.ReadAllBytes(fi.FullName));
 		}
 	}
 }

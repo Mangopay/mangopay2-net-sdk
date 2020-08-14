@@ -21,7 +21,7 @@ namespace MangoPay.SDK.Tests
 				Sort sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				ListPaginated<ReportRequestDTO> list = await this.Api.Reports.GetAll(pagination, null, sort);
+				ListPaginated<ReportRequestDTO> list = await this.Api.Reports.GetAllAsync(pagination, null, sort);
 
 				var exist = false;
 				for (int i = 0; i < pagination.ItemsPerPage; i++)
@@ -42,7 +42,7 @@ namespace MangoPay.SDK.Tests
 				filters.AfterDate = list[0].CreationDate;
 				filters.BeforeDate = DateTime.Today;
 
-				list = await this.Api.Reports.GetAll(pagination, filters, sort);
+				list = await this.Api.Reports.GetAllAsync(pagination, filters, sort);
 
 				Assert.IsNotNull(list);
 				Assert.IsTrue(list.Count == 0);
@@ -50,7 +50,7 @@ namespace MangoPay.SDK.Tests
 				filters.BeforeDate = filters.AfterDate;
 				filters.AfterDate = DateTime.Today.AddYears(-10);
 
-				list = await this.Api.Reports.GetAll(pagination, filters, sort);
+				list = await this.Api.Reports.GetAllAsync(pagination, filters, sort);
 
 				Assert.IsNotNull(list);
 				Assert.IsTrue(list.Count > 0);

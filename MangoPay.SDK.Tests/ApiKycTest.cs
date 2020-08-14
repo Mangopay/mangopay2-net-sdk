@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Tests
             try
             {
 				KycDocumentDTO kycDocument = await this.GetJohnsKycDocument();
-				KycDocumentDTO result = await this.Api.Kyc.Get(kycDocument.Id);
+				KycDocumentDTO result = await this.Api.Kyc.GetAsync(kycDocument.Id);
 
 				Assert.IsNotNull(result);
 				Assert.IsTrue(result.Id.Equals(kycDocument.Id));
@@ -41,10 +41,10 @@ namespace MangoPay.SDK.Tests
                 var assembly = Assembly.GetExecutingAssembly();
                 var fi = this.GetFileInfoOfFile(assembly.Location);
                 byte[] bytes = File.ReadAllBytes(fi.FullName);
-				await Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
-				await Api.Users.CreateKycPage(john.Id, kycDocument.Id, bytes);
+				await Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, bytes);
+				await Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, bytes);
 
-				var result = await Api.Kyc.GetDocumentConsultations(kycDocument.Id);
+				var result = await Api.Kyc.GetDocumentConsultationsAsync(kycDocument.Id);
 
 				Assert.AreEqual(2, result.Count);
 				Assert.IsInstanceOf<DateTime>(result.First().ExpirationDate);

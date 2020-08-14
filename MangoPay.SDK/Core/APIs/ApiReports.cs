@@ -19,24 +19,24 @@ namespace MangoPay.SDK.Core.APIs
 		/// <summary>Creates new report request.</summary>
 		/// <param name="hook">Report request instance to be created.</param>
 		/// <returns>Report request instance returned from API.</returns>
-		public async Task<ReportRequestDTO> Create(ReportRequestPostDTO reportRequest)
+		public async Task<ReportRequestDTO> CreateAsync(ReportRequestPostDTO reportRequest)
         {
 			if (!reportRequest.ReportType.HasValue) reportRequest.ReportType = ReportType.TRANSACTIONS;
 
-			return await Create(null, reportRequest);
+			return await CreateAsync(null, reportRequest);
         }
 
 		/// <summary>Creates new report request.</summary>
 		/// <param name="idempotencyKey">Idempotency key for this request.</param>
 		/// <param name="hook">Report request instance to be created.</param>
 		/// <returns>Report request instance returned from API.</returns>
-		public async Task<ReportRequestDTO> Create(String idempotencyKey, ReportRequestPostDTO reportRequest)
+		public async Task<ReportRequestDTO> CreateAsync(String idempotencyKey, ReportRequestPostDTO reportRequest)
 		{
 			if (!reportRequest.ReportType.HasValue) reportRequest.ReportType = ReportType.TRANSACTIONS;
 
 			var reportRequestTransport = ReportRequestTransportPostDTO.CreateFromBusinessObject(reportRequest);
 
-			var reportRequestTransportDTO = await this.CreateObject<ReportRequestTransportDTO, ReportRequestTransportPostDTO>(idempotencyKey, MethodKey.ReportRequest, reportRequestTransport, reportRequestTransport.ReportType.ToString().ToLower());
+			var reportRequestTransportDTO = await this.CreateObjectAsync<ReportRequestTransportDTO, ReportRequestTransportPostDTO>(idempotencyKey, MethodKey.ReportRequest, reportRequestTransport, reportRequestTransport.ReportType.ToString().ToLower());
 
             return reportRequestTransportDTO.GetBusinessObject();
         }
@@ -44,9 +44,9 @@ namespace MangoPay.SDK.Core.APIs
 		/// <summary>Gets report request.</summary>
 		/// <param name="hookId">Report request identifier.</param>
 		/// <returns>Report request instance returned from API.</returns>
-		public async Task<ReportRequestDTO> Get(String reportId)
+		public async Task<ReportRequestDTO> GetAsync(String reportId)
         {
-            var reportRequestTransportDTO = await this.GetObject<ReportRequestTransportDTO>(MethodKey.ReportGet, reportId);
+            var reportRequestTransportDTO = await this.GetObjectAsync<ReportRequestTransportDTO>(MethodKey.ReportGet, reportId);
 
             return reportRequestTransportDTO.GetBusinessObject();
         }
@@ -55,11 +55,11 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="pagination">Pagination.</param>
         /// <param name="sort">Sort.</param>
 		/// <returns>List of ReportRequest instances returned from API.</returns>
-		public async Task<ListPaginated<ReportRequestDTO>> GetAll(Pagination pagination, FilterReportsList filters = null, Sort sort = null)
+		public async Task<ListPaginated<ReportRequestDTO>> GetAllAsync(Pagination pagination = null, FilterReportsList filters = null, Sort sort = null)
         {
 			if (filters == null) filters = new FilterReportsList();
 
-			var resultTransport = await this.GetList<ReportRequestTransportDTO>(MethodKey.ReportGetAll, pagination, sort, filters.GetValues());
+			var resultTransport = await this.GetListAsync<ReportRequestTransportDTO>(MethodKey.ReportGetAll, pagination, sort, filters.GetValues());
 
 			var result = new List<ReportRequestDTO>();
 			foreach (ReportRequestTransportDTO item in resultTransport)
@@ -70,11 +70,58 @@ namespace MangoPay.SDK.Core.APIs
             return new ListPaginated<ReportRequestDTO>(result, resultTransport.TotalPages, resultTransport.TotalItems);
         }
 
-        /// <summary>Gets all report requests.</summary>
-        /// <returns>List of ReportRequest instances returned from API.</returns>
-		public async Task<ListPaginated<ReportRequestDTO>> GetAll()
+        /// <summary>Creates new report request.</summary>
+        /// <param name="hook">Report request instance to be created.</param>
+        /// <returns>Report request instance returned from API.</returns>
+        public ReportRequestDTO Create(ReportRequestPostDTO reportRequest)
         {
-            return await this.GetAll(null);
+            if (!reportRequest.ReportType.HasValue) reportRequest.ReportType = ReportType.TRANSACTIONS;
+
+            return Create(null, reportRequest);
+        }
+
+        /// <summary>Creates new report request.</summary>
+        /// <param name="idempotencyKey">Idempotency key for this request.</param>
+        /// <param name="hook">Report request instance to be created.</param>
+        /// <returns>Report request instance returned from API.</returns>
+        public ReportRequestDTO Create(String idempotencyKey, ReportRequestPostDTO reportRequest)
+        {
+            if (!reportRequest.ReportType.HasValue) reportRequest.ReportType = ReportType.TRANSACTIONS;
+
+            var reportRequestTransport = ReportRequestTransportPostDTO.CreateFromBusinessObject(reportRequest);
+
+            var reportRequestTransportDTO = this.CreateObject<ReportRequestTransportDTO, ReportRequestTransportPostDTO>(idempotencyKey, MethodKey.ReportRequest, reportRequestTransport, reportRequestTransport.ReportType.ToString().ToLower());
+
+            return reportRequestTransportDTO.GetBusinessObject();
+        }
+
+        /// <summary>Gets report request.</summary>
+        /// <param name="hookId">Report request identifier.</param>
+        /// <returns>Report request instance returned from API.</returns>
+        public ReportRequestDTO Get(String reportId)
+        {
+            var reportRequestTransportDTO = this.GetObject<ReportRequestTransportDTO>(MethodKey.ReportGet, reportId);
+
+            return reportRequestTransportDTO.GetBusinessObject();
+        }
+
+        /// <summary>Gets all report requests.</summary>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of ReportRequest instances returned from API.</returns>
+        public ListPaginated<ReportRequestDTO> GetAll(Pagination pagination = null, FilterReportsList filters = null, Sort sort = null)
+        {
+            if (filters == null) filters = new FilterReportsList();
+
+            var resultTransport = this.GetList<ReportRequestTransportDTO>(MethodKey.ReportGetAll, pagination, sort, filters.GetValues());
+
+            var result = new List<ReportRequestDTO>();
+            foreach (ReportRequestTransportDTO item in resultTransport)
+            {
+                result.Add(item.GetBusinessObject());
+            }
+
+            return new ListPaginated<ReportRequestDTO>(result, resultTransport.TotalPages, resultTransport.TotalItems);
         }
     }
 }

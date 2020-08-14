@@ -20,7 +20,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Single sign on user instance returned from API.</returns>
 		public async Task<SingleSignOnDTO> Get(String singleSignOnId)
         {
-            return await this.GetObject<SingleSignOnDTO>(MethodKey.SingleSignOnGet, singleSignOnId);
+            return await this.GetObjectAsync<SingleSignOnDTO>(MethodKey.SingleSignOnGet, singleSignOnId);
         }
 
 		/// <summary>Creates new single sign on user.</summary>
@@ -37,7 +37,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>UserNatural instance returned from API.</returns>
 		public async Task<SingleSignOnDTO> Create(String idempotencyKey, SingleSignOnPostDTO singleSignOn)
 		{
-			return await this.CreateObject<SingleSignOnDTO, SingleSignOnPostDTO>(idempotencyKey, MethodKey.SingleSignOnCreate, singleSignOn);
+			return await this.CreateObjectAsync<SingleSignOnDTO, SingleSignOnPostDTO>(idempotencyKey, MethodKey.SingleSignOnCreate, singleSignOn);
 		}
 
 		/// <summary>Gets single sign on users.</summary>
@@ -46,7 +46,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Collection of single sign on user instances.</returns>
 		public async Task<ListPaginated<SingleSignOnDTO>> GetAll(Pagination pagination, Sort sort = null)
         {
-            return await this.GetList<SingleSignOnDTO>(MethodKey.SingleSignOnAll, pagination, sort);
+            return await this.GetListAsync<SingleSignOnDTO>(MethodKey.SingleSignOnAll, pagination, sort);
         }
 
 		/// <summary>Gets first page of single sign on users.</summary>
@@ -62,7 +62,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Updated single sign on user object returned from API.</returns>
 		public async Task<SingleSignOnDTO> Update(SingleSignOnPutDTO singleSignOn, String singleSignOnId)
         {
-            return await this.UpdateObject<SingleSignOnDTO, SingleSignOnPutDTO>(MethodKey.SingleSignOnSave, singleSignOn, singleSignOnId);
+            return await this.UpdateObjectAsync<SingleSignOnDTO, SingleSignOnPutDTO>(MethodKey.SingleSignOnSave, singleSignOn, singleSignOnId);
         }
 
 		/// <summary>Extend single sign on invitation.</summary>
@@ -70,7 +70,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>Single sign on user object returned from API.</returns>
 		public async Task<SingleSignOnDTO> ExtendInvitation(String singleSignOnId)
 		{
-			return await this.UpdateObject<SingleSignOnDTO, SingleSignOnPutDTO>(MethodKey.SingleSignOnExtendInvitation, new SingleSignOnPutDTO(), singleSignOnId);
+			return await this.UpdateObjectAsync<SingleSignOnDTO, SingleSignOnPutDTO>(MethodKey.SingleSignOnExtendInvitation, new SingleSignOnPutDTO(), singleSignOnId);
 		}
 
 		/// <summary>Gets single sign on for the current user.</summary>
@@ -78,7 +78,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <remarks>Requires an API token associated with an SSO based authorization</remarks>
 		public async Task<SingleSignOnDTO> GetSsoForCurrentUser()
 		{
-			return await this.GetObject<SingleSignOnDTO>(MethodKey.SingleSignOnsMe, null);
+			return await this.GetObjectAsync<SingleSignOnDTO>(MethodKey.SingleSignOnsMe, null);
 		}
 
 		/// <summary>Gets permission group for the current user.</summary>
@@ -86,7 +86,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <remarks>Requires an API token associated with an SSO based authorization</remarks>
 		public async Task<PermissionGroupDTO> GetPermissionGroupForCurrentUser()
 		{
-			return await this.GetObject<PermissionGroupDTO>(MethodKey.SingleSignOnsMePermissionGroup, null);
+			return await this.GetObjectAsync<PermissionGroupDTO>(MethodKey.SingleSignOnsMePermissionGroup, null);
 		}
 	}
 }

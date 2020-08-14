@@ -27,7 +27,7 @@ namespace MangoPay.SDK.Tests
             UserNaturalDTO john = await this.GetJohn();
             WalletDTO wallet = await this.GetJohnsWallet();
 
-            WalletDTO getWallet = await this.Api.Wallets.Get(wallet.Id);
+            WalletDTO getWallet = await this.Api.Wallets.GetAsync(wallet.Id);
 
             Assert.AreEqual(wallet.Id, getWallet.Id);
             Assert.IsTrue(wallet.Owners.Contains(john.Id));
@@ -44,7 +44,7 @@ namespace MangoPay.SDK.Tests
                 Tag = wallet.Tag
             };
 
-            WalletDTO saveWallet = await this.Api.Wallets.Update(walletPut, wallet.Id);
+            WalletDTO saveWallet = await this.Api.Wallets.UpdateAsync(walletPut, wallet.Id);
 
             Assert.AreEqual(wallet.Id, saveWallet.Id);
             Assert.AreEqual(wallet.Description + " - changed", saveWallet.Description);
@@ -63,7 +63,7 @@ namespace MangoPay.SDK.Tests
             {
                 Type = TransactionType.PAYIN
             };
-            ListPaginated<TransactionDTO> transactions = await Api.Wallets.GetTransactions(wallet.Id, pagination, filter, null);
+            ListPaginated<TransactionDTO> transactions = await Api.Wallets.GetTransactionsAsync(wallet.Id, pagination, filter, null);
 
             Assert.IsTrue(transactions.Count == 1);
             Assert.IsTrue(transactions[0] is TransactionDTO);

@@ -161,7 +161,7 @@ namespace MangoPay.SDK.Tests
                 user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
                 user.Capacity = CapacityType.DECLARATIVE;
 
-                BaseTest._john = await this.Api.Users.Create(user);
+                BaseTest._john = await this.Api.Users.CreateAsync(user);
 
                 BaseTest._johnsWallet = null;
             }
@@ -178,7 +178,7 @@ namespace MangoPay.SDK.Tests
                 Capacity = CapacityType.DECLARATIVE
             };
 
-            return await this.Api.Users.Create(user);
+            return await this.Api.Users.CreateAsync(user);
         }
 
         protected async Task<UserLegalDTO> GetMatrix()
@@ -196,7 +196,7 @@ namespace MangoPay.SDK.Tests
                     Email = john.Email
                 };
 
-                BaseTest._matrix = await this.Api.Users.Create(user);
+                BaseTest._matrix = await this.Api.Users.CreateAsync(user);
             }
 
             return BaseTest._matrix;
@@ -212,7 +212,7 @@ namespace MangoPay.SDK.Tests
                     UserId = john.Id,
                     BIC = "CMBRFR2BCME"
                 };
-                BaseTest._johnsAccount =  await this.Api.Users.CreateBankAccountIban(john.Id, account);
+                BaseTest._johnsAccount =  await this.Api.Users.CreateBankAccountIbanAsync(john.Id, account);
             }
 
             return BaseTest._johnsAccount;
@@ -226,7 +226,7 @@ namespace MangoPay.SDK.Tests
 
                 WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
 
-                BaseTest._johnsWallet = await this.Api.Wallets.Create(wallet);
+                BaseTest._johnsWallet = await this.Api.Wallets.CreateAsync(wallet);
             }
 
             return BaseTest._johnsWallet;
@@ -240,7 +240,7 @@ namespace MangoPay.SDK.Tests
 
             WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
 
-            return await Api.Wallets.Create(wallet);
+            return await Api.Wallets.CreateAsync(wallet);
         }
 
         /// <summary>Creates wallet for John, loaded with 10k EUR (John's got lucky) if not created yet, or returns an existing one.</summary>
@@ -275,18 +275,18 @@ namespace MangoPay.SDK.Tests
             // create wallet with money
             WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
 
-            var johnsWalletWithMoney = await this.Api.Wallets.Create(wallet);
+            var johnsWalletWithMoney = await this.Api.Wallets.CreateAsync(wallet);
 
             CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(johnsWalletWithMoney.Owners[0], CurrencyIso.EUR);
-            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.Create(cardRegistrationPost);
+            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
 
             CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO
             {
                 RegistrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration)
             };
-            cardRegistration = await this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
+            cardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
 
-            CardDTO card = await this.Api.Cards.Get(cardRegistration.CardId);
+            CardDTO card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
 
             // create pay-in CARD DIRECT
             PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
@@ -296,9 +296,9 @@ namespace MangoPay.SDK.Tests
             payIn.CardType = card.CardType;
 
             // create Pay-In
-            var result = await this.Api.PayIns.CreateCardDirect(payIn);
+            var result = await this.Api.PayIns.CreateCardDirectAsync(payIn);
 
-            return await this.Api.Wallets.Get(johnsWalletWithMoney.Id);
+            return await this.Api.Wallets.GetAsync(johnsWalletWithMoney.Id);
         }
 
         protected async Task<PayInCardWebDTO> GetJohnsPayInCardWeb()
@@ -310,7 +310,7 @@ namespace MangoPay.SDK.Tests
 
                 PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
-                BaseTest._johnsPayInCardWeb = await this.Api.PayIns.CreateCardWeb(payIn);
+                BaseTest._johnsPayInCardWeb = await this.Api.PayIns.CreateCardWebAsync(payIn);
             }
 
             return BaseTest._johnsPayInCardWeb;
@@ -335,7 +335,7 @@ namespace MangoPay.SDK.Tests
                     TemplateURLOptionsCard = new TemplateURLOptionsCard { PAYLINEV2 = "https://www.maysite.com/payline_template/" }
                 };
 
-                BaseTest._johnsPayInCardWeb = await this.Api.PayIns.CreateCardWeb(payIn);
+                BaseTest._johnsPayInCardWeb = await this.Api.PayIns.CreateCardWebAsync(payIn);
             }
 
             return BaseTest._johnsPayInCardWeb;
@@ -348,7 +348,7 @@ namespace MangoPay.SDK.Tests
 
             PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
-            return await this.Api.PayIns.CreateCardWeb(payIn);
+            return await this.Api.PayIns.CreateCardWebAsync(payIn);
         }
 
         protected async Task<PayInCardWebDTO> GetNewPayInCardWeb()
@@ -358,7 +358,7 @@ namespace MangoPay.SDK.Tests
 
             PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
-            BaseTest._johnsPayInCardWeb = await this.Api.PayIns.CreateCardWeb(payIn);
+            BaseTest._johnsPayInCardWeb = await this.Api.PayIns.CreateCardWebAsync(payIn);
 
             return BaseTest._johnsPayInCardWeb;
         }
@@ -394,7 +394,7 @@ namespace MangoPay.SDK.Tests
         {
 
             PayInCardDirectPostDTO payIn = await GetPayInCardDirectPost(userId, idempotencyKey);
-            return await this.Api.PayIns.CreateCardDirect(payIn);
+            return await this.Api.PayIns.CreateCardDirectAsync(payIn);
         }
 
         /// <summary>Creates PayIn Card Direct object with billing details.</summary>
@@ -419,7 +419,7 @@ namespace MangoPay.SDK.Tests
             PayInCardDirectPostDTO payIn = await GetPayInCardDirectPost(userId, idempotencyKey);
             payIn.Billing = billing;
 
-            return await this.Api.PayIns.CreateCardDirect(payIn);
+            return await this.Api.PayIns.CreateCardDirectAsync(payIn);
         }
 
         protected async Task<PayInCardDirectPostDTO> GetPayInCardDirectPost(String userId, string idempotencyKey)
@@ -434,16 +434,16 @@ namespace MangoPay.SDK.Tests
 
             CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(userId, CurrencyIso.EUR);
 
-            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.Create(idempotencyKey, cardRegistrationPost);
+            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.CreateAsync(idempotencyKey, cardRegistrationPost);
 
             CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO
             {
                 RegistrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration)
             };
 
-            cardRegistration = await this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
+            cardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
 
-            CardDTO card = await this.Api.Cards.Get(cardRegistration.CardId);
+            CardDTO card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
 
             // create pay-in CARD DIRECT
             PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
@@ -468,7 +468,7 @@ namespace MangoPay.SDK.Tests
                 payOut.Tag = "DefaultTag";
                 payOut.CreditedUserId = user.Id;
 
-                BaseTest._johnsPayOutBankWire = await this.Api.PayOuts.CreateBankWire(payOut);
+                BaseTest._johnsPayOutBankWire = await this.Api.PayOuts.CreateBankWireAsync(payOut);
             }
 
             return BaseTest._johnsPayOutBankWire;
@@ -490,7 +490,7 @@ namespace MangoPay.SDK.Tests
                     CreditedUserId = payIn.AuthorId
                 };
 
-                BaseTest._johnsPayOutForCardDirect = await this.Api.PayOuts.CreateBankWire(payOut);
+                BaseTest._johnsPayOutForCardDirect = await this.Api.PayOuts.CreateBankWireAsync(payOut);
             }
 
             return BaseTest._johnsPayOutForCardDirect;
@@ -504,12 +504,12 @@ namespace MangoPay.SDK.Tests
 
             UserNaturalDTO user = await this.GetJohn();
             WalletPostDTO walletPost = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN EUR FOR TRANSFER", CurrencyIso.EUR);
-            WalletDTO wallet = await this.Api.Wallets.Create(walletPost);
+            WalletDTO wallet = await this.Api.Wallets.CreateAsync(walletPost);
 
             TransferPostDTO transfer = new TransferPostDTO(user.Id, user.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletWithMoney.Id, wallet.Id);
             transfer.Tag = "DefaultTag";
 
-            return await this.Api.Transfers.Create(transfer);
+            return await this.Api.Transfers.CreateAsync(transfer);
         }
 
         /// <summary>Creates refund object for transfer.</summary>
@@ -521,7 +521,7 @@ namespace MangoPay.SDK.Tests
 
             RefundTransferPostDTO refund = new RefundTransferPostDTO(user.Id);
 
-            return await this.Api.Transfers.CreateRefund(transfer.Id, refund);
+            return await this.Api.Transfers.CreateRefundAsync(transfer.Id, refund);
         }
 
         /// <summary>Creates refund object for PayIn.</summary>
@@ -551,7 +551,7 @@ namespace MangoPay.SDK.Tests
             };
 
             RefundPayInPostDTO refund = new RefundPayInPostDTO(user.Id, fees, debitedFunds);
-            return await this.Api.PayIns.CreateRefund(idempotencyKey, payIn.Id, refund);
+            return await this.Api.PayIns.CreateRefundAsync(idempotencyKey, payIn.Id, refund);
         }
 
         /// <summary>Creates card registration object.</summary>
@@ -566,7 +566,7 @@ namespace MangoPay.SDK.Tests
                 CardRegistrationPostDTO cardRegistration = new CardRegistrationPostDTO(user.Id, CurrencyIso.EUR, cardType);
                 cardRegistration.Tag = "DefaultTag";
 
-                BaseTest._johnsCardRegistration = await this.Api.CardRegistrations.Create(cardRegistration);
+                BaseTest._johnsCardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistration);
             }
 
             return BaseTest._johnsCardRegistration;
@@ -596,18 +596,18 @@ namespace MangoPay.SDK.Tests
             UserNaturalDTO user = await this.GetJohn();
             CardPreAuthorizationPostDTO cardPreAuthorization = await GetPreAuthorization(user.Id);
 
-            return await this.Api.CardPreAuthorizations.Create(idempotencyKey, cardPreAuthorization);
+            return await this.Api.CardPreAuthorizations.CreateAsync(idempotencyKey, cardPreAuthorization);
         }
 
         protected async Task<CardPreAuthorizationPostDTO> GetPreAuthorization(string userId)
         {
             CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(userId, CurrencyIso.EUR);
-            CardRegistrationDTO newCardRegistration = await this.Api.CardRegistrations.Create(cardRegistrationPost);
+            CardRegistrationDTO newCardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
 
             CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
             string registrationData = await this.GetPaylineCorrectRegistartionData(newCardRegistration);
             cardRegistrationPut.RegistrationData = registrationData;
-            CardRegistrationDTO getCardRegistration = await this.Api.CardRegistrations.Update(cardRegistrationPut, newCardRegistration.Id);
+            CardRegistrationDTO getCardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, newCardRegistration.Id);
 
             CardPreAuthorizationPostDTO cardPreAuthorization = new CardPreAuthorizationPostDTO(userId, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, SecureMode.DEFAULT, getCardRegistration.CardId, "http://test.com");
 
@@ -621,7 +621,7 @@ namespace MangoPay.SDK.Tests
                 var john = await this.GetJohn();
                 String johnsId = john.Id;
 
-                BaseTest._johnsKycDocument = await this.Api.Users.CreateKycDocument(johnsId, KycDocumentType.IDENTITY_PROOF);
+                BaseTest._johnsKycDocument = await this.Api.Users.CreateKycDocumentAsync(johnsId, KycDocumentType.IDENTITY_PROOF);
             }
 
             return BaseTest._johnsKycDocument;
@@ -687,7 +687,7 @@ namespace MangoPay.SDK.Tests
             {
 
                 Pagination pagination = new Pagination(1, 1);
-                ListPaginated<HookDTO> list = await this.Api.Hooks.GetAll(pagination);
+                ListPaginated<HookDTO> list = await this.Api.Hooks.GetAllAsync(pagination);
 
                 if (list != null && list.Count > 0 && list[0] != null)
                 {
@@ -696,7 +696,7 @@ namespace MangoPay.SDK.Tests
                 else
                 {
                     HookPostDTO hook = new HookPostDTO("http://test.com", EventType.PAYIN_NORMAL_CREATED);
-                    BaseTest._johnsHook = await this.Api.Hooks.Create(hook);
+                    BaseTest._johnsHook = await this.Api.Hooks.CreateAsync(hook);
                 }
             }
 
@@ -708,7 +708,7 @@ namespace MangoPay.SDK.Tests
             if (!BaseTest._johnsReports.ContainsKey(reportType))
             {
                 ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
-                var reportRequest = await this.Api.Reports.Create(reportPost);
+                var reportRequest = await this.Api.Reports.CreateAsync(reportPost);
                 BaseTest._johnsReports.Add(reportType, reportRequest);
             }
 
@@ -721,7 +721,7 @@ namespace MangoPay.SDK.Tests
             var bankAccountId = john.Id;
             var returnUrl = "http://test.test";
             var mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
-            var mandate = await Api.Mandates.Create(mandatePost);
+            var mandate = await Api.Mandates.CreateAsync(mandatePost);
 
             return mandate;
         }
