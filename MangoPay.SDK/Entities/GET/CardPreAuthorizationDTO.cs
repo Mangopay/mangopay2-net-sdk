@@ -73,6 +73,9 @@ namespace MangoPay.SDK.Entities.GET
 
         public SecurityInfo SecurityInfo { get; set; }
 
+        /// <summary>Represents the amount remaining on the bank account 
+        public Money RemainingFunds { get; set; }
+
         public Boolean MultiCapture { get; set; }
     }
 }
