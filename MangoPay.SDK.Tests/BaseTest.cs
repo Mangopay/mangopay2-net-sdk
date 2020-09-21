@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -150,7 +151,7 @@ namespace MangoPay.SDK.Tests
             return api;
         }
 
-        protected UserNaturalDTO GetJohn(bool recreate = false)
+        protected async Task<UserNaturalDTO> GetJohn(bool recreate = false)
         {
             if (BaseTest._john == null || recreate)
             {
@@ -160,14 +161,14 @@ namespace MangoPay.SDK.Tests
                 user.Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" };
                 user.Capacity = CapacityType.DECLARATIVE;
 
-                BaseTest._john = this.Api.Users.Create(user);
+                BaseTest._john = await this.Api.Users.CreateAsync(user);
 
                 BaseTest._johnsWallet = null;
             }
             return BaseTest._john;
         }
 
-        protected UserNaturalDTO GetNewJohn()
+        protected async Task<UserNaturalDTO> GetNewJohn()
         {
             UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR)
             {
@@ -177,14 +178,14 @@ namespace MangoPay.SDK.Tests
                 Capacity = CapacityType.DECLARATIVE
             };
 
-            return this.Api.Users.Create(user);
+            return await this.Api.Users.CreateAsync(user);
         }
 
-        protected UserLegalDTO GetMatrix()
+        protected async Task<UserLegalDTO> GetMatrix()
         {
             if (BaseTest._matrix == null)
             {
-                UserNaturalDTO john = this.GetJohn();
+                UserNaturalDTO john = await this.GetJohn();
                 var birthday = john.Birthday ?? new DateTime();
                 UserLegalPostDTO user = new UserLegalPostDTO(john.Email, "MartixSampleOrg", LegalPersonType.BUSINESS, john.FirstName, john.LastName, birthday, john.Nationality, john.CountryOfResidence)
                 {
@@ -195,66 +196,67 @@ namespace MangoPay.SDK.Tests
                     Email = john.Email
                 };
 
-                BaseTest._matrix = this.Api.Users.Create(user);
+                BaseTest._matrix = await this.Api.Users.CreateAsync(user);
             }
+
             return BaseTest._matrix;
         }
 
-        protected BankAccountIbanDTO GetJohnsAccount(bool recreate = false)
+        protected async Task<BankAccountIbanDTO> GetJohnsAccount(bool recreate = false)
         {
             if (BaseTest._johnsAccount == null || recreate)
             {
-                UserNaturalDTO john = this.GetJohn();
+                UserNaturalDTO john = await this.GetJohn();
                 BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154")
                 {
                     UserId = john.Id,
                     BIC = "CMBRFR2BCME"
                 };
-                BaseTest._johnsAccount = this.Api.Users.CreateBankAccountIban(john.Id, account);
+                BaseTest._johnsAccount =  await this.Api.Users.CreateBankAccountIbanAsync(john.Id, account);
             }
+
             return BaseTest._johnsAccount;
         }
 
-        protected WalletDTO GetJohnsWallet()
+        protected async Task<WalletDTO> GetJohnsWallet()
         {
             if (BaseTest._johnsWallet == null)
             {
-                UserNaturalDTO john = this.GetJohn();
+                UserNaturalDTO john = await this.GetJohn();
 
                 WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
 
-                BaseTest._johnsWallet = this.Api.Wallets.Create(wallet);
+                BaseTest._johnsWallet = await this.Api.Wallets.CreateAsync(wallet);
             }
 
             return BaseTest._johnsWallet;
         }
 
 
-        protected WalletDTO CreateJohnsWallet()
+        protected async Task<WalletDTO> CreateJohnsWallet()
         {
 
-            UserNaturalDTO john = this.GetJohn();
+            UserNaturalDTO john = await this.GetJohn();
 
             WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
 
-            return Api.Wallets.Create(wallet);
-
+            return await Api.Wallets.CreateAsync(wallet);
         }
 
         /// <summary>Creates wallet for John, loaded with 10k EUR (John's got lucky) if not created yet, or returns an existing one.</summary>
         /// <returns>Wallet instance loaded with 10k EUR.</returns>
-        protected WalletDTO GetJohnsWalletWithMoney()
+        protected async Task<WalletDTO> GetJohnsWalletWithMoney()
         {
-            return GetJohnsWalletWithMoney(10000);
+            return await GetJohnsWalletWithMoney(10000);
         }
 
         /// <summary>Creates wallet for John, if not created yet, or returns an existing one.</summary>
         /// <param name="amount">Initial wallet's money amount.</param>
         /// <returns>Wallet entity instance returned from API.</returns>
-        protected WalletDTO GetJohnsWalletWithMoney(int amount)
+        protected async Task<WalletDTO> GetJohnsWalletWithMoney(int amount)
         {
             if (BaseTest._johnsWalletWithMoney == null)
-                BaseTest._johnsWalletWithMoney = GetNewJohnsWalletWithMoney(amount);
+                BaseTest._johnsWalletWithMoney = await GetNewJohnsWalletWithMoney(amount);
 
             return BaseTest._johnsWalletWithMoney;
         }
@@ -262,25 +264,29 @@ namespace MangoPay.SDK.Tests
         /// <summary>Creates new wallet for John.</summary>
         /// <param name="amount">Initial wallet's money amount.</param>
         /// <returns>Wallet entity instance returned from API.</returns>
-        protected WalletDTO GetNewJohnsWalletWithMoney(int amount, UserNaturalDTO user = null)
+        protected async Task<WalletDTO> GetNewJohnsWalletWithMoney(int amount, UserNaturalDTO user = null)
         {
             UserNaturalDTO john = user;
             if (john == null)
-                john = this.GetJohn();
+            {
+                john = await this.GetJohn();
+            }
 
             // create wallet with money
             WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
 
-            var johnsWalletWithMoney = this.Api.Wallets.Create(wallet);
+            var johnsWalletWithMoney = await this.Api.Wallets.CreateAsync(wallet);
 
             CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(johnsWalletWithMoney.Owners[0], CurrencyIso.EUR);
-            CardRegistrationDTO cardRegistration = this.Api.CardRegistrations.Create(cardRegistrationPost);
+            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
 
-            CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
-            cardRegistrationPut.RegistrationData = this.GetPaylineCorrectRegistartionData(cardRegistration);
-            cardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
+            CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO
+            {
+                RegistrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration)
+            };
+            cardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
 
-            CardDTO card = this.Api.Cards.Get(cardRegistration.CardId);
+            CardDTO card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
 
             // create pay-in CARD DIRECT
             PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
@@ -290,144 +296,154 @@ namespace MangoPay.SDK.Tests
             payIn.CardType = card.CardType;
 
             // create Pay-In
-            var result = this.Api.PayIns.CreateCardDirect(payIn);
+            var result = await this.Api.PayIns.CreateCardDirectAsync(payIn);
 
-            return this.Api.Wallets.Get(johnsWalletWithMoney.Id);
+            return await this.Api.Wallets.GetAsync(johnsWalletWithMoney.Id);
         }
 
-        protected PayInCardWebDTO GetJohnsPayInCardWeb()
+        protected async Task<PayInCardWebDTO> GetJohnsPayInCardWeb()
         {
             if (BaseTest._johnsPayInCardWeb == null)
             {
-                WalletDTO wallet = this.GetJohnsWallet();
-                UserNaturalDTO user = this.GetJohn();
+                WalletDTO wallet = await this.GetJohnsWallet();
+                UserNaturalDTO user = await this.GetJohn();
 
                 PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
-                BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
+                BaseTest._johnsPayInCardWeb = await this.Api.PayIns.CreateCardWebAsync(payIn);
             }
 
             return BaseTest._johnsPayInCardWeb;
         }
 
-        protected PayInCardWebDTO GetJohnsNewPayInCardWeb()
+        protected async Task<PayInCardWebDTO> GetJohnsNewPayInCardWeb()
         {
             BaseTest._johnsPayInCardWeb = null;
 
-            return GetJohnsPayInCardWeb();
+            return await GetJohnsPayInCardWeb();
         }
 
-        protected PayInCardWebDTO GetJohnsPayInCardWeb(string walletId)
+        protected async Task<PayInCardWebDTO> GetJohnsPayInCardWeb(string walletId)
         {
             if (BaseTest._johnsPayInCardWeb == null)
             {
-                UserNaturalDTO user = this.GetJohn();
+                UserNaturalDTO user = await this.GetJohn();
 
-                PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
-                //Add TemplateURLOptionsCard for tests
-                payIn.TemplateURLOptionsCard = new TemplateURLOptionsCard { PAYLINEV2 = "https://www.maysite.com/payline_template/" };
+                PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD)
+                {
+                    //Add TemplateURLOptionsCard for tests
+                    TemplateURLOptionsCard = new TemplateURLOptionsCard { PAYLINEV2 = "https://www.maysite.com/payline_template/" }
+                };
 
-                BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
+                BaseTest._johnsPayInCardWeb = await this.Api.PayIns.CreateCardWebAsync(payIn);
             }
 
             return BaseTest._johnsPayInCardWeb;
         }
 
-        protected PayInCardWebDTO CreateJohnsPayInCardWeb(string walletId)
+        protected async Task<PayInCardWebDTO> CreateJohnsPayInCardWeb(string walletId)
         {
 
-            UserNaturalDTO user = this.GetJohn();
+            UserNaturalDTO user = await this.GetJohn();
 
             PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletId, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
-            return this.Api.PayIns.CreateCardWeb(payIn);
+            return await this.Api.PayIns.CreateCardWebAsync(payIn);
         }
 
-        protected PayInCardWebDTO GetNewPayInCardWeb()
+        protected async Task<PayInCardWebDTO> GetNewPayInCardWeb()
         {
-            WalletDTO wallet = this.GetJohnsWallet();
-            UserNaturalDTO user = this.GetJohn();
+            WalletDTO wallet = await this.GetJohnsWallet();
+            UserNaturalDTO user = await this.GetJohn();
 
             PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "https://test.com", CultureCode.FR, CardType.CB_VISA_MASTERCARD);
 
-            BaseTest._johnsPayInCardWeb = this.Api.PayIns.CreateCardWeb(payIn);
+            BaseTest._johnsPayInCardWeb = await this.Api.PayIns.CreateCardWebAsync(payIn);
 
             return BaseTest._johnsPayInCardWeb;
         }
 
-        protected PayInCardDirectDTO GetNewPayInCardDirect()
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirect()
         {
-            return GetNewPayInCardDirect(null);
+            return await GetNewPayInCardDirect(null);
         }
-        protected PayInCardDirectDTO GetNewPayInCardDirectWithBilling()
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBilling()
         {
-            return GetNewPayInCardDirectWithBilling(null);
+            return await GetNewPayInCardDirectWithBilling(null);
         }
 
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
-        protected PayInCardDirectDTO GetNewPayInCardDirect(String userId)
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirect(String userId)
         {
-            return GetNewPayInCardDirect(userId, null);
+            return await GetNewPayInCardDirect(userId, null);
         }
         /// <summary>Creates PayIn Card Direct object with billing information.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
-        protected PayInCardDirectDTO GetNewPayInCardDirectWithBilling(String userId)
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBilling(String userId)
         {
-            return GetNewPayInCardDirectWithBilling(userId, null);
+            return await GetNewPayInCardDirectWithBilling(userId, null);
         }
 
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
-        protected PayInCardDirectDTO GetNewPayInCardDirect(String userId, string idempotencyKey)
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirect(String userId, string idempotencyKey)
         {
 
-            PayInCardDirectPostDTO payIn = GetPayInCardDirectPost(userId, idempotencyKey);
-            return this.Api.PayIns.CreateCardDirect(payIn);
+            PayInCardDirectPostDTO payIn = await GetPayInCardDirectPost(userId, idempotencyKey);
+            return await this.Api.PayIns.CreateCardDirectAsync(payIn);
         }
 
         /// <summary>Creates PayIn Card Direct object with billing details.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
-        protected PayInCardDirectDTO GetNewPayInCardDirectWithBilling(String userId, string idempotencyKey)
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBilling(String userId, string idempotencyKey)
         {
+            Address address = new Address
+            {
+                AddressLine1 = "Test address line 1",
+                AddressLine2 = "Test address line 2",
+                City = "Test city",
+                Country = CountryIso.RO,
+                PostalCode = "65400"
+            };
 
-            PayInCardDirectPostDTO payIn = GetPayInCardDirectPost(userId, idempotencyKey);
-            Billing billing = new Billing();
-            Address address = new Address();
-            address.AddressLine1 = "Test address line 1";
-            address.AddressLine2 = "Test address line 2";
-            address.City = "Test city";
-            address.Country = CountryIso.RO;
-            address.PostalCode = "65400";
-            billing.Address = address;
+            Billing billing = new Billing
+            {
+                Address = address
+            };
+
+            PayInCardDirectPostDTO payIn = await GetPayInCardDirectPost(userId, idempotencyKey);
             payIn.Billing = billing;
 
-            return this.Api.PayIns.CreateCardDirect(payIn);
+            return await this.Api.PayIns.CreateCardDirectAsync(payIn);
         }
 
-        protected PayInCardDirectPostDTO GetPayInCardDirectPost(String userId, string idempotencyKey)
+        protected async Task<PayInCardDirectPostDTO> GetPayInCardDirectPost(String userId, string idempotencyKey)
         {
-            WalletDTO wallet = this.GetJohnsWalletWithMoney();
+            WalletDTO wallet = await this.GetJohnsWalletWithMoney();
 
             if (userId == null)
             {
-                UserNaturalDTO user = this.GetJohn();
+                UserNaturalDTO user = await this.GetJohn();
                 userId = user.Id;
             }
 
             CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(userId, CurrencyIso.EUR);
 
-            CardRegistrationDTO cardRegistration = this.Api.CardRegistrations.Create(idempotencyKey, cardRegistrationPost);
+            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.CreateAsync(idempotencyKey, cardRegistrationPost);
 
-            CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
-            cardRegistrationPut.RegistrationData = this.GetPaylineCorrectRegistartionData(cardRegistration);
-            cardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, cardRegistration.Id);
+            CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO
+            {
+                RegistrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration)
+            };
 
-            CardDTO card = this.Api.Cards.Get(cardRegistration.CardId);
+            cardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
+
+            CardDTO card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
 
             // create pay-in CARD DIRECT
             PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
@@ -440,19 +456,19 @@ namespace MangoPay.SDK.Tests
             return payIn;
         }
 
-        protected PayOutBankWireDTO GetJohnsPayOutBankWire()
+        protected async Task<PayOutBankWireDTO> GetJohnsPayOutBankWire()
         {
             if (BaseTest._johnsPayOutBankWire == null)
             {
-                WalletDTO wallet = this.GetJohnsWalletWithMoney();
-                UserNaturalDTO user = this.GetJohn();
-                BankAccountDTO account = this.GetJohnsAccount();
+                WalletDTO wallet = await this.GetJohnsWalletWithMoney();
+                UserNaturalDTO user = await this.GetJohn();
+                BankAccountDTO account = await this.GetJohnsAccount();
 
                 PayOutBankWirePostDTO payOut = new PayOutBankWirePostDTO(user.Id, wallet.Id, new Money { Amount = 10, Currency = CurrencyIso.EUR }, new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref");
                 payOut.Tag = "DefaultTag";
                 payOut.CreditedUserId = user.Id;
 
-                BaseTest._johnsPayOutBankWire = this.Api.PayOuts.CreateBankWire(payOut);
+                BaseTest._johnsPayOutBankWire = await this.Api.PayOuts.CreateBankWireAsync(payOut);
             }
 
             return BaseTest._johnsPayOutBankWire;
@@ -460,91 +476,97 @@ namespace MangoPay.SDK.Tests
 
         /// <summary>Creates PayOut Bank Wire object.</summary>
         /// <returns>PayOut Bank Wire instance returned from API.</returns>
-        protected PayOutBankWireDTO GetJohnsPayOutForCardDirect()
+        protected async Task<PayOutBankWireDTO> GetJohnsPayOutForCardDirect()
         {
             if (BaseTest._johnsPayOutForCardDirect == null)
             {
-                PayInCardDirectDTO payIn = this.GetNewPayInCardDirect();
-                BankAccountDTO account = this.GetJohnsAccount();
+                PayInCardDirectDTO payIn = await this.GetNewPayInCardDirect();
+                BankAccountDTO account = await this.GetJohnsAccount();
 
                 PayOutBankWirePostDTO payOut = new PayOutBankWirePostDTO(payIn.AuthorId, payIn.CreditedWalletId, new Money { Amount = 10, Currency = CurrencyIso.EUR },
-                    new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref");
-                payOut.Tag = "DefaultTag";
-                payOut.CreditedUserId = payIn.AuthorId;
+                    new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref")
+                {
+                    Tag = "DefaultTag",
+                    CreditedUserId = payIn.AuthorId
+                };
 
-                BaseTest._johnsPayOutForCardDirect = this.Api.PayOuts.CreateBankWire(payOut);
+                BaseTest._johnsPayOutForCardDirect = await this.Api.PayOuts.CreateBankWireAsync(payOut);
             }
 
             return BaseTest._johnsPayOutForCardDirect;
         }
 
-        protected TransferDTO GetNewTransfer(WalletDTO walletIn = null)
+        protected async Task<TransferDTO> GetNewTransfer(WalletDTO walletIn = null)
         {
             WalletDTO walletWithMoney = walletIn;
             if (walletWithMoney == null)
-                walletWithMoney = this.GetJohnsWalletWithMoney();
+                walletWithMoney = await this.GetJohnsWalletWithMoney();
 
-            UserNaturalDTO user = this.GetJohn();
+            UserNaturalDTO user = await this.GetJohn();
             WalletPostDTO walletPost = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN EUR FOR TRANSFER", CurrencyIso.EUR);
-            WalletDTO wallet = this.Api.Wallets.Create(walletPost);
+            WalletDTO wallet = await this.Api.Wallets.CreateAsync(walletPost);
 
             TransferPostDTO transfer = new TransferPostDTO(user.Id, user.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletWithMoney.Id, wallet.Id);
             transfer.Tag = "DefaultTag";
 
-            return this.Api.Transfers.Create(transfer);
+            return await this.Api.Transfers.CreateAsync(transfer);
         }
 
         /// <summary>Creates refund object for transfer.</summary>
         /// <param name="transfer">Transfer.</param>
         /// <returns>Refund instance returned from API.</returns>
-        protected RefundDTO GetNewRefundForTransfer(TransferDTO transfer)
+        protected async Task<RefundDTO> GetNewRefundForTransfer(TransferDTO transfer)
         {
-            UserNaturalDTO user = this.GetJohn();
+            UserNaturalDTO user = await this.GetJohn();
 
             RefundTransferPostDTO refund = new RefundTransferPostDTO(user.Id);
 
-            return this.Api.Transfers.CreateRefund(transfer.Id, refund);
+            return await this.Api.Transfers.CreateRefundAsync(transfer.Id, refund);
         }
 
         /// <summary>Creates refund object for PayIn.</summary>
         /// <param name="payIn">PayIn entity.</param>
         /// <returns>Refund instance returned from API.</returns>
-        protected RefundDTO GetNewRefundForPayIn(PayInDTO payIn)
+        protected async Task<RefundDTO> GetNewRefundForPayIn(PayInDTO payIn)
         {
-            return GetNewRefundForPayIn(payIn, null);
+            return await GetNewRefundForPayIn(payIn, null);
         }
 
         /// <summary>Creates refund object for PayIn.</summary>
         /// <param name="payIn">PayIn entity.</param>
         /// <returns>Refund instance returned from API.</returns>
-        protected RefundDTO GetNewRefundForPayIn(PayInDTO payIn, string idempotencyKey)
+        protected async Task<RefundDTO> GetNewRefundForPayIn(PayInDTO payIn, string idempotencyKey)
         {
-            UserNaturalDTO user = this.GetJohn();
+            UserNaturalDTO user = await this.GetJohn();
 
-            Money debitedFunds = new Money();
-            debitedFunds.Amount = payIn.DebitedFunds.Amount;
-            debitedFunds.Currency = payIn.DebitedFunds.Currency;
-            Money fees = new Money();
-            fees.Amount = payIn.Fees.Amount;
-            fees.Currency = payIn.Fees.Currency;
+            Money debitedFunds = new Money
+            {
+                Amount = payIn.DebitedFunds.Amount,
+                Currency = payIn.DebitedFunds.Currency
+            };
+            Money fees = new Money
+            {
+                Amount = payIn.Fees.Amount,
+                Currency = payIn.Fees.Currency
+            };
 
             RefundPayInPostDTO refund = new RefundPayInPostDTO(user.Id, fees, debitedFunds);
-            return this.Api.PayIns.CreateRefund(idempotencyKey, payIn.Id, refund);
+            return await this.Api.PayIns.CreateRefundAsync(idempotencyKey, payIn.Id, refund);
         }
 
         /// <summary>Creates card registration object.</summary>
         /// <param name="cardType">Card type.</param>
         /// <returns>CardRegistration instance returned from API.</returns>
-        protected CardRegistrationDTO GetJohnsCardRegistration(CardType cardType = CardType.CB_VISA_MASTERCARD)
+        protected async Task<CardRegistrationDTO> GetJohnsCardRegistration(CardType cardType = CardType.CB_VISA_MASTERCARD)
         {
             if (BaseTest._johnsCardRegistration == null)
             {
-                UserNaturalDTO user = this.GetJohn();
+                UserNaturalDTO user = await this.GetJohn();
 
                 CardRegistrationPostDTO cardRegistration = new CardRegistrationPostDTO(user.Id, CurrencyIso.EUR, cardType);
                 cardRegistration.Tag = "DefaultTag";
 
-                BaseTest._johnsCardRegistration = this.Api.CardRegistrations.Create(cardRegistration);
+                BaseTest._johnsCardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistration);
             }
 
             return BaseTest._johnsCardRegistration;
@@ -553,68 +575,68 @@ namespace MangoPay.SDK.Tests
         /// <summary>Creates new card registration object.</summary>
         /// <param name="cardType">Card type.</param>
         /// <returns>CardRegistration instance returned from API.</returns>
-        protected CardRegistrationDTO GetNewJohnsCardRegistration(CardType cardType = CardType.CB_VISA_MASTERCARD)
+        protected async Task<CardRegistrationDTO> GetNewJohnsCardRegistration(CardType cardType = CardType.CB_VISA_MASTERCARD)
         {
             BaseTest._johnsCardRegistration = null;
 
-            return GetJohnsCardRegistration(cardType);
+            return await GetJohnsCardRegistration(cardType);
         }
 
         /// <summary>Creates card registration object.</summary>
         /// <returns>CardPreAuthorization instance returned from API.</returns>
-        protected CardPreAuthorizationDTO GetJohnsCardPreAuthorization()
+        protected async Task<CardPreAuthorizationDTO> GetJohnsCardPreAuthorization()
         {
-            return GetJohnsCardPreAuthorization(null);
+            return await GetJohnsCardPreAuthorization(null);
         }
 
         /// <summary>Creates card registration object.</summary>
         /// <returns>CardPreAuthorization instance returned from API.</returns>
-        protected CardPreAuthorizationDTO GetJohnsCardPreAuthorization(string idempotencyKey)
+        protected async Task<CardPreAuthorizationDTO> GetJohnsCardPreAuthorization(string idempotencyKey)
         {
-            UserNaturalDTO user = this.GetJohn();
-            CardPreAuthorizationPostDTO cardPreAuthorization = getPreAuthorization(user.Id);
+            UserNaturalDTO user = await this.GetJohn();
+            CardPreAuthorizationPostDTO cardPreAuthorization = await GetPreAuthorization(user.Id);
 
-            return this.Api.CardPreAuthorizations.Create(idempotencyKey, cardPreAuthorization);
+            return await this.Api.CardPreAuthorizations.CreateAsync(idempotencyKey, cardPreAuthorization);
         }
 
-        protected CardPreAuthorizationPostDTO getPreAuthorization(string userId)
+        protected async Task<CardPreAuthorizationPostDTO> GetPreAuthorization(string userId)
         {
             CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(userId, CurrencyIso.EUR);
-            CardRegistrationDTO newCardRegistration = this.Api.CardRegistrations.Create(cardRegistrationPost);
+            CardRegistrationDTO newCardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
 
             CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
-            String registrationData = this.GetPaylineCorrectRegistartionData(newCardRegistration);
+            string registrationData = await this.GetPaylineCorrectRegistartionData(newCardRegistration);
             cardRegistrationPut.RegistrationData = registrationData;
-            CardRegistrationDTO getCardRegistration = this.Api.CardRegistrations.Update(cardRegistrationPut, newCardRegistration.Id);
+            CardRegistrationDTO getCardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, newCardRegistration.Id);
 
             CardPreAuthorizationPostDTO cardPreAuthorization = new CardPreAuthorizationPostDTO(userId, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, SecureMode.DEFAULT, getCardRegistration.CardId, "http://test.com");
 
             return cardPreAuthorization;
-
         }
 
-        protected KycDocumentDTO GetJohnsKycDocument()
+        protected async Task<KycDocumentDTO> GetJohnsKycDocument()
         {
             if (BaseTest._johnsKycDocument == null)
             {
-                String johnsId = this.GetJohn().Id;
+                var john = await this.GetJohn();
+                String johnsId = john.Id;
 
-                BaseTest._johnsKycDocument = this.Api.Users.CreateKycDocument(johnsId, KycDocumentType.IDENTITY_PROOF);
+                BaseTest._johnsKycDocument = await this.Api.Users.CreateKycDocumentAsync(johnsId, KycDocumentType.IDENTITY_PROOF);
             }
 
             return BaseTest._johnsKycDocument;
         }
 
-        protected KycDocumentDTO GetNewKycDocument()
+        protected async Task<KycDocumentDTO> GetNewKycDocument()
         {
             BaseTest._johnsKycDocument = null;
-            return GetJohnsKycDocument();
+            return await GetJohnsKycDocument();
         }
 
         /// <summary>Gets registration data from Payline service.</summary>
         /// <param name="cardRegistration">CardRegistration instance.</param>
         /// <returns>Registration data.</returns>
-        protected String GetPaylineCorrectRegistartionData(CardRegistrationDTO cardRegistration)
+        protected async Task<string> GetPaylineCorrectRegistartionData(CardRegistrationDTO cardRegistration)
         {
             RestClient client = new RestClient(cardRegistration.CardRegistrationURL);
 
@@ -628,7 +650,7 @@ namespace MangoPay.SDK.Tests
             // Payline requires TLS
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            IRestResponse response = client.Execute(request);
+            IRestResponse response = await client.ExecuteAsync(request);
 
             String responseString = response.Content;
 
@@ -659,13 +681,13 @@ namespace MangoPay.SDK.Tests
             return fi;
         }
 
-        protected HookDTO GetJohnsHook()
+        protected async Task<HookDTO> GetJohnsHook()
         {
             if (BaseTest._johnsHook == null)
             {
 
                 Pagination pagination = new Pagination(1, 1);
-                ListPaginated<HookDTO> list = this.Api.Hooks.GetAll(pagination);
+                ListPaginated<HookDTO> list = await this.Api.Hooks.GetAllAsync(pagination);
 
                 if (list != null && list.Count > 0 && list[0] != null)
                 {
@@ -674,22 +696,34 @@ namespace MangoPay.SDK.Tests
                 else
                 {
                     HookPostDTO hook = new HookPostDTO("http://test.com", EventType.PAYIN_NORMAL_CREATED);
-                    BaseTest._johnsHook = this.Api.Hooks.Create(hook);
+                    BaseTest._johnsHook = await this.Api.Hooks.CreateAsync(hook);
                 }
             }
 
             return BaseTest._johnsHook;
         }
 
-        protected ReportRequestDTO GetJohnsReport(ReportType reportType)
+        protected async Task<ReportRequestDTO> GetJohnsReport(ReportType reportType)
         {
             if (!BaseTest._johnsReports.ContainsKey(reportType))
             {
                 ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
-                BaseTest._johnsReports.Add(reportType, this.Api.Reports.Create(reportPost));
+                var reportRequest = await this.Api.Reports.CreateAsync(reportPost);
+                BaseTest._johnsReports.Add(reportType, reportRequest);
             }
 
             return BaseTest._johnsReports[reportType];
+        }
+
+        protected async Task<MandateDTO> GetNewMandate()
+        {
+            var john = await GetJohnsAccount();
+            var bankAccountId = john.Id;
+            var returnUrl = "http://test.test";
+            var mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
+            var mandate = await Api.Mandates.CreateAsync(mandatePost);
+
+            return mandate;
         }
 
         protected void AssertEqualInputProps<T>(T entity1, T entity2)
@@ -834,16 +868,6 @@ namespace MangoPay.SDK.Tests
             {
                 throw new ArgumentException("Unsupported type.");
             }
-        }
-
-        protected MandateDTO GetNewMandate()
-        {
-            string bankAccountId = GetJohnsAccount().Id;
-            string returnUrl = "http://test.test";
-            MandatePostDTO mandatePost = new MandatePostDTO(bankAccountId, CultureCode.EN, returnUrl);
-            MandateDTO mandate = Api.Mandates.Create(mandatePost);
-
-            return mandate;
         }
     }
 }

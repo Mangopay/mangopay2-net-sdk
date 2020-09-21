@@ -4,6 +4,7 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -11,13 +12,13 @@ namespace MangoPay.SDK.Tests
     public class ApiReportsWalletsTest : BaseTest
     {
         [Test]
-        public void Test_Report_Wallets_Create()
+        public async Task Test_Report_Wallets_Create()
         {
             try
             {
 				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.WALLETS);
 
-				ReportRequestDTO report = this.Api.Reports.Create(reportPost);
+				ReportRequestDTO report = await this.Api.Reports.CreateAsync(reportPost);
 				Assert.IsNotNull(report);
 				Assert.AreEqual(ReportType.WALLETS, report.ReportType);
 				Assert.IsTrue(report.Id.Length > 0);
@@ -29,12 +30,13 @@ namespace MangoPay.SDK.Tests
         }
 
 		[Test]
-		public void Test_Report_Wallets_Filtered_Create()
+		public async Task Test_Report_Wallets_Filtered_Create()
 		{
 			try
 			{
 				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.WALLETS);
-				string johnsId = this.GetJohn().Id;
+                var john = await this.GetJohn();
+				string johnsId = john.Id;
 				var minBalance = new Money() { Amount = 1, Currency = CurrencyIso.EUR };
 				var maxBalance = new Money() { Amount = 1000, Currency = CurrencyIso.EUR };
 				var currency = CurrencyIso.EUR;
@@ -44,7 +46,7 @@ namespace MangoPay.SDK.Tests
 				reportPost.Filters.MaxBalanceAmount = maxBalance.Amount;
 				reportPost.Filters.MaxBalanceCurrency = maxBalance.Currency;
 				reportPost.Filters.Currency = currency;
-				ReportRequestDTO report = this.Api.Reports.Create(reportPost);
+				ReportRequestDTO report = await this.Api.Reports.CreateAsync(reportPost);
 				Assert.IsNotNull(report);
 				Assert.AreEqual(ReportType.WALLETS, report.ReportType);
 				Assert.IsNotNull(report.Filters);
@@ -64,12 +66,12 @@ namespace MangoPay.SDK.Tests
 		}
 
         [Test]
-        public void Test_Report_Wallets_Get()
+        public async Task Test_Report_Wallets_Get()
         {
             try
             {
-				ReportRequestDTO report = this.GetJohnsReport(ReportType.WALLETS);
-				ReportRequestDTO getReport = this.Api.Reports.Get(report.Id);
+				ReportRequestDTO report = await this.GetJohnsReport(ReportType.WALLETS);
+				ReportRequestDTO getReport = await this.Api.Reports.GetAsync(report.Id);
 
 				Assert.AreEqual(getReport.Id, report.Id);
             }

@@ -4,6 +4,7 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -11,13 +12,13 @@ namespace MangoPay.SDK.Tests
     public class ApiReportsTransactionsTest : BaseTest
     {
         [Test]
-        public void Test_Report_Transactions_Create()
+        public async Task Test_Report_Transactions_Create()
         {
             try
             {
 				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
 
-				ReportRequestDTO report = this.Api.Reports.Create(reportPost);
+				ReportRequestDTO report = await this.Api.Reports.CreateAsync(reportPost);
 				Assert.IsNotNull(report);
 				Assert.AreEqual(ReportType.TRANSACTIONS, report.ReportType);
 				Assert.IsTrue(report.Id.Length > 0);
@@ -29,13 +30,15 @@ namespace MangoPay.SDK.Tests
         }
 
 		[Test]
-		public void Test_Report_Transactions_Filtered_Create()
+		public async Task Test_Report_Transactions_Filtered_Create()
 		{
 			try
 			{
 				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
-				string johnsId = this.GetJohn().Id;
-				string walletId = this.GetJohnsWallet().Id;
+                var john = await GetJohn();
+                var wallet = await GetJohnsWallet();
+				string johnsId = john.Id;
+				string walletId = wallet.Id;
 				var minDebitedFunds = new Money() { Amount = 111, Currency = CurrencyIso.EUR };
 				var maxDebitedFunds = new Money() { Amount = 222, Currency = CurrencyIso.EUR };
 				var minFees = new Money() { Amount = 3, Currency = CurrencyIso.JPY };
@@ -51,7 +54,7 @@ namespace MangoPay.SDK.Tests
 				reportPost.Filters.MaxFeesAmount = maxFees.Amount;
 				reportPost.Filters.MaxFeesCurrency = maxFees.Currency;
 
-				ReportRequestDTO report = this.Api.Reports.Create(reportPost);
+				ReportRequestDTO report = await this.Api.Reports.CreateAsync(reportPost);
 				Assert.IsNotNull(report);
 				Assert.AreEqual(ReportType.TRANSACTIONS, report.ReportType);
 				Assert.IsNotNull(report.Filters);
@@ -76,12 +79,12 @@ namespace MangoPay.SDK.Tests
 		}
 
         [Test]
-        public void Test_Report_Transactions_Get()
+        public async Task Test_Report_Transactions_Get()
         {
             try
             {
-				ReportRequestDTO report = this.GetJohnsReport(ReportType.TRANSACTIONS);
-				ReportRequestDTO getReport = this.Api.Reports.Get(report.Id);
+				ReportRequestDTO report = await this.GetJohnsReport(ReportType.TRANSACTIONS);
+				ReportRequestDTO getReport = await this.Api.Reports.GetAsync(report.Id);
 
 				Assert.AreEqual(getReport.Id, report.Id);
             }

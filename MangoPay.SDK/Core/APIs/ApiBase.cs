@@ -3,6 +3,7 @@ using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -231,10 +232,27 @@ namespace MangoPay.SDK.Core.APIs
             var endPoint = GetApiEndPoint(methodKey);
             endPoint.SetParameters(entitiesId);
 
-            RestTool restTool = new RestTool(this._root, true);
-            U result = restTool.Request<U, T>(idempotencyKey, endPoint, null, null, entity);
+            var restTool = new RestTool(this._root, true);
+            return restTool.Request<U, T>(idempotencyKey, endPoint, null, null, entity);
+        }
 
-            return result;
+        /// <summary>Creates the DTO instance.</summary>
+        /// <typeparam name="U">Return type.</typeparam>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="idempotencyKey">Idempotency key for this request.</param>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="entity">DTO instance that is going to be sent.</param>
+        /// <param name="entitiesId">Entity identifier.</param>
+        /// <returns>The DTO instance returned from API.</returns>
+        protected async Task<U> CreateObjectAsync<U, T>(String idempotencyKey, MethodKey methodKey, T entity, params string[] entitiesId)
+            where U : EntityBase, new()
+            where T : EntityPostBase
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.SetParameters(entitiesId);
+
+            var restTool = new RestTool(this._root, true);
+            return await restTool.RequestAsync<U, T>(idempotencyKey, endPoint, null, null, entity);
         }
 
         /// <summary>Gets the DTO instance from API.</summary>
@@ -242,15 +260,27 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="methodKey">Relevant method key.</param>
         /// <param name="entitiesId">Entities identifier.</param>
         /// <returns>The DTO instance returned from API.</returns>
-        protected T GetObject<T>(MethodKey methodKey, params string[] entitiesId) where T:EntityBase, new()
+        protected T GetObject<T>(MethodKey methodKey, params string[] entitiesId) where T : EntityBase, new()
         {
             var endPoint = GetApiEndPoint(methodKey);
             endPoint.SetParameters(entitiesId);
 
-            RestTool rest = new RestTool(this._root, true);
-            T response = rest.Request<T, T>(endPoint);
+            var rest = new RestTool(this._root, true);
+            return rest.Request<T, T>(endPoint);
+        }
 
-            return response;
+        /// <summary>Gets the DTO instance from API.</summary>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="entitiesId">Entities identifier.</param>
+        /// <returns>The DTO instance returned from API.</returns>
+        protected async Task<T> GetObjectAsync<T>(MethodKey methodKey, params string[] entitiesId) where T:EntityBase, new()
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.SetParameters(entitiesId);
+
+            var rest = new RestTool(this._root, true);
+            return await rest.RequestAsync<T, T>(endPoint);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
@@ -280,7 +310,7 @@ namespace MangoPay.SDK.Core.APIs
                 additionalUrlParams.Add(Constants.SORT_URL_PARAMETER_NAME, sort.GetFields());
             }
 
-            RestTool restTool = new RestTool(this._root, true);
+            var restTool = new RestTool(this._root, true);
 
             return restTool.RequestList<T>(endPoint, additionalUrlParams, pagination);
         }
@@ -291,11 +321,56 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="pagination">Pagination object.</param>
         /// <param name="entitiesId">Entities identifier.</param>
         /// <param name="sort">Sort.</param>
+        /// <param name="additionalUrlParams">Collection of key-value pairs of request parameters.</param>
         /// <returns>Collection of Dto instances returned from API.</returns>
-        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination,  Sort sort = null, params string[] entitiesId)
+        protected async Task<ListPaginated<T>> GetListAsync<T>(MethodKey methodKey, Pagination pagination, Sort sort, Dictionary<String, String> additionalUrlParams, params string[] entitiesId)
             where T : EntityBase, new()
         {
-            return GetList<T>(methodKey, pagination, sort,null,entitiesId);
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.SetParameters(entitiesId);
+
+            if (pagination == null)
+            {
+                pagination = new Pagination();
+            }
+
+            if (sort != null && sort.IsSet)
+            {
+                if (additionalUrlParams == null)
+                    additionalUrlParams = new Dictionary<string, string>();
+
+                additionalUrlParams.Add(Constants.SORT_URL_PARAMETER_NAME, sort.GetFields());
+            }
+
+            var restTool = new RestTool(this._root, true);
+
+            return await restTool.RequestListAsync<T>(endPoint, additionalUrlParams, pagination);
+        }
+
+        /// <summary>Gets the collection of Dto instances from API.</summary>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="pagination">Pagination object.</param>
+        /// <param name="entitiesId">Entities identifier.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>Collection of Dto instances returned from API.</returns>
+        protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, Sort sort = null, params string[] entitiesId)
+            where T : EntityBase, new()
+        {
+            return GetList<T>(methodKey, pagination, sort, null, entitiesId);
+        }
+
+        /// <summary>Gets the collection of Dto instances from API.</summary>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="pagination">Pagination object.</param>
+        /// <param name="entitiesId">Entities identifier.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>Collection of Dto instances returned from API.</returns>
+        protected async Task<ListPaginated<T>> GetListAsync<T>(MethodKey methodKey, Pagination pagination,  Sort sort = null, params string[] entitiesId)
+            where T : EntityBase, new()
+        {
+            return await GetListAsync<T>(methodKey, pagination, sort, null, entitiesId);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
@@ -307,7 +382,19 @@ namespace MangoPay.SDK.Core.APIs
         protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination, Sort sort = null)
             where T : EntityBase, new()
         {
-            return GetList<T>(methodKey, pagination,sort, additionalUrlParams:null);
+            return GetList<T>(methodKey, pagination, sort, additionalUrlParams: null);
+        }
+        /// <summary>Gets the collection of Dto instances from API.</summary>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="pagination">Pagination object.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>Collection of Dto instances returned from API.</returns>
+
+        protected async Task<ListPaginated<T>> GetListAsync<T>(MethodKey methodKey, Pagination pagination, Sort sort = null)
+            where T : EntityBase, new()
+        {
+            return await GetListAsync<T>(methodKey, pagination,sort, additionalUrlParams: null);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
@@ -318,7 +405,18 @@ namespace MangoPay.SDK.Core.APIs
         protected ListPaginated<T> GetList<T>(MethodKey methodKey, Pagination pagination)
             where T : EntityBase, new()
         {
-            return GetList<T>(methodKey, pagination, sort: null, additionalUrlParams:null);
+            return GetList<T>(methodKey, pagination, sort: null, additionalUrlParams: null);
+        }
+
+        /// <summary>Gets the collection of Dto instances from API.</summary>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="pagination">Pagination object.</param>
+        /// <returns>Collection of Dto instances returned from API.</returns>
+        protected async Task<ListPaginated<T>> GetListAsync<T>(MethodKey methodKey, Pagination pagination)
+            where T : EntityBase, new()
+        {
+            return await GetListAsync<T>(methodKey, pagination, sort: null, additionalUrlParams: null);
         }
 
         /// <summary>Saves the Dto instance.</summary>
@@ -335,8 +433,26 @@ namespace MangoPay.SDK.Core.APIs
             var endPoint = GetApiEndPoint(methodKey);
             endPoint.SetParameters(entitiesId);
 
-            RestTool restTool = new RestTool(this._root, true);
+            var restTool = new RestTool(this._root, true);
             return restTool.Request<U, T>(null, endPoint, null, null, entity);
+        }
+
+        /// <summary>Saves the Dto instance.</summary>
+        /// <typeparam name="U">Return type.</typeparam>
+        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="entity">Dto instance that is going to be sent.</param>
+        /// <param name="entitiesId">Entities identifier.</param>
+        /// <returns>The Dto instance returned from API.</returns>
+        protected async Task<U> UpdateObjectAsync<U, T>(MethodKey methodKey, T entity, params string[] entitiesId)
+            where U : EntityBase, new()
+            where T : EntityPutBase
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.SetParameters(entitiesId);
+
+            var restTool = new RestTool(this._root, true);
+            return await restTool.RequestAsync<U, T>(null, endPoint, null, null, entity);
         }
 
         protected Type GetObjectForIdempotencyUrl()

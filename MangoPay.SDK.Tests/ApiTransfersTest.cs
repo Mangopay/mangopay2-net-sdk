@@ -1,6 +1,7 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities.GET;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -8,13 +9,13 @@ namespace MangoPay.SDK.Tests
     public class ApiTransfersTest : BaseTest
     {
         [Test]
-        public void Test_Transfers_Create()
+        public async Task Test_Transfers_Create()
         {
-            UserNaturalDTO john = this.GetJohn();
-            var wallet = this.GetNewJohnsWalletWithMoney(10000);
+            UserNaturalDTO john = await this.GetJohn();
+            var wallet = await this.GetNewJohnsWalletWithMoney(10000);
 
-			TransferDTO transfer = this.GetNewTransfer(wallet);
-            WalletDTO creditedWallet = this.Api.Wallets.Get(transfer.CreditedWalletId);
+            TransferDTO transfer = await this.GetNewTransfer(wallet);
+            WalletDTO creditedWallet = await this.Api.Wallets.GetAsync(transfer.CreditedWalletId);
 
             Assert.IsTrue(transfer.Id.Length > 0);
             Assert.AreEqual(transfer.AuthorId, john.Id);
@@ -23,13 +24,13 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Transfers_Get()
+        public async Task Test_Transfers_Get()
         {
-            UserNaturalDTO john = this.GetJohn();
-			var wallet = this.GetNewJohnsWalletWithMoney(10000);
-			TransferDTO transfer = this.GetNewTransfer(wallet);
+            UserNaturalDTO john = await this.GetJohn();
+			var wallet = await this.GetNewJohnsWalletWithMoney(10000);
+			TransferDTO transfer = await this.GetNewTransfer(wallet);
 
-            TransferDTO getTransfer = this.Api.Transfers.Get(transfer.Id);
+            TransferDTO getTransfer = await this.Api.Transfers.GetAsync(transfer.Id);
 
             Assert.AreEqual(transfer.Id, getTransfer.Id);
             Assert.AreEqual(getTransfer.AuthorId, john.Id);
@@ -38,14 +39,14 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_Transfers_CreateRefund()
+        public async Task Test_Transfers_CreateRefund()
         {
-			WalletDTO wallet = this.GetNewJohnsWalletWithMoney(10000);
-			TransferDTO transfer = this.GetNewTransfer(wallet);
-            WalletDTO walletBefore = this.Api.Wallets.Get(wallet.Id);
+			WalletDTO wallet = await this.GetNewJohnsWalletWithMoney(10000);
+            TransferDTO transfer = await this.GetNewTransfer(wallet);
+            WalletDTO walletBefore = await this.Api.Wallets.GetAsync(wallet.Id);
 
-			RefundDTO refund = this.GetNewRefundForTransfer(transfer);
-            WalletDTO walletAfter = this.Api.Wallets.Get(wallet.Id);
+			RefundDTO refund = await this.GetNewRefundForTransfer(transfer);
+            WalletDTO walletAfter = await this.Api.Wallets.GetAsync(wallet.Id);
 
             Assert.IsNotNull(walletBefore);
             Assert.IsTrue(refund.Id.Length > 0);

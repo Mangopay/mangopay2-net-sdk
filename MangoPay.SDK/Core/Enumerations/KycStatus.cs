@@ -20,6 +20,9 @@ namespace MangoPay.SDK.Core.Enumerations
 		VALIDATED = 0x04,
 
 		/// <summary>REFUSED KYC status.</summary>
-		REFUSED = 0x08
-	}
+		REFUSED = 0x08,
+
+        /// <summary> OUT_OF_DATE KYC status. </summary>
+        OUT_OF_DATE = 0x10
+    }
 }

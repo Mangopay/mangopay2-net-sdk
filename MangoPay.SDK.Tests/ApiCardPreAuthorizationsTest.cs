@@ -6,6 +6,7 @@ using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -13,11 +14,11 @@ namespace MangoPay.SDK.Tests
     public class ApiCardPreAuthorizationsTest : BaseTest
     {
         [Test]
-        public void Test_CardPreAuthorization_Create()
+        public async Task Test_CardPreAuthorization_Create()
         {
             try
             {
-                CardPreAuthorizationDTO cardPreAuthorization = this.GetJohnsCardPreAuthorization();
+                CardPreAuthorizationDTO cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
 
                 Assert.IsTrue(cardPreAuthorization.Id.Length > 0);
                 Assert.AreEqual(cardPreAuthorization.Status, PreAuthorizationStatus.SUCCEEDED);
@@ -33,22 +34,25 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_CardPreAuthorization_Create_WithBilling()
+        public async Task Test_CardPreAuthorization_Create_WithBilling()
         {
             try
             {
-                CardPreAuthorizationPostDTO cardPreAuthorization = getPreAuthorization(GetJohn().Id);
+                var john = await GetJohn();
+                CardPreAuthorizationPostDTO cardPreAuthorization = await GetPreAuthorization(john.Id);
                 Billing billing = new Billing();
-                Address address = new Address();
-                address.City = "Test city";
-                address.AddressLine1 = "Test address line 1";
-                address.AddressLine2 = "Test address line 2";
-                address.Country = CountryIso.RO;
-                address.PostalCode = "65400";
+                Address address = new Address
+                {
+                    City = "Test city",
+                    AddressLine1 = "Test address line 1",
+                    AddressLine2 = "Test address line 2",
+                    Country = CountryIso.RO,
+                    PostalCode = "65400"
+                };
                 billing.Address = address;
                 cardPreAuthorization.Billing = billing;
 
-                CardPreAuthorizationDTO cardPreAuthorizationWithBilling = this.Api.CardPreAuthorizations.Create(cardPreAuthorization);
+                CardPreAuthorizationDTO cardPreAuthorizationWithBilling = await this.Api.CardPreAuthorizations.CreateAsync(cardPreAuthorization);
 
                 Assert.IsNotNull(cardPreAuthorizationWithBilling);
                 Assert.IsNotNull(cardPreAuthorizationWithBilling.Billing);
@@ -64,16 +68,17 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_CardPreAuthorization_Get()
+        public async Task Test_CardPreAuthorization_Get()
         {
             try
             {
-                CardPreAuthorizationDTO cardPreAuthorization = this.GetJohnsCardPreAuthorization();
+                CardPreAuthorizationDTO cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
 
-                CardPreAuthorizationDTO getCardPreAuthorization = this.Api.CardPreAuthorizations.Get(cardPreAuthorization.Id);
+                CardPreAuthorizationDTO getCardPreAuthorization = await this.Api.CardPreAuthorizations.GetAsync(cardPreAuthorization.Id);
 
                 Assert.AreEqual(cardPreAuthorization.Id, getCardPreAuthorization.Id);
                 Assert.AreEqual(getCardPreAuthorization.ResultCode, "000000");
+                Assert.IsNotNull(getCardPreAuthorization.MultiCapture);
             }
             catch (Exception ex)
             {
@@ -82,16 +87,18 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_CardPreAuthorization_Update()
+        public async Task Test_CardPreAuthorization_Update()
         {
             try
             {
-                CardPreAuthorizationDTO cardPreAuthorization = this.GetJohnsCardPreAuthorization();
-                CardPreAuthorizationPutDTO cardPreAuthorizationPut = new CardPreAuthorizationPutDTO();
-                cardPreAuthorizationPut.Tag = cardPreAuthorization.Tag;
-                cardPreAuthorizationPut.PaymentStatus = PaymentStatus.CANCELED;
+                CardPreAuthorizationDTO cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
+                CardPreAuthorizationPutDTO cardPreAuthorizationPut = new CardPreAuthorizationPutDTO
+                {
+                    Tag = cardPreAuthorization.Tag,
+                    PaymentStatus = PaymentStatus.CANCELED
+                };
 
-                CardPreAuthorizationDTO resultCardPreAuthorization = this.Api.CardPreAuthorizations.Update(cardPreAuthorizationPut, cardPreAuthorization.Id);
+                CardPreAuthorizationDTO resultCardPreAuthorization = await this.Api.CardPreAuthorizations.UpdateAsync(cardPreAuthorizationPut, cardPreAuthorization.Id);
 
                 Assert.AreEqual(resultCardPreAuthorization.Status, PreAuthorizationStatus.SUCCEEDED);
                 Assert.AreEqual(resultCardPreAuthorization.PaymentStatus, PaymentStatus.CANCELED);
@@ -103,23 +110,25 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_CardPreAuthorizations_GetPreAuthorizationsForUser()
+        public async Task Test_CardPreAuthorizations_GetPreAuthorizationsForUser()
         {
             try
             {
-                var cardPreAuthorization = GetJohnsCardPreAuthorization();
+                var cardPreAuthorization = await GetJohnsCardPreAuthorization();
 
                 var pagination = new Pagination(1, 1);
 
-                var filter = new FilterPreAuthorizations();
-                filter.ResultCode = cardPreAuthorization.ResultCode;
-                filter.PaymentStatus = cardPreAuthorization.PaymentStatus;
-                filter.Status = cardPreAuthorization.Status;
+                var filter = new FilterPreAuthorizations
+                {
+                    ResultCode = cardPreAuthorization.ResultCode,
+                    PaymentStatus = cardPreAuthorization.PaymentStatus,
+                    Status = cardPreAuthorization.Status
+                };
 
                 var sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
 
-                var preAuthorizations = Api.CardPreAuthorizations.GetPreAuthorizationsForUser(cardPreAuthorization.AuthorId, pagination, filter, sort);
+                var preAuthorizations = await Api.CardPreAuthorizations.GetPreAuthorizationsForUserAsync(cardPreAuthorization.AuthorId, pagination, filter, sort);
 
                 Assert.IsTrue(preAuthorizations.Count > 0);
             }
@@ -130,23 +139,25 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public void Test_CardPreAuthorizations_GetPreAuthorizationsForCard()
+        public async Task Test_CardPreAuthorizations_GetPreAuthorizationsForCard()
         {
             try
             {
-                var cardPreAuthorization = GetJohnsCardPreAuthorization();
+                var cardPreAuthorization = await GetJohnsCardPreAuthorization();
 
                 var pagination = new Pagination(1, 1);
 
-                var filter = new FilterPreAuthorizations();
-                filter.ResultCode = cardPreAuthorization.ResultCode;
-                filter.PaymentStatus = cardPreAuthorization.PaymentStatus;
-                filter.Status = cardPreAuthorization.Status;
+                var filter = new FilterPreAuthorizations
+                {
+                    ResultCode = cardPreAuthorization.ResultCode,
+                    PaymentStatus = cardPreAuthorization.PaymentStatus,
+                    Status = cardPreAuthorization.Status
+                };
 
                 var sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
 
-                var preAuthorizations = Api.CardPreAuthorizations.GetPreAuthorizationsForCard(cardPreAuthorization.CardId, pagination, filter, sort);
+                var preAuthorizations = await Api.CardPreAuthorizations.GetPreAuthorizationsForCardAsync(cardPreAuthorization.CardId, pagination, filter, sort);
 
                 Assert.IsTrue(preAuthorizations.Count > 0);
             }
