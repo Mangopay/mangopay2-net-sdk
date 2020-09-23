@@ -71,6 +71,28 @@ namespace MangoPay.SDK.Tests
             AssertEqualInputProps(transactions[0], payIn);
         }
 
+        [Test]
+        public async Task Test_Issue116()
+        {
+            UserNaturalDTO john = await GetJohn();
+
+            WalletDTO wallet = await CreateJohnsWallet();
+            PayInDTO payIn = await CreateJohnsPayInCardWeb(wallet.Id);
+
+            var api = Api;
+            Sort mpSort = new Sort();
+            mpSort.AddField("CreationDate", SortDirection.desc);
+            Pagination pagination = new Pagination(1, 99);
+
+            var mpTransactions = api.Wallets.GetTransactions(wallet.Id, pagination, mpSort);
+
+            Assert.IsNotNull(api);
+            Assert.AreEqual(payIn.Status, TransactionStatus.CREATED);
+            Assert.IsTrue(mpTransactions.Count == 1);
+            Assert.IsTrue(mpTransactions[0] is TransactionDTO);
+            Assert.AreEqual(mpTransactions[0].AuthorId, john.Id);
+        }
+
         /** FIXME: backend error to fix
         [Test]
         public void Test_Wallets_Transactions_With_Sorting()
