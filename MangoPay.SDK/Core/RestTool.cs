@@ -725,12 +725,11 @@ namespace MangoPay.SDK.Core
 
             var restResponse = await client.ExecuteAsync<List<T>>(restRequest);
 
-            if (pagination != null)
-            {
-                this._pagination = pagination;
-            }
+            var totalPages = pagination?.Page ?? 0;
 
-            responseObject = new ListPaginated<T>(restResponse.Data, _pagination.Page, restResponse.Data.Count);
+            var totalItems = restResponse.Data.Count;
+
+            responseObject = new ListPaginated<T>(restResponse.Data, totalPages, totalItems);
 
             this._responseCode = (int)restResponse.StatusCode;
 
