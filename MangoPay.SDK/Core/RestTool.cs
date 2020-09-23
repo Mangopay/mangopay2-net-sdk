@@ -721,15 +721,16 @@ namespace MangoPay.SDK.Core
                     _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
             }
 
+            _log.Debug("RequestType: " + this._requestType);
+
+            var restResponse = await client.ExecuteAsync<List<T>>(restRequest);
+
             if (pagination != null)
             {
                 this._pagination = pagination;
             }
 
-            _log.Debug("RequestType: " + this._requestType);
-
-            IRestResponse<List<T>> restResponse = await client.ExecuteAsync<List<T>>(restRequest);
-            responseObject = new ListPaginated<T>(restResponse.Data);
+            responseObject = new ListPaginated<T>(restResponse.Data, _pagination.Page, restResponse.Data.Count);
 
             this._responseCode = (int)restResponse.StatusCode;
 
