@@ -1,3 +1,9 @@
+## [2.1.2]
+- New endpoint to support changes to Card Validation process (please listen out for product announcements)
+- Changes to TotalItems and TotalPages #115
+- NullReferenceException: On dictionary in DefaultStorageStrategy #103
+- Async improvements to Card Validation and a few other little fixes 
+
 ## [2.0.4]
 - Added new `KYC_OUTDATED` value for `EventType`
 - Added new `USER_KYC_LIGHT` value for `EventType`
