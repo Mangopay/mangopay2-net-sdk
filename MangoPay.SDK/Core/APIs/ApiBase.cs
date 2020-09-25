@@ -39,6 +39,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.CardSave, new ApiEndPoint("/cards/{0}", RequestType.PUT)},
             { MethodKey.CardPreauthorizations, new ApiEndPoint("/cards/{0}/preauthorizations", RequestType.GET)},
             { MethodKey.CardTransactions, new ApiEndPoint("/cards/{0}/transactions", RequestType.GET)},
+            { MethodKey.CardValidate, new ApiEndPoint("/cards/{0}/validate", RequestType.POST) },
 
             { MethodKey.PayinsCardWebCreate, new ApiEndPoint("/payins/card/web", RequestType.POST)},
             { MethodKey.PayinsCardWebGetCardData, new ApiEndPoint("/payins/card/web/{0}/extended/", RequestType.GET)},

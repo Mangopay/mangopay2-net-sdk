@@ -56,6 +56,22 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        [Ignore("Ignored as it will deactivate the test card")]
+        public async Task Test_Card_Validate()
+        {
+            var payIn = await GetNewPayInCardDirect();
+            Assert.IsNotNull(payIn, "PayIn object is null!");
+            var card = Api.Cards.Get(payIn.CardId);
+
+            Assert.IsNotNull(card, "Card is null!");
+            Assert.IsNotNull(card.Fingerprint, "Card fingerprint is null!");
+            Assert.IsNotEmpty(card.Fingerprint, "Card fingerprint is empty!");
+
+            var validated = Api.Cards.Validate(card.Id);
+            Assert.IsNotNull(validated);
+        }
+
+        [Test]
         public async Task Test_Card_GetByFingerprint_Paginated()
         {
             PayInCardDirectDTO payIn = await GetNewPayInCardDirect();
