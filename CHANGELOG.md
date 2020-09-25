@@ -1,4 +1,4 @@
-## [2.1.2]
+## [2.1.3]
 - New endpoint to support changes to Card Validation process (please listen out for product announcements)
 - Changes to TotalItems and TotalPages #115
 - NullReferenceException: On dictionary in DefaultStorageStrategy #103
