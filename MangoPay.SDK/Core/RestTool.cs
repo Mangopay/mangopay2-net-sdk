@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using StringExtensions;
+using Shaman.Runtime;
 
 namespace MangoPay.SDK.Core
 {
@@ -788,19 +788,7 @@ namespace MangoPay.SDK.Core
 
         private List<string> CustomSplit(string input, string delim)
         {
-            var list = new List<string>();
-
-            while (CommonStringExtensions.Contains(input, delim, StringComparison.InvariantCulture))
-            {
-                var add = CommonStringExtensions.LeftOf(input, delim[0]);
-                list.Add(add);
-
-                input = CommonStringExtensions.Right(input, add.Length + 1);
-            }
-
-            list.Add(input);
-
-            return list;
+            return ValueStringExtensions.SplitFast(input, delim[0]).ToList();
         }
 
         private void SetLinksForList<T>(ListPaginated<T> listPaginated, List<string> links)
