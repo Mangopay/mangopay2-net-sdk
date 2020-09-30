@@ -16,6 +16,7 @@
       <PackageReference Include="Common.Logging" Version="3.4.1" />
       <PackageReference Include="Common.Logging.Core" Version="3.4.1" />
       <PackageReference Include="RestSharp" Version="106.10.1" />
+      <PackageReference Include="StringExtensions" Version="1.1.1" />
     </ItemGroup>
 </Project>
 
