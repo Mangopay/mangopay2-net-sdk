@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Shaman.Runtime;
 
 namespace MangoPay.SDK.Core
 {
@@ -775,7 +774,8 @@ namespace MangoPay.SDK.Core
 
                 if (header.Name.ToLower().Contains(Constants.LINK.ToLower()))
                 {
-                    var links = CustomSplit(value, ",");
+
+                    var links = CustomSplit(value, ',');
 
                     if (links.Count <= 0) continue;
 
@@ -786,18 +786,71 @@ namespace MangoPay.SDK.Core
             return listPaginated;
         }
 
-        private List<string> CustomSplit(string input, string delim)
+        private List<string> Split(string input, char delim)
         {
-            return ValueStringExtensions.SplitFast(input, delim[0]).ToList();
+            return input.Split(delim).ToList();
+        }
+
+        private List<string> CustomSplit(string input, char delim)
+        {
+            var list = new List<string>();
+            var pos = new List<int> {0};
+
+            for (var i = 0; i < input.Length; i++)
+            {
+                if (input[i] == delim)
+                {
+                    pos.Add(i + 1);
+                }
+            }
+
+            pos.Add(input.Length + 1);
+
+            for (var i = 1; i < pos.Count; i++)
+            {
+                var length = pos[i] - pos[i - 1] - 1;
+                var charArray = new char[length];
+                var count = 0;
+                for (var j = pos[i - 1]; j < pos[i] - 1; j++)
+                {
+                    charArray[count++] = input[j];
+                }
+
+                list.Add(new string(charArray));
+            }
+
+            return list;
+        }
+
+        private string SubstractFromRel(string rel, char delim)
+        {
+            var pos = new List<int>();
+
+            for (var i = 0; i < rel.Length; i++)
+            {
+                if (rel[i] == delim)
+                {
+                    pos.Add(i + 1);
+                }
+            }
+
+            var length = pos[1] - pos[0] - 1;
+            var charArr = new char[length];
+            var count = 0;
+            for (var i = pos[0]; i < pos[1] - 1; i++)
+            {
+                charArr[count++] = rel[i];
+            }
+
+            return new string(charArr);
         }
 
         private void SetLinksForList<T>(ListPaginated<T> listPaginated, List<string> links)
         {
             foreach (var l in links)
             {
-                var link = RemoveCharactersFromLink(l);
-
-                var oneLink = CustomSplit(link, ";");
+                var oneLink = CustomSplit(l, ';');
+                oneLink[1] = SubstractFromRel(oneLink[1], '"');
 
                 if (oneLink[0] != null && oneLink[1] != null)
                 {
