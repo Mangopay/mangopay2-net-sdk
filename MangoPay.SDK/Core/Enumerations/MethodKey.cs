@@ -13,6 +13,7 @@ namespace MangoPay.SDK.Core.Enumerations
         CardRegistrationGet,
         CardRegistrationSave,
         CardPreauthorizations,
+        CardValidate,
         CardTransactions,
         CardByFingerprintGet,
         EventsAll,

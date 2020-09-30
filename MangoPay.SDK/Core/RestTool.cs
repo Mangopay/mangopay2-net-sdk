@@ -665,7 +665,7 @@ namespace MangoPay.SDK.Core
 
             if (this._responseCode == 200)
             {
-                responseObject = this.ReadResponseHeaders<T>(restResponse, responseObject);
+                responseObject = this.ReadResponseHeaders<T>(restResponse.Headers, responseObject);
 
                 _log.Debug("Response object: " + responseObject.ToString());
             }
@@ -721,14 +721,10 @@ namespace MangoPay.SDK.Core
                     _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
             }
 
-            if (pagination != null)
-            {
-                this._pagination = pagination;
-            }
-
             _log.Debug("RequestType: " + this._requestType);
 
-            IRestResponse<List<T>> restResponse = await client.ExecuteAsync<List<T>>(restRequest);
+            var restResponse = await client.ExecuteAsync<List<T>>(restRequest);
+
             responseObject = new ListPaginated<T>(restResponse.Data);
 
             this._responseCode = (int)restResponse.StatusCode;
@@ -744,7 +740,7 @@ namespace MangoPay.SDK.Core
 
             if (this._responseCode == 200)
             {
-                responseObject = this.ReadResponseHeaders<T>(restResponse, responseObject);
+                responseObject = this.ReadResponseHeaders<T>(restResponse.Headers, responseObject);
 
                 _log.Debug("Response object: " + responseObject.ToString());
             }
@@ -757,8 +753,86 @@ namespace MangoPay.SDK.Core
         }
 
         /// <summary>Reads and parses response headers (pagination etc.)</summary>
+        /// <param name="headers">The original response headers</param>
+        /// <param name="listPaginated">The list</param>
+        private ListPaginated<T> ReadResponseHeaders<T>(IList<Parameter> headers, ListPaginated<T> listPaginated)
+        {
+            headers = headers.Where(x => x.Name != null).ToList();
+            foreach (var header in headers)
+            {
+                var value = header.Value.ToString();
+
+                if (header.Name.ToLower().Contains(Constants.X_NUMBER_OF_PAGES.ToLower()))
+                {
+                    listPaginated.TotalPages = int.Parse(value); continue;
+                }
+
+                if (header.Name.ToLower().Contains(Constants.X_NUMBER_OF_ITEMS.ToLower()))
+                {
+                    listPaginated.TotalItems = int.Parse(value); continue;
+                }
+
+                if (header.Name.ToLower().Contains(Constants.LINK.ToLower()))
+                {
+                    var links = CustomSplit(value, ',');
+
+                    if (links.Count <= 0) continue;
+
+                    SetLinksForList(listPaginated, links);
+                }
+            }
+
+            return listPaginated;
+        }
+
+        private List<string> CustomSplit(string input, char delim)
+        {
+            var list = new List<string>();
+            while (input.Contains(delim))
+            {
+                var pos = input.IndexOf(delim);
+                var add = input.Substring(0, pos).Trim();
+                list.Add(add);
+                input = input.Substring(pos + 1);
+            }
+
+            list.Add(input);
+
+            return list;
+        }
+
+        private void SetLinksForList<T>(ListPaginated<T> listPaginated, List<string> links)
+        {
+            foreach (var l in links)
+            {
+                var link = RemoveCharactersFromLink(l);
+
+                var oneLink = CustomSplit(link, ';');
+
+                if (oneLink[0] != null && oneLink[1] != null)
+                {
+                    if (oneLink[1] == Constants.LINKS_FIRST_ITEM) listPaginated.Links[0] = oneLink[0];
+                    if (oneLink[1] == Constants.LINKS_PREVIOUS_ITEM) listPaginated.Links[1] = oneLink[0];
+                    if (oneLink[1] == Constants.LINKS_NEXT_ITEM) listPaginated.Links[2] = oneLink[0];
+                    if (oneLink[1] == Constants.LINKS_LAST_ITEM) listPaginated.Links[3] = oneLink[0];
+                }
+            }
+        }
+
+        private string RemoveCharactersFromLink(string input)
+        {
+            var link = input;
+            link = link.Replace("<\"", "");
+            link = link.Replace("\">", "");
+            link = link.Replace(" rel=\"", "");
+            link = link.Replace("\"", "");
+
+            return link;
+        }
+
+        /// <summary>Reads and parses response headers (pagination etc.)</summary>
         /// <param name="conn">Response object.</param>
-        private ListPaginated<T> ReadResponseHeaders<T>(IRestResponse restResponse, ListPaginated<T> listPaginated = null)
+        private ListPaginated<T> ReadResponseHeadersOld<T>(IRestResponse restResponse, ListPaginated<T> listPaginated = null)
         {
             foreach (Parameter k in restResponse.Headers)
             {
