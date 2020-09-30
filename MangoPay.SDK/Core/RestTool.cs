@@ -774,7 +774,7 @@ namespace MangoPay.SDK.Core
 
                 if (header.Name.ToLower().Contains(Constants.LINK.ToLower()))
                 {
-                    var links = value.Split(',').ToList();
+                    var links = CustomSplit(value, ',');
 
                     if (links.Count <= 0) continue;
 
@@ -785,13 +785,29 @@ namespace MangoPay.SDK.Core
             return listPaginated;
         }
 
+        private List<string> CustomSplit(string input, char delim)
+        {
+            var list = new List<string>();
+            while (input.Contains(delim))
+            {
+                var pos = input.IndexOf(delim);
+                var add = input.Substring(0, pos).Trim();
+                list.Add(add);
+                input = input.Substring(pos + 1);
+            }
+
+            list.Add(input);
+
+            return list;
+        }
+
         private void SetLinksForList<T>(ListPaginated<T> listPaginated, List<string> links)
         {
             foreach (var l in links)
             {
                 var link = RemoveCharactersFromLink(l);
 
-                var oneLink = link.Split(';').ToList();
+                var oneLink = CustomSplit(link, ';');
 
                 if (oneLink[0] != null && oneLink[1] != null)
                 {
