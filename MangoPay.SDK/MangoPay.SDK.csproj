@@ -6,9 +6,9 @@
         <Copyright>Copyright © 2020</Copyright>
         <Description>.Net SDK and .NET Core SDK for access to MANGOPAY API v2</Description>
         <Authors>MangoPay</Authors>
-        <Version>2.1.5-beta</Version>
-        <AssemblyVersion>2.1.5.0-beta</AssemblyVersion>
-        <FileVersion>2.1.5.0-beta</FileVersion>
+        <Version>2.1.4</Version>
+        <AssemblyVersion>2.1.4.0</AssemblyVersion>
+        <FileVersion>2.1.4.0</FileVersion>
         <PackageId>mangopay2-sdk</PackageId>
     </PropertyGroup>
     <ItemGroup>
