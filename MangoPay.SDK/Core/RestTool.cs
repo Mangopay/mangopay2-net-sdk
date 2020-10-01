@@ -764,12 +764,14 @@ namespace MangoPay.SDK.Core
 
                 if (header.Name.ToLower().Contains(Constants.X_NUMBER_OF_PAGES.ToLower()))
                 {
-                    listPaginated.TotalPages = int.Parse(value); continue;
+                    listPaginated.TotalPages = int.Parse(value);
+                    continue;
                 }
 
                 if (header.Name.ToLower().Contains(Constants.X_NUMBER_OF_ITEMS.ToLower()))
                 {
-                    listPaginated.TotalItems = int.Parse(value); continue;
+                    listPaginated.TotalItems = int.Parse(value);
+                    continue;
                 }
 
                 if (header.Name.ToLower().Contains(Constants.LINK.ToLower()))
@@ -784,11 +786,6 @@ namespace MangoPay.SDK.Core
             }
 
             return listPaginated;
-        }
-
-        private List<string> Split(string input, char delim)
-        {
-            return input.Split(delim).ToList();
         }
 
         private List<string> CustomSplit(string input, char delim)
@@ -860,17 +857,6 @@ namespace MangoPay.SDK.Core
                     if (oneLink[1] == Constants.LINKS_LAST_ITEM) listPaginated.Links[3] = oneLink[0];
                 }
             }
-        }
-
-        private string RemoveCharactersFromLink(string input)
-        {
-            var link = input;
-            link = link.Replace("<\"", "");
-            link = link.Replace("\">", "");
-            link = link.Replace(" rel=\"", "");
-            link = link.Replace("\"", "");
-
-            return link;
         }
 
         /// <summary>Reads and parses response headers (pagination etc.)</summary>
