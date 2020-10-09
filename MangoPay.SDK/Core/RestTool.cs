@@ -438,9 +438,9 @@ namespace MangoPay.SDK.Core
                     }
                 }
 
-                Parameter body = restRequest.Parameters.Where(p => p.Type == ParameterType.RequestBody).FirstOrDefault();
-                IEnumerable<Parameter> parameters = restRequest.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
-                foreach (Parameter p in parameters)
+                var body = restRequest.Parameters.Where(p => p.Type == ParameterType.RequestBody).FirstOrDefault();
+                var parameters = restRequest.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
+                foreach (var p in parameters)
                 {
                     _log.Debug(p.Name + ": " + p.Value);
                 }
@@ -543,9 +543,9 @@ namespace MangoPay.SDK.Core
                     }
                 }
 
-                Parameter body = restRequest.Parameters.Where(p => p.Type == ParameterType.RequestBody).FirstOrDefault();
-                IEnumerable<Parameter> parameters = restRequest.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
-                foreach (Parameter p in parameters)
+                var body = restRequest.Parameters.Where(p => p.Type == ParameterType.RequestBody).FirstOrDefault();
+                var parameters = restRequest.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
+                foreach (var p in parameters)
                 {
                     _log.Debug(p.Name + ": " + p.Value);
                 }
@@ -665,7 +665,7 @@ namespace MangoPay.SDK.Core
 
             if (this._responseCode == 200)
             {
-                responseObject = this.ReadResponseHeaders<T>(restResponse.Headers, responseObject);
+                responseObject = this.ReadResponseHeaders<T>(restResponse, responseObject);
 
                 _log.Debug("Response object: " + responseObject.ToString());
             }
@@ -740,7 +740,7 @@ namespace MangoPay.SDK.Core
 
             if (this._responseCode == 200)
             {
-                responseObject = this.ReadResponseHeaders<T>(restResponse.Headers, responseObject);
+                responseObject = this.ReadResponseHeaders<T>(restResponse, responseObject);
 
                 _log.Debug("Response object: " + responseObject.ToString());
             }
@@ -755,9 +755,9 @@ namespace MangoPay.SDK.Core
         /// <summary>Reads and parses response headers (pagination etc.)</summary>
         /// <param name="headers">The original response headers</param>
         /// <param name="listPaginated">The list</param>
-        private ListPaginated<T> ReadResponseHeaders<T>(IList<Parameter> headers, ListPaginated<T> listPaginated)
+        private ListPaginated<T> ReadResponseHeaders<T>(IRestResponse response, ListPaginated<T> listPaginated)
         {
-            headers = headers.Where(x => x.Name != null).ToList();
+            var headers = response.Headers.Where(x => x.Name != null).ToList();
             foreach (var header in headers)
             {
                 var value = header.Value.ToString();
@@ -863,7 +863,7 @@ namespace MangoPay.SDK.Core
         /// <param name="conn">Response object.</param>
         private ListPaginated<T> ReadResponseHeadersOld<T>(IRestResponse restResponse, ListPaginated<T> listPaginated = null)
         {
-            foreach (Parameter k in restResponse.Headers)
+            foreach (var k in restResponse.Headers)
             {
                 String v = (string)k.Value;
                 _log.Debug("Response header: " + k.Name + ":" + v);
