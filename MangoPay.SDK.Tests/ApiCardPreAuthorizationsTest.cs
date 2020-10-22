@@ -6,6 +6,7 @@ using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
@@ -79,6 +80,35 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual(cardPreAuthorization.Id, getCardPreAuthorization.Id);
                 Assert.AreEqual(getCardPreAuthorization.ResultCode, "000000");
                 Assert.IsNotNull(getCardPreAuthorization.MultiCapture);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task Test_CardPreAuthorizationTransactions_Get()
+        {
+            try
+            {
+                var cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
+                var wallet = await this.GetJohnsWalletWithMoney();
+                var user = await this.GetJohn();
+                var payIn = new PayInPreauthorizedDirectPostDTO(user.Id,
+                    new Money {Amount = 10000, Currency = CurrencyIso.EUR},
+                    new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, cardPreAuthorization.Id)
+                {
+                    SecureModeReturnURL = "http://test.com"
+                };
+
+                await Api.PayIns.CreatePreauthorizedDirectAsync(payIn);
+
+                var preAuthTransactions = await this.Api.CardPreAuthorizations.GetTransactionsAsync(cardPreAuthorization.Id, new Pagination(1, 10));
+
+                Assert.NotNull(preAuthTransactions);
+                Assert.NotNull(preAuthTransactions.ElementAt(0));
+                Assert.AreEqual(preAuthTransactions.ElementAt(0).Status, TransactionStatus.SUCCEEDED);
             }
             catch (Exception ex)
             {

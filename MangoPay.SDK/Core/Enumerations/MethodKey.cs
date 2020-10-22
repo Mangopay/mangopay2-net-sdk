@@ -39,6 +39,7 @@ namespace MangoPay.SDK.Core.Enumerations
         PreauthorizationCreate,
         PreauthorizationGet,
         PreauthorizationSave,
+        PreauthorizationTransactionsGet,
         RefundsGet,
         TransfersCreate,
         TransfersCreateRefunds,
