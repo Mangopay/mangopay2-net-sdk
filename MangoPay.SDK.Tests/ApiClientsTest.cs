@@ -274,5 +274,58 @@ namespace MangoPay.SDK.Tests
             await this.Api.Clients.UploadLogoAsync(fi.FullName);
 			await this.Api.Clients.UploadLogoAsync(File.ReadAllBytes(fi.FullName));
 		}
+
+		[Test]
+        public async Task Test_BankAccountCreation()
+        {
+            var john = await this.GetJohn();
+            var account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154")
+            {
+                UserId = john.Id,
+                BIC = "CMBRFR2BCME"
+            };
+
+			var result = await Api.Clients.CreateBankAccountIbanAsync(account);
+
+			Assert.NotNull(result);
+			Assert.AreEqual(result.Type, BankAccountType.IBAN);
+			Assert.NotNull(result.Id);
+        }
+
+        [Test]
+		[Ignore("due to backend issues, this cannot run yet")]
+        public async Task Test_Payout()
+        {
+            var john = await this.GetJohn();
+
+            var wallet = await GetJohnsWalletWithMoney(1000);
+
+			var getWallet = await Api.Wallets.GetAsync(wallet.Id);
+
+            var account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154")
+            {
+                UserId = john.Id,
+                BIC = "CMBRFR2BCME"
+            };
+
+            var result = await Api.Clients.CreateBankAccountIbanAsync(account);
+
+			var payOut = new WalletPayoutDTO
+            {
+				BankAccountId = result.Id,
+				BankWireRef = "invoice 7282",
+				DebitedFunds = new Money
+                {
+					Amount = 12,
+					Currency = CurrencyIso.EUR
+                },
+				DebitedWalletId = getWallet.Id,
+                Tag = "DefaultTag"
+            };
+
+            var bankWire = await this.Api.Clients.CreatePayout(payOut);
+
+            Assert.NotNull(bankWire);
+        }
 	}
 }

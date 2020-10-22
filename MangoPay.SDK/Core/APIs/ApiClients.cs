@@ -5,6 +5,7 @@ using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core.APIs
@@ -149,7 +150,17 @@ namespace MangoPay.SDK.Core.APIs
 			return await UploadLogoAsync(fileArray);
 		}
 
-        /// <summary>***Now depreciated and soon to be removed from this class (already moved to ApiKyc.cs)*** Gets the list of all the uploaded documents for all users.</summary>
+        public async Task<BankAccountIbanDTO> CreateBankAccountIbanAsync(BankAccountIbanPostDTO bankAccount)
+        {
+            return await this.CreateObjectAsync<BankAccountIbanDTO, BankAccountIbanPostDTO>(null, MethodKey.ClientBankAccount, bankAccount);
+        }
+
+        public async Task<PayOutBankWireDTO> CreatePayout(WalletPayoutDTO payOut)
+        {
+            return await this.CreateObjectAsync<PayOutBankWireDTO, WalletPayoutDTO>(null, MethodKey.ClientPayout, payOut);
+        }
+
+		/// <summary>***Now depreciated and soon to be removed from this class (already moved to ApiKyc.cs)*** Gets the list of all the uploaded documents for all users.</summary>
 		/// <param name="pagination">Pagination.</param>
 		/// <param name="filter">Filter.</param>
 		/// <param name="sort">Sort.</param>
@@ -281,5 +292,10 @@ namespace MangoPay.SDK.Core.APIs
             byte[] fileArray = File.ReadAllBytes(filePath);
             return UploadLogo(fileArray);
         }
-    }
+
+        public BankAccountIbanDTO CreateBankAccountIban(BankAccountIbanPostDTO bankAccount)
+        {
+            return this.CreateObject<BankAccountIbanDTO, BankAccountIbanPostDTO>(null, MethodKey.ClientBankAccount, bankAccount);
+        }
+	}
 }
