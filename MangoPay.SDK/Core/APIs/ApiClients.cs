@@ -150,12 +150,22 @@ namespace MangoPay.SDK.Core.APIs
 			return await UploadLogoAsync(fileArray);
 		}
 
-        public async Task<BankAccountIbanDTO> CreateBankAccountIbanAsync(BankAccountIbanPostDTO bankAccount)
+        public async Task<BankAccountIbanDTO> CreateBankAccountIbanAsync(string idempotencyKey, BankAccountIbanPostDTO bankAccount)
+        {
+            return await this.CreateObjectAsync<BankAccountIbanDTO, BankAccountIbanPostDTO>(idempotencyKey, MethodKey.ClientBankAccount, bankAccount);
+        }
+
+		public async Task<BankAccountIbanDTO> CreateBankAccountIbanAsync(BankAccountIbanPostDTO bankAccount)
         {
             return await this.CreateObjectAsync<BankAccountIbanDTO, BankAccountIbanPostDTO>(null, MethodKey.ClientBankAccount, bankAccount);
         }
 
-        public async Task<PayOutBankWireDTO> CreatePayout(WalletPayoutDTO payOut)
+        public async Task<PayOutBankWireDTO> CreatePayoutAsync(string idempotencyKey, WalletPayoutDTO payOut)
+        {
+            return await this.CreateObjectAsync<PayOutBankWireDTO, WalletPayoutDTO>(idempotencyKey, MethodKey.ClientPayout, payOut);
+        }
+
+		public async Task<PayOutBankWireDTO> CreatePayoutAsync(WalletPayoutDTO payOut)
         {
             return await this.CreateObjectAsync<PayOutBankWireDTO, WalletPayoutDTO>(null, MethodKey.ClientPayout, payOut);
         }
@@ -297,5 +307,16 @@ namespace MangoPay.SDK.Core.APIs
         {
             return this.CreateObject<BankAccountIbanDTO, BankAccountIbanPostDTO>(null, MethodKey.ClientBankAccount, bankAccount);
         }
-	}
+
+
+        public PayOutBankWireDTO CreatePayout(string idempotencyKey, WalletPayoutDTO payOut)
+        {
+            return this.CreateObject<PayOutBankWireDTO, WalletPayoutDTO>(idempotencyKey, MethodKey.ClientPayout, payOut);
+        }
+
+        public PayOutBankWireDTO CreatePayout(WalletPayoutDTO payOut)
+        {
+            return this.CreateObject<PayOutBankWireDTO, WalletPayoutDTO>(null, MethodKey.ClientPayout, payOut);
+        }
+    }
 }
