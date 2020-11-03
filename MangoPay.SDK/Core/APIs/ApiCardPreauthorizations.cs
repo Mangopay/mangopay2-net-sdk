@@ -40,6 +40,15 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<CardPreAuthorizationDTO>(MethodKey.PreauthorizationGet, cardPreAuthorizationId);
         }
 
+        /// <summary>Gets pre-authorization object.</summary>
+        /// <param name="cardPreAuthorizationId">PreAuthorization identifier.</param>
+        /// <param name="pagination">Pagination</param>
+        /// <returns>Card registration instance returned from API.</returns>
+        public async Task<ListPaginated<TransactionDTO>> GetTransactionsAsync(string cardPreAuthorizationId, Pagination pagination)
+        {
+            return await this.GetListAsync<TransactionDTO>(MethodKey.PreauthorizationTransactionsGet, pagination, null, cardPreAuthorizationId);
+        }
+
         /// <summary>Updates pre-authorization object.</summary>
         /// <param name="cardPreAuthorization">PreAuthorization object to be updated.</param>
         /// <param name="cardPreAuthorizationId">PreAuthorization object identifier.</param>
@@ -98,6 +107,15 @@ namespace MangoPay.SDK.Core.APIs
         public CardPreAuthorizationDTO Get(String cardPreAuthorizationId)
         {
             return this.GetObject<CardPreAuthorizationDTO>(MethodKey.PreauthorizationGet, cardPreAuthorizationId);
+        }
+
+        /// <summary>Gets pre-authorization object.</summary>
+        /// <param name="cardPreAuthorizationId">PreAuthorization identifier.</param>
+        /// <param name="pagination">Pagination</param>
+        /// <returns>Card registration instance returned from API.</returns>
+        public ListPaginated<TransactionDTO> GetTransactions(string cardPreAuthorizationId, Pagination pagination)
+        {
+            return this.GetList<TransactionDTO>(MethodKey.PreauthorizationTransactionsGet, pagination, null, cardPreAuthorizationId);
         }
 
         /// <summary>Updates pre-authorization object.</summary>
