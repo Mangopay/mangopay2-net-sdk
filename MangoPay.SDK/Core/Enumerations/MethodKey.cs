@@ -99,6 +99,8 @@ namespace MangoPay.SDK.Core.Enumerations
         ClientGet,
         ClientSave,
         ClientUploadLogo,
+        ClientBankAccount,
+        ClientPayout,
         
         DisputesGet,
         DisputesSaveTag,

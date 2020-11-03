@@ -130,6 +130,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.ClientGet, new ApiEndPoint("/clients", RequestType.GET)},
             { MethodKey.ClientSave, new ApiEndPoint("/clients", RequestType.PUT)},
             { MethodKey.ClientUploadLogo, new ApiEndPoint("/clients/logo", RequestType.PUT)},
+            { MethodKey.ClientBankAccount, new ApiEndPoint("/clients/bankaccounts/iban", RequestType.POST)},
+            { MethodKey.ClientPayout, new ApiEndPoint("/clients/payouts", RequestType.POST)},
 
             { MethodKey.DisputesGet, new ApiEndPoint("/disputes/{0}", RequestType.GET)},
             { MethodKey.DisputesSaveTag, new ApiEndPoint("/disputes/{0}", RequestType.PUT)},
