@@ -86,12 +86,14 @@ namespace MangoPay.SDK.Tests
                 Country = CountryIso.PL
             };
             var uboPutDto = new UboPutDTO("JohnNatural1", "DoeNatural1", address, CountryIso.DE, birthDate, birthPlace);
+            uboPutDto.IsActive = true;
             UboDTO result = null;
             Assert.DoesNotThrowAsync(async () =>
                 result = await Api.UboDeclarations.UpdateUboAsync(uboPutDto, userLegal.Id, uboDeclaration.Id, ubo.Id));
             Assert.NotNull(result);
             Assert.AreEqual(ubo.Id, result.Id);
             Assert.AreEqual(uboPutDto.FirstName, result.FirstName);
+            Assert.AreEqual(uboPutDto.IsActive, result.IsActive);
         }
 
         [Test]

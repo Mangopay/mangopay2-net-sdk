@@ -31,5 +31,8 @@ namespace MangoPay.SDK.Entities.GET
                 
         /// <summary>Birthplace.</summary>
         public Birthplace Birthplace { get; set; }
+
+        /// <summary>IsActive.</summary>
+        public Boolean IsActive { get; set; }
     }
 }
