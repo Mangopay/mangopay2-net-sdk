@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.1;net48;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;net461;netcoreapp2.1</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Company>MangoPay</Company>
         <Copyright>Copyright © 2020</Copyright>
