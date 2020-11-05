@@ -63,7 +63,11 @@ namespace MangoPay.SDK.Core.Enumerations
 	    MANDATE_EXPIRED                         = 0x8000000000000,
 	    USER_KYC_REGULAR                        = 0x10000000000000,
         KYC_OUTDATED                            = 0x20000000000000,
-        USER_KYC_LIGHT                          = 0x40000000000000
+        USER_KYC_LIGHT                          = 0x40000000000000,
+        USER_INFLOWS_BLOCKED                    = 0x80000000000000,
+        USER_INFLOWS_UNBLOCKED                  = 0x100000000000000,
+        USER_OUTFLOWS_BLOCKED                   = 0x200000000000000,
+        USER_OUTFLOWS_UNBLOCKED                 = 0x400000000000000
 
         /* IMPORTANT!
 		 * 
