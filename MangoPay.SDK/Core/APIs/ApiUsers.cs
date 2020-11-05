@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using RestSharp;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -598,6 +599,20 @@ namespace MangoPay.SDK.Core.APIs
             return await rest.RequestAsync<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
         }
 
+        /// <summary>
+        /// Gets the user block status async
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<UsersBlockStatusDTO> GetUserBlockStatusAsync(String userId)
+        {
+            var endPoint = GetApiEndPoint(MethodKey.UsersBlockStatus);
+            endPoint.SetParameters(new[] { userId });
+            var rest = new RestTool(_root, true);
+
+            return await rest.RequestAsync<UsersBlockStatusDTO, UsersBlockStatusDTO>(endPoint);
+        }
+
         /// <summary>Gets user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>User instance returned from API, which is either of UserNatural or UserLegal type.</returns>
@@ -1177,6 +1192,20 @@ namespace MangoPay.SDK.Core.APIs
             }
 
             return rest.Request<EmoneyDTO, EmoneyDTO>(endPoint, parameters);
+        }
+
+        /// <summary>
+        /// Gets the user block status
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public UsersBlockStatusDTO GetUserBlockStatus(String userId)
+        {
+            var endPoint = GetApiEndPoint(MethodKey.UsersBlockStatus);
+            endPoint.SetParameters(new[] { userId });
+            var rest = new RestTool(_root, true);
+
+            return rest.Request<UsersBlockStatusDTO, UsersBlockStatusDTO>(endPoint);
         }
     }
 }
