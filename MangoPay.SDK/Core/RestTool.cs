@@ -589,13 +589,18 @@ namespace MangoPay.SDK.Core
         private void SetLastRequestInfo(IRestRequest request, IRestResponse response)
         {
             _root.LastRequestInfo = new LastRequestInfo() { Request = request, Response = response };
+            
+            string getHeaderValue(string key)
+            {
+                return response.Headers
+                    .FirstOrDefault(h => string.Equals(h.Name, key, StringComparison.OrdinalIgnoreCase))
+                    ?.Value
+                    ?.ToString();
+            }
 
-            _root.LastRequestInfo.RateLimitingCallsAllowed =
-                response.Headers.FirstOrDefault(h => h.Name == "X-RateLimit-Limit")?.Value?.ToString();
-            _root.LastRequestInfo.RateLimitingCallsRemaining =
-                response.Headers.FirstOrDefault(h => h.Name == "X-RateLimit-Remaining")?.Value?.ToString();
-            _root.LastRequestInfo.RateLimitingTimeTillReset =
-                response.Headers.FirstOrDefault(h => h.Name == "X-RateLimit-Reset")?.Value?.ToString();
+            _root.LastRequestInfo.RateLimitingCallsAllowed = getHeaderValue("X-RateLimit-Limit");
+            _root.LastRequestInfo.RateLimitingCallsRemaining = getHeaderValue("X-RateLimit-Remaining");
+            _root.LastRequestInfo.RateLimitingTimeTillReset = getHeaderValue("X-RateLimit-Reset");
         }
 
         private ListPaginated<T> DoRequestList<T>(string urlMethod, Pagination pagination, Dictionary<String, String> additionalUrlParams)
