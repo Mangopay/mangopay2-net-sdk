@@ -3,7 +3,9 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
 
 namespace MangoPay.SDK.Tests
 {
@@ -92,6 +94,40 @@ namespace MangoPay.SDK.Tests
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
+            }
+        }
+
+        [Ignore("no testable hooks")]
+        [Test]
+        public async Task Test_Hooks_GetByIdNewHooks()
+        {
+            try
+            {
+                var pagination = new Pagination(1, 100);
+                var hooks = await this.Api.Hooks.GetAllAsync(pagination, null);
+                var neededHooks = new List<HookDTO>();
+                for (var i = 0; i < hooks.Count; i++)
+                {
+                    if (hooks[i].EventType == EventType.USER_INFLOWS_BLOCKED ||
+                        hooks[i].EventType == EventType.USER_INFLOWS_UNBLOCKED ||
+                        hooks[i].EventType == EventType.USER_OUTFLOWS_BLOCKED ||
+                        hooks[i].EventType == EventType.USER_OUTFLOWS_UNBLOCKED)
+                    {
+                        neededHooks.Add(hooks[i]);
+                    }
+                }
+
+                if (neededHooks.Count == 0)
+                {
+                    throw new Exception("no testable hooks");
+                }
+
+                Assert.NotNull(neededHooks);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+                // hooks exampled in the API are not available
             }
         }
     }
