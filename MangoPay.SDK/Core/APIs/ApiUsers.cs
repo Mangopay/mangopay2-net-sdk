@@ -613,6 +613,20 @@ namespace MangoPay.SDK.Core.APIs
             return await rest.RequestAsync<UsersBlockStatusDTO, UsersBlockStatusDTO>(endPoint);
         }
 
+        /// <summary>
+        /// Gets the user regulatory async
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<UsersBlockStatusDTO> GetUserRegulatoryAsync(String userId)
+        {
+            var endPoint = GetApiEndPoint(MethodKey.UsersRegulatory);
+            endPoint.SetParameters(new[] { userId });
+            var rest = new RestTool(_root, true);
+
+            return await rest.RequestAsync<UsersBlockStatusDTO, UsersBlockStatusDTO>(endPoint);
+        }
+
         /// <summary>Gets user.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>User instance returned from API, which is either of UserNatural or UserLegal type.</returns>
@@ -1202,6 +1216,20 @@ namespace MangoPay.SDK.Core.APIs
         public UsersBlockStatusDTO GetUserBlockStatus(String userId)
         {
             var endPoint = GetApiEndPoint(MethodKey.UsersBlockStatus);
+            endPoint.SetParameters(new[] { userId });
+            var rest = new RestTool(_root, true);
+
+            return rest.Request<UsersBlockStatusDTO, UsersBlockStatusDTO>(endPoint);
+        }
+
+        /// <summary>
+        /// Gets the user block regulatory
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public UsersBlockStatusDTO GetUserRegulatory(String userId)
+        {
+            var endPoint = GetApiEndPoint(MethodKey.UsersRegulatory);
             endPoint.SetParameters(new[] { userId });
             var rest = new RestTool(_root, true);
 

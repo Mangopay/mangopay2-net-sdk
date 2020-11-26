@@ -91,6 +91,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersGetLegals, new ApiEndPoint("/users/legal/{0}", RequestType.GET)},
             { MethodKey.UsersPreauthorizations, new ApiEndPoint("/users/{0}/preauthorizations", RequestType.GET)},
             { MethodKey.UsersBlockStatus, new ApiEndPoint("/users/{0}/blockStatus", RequestType.GET)},
+            { MethodKey.UsersRegulatory, new ApiEndPoint("/users/{0}/Regulatory", RequestType.GET)},
 
             { MethodKey.UsersGetKycDocument, new ApiEndPoint("/users/{0}/KYC/documents/{1}", RequestType.GET)},
             { MethodKey.UsersGetKycDocuments, new ApiEndPoint("/users/{0}/KYC/documents", RequestType.GET)},

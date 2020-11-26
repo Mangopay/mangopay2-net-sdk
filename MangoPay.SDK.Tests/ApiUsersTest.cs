@@ -932,5 +932,23 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(e.Message);
             }
         }
-	}
+
+        [Test]
+        [Ignore("not on api yet")]
+        public async Task Test_Users_GetUserRegulatory()
+        {
+            try
+            {
+                var john = await GetJohn();
+
+                var status = await Api.Users.GetUserRegulatoryAsync(john.Id);
+
+                Assert.NotNull(status);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+    }
 }

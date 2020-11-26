@@ -75,6 +75,7 @@ namespace MangoPay.SDK.Core.Enumerations
         UsersEmoneyYearMonthGet,
         UsersEmoneyMonthGet,
         UsersBlockStatus,
+        UsersRegulatory,
         WalletsAllTransactions,
         WalletsCreate,
         WalletsGet,
