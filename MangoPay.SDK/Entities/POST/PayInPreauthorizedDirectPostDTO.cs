@@ -6,13 +6,14 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn pre-authorized direct POST entity.</summary>
     public class PayInPreauthorizedDirectPostDTO : EntityPostBase
     {
-        public PayInPreauthorizedDirectPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string preauthorizationId)
+        public PayInPreauthorizedDirectPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string preauthorizationId, BrowserInfo bInfo = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
             Fees = fees;
             CreditedWalletId = creditedWalletId;
             PreauthorizationId = preauthorizationId;
+            BrowserInfo = bInfo;
         }
 
         /// <summary>Author identifier.</summary>
@@ -35,5 +36,7 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Secure mode return URL.</summary>
         public String SecureModeReturnURL { get; set; }
+
+        public BrowserInfo BrowserInfo { get; set; }
     }
 }
