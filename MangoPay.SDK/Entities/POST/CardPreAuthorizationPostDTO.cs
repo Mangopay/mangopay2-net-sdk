@@ -48,5 +48,7 @@ namespace MangoPay.SDK.Entities.POST
         public Money RemainingFunds { get; set; }
 
         public Boolean MultiCapture { get; set; }
+
+        public Shipping Shipping { get; set; }
     }
 }

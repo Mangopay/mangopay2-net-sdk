@@ -58,5 +58,6 @@ namespace MangoPay.SDK.Entities.POST
 
         public SecurityInfo SecurityInfo { get; set; }
 
+        public Shipping Shipping { get; set; }
     }
 }

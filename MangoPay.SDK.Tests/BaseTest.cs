@@ -367,9 +367,15 @@ namespace MangoPay.SDK.Tests
         {
             return await GetNewPayInCardDirect(null);
         }
+
         protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBilling()
         {
             return await GetNewPayInCardDirectWithBilling(null);
+        }
+
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBillingAndShipping()
+        {
+            return await GetNewPayInCardDirectWithBillingAndShipping(null);
         }
 
         /// <summary>Creates PayIn Card Direct object.</summary>
@@ -379,12 +385,18 @@ namespace MangoPay.SDK.Tests
         {
             return await GetNewPayInCardDirect(userId, null);
         }
+
         /// <summary>Creates PayIn Card Direct object with billing information.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
         protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBilling(String userId)
         {
             return await GetNewPayInCardDirectWithBilling(userId, null);
+        }
+
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBillingAndShipping(String userId)
+        {
+            return await GetNewPayInCardDirectWithBillingAndShipping(userId, null);
         }
 
         /// <summary>Creates PayIn Card Direct object.</summary>
@@ -418,6 +430,34 @@ namespace MangoPay.SDK.Tests
 
             PayInCardDirectPostDTO payIn = await GetPayInCardDirectPost(userId, idempotencyKey);
             payIn.Billing = billing;
+
+            return await this.Api.PayIns.CreateCardDirectAsync(payIn);
+        }
+
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBillingAndShipping(String userId, string idempotencyKey)
+        {
+            var address = new Address
+            {
+                AddressLine1 = "Test address line 1",
+                AddressLine2 = "Test address line 2",
+                City = "Test city",
+                Country = CountryIso.RO,
+                PostalCode = "65400"
+            };
+
+            var billing = new Billing
+            {
+                Address = address
+            };
+
+            var shipping = new Shipping
+            {
+                Address = address
+            };
+
+            var payIn = await GetPayInCardDirectPost(userId, idempotencyKey);
+            payIn.Billing = billing;
+            payIn.Shipping = shipping;
 
             return await this.Api.PayIns.CreateCardDirectAsync(payIn);
         }

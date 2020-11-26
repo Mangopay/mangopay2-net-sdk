@@ -15,5 +15,7 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Secure mode return URL.</summary>
         public String SecureModeReturnURL { get; set; }
+
+        public Shipping Shipping { get; set; }
     }
 }
