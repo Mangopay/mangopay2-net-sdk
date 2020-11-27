@@ -648,52 +648,6 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public async Task Test_PayIns_PreAuthorizedDirectWithBrowserInfo()
-        {
-            try
-            {
-                var cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
-                var wallet = await this.GetJohnsWalletWithMoney();
-                var user = await this.GetJohn();
-
-                // create pay-in PRE-AUTHORIZED DIRECT
-                var payIn = new PayInPreauthorizedDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, cardPreAuthorization.Id)
-                {
-                    SecureModeReturnURL = "http://test.com",
-                    BrowserInfo = new BrowserInfo
-                    {
-                        AcceptHeader = "application/json,text/javascript,*/*;q=0.01<",
-                        ColorDepth = "32",
-                        JavaEnabled = true,
-                        JavascriptEnabled = false,
-                        Language = "fr",
-                        ScreenHeight = "1080",
-                        ScreenWidth = "1920",
-                        TimeZoneOffset = "+3600",
-                        UserAgent = "postman"
-                    }
-                };
-
-                var createPayIn = await this.Api.PayIns.CreatePreauthorizedDirectAsync(payIn);
-
-                Assert.IsTrue("" != createPayIn.Id);
-                Assert.AreEqual(wallet.Id, createPayIn.CreditedWalletId);
-                Assert.AreEqual(PayInPaymentType.PREAUTHORIZED, createPayIn.PaymentType);
-                Assert.AreEqual(PayInExecutionType.DIRECT, createPayIn.ExecutionType);
-                Assert.IsTrue(createPayIn.DebitedFunds is Money);
-                Assert.IsTrue(createPayIn.CreditedFunds is Money);
-                Assert.IsTrue(createPayIn.Fees is Money);
-                Assert.AreEqual(user.Id, createPayIn.AuthorId);
-                Assert.AreEqual(TransactionStatus.SUCCEEDED, createPayIn.Status);
-                Assert.AreEqual(TransactionType.PAYIN, createPayIn.Type);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-        }
-
-        [Test]
         public async Task Test_PayIns_Create_CardDirectWithBrowserInfo()
         {
             try
@@ -729,42 +683,6 @@ namespace MangoPay.SDK.Tests
                 Assert.IsTrue(wallet.Balance.Amount == beforeWallet.Balance.Amount + payIn.CreditedFunds.Amount);
                 Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
                 Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-        }
-
-
-        [Test]
-        public async Task Test_PayIns_PreAuthorizedDirectWithIpAddress()
-        {
-            try
-            {
-                var cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
-                var wallet = await this.GetJohnsWalletWithMoney();
-                var user = await this.GetJohn();
-
-                // create pay-in PRE-AUTHORIZED DIRECT
-                var payIn = new PayInPreauthorizedDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, cardPreAuthorization.Id)
-                {
-                    SecureModeReturnURL = "http://test.com",
-                    IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C"
-                };
-
-                var createPayIn = await this.Api.PayIns.CreatePreauthorizedDirectAsync(payIn);
-
-                Assert.IsTrue("" != createPayIn.Id);
-                Assert.AreEqual(wallet.Id, createPayIn.CreditedWalletId);
-                Assert.AreEqual(PayInPaymentType.PREAUTHORIZED, createPayIn.PaymentType);
-                Assert.AreEqual(PayInExecutionType.DIRECT, createPayIn.ExecutionType);
-                Assert.IsTrue(createPayIn.DebitedFunds is Money);
-                Assert.IsTrue(createPayIn.CreditedFunds is Money);
-                Assert.IsTrue(createPayIn.Fees is Money);
-                Assert.AreEqual(user.Id, createPayIn.AuthorId);
-                Assert.AreEqual(TransactionStatus.SUCCEEDED, createPayIn.Status);
-                Assert.AreEqual(TransactionType.PAYIN, createPayIn.Type);
             }
             catch (Exception ex)
             {
