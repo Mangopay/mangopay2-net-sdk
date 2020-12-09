@@ -97,7 +97,6 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        [Ignore("no testable hooks")]
         [Test]
         public async Task Test_Hooks_GetByIdNewHooks()
         {
