@@ -11,6 +11,11 @@ namespace MangoPay.SDK.Core.Enumerations
         DEFAULT,
 
         /// <summary>Secured Mode is activated for any transaction's amount.</summary>
-        FORCE
+        FORCE,
+
+        /// <summary>
+        /// Secure Mode has no choice
+        /// </summary>
+        NO_CHOICE
     }
 }
