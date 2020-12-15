@@ -648,6 +648,7 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        [Ignore("not on api yet")]
         public async Task Test_Payins_CardDirect_Create_WithBillingAndShipping()
         {
             try
