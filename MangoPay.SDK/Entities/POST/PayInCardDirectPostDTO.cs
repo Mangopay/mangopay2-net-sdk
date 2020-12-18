@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn card direct POST entity.</summary>
     public class PayInCardDirectPostDTO : EntityPostBase
     {
-        public PayInCardDirectPostDTO(string authorId, string creditedUserId, Money debitedFunds, Money fees, string creditedWalletId, string secureModeReturnURL, string cardId, string statementDescriptor = null, Billing billing = null)
+        public PayInCardDirectPostDTO(string authorId, string creditedUserId, Money debitedFunds, Money fees, string creditedWalletId, string secureModeReturnURL, string cardId, string statementDescriptor = null, Billing billing = null, BrowserInfo bInfo = null)
         {
             AuthorId = authorId;
             CreditedUserId = creditedUserId;
@@ -20,6 +20,7 @@ namespace MangoPay.SDK.Entities.POST
             CardId = cardId;
             StatementDescriptor = statementDescriptor;
             Billing = Billing;
+            BrowserInfo = bInfo;
         }
 
         /// <summary>Author identifier.</summary>
@@ -57,7 +58,15 @@ namespace MangoPay.SDK.Entities.POST
         public Billing Billing { get; set; }
 
         public SecurityInfo SecurityInfo { get; set; }
+        
+        public BrowserInfo BrowserInfo { get; set; }
 
         public Shipping Shipping { get; set; }
+
+        /// <summary>
+        /// → Is not Mandatory for 3DSv1 (flag “Use 3DSV2 Scenario” OFF)
+        /// → Is mandatory when the flag “Use 3DSV2 Scenario” is active for (FORCE/DEFAULT/FRICTIONLESS both 3)
+        /// </summary>
+        public string IpAddress { get; set; }
     }
 }

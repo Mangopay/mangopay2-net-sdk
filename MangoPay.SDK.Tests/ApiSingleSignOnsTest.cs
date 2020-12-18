@@ -20,7 +20,7 @@ namespace MangoPay.SDK.Tests
 				var email = "email_" + DateTime.Now.Ticks + "@email.com";
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName", "lastName", email, "READ");
 
-				var singleSignOn = await this.Api.SingleSignOns.Create(singleSignOnPost);
+				var singleSignOn = await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
 
                 Assert.IsTrue(singleSignOn.Id.Length > 0);
                 Assert.AreEqual("firstName", singleSignOn.FirstName);
@@ -44,7 +44,7 @@ namespace MangoPay.SDK.Tests
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName", "lastName", email, "READ");
 				var idempotencyKey = "keysso" + DateTime.Now.Ticks.ToString();
 
-				var singleSignOn = await this.Api.SingleSignOns.Create(idempotencyKey, singleSignOnPost);
+				var singleSignOn = await this.Api.SingleSignOns.CreateAsync(idempotencyKey, singleSignOnPost);
 
 				Assert.IsTrue(singleSignOn.Id.Length > 0);
 				Assert.AreEqual("firstName", singleSignOn.FirstName);
@@ -64,9 +64,9 @@ namespace MangoPay.SDK.Tests
             {
 				var email = "email-Get_" + DateTime.Now.Ticks + "@email.com";
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName-Get", "lastName-Get", email, "READ");
-				var singleSignOnCreated = await this.Api.SingleSignOns.Create(singleSignOnPost);
+				var singleSignOnCreated = await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
 
-				var singleSignOn = await this.Api.SingleSignOns.Get(singleSignOnCreated.Id);
+				var singleSignOn = await this.Api.SingleSignOns.GetAsync(singleSignOnCreated.Id);
 
 				Assert.IsTrue(singleSignOn.Id.Length > 0);
 				Assert.AreEqual("firstName-Get", singleSignOn.FirstName);
@@ -86,9 +86,9 @@ namespace MangoPay.SDK.Tests
             {
 				var email = "email-GetAll_" + DateTime.Now.Ticks + "@email.com";
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName-GetAll", "lastName-GetAll", email, "READ");
-				var singleSignOnCreated = await this.Api.SingleSignOns.Create(singleSignOnPost);
+				var singleSignOnCreated = await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
 
-				var singleSignOns = await this.Api.SingleSignOns.GetAll();
+				var singleSignOns = await this.Api.SingleSignOns.GetAllAsync();
 
                 Assert.IsNotNull(singleSignOns);
                 Assert.IsTrue(singleSignOns.Count > 0);				
@@ -106,12 +106,12 @@ namespace MangoPay.SDK.Tests
 			{
 				var email = "email-GetAll_" + DateTime.Now.Ticks + "@email.com";
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName-GetAll", "lastName-GetAll", email, "READ");
-				var singleSignOnCreated = await this.Api.SingleSignOns.Create(singleSignOnPost);
+				var singleSignOnCreated = await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
 				var pagination = new Pagination(1, 1);
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.asc);
 				
-				var singleSignOns = await this.Api.SingleSignOns.GetAll(pagination, sort);
+				var singleSignOns = await this.Api.SingleSignOns.GetAllAsync(pagination, sort);
 
 				Assert.IsNotNull(singleSignOns);
 				Assert.AreEqual(1, singleSignOns.Count);			
@@ -129,7 +129,7 @@ namespace MangoPay.SDK.Tests
             {
 				var email = "email-Save_" + DateTime.Now.Ticks + "@email.com";
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName-Save", "lastName-Save", email, "READ");
-				var singleSignOnCreated = await this.Api.SingleSignOns.Create(singleSignOnPost);
+				var singleSignOnCreated = await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
 				var singleSignOnPut = new SingleSignOnPutDTO
 				{
 					FirstName = "firstName-Save-Updated",
@@ -137,8 +137,8 @@ namespace MangoPay.SDK.Tests
 					Active = false
 				};
 
-				var singleSignOnSaved = await this.Api.SingleSignOns.Update(singleSignOnPut, singleSignOnCreated.Id);
-                var singleSignOn = await this.Api.SingleSignOns.Get(singleSignOnCreated.Id);
+				var singleSignOnSaved = await this.Api.SingleSignOns.UpdateAsync(singleSignOnPut, singleSignOnCreated.Id);
+                var singleSignOn = await this.Api.SingleSignOns.GetAsync(singleSignOnCreated.Id);
 
 				Assert.AreEqual(singleSignOnCreated.Id, singleSignOn.Id);
 				Assert.AreEqual("firstName-Save-Updated", singleSignOn.FirstName);
@@ -158,15 +158,15 @@ namespace MangoPay.SDK.Tests
             {
                	var email = "email-Save_" + DateTime.Now.Ticks + "@email.com";
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName-Save", "lastName-Save", email, "READ");
-				var singleSignOnCreated = await this.Api.SingleSignOns.Create(singleSignOnPost);
+				var singleSignOnCreated = await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
 				var singleSignOnPut = new SingleSignOnPutDTO
 				{
 					FirstName = "firstName-Save-Updated - CHANGED (éèęóąśłżźćń)",
 					LastName = "lastName-Save-Updated - CHANGED(éèęóąśłżźćń)",
 				};
 
-				var singleSignOnSaved = await this.Api.SingleSignOns.Update(singleSignOnPut, singleSignOnCreated.Id);
-				var singleSignOn = await this.Api.SingleSignOns.Get(singleSignOnCreated.Id);
+				var singleSignOnSaved = await this.Api.SingleSignOns.UpdateAsync(singleSignOnPut, singleSignOnCreated.Id);
+				var singleSignOn = await this.Api.SingleSignOns.GetAsync(singleSignOnCreated.Id);
 
 				Assert.AreEqual(singleSignOnCreated.Id, singleSignOn.Id);
 				Assert.AreEqual("firstName-Save-Updated - CHANGED (éèęóąśłżźćń)", singleSignOn.FirstName);
@@ -186,9 +186,9 @@ namespace MangoPay.SDK.Tests
 			{
 				var email = "email-ExtendInvitation_" + DateTime.Now.Ticks + "@email.com";
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName-ExtendInvitation", "lastName-ExtendInvitation", email, "READ");
-				var singleSignOnCreated = await this.Api.SingleSignOns.Create(singleSignOnPost);
+				var singleSignOnCreated = await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
 
-				var singleSignOn = await this.Api.SingleSignOns.ExtendInvitation(singleSignOnCreated.Id);
+				var singleSignOn = await this.Api.SingleSignOns.ExtendInvitationAsync(singleSignOnCreated.Id);
 
 				Assert.IsTrue(singleSignOn.Id.Length > 0);
 				Assert.AreEqual("firstName-ExtendInvitation", singleSignOn.FirstName);
