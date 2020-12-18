@@ -721,5 +721,29 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [Test]
+        [Ignore("not on api yet")]
+        public async Task Test_Payins_CardDirect_Create_WithBillingAndShipping()
+        {
+            try
+            {
+                WalletDTO johnWallet = await this.GetJohnsWalletWithMoney();
+                WalletDTO wallet = await this.Api.Wallets.GetAsync(johnWallet.Id);
+                UserNaturalDTO user = await this.GetJohn();
+
+                PayInCardDirectDTO payIn = await this.GetNewPayInCardDirectWithBillingAndShipping();
+                Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+                Assert.IsNotNull(payIn.Billing);
+                Assert.IsNotNull(payIn.SecurityInfo);
+                Assert.IsNotNull(payIn.SecurityInfo.AVSResult);
+                Assert.AreEqual(payIn.SecurityInfo.AVSResult, AVSResult.NO_CHECK);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

@@ -31,5 +31,7 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>An optional value to be specified on the user's bank statement.</summary>
         public String StatementDescriptor { get; set; }
+
+        public Shipping Shipping { get; set; }
     }
 }

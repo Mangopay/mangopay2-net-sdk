@@ -61,6 +61,8 @@ namespace MangoPay.SDK.Entities.POST
         
         public BrowserInfo BrowserInfo { get; set; }
 
+        public Shipping Shipping { get; set; }
+
         /// <summary>
         /// → Is not Mandatory for 3DSv1 (flag “Use 3DSV2 Scenario” OFF)
         /// → Is mandatory when the flag “Use 3DSV2 Scenario” is active for (FORCE/DEFAULT/FRICTIONLESS both 3)
