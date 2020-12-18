@@ -646,5 +646,80 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [Test]
+        public async Task Test_PayIns_Create_CardDirectWithBrowserInfo()
+        {
+            try
+            {
+                var johnWallet = await this.GetJohnsWalletWithMoney();
+                var beforeWallet = await this.Api.Wallets.GetAsync(johnWallet.Id);
+
+                var payIn = await this.GetNewPayInCardDirect();
+                payIn.BrowserInfo = new BrowserInfo
+                {
+                    AcceptHeader = "application/json,text/javascript,*/*;q=0.01<",
+                    ColorDepth = "32",
+                    JavaEnabled = true,
+                    JavascriptEnabled = false,
+                    Language = "fr",
+                    ScreenHeight = "1080",
+                    ScreenWidth = "1920",
+                    TimeZoneOffset = "+3600",
+                    UserAgent = "postman"
+                };
+
+                var wallet = await this.Api.Wallets.GetAsync(johnWallet.Id);
+                var user = await this.GetJohn();
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(wallet.Id, payIn.CreditedWalletId);
+                Assert.AreEqual(PayInPaymentType.CARD, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.DIRECT, payIn.ExecutionType);
+                Assert.IsTrue(payIn.DebitedFunds is Money);
+                Assert.IsTrue(payIn.CreditedFunds is Money);
+                Assert.IsTrue(payIn.Fees is Money);
+                Assert.AreEqual(user.Id, payIn.AuthorId);
+                Assert.IsTrue(wallet.Balance.Amount == beforeWallet.Balance.Amount + payIn.CreditedFunds.Amount);
+                Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task Test_PayIns_Create_CardDirectWithIpAddress()
+        {
+            try
+            {
+                var johnWallet = await this.GetJohnsWalletWithMoney();
+                var beforeWallet = await this.Api.Wallets.GetAsync(johnWallet.Id);
+
+                var payIn = await this.GetNewPayInCardDirect();
+                payIn.IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C";
+
+                var wallet = await this.Api.Wallets.GetAsync(johnWallet.Id);
+                var user = await this.GetJohn();
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(wallet.Id, payIn.CreditedWalletId);
+                Assert.AreEqual(PayInPaymentType.CARD, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.DIRECT, payIn.ExecutionType);
+                Assert.IsTrue(payIn.DebitedFunds is Money);
+                Assert.IsTrue(payIn.CreditedFunds is Money);
+                Assert.IsTrue(payIn.Fees is Money);
+                Assert.AreEqual(user.Id, payIn.AuthorId);
+                Assert.IsTrue(wallet.Balance.Amount == beforeWallet.Balance.Amount + payIn.CreditedFunds.Amount);
+                Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

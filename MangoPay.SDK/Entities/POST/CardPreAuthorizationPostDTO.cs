@@ -48,5 +48,13 @@ namespace MangoPay.SDK.Entities.POST
         public Money RemainingFunds { get; set; }
 
         public Boolean MultiCapture { get; set; }
+
+        public BrowserInfo BrowserInfo { get; set; }
+
+        /// <summary>
+        /// → Is not Mandatory for 3DSv1 (flag “Use 3DSV2 Scenario” OFF)
+        /// → Is mandatory when the flag “Use 3DSV2 Scenario” is active for (FORCE/DEFAULT/FRICTIONLESS both 3)
+        /// </summary>
+        public string IpAddress { get; set; }
     }
 }
