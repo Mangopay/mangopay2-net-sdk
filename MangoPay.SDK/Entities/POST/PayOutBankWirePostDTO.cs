@@ -6,7 +6,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayOut bank wire POST entity.</summary>
     public class PayOutBankWirePostDTO : EntityPostBase
     {
-        public PayOutBankWirePostDTO(string authorId, string debitedWalletId, Money debitedFunds, Money fees, string bankAccountId, string bankWireRef)
+        public PayOutBankWirePostDTO(string authorId, string debitedWalletId, Money debitedFunds, Money fees, string bankAccountId, string bankWireRef, string payoutModeRequested)
         {
             AuthorId = authorId;
             DebitedWalletId = debitedWalletId;
@@ -14,6 +14,7 @@ namespace MangoPay.SDK.Entities.POST
             Fees = fees;
             BankAccountId = bankAccountId;
             BankWireRef = bankWireRef;
+            PayoutModeRequested = payoutModeRequested;
         }
 
         /// <summary>Author identifier.</summary>
@@ -36,5 +37,15 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>A custom reference you wish to appear on the user’s bank statement (your ClientId is already shown).</summary>
         public String BankWireRef { get; set; }
+
+        /// <summary>
+        /// Gets or sets the payout mode requested.
+        /// The new parameter "PayoutModeRequested" }} can take two differents values : {{"INSTANT_PAYMENT" or "STANDARD"
+        /// (STANDARD = the way we procede normaly a payout request)
+        /// </summary>
+        /// <value>
+        /// The payout mode requested.
+        /// </value>
+        public String PayoutModeRequested { get; set; }
     }
 }
