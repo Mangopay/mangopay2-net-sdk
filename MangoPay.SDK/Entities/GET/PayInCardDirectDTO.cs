@@ -29,7 +29,6 @@ namespace MangoPay.SDK.Entities.GET
 
         public SecurityInfo SecurityInfo { get; set; }
 
-
         public Shipping Shipping { get; set; }
 
         public BrowserInfo BrowserInfo { get; set; }

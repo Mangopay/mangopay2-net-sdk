@@ -1,5 +1,7 @@
 using System;
 using MangoPay.SDK.Core.Enumerations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.POST
 {
@@ -43,7 +45,10 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary> A custom description to appear on the user's bank statement </summary>
         public String StatementDescriptor { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public PayInPaymentType PaymentType { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
         public PayInExecutionType ExecutionType { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using RestSharp.Serializers;
 
 namespace MangoPay.SDK.Core
@@ -16,7 +15,7 @@ namespace MangoPay.SDK.Core
 
         public string Serialize(object obj)
         {
-            return JsonConvert.SerializeObject(obj, new StringEnumConverter());
+            return JsonConvert.SerializeObject(obj);
         }
     }
 }

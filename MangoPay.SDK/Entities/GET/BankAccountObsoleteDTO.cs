@@ -21,7 +21,7 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>Owner address.</summary>
         public String OwnerAddress { get; set; }
 
-	/// <summary>Denotes whether the bank account is active or not.</summary>
-	public bool Active { get; set; }
+	    /// <summary>Denotes whether the bank account is active or not.</summary>
+	    public bool Active { get; set; }
     }
 }

@@ -19,7 +19,8 @@ namespace MangoPay.SDK.Entities.POST
             CountryOfResidence = countryOfResidence;
         }
 
-		public CapacityType Capacity { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CapacityType Capacity { get; set; }
 
 		/// <summary>Email address.</summary>
 		public String Email { get; set; }

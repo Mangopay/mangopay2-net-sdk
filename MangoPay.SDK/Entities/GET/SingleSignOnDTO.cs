@@ -1,7 +1,8 @@
-﻿using MangoPay.SDK.Core;
-using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using System;
+using Newtonsoft.Json.Converters;
+using UnixDateTimeConverter = MangoPay.SDK.Core.UnixDateTimeConverter;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -20,6 +21,7 @@ namespace MangoPay.SDK.Entities.GET
 		public bool Active { get; set; }
 
 		/// <summary>Wheter the SSO is active or not.</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
 		public InvitationStatus InvitationStatus { get; set; }
 
 		/// <summary>Date of the latest authentification.</summary>

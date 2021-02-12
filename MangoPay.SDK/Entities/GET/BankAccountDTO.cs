@@ -23,7 +23,7 @@ namespace MangoPay.SDK.Entities.GET
 
 		public String OwnerAddressObsolete { get; set; }
 
-	/// <summary>Denotes whether the bank account is active or not.</summary>
-	public bool Active { get; set; }
+	    /// <summary>Denotes whether the bank account is active or not.</summary>
+	    public bool Active { get; set; }
     }
 }

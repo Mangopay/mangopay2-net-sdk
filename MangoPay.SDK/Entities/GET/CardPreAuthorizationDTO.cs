@@ -32,9 +32,11 @@ namespace MangoPay.SDK.Entities.GET
         public String ResultMessage { get; set; }
 
         /// <summary>How the PreAuthorization has been executed..</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public PreAuthorizationExecutionType ExecutionType { get; set; }
 
         /// <summary>How the PreAuthorization has been paid..</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public PreAuthorizationPaymentType PaymentType { get; set; }
 
         /// <summary>The SecureMode correspond to '3D secure' for CB Visa and MasterCard 

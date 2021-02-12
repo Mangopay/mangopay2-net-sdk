@@ -3,6 +3,7 @@ using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities.GET;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.PUT
 {
@@ -14,6 +15,7 @@ namespace MangoPay.SDK.Entities.PUT
             Status = status;
         }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public UboDeclarationType Status { get; set; }
 
         public UboDTO[] Ubos { get; set; }

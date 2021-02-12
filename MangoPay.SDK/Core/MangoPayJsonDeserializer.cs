@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using JsonSubTypes;
+using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities.GET;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Deserializers;
@@ -31,12 +33,26 @@ namespace MangoPay.SDK.Core
 
 				return (T)((object)result);
 			}
-			else return JsonConvert.DeserializeObject<T>(response.Content, new StringEnumConverter());
+
+            if (typeof(T) == typeof(BankAccountDTO))
+            {
+                var settings = new JsonSerializerSettings();
+                settings.Converters.Add(
+                    JsonSubtypesConverterBuilder.Of<BankAccountDTO>("Type")
+                        .RegisterSubtype<BankAccountIbanDTO>(BankAccountType.IBAN)
+                        .SerializeDiscriminatorProperty()
+                        .Build()
+                );
+
+                return JsonConvert.DeserializeObject<T>(response.Content, settings);
+			}
+
+            return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
 		public T DeserializeString<T>(object resource)
 		{
-			return JsonConvert.DeserializeObject<T>((string)resource, new StringEnumConverter());
+			return JsonConvert.DeserializeObject<T>((string)resource);
 		}
 	}
 }

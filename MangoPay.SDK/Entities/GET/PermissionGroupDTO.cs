@@ -1,5 +1,7 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -9,6 +11,7 @@ namespace MangoPay.SDK.Entities.GET
 		public String Name { get; set; }
 
 		/// <summary>The type of permission group.</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
 		public PermissionGroupType Type { get; set; }
 		
 		/// <summary>The scopes of the permission.</summary>

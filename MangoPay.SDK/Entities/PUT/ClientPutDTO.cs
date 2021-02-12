@@ -1,6 +1,8 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.PUT
 {
@@ -40,6 +42,7 @@ namespace MangoPay.SDK.Entities.PUT
 		/// <summary>A description of what your platform does</summary>
 		public String PlatformDescription { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
 		/// <summary>The type of platform</summary>
 		public PlatformType? PlatformType { get; set; }
 
