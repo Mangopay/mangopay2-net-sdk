@@ -425,7 +425,9 @@ namespace MangoPay.SDK.Tests
 
             Billing billing = new Billing
             {
-                Address = address
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
             };
 
             PayInCardDirectPostDTO payIn = await GetPayInCardDirectPost(userId, idempotencyKey);
@@ -447,12 +449,16 @@ namespace MangoPay.SDK.Tests
 
             var billing = new Billing
             {
-                Address = address
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
             };
 
             var shipping = new Shipping
             {
-                Address = address
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
             };
 
             var payIn = await GetPayInCardDirectPost(userId, idempotencyKey);
