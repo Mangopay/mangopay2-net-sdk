@@ -499,9 +499,7 @@ namespace MangoPay.SDK.Tests
                 StatementDescriptor = "Bob",
                 Billing = new Billing
                 {
-                    Address = user.Address,
-                    FirstName = "John",
-                    LastName = "Doe"
+                    Address = user.Address
                 }
             };
 
