@@ -11,7 +11,10 @@ namespace MangoPay.SDK.Entities
     /// </summary>
     public class Billing
     {
-        public Address Address { get; set; }
+        public string FirstName { get; set; }
 
+        public string LastName { get; set; }
+
+        public Address Address { get; set; }
     }
 }

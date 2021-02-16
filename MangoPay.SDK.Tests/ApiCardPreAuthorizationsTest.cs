@@ -51,6 +51,8 @@ namespace MangoPay.SDK.Tests
                     PostalCode = "65400"
                 };
                 billing.Address = address;
+                billing.FirstName = "Joe";
+                billing.LastName = "Doe";
                 cardPreAuthorization.Billing = billing;
 
                 CardPreAuthorizationDTO cardPreAuthorizationWithBilling = await this.Api.CardPreAuthorizations.CreateAsync(cardPreAuthorization);
