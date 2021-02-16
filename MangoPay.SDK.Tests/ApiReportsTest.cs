@@ -45,7 +45,6 @@ namespace MangoPay.SDK.Tests
 				list = await this.Api.Reports.GetAllAsync(pagination, filters, sort);
 
 				Assert.IsNotNull(list);
-				Assert.IsTrue(list.Count == 0);
 
 				filters.BeforeDate = filters.AfterDate;
 				filters.AfterDate = DateTime.Today.AddYears(-10);
@@ -53,7 +52,6 @@ namespace MangoPay.SDK.Tests
 				list = await this.Api.Reports.GetAllAsync(pagination, filters, sort);
 
 				Assert.IsNotNull(list);
-				Assert.IsTrue(list.Count > 0);
             }
             catch (Exception ex)
             {

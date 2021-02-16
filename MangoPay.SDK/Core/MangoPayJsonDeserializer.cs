@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Collections.Generic;
+using MangoPay.SDK.Core.Deserializers;
+using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities.GET;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Deserializers;
@@ -16,27 +19,27 @@ namespace MangoPay.SDK.Core
 
         public T Deserialize<T>(IRestResponse response)
         {
-			if (typeof(T) == typeof(MangoPay.SDK.Entities.GET.IdempotencyResponseDTO))
-			{
-				JToken token = JObject.Parse(response.Content);
+            if (typeof(T) != typeof(IdempotencyResponseDTO))
+                return JsonConvert.DeserializeObject<T>(response.Content);
 
-				MangoPay.SDK.Entities.GET.IdempotencyResponseDTO result = new Entities.GET.IdempotencyResponseDTO();
+            JToken token = JObject.Parse(response.Content);
 
-				result.StatusCode = (string)token.SelectToken("StatusCode");
-				result.ContentLength = (string)token.SelectToken("ContentLength");
-				result.ContentType = (string)token.SelectToken("ContentType");
-				result.Date = (string)token.SelectToken("Date");
-				result.RequestURL = (string)token.SelectToken("RequestURL");
-				result.Resource = token.SelectToken("Resource") != null ? token.SelectToken("Resource").ToString() : "";
+            var result = new IdempotencyResponseDTO
+            {
+                StatusCode = (string) token.SelectToken("StatusCode"),
+                ContentLength = (string) token.SelectToken("ContentLength"),
+                ContentType = (string) token.SelectToken("ContentType"),
+                Date = (string) token.SelectToken("Date"),
+                RequestURL = (string) token.SelectToken("RequestURL"),
+                Resource = token.SelectToken("Resource") != null ? token.SelectToken("Resource").ToString() : ""
+            };
 
-				return (T)((object)result);
-			}
-			else return JsonConvert.DeserializeObject<T>(response.Content, new StringEnumConverter());
+            return (T)((object)result);
         }
 
 		public T DeserializeString<T>(object resource)
 		{
-			return JsonConvert.DeserializeObject<T>((string)resource, new StringEnumConverter());
+			return JsonConvert.DeserializeObject<T>((string)resource);
 		}
 	}
 }

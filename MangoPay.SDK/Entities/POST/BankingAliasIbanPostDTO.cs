@@ -1,5 +1,7 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.POST
 {
@@ -12,7 +14,8 @@ namespace MangoPay.SDK.Entities.POST
 			Country = country;
 		}
 
-		/// <summary>THe name of the owner of the bank account.</summary>
-		public CountryIso Country { get; set; }
+        /// <summary>THe name of the owner of the bank account.</summary>
+		[JsonConverter(typeof(StringEnumConverter))]
+        public CountryIso Country { get; set; }
 	}
 }

@@ -465,6 +465,7 @@ namespace MangoPay.SDK.Tests
                 }
 
                 Assert.IsTrue(list[listIndex] is BankAccountDTO);
+                Assert.IsTrue(list[listIndex] is BankAccountIbanDTO);
 
                 BankAccountIbanDTO castedBankAccount = await this.Api.Users.GetBankAccountIbanAsync(john.Id, list[listIndex].Id);
 
@@ -490,6 +491,7 @@ namespace MangoPay.SDK.Tests
                 result = await this.Api.Users.GetBankAccountsAsync(john.Id, pagination, sort);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
+                Assert.IsTrue(result[1] is BankAccountOtherDTO);
 
                 sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);

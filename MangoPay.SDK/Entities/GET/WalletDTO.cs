@@ -23,7 +23,7 @@ namespace MangoPay.SDK.Entities.GET
         public CurrencyIso Currency { get; set; }
 
         /// <summary>The funds usage type.</summary>
-	[JsonConverter(typeof(StringEnumConverter))]
-	public FundsType FundsType { get; set; }
+	    [JsonConverter(typeof(StringEnumConverter))]
+	    public FundsType FundsType { get; set; }
     }
 }

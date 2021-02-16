@@ -1,15 +1,16 @@
 using MangoPay.SDK.Core.Enumerations;
 using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.GET
 {
 	public class DebitedBankAccountDTO
 	{
-
-		    /// <summary>
+        /// <summary>
         /// Owner name.
         /// </summary>
-		    public String OwnerName { get; set; }
+        public String OwnerName { get; set; }
 
         /// <summary>
         /// The account number
@@ -34,21 +35,7 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>
         /// The type of bankAccount
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public BankAccountType Type { get; set; }
-  
-        public DebitedBankAccountDTO()
-        {
-
-        }
-
-        public DebitedBankAccountDTO(String OwnerName, String AccountNumber, String IBAN, String BIC, String Country, BankAccountType Type)
-        {
-            this.OwnerName = OwnerName;
-            this.AccountNumber = AccountNumber;
-            this.IBAN = IBAN;
-            this.BIC = BIC;
-            this.Country = Country;
-            this.Type = Type;
-        }
     }
 }

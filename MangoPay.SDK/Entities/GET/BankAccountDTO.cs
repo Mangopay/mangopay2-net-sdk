@@ -2,10 +2,12 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
+using MangoPay.SDK.Core.Deserializers;
 
 namespace MangoPay.SDK.Entities.GET
 {
     /// <summary>Bank Account base entity.</summary>
+    [JsonConverter(typeof(BankAccountDeserializer))]
     public class BankAccountDTO : EntityBase
     {
         /// <summary>User identifier.</summary>
@@ -23,7 +25,7 @@ namespace MangoPay.SDK.Entities.GET
 
 		public String OwnerAddressObsolete { get; set; }
 
-	/// <summary>Denotes whether the bank account is active or not.</summary>
-	public bool Active { get; set; }
+	    /// <summary>Denotes whether the bank account is active or not.</summary>
+	    public bool Active { get; set; }
     }
 }
