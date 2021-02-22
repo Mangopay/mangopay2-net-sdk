@@ -422,6 +422,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsTrue(getPayIn.Tag == createPayIn.Tag);
         }
 
+        [Ignore("card is not 3dsecure")]
         [Test]
         public async Task TestApplePayIn()
         {
