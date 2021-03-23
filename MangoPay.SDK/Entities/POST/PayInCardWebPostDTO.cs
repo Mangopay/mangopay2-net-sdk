@@ -58,5 +58,7 @@ namespace MangoPay.SDK.Entities.POST
         public String StatementDescriptor { get; set; }
 
         public Shipping Shipping { get; set; }
+
+        public string Requested3DSVersion { get; set; }
     }
 }

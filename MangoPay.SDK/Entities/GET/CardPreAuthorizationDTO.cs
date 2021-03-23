@@ -81,5 +81,9 @@ namespace MangoPay.SDK.Entities.GET
         public Boolean MultiCapture { get; set; }
 
         public Shipping Shipping { get; set; }
+
+        public string Requested3DSVersion { get; set; }
+
+        public string Applied3DSVersion { get; set; }
     }
 }

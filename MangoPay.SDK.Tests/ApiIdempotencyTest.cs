@@ -147,6 +147,7 @@ namespace MangoPay.SDK.Tests
                 new Money {Amount = 1000, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR},
                 johnsWallet.Id, "http://test.com", card.Id);
+            payIn.Requested3DSVersion = "V1";
             payIn.CardType = card.CardType;
             await Api.PayIns.CreateCardDirectAsync(key, payIn);
 
@@ -165,6 +166,7 @@ namespace MangoPay.SDK.Tests
                 new Money {Amount = 1000, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, "https://test.com", CultureCode.FR,
                 CardType.CB_VISA_MASTERCARD);
+            payIn.Requested3DSVersion = "V1";
             await Api.PayIns.CreateCardWebAsync(key, payIn);
 
             var result = await Api.Idempotency.GetAsync(key);
