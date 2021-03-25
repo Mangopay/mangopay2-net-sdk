@@ -68,5 +68,7 @@ namespace MangoPay.SDK.Entities.POST
         /// → Is mandatory when the flag “Use 3DSV2 Scenario” is active for (FORCE/DEFAULT/FRICTIONLESS both 3)
         /// </summary>
         public string IpAddress { get; set; }
+
+        public string Requested3DSVersion { get; set; }
     }
 }

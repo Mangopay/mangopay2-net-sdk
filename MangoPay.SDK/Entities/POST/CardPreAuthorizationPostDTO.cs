@@ -59,5 +59,6 @@ namespace MangoPay.SDK.Entities.POST
         /// </summary>
         public string IpAddress { get; set; }
 
+        public string Requested3DSVersion { get; set; }
     }
 }

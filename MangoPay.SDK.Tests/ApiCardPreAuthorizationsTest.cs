@@ -71,6 +71,44 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        public async Task Test_CardPreAuthorization_Create_WithRequested3DS()
+        {
+            try
+            {
+                var john = await GetJohn();
+                CardPreAuthorizationPostDTO cardPreAuthorization = await GetPreAuthorization(john.Id);
+                Billing billing = new Billing();
+                Address address = new Address
+                {
+                    City = "Test city",
+                    AddressLine1 = "Test address line 1",
+                    AddressLine2 = "Test address line 2",
+                    Country = CountryIso.RO,
+                    PostalCode = "65400"
+                };
+                billing.Address = address;
+                billing.FirstName = "Joe";
+                billing.LastName = "Doe";
+                cardPreAuthorization.Billing = billing;
+                cardPreAuthorization.Requested3DSVersion = "V1";
+
+                CardPreAuthorizationDTO cardPreAuthorizationPost = await this.Api.CardPreAuthorizations.CreateAsync(cardPreAuthorization);
+
+                Assert.IsNotNull(cardPreAuthorizationPost);
+                Assert.IsNotNull(cardPreAuthorizationPost.Billing);
+                Assert.IsNotNull(cardPreAuthorizationPost.SecurityInfo);
+                Assert.IsNotNull(cardPreAuthorizationPost.SecurityInfo.AVSResult);
+                Assert.AreEqual(cardPreAuthorizationPost.SecurityInfo.AVSResult, AVSResult.NO_CHECK);
+                Assert.IsNotNull(cardPreAuthorizationPost.Requested3DSVersion);
+
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
         public async Task Test_CardPreAuthorization_Get()
         {
             try
