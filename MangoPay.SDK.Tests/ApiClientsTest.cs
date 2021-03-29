@@ -279,10 +279,10 @@ namespace MangoPay.SDK.Tests
         public async Task Test_BankAccountCreation()
         {
             var john = await this.GetJohn();
-            var account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154")
+            var account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7630004000031234567890143")
             {
                 UserId = john.Id,
-                BIC = "CMBRFR2BCME"
+                BIC = "CRLYFRPP"
             };
 
             var result = await Api.Clients.CreateBankAccountIbanAsync(account);
@@ -299,10 +299,10 @@ namespace MangoPay.SDK.Tests
 
             var wallet = (await Api.Clients.GetWalletsAsync(FundsType.FEES, new Pagination(1, 10))).FirstOrDefault();
 
-            var account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154")
+            var account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7630004000031234567890143")
             {
                 UserId = john.Id,
-                BIC = "CMBRFR2BCME"
+                BIC = "CRLYFRPP"
             };
 
             var result = await Api.Clients.CreateBankAccountIbanAsync(account);
