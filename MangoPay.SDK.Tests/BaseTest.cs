@@ -210,7 +210,7 @@ namespace MangoPay.SDK.Tests
                 BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7630004000031234567890143")
                 {
                     UserId = john.Id,
-                    BIC = "CRLYFRPP"
+                    BIC = "BNPAFRPP"
                 };
                 BaseTest._johnsAccount =  await this.Api.Users.CreateBankAccountIbanAsync(john.Id, account);
             }

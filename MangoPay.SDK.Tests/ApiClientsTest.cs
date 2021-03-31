@@ -282,7 +282,7 @@ namespace MangoPay.SDK.Tests
             var account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7630004000031234567890143")
             {
                 UserId = john.Id,
-                BIC = "CRLYFRPP"
+                BIC = "BNPAFRPP"
             };
 
             var result = await Api.Clients.CreateBankAccountIbanAsync(account);
@@ -302,7 +302,7 @@ namespace MangoPay.SDK.Tests
             var account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7630004000031234567890143")
             {
                 UserId = john.Id,
-                BIC = "CRLYFRPP"
+                BIC = "BNPAFRPP"
             };
 
             var result = await Api.Clients.CreateBankAccountIbanAsync(account);
