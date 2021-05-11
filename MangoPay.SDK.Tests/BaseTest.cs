@@ -207,10 +207,10 @@ namespace MangoPay.SDK.Tests
             if (BaseTest._johnsAccount == null || recreate)
             {
                 UserNaturalDTO john = await this.GetJohn();
-                BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7618829754160173622224154")
+                BankAccountIbanPostDTO account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address, "FR7630004000031234567890143")
                 {
                     UserId = john.Id,
-                    BIC = "CMBRFR2BCME"
+                    BIC = "BNPAFRPP"
                 };
                 BaseTest._johnsAccount =  await this.Api.Users.CreateBankAccountIbanAsync(john.Id, account);
             }

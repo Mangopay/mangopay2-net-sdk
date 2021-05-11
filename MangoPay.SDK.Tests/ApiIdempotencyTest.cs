@@ -371,9 +371,9 @@ namespace MangoPay.SDK.Tests
             string key = DateTime.Now.Ticks.ToString();
             UserNaturalDTO john = await this.GetJohn();
             var account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address,
-                "FR7618829754160173622224154");
+                "FR7630004000031234567890143");
             account.UserId = john.Id;
-            account.BIC = "CMBRFR2BCME";
+            account.BIC = "BNPAFRPP";
             await Api.Users.CreateBankAccountIbanAsync(key, john.Id, account);
 
             var result = await Api.Idempotency.GetAsync(key);
