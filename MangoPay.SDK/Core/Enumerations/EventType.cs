@@ -67,7 +67,10 @@ namespace MangoPay.SDK.Core.Enumerations
         USER_INFLOWS_BLOCKED                    = 0x80000000000000,
         USER_INFLOWS_UNBLOCKED                  = 0x100000000000000,
         USER_OUTFLOWS_BLOCKED                   = 0x200000000000000,
-        USER_OUTFLOWS_UNBLOCKED                 = 0x400000000000000
+        USER_OUTFLOWS_UNBLOCKED                 = 0x400000000000000,
+        PREAUTHORIZATION_CREATED                = 0x800000000000000,
+        PREAUTHORIZATION_SUCCEEDED              = 0x1000000000000000,
+        PREAUTHORIZATION_FAILED                 = 0x2000000000000000
 
         /* IMPORTANT!
 		 * 
