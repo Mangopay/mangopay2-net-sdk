@@ -25,5 +25,20 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [Test]
+        public async Task Test_PayOuts_Get_Bankwire()
+        {
+            var john = await this.GetJohnsPayOutBankWire();
+
+            var getJohnBankwire = await Api.PayOuts.GetBankwirePayoutAsync(john.Id);
+
+            Assert.NotNull(john);
+            Assert.NotNull(getJohnBankwire);
+
+            Assert.AreEqual(john.Id, getJohnBankwire.Id);
+            Assert.IsTrue(getJohnBankwire.ModeRequested == "STANDARD");
+            Assert.IsTrue(getJohnBankwire.ModeApplied.Length != 0);
+        }
     }
 }
