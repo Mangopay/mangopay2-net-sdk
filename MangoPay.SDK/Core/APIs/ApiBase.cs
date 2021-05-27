@@ -62,6 +62,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.GooglePayinsDirectCreate, new ApiEndPoint("/payins/googlepay/direct", RequestType.POST)},
 
             { MethodKey.PayoutsBankwireCreate, new ApiEndPoint("/payouts/bankwire", RequestType.POST)},
+            { MethodKey.PayoutsBankwireGet, new ApiEndPoint("/payouts/bankwire/{0}", RequestType.GET)},
             { MethodKey.PayoutsGet, new ApiEndPoint("/payouts/{0}", RequestType.GET)},
             { MethodKey.PayoutsGetRefunds, new ApiEndPoint("/payouts/{0}/refunds", RequestType.GET)},
 

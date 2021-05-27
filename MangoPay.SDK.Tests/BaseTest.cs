@@ -32,6 +32,7 @@ namespace MangoPay.SDK.Tests
         private static CardRegistrationDTO _johnsCardRegistration;
         private static KycDocumentDTO _johnsKycDocument;
         private static PayOutBankWireDTO _johnsPayOutForCardDirect;
+        private static PayOutBankWireDTO _johnsPayPutBankwire;
         private static HookDTO _johnsHook;
         private static Dictionary<ReportType, ReportRequestDTO> _johnsReports;
 
@@ -540,6 +541,24 @@ namespace MangoPay.SDK.Tests
             }
 
             return BaseTest._johnsPayOutForCardDirect;
+        }
+
+        protected async Task<PayOutBankWireDTO> GetJohnsPayoutBankwire()
+        {
+            if (_johnsPayOutBankWire != null) 
+                return _johnsPayOutBankWire;
+
+            var payIn = await this.GetNewPayInCardDirect();
+            var account = await this.GetJohnsAccount();
+
+            var payOut = new PayOutBankWirePostDTO(payIn.AuthorId, payIn.CreditedWalletId, new Money { Amount = 10, Currency = CurrencyIso.EUR },
+                new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref", "STANDARD")
+            {
+                Tag = "DefaultTag",
+                CreditedUserId = payIn.AuthorId
+            };
+
+            return await this.Api.PayOuts.CreateBankWireAsync(payOut);
         }
 
         protected async Task<TransferDTO> GetNewTransfer(WalletDTO walletIn = null)
