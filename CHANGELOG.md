@@ -1,3 +1,19 @@
+## [2.5.0] - 2021.05.27
+## Added 
+
+Mangopay introduces the instant payment mode. It allows payouts (transfer from wallet to user bank account) to be processed within 25 seconds, rather than the 48 hours for a standard payout.
+
+You can now use this new type of payout with the .Net SDK.
+
+Example :
+
+```csharp
+var getJohnBankwire = awaitApi.PayOuts.GetBankwirePayoutAsync(payOut.Id);
+// where payOut.Id is the id of an existing payout
+```
+
+Please note that this feature must be authorized and activated by MANGOPAY. More information [here](https://docs.mangopay.com/guide/instant-payment-payout).
+
 ## [2.4.0]
 ## Fixed
 
