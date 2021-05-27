@@ -46,6 +46,16 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<PayOutBankWireDTO>(MethodKey.PayoutsGet, payOutId);
         }
 
+        /// <summary>
+        /// Gets async PayOut Bankwire Entity by its identifier
+        /// </summary>
+        /// <param name="payoutId">PayOutBankWire identifier.</param>
+        /// <returns></returns>
+        public async Task<PayOutBankWireGetDTO> GetBankwirePayoutAsync(String payoutId)
+        {
+            return await this.GetObjectAsync<PayOutBankWireGetDTO>(MethodKey.PayoutsBankwireGet, payoutId);
+        }
+
         /// <summary>Creates new PayOut object.</summary>
         /// <param name="payOut">The PayOut object to be created.</param>
         /// <returns>Created PayOut object returned from API.</returns>
@@ -77,6 +87,16 @@ namespace MangoPay.SDK.Core.APIs
         public PayOutBankWireDTO GetBankWire(String payOutId)
         {
             return this.GetObject<PayOutBankWireDTO>(MethodKey.PayoutsGet, payOutId);
+        }
+
+        /// <summary>
+        /// Gets PayOut Bankwire Entity by its identifier
+        /// </summary>
+        /// <param name="payoutId">PayOutBankWire identifier.</param>
+        /// <returns></returns>
+        public PayOutBankWireGetDTO GetBankwirePayout(String payoutId)
+        {
+            return this.GetObject<PayOutBankWireGetDTO>(MethodKey.PayoutsBankwireGet, payoutId);
         }
     }
 }
