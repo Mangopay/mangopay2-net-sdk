@@ -302,6 +302,45 @@ namespace MangoPay.SDK.Tests
             return await this.Api.Wallets.GetAsync(johnsWalletWithMoney.Id);
         }
 
+        protected async Task<Tuple<string, WalletDTO>> GetNewJohnsWalletWithMoneyAndCardId(int amount, UserNaturalDTO user = null)
+        {
+            UserNaturalDTO john = user;
+            if (john == null)
+            {
+                john = await this.GetJohn();
+            }
+
+            // create wallet with money
+            WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
+
+            var johnsWalletWithMoney = await this.Api.Wallets.CreateAsync(wallet);
+
+            CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(johnsWalletWithMoney.Owners[0], CurrencyIso.EUR);
+            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
+
+            CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO
+            {
+                RegistrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration)
+            };
+            cardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
+
+            CardDTO card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
+
+            // create pay-in CARD DIRECT
+            PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
+                new Money { Amount = amount, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR },
+                johnsWalletWithMoney.Id, "http://test.com", card.Id);
+
+            payIn.CardType = card.CardType;
+
+            // create Pay-In
+            var result = await this.Api.PayIns.CreateCardDirectAsync(payIn);
+
+            var createdWallet = await this.Api.Wallets.GetAsync(johnsWalletWithMoney.Id);
+
+            return new Tuple<string, WalletDTO>(card.Id, createdWallet);
+        }
+
         protected async Task<PayInCardWebDTO> GetJohnsPayInCardWeb()
         {
             if (BaseTest._johnsPayInCardWeb == null)

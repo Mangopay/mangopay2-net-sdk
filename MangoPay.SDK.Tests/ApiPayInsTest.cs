@@ -5,7 +5,9 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using MangoPay.SDK.Entities.PUT;
 
 namespace MangoPay.SDK.Tests
 {
@@ -742,6 +744,89 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(payIn.SecurityInfo);
                 Assert.IsNotNull(payIn.SecurityInfo.AVSResult);
                 Assert.AreEqual(payIn.SecurityInfo.AVSResult, AVSResult.NO_CHECK);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task Test_PayIns_Create_Recurring()
+        {
+            try
+            {
+                var data = await GetNewJohnsWalletWithMoneyAndCardId(1000);
+                var cardId = data.Item1;
+                var wallet = data.Item2;
+                var userId = wallet.Owners.FirstOrDefault();
+
+                var payInPost = new RecurringPayInRegistrationPostDTO
+                {
+                    AuthorId = userId,
+                    CardId = cardId,
+                    CreditedUserId = userId,
+                    CreditedWalletId = wallet.Id,
+                    FirstTransactionDebitedFunds = new Money
+                    {
+                        Amount = 12,
+                        Currency = CurrencyIso.EUR
+                    },
+                    FirstTransactionFees = new Money
+                    {
+                        Amount = 1,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Billing = new Billing
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    Shipping = new Shipping
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    EndDate = DateTime.Now.AddDays(365),
+                    Migration = true,
+                    NextTransactionDebitedFunds = new Money
+                    {
+                        Amount = 12,
+                        Currency = CurrencyIso.EUR
+                    },
+                    NextTransactionFees = new Money
+                    {
+                        Amount = 1,
+                        Currency = CurrencyIso.EUR
+                    }
+                };
+
+                var result = await this.Api.PayIns.CreateRecurringPayInRegistration(payInPost);
+
+                Assert.NotNull(result);
+                Assert.IsTrue(userId == result.CreditedUserId);
+                Assert.IsTrue(cardId == result.CardId);
+                Assert.IsTrue(wallet.Id == result.CreditedWalletId);
+                Assert.NotNull(result.Shipping);
+                Assert.NotNull(result.Billing);
             }
             catch (Exception ex)
             {
