@@ -254,6 +254,18 @@ namespace MangoPay.SDK.Core.APIs
                 idempotencyKey, MethodKey.PayinsRecurringRegistration, payIn);
         }
 
+        public async Task<RecurringPayInCITDTO> CreateRecurringPayInRegistrationCIT(RecurringPayInCITPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<RecurringPayInCITDTO, RecurringPayInCITPostDTO>(
+                null, MethodKey.PayinsRecurringCardDirect, payIn);
+        }
+
+        public async Task<RecurringPayInCITDTO> CreateRecurringPayInRegistrationCIT(string idempotencyKey, RecurringPayInCITPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<RecurringPayInCITDTO, RecurringPayInCITPostDTO>(
+                idempotencyKey, MethodKey.PayinsRecurringCardDirect, payIn);
+        }
+
         public PayInBankWireDirectDTO CreateBankWireDirect(PayInBankWireDirectPostDTO payIn)
         {
             return CreateBankWireDirect(null, payIn);

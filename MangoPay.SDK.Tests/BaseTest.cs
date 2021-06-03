@@ -32,7 +32,6 @@ namespace MangoPay.SDK.Tests
         private static CardRegistrationDTO _johnsCardRegistration;
         private static KycDocumentDTO _johnsKycDocument;
         private static PayOutBankWireDTO _johnsPayOutForCardDirect;
-        private static PayOutBankWireDTO _johnsPayPutBankwire;
         private static HookDTO _johnsHook;
         private static Dictionary<ReportType, ReportRequestDTO> _johnsReports;
 

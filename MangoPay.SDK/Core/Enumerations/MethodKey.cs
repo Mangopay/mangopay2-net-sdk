@@ -34,6 +34,7 @@ namespace MangoPay.SDK.Core.Enumerations
         PayinsDirectDebitCreate,
         PayinsMandateDirectDebitCreate,
         PayinsRecurringRegistration,
+        PayinsRecurringCardDirect,
         PayoutsBankwireCreate,
         PayoutsBankwireGet,
         PayoutsGet,
