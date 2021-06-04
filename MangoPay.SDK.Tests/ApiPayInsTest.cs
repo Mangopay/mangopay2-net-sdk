@@ -1012,7 +1012,9 @@ namespace MangoPay.SDK.Tests
                         Amount = 1,
                         Currency = CurrencyIso.EUR
                     },
-                    Frequency = "Daily"
+                    Frequency = "Daily",
+                    FixedNextAmount = true,
+                    FractionedPayment = false
                 };
 
                 var createdPayInRegistration = await this.Api.PayIns.CreateRecurringPayInRegistration(payInPost);
