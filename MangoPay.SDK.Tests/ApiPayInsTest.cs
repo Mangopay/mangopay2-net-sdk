@@ -1052,7 +1052,7 @@ namespace MangoPay.SDK.Tests
                 Assert.IsTrue(cardId == createdCit.CardId);
                 Assert.IsTrue(wallet.Id == createdCit.CreditedWalletId);
 
-                var mit = new RecurringPayInMITPostDTO
+                /*var mit = new RecurringPayInMITPostDTO
                 {
                     RecurringPayinRegistrationId = createdPayInRegistration.Id,
                     StatementDescriptor = "lorem",
@@ -1074,7 +1074,7 @@ namespace MangoPay.SDK.Tests
                 Assert.NotNull(createdMit);
                 Assert.IsTrue(userId == createdMit.CreditedUserId);
                 Assert.IsTrue(cardId == createdMit.CardId);
-                Assert.IsTrue(wallet.Id == createdMit.CreditedWalletId);
+                Assert.IsTrue(wallet.Id == createdMit.CreditedWalletId);*/
             }
             catch (Exception ex)
             {
