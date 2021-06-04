@@ -30,7 +30,7 @@ namespace MangoPay.SDK.Entities.GET
         [JsonConverter(typeof(Core.UnixDateTimeConverter))]
         public DateTime? EndDate { get; set; }
 
-        public List<string> Frequency { get; set; }
+        public string Frequency { get; set; }
 
         public bool FixedNextAmount { get; set; }
 

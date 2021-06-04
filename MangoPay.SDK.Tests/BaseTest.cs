@@ -303,34 +303,48 @@ namespace MangoPay.SDK.Tests
 
         protected async Task<Tuple<string, WalletDTO>> GetNewJohnsWalletWithMoneyAndCardId(int amount, UserNaturalDTO user = null)
         {
-            UserNaturalDTO john = user;
-            if (john == null)
-            {
-                john = await this.GetJohn();
-            }
+            var john = user ?? await this.GetJohn();
 
             // create wallet with money
-            WalletPostDTO wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
+            var wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
 
             var johnsWalletWithMoney = await this.Api.Wallets.CreateAsync(wallet);
 
-            CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(johnsWalletWithMoney.Owners[0], CurrencyIso.EUR);
-            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
+            var cardRegistrationPost = new CardRegistrationPostDTO(johnsWalletWithMoney.Owners[0], CurrencyIso.EUR);
+            var cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
 
-            CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO
+            var cardRegistrationPut = new CardRegistrationPutDTO
             {
-                RegistrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration)
+                RegistrationData = await this.GetPaylineCorrectRegistartionData3DSecure(cardRegistration)
             };
             cardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
 
-            CardDTO card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
+            var card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
 
             // create pay-in CARD DIRECT
-            PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
-                new Money { Amount = amount, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR },
-                johnsWalletWithMoney.Id, "http://test.com", card.Id);
+            var payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
+                new Money {Amount = amount, Currency = CurrencyIso.EUR},
+                new Money {Amount = 0, Currency = CurrencyIso.EUR},
+                johnsWalletWithMoney.Id, "http://www.my-site.com/returnurl", card.Id)
+            {
+                CardType = card.CardType,
+                IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C",
+                Requested3DSVersion = "V2_1",
+                BrowserInfo = new BrowserInfo
+                {
+                    AcceptHeader = "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
+                    JavaEnabled = true,
+                    Language = "FR-FR",
+                    ColorDepth = 4,
+                    ScreenHeight = 1800,
+                    ScreenWidth = 400,
+                    JavascriptEnabled = true,
+                    TimeZoneOffset = "+60",
+                    UserAgent =
+                        "Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
+                }
+            };
 
-            payIn.CardType = card.CardType;
 
             // create Pay-In
             var result = await this.Api.PayIns.CreateCardDirectAsync(payIn);
@@ -747,6 +761,30 @@ namespace MangoPay.SDK.Tests
             request.AddParameter("data", cardRegistration.PreregistrationData);
             request.AddParameter("accessKeyRef", cardRegistration.AccessKey);
             request.AddParameter("cardNumber", "4972485830400056");
+            request.AddParameter("cardExpirationDate", "1224");
+            request.AddParameter("cardCvx", "123");
+
+            // Payline requires TLS
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            IRestResponse response = await client.ExecuteAsync(request);
+
+            String responseString = response.Content;
+
+            if (response.StatusCode == HttpStatusCode.OK)
+                return responseString;
+            else
+                throw new Exception(responseString);
+        }
+
+        protected async Task<string> GetPaylineCorrectRegistartionData3DSecure(CardRegistrationDTO cardRegistration)
+        {
+            RestClient client = new RestClient(cardRegistration.CardRegistrationURL);
+
+            RestRequest request = new RestRequest(Method.POST);
+            request.AddParameter("data", cardRegistration.PreregistrationData);
+            request.AddParameter("accessKeyRef", cardRegistration.AccessKey);
+            request.AddParameter("cardNumber", "4970105191923460");
             request.AddParameter("cardExpirationDate", "1224");
             request.AddParameter("cardCvx", "123");
 

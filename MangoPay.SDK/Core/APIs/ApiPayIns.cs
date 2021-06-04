@@ -254,15 +254,27 @@ namespace MangoPay.SDK.Core.APIs
                 idempotencyKey, MethodKey.PayinsRecurringRegistration, payIn);
         }
 
-        public async Task<RecurringPayInCITDTO> CreateRecurringPayInRegistrationCIT(RecurringPayInCITPostDTO payIn)
+        public async Task<RecurringPayInDTO> CreateRecurringPayInRegistrationCIT(RecurringPayInCITPostDTO payIn)
         {
-            return await this.CreateObjectAsync<RecurringPayInCITDTO, RecurringPayInCITPostDTO>(
+            return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayInCITPostDTO>(
                 null, MethodKey.PayinsRecurringCardDirect, payIn);
         }
 
-        public async Task<RecurringPayInCITDTO> CreateRecurringPayInRegistrationCIT(string idempotencyKey, RecurringPayInCITPostDTO payIn)
+        public async Task<RecurringPayInDTO> CreateRecurringPayInRegistrationCIT(string idempotencyKey, RecurringPayInCITPostDTO payIn)
         {
-            return await this.CreateObjectAsync<RecurringPayInCITDTO, RecurringPayInCITPostDTO>(
+            return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayInCITPostDTO>(
+                idempotencyKey, MethodKey.PayinsRecurringCardDirect, payIn);
+        }
+
+        public async Task<RecurringPayInDTO> CreateRecurringPayInRegistrationMIT(RecurringPayInMITPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayInMITPostDTO>(
+                null, MethodKey.PayinsRecurringCardDirect, payIn);
+        }
+
+        public async Task<RecurringPayInDTO> CreateRecurringPayInRegistrationMIT(string idempotencyKey, RecurringPayInMITPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayInMITPostDTO>(
                 idempotencyKey, MethodKey.PayinsRecurringCardDirect, payIn);
         }
 

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.GET
 {
-    public class RecurringPayInCITDTO : PayInDTO
+    public class RecurringPayInDTO : PayInDTO
     {
         [JsonConverter(typeof(StringEnumConverter))]
         public SecureMode? SecureMode { get; set; }

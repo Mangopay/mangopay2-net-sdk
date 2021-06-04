@@ -32,7 +32,7 @@ namespace MangoPay.SDK.Entities.POST
         [JsonConverter(typeof(Core.UnixDateTimeConverter))]
         public DateTime? EndDate { get; set; }
 
-        public List<String> Frequency { get; set; }
+        public string Frequency { get; set; }
 
         public bool Migration { get; set; }
 
