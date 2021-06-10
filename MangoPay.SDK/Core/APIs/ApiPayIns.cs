@@ -242,6 +242,42 @@ namespace MangoPay.SDK.Core.APIs
             return await this.CreateObjectAsync<GooglePayDirectPayInDTO, GooglePayDirectPayInPostDTO>(idempotencyKey, MethodKey.GooglePayinsDirectCreate, payIn);
         }
 
+        public async Task<RecurringPayInRegistrationDTO> CreateRecurringPayInRegistration(RecurringPayInRegistrationPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<RecurringPayInRegistrationDTO, RecurringPayInRegistrationPostDTO>(
+                null, MethodKey.PayinsRecurringRegistration, payIn);
+        }
+
+        public async Task<RecurringPayInRegistrationDTO> CreateRecurringPayInRegistration(string idempotencyKey, RecurringPayInRegistrationPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<RecurringPayInRegistrationDTO, RecurringPayInRegistrationPostDTO>(
+                idempotencyKey, MethodKey.PayinsRecurringRegistration, payIn);
+        }
+
+        public async Task<RecurringPayInDTO> CreateRecurringPayInRegistrationCIT(RecurringPayInCITPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayInCITPostDTO>(
+                null, MethodKey.PayinsRecurringCardDirect, payIn);
+        }
+
+        public async Task<RecurringPayInDTO> CreateRecurringPayInRegistrationCIT(string idempotencyKey, RecurringPayInCITPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayInCITPostDTO>(
+                idempotencyKey, MethodKey.PayinsRecurringCardDirect, payIn);
+        }
+
+        public async Task<RecurringPayInDTO> CreateRecurringPayInRegistrationMIT(RecurringPayInMITPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayInMITPostDTO>(
+                null, MethodKey.PayinsRecurringCardDirect, payIn);
+        }
+
+        public async Task<RecurringPayInDTO> CreateRecurringPayInRegistrationMIT(string idempotencyKey, RecurringPayInMITPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayInMITPostDTO>(
+                idempotencyKey, MethodKey.PayinsRecurringCardDirect, payIn);
+        }
+
         public PayInBankWireDirectDTO CreateBankWireDirect(PayInBankWireDirectPostDTO payIn)
         {
             return CreateBankWireDirect(null, payIn);
