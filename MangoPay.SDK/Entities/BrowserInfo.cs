@@ -29,17 +29,17 @@ namespace MangoPay.SDK.Entities
         /// <summary>
         /// The color depth
         /// </summary>
-        public string ColorDepth { get; set; }
+        public int ColorDepth { get; set; }
 
         /// <summary>
         /// The screen height
         /// </summary>
-        public string ScreenHeight { get; set; }
+        public int ScreenHeight { get; set; }
 
         /// <summary>
         /// The screen width
         /// </summary>
-        public string ScreenWidth { get; set; }
+        public int ScreenWidth { get; set; }
 
         /// <summary>
         /// The timezone offset
