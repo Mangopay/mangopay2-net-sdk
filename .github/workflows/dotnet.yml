@@ -18,8 +18,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        #dotnet: [ '2.1.x', '3.1.x', '5.0.x' ]
-        dotnet: [2.1.x]
+        dotnet: ['5.0.x']
     name: dotnet ${{ matrix.dotnet }}
     steps:
     - uses: actions/checkout@v2
