@@ -15,10 +15,11 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
-        dotnet: [ '2.1.x', '3.1.x', '5.0.x' ]
+        #dotnet: [ '2.1.x', '3.1.x', '5.0.x' ]
+        dotnet: [2.1.x]
     name: dotnet ${{ matrix.dotnet }}
     steps:
     - uses: actions/checkout@v2
