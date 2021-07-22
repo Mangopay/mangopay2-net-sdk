@@ -30,8 +30,6 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build -c Release --no-restore
-    - name: Update Packages
-      run: apt-get update
     - name: Install Nuget
       run: sudo apt-get install nuget
     - name: Check mono
