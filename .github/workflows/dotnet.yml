@@ -31,8 +31,11 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
     - name: Install Nuget
+      run: apt-get update
       run: sudo apt-get install nuget
     - name: Check mono
       run: mono --version
+    - name: Install NUnit Console
+      run: nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/net461/MangoPay.SDK.Tests.dll
