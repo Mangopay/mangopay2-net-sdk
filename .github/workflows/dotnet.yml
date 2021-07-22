@@ -1,0 +1,34 @@
+name: mangopay2-net-sdk-ci
+
+on:
+  push:
+    branches:
+      # push on master branch
+      - master
+      # push on a feature branch
+      - feature/*
+      # push on a bugfix branch
+      - bugfix/*
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet: [ '2.1.x', '3.1.x', '5.0.x' ]
+    name: dotnet ${{ matrix.dotnet }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ matrix.dotnet }}
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build -c --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
