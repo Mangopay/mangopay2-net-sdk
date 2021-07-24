@@ -1,0 +1,39 @@
+name: mangopay2-net-sdk-cd
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      # It pushes any tags that contain a v. ex: v1.16.1
+      - 'v*' 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet: ['5.0.x']
+    name: dotnet ${{ matrix.dotnet }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ matrix.dotnet }}
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build -c Release --no-restore
+
+  publish-nuget:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ matrix.dotnet }}
+        
+    - name: Install Nuget
+      run: sudo apt-get install nuget
+    - name: Publish on Nuget
+      run: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -Source $NUGET_SOURCE -SkipDuplicate -Verbosity detailed
