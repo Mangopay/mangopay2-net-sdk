@@ -930,7 +930,17 @@ namespace MangoPay.SDK.Tests
                     IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C",
                     SecureModeReturnURL = "http://www.my-site.com/returnurl",
                     StatementDescriptor = "lorem",
-                    Tag = "custom meta"
+                    Tag = "custom meta",
+                    DebitedFunds = new Money
+                    {
+                        Amount = 12,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Fees = new Money
+                    {
+                        Amount = 1,
+                        Currency = CurrencyIso.EUR
+                    }
                 };
 
                 var createdCit = await this.Api.PayIns.CreateRecurringPayInRegistrationCIT(cit);
@@ -1044,7 +1054,17 @@ namespace MangoPay.SDK.Tests
                     IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C",
                     SecureModeReturnURL = "http://www.my-site.com/returnURL",
                     StatementDescriptor = "lorem",
-                    Tag = "custom meta"
+                    Tag = "custom meta",
+                    DebitedFunds = new Money
+                    {
+                        Amount = 12,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Fees = new Money
+                    {
+                        Amount = 1,
+                        Currency = CurrencyIso.EUR
+                    }
                 };
 
                 var createdCit = await this.Api.PayIns.CreateRecurringPayInRegistrationCIT(cit);
@@ -1054,7 +1074,7 @@ namespace MangoPay.SDK.Tests
                 Assert.IsTrue(cardId == createdCit.CardId);
                 Assert.IsTrue(wallet.Id == createdCit.CreditedWalletId);
 
-                /*var mit = new RecurringPayInMITPostDTO
+                var mit = new RecurringPayInMITPostDTO
                 {
                     RecurringPayinRegistrationId = createdPayInRegistration.Id,
                     StatementDescriptor = "lorem",
@@ -1076,7 +1096,7 @@ namespace MangoPay.SDK.Tests
                 Assert.NotNull(createdMit);
                 Assert.IsTrue(userId == createdMit.CreditedUserId);
                 Assert.IsTrue(cardId == createdMit.CardId);
-                Assert.IsTrue(wallet.Id == createdMit.CreditedWalletId);*/
+                Assert.IsTrue(wallet.Id == createdMit.CreditedWalletId);
             }
             catch (Exception ex)
             {
