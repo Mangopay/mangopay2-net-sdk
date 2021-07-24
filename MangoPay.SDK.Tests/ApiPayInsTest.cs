@@ -836,6 +836,92 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        public async Task Test_PayIns_Get_Recurring()
+        {
+            try
+            {
+                var data = await GetNewJohnsWalletWithMoneyAndCardId(1000);
+                var cardId = data.Item1;
+                var wallet = data.Item2;
+                var userId = wallet.Owners.FirstOrDefault();
+
+                var payInPost = new RecurringPayInRegistrationPostDTO
+                {
+                    AuthorId = userId,
+                    CardId = cardId,
+                    CreditedUserId = userId,
+                    CreditedWalletId = wallet.Id,
+                    FirstTransactionDebitedFunds = new Money
+                    {
+                        Amount = 12,
+                        Currency = CurrencyIso.EUR
+                    },
+                    FirstTransactionFees = new Money
+                    {
+                        Amount = 1,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Billing = new Billing
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    Shipping = new Shipping
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    EndDate = DateTime.Now.AddDays(365),
+                    Migration = true,
+                    NextTransactionDebitedFunds = new Money
+                    {
+                        Amount = 12,
+                        Currency = CurrencyIso.EUR
+                    },
+                    NextTransactionFees = new Money
+                    {
+                        Amount = 1,
+                        Currency = CurrencyIso.EUR
+                    }
+                };
+
+                var result = await this.Api.PayIns.CreateRecurringPayInRegistration(payInPost);
+
+                var get = await this.Api.PayIns.GetRecurringPayInRegistration(result.Id);
+
+                Assert.NotNull(get);
+                Assert.IsTrue(get.CreditedUserId == result.CreditedUserId);
+                Assert.IsTrue(get.CardId == result.CardId);
+                Assert.IsTrue(get.CreditedWalletId == result.CreditedWalletId);
+                Assert.NotNull(get.Shipping);
+                Assert.NotNull(get.Billing);
+                Assert.NotNull(get.CurrentState);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
         public async Task Test_PayIns_Create_Recurring_CIT()
         {
             try
