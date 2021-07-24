@@ -4,6 +4,7 @@ using MangoPay.SDK.Entities.POST;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MangoPay.SDK.Entities.PUT;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -246,6 +247,13 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.GetObjectAsync<RecurringPayInRegistrationGetDTO>(MethodKey.PayinsGetRecurringRegistration,
                 recurringRegistrationId);
+        }
+
+        public async Task<RecurringPayInRegistrationGetDTO> UpdateRecurringPayInRegistration(string recurringRegistrationId, RecurringPayInPutDTO payIn)
+        {
+            return await this.UpdateObjectAsync<RecurringPayInRegistrationGetDTO, RecurringPayInPutDTO>(
+                MethodKey.PayinsPutRecurringRegistration,
+                payIn, recurringRegistrationId);
         }
 
         public async Task<RecurringPayInRegistrationDTO> CreateRecurringPayInRegistration(RecurringPayInRegistrationPostDTO payIn)
