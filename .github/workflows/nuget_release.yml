@@ -4,8 +4,8 @@ on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:
-      # It pushes any tags that contain a v. ex: v1.16.1
-      - 'v*' 
+      # It pushes any tags. ex: v1.16.1
+      - '*' 
 jobs:
   build:
     runs-on: ubuntu-latest
