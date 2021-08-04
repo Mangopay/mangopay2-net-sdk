@@ -22,22 +22,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build -c Release --no-restore
-
-  publish-nuget:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: ${{ matrix.dotnet }}
-        
     - name: Install Nuget
       run: sudo apt-get install nuget
-    - name: Print directory
-      run: pwd
-    - name: Print all files
-      run: ls -R
     - name: Publish on Nuget
       run: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg ${{ secrets.NUGET_API_KEY }} -Source ${{ secrets.NUGET_SOURCE }} -SkipDuplicate -Verbosity detailed
