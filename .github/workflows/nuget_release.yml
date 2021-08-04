@@ -36,4 +36,4 @@ jobs:
     - name: Install Nuget
       run: sudo apt-get install nuget
     - name: Publish on Nuget
-      run: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg $NUGET_API_KEY -Source $NUGET_SOURCE -SkipDuplicate -Verbosity detailed
+      run: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg ${{ secrets.NUGET_API_KEY }} -Source ${{ secrets.NUGET_SOURCE }} -SkipDuplicate -Verbosity detailed
