@@ -35,5 +35,9 @@ jobs:
         
     - name: Install Nuget
       run: sudo apt-get install nuget
+    - name: Print directory
+      run: pwd
+    - name: Print all files
+      run: ls -R
     - name: Publish on Nuget
       run: nuget push ./MangoPay.SDK/bin/Release/mangopay2-sdk.*.nupkg ${{ secrets.NUGET_API_KEY }} -Source ${{ secrets.NUGET_SOURCE }} -SkipDuplicate -Verbosity detailed
