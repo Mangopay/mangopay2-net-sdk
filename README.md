@@ -7,9 +7,9 @@ MangopaySDK is a Microsoft .NET client library to work with
 Installation and package dependencies
 -------------------------------------------------
 SDK has been written in C# 6.0, for .NET Framework 4.5 and has 3 dependencies on external packages. These dependencies are:
-- Common.Logging library (version 3.1.0)
-- Json.NET (version 6.0.3)
-- RestSharp (version 104.4.0)
+- Common.Logging library (version 3.4.1)
+- Newtonsoft.Json (version 13.0.1)
+- RestSharp (version 106.12.0)
 
 The installation is as easy as downloading the SDK package and storing it under any location that will be available for referencing by your project (see examples below). You can also install from the .Net Package Manager Console:
 
