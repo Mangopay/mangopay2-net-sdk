@@ -26,3 +26,4 @@ TestResults/
 .vs/
 *.iml
 .idea
+/nuget.exe
