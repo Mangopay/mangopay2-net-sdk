@@ -19,6 +19,12 @@ namespace MangoPay.SDK.Entities.GET
 
         public String ModeApplied { get; set; }
 
-        public String FallbackReason { get; set; }
+        public FallbackReason FallbackReason { get; set; }
+    }
+
+    public class FallbackReason
+    {
+        public String Code { get; set; }
+        public String Message { get; set; }
     }
 }
