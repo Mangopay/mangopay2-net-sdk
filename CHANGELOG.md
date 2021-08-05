@@ -1,4 +1,11 @@
+## [2.7.1] - 2021.08.05
+## Fixed
+
+- Change `FallbackReason` parameter's type to object in PayOutBankWireDTO  
+
 ## [2.7.0] - 2021.07.29
+## Added 
+
 - You can now update and view a Recurring PayIn Registration object. To know more about this feature, please consult the documentation [here](https://docs.mangopay.com/guide/recurring-payments-introduction). 
 - To improve recurring payments, we have added new parameters for CIT : DebitedFunds & Fees. To know more about this feature, please consult the documentation [here](https://docs.mangopay.com/endpoints/v2.01/payins#e1053_create-a-recurring-payin-cit)
 
