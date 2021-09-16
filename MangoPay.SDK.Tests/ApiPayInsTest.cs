@@ -80,6 +80,46 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        public async Task Test_PayIns_Create_Payconiq()
+        {
+            try
+            {
+                var wallet = await this.GetJohnsWallet();
+                var user = await this.GetJohn();
+
+                var payInPost = new PayInPayconiqPostDTO
+                {
+                    Tag = "custom meta",
+                    AuthorId = user.Id,
+                    DebitedFunds = new Money
+                    {
+                        Amount = 22,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Fees = new Money
+                    {
+                        Amount = 10,
+                        Currency = CurrencyIso.EUR
+                    },
+                    ReturnURL = "http://www.my-site.com/returnURL",
+                    CreditedWalletId = wallet.Id,
+                    Country = "BE",
+                    CreditedUserId = user.Id
+                };
+
+                var payIn = await this.Api.PayIns.CreatePayconiqAsync(payInPost);
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.IsTrue(payIn.PaymentType == PayInPaymentType.PAYCONIQ);
+                Assert.IsTrue(payIn.ExecutionType == PayInExecutionType.WEB);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
         public async Task Test_PayIns_Create_PayPal_WithShippingAddress()
         {
             try

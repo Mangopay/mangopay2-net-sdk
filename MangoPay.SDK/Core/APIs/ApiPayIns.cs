@@ -83,6 +83,23 @@ namespace MangoPay.SDK.Core.APIs
             return await this.CreateObjectAsync<PayInPayPalDTO, PayInPayPalPostDTO>(idempotencyKey, MethodKey.PayinsPayPalCreate, payIn);
         }
 
+        /// <summary>Creates new payin by Payconiq.</summary>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInPayconiqDTO> CreatePayconiqAsync(PayInPayconiqPostDTO payIn)
+        {
+            return await CreatePayconiqAsync(null, payIn);
+        }
+
+        /// <summary>Creates new payin by Payconiq.</summary>
+        /// <param name="idempotencyKey">Idempotency key for this request.</param>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInPayconiqDTO> CreatePayconiqAsync(String idempotencyKey, PayInPayconiqPostDTO payIn)
+        {
+            return await this.CreateObjectAsync<PayInPayconiqDTO, PayInPayconiqPostDTO>(idempotencyKey, MethodKey.PayinsPayconiqWebCreate, payIn);
+        }
+
         /// <summary>Creates new payin preauthorized direct.</summary>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>

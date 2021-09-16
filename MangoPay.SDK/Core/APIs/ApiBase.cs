@@ -55,6 +55,8 @@ namespace MangoPay.SDK.Core.APIs
 
             { MethodKey.PayinsBankwireDirectCreate, new ApiEndPoint("/payins/bankwire/direct", RequestType.POST)},
 
+            { MethodKey.PayinsPayconiqWebCreate, new ApiEndPoint("/payins/payconiq/web", RequestType.POST)},
+
             { MethodKey.PayinsDirectDebitCreate, new ApiEndPoint("/payins/directdebit/web", RequestType.POST)},
             { MethodKey.PayinsMandateDirectDebitCreate, new ApiEndPoint("/payins/directdebit/direct", RequestType.POST)},
             
