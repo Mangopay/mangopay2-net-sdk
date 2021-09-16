@@ -171,7 +171,7 @@ namespace MangoPay.SDK.Tests
 
 				WalletDTO wallet = await GetJohnsWallet();
 				UserNaturalDTO user = await GetJohn();
-				PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test.test", mandate.Id);
+				PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test.test", mandate.Id);
 				PayInDTO createPayIn = await this.Api.PayIns.CreateMandateDirectDebitAsync(payIn);
 
 				var pagination = new Pagination(1, 1);

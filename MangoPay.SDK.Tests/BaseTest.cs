@@ -247,7 +247,7 @@ namespace MangoPay.SDK.Tests
         /// <returns>Wallet instance loaded with 10k EUR.</returns>
         protected async Task<WalletDTO> GetJohnsWalletWithMoney()
         {
-            return await GetJohnsWalletWithMoney(10000);
+            return await GetJohnsWalletWithMoney(100);
         }
 
         /// <summary>Creates wallet for John, if not created yet, or returns an existing one.</summary>
@@ -546,7 +546,7 @@ namespace MangoPay.SDK.Tests
 
             // create pay-in CARD DIRECT
             PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
-                    new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR },
+                    new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR },
                     wallet.Id, "http://test.com", card.Id);
 
             // payment type as CARD
@@ -726,7 +726,7 @@ namespace MangoPay.SDK.Tests
             cardRegistrationPut.RegistrationData = registrationData;
             CardRegistrationDTO getCardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, newCardRegistration.Id);
 
-            CardPreAuthorizationPostDTO cardPreAuthorization = new CardPreAuthorizationPostDTO(userId, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, SecureMode.DEFAULT, getCardRegistration.CardId, "http://test.com");
+            CardPreAuthorizationPostDTO cardPreAuthorization = new CardPreAuthorizationPostDTO(userId, new Money { Amount = 100, Currency = CurrencyIso.EUR }, SecureMode.DEFAULT, getCardRegistration.CardId, "http://test.com");
 
             return cardPreAuthorization;
         }

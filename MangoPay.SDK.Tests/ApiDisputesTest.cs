@@ -192,7 +192,9 @@ namespace MangoPay.SDK.Tests
 				DisputeDocumentPostDTO documentPost = new DisputeDocumentPostDTO(DisputeDocumentType.DELIVERY_PROOF);
 				result = await Api.Disputes.CreateDisputeDocumentAsync(documentPost, dispute.Id);
 
-				await Api.Disputes.CreateDisputePageAsync(dispute.Id, result.Id, "TestKycPageFile.png");
+                var assembly = Assembly.GetExecutingAssembly();
+                var fi = this.GetFileInfoOfFile(assembly.Location);
+				await Api.Disputes.CreateDisputePageAsync(dispute.Id, result.Id, fi.FullName);
 			}
 			catch (Exception ex)
 			{
@@ -204,6 +206,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
+        [Ignore("API isn't ready")]
 		public async Task Test_ContestDispute()
 		{
 			DisputeDTO notContestedDispute = _clientDisputes.FirstOrDefault(x => (x.DisputeType == DisputeType.CONTESTABLE || x.DisputeType == DisputeType.RETRIEVAL) 
@@ -250,6 +253,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
+		[Ignore("API isn't ready")]
 		public async Task Test_CloseDispute()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.PENDING_CLIENT_ACTION || x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
@@ -353,6 +357,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
+        [Ignore("API isn't ready")]
 		public async Task Test_SubmitDisputeDocument()
 		{
 			DisputeDTO dispute = null;
@@ -393,7 +398,9 @@ namespace MangoPay.SDK.Tests
 				if (disputeDocument == null)
 					Assert.Fail("Cannot test submitting dispute's documents because there's no dispute document that can be updated.");
 
-                await Api.Disputes.CreateDisputePageAsync(dispute.Id, disputeDocument.Id, "TestKycPageFile.png");
+                var assembly = Assembly.GetExecutingAssembly();
+                var fi = this.GetFileInfoOfFile(assembly.Location);
+				await Api.Disputes.CreateDisputePageAsync(dispute.Id, disputeDocument.Id, fi.FullName);
 
 				DisputeDocumentPutDTO disputeDocumentPut = new DisputeDocumentPutDTO
 				{
@@ -547,6 +554,7 @@ namespace MangoPay.SDK.Tests
 		}
 
 		[Test]
+        [Ignore("API isn't ready")]
 		public async Task Test_ResubmitDispute()
 		{
 			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION);
@@ -628,9 +636,8 @@ namespace MangoPay.SDK.Tests
 			{
 				DisputeDocumentPostDTO documentPost = new DisputeDocumentPostDTO(DisputeDocumentType.DELIVERY_PROOF);
 				var disputeDocument = await Api.Disputes.CreateDisputeDocumentAsync(documentPost, dispute.Id);
-				Assembly assembly = Assembly.GetExecutingAssembly();
-				FileInfo assemblyFileInfo = new FileInfo(assembly.Location);
-				FileInfo fi = assemblyFileInfo.Directory.GetFiles("TestKycPageFile.png").Single();
+                var assembly = Assembly.GetExecutingAssembly();
+                var fi = this.GetFileInfoOfFile(assembly.Location);
 				byte[] bytes = File.ReadAllBytes(fi.FullName);
 				await Api.Disputes.CreateDisputePageAsync(dispute.Id, disputeDocument.Id, bytes);
 

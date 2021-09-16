@@ -15,7 +15,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Refund_GetForTransfer()
         {
-			WalletDTO wallet = await this.GetNewJohnsWalletWithMoney(10000);
+			WalletDTO wallet = await this.GetNewJohnsWalletWithMoney(100);
 			TransferDTO transfer = await this.GetNewTransfer(wallet);
             RefundDTO refund = await this.GetNewRefundForTransfer(transfer);
             UserNaturalDTO user = await this.GetJohn();
@@ -103,7 +103,7 @@ namespace MangoPay.SDK.Tests
 		{
 			try
 			{
-				var wallet = await this.GetNewJohnsWalletWithMoney(10000);
+				var wallet = await this.GetNewJohnsWalletWithMoney(100);
 				TransferDTO transfer = await this.GetNewTransfer(wallet);
 				RefundDTO refund = await this.GetNewRefundForTransfer(transfer);
 

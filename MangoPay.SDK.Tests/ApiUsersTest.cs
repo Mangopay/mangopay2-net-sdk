@@ -771,12 +771,12 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				var user = await GetNewJohn();
-				var wallet = await GetNewJohnsWalletWithMoney(10000, user);
+				var wallet = await GetNewJohnsWalletWithMoney(100, user);
 
 				var emoney = await Api.Users.GetEmoneyAsync(user.Id);
 
 				Assert.AreEqual(user.Id, emoney.UserId);
-				Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
+				Assert.AreEqual(100, emoney.CreditedEMoney.Amount);
 				Assert.AreEqual(CurrencyIso.EUR, emoney.CreditedEMoney.Currency);
 			}
 			catch (Exception ex)
@@ -791,14 +791,14 @@ namespace MangoPay.SDK.Tests
             try
             {
                 var user = await GetNewJohn();
-                var wallet = await GetNewJohnsWalletWithMoney(10000, user);
+                var wallet = await GetNewJohnsWalletWithMoney(100, user);
 		        var year = DateTime.Now.Year.ToString();
                 var emoney = await Api.Users.GetEmoneyForYearAsync(user.Id, year);
 
                 Assert.IsNotNull(emoney);
                 Assert.AreEqual(user.Id, emoney.UserId);
                 //Assert.AreEqual("2019","2019");
-                Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
+                Assert.AreEqual(100, emoney.CreditedEMoney.Amount);
                 Assert.AreEqual(CurrencyIso.EUR, emoney.CreditedEMoney.Currency);
             }
             catch (Exception e)
@@ -813,7 +813,7 @@ namespace MangoPay.SDK.Tests
             try
             {
                 var user = await GetNewJohn();
-                var wallet = await GetNewJohnsWalletWithMoney(10000, user);
+                var wallet = await GetNewJohnsWalletWithMoney(100, user);
 		        var year = DateTime.Now.Year.ToString();
                 var month = DateTime.Now.Month.ToString();
 
@@ -822,7 +822,7 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual(user.Id, emoney.UserId);
                 //Assert.AreEqual("2019","2019");
                 //Assert.AreEqual("04","04");
-                Assert.AreEqual(10000, emoney.CreditedEMoney.Amount);
+                Assert.AreEqual(100, emoney.CreditedEMoney.Amount);
                 Assert.AreEqual(CurrencyIso.EUR, emoney.CreditedEMoney.Currency);
             }
             catch (Exception e)
@@ -837,7 +837,7 @@ namespace MangoPay.SDK.Tests
 			try
 			{
 				var user = await GetNewJohn();
-				var wallet = GetNewJohnsWalletWithMoney(10000, user);
+				var wallet = GetNewJohnsWalletWithMoney(100, user);
 
 				var emoney = await Api.Users.GetEmoneyAsync(user.Id, CurrencyIso.USD);
 
@@ -856,7 +856,7 @@ namespace MangoPay.SDK.Tests
             try
             {
                 var user = await GetNewJohn();
-                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+                var wallet = GetNewJohnsWalletWithMoney(100, user);
                 var year = DateTime.Now.Year.ToString();
 
                 var emoney = await Api.Users.GetEmoneyAsync(user.Id, year, CurrencyIso.USD);
@@ -877,7 +877,7 @@ namespace MangoPay.SDK.Tests
             try
             {
                 var user = await GetNewJohn();
-                var wallet = GetNewJohnsWalletWithMoney(10000, user);
+                var wallet = GetNewJohnsWalletWithMoney(100, user);
                 var year = DateTime.Now.Year.ToString();
                 var month = DateTime.Now.Month.ToString();
 

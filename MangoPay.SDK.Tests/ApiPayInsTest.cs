@@ -233,7 +233,7 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO user = await this.GetJohn();
 
                 // create pay-in PRE-AUTHORIZED DIRECT
-                PayInPreauthorizedDirectPostDTO payIn = new PayInPreauthorizedDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, cardPreAuthorization.Id)
+                PayInPreauthorizedDirectPostDTO payIn = new PayInPreauthorizedDirectPostDTO(user.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, cardPreAuthorization.Id)
                 {
                     SecureModeReturnURL = "http://test.com"
                 };
@@ -266,7 +266,7 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO user = await this.GetJohn();
 
                 // create pay-in BANKWIRE DIRECT
-                PayInBankWireDirectPostDTO payIn = new PayInBankWireDirectPostDTO(user.Id, wallet.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR })
+                PayInBankWireDirectPostDTO payIn = new PayInBankWireDirectPostDTO(user.Id, wallet.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR })
                 {
                     CreditedWalletId = wallet.Id,
                     AuthorId = user.Id
@@ -316,7 +316,7 @@ namespace MangoPay.SDK.Tests
 				 * 
 				 */
 
-                PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test.test", mandate.Id);
+                PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test.test", mandate.Id);
 
                 PayInDTO createPayIn = await this.Api.PayIns.CreateMandateDirectDebitAsync(payIn);
 
@@ -353,7 +353,7 @@ namespace MangoPay.SDK.Tests
                 UserNaturalDTO user = await this.GetJohn();
 
                 // create pay-in BANKWIRE DIRECT
-                PayInBankWireDirectPostDTO payIn = new PayInBankWireDirectPostDTO(user.Id, wallet.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR });
+                PayInBankWireDirectPostDTO payIn = new PayInBankWireDirectPostDTO(user.Id, wallet.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR });
                 payIn.CreditedWalletId = wallet.Id;
                 payIn.AuthorId = user.Id;
 
@@ -381,7 +381,7 @@ namespace MangoPay.SDK.Tests
             WalletDTO wallet = await this.GetJohnsWallet();
             UserNaturalDTO user = await this.GetJohn();
             // create pay-in DIRECT DEBIT
-            PayInDirectDebitPostDTO payIn = new PayInDirectDebitPostDTO(user.Id, new Money { Amount = 10000, Currency = CurrencyIso.EUR }, new Money { Amount = 100, Currency = CurrencyIso.EUR }, wallet.Id, "http://www.mysite.com/returnURL/", CultureCode.FR, DirectDebitType.GIROPAY)
+            PayInDirectDebitPostDTO payIn = new PayInDirectDebitPostDTO(user.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 10, Currency = CurrencyIso.EUR }, wallet.Id, "http://www.mysite.com/returnURL/", CultureCode.FR, DirectDebitType.GIROPAY)
             {
                 TemplateURLOptions = new TemplateURLOptions { PAYLINE = "https://www.maysite.com/payline_template/" },
                 Tag = "DirectDebit test tag"
@@ -400,17 +400,17 @@ namespace MangoPay.SDK.Tests
             Assert.IsTrue(createPayIn.Type == TransactionType.PAYIN);
             Assert.IsNotNull(createPayIn.DebitedFunds);
             Assert.IsTrue(createPayIn.DebitedFunds is Money);
-            Assert.AreEqual(10000, createPayIn.DebitedFunds.Amount);
+            Assert.AreEqual(100, createPayIn.DebitedFunds.Amount);
             Assert.IsTrue(createPayIn.DebitedFunds.Currency == CurrencyIso.EUR);
 
             Assert.IsNotNull(createPayIn.CreditedFunds);
             Assert.IsTrue(createPayIn.CreditedFunds is Money);
-            Assert.AreEqual(9900, createPayIn.CreditedFunds.Amount);
+            Assert.AreEqual(90, createPayIn.CreditedFunds.Amount);
             Assert.IsTrue(createPayIn.CreditedFunds.Currency == CurrencyIso.EUR);
 
             Assert.IsNotNull(createPayIn.Fees);
             Assert.IsTrue(createPayIn.Fees is Money);
-            Assert.AreEqual(100, createPayIn.Fees.Amount);
+            Assert.AreEqual(10, createPayIn.Fees.Amount);
             Assert.IsTrue(createPayIn.Fees.Currency == CurrencyIso.EUR);
 
             Assert.IsNotNull(createPayIn.ReturnURL);

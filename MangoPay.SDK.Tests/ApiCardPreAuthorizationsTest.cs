@@ -136,7 +136,7 @@ namespace MangoPay.SDK.Tests
                 var wallet = await this.GetJohnsWalletWithMoney();
                 var user = await this.GetJohn();
                 var payIn = new PayInPreauthorizedDirectPostDTO(user.Id,
-                    new Money {Amount = 10000, Currency = CurrencyIso.EUR},
+                    new Money {Amount = 100, Currency = CurrencyIso.EUR},
                     new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, cardPreAuthorization.Id)
                 {
                     SecureModeReturnURL = "http://test.com"

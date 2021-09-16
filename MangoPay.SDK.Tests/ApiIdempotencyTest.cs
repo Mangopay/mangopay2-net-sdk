@@ -117,7 +117,7 @@ namespace MangoPay.SDK.Tests
             WalletDTO wallet = await this.GetJohnsWallet();
             UserNaturalDTO user = await this.GetJohn();
             PayInBankWireDirectPostDTO payIn = new PayInBankWireDirectPostDTO(user.Id, wallet.Id,
-                new Money {Amount = 10000, Currency = CurrencyIso.EUR},
+                new Money {Amount = 100, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR});
             payIn.CreditedWalletId = wallet.Id;
             payIn.AuthorId = user.Id;
@@ -192,8 +192,8 @@ namespace MangoPay.SDK.Tests
             WalletDTO wallet = await this.GetJohnsWallet();
             UserNaturalDTO user = await this.GetJohn();
             PayInDirectDebitPostDTO payIn = new PayInDirectDebitPostDTO(user.Id,
-                new Money {Amount = 10000, Currency = CurrencyIso.EUR},
-                new Money {Amount = 100, Currency = CurrencyIso.EUR}, wallet.Id, "http://www.mysite.com/returnURL/",
+                new Money {Amount = 100, Currency = CurrencyIso.EUR},
+                new Money {Amount = 10, Currency = CurrencyIso.EUR}, wallet.Id, "http://www.mysite.com/returnURL/",
                 CultureCode.FR, DirectDebitType.GIROPAY);
             payIn.TemplateURLOptions = new TemplateURLOptions {PAYLINE = "https://www.maysite.com/payline_template/"};
             payIn.Tag = "DirectDebit test tag";
@@ -223,7 +223,7 @@ namespace MangoPay.SDK.Tests
 			 * 
 			 */
             PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id,
-                new Money {Amount = 10000, Currency = CurrencyIso.EUR},
+                new Money {Amount = 100, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, "http://test.test", mandate.Id);
             await Api.PayIns.CreateMandateDirectDebitAsync(key, payIn);
 
