@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Collections.Generic;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -18,5 +19,8 @@ namespace MangoPay.SDK.Entities.GET
 
 		/// <summary>The User that this document belongs to.</summary>
 		public String UserId { get; set; }
+
+        /// <summary> More information regarding why the document has been rejected </summary>
+        public List<string> Flags { get; set; }
     }
 }
