@@ -1,3 +1,22 @@
+## [2.8.0] - 2021.10.11
+## Added
+
+### Payconiq
+
+As requested by numerous clients, we are now providing [Payconiq](https://www.payconiq.be) as a new mean-of-payment. To request access, please contact MANGOPAY.
+
+### Flags for KYC documents
+
+**We provide more information regarding refused KYC documents.** Therefore it will be easier for you to adapt your app behavior and help your end user.
+
+You are now able to see the exact explanation thanks to a new parameter called “Flags”. 
+
+It has been added to 
+
+`this.Api.Kyc.GetAsync(kycDocument.Id);`
+
+It will display one or several error codes that provide the reason(s) why your document validation has failed. These error codes description are available [here](https://docs.mangopay.com/guide/kyc-document).
+
 ## [2.7.1] - 2021.08.05
 ## Fixed
 
