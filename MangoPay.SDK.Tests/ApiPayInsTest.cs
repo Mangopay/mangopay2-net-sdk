@@ -1062,7 +1062,8 @@ namespace MangoPay.SDK.Tests
                         },
                         FirstName = "New Name",
                         LastName = "New Last Name"
-                    }
+                    },
+                    Status = RecurringPaymentStatus.ENDED
                 };
 
                 var put = await this.Api.PayIns.UpdateRecurringPayInRegistration(get.Id, putObject);
