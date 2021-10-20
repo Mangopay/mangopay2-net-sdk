@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.GET
 {
     public class RecurringPayInRegistrationDTO : EntityBase
     {
-        public string Status { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public RecurringPaymentStatus Status { get; set; }
 
         public string RecurringType { get; set; }
 
