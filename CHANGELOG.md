@@ -1,3 +1,13 @@
+## [2.10.0] - 2021.11.19
+## Added
+
+We are now providing new hooks for our new feature [Instant payouts](https://docs.mangopay.com/guide/instant-payment-payout) :
+
+- INSTANT_PAYOUT_SUCCEEDED
+- INSTANT_PAYOUT_FALLBACKED
+
+It will allow you to trigger an action depends on the Instant Payout treatment.
+
 ## [2.9.0] - 2021.10.20
 ## Added
 
