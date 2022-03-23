@@ -261,7 +261,7 @@ namespace MangoPay.SDK.Tests
             BankAccountDTO account = await this.GetJohnsAccount();
             PayOutBankWirePostDTO payOut = new PayOutBankWirePostDTO(user.Id, wallet.Id,
                 new Money {Amount = 10, Currency = CurrencyIso.EUR}, new Money {Amount = 5, Currency = CurrencyIso.EUR},
-                account.Id, "Johns bank wire ref", "STANDARD");
+                account.Id, "Johns bank wire ref", PayoutModeRequested.STANDARD);
             payOut.Tag = "DefaultTag";
             payOut.CreditedUserId = user.Id;
             await Api.PayOuts.CreateBankWireAsync(key, payOut);
