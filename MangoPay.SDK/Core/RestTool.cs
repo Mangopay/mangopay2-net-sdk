@@ -269,7 +269,7 @@ namespace MangoPay.SDK.Core
             ListPaginated<T> responseObject = null;
 
             var urlTool = new UrlTool(_root);
-            var restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, null, _root.Config.ApiVersion);
+            var restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, additionalUrlParams, _root.Config.ApiVersion);
 
             if (this._requestData != null)
             {

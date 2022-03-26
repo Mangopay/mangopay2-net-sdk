@@ -504,7 +504,7 @@ namespace MangoPay.SDK.Tests
                 PaymentData = paymentData
             };
 
-            var getPayIn = await Api.PayIns.CreateApplePayAsync(DateTime.Now.Ticks.ToString(), applePayIn);
+            var getPayIn = await Api.PayIns.CreateApplePayAsync(applePayIn, DateTime.Now.Ticks.ToString());
 
             Assert.IsNotNull(getPayIn);
             Assert.AreEqual(getPayIn.AuthorId, applePayIn.AuthorId);
@@ -549,7 +549,7 @@ namespace MangoPay.SDK.Tests
                 }
             };
 
-            var getPayIn = await Api.PayIns.CreateGooglePayAsync(null, googlePayIn);
+            var getPayIn = await Api.PayIns.CreateGooglePayAsync(googlePayIn);
 
             Assert.IsNotNull(getPayIn);
             Assert.AreEqual(getPayIn.AuthorId, googlePayIn.AuthorId);

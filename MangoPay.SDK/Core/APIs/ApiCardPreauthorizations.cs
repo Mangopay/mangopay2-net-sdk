@@ -21,7 +21,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Card registration instance returned from API.</returns>
         public async Task<CardPreAuthorizationDTO> CreateAsync(CardPreAuthorizationPostDTO cardPreAuthorization, string idempotentKey = null)
         {
-            return await this.CreateObjectAsync<CardPreAuthorizationDTO, CardPreAuthorizationPostDTO>(MethodKey.PreauthorizationCreate, cardPreAuthorization, idempotentKey: idempotentKey);
+            return await this.CreateObjectAsync<CardPreAuthorizationDTO, CardPreAuthorizationPostDTO>(MethodKey.PreauthorizationCreate, cardPreAuthorization, idempotentKey);
         }
 
         /// <summary>Gets pre-authorization object.</summary>
@@ -29,7 +29,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Card registration instance returned from API.</returns>
         public async Task<CardPreAuthorizationDTO> GetAsync(string cardPreAuthorizationId)
         {
-            return await this.GetObjectAsync<CardPreAuthorizationDTO>(MethodKey.PreauthorizationGet, cardPreAuthorizationId);
+            return await this.GetObjectAsync<CardPreAuthorizationDTO>(MethodKey.PreauthorizationGet, entitiesId: cardPreAuthorizationId);
         }
 
         /// <summary>Gets pre-authorization object.</summary>
@@ -47,7 +47,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Card registration instance returned from API.</returns>
         public async Task<CardPreAuthorizationDTO> UpdateAsync(CardPreAuthorizationPutDTO cardPreAuthorization, string cardPreAuthorizationId)
         {
-            return await this.UpdateObjectAsync<CardPreAuthorizationDTO, CardPreAuthorizationPutDTO>(MethodKey.PreauthorizationSave, cardPreAuthorization, cardPreAuthorizationId);
+            return await this.UpdateObjectAsync<CardPreAuthorizationDTO, CardPreAuthorizationPutDTO>(MethodKey.PreauthorizationSave, cardPreAuthorization, entitiesId: cardPreAuthorizationId);
         }
 
         /// <summary>Lists PreAuthorizations for a user</summary>
@@ -60,7 +60,7 @@ namespace MangoPay.SDK.Core.APIs
         {
             if (filters == null) filters = new FilterPreAuthorizations();
 
-            return await GetListAsync<CardPreAuthorizationDTO>(MethodKey.UsersPreauthorizations, pagination, sort, filters.GetValues(), userId);
+            return await GetListAsync<CardPreAuthorizationDTO>(MethodKey.UsersPreauthorizations, pagination, sort, filters.GetValues(), entitiesId: userId);
         }
 
         /// <summary>Lists PreAuthorizations for a card</summary>
@@ -73,7 +73,7 @@ namespace MangoPay.SDK.Core.APIs
         {
             if (filters == null) filters = new FilterPreAuthorizations();
 
-            return await GetListAsync<CardPreAuthorizationDTO>(MethodKey.CardPreauthorizations, pagination, sort, filters.GetValues(), cardId);
+            return await GetListAsync<CardPreAuthorizationDTO>(MethodKey.CardPreauthorizations, pagination, sort, filters.GetValues(), entitiesId: cardId);
         }
     }
 }

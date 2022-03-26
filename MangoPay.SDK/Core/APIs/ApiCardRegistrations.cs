@@ -28,7 +28,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Card registration instance returned from API.</returns>
         public async Task<CardRegistrationDTO> GetAsync(string cardRegistrationId)
         {
-            return await this.GetObjectAsync<CardRegistrationDTO>(MethodKey.CardRegistrationGet, cardRegistrationId);
+            return await this.GetObjectAsync<CardRegistrationDTO>(MethodKey.CardRegistrationGet, entitiesId: cardRegistrationId);
         }
 
         /// <summary>Updates card registration.</summary>
@@ -37,7 +37,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Card registration object returned from API.</returns>
         public async Task<CardRegistrationDTO> UpdateAsync(CardRegistrationPutDTO cardRegistration, string cardRegistrationId)
         {
-            return await this.UpdateObjectAsync<CardRegistrationDTO, CardRegistrationPutDTO>(MethodKey.CardRegistrationSave, cardRegistration, cardRegistrationId);
+            return await this.UpdateObjectAsync<CardRegistrationDTO, CardRegistrationPutDTO>(MethodKey.CardRegistrationSave, cardRegistration, entitiesId: cardRegistrationId);
         }
     }
 }

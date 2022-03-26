@@ -34,6 +34,25 @@ namespace MangoPay.SDK.Core.APIs
             );
         }
 
+        public async Task<UboDeclarationDTO> GetUboDeclarationByIdAsync(string userId, string uboDeclarationId)
+        {
+            return await GetObjectAsync<UboDeclarationDTO>(
+                MethodKey.UboDeclarationGet,
+                null,
+                userId,
+                uboDeclarationId
+            );
+        }
+
+        public async Task<UboDeclarationDTO> GetUboDeclarationByIdAsync(string uboDeclarationId)
+        {
+            return await GetObjectAsync<UboDeclarationDTO>(
+                MethodKey.UboDeclarationGetById,
+                null,
+                uboDeclarationId
+            );
+        }
+
         public async Task<UboDeclarationDTO> UpdateUboDeclarationAsync(UboDeclarationPutDTO uboDeclaration, string userId,
             string uboDeclarationId)
         {

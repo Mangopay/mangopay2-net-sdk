@@ -44,7 +44,7 @@ namespace MangoPay.SDK.Tests
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName", "lastName", email, "READ");
 				var idempotencyKey = "keysso" + DateTime.Now.Ticks.ToString();
 
-				var singleSignOn = await this.Api.SingleSignOns.CreateAsync(idempotencyKey, singleSignOnPost);
+				var singleSignOn = await this.Api.SingleSignOns.CreateAsync(singleSignOnPost, idempotencyKey);
 
 				Assert.IsTrue(singleSignOn.Id.Length > 0);
 				Assert.AreEqual("firstName", singleSignOn.FirstName);

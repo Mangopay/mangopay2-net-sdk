@@ -859,7 +859,7 @@ namespace MangoPay.SDK.Tests
                 var wallet = GetNewJohnsWalletWithMoney(100, user);
                 var year = DateTime.Now.Year.ToString();
 
-                var emoney = await Api.Users.GetEmoneyAsync(user.Id, year, CurrencyIso.USD);
+                var emoney = await Api.Users.GetEmoneyForYearAsync(user.Id, year, CurrencyIso.USD);
 
                 Assert.NotNull(emoney);
                 Assert.AreEqual(user.Id, emoney.UserId);
@@ -881,7 +881,7 @@ namespace MangoPay.SDK.Tests
                 var year = DateTime.Now.Year.ToString();
                 var month = DateTime.Now.Month.ToString();
 
-                var emoney = await Api.Users.GetEmoneyAsync(user.Id, year, month, CurrencyIso.USD);
+                var emoney = await Api.Users.GetEmoneyForYearAndMonthAsync(user.Id, year, month, CurrencyIso.USD);
 
                 Assert.NotNull(emoney);
                 Assert.AreEqual(user.Id, emoney.UserId);
@@ -918,25 +918,6 @@ namespace MangoPay.SDK.Tests
 		}
 
         [Test]
-        [Ignore("not on api yet")]
-        public async Task Test_Users_GetUserBlockStatus()
-        {
-            try
-            {
-                var john = await GetJohn();
-
-                var status = await Api.Users.GetUserBlockStatusAsync(john.Id);
-
-                Assert.NotNull(status);
-            }
-            catch (Exception e)
-            {
-                Assert.Fail(e.Message);
-            }
-        }
-
-        [Test]
-        [Ignore("not on api yet")]
         public async Task Test_Users_GetUserRegulatory()
         {
             try

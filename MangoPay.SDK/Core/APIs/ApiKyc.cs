@@ -31,7 +31,7 @@ namespace MangoPay.SDK.Core.APIs
 		/// <returns>KYC document instance returned from API.</returns>
         public async Task<KycDocumentDTO> GetAsync(string kycDocumentId)
         {
-            return await this.GetObjectAsync<KycDocumentDTO>(MethodKey.GetKycDocument, kycDocumentId);
+            return await this.GetObjectAsync<KycDocumentDTO>(MethodKey.GetKycDocument, entitiesId: kycDocumentId);
         }
 
         /// <summary>

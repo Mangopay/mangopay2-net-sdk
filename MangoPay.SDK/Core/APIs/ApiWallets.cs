@@ -28,7 +28,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Wallet instance returned from API.</returns>
         public async Task<WalletDTO> GetAsync(string walletId)
         {
-            return await this.GetObjectAsync<WalletDTO>(MethodKey.WalletsGet, walletId);
+            return await this.GetObjectAsync<WalletDTO>(MethodKey.WalletsGet, entitiesId: walletId);
         }
 
         /// <summary>Updates wallet.</summary>

@@ -20,14 +20,14 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Single sign on user instance returned from API.</returns>
         public async Task<SingleSignOnDTO> GetAsync(string singleSignOnId)
         {
-            return await this.GetObjectAsync<SingleSignOnDTO>(MethodKey.SingleSignOnGet, singleSignOnId);
+            return await this.GetObjectAsync<SingleSignOnDTO>(MethodKey.SingleSignOnGet, entitiesId: singleSignOnId);
         }
 
         /// <summary>Creates new user, async.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="singleSignOn">SingleSignOn object to be created.</param>
         /// <returns>UserNatural instance returned from API.</returns>
-        public async Task<SingleSignOnDTO> CreateAsync(SingleSignOnPostDTO singleSignOn, string idempotentKey)
+        public async Task<SingleSignOnDTO> CreateAsync(SingleSignOnPostDTO singleSignOn, string idempotentKey = null)
         {
             return await this.CreateObjectAsync<SingleSignOnDTO, SingleSignOnPostDTO>(MethodKey.SingleSignOnCreate, singleSignOn, idempotentKey);
         }

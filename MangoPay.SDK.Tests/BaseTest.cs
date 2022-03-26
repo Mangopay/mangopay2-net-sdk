@@ -533,7 +533,7 @@ namespace MangoPay.SDK.Tests
 
             CardRegistrationPostDTO cardRegistrationPost = new CardRegistrationPostDTO(userId, CurrencyIso.EUR);
 
-            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.CreateAsync(idempotencyKey, cardRegistrationPost);
+            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost, idempotencyKey);
 
             CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO
             {
@@ -668,7 +668,7 @@ namespace MangoPay.SDK.Tests
             };
 
             RefundPayInPostDTO refund = new RefundPayInPostDTO(user.Id, fees, debitedFunds);
-            return await this.Api.PayIns.CreateRefundAsync(idempotencyKey, payIn.Id, refund);
+            return await this.Api.PayIns.CreateRefundAsync(payIn.Id, refund, idempotencyKey);
         }
 
         /// <summary>Creates card registration object.</summary>
@@ -701,19 +701,12 @@ namespace MangoPay.SDK.Tests
 
         /// <summary>Creates card registration object.</summary>
         /// <returns>CardPreAuthorization instance returned from API.</returns>
-        protected async Task<CardPreAuthorizationDTO> GetJohnsCardPreAuthorization()
-        {
-            return await GetJohnsCardPreAuthorization(null);
-        }
-
-        /// <summary>Creates card registration object.</summary>
-        /// <returns>CardPreAuthorization instance returned from API.</returns>
-        protected async Task<CardPreAuthorizationDTO> GetJohnsCardPreAuthorization(string idempotencyKey)
+        protected async Task<CardPreAuthorizationDTO> GetJohnsCardPreAuthorization(string idempotencyKey = null)
         {
             UserNaturalDTO user = await this.GetJohn();
             CardPreAuthorizationPostDTO cardPreAuthorization = await GetPreAuthorization(user.Id);
 
-            return await this.Api.CardPreAuthorizations.CreateAsync(idempotencyKey, cardPreAuthorization);
+            return await this.Api.CardPreAuthorizations.CreateAsync(cardPreAuthorization, idempotencyKey);
         }
 
         protected async Task<CardPreAuthorizationPostDTO> GetPreAuthorization(string userId)

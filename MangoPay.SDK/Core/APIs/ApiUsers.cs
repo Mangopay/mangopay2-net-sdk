@@ -402,19 +402,9 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="month">Emoney accounts for month</param>
         /// <param name="currency">Currency ISO code.</param>
         /// <returns>Emoney object returned from API.</returns>
-        public async Task<EmoneyDTO> GetEmoneyForYearAndMonthAsync(string userId, string year, string month, CurrencyIso currency)
+        public async Task<EmoneyDTO> GetEmoneyForYearAndMonthAsync(string userId, string year, string month, CurrencyIso currency = CurrencyIso.NotSpecified)
         {
             return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyYearMonthGet, null, userId, year, month, currency.ToString());
-        }
-
-        /// <summary>
-        /// Gets the user block status async
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public async Task<UsersBlockStatusDTO> GetUserBlockStatusAsync(string userId)
-        {
-            return await this.GetObjectAsync<UsersBlockStatusDTO>(MethodKey.UsersBlockStatus, userId);
         }
 
         /// <summary>
@@ -424,7 +414,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns></returns>
         public async Task<UsersBlockStatusDTO> GetUserRegulatoryAsync(string userId)
         {
-            return await this.GetObjectAsync<UsersBlockStatusDTO>(MethodKey.UsersRegulatory, userId);
+            return await this.GetObjectAsync<UsersBlockStatusDTO>(MethodKey.UsersRegulatory, entitiesId: userId);
         }
     }
 }

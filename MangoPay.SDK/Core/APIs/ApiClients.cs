@@ -85,7 +85,7 @@ namespace MangoPay.SDK.Core.APIs
         {
             if (filter == null) filter = new FilterTransactions();
 
-            return await this.GetListAsync<TransactionDTO>(MethodKey.ClientGetWalletTransactions, pagination, sort, filter.GetValues(), fundsType.ToString(), currency.ToString());
+            return await this.GetListAsync<TransactionDTO>(MethodKey.ClientGetWalletTransactions, pagination, sort, filter.GetValues(), null, fundsType.ToString(), currency.ToString());
         }
 
 

@@ -18,7 +18,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Card instance returned from API.</returns>
         public async Task<CardDTO> GetAsync(string cardId)
         {
-            return await this.GetObjectAsync<CardDTO>(MethodKey.CardGet, cardId);
+            return await this.GetObjectAsync<CardDTO>(MethodKey.CardGet, entitiesId: cardId);
         }
 
         /// <summary>Saves card.</summary>
@@ -27,7 +27,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Card instance returned from API.</returns>
         public async Task<CardDTO> UpdateAsync(CardPutDTO card, string cardId)
         {
-            return await this.UpdateObjectAsync<CardDTO, CardPutDTO>(MethodKey.CardSave, card, cardId);
+            return await this.UpdateObjectAsync<CardDTO, CardPutDTO>(MethodKey.CardSave, card, entitiesId: cardId);
         }
 
         /// <summary>Lists transactions for a card</summary>
@@ -40,7 +40,7 @@ namespace MangoPay.SDK.Core.APIs
         {
             if (filters == null) filters = new FilterTransactions();
 
-            return await GetListAsync<TransactionDTO>(MethodKey.CardTransactions, pagination, sort, filters.GetValues(), cardId);
+            return await GetListAsync<TransactionDTO>(MethodKey.CardTransactions, pagination, sort, filters.GetValues(), entitiesId: cardId);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns></returns>
         public async Task<ListPaginated<CardDTO>> GetCardsByFingerprintAsync(string fingerprint, Pagination pagination = null, Sort sort = null)
         {
-            return await GetListAsync<CardDTO>(MethodKey.CardByFingerprintGet, pagination, sort, idempotentKey: fingerprint);
+            return await GetListAsync<CardDTO>(MethodKey.CardByFingerprintGet, pagination, sort, entitiesId: fingerprint);
         }
 
         /// <summary>Validates the card.</summary>
@@ -60,7 +60,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Card instance returned from API.</returns>
         public async Task<CardDTO> ValidateAsync(string cardId)
         {
-            return await this.GetObjectAsync<CardDTO>(MethodKey.CardValidate, cardId);
+            return await this.GetObjectAsync<CardDTO>(MethodKey.CardValidate, entitiesId: cardId);
         }
     }
 }

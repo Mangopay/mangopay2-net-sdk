@@ -16,11 +16,11 @@ namespace MangoPay.SDK.Core.APIs
         public ApiIdempotent(MangoPayApi root) : base(root) { }
 
         /// <summary>Gets idempotent response.</summary>
-		/// <param name="idempotentKey">Idempotent key for .</param>
+		/// <param name="key">Idempotent key for .</param>
 		/// <returns>Idempotent response instance returned from API.</returns>
-        public async Task<IdempotencyResponseDTO> GetAsync(string idempotentKey)
+        public async Task<IdempotencyResponseDTO> GetAsync(string key)
         {
-            var response = await this.GetObjectAsync<IdempotencyResponseDTO>(MethodKey.IdempotencyResponseGet, idempotentKey);
+            var response = await this.GetObjectAsync<IdempotencyResponseDTO>(MethodKey.IdempotencyResponseGet, entitiesId: key);
             LoadResourceObject(response);
 
             return response;

@@ -19,7 +19,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Permission group instance returned from API.</returns>
         public async Task<PermissionGroupDTO> GetAsync(string permissionGroupId)
         {
-            return await this.GetObjectAsync<PermissionGroupDTO>(MethodKey.PermissionGroupGet, permissionGroupId);
+            return await this.GetObjectAsync<PermissionGroupDTO>(MethodKey.PermissionGroupGet, entitiesId: permissionGroupId);
         }
 
         /// <summary>Creates new permission group.</summary>

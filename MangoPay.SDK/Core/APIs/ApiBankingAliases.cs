@@ -20,7 +20,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Banking alias object returned from API.</returns>
         public async Task<BankingAliasIbanDTO> CreateIbanAsync(string walletId, BankingAliasIbanPostDTO bankingAlias)
         {
-            return await this.CreateObjectAsync<BankingAliasIbanDTO, BankingAliasIbanPostDTO>(MethodKey.BankingAliasCreateIban, bankingAlias, walletId);
+            return await this.CreateObjectAsync<BankingAliasIbanDTO, BankingAliasIbanPostDTO>(MethodKey.BankingAliasCreateIban, bankingAlias, entitiesId: walletId);
         }
 
         /// <summary>Gets details of a banking alias.</summary>
@@ -28,7 +28,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Banking alias object returned from API.</returns>
         public async Task<BankingAliasDTO> GetAsync(string bankingAliasId)
         {
-            return await this.GetObjectAsync<BankingAliasDTO>(MethodKey.BankingAliasGet, bankingAliasId);
+            return await this.GetObjectAsync<BankingAliasDTO>(MethodKey.BankingAliasGet, entitiesId: bankingAliasId);
         }
 
         /// <summary>Gets details of a IBAN banking alias.</summary>
@@ -36,7 +36,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>IBAN banking alias object returned from API.</returns>
         public async Task<BankingAliasIbanDTO> GetIbanAsync(string bankingAliasId)
         {
-            return await this.GetObjectAsync<BankingAliasIbanDTO>(MethodKey.BankingAliasGet, bankingAliasId);
+            return await this.GetObjectAsync<BankingAliasIbanDTO>(MethodKey.BankingAliasGet, entitiesId: bankingAliasId);
         }
 
         /// <summary>Gets list of a banking aliases for a wallet.</summary>
@@ -55,7 +55,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Banking alias object returned from API.</returns>
         public async Task<BankingAliasDTO> UpdateAsync(BankingAliasPutDTO bankingAlias, string bankingAliasId)
         {
-            return await this.UpdateObjectAsync<BankingAliasDTO, BankingAliasPutDTO>(MethodKey.BankingAliasSave, bankingAlias, bankingAliasId);
+            return await this.UpdateObjectAsync<BankingAliasDTO, BankingAliasPutDTO>(MethodKey.BankingAliasSave, bankingAlias, entitiesId: bankingAliasId);
         }
     }
 }

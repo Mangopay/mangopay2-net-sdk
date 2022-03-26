@@ -114,7 +114,7 @@ namespace MangoPay.SDK.Tests
             var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
 
             UboDeclarationDTO uboDeclaration = null;
-            Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.CreateAsync(userLegal.Id));
+            Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id));
             UboDeclarationDTO result = null;
             Assert.DoesNotThrowAsync(async () =>
                 result = await Api.UboDeclarations.GetUboDeclarationByIdAsync(userLegal.Id, uboDeclaration.Id));
@@ -128,7 +128,7 @@ namespace MangoPay.SDK.Tests
             var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
 
             UboDeclarationDTO uboDeclaration = null;
-            Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.CreateAsync(userLegal.Id));
+            Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id));
 
             UboDeclarationDTO result = null;
             Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.GetUboDeclarationByIdAsync(uboDeclaration.Id));
@@ -141,7 +141,7 @@ namespace MangoPay.SDK.Tests
         public async Task ApiUboDeclaration_GetAll_UboDeclaration_Valid()
         {
             var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
-            var uboDeclarationDto = await Api.UboDeclarations.CreateAsync(userLegal.Id);
+            var uboDeclarationDto = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id);
 
             ListPaginated<UboDeclarationDTO> result = null;
             Pagination pagination = new Pagination(1, 1);
@@ -163,7 +163,7 @@ namespace MangoPay.SDK.Tests
 
             foreach (var uboPost in ubopostDtos)
             {
-                var ubo = await Api.UboDeclarations.CreateUboAsync(null, uboPost, userLegal.Id, uboDeclaration.Id);
+                var ubo = await Api.UboDeclarations.CreateUboAsync(uboPost, userLegal.Id, uboDeclaration.Id);
                 uboDtos.Add(ubo);
             }
 
