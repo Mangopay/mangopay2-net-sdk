@@ -110,14 +110,14 @@ namespace MangoPay.SDK.Core
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <returns>The DTO instance returned from API.</returns>
         public async Task<U> RequestAsync<U, T>(ApiEndPoint endPoint, Dictionary<string, string> requestData, 
-            T entity = default, Pagination pagination = null, string idempotentKey = null)
+            T entity = default, Pagination pagination = null, Dictionary<string, string> additionalUrlParams = null, string idempotentKey = null)
             where U : new()
         {
             this._requestType = endPoint.RequestType;
             this._includeClientId = endPoint.IncludeClientId;
             this._requestData = requestData;
 
-            var responseResult = await this.DoRequestAsync<U, T>(endPoint.GetUrl(), entity, pagination, idempotentKey);
+            var responseResult = await this.DoRequestAsync<U, T>(endPoint.GetUrl(), entity, pagination, additionalUrlParams, idempotentKey);
 
             return responseResult;
         }
@@ -146,11 +146,11 @@ namespace MangoPay.SDK.Core
             return responseResult;
         }
 
-        private async Task<U> DoRequestAsync<U, T>(string urlMethod, T entity = default, Pagination pagination = null, string idempotentKey = null)
+        private async Task<U> DoRequestAsync<U, T>(string urlMethod, T entity = default, Pagination pagination = null, Dictionary<string, string> additionalUrlParams = null, string idempotentKey = null)
             where U : new()
         {
             var urlTool = new UrlTool(_root);
-            var restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, null, _root.Config.ApiVersion);
+            var restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, additionalUrlParams, _root.Config.ApiVersion);
 
             var fullUrl = urlTool.GetFullUrl(restUrl);
             var client = new RestClient(fullUrl);

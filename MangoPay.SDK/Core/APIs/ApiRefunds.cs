@@ -18,7 +18,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Refund entity instance returned from API.</returns>
         public async Task<RefundDTO> GetAsync(string refundId)
         {
-            return await this.GetObjectAsync<RefundDTO>(MethodKey.RefundsGet, refundId);
+            return await this.GetObjectAsync<RefundDTO>(MethodKey.RefundsGet, entitiesId: refundId);
         }
 
         /// <summary>Lists refunds for a payout</summary>

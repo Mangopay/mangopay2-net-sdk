@@ -183,12 +183,12 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account object returned from API.</returns>
 		public async Task<BankAccountDTO> GetBankAccountAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         public async Task<BankAccountObsoleteDTO> GetBankAccountObsoleteAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountObsoleteDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountObsoleteDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         /// <summary>Gets CA bank account of user.</summary>
@@ -197,12 +197,12 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account object returned from API.</returns>
 		public async Task<BankAccountCaDTO> GetBankAccountCaAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountCaDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountCaDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         public async Task<BankAccountCaObsoleteDTO> GetBankAccountCaObsoleteAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountCaObsoleteDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountCaObsoleteDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         /// <summary>Gets GB bank account of user.</summary>
@@ -211,12 +211,12 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account object returned from API.</returns>
 		public async Task<BankAccountGbDTO> GetBankAccountGbAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountGbDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountGbDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         public async Task<BankAccountGbObsoleteDTO> GetBankAccountGbObsoleteAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountGbObsoleteDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountGbObsoleteDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         /// <summary>Gets IBAN bank account of user.</summary>
@@ -225,12 +225,12 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account object returned from API.</returns>
 		public async Task<BankAccountIbanDTO> GetBankAccountIbanAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountIbanDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountIbanDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         public async Task<BankAccountIbanObsoleteDTO> GetBankAccountIbanObsoleteAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountIbanObsoleteDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountIbanObsoleteDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         /// <summary>Gets OTHER bank account of user.</summary>
@@ -239,12 +239,12 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account object returned from API.</returns>
         public async Task<BankAccountOtherDTO> GetBankAccountOtherAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountOtherDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountOtherDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         public async Task<BankAccountOtherObsoleteDTO> GetBankAccountOtherObsoleteAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountOtherObsoleteDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountOtherObsoleteDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         /// <summary>Gets US bank account of user.</summary>
@@ -253,12 +253,12 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account object returned from API.</returns>
         public async Task<BankAccountUsDTO> GetBankAccountUsAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountUsDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountUsDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         public async Task<BankAccountUsObsoleteDTO> GetBankAccountUsObsoleteAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountUsObsoleteDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountUsObsoleteDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
         }
 
         /// <summary>Updates bank account.</summary>
@@ -351,7 +351,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>KycDocument object returned from API.</returns>
         public async Task<KycDocumentDTO> GetKycDocumentAsync(string userId, string kycDocumentId)
         {
-            return await this.GetObjectAsync<KycDocumentDTO>(MethodKey.UsersGetKycDocument, null, userId, kycDocumentId);
+            return await this.GetObjectAsync<KycDocumentDTO>(MethodKey.UsersGetKycDocument, null, null, userId, kycDocumentId);
         }
 
         /// <summary>Updates KycDocument.</summary>
@@ -383,7 +383,16 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Emoney object returned from API.</returns>
         public async Task<EmoneyDTO> GetEmoneyAsync(string userId, CurrencyIso currency = CurrencyIso.NotSpecified)
         {
-            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyGet, null, userId, currency.ToString());
+            Dictionary<string, string> additionalUrlParams = null;
+            if (currency != CurrencyIso.NotSpecified)
+            {
+                additionalUrlParams = new Dictionary<string, string>
+                {
+                    {"currency", currency.ToString()}
+                };
+            }
+
+            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyGet, null, additionalUrlParams, userId, currency.ToString());
         }
 
         /// <summary>Gets Emoney object.</summary>
@@ -393,7 +402,16 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Emoney object returned from API.</returns>
         public async Task<EmoneyDTO> GetEmoneyForYearAsync(string userId, string year, CurrencyIso currency = CurrencyIso.NotSpecified)
         {
-            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyYearGet, null, userId, year, currency.ToString());
+            Dictionary<string, string> additionalUrlParams = null;
+            if (currency != CurrencyIso.NotSpecified)
+            {
+                additionalUrlParams = new Dictionary<string, string>
+                {
+                    {"currency", currency.ToString()}
+                };
+            }
+
+            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyYearGet, null, additionalUrlParams, userId, year, currency.ToString());
         }
 
         /// <summary>Gets Emoney object.</summary>
@@ -404,7 +422,16 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Emoney object returned from API.</returns>
         public async Task<EmoneyDTO> GetEmoneyForYearAndMonthAsync(string userId, string year, string month, CurrencyIso currency = CurrencyIso.NotSpecified)
         {
-            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyYearMonthGet, null, userId, year, month, currency.ToString());
+            Dictionary<string, string> additionalUrlParams = null;
+            if (currency != CurrencyIso.NotSpecified)
+            {
+                additionalUrlParams = new Dictionary<string, string>
+                {
+                    {"currency", currency.ToString()}
+                };
+            }
+
+            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyYearMonthGet, null, additionalUrlParams, userId, year, month, currency.ToString());
         }
 
         /// <summary>

@@ -56,7 +56,7 @@ namespace MangoPay.SDK.Tests
         public async Task ApiUbo_Create_Ubo_Valid()
         {
             var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
-            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(null, userLegal.Id);
+            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id);
             var uboDto = UboPostDtoCollection[0];
             UboDTO result = null;
             Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.CreateUboAsync(uboDto, userLegal.Id, uboDeclaration.Id));
@@ -67,7 +67,7 @@ namespace MangoPay.SDK.Tests
         public async Task ApiUbo_Update_Ubo_Valid()
         {
             var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
-            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(null, userLegal.Id);
+            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id);
             var uboDto = UboPostDtoCollection[1];
             var ubo = await Api.UboDeclarations.CreateUboAsync(uboDto, userLegal.Id, uboDeclaration.Id);
             var address = new Address
@@ -103,7 +103,7 @@ namespace MangoPay.SDK.Tests
 
             UboDeclarationDTO result = null;
 
-            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.CreateUboDeclarationAsync(null, userLegal.Id));
+            Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id));
             Assert.That(result.Status == UboDeclarationType.CREATED);
             Assert.That(result.CreationDate != DateTime.MinValue);
         }
@@ -156,7 +156,7 @@ namespace MangoPay.SDK.Tests
         {
             var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
 
-            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(null, userLegal.Id);
+            var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id);
 
             List<UboPostDTO> ubopostDtos = UboPostDtoCollection;
             List<UboDTO> uboDtos = new List<UboDTO>();
