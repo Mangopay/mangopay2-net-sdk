@@ -17,12 +17,12 @@ namespace MangoPay.SDK.Entities.GET
         public CultureCode Culture { get; set; }
 
         /// <summary>Redirect URL.</summary>
-        public String RedirectURL { get; set; }
+        public string RedirectURL { get; set; }
 
         /// <summary>Return URL.</summary>
-        public String ReturnURL { get; set; }
+        public string ReturnURL { get; set; }
 
         /// <summary>Template URL.</summary>
-        public String TemplateURL { get; set; }
+        public string TemplateURL { get; set; }
     }
 }

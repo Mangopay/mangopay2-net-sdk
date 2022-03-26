@@ -17,16 +17,16 @@ namespace MangoPay.SDK.Entities.GET
         public BankAccountIbanDTO BankAccount { get; set; }
 
         /// <summary>Wire reference.</summary>
-        public String WireReference { get; set; }
+        public string WireReference { get; set; }
 
         /// <summary>Card identifier.</summary>
-        public String CardId { get; set; }
+        public string CardId { get; set; }
 
         /// <summary>Secure mode.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public SecureMode SecureMode { get; set; }
 
         /// <summary>Secure mode return URL.</summary>
-        public String SecureModeReturnURL { get; set; }
+        public string SecureModeReturnURL { get; set; }
     }
 }

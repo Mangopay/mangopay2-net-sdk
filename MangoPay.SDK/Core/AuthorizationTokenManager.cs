@@ -25,37 +25,23 @@ namespace MangoPay.SDK.Core
         /// If currently stored token is expired, this method creates a new one.
         /// </summary>
         /// <returns>Valid OAuthToken instance.</returns>
-        public OAuthTokenDTO GetToken()
-        {
-            OAuthTokenDTO token = _storageStrategy.Get(GetEnvKey());
-
-            if (token == null || token.IsExpired())
-            {
-                var result = this._root.AuthenticationManager.CreateToken();
-                StoreToken(result);
-            }
-
-            return _storageStrategy.Get(GetEnvKey());
-        }
-
         public async Task<OAuthTokenDTO> GetTokenAsync()
         {
-			OAuthTokenDTO token = _storageStrategy.Get(GetEnvKey());
+            var token = _storageStrategy.Get(GetEnvKey());
 
-            if (token == null || token.IsExpired())
-            {
-                var result = await this._root.AuthenticationManager.CreateTokenAsync();
-                StoreToken(result);
-            }
+            if (token != null && !token.IsExpired()) return _storageStrategy.Get(GetEnvKey());
+            
+            var result = await this.Root.AuthenticationManager.CreateTokenAsync();
+            StoreToken(result);
 
-			return _storageStrategy.Get(GetEnvKey());
+            return _storageStrategy.Get(GetEnvKey());
         }
 
         /// <summary>Stores authorization token passed as an argument in the underlying storage strategy implementation.</summary>
         /// <param name="token">Token instance to be stored.</param>
         public void StoreToken(OAuthTokenDTO token)
         {
-			_storageStrategy.Store(token, GetEnvKey());
+            _storageStrategy.Store(token, GetEnvKey());
         }
 
         /// <summary>Registers custom storage strategy implementation.
@@ -68,20 +54,21 @@ namespace MangoPay.SDK.Core
             _storageStrategy = customStorageStrategy;
         }
 
-		private string GetEnvKey()
-		{
-			string input = _root.Config.BaseUrl + _root.Config.ClientId + _root.Config.ClientPassword;
+        private string GetEnvKey()
+        {
+            var input = $"{Root.Config.BaseUrl}{Root.Config.ClientId}{Root.Config.ClientPassword}";
 
-			using (MD5 md5Hash = MD5.Create())
-			{
-				byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-				StringBuilder sBuilder = new StringBuilder();
-				for (int i = 0; i < data.Length; i++)
-				{
-					sBuilder.Append(data[i].ToString("x2"));
-				}
-				return sBuilder.ToString();
-			}
-		}
+            var sBuilder = new StringBuilder();
+            using (var md5Hash = MD5.Create())
+            {
+                var data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+                foreach (var t in data)
+                {
+                    sBuilder.Append(t.ToString("x2"));
+                }
+
+                return sBuilder.ToString();
+            }
+        }
     }
 }

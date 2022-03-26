@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>Wallet POST entity.</summary>
     public class WalletPostDTO : EntityPostBase
     {
-        public WalletPostDTO(List<String> owners, string description, CurrencyIso currency)
+        public WalletPostDTO(List<string> owners, string description, CurrencyIso currency)
         {
             Owners = owners;
             Description = description;
@@ -17,10 +17,10 @@ namespace MangoPay.SDK.Entities.POST
         }
 
         /// <summary>Collection of owners identifiers.</summary>
-        public List<String> Owners { get; set; }
+        public List<string> Owners { get; set; }
 
         /// <summary>Wallet description.</summary>
-        public String Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>Currency code in ISO.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

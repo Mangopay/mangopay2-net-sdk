@@ -8,7 +8,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>US bank account POST entity.</summary>
     public class BankAccountUsPostDTO : BankAccountPostDTO
     {
-		public BankAccountUsPostDTO(String ownerName, Address ownerAddress, String accountNumber, String aba)
+		public BankAccountUsPostDTO(string ownerName, Address ownerAddress, string accountNumber, string aba)
         {
             Type = BankAccountType.US;
             OwnerName = ownerName;
@@ -19,10 +19,10 @@ namespace MangoPay.SDK.Entities.POST
         }
 
         /// <summary>Account number.</summary>
-        public String AccountNumber { get; set; }
+        public string AccountNumber { get; set; }
 
         /// <summary>ABA.</summary>
-        public String ABA { get; set; }
+        public string ABA { get; set; }
 
 		/// <summary>Deposit account type.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]

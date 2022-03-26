@@ -8,11 +8,11 @@ namespace MangoPay.SDK.Core
     /// <summary>File token storage strategy implementation.</summary>
     public class FileStorageStrategy : IStorageStrategy
     {
-        private String _tempDir = null;
+        private string _tempDir = null;
 
         /// <summary>Instantiates FileStorageStrategy object.</summary>
         /// <param name="tempDir">Temporary directory path.</param>
-        public FileStorageStrategy(String tempDir)
+        public FileStorageStrategy(string tempDir)
         {
             _tempDir = tempDir;
         }
@@ -43,7 +43,7 @@ namespace MangoPay.SDK.Core
 			File.WriteAllText(GetFilePath(envKey), serializedToken);
         }
 
-		private String GetFilePath(string envKey) 
+		private string GetFilePath(string envKey) 
 		{ 
 			return _tempDir + GetType().Name + "." + envKey + Constants.TMP_FILE_EXTENSION; 
 		}

@@ -16,17 +16,17 @@ namespace MangoPay.SDK.Entities.POST
 		}
 
         /// <summary>User identifier.</summary>
-        public String UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>Currency.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public CurrencyIso Currency { get; set; }
 
         /// <summary>Card registration URL.</summary>
-        public String CardRegistrationURL { get; set; }
+        public string CardRegistrationURL { get; set; }
 
         /// <summary>Registration data.</summary>
-        public String RegistrationData { get; set; }
+        public string RegistrationData { get; set; }
 
 		/// <summary>Card type.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]

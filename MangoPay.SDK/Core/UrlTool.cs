@@ -18,7 +18,7 @@ namespace MangoPay.SDK.Core
             this._root = root;
         }
 
-        private String GetHost()
+        private string GetHost()
         {
             if (_root.Config.BaseUrl == null || _root.Config.BaseUrl.Length == 0)
                 throw new Exception("MangoPayApi.Config.BaseUrl setting is not defined.");
@@ -31,7 +31,7 @@ namespace MangoPay.SDK.Core
         /// <summary>Gets REST url.</summary>
         /// <param name="urlKey">Url key.</param>
         /// <returns>Final REST url.</returns>
-        public String GetRestUrl(String urlKey)
+        public string GetRestUrl(string urlKey)
         {
 			return GetRestUrl(urlKey, true, null, null, _root.Config.ApiVersion);
         }
@@ -40,7 +40,7 @@ namespace MangoPay.SDK.Core
         /// <param name="urlKey">Url key.</param>
         /// <param name="addClientId">Denotes whether client identifier should be composed into final url.</param>
         /// <returns>Final REST url.</returns>
-        public String GetRestUrl(String urlKey, Boolean addClientId)
+        public string GetRestUrl(string urlKey, Boolean addClientId)
         {
 			return GetRestUrl(urlKey, addClientId, null, null, _root.Config.ApiVersion);
         }
@@ -50,7 +50,7 @@ namespace MangoPay.SDK.Core
         /// <param name="addClientId">Denotes whether client identifier should be composed into final url.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <returns>Final REST url.</returns>
-        public String GetRestUrl(String urlKey, Boolean addClientId, Pagination pagination)
+        public string GetRestUrl(string urlKey, Boolean addClientId, Pagination pagination)
         {
 			return GetRestUrl(urlKey, addClientId, pagination, null, _root.Config.ApiVersion);
         }
@@ -62,15 +62,15 @@ namespace MangoPay.SDK.Core
         /// <param name="additionalUrlParams">Additional parameters.</param>
 		/// <param name="apiVersion">API version (v2 or v2.01).</param>
         /// <returns>Final REST url.</returns>
-        public String GetRestUrl(String urlKey, Boolean addClientId, Pagination pagination, Dictionary<String, String> additionalUrlParams, String apiVersion)
+        public string GetRestUrl(string urlKey, Boolean addClientId, Pagination pagination, Dictionary<string, string> additionalUrlParams, string apiVersion)
         {
 			var url = new StringBuilder();
 
-			url.Append(String.Format("/{0}", apiVersion));
+			url.Append(string.Format("/{0}", apiVersion));
 
 			if (addClientId)
 			{
-				url.Append(String.Format("/{0}", _root.Config.ClientId));
+				url.Append(string.Format("/{0}", _root.Config.ClientId));
 			}
 
 			url.Append(urlKey);
@@ -78,7 +78,7 @@ namespace MangoPay.SDK.Core
             bool paramsAdded = false;
             if (pagination != null)
             {
-				url.Append(String.Format("{0}page={1}&per_page={2}", Constants.URI_QUERY_SEPARATOR, pagination.Page, pagination.ItemsPerPage));
+				url.Append(string.Format("{0}page={1}&per_page={2}", Constants.URI_QUERY_SEPARATOR, pagination.Page, pagination.ItemsPerPage));
                 paramsAdded = true;
             }
 
@@ -87,7 +87,7 @@ namespace MangoPay.SDK.Core
                 foreach (string key in additionalUrlParams.Keys)
                 {
 					url.Append(paramsAdded ? Constants.URI_QUERY_PARAMS_SEPARATOR : Constants.URI_QUERY_SEPARATOR);
-					url.Append(String.Format("{0}={1}", key, Uri.EscapeDataString(additionalUrlParams[key])));
+					url.Append(string.Format("{0}={1}", key, Uri.EscapeDataString(additionalUrlParams[key])));
                     paramsAdded = true;
                 }
             }
@@ -98,9 +98,9 @@ namespace MangoPay.SDK.Core
         /// <summary>Gets complete url.</summary>
         /// <param name="restUrl">Rest url.</param>
         /// <returns>Returns complete url.</returns>
-        public String GetFullUrl(String restUrl)
+        public string GetFullUrl(string restUrl)
         {
-            String result = "";
+            string result = "";
 
             try
             {

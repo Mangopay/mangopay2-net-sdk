@@ -6,7 +6,7 @@ namespace MangoPay.SDK.Core
     public class TemplateURLOptions
     {
         /// <summary>PAYLINE: could be use for DirectDebitWeb payments only. Use TemplateURLOptionsCard and PAYLINEV2 for Payin Web</summary>
-        public String PAYLINE;
+        public string PAYLINE;
         
     }
 }

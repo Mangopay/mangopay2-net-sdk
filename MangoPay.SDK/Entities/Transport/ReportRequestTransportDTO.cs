@@ -24,17 +24,17 @@ namespace MangoPay.SDK.Entities.Transport
 		public DownloadReportFormat DownloadFormat { get; set; }
 
 		/// <summary>Download URL.</summary>
-		public String DownloadURL { get; set; }
+		public string DownloadURL { get; set; }
 
 		/// <summary>Callback URL.</summary>
-		public String CallbackURL { get; set; }
+		public string CallbackURL { get; set; }
 
 		/// <summary>Type of the report.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ReportType ReportType { get; set; }
 
 		/// <summary>Sorting.</summary>
-		public String Sort { get; set; }
+		public string Sort { get; set; }
 
 		/// <summary>If true, the report will be limited to the first 10 lines.</summary>
 		public bool Preview { get; set; }
@@ -43,13 +43,13 @@ namespace MangoPay.SDK.Entities.Transport
 		public FilterReportsTransport Filters { get; set; }
 
 		/// <summary>Allowed values: "Alias", "BankAccountId", "BankWireRef", "CardId", "CardType", "Country", "Culture", "Currency", "DeclaredDebitedFundsAmount", "DeclaredDebitedFundsCurrency", "DeclaredFeesAmount", "DeclaredFeesCurrency", "ExecutionType", "ExpirationDate", "PaymentType", "PreauthorizationId", "WireReference".</summary>
-		public String[] Columns { get; set; }
+		public string[] Columns { get; set; }
 
 		/// <summary>Result code.</summary>
-		public String ResultCode { get; set; }
+		public string ResultCode { get; set; }
 
 		/// <summary>Result message.</summary>
-		public String ResultMessage { get; set; }
+		public string ResultMessage { get; set; }
 
 		public ReportRequestDTO GetBusinessObject()
 		{

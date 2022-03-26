@@ -27,9 +27,9 @@ namespace MangoPay.SDK.Core
 
 		/// <summary>Gets map of fields and values.</summary>
 		/// <returns>Returns collection of field_name-field_value pairs.</returns>
-		public Dictionary<String, String> GetValues()
+		public Dictionary<string, string> GetValues()
         {
-            Dictionary<String, String> result = new Dictionary<String, String>();
+            Dictionary<string, string> result = new Dictionary<string, string>();
 
             UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
 
@@ -38,7 +38,7 @@ namespace MangoPay.SDK.Core
 			if (Nature.HasValue && Nature != TransactionNature.NotSpecified) result.Add(Constants.NATURE, Nature.Value.ToString("G").Replace(" ", ""));
 			if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
             if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());
-			if (!String.IsNullOrEmpty(ResultCode)) result.Add(Constants.RESULT_CODE, ResultCode.ToString());
+			if (!string.IsNullOrEmpty(ResultCode)) result.Add(Constants.RESULT_CODE, ResultCode.ToString());
 
 			return result;
         }

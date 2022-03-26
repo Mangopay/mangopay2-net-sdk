@@ -12,10 +12,10 @@ namespace MangoPay.SDK.Entities
         public long create_time { get; set; }
 
         /// <summary>Value of token.</summary>
-        public String access_token { get; set; }
+        public string access_token { get; set; }
 
         /// <summary>Token type.</summary>
-        public String token_type { get; set; }
+        public string token_type { get; set; }
 
         /// <summary>Denotes how long the token is valid, in seconds.</summary>
         public int expires_in { get; set; }
@@ -34,7 +34,7 @@ namespace MangoPay.SDK.Entities
         }
 
         // for debug purposes
-        public override String ToString()
+        public override string ToString()
         {
             return "access_token = " + this.access_token + ", token_type: " + this.token_type + ", expires_in: " + this.expires_in;
         }

@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.GET
     public class HookDTO : EntityBase
     {
         /// <summary>This is the URL where you receive notification for various event types.</summary>
-        public String Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>Hook status.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

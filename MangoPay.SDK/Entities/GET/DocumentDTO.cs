@@ -7,10 +7,10 @@ namespace MangoPay.SDK.Entities.GET
 	public class DocumentDTO : EntityBase
 	{
 		/// <summary>Refused reason type.</summary>
-		public String RefusedReasonType { get; set; }
+		public string RefusedReasonType { get; set; }
 
 		/// <summary>Refused reason message.</summary>
-		public String RefusedReasonMessage { get; set; }
+		public string RefusedReasonMessage { get; set; }
 
 	    /// <summary>Date when the document was processed.</summary>
 	    [JsonConverter(typeof(UnixDateTimeConverter))]

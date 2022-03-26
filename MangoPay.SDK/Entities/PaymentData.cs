@@ -5,11 +5,11 @@ namespace MangoPay.SDK.Entities
     public class PaymentData
     {
         /// <summary> Id of the apple payment transaction </summary>
-        public String TransactionId;
+        public string TransactionId;
         /// <summary> Network card used for the transaction </summary>
-        public String Network;
+        public string Network;
         /// <summary> Data block containing payment information </summary>
-        public String TokenData;
+        public string TokenData;
 
         public PaymentData()
         {

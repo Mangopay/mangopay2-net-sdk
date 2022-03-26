@@ -10,12 +10,12 @@ namespace MangoPay.SDK.Entities.PUT
     public class WalletPutDTO : EntityPutBase
     {
         /// <summary>Custom data.</summary>
-        public String Tag { get; set; }
+        public string Tag { get; set; }
 
         /// <summary>Collection of owners identifiers.</summary>
-        public List<String> Owners { get; set; }
+        public List<string> Owners { get; set; }
 
         /// <summary>Wallet description.</summary>
-        public String Description { get; set; }
+        public string Description { get; set; }
     }
 }

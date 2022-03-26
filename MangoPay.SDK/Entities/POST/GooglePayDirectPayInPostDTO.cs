@@ -15,13 +15,13 @@ namespace MangoPay.SDK.Entities.POST
 
 
         /// <summary>Author identifier.</summary>
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         /// <summary>Credited user identifier</summary>
-        public String CreditedUserId { get; set; }
+        public string CreditedUserId { get; set; }
 
         /// <summary>Credited wallet identifier.</summary>
-        public String CreditedWalletId { get; set; }
+        public string CreditedWalletId { get; set; }
 
         /// <summary>Debited founds.</summary>
         public Money DebitedFunds { get; set; }
@@ -36,6 +36,6 @@ namespace MangoPay.SDK.Entities.POST
         public Billing Billing { get; set; }
 
         /// <summary> A custom description to appear on the user's bank statement </summary>
-        public String StatementDescriptor { get; set; }
+        public string StatementDescriptor { get; set; }
     }
 }

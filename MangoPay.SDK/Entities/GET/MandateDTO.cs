@@ -9,10 +9,10 @@ namespace MangoPay.SDK.Entities.GET
 	public class MandateDTO : EntityBase
 	{
 		/// <summary>The bank account ID to associate this mandate against (and hence from where the payins will come from).</summary>
-		public String BankAccountId { get; set; }
+		public string BankAccountId { get; set; }
 
 		/// <summary>Bank reference for the mandate.</summary>
-		public String BankReference { get; set; }
+		public string BankReference { get; set; }
 
 		/// <summary>The type of mandate – it will be <code>SEPA</code> or <code>BACS</code> but will only be completed once the mandate has been submitted.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -23,16 +23,16 @@ namespace MangoPay.SDK.Entities.GET
 		public CultureCode Culture { get; set; }
 
 		/// <summary>The URL to view/download the mandate document.</summary>
-		public String DocumentURL { get; set; }
+		public string DocumentURL { get; set; }
 
 		/// <summary>The URL where you must redirect the user for them to confirm the setup of their mandate and then he will be redirected to the ReturnURL.</summary>
-		public String RedirectURL { get; set; }
+		public string RedirectURL { get; set; }
 
 		/// <summary>URL format expected.</summary>
-		public String ReturnURL { get; set; }
+		public string ReturnURL { get; set; }
 
 		/// <summary>ID of the user to which this mandate belongs.</summary>
-		public String UserId { get; set; }
+		public string UserId { get; set; }
 
 		/// <summary>The status of the mandate: 
 		/// <code>CREATED</code> (the mandate has been created),
@@ -45,10 +45,10 @@ namespace MangoPay.SDK.Entities.GET
 		public MandateStatus Status { get; set; }
 
 		/// <summary>Mandate result code.</summary>
-		public String ResultCode { get; set; }
+		public string ResultCode { get; set; }
 
 		/// <summary>Mandate result message.</summary>
-		public String ResultMessage { get; set; }
+		public string ResultMessage { get; set; }
 
 		/// <summary>Type of mandate.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]

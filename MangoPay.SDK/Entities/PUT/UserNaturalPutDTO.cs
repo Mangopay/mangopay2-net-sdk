@@ -10,16 +10,16 @@ namespace MangoPay.SDK.Entities.PUT
     public class UserNaturalPutDTO : EntityPutBase
     {
         /// <summary>Custom data.</summary>
-        public String Tag { get; set; }
+        public string Tag { get; set; }
 
         /// <summary>Email address.</summary>
-        public String Email { get; set; }
+        public string Email { get; set; }
 
         /// <summary>First name.</summary>
-        public String FirstName { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>Last name.</summary>
-        public String LastName { get; set; }
+        public string LastName { get; set; }
 
         /// <summary>Address.</summary>
         public Address Address { get; set; }
@@ -37,7 +37,7 @@ namespace MangoPay.SDK.Entities.PUT
         public CountryIso? CountryOfResidence { get; set; }
 
         /// <summary>User's occupation.</summary>
-        public String Occupation { get; set; }
+        public string Occupation { get; set; }
 
         /// <summary>Income ranges:
         /// 1 (-18K€),

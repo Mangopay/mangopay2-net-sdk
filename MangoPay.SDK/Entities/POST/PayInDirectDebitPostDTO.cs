@@ -21,7 +21,7 @@ namespace MangoPay.SDK.Entities.POST
         }
 
         /// <summary>Author identifier.</summary>
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         /// <summary>Debited funds.</summary>
         public Money DebitedFunds { get; set; }
@@ -30,10 +30,10 @@ namespace MangoPay.SDK.Entities.POST
         public Money Fees { get; set; }
 
         /// <summary>Credited wallet identifier.</summary>
-        public String CreditedWalletId { get; set; }
+        public string CreditedWalletId { get; set; }
 
         /// <summary>Return URL.</summary>
-        public String ReturnURL { get; set; }
+        public string ReturnURL { get; set; }
 
         /// <summary>The URL where you host the iFramed template.</summary>
         public TemplateURLOptions TemplateURLOptions { get; set; }
@@ -47,6 +47,6 @@ namespace MangoPay.SDK.Entities.POST
         public DirectDebitType DirectDebitType { get; set; }
 
         /// <summary>Identifier of the credited user (owner of the credited wallet).</summary>
-        public String CreditedUserId { get; set; }
+        public string CreditedUserId { get; set; }
     }
 }

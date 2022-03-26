@@ -24,13 +24,13 @@ namespace MangoPay.SDK.Entities.Transport
 		#region Transactions report filters
 
 		/// <summary>Transaction type.</summary>
-		public String[] Type;
+		public string[] Type;
 
 		/// <summary>Transaction status.</summary>
-		public String[] Status;
+		public string[] Status;
 
 		/// <summary>Transaction nature.</summary>
-		public String[] Nature;
+		public string[] Nature;
 
 		public Int64? MinDebitedFundsAmount { get; set; }
 
@@ -52,17 +52,17 @@ namespace MangoPay.SDK.Entities.Transport
 		[JsonConverter(typeof(StringEnumConverter))]
 		public CurrencyIso? MaxFeesCurrency { get; set; }
 
-		public String AuthorId { get; set; }
+		public string AuthorId { get; set; }
 
-		public String WalletId { get; set; }
+		public string WalletId { get; set; }
 
-		public String[] ResultCode { get; set; }
+		public string[] ResultCode { get; set; }
 
 		#endregion
 
 		#region Wallets report filters
 
-		public String OwnerId { get; set; }
+		public string OwnerId { get; set; }
 
 		public Int64? MinBalanceAmount { get; set; }
 
@@ -122,7 +122,7 @@ namespace MangoPay.SDK.Entities.Transport
 			if (ResultCode != null)
 				foreach (string rc in ResultCode)
 				{
-					if (String.IsNullOrEmpty(rc))
+					if (string.IsNullOrEmpty(rc))
 						continue;
 
 					int enumInt = Int32.Parse(rc);
@@ -169,7 +169,7 @@ namespace MangoPay.SDK.Entities.Transport
 
 			if (filters.Nature != null)
 			{
-				result.Nature = new String[filters.Nature.Count];
+				result.Nature = new string[filters.Nature.Count];
 				for (int i = 0; i < filters.Nature.Count; i++)
 				{
 					result.Nature[i] = filters.Nature[i].ToString();
@@ -177,7 +177,7 @@ namespace MangoPay.SDK.Entities.Transport
 			}
 			if (filters.Status != null)
 			{
-				result.Status = new String[filters.Status.Count];
+				result.Status = new string[filters.Status.Count];
 				for (int i = 0; i < filters.Status.Count; i++)
 				{
 					result.Status[i] = filters.Status[i].ToString();
@@ -185,7 +185,7 @@ namespace MangoPay.SDK.Entities.Transport
 			}
 			if (filters.Type != null)
 			{
-				result.Type = new String[filters.Type.Count];
+				result.Type = new string[filters.Type.Count];
 				for (int i = 0; i < filters.Type.Count; i++)
 				{
 					result.Type[i] = filters.Type[i].ToString();
@@ -194,11 +194,11 @@ namespace MangoPay.SDK.Entities.Transport
 
 			if (filters.ResultCode != null)
 			{
-				result.ResultCode = new String[filters.ResultCode.Count];
+				result.ResultCode = new string[filters.ResultCode.Count];
 
 				for (int i = 0; i < filters.ResultCode.Count; i++)
 				{
-					result.ResultCode[i] = String.Format("{0:000000}", (int)filters.ResultCode[i]);
+					result.ResultCode[i] = string.Format("{0:000000}", (int)filters.ResultCode[i]);
 				}
 			}
 

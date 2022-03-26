@@ -64,10 +64,10 @@ namespace MangoPay.SDK.Core
 		public CurrencyIso? MaxFeesCurrency { get; set; }
 
 		/// <summary>A user's ID</summary>
-		public String AuthorId { get; set; }
+		public string AuthorId { get; set; }
 
 		/// <summary>The ID of a wallet</summary>
-		public String WalletId { get; set; }
+		public string WalletId { get; set; }
 
 		/// <summary>Transaction result code</summary>
 		public List<ReportResultCode> ResultCode { get; set; }
@@ -77,7 +77,7 @@ namespace MangoPay.SDK.Core
 		#region Wallets report filters
 
 		/// <summary></summary>
-		public String OwnerId { get; set; }
+		public string OwnerId { get; set; }
 
 		/// <summary></summary>
 		public Int64? MinBalanceAmount { get; set; }

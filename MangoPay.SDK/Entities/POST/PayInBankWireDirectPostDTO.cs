@@ -27,12 +27,12 @@ namespace MangoPay.SDK.Entities.POST
         public Money DeclaredFees { get; set; }
 
         /// <summary>Author identifier.</summary>
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         /// <summary>Credited user identifier.</summary>
-        public String CreditedUserId { get; set; }
+        public string CreditedUserId { get; set; }
 
         /// <summary>Credited wallet identifier.</summary>
-        public String CreditedWalletId { get; set; }
+        public string CreditedWalletId { get; set; }
     }
 }

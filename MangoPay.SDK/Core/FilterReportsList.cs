@@ -14,9 +14,9 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Gets map of fields and values.</summary>
         /// <returns>Returns collection of field_name-field_value pairs.</returns>
-        public Dictionary<String, String> GetValues()
+        public Dictionary<string, string> GetValues()
         {
-            Dictionary<String, String> result = new Dictionary<String, String>();
+            Dictionary<string, string> result = new Dictionary<string, string>();
 
             UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
 

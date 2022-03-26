@@ -8,7 +8,7 @@ namespace MangoPay.SDK.Entities.POST
 	/// <summary>Mandate POST entity.</summary>
 	public class MandatePostDTO : EntityPostBase
 	{
-		public MandatePostDTO(String bankAccountId, CultureCode culture, String returnUrl)
+		public MandatePostDTO(string bankAccountId, CultureCode culture, string returnUrl)
 		{
 			BankAccountId = bankAccountId;
 			Culture = culture;
@@ -16,13 +16,13 @@ namespace MangoPay.SDK.Entities.POST
 		}
 
 		/// <summary>The bank account ID to create the mandate against – can only be GB or IBAN type bank accounts for SEPA, but only GB type for BACS (UK) mandates.</summary>
-		public String BankAccountId { get; set; }
+		public string BankAccountId { get; set; }
 
 		/// <summary>The language of the confirmation web page – can be EN or FR for SEPA mandates, but only EN for BACS (UK) mandates.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]
 		public CultureCode Culture { get; set; }
 
 		/// <summary>URL format expected.</summary>
-		public String ReturnUrl { get; set; }
+		public string ReturnUrl { get; set; }
 	}
 }

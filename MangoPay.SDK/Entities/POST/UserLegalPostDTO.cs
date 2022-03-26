@@ -22,13 +22,13 @@ namespace MangoPay.SDK.Entities.POST
         }
 
         /// <summary>Email address.</summary>
-        public String Email { get; set; }
+        public string Email { get; set; }
 
         /// <summary>Name of this user.</summary>
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>Company Number</summary>
-        public String CompanyNumber { get; set; }
+        public string CompanyNumber { get; set; }
 
         /// <summary>Type of legal user.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -38,16 +38,16 @@ namespace MangoPay.SDK.Entities.POST
 		public Address HeadquartersAddress { get; set; }
 
         /// <summary>Legal representative first name.</summary>
-        public String LegalRepresentativeFirstName { get; set; }
+        public string LegalRepresentativeFirstName { get; set; }
 
         /// <summary>Legal representative last name.</summary>
-        public String LegalRepresentativeLastName { get; set; }
+        public string LegalRepresentativeLastName { get; set; }
 
         /// <summary>Legal representative address.</summary>
 		public Address LegalRepresentativeAddress { get; set; }
 
         /// <summary>Legal representative email.</summary>
-        public String LegalRepresentativeEmail { get; set; }
+        public string LegalRepresentativeEmail { get; set; }
 
         /// <summary>Legal representative birthday.</summary>
         [JsonConverter(typeof(Core.UnixDateTimeConverter))]
@@ -62,16 +62,16 @@ namespace MangoPay.SDK.Entities.POST
         public CountryIso LegalRepresentativeCountryOfResidence { get; set; }
 
         /// <summary>Statute.</summary>
-        public String Statute { get; set; }
+        public string Statute { get; set; }
 
         /// <summary>Proof of registration.</summary>
-        public String ProofOfRegistration { get; set; }
+        public string ProofOfRegistration { get; set; }
 
         /// <summary>Shareholder declaration.</summary>
-        public String ShareholderDeclaration { get; set; }
+        public string ShareholderDeclaration { get; set; }
 
         /// <summary>Legal Representative Proof Of Identity.</summary>
-        public String LegalRepresentativeProofOfIdentity { get; set; }
+        public string LegalRepresentativeProofOfIdentity { get; set; }
 
 		public bool ShouldSerializeHeadquartersAddress()
 		{

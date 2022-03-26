@@ -7,20 +7,20 @@ namespace MangoPay.SDK.Core
     /// <summary>Base sorting class.</summary>
     public class Sort
     {
-        private Dictionary<String, SortDirection> sortFields = new Dictionary<string,SortDirection>();
+        private Dictionary<string, SortDirection> sortFields = new Dictionary<string,SortDirection>();
 
-        public String GetFields()
+        public string GetFields()
         {
-            string sortValues = String.Empty;
+            string sortValues = string.Empty;
 
-            foreach (KeyValuePair<String, SortDirection> item in sortFields)
+            foreach (KeyValuePair<string, SortDirection> item in sortFields)
             {
-                if (sortValues != String.Empty)
+                if (sortValues != string.Empty)
                 {
                     sortValues += Constants.SORT_FIELD_SEPARATOR;
                 }
 
-                sortValues += String.Format("{0}:{1}", item.Key, item.Value);
+                sortValues += string.Format("{0}:{1}", item.Key, item.Value);
             }
 
             return sortValues;
@@ -30,7 +30,7 @@ namespace MangoPay.SDK.Core
         {
             get
             {
-                return GetFields() != String.Empty;
+                return GetFields() != string.Empty;
             }
         }
 

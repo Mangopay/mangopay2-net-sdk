@@ -23,13 +23,13 @@ namespace MangoPay.SDK.Entities.POST
         public CapacityType Capacity { get; set; }
 
 		/// <summary>Email address.</summary>
-		public String Email { get; set; }
+		public string Email { get; set; }
 
         /// <summary>First name.</summary>
-        public String FirstName { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>Last name.</summary>
-        public String LastName { get; set; }
+        public string LastName { get; set; }
 
         /// <summary>Address.</summary>
         public Address Address { get; set; }
@@ -47,7 +47,7 @@ namespace MangoPay.SDK.Entities.POST
         public CountryIso CountryOfResidence { get; set; }
 
         /// <summary>User's occupation.</summary>
-        public String Occupation { get; set; }
+        public string Occupation { get; set; }
 
         /// <summary>Income ranges:
         /// 1 (-18K€),
@@ -70,10 +70,10 @@ namespace MangoPay.SDK.Entities.POST
         public int? IncomeRange { get; set; }
 
         /// <summary>Proof of identity.</summary>
-        public String ProofOfIdentity { get; set; }
+        public string ProofOfIdentity { get; set; }
 
         /// <summary>Proof of address.</summary>
-        public String ProofOfAddress { get; set; }
+        public string ProofOfAddress { get; set; }
 
 		public bool ShouldSerializeAddress()
 		{

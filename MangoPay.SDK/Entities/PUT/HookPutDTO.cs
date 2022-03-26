@@ -9,10 +9,10 @@ namespace MangoPay.SDK.Entities.PUT
     public class HookPutDTO : EntityPutBase
     {
         /// <summary>Custom data.</summary>
-        public String Tag { get; set; }
+        public string Tag { get; set; }
 
         /// <summary>This is the URL where you receive notification.</summary>
-        public String Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>Hook status.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

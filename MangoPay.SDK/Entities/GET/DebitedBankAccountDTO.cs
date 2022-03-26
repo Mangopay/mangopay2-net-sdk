@@ -10,27 +10,27 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>
         /// Owner name.
         /// </summary>
-        public String OwnerName { get; set; }
+        public string OwnerName { get; set; }
 
         /// <summary>
         /// The account number
         /// </summary>
-        public String AccountNumber { get; set; }
+        public string AccountNumber { get; set; }
 
         /// <summary>
         /// IBAN
         /// </summary>
-        public String IBAN { get; set; }
+        public string IBAN { get; set; }
         
         /// <summary>
         /// BIC
         /// </summary>
-        public String BIC { get; set; }
+        public string BIC { get; set; }
 
         /// <summary>
         /// Country
         /// </summary>
-        public String Country { get; set; }
+        public string Country { get; set; }
 
         /// <summary>
         /// The type of bankAccount

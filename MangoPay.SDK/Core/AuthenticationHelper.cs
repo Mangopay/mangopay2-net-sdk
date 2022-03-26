@@ -10,7 +10,7 @@ namespace MangoPay.SDK.Core
     internal class AuthenticationHelper
     {
         // Root/parent instance that holds the OAuthToken and Configuration instance
-        private MangoPayApi _root;
+        private readonly MangoPayApi _root;
 
         /// <summary>Instantiates new AuthenticationHelper object.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
@@ -21,53 +21,35 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Gets HTTP header value with authorization string.</summary>
         /// <returns></returns>
-        public Dictionary<String, String> GetHttpHeaderKey()
-        {
-            return GetHttpHeaderStrong();
-        }
-
-        public async Task<Dictionary<String, String>> GetHttpHeaderKeyAsync()
+        public async Task<Dictionary<string, string>> GetHttpHeaderKeyAsync()
         {
             return await GetHttpHeaderStrongAsync();
         }
 
         /// <summary>Gets basic key for HTTP header.</summary>
         /// <returns>Authorization string.</returns>
-        public String GetHttpHeaderBasicKey()
+        public string GetHttpHeaderBasicKey()
         {
-            if (String.IsNullOrEmpty(_root.Config.ClientId))
+            if (string.IsNullOrEmpty(_root.Config.ClientId))
                 throw new Exception("MangoPay.Config.ClientId is not set.");
 
-            if (String.IsNullOrEmpty(_root.Config.ClientPassword))
+            if (string.IsNullOrEmpty(_root.Config.ClientPassword))
                 throw new Exception("MangoPay.Config.ClientPassword is not set.");
 
-            String signature = _root.Config.ClientId + ':' + _root.Config.ClientPassword;
+            var signature = $"{_root.Config.ClientId}:{_root.Config.ClientPassword}";
 
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(signature));
         }
 
         // gets HTTP header value with authorization string for strong authentication
-        private Dictionary<String, String> GetHttpHeaderStrong()
+        private async Task<Dictionary<string, string>> GetHttpHeaderStrongAsync()
         {
-            OAuthTokenDTO token = _root.OAuthTokenManager.GetToken();
+            var token = await _root.OAuthTokenManager.GetTokenAsync();
 
-            if (token == null || String.IsNullOrEmpty(token.access_token) || String.IsNullOrEmpty(token.token_type))
+            if (token == null || string.IsNullOrEmpty(token.access_token) || string.IsNullOrEmpty(token.token_type))
                 throw new Exception("OAuth token is not created (or is invalid) for strong authentication");
 
-            return new Dictionary<String, String>
-            {
-                { Constants.AUTHORIZATION, token.token_type + " " + token.access_token }
-            };
-        }
-
-        private async Task<Dictionary<String, String>> GetHttpHeaderStrongAsync()
-        {
-            OAuthTokenDTO token = await _root.OAuthTokenManager.GetTokenAsync();
-
-            if (token == null || String.IsNullOrEmpty(token.access_token) || String.IsNullOrEmpty(token.token_type))
-                throw new Exception("OAuth token is not created (or is invalid) for strong authentication");
-
-            return new Dictionary<String, String> 
+            return new Dictionary<string, string> 
             {
                 { Constants.AUTHORIZATION, token.token_type + " " + token.access_token }
             };

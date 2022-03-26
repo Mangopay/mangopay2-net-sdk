@@ -21,14 +21,14 @@ namespace MangoPay.SDK.Entities
         /// Links[2] -> next, 
         /// Links[3] -> last.
         /// </summary>
-        public String[] Links;
+        public string[] Links;
 
         public ListPaginated(IList<T> entities, int totalPages, int totalItems)
         {
             _entities = entities;
             TotalItems = totalItems;
             TotalPages = totalPages;
-            Links = new String[4];
+            Links = new string[4];
         }
         public ListPaginated(IList<T> entities) : this(entities, 0, 0) { }
         public ListPaginated() : this(new List<T>(), 0, 0) { }

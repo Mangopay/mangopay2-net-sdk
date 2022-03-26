@@ -2,10 +2,10 @@
 
 namespace MangoPay.SDK.Entities.GET
 {
-	public class EmoneyDTO
+	public class EmoneyDTO : EntityBase
 	{
 		/// <summary>User identifier.</summary>
-		public String UserId { get; set; }
+		public string UserId { get; set; }
 
 		/// <summary>The amount of money that has been credited to this user.</summary>
 		public Money CreditedEMoney { get; set; }

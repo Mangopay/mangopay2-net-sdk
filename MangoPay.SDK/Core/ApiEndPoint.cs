@@ -29,7 +29,7 @@ namespace MangoPay.SDK.Core
 			{
 				return UrlPattern;
 			}
-			return String.Format(UrlPattern, _parameters);
+			return string.Format(UrlPattern, _parameters);
 		}
 
 		/// <summary>

@@ -10,10 +10,10 @@ namespace MangoPay.SDK.Entities.GET
     public class TransactionDTO : EntityBase
     {
         /// <summary>Author identifier.</summary>
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         /// <summary>Credited user identifier.</summary>
-        public String CreditedUserId { get; set; }
+        public string CreditedUserId { get; set; }
 
         /// <summary>Debited funds.</summary>
         public Money DebitedFunds { get; set; }
@@ -29,10 +29,10 @@ namespace MangoPay.SDK.Entities.GET
         public TransactionStatus Status { get; set; }
 
         /// <summary>Result code.</summary>
-        public String ResultCode { get; set; }
+        public string ResultCode { get; set; }
 
         /// <summary>The pre-authorization result message explaining the result code.</summary>
-        public String ResultMessage { get; set; }
+        public string ResultMessage { get; set; }
 
         /// <summary>Execution date.</summary>
         [JsonConverter(typeof(Core.UnixDateTimeConverter))]
@@ -47,9 +47,9 @@ namespace MangoPay.SDK.Entities.GET
         public TransactionNature Nature { get; set; }
 
         /// <summary>Credited wallet identifier.</summary>
-        public String CreditedWalletId { get; set; }
+        public string CreditedWalletId { get; set; }
 
         /// <summary>Debited wallet identifier.</summary>
-        public String DebitedWalletId { get; set; }
+        public string DebitedWalletId { get; set; }
     }
 }

@@ -10,19 +10,19 @@ namespace MangoPay.SDK.Entities
 	public class Address
 	{
 		/// <summary>Address line 1.</summary>
-		public String AddressLine1;
+		public string AddressLine1;
 
 		/// <summary>Address line 2.</summary>
-		public String AddressLine2;
+		public string AddressLine2;
 
 		/// <summary>City.</summary>
-		public String City;
+		public string City;
 
 		/// <summary>Region.</summary>
-		public String Region;
+		public string Region;
 
 		/// <summary>Postal code.</summary>
-		public String PostalCode;
+		public string PostalCode;
 
 		/// <summary>Country.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]

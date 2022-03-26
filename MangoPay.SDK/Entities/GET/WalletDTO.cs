@@ -10,10 +10,10 @@ namespace MangoPay.SDK.Entities.GET
     public class WalletDTO : EntityBase
     {
         /// <summary>Collection of owners identifiers.</summary>
-        public List<String> Owners { get; set; }
+        public List<string> Owners { get; set; }
 
         /// <summary>Wallet description.</summary>
-        public String Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>Money in wallet.</summary>
         public Money Balance { get; set; }

@@ -9,10 +9,10 @@ namespace MangoPay.SDK.Entities.GET
     public class BankAccountUsObsoleteDTO : BankAccountObsoleteDTO
     {
         /// <summary>Account number.</summary>
-        public String AccountNumber { get; set; }
+        public string AccountNumber { get; set; }
 
         /// <summary>ABA.</summary>
-        public String ABA { get; set; }
+        public string ABA { get; set; }
 
 		/// <summary>Deposit account type.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]

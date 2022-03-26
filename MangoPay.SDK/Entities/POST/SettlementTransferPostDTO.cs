@@ -13,7 +13,7 @@ namespace MangoPay.SDK.Entities.POST
 		}
 
 		/// <summary>The Id of the author of the original PayIn that was repudiated.</summary>
-		public String AuthorId { get; set; }
+		public string AuthorId { get; set; }
 
 		/// <summary>The funds debited from the debited wallet.</summary>
 		public Money DebitedFunds { get; set; }

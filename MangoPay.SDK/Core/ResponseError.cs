@@ -11,19 +11,19 @@ namespace MangoPay.SDK.Core
         internal ResponseError () { }
 
         /// <summary>General error text message.</summary>
-        public String Message;
+        public string Message;
 
         /// <summary>Type of error.</summary>
-        public String Type;
+        public string Type;
         
         /// <summary>Error identifier.</summary>
-        public String Id;
+        public string Id;
 
         /// <summary>Date (UNIX timestamp).</summary>
         public long Date;
 
         /// <summary>Collection of field name / error decription pairs.</summary>
-        public Dictionary<String, String> errors;
+        public Dictionary<string, string> errors;
 
         /// <summary>Deserializes JSON ResponseError instance.</summary>
         /// <param name="serializedResponseError">JSON-serialized ResponseError instance.</param>

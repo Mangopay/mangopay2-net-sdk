@@ -9,13 +9,13 @@ namespace MangoPay.SDK.Entities.GET
 	public class SingleSignOnDTO : EntityBase
 	{
 		/// <summary>The name of the user.</summary>
-		public String FirstName { get; set; }
+		public string FirstName { get; set; }
 
 		/// <summary>The last name of the user.</summary>
-		public String LastName { get; set; }
+		public string LastName { get; set; }
 
 		/// <summary>Email address.</summary>
-		public String Email { get; set; }
+		public string Email { get; set; }
 
 		/// <summary>Wheter the SSO is active or not.</summary>
 		public bool Active { get; set; }
@@ -29,9 +29,9 @@ namespace MangoPay.SDK.Entities.GET
 		public DateTime? LastLoginDate { get; set; }
 
 		/// <summary>Permission group ID assigned to this SSO.</summary>
-		public String PermissionGroupId { get; set; }
+		public string PermissionGroupId { get; set; }
 
 		/// <summary>An ID for the client.</summary>
-		public String ClientId { get; set; }
+		public string ClientId { get; set; }
 	}
 }

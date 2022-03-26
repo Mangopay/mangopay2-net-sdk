@@ -18,7 +18,7 @@ namespace MangoPay.SDK.Entities.GET
 		public KycStatus Status { get; set; }
 
 		/// <summary>The User that this document belongs to.</summary>
-		public String UserId { get; set; }
+		public string UserId { get; set; }
 
         /// <summary> More information regarding why the document has been rejected </summary>
         public List<string> Flags { get; set; }

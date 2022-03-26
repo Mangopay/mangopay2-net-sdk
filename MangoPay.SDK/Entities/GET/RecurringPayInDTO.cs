@@ -12,13 +12,13 @@ namespace MangoPay.SDK.Entities.GET
         [JsonConverter(typeof(StringEnumConverter))]
         public SecureMode? SecureMode { get; set; }
 
-        public String CardId { get; set; }
+        public string CardId { get; set; }
 
         public bool SecureModeNeeded { get; set; }
 
-        public String SecureModeRedirectURL { get; set; }
+        public string SecureModeRedirectURL { get; set; }
 
-        public String SecureModeReturnURL { get; set; }
+        public string SecureModeReturnURL { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public CultureCode? Culture { get; set; }

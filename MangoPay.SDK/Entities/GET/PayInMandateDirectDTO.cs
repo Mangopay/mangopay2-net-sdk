@@ -8,10 +8,10 @@ namespace MangoPay.SDK.Entities.GET
 	public class PayInMandateDirectDTO : PayInDTO
     {
         /// <summary>Mandate identifier.</summary>
-        public String MandateId { get; set; }
+        public string MandateId { get; set; }
 
 	/// <summary>An optional value to be specified on the user's bank statement.</summary>
-        public String StatementDescriptor { get; set; }
+        public string StatementDescriptor { get; set; }
 		
 		/// <summary>Charge date.</summary>
 		[JsonConverter(typeof(UnixDateTimeConverter))]

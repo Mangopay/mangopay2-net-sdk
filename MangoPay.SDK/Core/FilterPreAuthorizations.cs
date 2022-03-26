@@ -18,12 +18,12 @@ namespace MangoPay.SDK.Core
 
 		/// <summary>Gets map of fields and values.</summary>
 		/// <returns>Returns collection of field_name-field_value pairs.</returns>
-		public Dictionary<String, String> GetValues()
+		public Dictionary<string, string> GetValues()
         {
-            var result = new Dictionary<String, String>();
+            var result = new Dictionary<string, string>();
 
 
-			if (!String.IsNullOrEmpty(ResultCode)) result.Add(Constants.RESULT_CODE, ResultCode.ToString());
+			if (!string.IsNullOrEmpty(ResultCode)) result.Add(Constants.RESULT_CODE, ResultCode.ToString());
 			if (Status != PreAuthorizationStatus.NotSpecified) result.Add(Constants.STATUS, Status.ToString());
 			if (PaymentStatus != PaymentStatus.NotSpecified) result.Add(Constants.PAYMENT_STATUS, PaymentStatus.ToString());
 

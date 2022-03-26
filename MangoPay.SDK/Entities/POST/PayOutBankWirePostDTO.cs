@@ -18,10 +18,10 @@ namespace MangoPay.SDK.Entities.POST
         }
 
         /// <summary>Author identifier.</summary>
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         /// <summary>Debited wallet identifier.</summary>
-        public String DebitedWalletId { get; set; }
+        public string DebitedWalletId { get; set; }
 
         /// <summary>Debited funds.</summary>
         public Money DebitedFunds { get; set; }
@@ -30,13 +30,13 @@ namespace MangoPay.SDK.Entities.POST
         public Money Fees { get; set; }
 
         /// <summary>Bank account identifier.</summary>
-        public String BankAccountId { get; set; }
+        public string BankAccountId { get; set; }
 
         /// <summary>Credited user identifier.</summary>
-        public String CreditedUserId { get; set; }
+        public string CreditedUserId { get; set; }
 
         /// <summary>A custom reference you wish to appear on the user’s bank statement (your ClientId is already shown).</summary>
-        public String BankWireRef { get; set; }
+        public string BankWireRef { get; set; }
 
         /// <summary>
         /// Gets or sets the payout mode requested.
@@ -46,6 +46,6 @@ namespace MangoPay.SDK.Entities.POST
         /// <value>
         /// The payout mode requested.
         /// </value>
-        public String PayoutModeRequested { get; set; }
+        public string PayoutModeRequested { get; set; }
     }
 }
