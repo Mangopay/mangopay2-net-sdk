@@ -15,33 +15,33 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                CardRegistrationDTO cardRegistration_visa = await this.GetJohnsCardRegistration();
-                UserNaturalDTO user = await this.GetJohn();
+                var cardRegistrationVisa = await this.GetJohnsCardRegistration();
+                var user = await this.GetJohn();
 
-                Assert.IsNotNull(cardRegistration_visa.Id);
-                Assert.IsTrue(cardRegistration_visa.Id.Length > 0);
+                Assert.IsNotNull(cardRegistrationVisa.Id);
+                Assert.IsTrue(cardRegistrationVisa.Id.Length > 0);
 
-                Assert.IsNotNull(cardRegistration_visa.AccessKey);
-                Assert.IsNotNull(cardRegistration_visa.PreregistrationData);
-                Assert.IsNotNull(cardRegistration_visa.CardRegistrationURL);
-                Assert.AreEqual(user.Id, cardRegistration_visa.UserId);
-                Assert.AreEqual(CurrencyIso.EUR, cardRegistration_visa.Currency);
-                Assert.AreEqual("CREATED", cardRegistration_visa.Status);
-				Assert.AreEqual(CardType.CB_VISA_MASTERCARD, cardRegistration_visa.CardType);
-                Assert.AreEqual("DefaultTag", cardRegistration_visa.Tag);
+                Assert.IsNotNull(cardRegistrationVisa.AccessKey);
+                Assert.IsNotNull(cardRegistrationVisa.PreregistrationData);
+                Assert.IsNotNull(cardRegistrationVisa.CardRegistrationURL);
+                Assert.AreEqual(user.Id, cardRegistrationVisa.UserId);
+                Assert.AreEqual(CurrencyIso.EUR, cardRegistrationVisa.Currency);
+                Assert.AreEqual("CREATED", cardRegistrationVisa.Status);
+				Assert.AreEqual(CardType.CB_VISA_MASTERCARD, cardRegistrationVisa.CardType);
+                Assert.AreEqual("DefaultTag", cardRegistrationVisa.Tag);
 
-				CardRegistrationDTO cardRegistration_maestro = await this.GetNewJohnsCardRegistration(CardType.MAESTRO);
+                var cardRegistrationMaestro = await this.GetNewJohnsCardRegistration(CardType.MAESTRO);
 
-				Assert.IsNotNull(cardRegistration_maestro.Id);
-				Assert.IsTrue(cardRegistration_maestro.Id.Length > 0);
+				Assert.IsNotNull(cardRegistrationMaestro.Id);
+				Assert.IsTrue(cardRegistrationMaestro.Id.Length > 0);
 
-				Assert.IsNotNull(cardRegistration_maestro.AccessKey);
-				Assert.IsNotNull(cardRegistration_maestro.PreregistrationData);
-				Assert.IsNotNull(cardRegistration_maestro.CardRegistrationURL);
-				Assert.AreEqual(user.Id, cardRegistration_maestro.UserId);
-				Assert.AreEqual(CurrencyIso.EUR, cardRegistration_maestro.Currency);
-				Assert.AreEqual("CREATED", cardRegistration_maestro.Status);
-				Assert.AreEqual(CardType.MAESTRO, cardRegistration_maestro.CardType);
+				Assert.IsNotNull(cardRegistrationMaestro.AccessKey);
+				Assert.IsNotNull(cardRegistrationMaestro.PreregistrationData);
+				Assert.IsNotNull(cardRegistrationMaestro.CardRegistrationURL);
+				Assert.AreEqual(user.Id, cardRegistrationMaestro.UserId);
+				Assert.AreEqual(CurrencyIso.EUR, cardRegistrationMaestro.Currency);
+				Assert.AreEqual("CREATED", cardRegistrationMaestro.Status);
+				Assert.AreEqual(CardType.MAESTRO, cardRegistrationMaestro.CardType);
             }
             catch (Exception ex)
             {
@@ -54,9 +54,9 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                CardRegistrationDTO cardRegistration = await this.GetJohnsCardRegistration();
+                var cardRegistration = await this.GetJohnsCardRegistration();
 
-                CardRegistrationDTO getCardRegistration = await this.Api.CardRegistrations.GetAsync(cardRegistration.Id);
+                var getCardRegistration = await this.Api.CardRegistrations.GetAsync(cardRegistration.Id);
 
                 Assert.IsTrue(getCardRegistration.Id.Length > 0);
                 Assert.AreEqual(cardRegistration.Id, getCardRegistration.Id);
@@ -72,13 +72,13 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                CardRegistrationDTO cardRegistration = await this.GetJohnsCardRegistration();
-                CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
-                string registrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
+                var cardRegistration = await this.GetJohnsCardRegistration();
+                var cardRegistrationPut = new CardRegistrationPutDTO();
+                var registrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
                 cardRegistrationPut.RegistrationData = registrationData;
                 cardRegistrationPut.Tag = "DefaultTag - Updated";
 
-                CardRegistrationDTO getCardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
+                var getCardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
 
                 Assert.AreEqual(registrationData, getCardRegistration.RegistrationData);
                 Assert.IsNotNull(getCardRegistration.CardId);

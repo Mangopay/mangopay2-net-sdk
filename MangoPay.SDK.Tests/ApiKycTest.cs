@@ -19,8 +19,8 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-				KycDocumentDTO kycDocument = await this.GetJohnsKycDocument();
-				KycDocumentDTO result = await this.Api.Kyc.GetAsync(kycDocument.Id);
+                var kycDocument = await this.GetJohnsKycDocument();
+                var result = await this.Api.Kyc.GetAsync(kycDocument.Id);
 
 				Assert.IsNotNull(result);
 				Assert.IsTrue(result.Id.Equals(kycDocument.Id));
@@ -72,12 +72,12 @@ namespace MangoPay.SDK.Tests
 		{
 			try
 			{
-				UserNaturalDTO john = await this.GetJohn();
-				KycDocumentDTO kycDocument = await this.GetNewKycDocument();
+                var john = await this.GetJohn();
+                var kycDocument = await this.GetNewKycDocument();
 
                 var assembly = Assembly.GetExecutingAssembly();
                 var fi = this.GetFileInfoOfFile(assembly.Location);
-                byte[] bytes = File.ReadAllBytes(fi.FullName);
+                var bytes = await File.ReadAllBytesAsync(fi.FullName);
 				await Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, bytes);
 				await Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, bytes);
 

@@ -19,15 +19,15 @@ namespace MangoPay.SDK.Tests
 		{
 			try
 			{
-				UserNaturalDTO john = await this.GetJohn();
-				WalletDTO wallet = await this.GetJohnsWallet();
-				BankingAliasIbanPostDTO bankingAliasIban = new BankingAliasIbanPostDTO(
+				var john = await this.GetJohn();
+				var wallet = await this.GetJohnsWallet();
+				var bankingAliasIban = new BankingAliasIbanPostDTO(
 					john.FirstName + " " + john.LastName, CountryIso.LU)
 				{
 					Tag = "Tag test"
 				};
 
-				BankingAliasDTO bankingAlias = await Api.BankingAlias.CreateIbanAsync(wallet.Id, bankingAliasIban);
+				var bankingAlias = await Api.BankingAlias.CreateIbanAsync(wallet.Id, bankingAliasIban);
 
 				Assert.IsNotEmpty(bankingAlias.Id);
 			}
@@ -42,17 +42,17 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-				UserNaturalDTO john = await this.GetJohn();
-				WalletPostDTO walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
-				WalletDTO wallet = await this.Api.Wallets.CreateAsync(walletPost);
-				BankingAliasIbanPostDTO bankingAliasIban = new BankingAliasIbanPostDTO(
+				var john = await this.GetJohn();
+				var walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
+				var wallet = await this.Api.Wallets.CreateAsync(walletPost);
+				var bankingAliasIban = new BankingAliasIbanPostDTO(
 					john.FirstName + " " + john.LastName, CountryIso.LU)
 				{
 					Tag = "Tag test"
 				};
-				BankingAliasDTO bankingAliasCreated = await this.Api.BankingAlias.CreateIbanAsync(wallet.Id, bankingAliasIban);
+				var bankingAliasCreated = await this.Api.BankingAlias.CreateIbanAsync(wallet.Id, bankingAliasIban);
 
-				BankingAliasDTO bankingAlias = await this.Api.BankingAlias.GetAsync(bankingAliasCreated.Id);
+                var bankingAlias = await this.Api.BankingAlias.GetAsync(bankingAliasCreated.Id);
 
                 Assert.AreEqual(bankingAliasCreated.Id, bankingAlias.Id);
 				Assert.AreEqual(BankingAliasType.IBAN, bankingAlias.Type);
@@ -68,17 +68,17 @@ namespace MangoPay.SDK.Tests
 		{
 			try
 			{
-				UserNaturalDTO john = await this.GetJohn();
-				WalletPostDTO walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
-				WalletDTO wallet = await this.Api.Wallets.CreateAsync(walletPost);
-				BankingAliasIbanPostDTO bankingAliasIban = new BankingAliasIbanPostDTO(
+                var john = await this.GetJohn();
+                var walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
+                var wallet = await this.Api.Wallets.CreateAsync(walletPost);
+                var bankingAliasIban = new BankingAliasIbanPostDTO(
 					john.FirstName + " " + john.LastName, CountryIso.LU)
 				{
 					Tag = "Tag test"
 				};
-				BankingAliasDTO bankingAliasCreated = await Api.BankingAlias.CreateIbanAsync(wallet.Id, bankingAliasIban);
+                var bankingAliasCreated = await Api.BankingAlias.CreateIbanAsync(wallet.Id, bankingAliasIban);
 
-				BankingAliasDTO bankingAlias = await this.Api.BankingAlias.GetIbanAsync(bankingAliasCreated.Id);
+                var bankingAlias = await this.Api.BankingAlias.GetIbanAsync(bankingAliasCreated.Id);
 
 				Assert.AreEqual(bankingAliasCreated.Id, bankingAlias.Id);
 				Assert.AreEqual(BankingAliasType.IBAN, bankingAlias.Type);
@@ -94,17 +94,17 @@ namespace MangoPay.SDK.Tests
 		{
 			try
 			{
-				UserNaturalDTO john = await this.GetJohn();
-				WalletPostDTO walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
-				WalletDTO wallet = await this.Api.Wallets.CreateAsync(walletPost);
-				BankingAliasIbanPostDTO bankingAliasIban = new BankingAliasIbanPostDTO(
+                var john = await this.GetJohn();
+                var walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
+                var wallet = await this.Api.Wallets.CreateAsync(walletPost);
+                var bankingAliasIban = new BankingAliasIbanPostDTO(
 					john.FirstName + " " + john.LastName, CountryIso.LU)
 				{
 					Tag = "Tag test"
 				};
-				BankingAliasDTO bankingAliasCreated = await this.Api.BankingAlias.CreateIbanAsync(wallet.Id, bankingAliasIban);
-				Pagination pagination = new Pagination(1, 2);
-				Sort sort = new Sort();
+                var bankingAliasCreated = await this.Api.BankingAlias.CreateIbanAsync(wallet.Id, bankingAliasIban);
+                var pagination = new Pagination(1, 2);
+                var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.asc);
 
 				var result = await this.Api.BankingAlias.GetAllAsync(wallet.Id, pagination, sort);
@@ -123,23 +123,23 @@ namespace MangoPay.SDK.Tests
 		{
 			try
 			{
-				UserNaturalDTO john = await this.GetJohn();
-				WalletPostDTO walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
-				WalletDTO wallet = await this.Api.Wallets.CreateAsync(walletPost);
-				BankingAliasIbanPostDTO bankingAliasIban = new BankingAliasIbanPostDTO(
+                var john = await this.GetJohn();
+                var walletPost = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR", CurrencyIso.EUR);
+                var wallet = await this.Api.Wallets.CreateAsync(walletPost);
+                var bankingAliasIban = new BankingAliasIbanPostDTO(
 					john.FirstName + " " + john.LastName, CountryIso.LU)
 				{
 					Tag = "Tag test"
 				};
-				BankingAliasDTO bankingAliasCreated = await this.Api.BankingAlias.CreateIbanAsync(wallet.Id, bankingAliasIban);
-				BankingAliasPutDTO bankingAliasPut = new BankingAliasPutDTO
+                var bankingAliasCreated = await this.Api.BankingAlias.CreateIbanAsync(wallet.Id, bankingAliasIban);
+                var bankingAliasPut = new BankingAliasPutDTO
 				{
 					Active = false
 				};
 
-				BankingAliasDTO bankingAlias = await this.Api.BankingAlias.UpdateAsync(bankingAliasPut, bankingAliasCreated.Id);
+                var bankingAlias = await this.Api.BankingAlias.UpdateAsync(bankingAliasPut, bankingAliasCreated.Id);
 
-				BankingAliasDTO bankingAliasGet = await this.Api.BankingAlias.GetAsync(bankingAliasCreated.Id);
+                var bankingAliasGet = await this.Api.BankingAlias.GetAsync(bankingAliasCreated.Id);
 
 				Assert.IsFalse(bankingAliasGet.Active);
 			}

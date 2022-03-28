@@ -14,8 +14,8 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                PayInDTO payIn = await this.GetJohnsPayInCardWeb();
-                PayOutDTO payOut = await this.GetJohnsPayOutBankWire();
+                await this.GetJohnsPayInCardWeb();
+                var payOut = await this.GetJohnsPayOutBankWire();
 
                 Assert.IsTrue(payOut.Id.Length > 0);
                 Assert.AreEqual(payOut.PaymentType, PayOutPaymentType.BANK_WIRE);

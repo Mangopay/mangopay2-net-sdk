@@ -16,9 +16,9 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
+                var reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
 
-				ReportRequestDTO report = await this.Api.Reports.CreateAsync(reportPost);
+                var report = await this.Api.Reports.CreateAsync(reportPost);
 				Assert.IsNotNull(report);
 				Assert.AreEqual(ReportType.TRANSACTIONS, report.ReportType);
 				Assert.IsTrue(report.Id.Length > 0);
@@ -34,11 +34,11 @@ namespace MangoPay.SDK.Tests
 		{
 			try
 			{
-				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
+                var reportPost = new ReportRequestPostDTO(ReportType.TRANSACTIONS);
                 var john = await GetJohn();
                 var wallet = await GetJohnsWallet();
-				string johnsId = john.Id;
-				string walletId = wallet.Id;
+                var johnsId = john.Id;
+                var walletId = wallet.Id;
 				var minDebitedFunds = new Money() { Amount = 111, Currency = CurrencyIso.EUR };
 				var maxDebitedFunds = new Money() { Amount = 222, Currency = CurrencyIso.EUR };
 				var minFees = new Money() { Amount = 3, Currency = CurrencyIso.JPY };
@@ -54,7 +54,7 @@ namespace MangoPay.SDK.Tests
 				reportPost.Filters.MaxFeesAmount = maxFees.Amount;
 				reportPost.Filters.MaxFeesCurrency = maxFees.Currency;
 
-				ReportRequestDTO report = await this.Api.Reports.CreateAsync(reportPost);
+                var report = await this.Api.Reports.CreateAsync(reportPost);
 				Assert.IsNotNull(report);
 				Assert.AreEqual(ReportType.TRANSACTIONS, report.ReportType);
 				Assert.IsNotNull(report.Filters);
@@ -83,8 +83,8 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-				ReportRequestDTO report = await this.GetJohnsReport(ReportType.TRANSACTIONS);
-				ReportRequestDTO getReport = await this.Api.Reports.GetAsync(report.Id);
+                var report = await this.GetJohnsReport(ReportType.TRANSACTIONS);
+                var getReport = await this.Api.Reports.GetAsync(report.Id);
 
 				Assert.AreEqual(getReport.Id, report.Id);
             }

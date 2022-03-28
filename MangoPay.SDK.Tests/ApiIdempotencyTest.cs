@@ -13,7 +13,6 @@ using NUnit.Framework;
 namespace MangoPay.SDK.Tests
 {
     [TestFixture]
-    //[Ignore("Gotta ask?!")]
     public class ApiIdempotencyTest : BaseTest
     {
         /*[Test]
@@ -31,7 +30,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_CardRegistrationCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             await GetNewPayInCardDirect(null, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -42,7 +41,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_ClientCreateBankwireDirect()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             var bankwireDirectPost =
                 new ClientBankWireDirectPostDTO("CREDIT_EUR", new Money {Amount = 1000, Currency = CurrencyIso.EUR});
             await Api.Clients.CreateBankWireDirectAsync(bankwireDirectPost, key);
@@ -100,10 +99,10 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_MandateCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             var bankAccount = await this.GetJohnsAccount();
-            string returnUrl = "http://test.test";
-            MandatePostDTO mandatePost = new MandatePostDTO(bankAccount.Id, CultureCode.EN, returnUrl);
+            var returnUrl = "http://test.test";
+            var mandatePost = new MandatePostDTO(bankAccount.Id, CultureCode.EN, returnUrl);
             await Api.Mandates.CreateAsync(mandatePost, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -114,10 +113,10 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_PayinsBankwireDirectCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            WalletDTO wallet = await this.GetJohnsWallet();
-            UserNaturalDTO user = await this.GetJohn();
-            PayInBankWireDirectPostDTO payIn = new PayInBankWireDirectPostDTO(user.Id, wallet.Id,
+            var key = DateTime.Now.Ticks.ToString();
+            var wallet = await this.GetJohnsWallet();
+            var user = await this.GetJohn();
+            var payIn = new PayInBankWireDirectPostDTO(user.Id, wallet.Id,
                 new Money {Amount = 100, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR});
             payIn.CreditedWalletId = wallet.Id;
@@ -132,24 +131,26 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_PayinsCardDirectCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            UserNaturalDTO john = await this.GetJohn();
-            WalletPostDTO wallet =
+            var key = DateTime.Now.Ticks.ToString();
+            var john = await this.GetJohn();
+            var wallet =
                 new WalletPostDTO(new List<string> {john.Id}, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
             var johnsWallet = await this.Api.Wallets.CreateAsync(wallet);
-            CardRegistrationPostDTO cardRegistrationPost =
+            var cardRegistrationPost =
                 new CardRegistrationPostDTO(johnsWallet.Owners[0], CurrencyIso.EUR);
-            CardRegistrationDTO cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
-            CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
+            var cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
+            var cardRegistrationPut = new CardRegistrationPutDTO();
             cardRegistrationPut.RegistrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
             cardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
-            CardDTO card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
-            PayInCardDirectPostDTO payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
+            var card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
+            var payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
                 new Money {Amount = 1000, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR},
-                johnsWallet.Id, "http://test.com", card.Id);
-            payIn.Requested3DSVersion = "V1";
-            payIn.CardType = card.CardType;
+                johnsWallet.Id, "http://test.com", card.Id)
+            {
+                Requested3DSVersion = "V1",
+                CardType = card.CardType
+            };
             await Api.PayIns.CreateCardDirectAsync(payIn, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -160,10 +161,10 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_PayinsCardWebCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            WalletDTO wallet = await this.GetJohnsWallet();
-            UserNaturalDTO user = await this.GetJohn();
-            PayInCardWebPostDTO payIn = new PayInCardWebPostDTO(user.Id,
+            var key = DateTime.Now.Ticks.ToString();
+            var wallet = await this.GetJohnsWallet();
+            var user = await this.GetJohn();
+            var payIn = new PayInCardWebPostDTO(user.Id,
                 new Money {Amount = 1000, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, "https://test.com", CultureCode.FR,
                 CardType.CB_VISA_MASTERCARD);
@@ -177,9 +178,9 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_PayinsCreateRefunds()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            PayInDTO payIn = await this.GetNewPayInCardDirect();
-            RefundDTO refund = await this.GetNewRefundForPayIn(payIn, key);
+            var key = DateTime.Now.Ticks.ToString();
+            var payIn = await this.GetNewPayInCardDirect();
+            await this.GetNewRefundForPayIn(payIn, key);
 
             var result = await Api.Idempotent.GetAsync(key);
 
@@ -189,15 +190,17 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_PayinsDirectDebitCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            WalletDTO wallet = await this.GetJohnsWallet();
-            UserNaturalDTO user = await this.GetJohn();
-            PayInDirectDebitPostDTO payIn = new PayInDirectDebitPostDTO(user.Id,
+            var key = DateTime.Now.Ticks.ToString();
+            var wallet = await this.GetJohnsWallet();
+            var user = await this.GetJohn();
+            var payIn = new PayInDirectDebitPostDTO(user.Id,
                 new Money {Amount = 100, Currency = CurrencyIso.EUR},
                 new Money {Amount = 10, Currency = CurrencyIso.EUR}, wallet.Id, "http://www.mysite.com/returnURL/",
-                CultureCode.FR, DirectDebitType.GIROPAY);
-            payIn.TemplateURLOptions = new TemplateURLOptions {PAYLINE = "https://www.maysite.com/payline_template/"};
-            payIn.Tag = "DirectDebit test tag";
+                CultureCode.FR, DirectDebitType.GIROPAY)
+            {
+                TemplateURLOptions = new TemplateURLOptions {PAYLINE = "https://www.maysite.com/payline_template/"},
+                Tag = "DirectDebit test tag"
+            };
             await Api.PayIns.CreateDirectDebitAsync(payIn, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -208,13 +211,13 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_PayinsMandateDirectDebitCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            WalletDTO wallet = await this.GetJohnsWallet();
-            UserNaturalDTO user = await this.GetJohn();
+            var key = DateTime.Now.Ticks.ToString();
+            var wallet = await this.GetJohnsWallet();
+            var user = await this.GetJohn();
             var bankAccount = await this.GetJohnsAccount();
-            string returnUrl = "http://test.test";
-            MandatePostDTO mandatePost = new MandatePostDTO(bankAccount.Id, CultureCode.EN, returnUrl);
-            MandateDTO mandate = await this.Api.Mandates.CreateAsync(mandatePost);
+            var returnUrl = "http://test.test";
+            var mandatePost = new MandatePostDTO(bankAccount.Id, CultureCode.EN, returnUrl);
+            var mandate = await this.Api.Mandates.CreateAsync(mandatePost);
 
             /*	
 			 *	! IMPORTANT NOTE !
@@ -223,7 +226,7 @@ namespace MangoPay.SDK.Tests
 			 *	navigate to URL the mandate.RedirectURL property points to and click "CONFIRM" button.
 			 * 
 			 */
-            PayInMandateDirectPostDTO payIn = new PayInMandateDirectPostDTO(user.Id,
+            var payIn = new PayInMandateDirectPostDTO(user.Id,
                 new Money {Amount = 100, Currency = CurrencyIso.EUR},
                 new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, "http://test.test", mandate.Id);
             await Api.PayIns.CreateMandateDirectDebitAsync(payIn, key);
@@ -236,15 +239,17 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_PayinsPreauthorizedDirectCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            string okCode = "200";
-            CardPreAuthorizationDTO cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
-            WalletDTO wallet = await this.GetJohnsWalletWithMoney();
-            UserNaturalDTO user = await this.GetJohn();
-            PayInPreauthorizedDirectPostDTO payIn = new PayInPreauthorizedDirectPostDTO(user.Id,
+            var key = DateTime.Now.Ticks.ToString();
+            var okCode = "200";
+            var cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
+            var wallet = await this.GetJohnsWalletWithMoney();
+            var user = await this.GetJohn();
+            var payIn = new PayInPreauthorizedDirectPostDTO(user.Id,
                 new Money {Amount = 10000, Currency = CurrencyIso.EUR},
-                new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, cardPreAuthorization.Id);
-            payIn.SecureModeReturnURL = "http://test.com";
+                new Money {Amount = 0, Currency = CurrencyIso.EUR}, wallet.Id, cardPreAuthorization.Id)
+                {
+                    SecureModeReturnURL = "http://test.com"
+                };
             await Api.PayIns.CreatePreauthorizedDirectAsync(payIn, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -256,15 +261,17 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_PayoutsBankwireCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            WalletDTO wallet = await this.GetJohnsWallet();
-            UserNaturalDTO user = await this.GetJohn();
-            BankAccountDTO account = await this.GetJohnsAccount();
-            PayOutBankWirePostDTO payOut = new PayOutBankWirePostDTO(user.Id, wallet.Id,
+            var key = DateTime.Now.Ticks.ToString();
+            var wallet = await this.GetJohnsWallet();
+            var user = await this.GetJohn();
+            var account = await this.GetJohnsAccount();
+            var payOut = new PayOutBankWirePostDTO(user.Id, wallet.Id,
                 new Money {Amount = 10, Currency = CurrencyIso.EUR}, new Money {Amount = 5, Currency = CurrencyIso.EUR},
-                account.Id, "Johns bank wire ref", "STANDARD");
-            payOut.Tag = "DefaultTag";
-            payOut.CreditedUserId = user.Id;
+                account.Id, "Johns bank wire ref", "STANDARD")
+            {
+                Tag = "DefaultTag",
+                CreditedUserId = user.Id
+            };
             await Api.PayOuts.CreateBankWireAsync(payOut, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -275,7 +282,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_PreauthorizationCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             await GetJohnsCardPreAuthorization(key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -287,16 +294,18 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_TransfersCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            WalletDTO walletWithMoney = await this.GetJohnsWalletWithMoney();
-            UserNaturalDTO user = await this.GetJohn();
-            WalletPostDTO walletPost =
+            var key = DateTime.Now.Ticks.ToString();
+            var walletWithMoney = await this.GetJohnsWalletWithMoney();
+            var user = await this.GetJohn();
+            var walletPost =
                 new WalletPostDTO(new List<string> {user.Id}, "WALLET IN EUR FOR TRANSFER", CurrencyIso.EUR);
-            WalletDTO wallet = await this.Api.Wallets.CreateAsync(walletPost);
-            TransferPostDTO transfer = new TransferPostDTO(user.Id, user.Id,
+            var wallet = await this.Api.Wallets.CreateAsync(walletPost);
+            var transfer = new TransferPostDTO(user.Id, user.Id,
                 new Money {Amount = 100, Currency = CurrencyIso.EUR},
-                new Money {Amount = 0, Currency = CurrencyIso.EUR}, walletWithMoney.Id, wallet.Id);
-            transfer.Tag = "DefaultTag";
+                new Money {Amount = 0, Currency = CurrencyIso.EUR}, walletWithMoney.Id, wallet.Id)
+            {
+                Tag = "DefaultTag"
+            };
             await Api.Transfers.CreateAsync(transfer, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -307,10 +316,10 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_TransfersCreateRefunds()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            TransferDTO transfer = await this.GetNewTransfer();
-            UserNaturalDTO user = await this.GetJohn();
-            RefundTransferPostDTO refund = new RefundTransferPostDTO(user.Id);
+            var key = DateTime.Now.Ticks.ToString();
+            var transfer = await this.GetNewTransfer();
+            var user = await this.GetJohn();
+            var refund = new RefundTransferPostDTO(user.Id);
             await Api.Transfers.CreateRefundAsync(transfer.Id, refund, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -321,13 +330,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_UboDeclarationCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
-
-            var refusedReasons = new UboRefusedReasonType[]
-            {
-                UboRefusedReasonType.MISSING_UBO,
-                UboRefusedReasonType.DECLARATION_DO_NOT_MATCH_UBO_INFORMATION
-            };
+            var key = DateTime.Now.Ticks.ToString();
 
             var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
 
@@ -341,7 +344,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_UsersCreateBankAccountsCa()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             var john = await this.GetJohn();
             var account = new BankAccountCaPostDTO(john.FirstName + " " + john.LastName, john.Address, "TestBankName",
                 "123", "12345", "234234234234");
@@ -355,10 +358,12 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_UsersCreateBankAccountsGb()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             var john = await this.GetJohn();
-            var account = new BankAccountGbPostDTO(john.FirstName + " " + john.LastName, john.Address, "63956474");
-            account.SortCode = "200000";
+            var account = new BankAccountGbPostDTO(john.FirstName + " " + john.LastName, john.Address, "63956474")
+                {
+                    SortCode = "200000"
+                };
             await Api.Users.CreateBankAccountGbAsync(john.Id, account, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -369,12 +374,14 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_UsersCreateBankAccountsIban()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            UserNaturalDTO john = await this.GetJohn();
+            var key = DateTime.Now.Ticks.ToString();
+            var john = await this.GetJohn();
             var account = new BankAccountIbanPostDTO(john.FirstName + " " + john.LastName, john.Address,
-                "FR7630004000031234567890143");
-            account.UserId = john.Id;
-            account.BIC = "BNPAFRPP";
+                "FR7630004000031234567890143")
+            {
+                UserId = john.Id,
+                BIC = "BNPAFRPP"
+            };
             await Api.Users.CreateBankAccountIbanAsync(john.Id, account, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -385,12 +392,14 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_UsersCreateBankAccountsOther()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             var john = await this.GetJohn();
             var account = new BankAccountOtherPostDTO(john.FirstName + " " + john.LastName, john.Address,
-                "234234234234", "BINAADADXXX");
-            account.Type = BankAccountType.OTHER;
-            account.Country = CountryIso.FR;
+                "234234234234", "BINAADADXXX")
+            {
+                Type = BankAccountType.OTHER,
+                Country = CountryIso.FR
+            };
             await Api.Users.CreateBankAccountOtherAsync(john.Id, account, key);
 
             var result = await Api.Idempotent.GetAsync(key);
@@ -401,7 +410,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_UsersCreateBankAccountsUs()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             var john = await this.GetJohn();
             var account = new BankAccountUsPostDTO(john.FirstName + " " + john.LastName, john.Address, "234234234234",
                 "234334789");
@@ -415,7 +424,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_UsersCreateKycDocument()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             var john = await GetJohn();
             await Api.Users.CreateKycDocumentAsync(john.Id, KycDocumentType.IDENTITY_PROOF, idempotentKey: key);
 
@@ -427,7 +436,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_UsersCreateLegals()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             var userPost = new UserLegalPostDTO("email@email.org", "SomeOtherSampleOrg", LegalPersonType.BUSINESS,
                 "RepFName", "RepLName", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
             await Api.Users.CreateAsync(userPost, key);
@@ -440,17 +449,19 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_UsersCreateNaturals()
         {
-            string key = DateTime.Now.Ticks.ToString();
-            UserNaturalPostDTO user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe",
-                new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
-            user.Occupation = "programmer";
-            user.IncomeRange = 3;
-            user.Address = new Address
+            var key = DateTime.Now.Ticks.ToString();
+            var user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe",
+                new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR)
             {
-                AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City",
-                Country = CountryIso.PL, PostalCode = "11222", Region = "Region"
+                Occupation = "programmer",
+                IncomeRange = 3,
+                Address = new Address
+                {
+                    AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City",
+                    Country = CountryIso.PL, PostalCode = "11222", Region = "Region"
+                },
+                Capacity = CapacityType.NORMAL
             };
-            user.Capacity = CapacityType.NORMAL;
 
             await Api.Users.CreateAsync(user, key);
 
@@ -462,7 +473,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Idempotency_WalletsCreate()
         {
-            string key = DateTime.Now.Ticks.ToString();
+            var key = DateTime.Now.Ticks.ToString();
             var john = await this.GetJohn();
             var wallet = new WalletPostDTO(new List<string> {john.Id}, "WALLET IN EUR", CurrencyIso.EUR);
             await Api.Wallets.CreateAsync(wallet, key);

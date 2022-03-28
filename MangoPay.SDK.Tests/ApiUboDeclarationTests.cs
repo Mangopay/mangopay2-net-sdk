@@ -50,8 +50,6 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        //Ubo tests
-
         [Test]
         public async Task ApiUbo_Create_Ubo_Valid()
         {
@@ -85,8 +83,10 @@ namespace MangoPay.SDK.Tests
                 City = "CityNatural1",
                 Country = CountryIso.PL
             };
-            var uboPutDto = new UboPutDTO("JohnNatural1", "DoeNatural1", address, CountryIso.DE, birthDate, birthPlace);
-            uboPutDto.IsActive = true;
+            var uboPutDto = new UboPutDTO("JohnNatural1", "DoeNatural1", address, CountryIso.DE, birthDate, birthPlace)
+                {
+                    IsActive = true
+                };
             UboDTO result = null;
             Assert.DoesNotThrowAsync(async () =>
                 result = await Api.UboDeclarations.UpdateUboAsync(uboPutDto, userLegal.Id, uboDeclaration.Id, ubo.Id));
@@ -136,7 +136,6 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(uboDeclaration.Id, result.Id);
         }
 
-        //UboDeclarations test
         [Test]
         public async Task ApiUboDeclaration_GetAll_UboDeclaration_Valid()
         {
@@ -144,7 +143,7 @@ namespace MangoPay.SDK.Tests
             var uboDeclarationDto = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id);
 
             ListPaginated<UboDeclarationDTO> result = null;
-            Pagination pagination = new Pagination(1, 1);
+            var pagination = new Pagination(1, 1);
             Assert.DoesNotThrowAsync(async () => result = await Api.UboDeclarations.GetUboDeclarationByUserIdAsync(userLegal.Id, pagination));
             Assert.NotNull(result);
             Assert.IsTrue(result.Count > 0);
@@ -158,8 +157,8 @@ namespace MangoPay.SDK.Tests
 
             var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id);
 
-            List<UboPostDTO> ubopostDtos = UboPostDtoCollection;
-            List<UboDTO> uboDtos = new List<UboDTO>();
+            var ubopostDtos = UboPostDtoCollection;
+            var uboDtos = new List<UboDTO>();
 
             foreach (var uboPost in ubopostDtos)
             {
@@ -167,7 +166,7 @@ namespace MangoPay.SDK.Tests
                 uboDtos.Add(ubo);
             }
 
-            UboDeclarationPutDTO ubodeclarationPut =
+            var ubodeclarationPut =
                 new UboDeclarationPutDTO(uboDtos.ToArray(), UboDeclarationType.VALIDATION_ASKED);
 
             UboDeclarationDTO result = null;

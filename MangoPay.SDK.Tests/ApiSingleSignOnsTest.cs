@@ -86,7 +86,7 @@ namespace MangoPay.SDK.Tests
             {
 				var email = "email-GetAll_" + DateTime.Now.Ticks + "@email.com";
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName-GetAll", "lastName-GetAll", email, "READ");
-				var singleSignOnCreated = await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
+				await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
 
 				var singleSignOns = await this.Api.SingleSignOns.GetAllAsync();
 
@@ -106,7 +106,7 @@ namespace MangoPay.SDK.Tests
 			{
 				var email = "email-GetAll_" + DateTime.Now.Ticks + "@email.com";
 				var singleSignOnPost = new SingleSignOnPostDTO("firstName-GetAll", "lastName-GetAll", email, "READ");
-				var singleSignOnCreated = await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
+				await this.Api.SingleSignOns.CreateAsync(singleSignOnPost);
 				var pagination = new Pagination(1, 1);
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.asc);
@@ -137,7 +137,7 @@ namespace MangoPay.SDK.Tests
 					Active = false
 				};
 
-				var singleSignOnSaved = await this.Api.SingleSignOns.UpdateAsync(singleSignOnPut, singleSignOnCreated.Id);
+				await this.Api.SingleSignOns.UpdateAsync(singleSignOnPut, singleSignOnCreated.Id);
                 var singleSignOn = await this.Api.SingleSignOns.GetAsync(singleSignOnCreated.Id);
 
 				Assert.AreEqual(singleSignOnCreated.Id, singleSignOn.Id);
@@ -165,7 +165,7 @@ namespace MangoPay.SDK.Tests
 					LastName = "lastName-Save-Updated - CHANGED(éèęóąśłżźćń)",
 				};
 
-				var singleSignOnSaved = await this.Api.SingleSignOns.UpdateAsync(singleSignOnPut, singleSignOnCreated.Id);
+				await this.Api.SingleSignOns.UpdateAsync(singleSignOnPut, singleSignOnCreated.Id);
 				var singleSignOn = await this.Api.SingleSignOns.GetAsync(singleSignOnCreated.Id);
 
 				Assert.AreEqual(singleSignOnCreated.Id, singleSignOn.Id);

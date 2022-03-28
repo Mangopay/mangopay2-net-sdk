@@ -55,9 +55,9 @@ namespace MangoPay.SDK.Tests
 
             WalletDTO wallet = null;
             WalletDTO result = null;
-            if (feesWallets != null && feesWallets.Count > 0)
+            if (feesWallets.Count > 0)
                 wallet = feesWallets[0];
-            else if (creditWallets != null && creditWallets.Count > 0)
+            else if (creditWallets.Count > 0)
                 wallet = creditWallets[0];
 
             result = await this.Api.Clients.GetWalletAsync(wallet.FundsType, wallet.Currency);
@@ -88,9 +88,9 @@ namespace MangoPay.SDK.Tests
 
             WalletDTO wallet = null;
             ListPaginated<TransactionDTO> result = null;
-            if (feesWallets != null && feesWallets.Count > 0)
+            if (feesWallets.Count > 0)
                 wallet = feesWallets[0];
-            else if (creditWallets != null && creditWallets.Count > 0)
+            else if (creditWallets.Count > 0)
                 wallet = creditWallets[0];
 
             result = await this.Api.Clients.GetWalletTransactionsAsync(wallet.FundsType, wallet.Currency, new Pagination(1, 1), null);
@@ -121,7 +121,7 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                ClientBankWireDirectPostDTO bankwireDirectPost = new ClientBankWireDirectPostDTO("CREDIT_EUR", new Money { Amount = 1000, Currency = CurrencyIso.EUR });
+                var bankwireDirectPost = new ClientBankWireDirectPostDTO("CREDIT_EUR", new Money { Amount = 1000, Currency = CurrencyIso.EUR });
 
                 PayInDTO result = await this.Api.Clients.CreateBankWireDirectAsync(bankwireDirectPost);
 
@@ -143,7 +143,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_ClientGet()
         {
-            ClientDTO client = await this.Api.Clients.GetAsync();
+            var client = await this.Api.Clients.GetAsync();
 
             Assert.IsNotNull(client);
             Assert.IsTrue("sdk-unit-tests".Equals(client.ClientId));
@@ -152,12 +152,12 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_ClientSave()
         {
-            ClientPutDTO client = new ClientPutDTO();
+            var client = new ClientPutDTO();
 
-            Random rand = new Random();
-            string color1 = (rand.Next(100000) + 100000).ToString();
-            string color2 = (rand.Next(100000) + 100000).ToString();
-            string headquartersPhoneNumber = (rand.Next(10000000, 99999999)).ToString();
+            var rand = new Random();
+            var color1 = (rand.Next(100000) + 100000).ToString();
+            var color2 = (rand.Next(100000) + 100000).ToString();
+            var headquartersPhoneNumber = (rand.Next(10000000, 99999999)).ToString();
 
             client.PrimaryButtonColour = "#" + color1;
             client.PrimaryThemeColour = "#" + color2;
@@ -180,7 +180,7 @@ namespace MangoPay.SDK.Tests
             };
             client.HeadquartersPhoneNumber = headquartersPhoneNumber;
 
-            ClientDTO clientNew = await this.Api.Clients.SaveAsync(client);
+            var clientNew = await this.Api.Clients.SaveAsync(client);
 
             Assert.IsNotNull(clientNew);
             Assert.AreEqual(client.PrimaryButtonColour, clientNew.PrimaryButtonColour);
@@ -215,17 +215,17 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Client_SaveAddressNull()
         {
-            ClientPutDTO client = new ClientPutDTO();
+            var client = new ClientPutDTO();
 
-            Random rand = new Random();
-            string color1 = (rand.Next(100000) + 100000).ToString();
-            string color2 = (rand.Next(100000) + 100000).ToString();
+            var rand = new Random();
+            var color1 = (rand.Next(100000) + 100000).ToString();
+            var color2 = (rand.Next(100000) + 100000).ToString();
 
             client.PrimaryButtonColour = "#" + color1;
             client.PrimaryThemeColour = "#" + color2;
             client.HeadquartersAddress = new Address();
 
-            ClientDTO clientNew = await this.Api.Clients.SaveAsync(client);
+            var clientNew = await this.Api.Clients.SaveAsync(client);
 
             Assert.IsNotNull(clientNew);
         }

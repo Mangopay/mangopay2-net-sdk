@@ -16,33 +16,34 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-				ReportRequestDTO report = await this.GetJohnsReport(ReportType.TRANSACTIONS);
-                Pagination pagination = new Pagination(1, 10);
-				Sort sort = new Sort();
+				var report = await this.GetJohnsReport(ReportType.TRANSACTIONS);
+                var pagination = new Pagination(1, 10);
+                var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
-				ListPaginated<ReportRequestDTO> list = await this.Api.Reports.GetAllAsync(pagination, null, sort);
+                var list = await this.Api.Reports.GetAllAsync(pagination, null, sort);
 
 				var exist = false;
-				for (int i = 0; i < pagination.ItemsPerPage; i++)
-				{
-					if (report.Id == list[i].Id)
-					{
-						exist = true;
-						break;
-					}
-				}
+				for (var i = 0; i < pagination.ItemsPerPage; i++)
+                {
+                    if (report.Id != list[i].Id) continue;
+
+                    exist = true;
+                    break;
+                }
 
                 Assert.IsNotNull(list[0]);
 				Assert.IsTrue(exist);
                 Assert.AreEqual(pagination.Page, 1);
 				Assert.IsTrue(pagination.ItemsPerPage <= 10);
 
-				FilterReportsList filters = new FilterReportsList();
-				filters.AfterDate = list[0].CreationDate;
-				filters.BeforeDate = DateTime.Today;
+                var filters = new FilterReportsList
+                {
+                    AfterDate = list[0].CreationDate,
+                    BeforeDate = DateTime.Today
+                };
 
-				list = await this.Api.Reports.GetAllAsync(pagination, filters, sort);
+                list = await this.Api.Reports.GetAllAsync(pagination, filters, sort);
 
 				Assert.IsNotNull(list);
 

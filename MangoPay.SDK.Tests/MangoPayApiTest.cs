@@ -8,7 +8,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public void ApiAndUsersConstructionTest()
         {
-            MangoPayApi api = new MangoPayApi();
+            var api = new MangoPayApi();
             Assert.IsNotNull(api);
             Assert.IsNotNull(api.Users);
         }
