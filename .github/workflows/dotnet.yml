@@ -35,6 +35,6 @@ jobs:
     - name: Check mono
       run: mono --version
     - name: Install NUnit Console
-      run: nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
+      run: nuget install NUnit.Console -Version 3.15.0 -OutputDirectory testrunner
     - name: Test
-      run: mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/net5.0/MangoPay.SDK.Tests.dll
+      run: mono ./testrunner/NUnit.ConsoleRunner.3.15.0/tools/nunit3-console.exe ./MangoPay.SDK.Tests/bin/Release/net5.0/MangoPay.SDK.Tests.dll
