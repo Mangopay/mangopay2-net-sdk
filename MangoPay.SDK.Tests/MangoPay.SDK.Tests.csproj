@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <DebugType>Full</DebugType>
-    <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
     <Company>MangoPay</Company>
     <Copyright>Copyright © 2020</Copyright>
     <Description>.Net MangoPay Tests</Description>
@@ -13,8 +13,8 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JsonSubTypes" Version="1.8.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="nunit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.2.1">
       <PrivateAssets>all</PrivateAssets>
@@ -23,7 +23,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Common.Logging" Version="3.4.1" />
     <PackageReference Include="Common.Logging.Core" Version="3.4.1" />
-    <PackageReference Include="RestSharp" Version="106.12.0" />
+    <PackageReference Include="RestSharp" Version="107.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MangoPay.SDK\MangoPay.SDK.csproj" />
