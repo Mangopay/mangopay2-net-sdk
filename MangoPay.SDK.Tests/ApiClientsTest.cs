@@ -1,5 +1,4 @@
-﻿using MangoPay.SDK.Core;
-using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
@@ -17,40 +16,6 @@ namespace MangoPay.SDK.Tests
     [TestFixture]
     public class ApiClientsTest : BaseTest
     {
-
-        [Test]
-        public async Task Test_Client_GetKycDocuments()
-        {
-            ListPaginated<KycDocumentDTO> result = null;
-            ListPaginated<KycDocumentDTO> result2 = null;
-
-            try
-            {
-                result = await this.Api.Clients.GetKycDocumentsAsync(null, null);
-                Assert.IsNotNull(result);
-                Assert.IsTrue(result.Count > 0);
-
-                Pagination pagination = new Pagination(1, 2);
-                Sort sort = new Sort();
-                sort.AddField("CreationDate", SortDirection.asc);
-                result = await this.Api.Clients.GetKycDocumentsAsync(pagination, null, sort);
-                Assert.IsNotNull(result);
-                Assert.IsTrue(result.Count > 0);
-
-                sort = new Sort();
-                sort.AddField("CreationDate", SortDirection.desc);
-                result2 = await this.Api.Clients.GetKycDocumentsAsync(pagination, null, sort);
-                Assert.IsNotNull(result2);
-                Assert.IsTrue(result2.Count > 0);
-
-                Assert.IsTrue(result[0].Id != result2[0].Id);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-        }
-
         [Test]
         public async Task Test_Client_GetWallets()
         {

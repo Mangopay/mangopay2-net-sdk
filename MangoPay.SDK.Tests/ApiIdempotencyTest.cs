@@ -13,6 +13,7 @@ using NUnit.Framework;
 namespace MangoPay.SDK.Tests
 {
     [TestFixture]
+    [Ignore("Gotta ask?!")]
     public class ApiIdempotencyTest : BaseTest
     {
         /*[Test]

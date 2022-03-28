@@ -42,6 +42,8 @@ namespace MangoPay.SDK.Core
         // logger object
         private readonly ILog _log;
 
+        private readonly int _timeout = 15000;
+
         /// <summary>Instantiates new RestTool object.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
         /// <param name="authRequired">Defines whether request authentication is required.</param>
@@ -77,7 +79,7 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Checks the HTTP response and if it's neither 200 nor 204 throws a ResponseException.</summary>
         /// <param name="restResponse">Rest response object</param>
-        private void CheckResponseCode(IRestResponse restResponse)
+        private void CheckResponseCode(RestResponse restResponse)
         {
             var responseCode = (int)restResponse.StatusCode;
 
@@ -153,25 +155,23 @@ namespace MangoPay.SDK.Core
             var restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, additionalUrlParams, _root.Config.ApiVersion);
 
             var fullUrl = urlTool.GetFullUrl(restUrl);
-            var client = new RestClient(fullUrl);
+            var restClientOptions = new RestClientOptions(fullUrl)
+            {
+                ThrowOnAnyError = true,
+                Timeout = _root.Config.Timeout > 0 ? _root.Config.Timeout : _timeout
+            };
 
-            client.AddHandler(Constants.APPLICATION_JSON, () => new MangoPayJsonDeserializer());
+            var client = new RestClient(restClientOptions);
+            client.UseSerializer<MangoPaySerializer>();
 
             _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
 
-            var method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
-            var restRequest = new RestRequest(method)
+            var method = (Method)Enum.Parse(typeof(Method), this._requestType, true);
+            var restRequest = new RestRequest()
             {
                 RequestFormat = DataFormat.Json,
-                JsonSerializer = new MangoPayJsonSerializer()
+                Method = method
             };
-            restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
-
-            if (_root.Config.Timeout > 0)
-            {
-                client.Timeout = _root.Config.Timeout;
-                restRequest.Timeout = _root.Config.Timeout;
-            }
 
             var headers = await this.GetHttpHeadersAsync(restUrl);
             foreach (var h in headers)
@@ -191,9 +191,9 @@ namespace MangoPay.SDK.Core
 
             if (this._requestData != null || entity != null)
             {
-                if (entity != null)
+                if (entity != null && method != Method.Get)
                 {
-                    restRequest.AddJsonBody(entity);
+                    restRequest.AddBody(entity, "application/json");
                 }
                 if (this._requestData != null)
                 {
@@ -246,13 +246,13 @@ namespace MangoPay.SDK.Core
             return responseObject;
         }
 
-        private void SetLastRequestInfo(IRestRequest request, IRestResponse response)
+        private void SetLastRequestInfo(RestRequest request, RestResponse response)
         {
             _root.LastRequestInfo = new LastRequestInfo() { Request = request, Response = response };
             
             string GetHeaderValue(string key)
             {
-                return response.Headers
+                return response?.Headers?
                     .FirstOrDefault(h => string.Equals(h.Name, key, StringComparison.OrdinalIgnoreCase))
                     ?.Value
                     ?.ToString();
@@ -286,19 +286,25 @@ namespace MangoPay.SDK.Core
             }
 
             var fullUrl = urlTool.GetFullUrl(restUrl);
-            var client = new RestClient(fullUrl);
+            var restClientOptions = new RestClientOptions(fullUrl)
+            {
+                Timeout = _root.Config.Timeout > 0 ? _root.Config.Timeout : _timeout
+            };
 
-            client.AddHandler(Constants.APPLICATION_JSON, () => { return new MangoPayJsonDeserializer(); });
+            var client = new RestClient(restClientOptions);
+            client.UseSerializer<MangoPaySerializer>();
+
+            //client.AddHandler(Constants.APPLICATION_JSON, () => { return new MangoPayJsonDeserializer(); });
 
             _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
 
-            var method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
-            var restRequest = new RestRequest(method)
+            var method = (Method)Enum.Parse(typeof(Method), this._requestType, true);
+            var restRequest = new RestRequest("", method)
             {
                 RequestFormat = DataFormat.Json,
-                JsonSerializer = new MangoPayJsonSerializer()
+                //JsonSerializer = new MangoPayJsonSerializer()
             };
-            restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
+            //restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
 
             if (!string.IsNullOrWhiteSpace(idempotentKey))
                 restRequest.AddHeader(Constants.IDEMPOTENCY_KEY, idempotentKey);
@@ -346,7 +352,7 @@ namespace MangoPay.SDK.Core
         /// <summary>Reads and parses response headers (pagination etc.)</summary>
         /// <param name="response">The original response</param>
         /// <param name="listPaginated">The list</param>
-        private ListPaginated<T> ReadResponseHeaders<T>(IRestResponse response, ListPaginated<T> listPaginated)
+        private ListPaginated<T> ReadResponseHeaders<T>(RestResponse response, ListPaginated<T> listPaginated)
         {
             var headers = response.Headers.Where(x => x.Name != null).ToList();
             foreach (var header in headers)
@@ -451,7 +457,7 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Reads and parses response headers (pagination etc.)</summary>
         /// <param name="conn">Response object.</param>
-        private ListPaginated<T> ReadResponseHeadersOld<T>(IRestResponse restResponse, ListPaginated<T> listPaginated = null)
+        private ListPaginated<T> ReadResponseHeadersOld<T>(RestResponse restResponse, ListPaginated<T> listPaginated = null)
         {
             foreach (var k in restResponse.Headers)
             {

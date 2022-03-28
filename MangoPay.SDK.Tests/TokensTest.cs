@@ -1,6 +1,7 @@
 ﻿using MangoPay.SDK.Entities;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using MangoPay.SDK.Entities.POST;
 
 namespace MangoPay.SDK.Tests
 {
@@ -11,7 +12,7 @@ namespace MangoPay.SDK.Tests
         public async Task Test_ForceToken()
         {
             OAuthTokenDTO oldToken = await this.Api.OAuthTokenManager.GetTokenAsync();
-            OAuthTokenDTO newToken = await this.Api.AuthenticationManager.CreateTokenAsync();
+            OAuthTokenDTO newToken = await this.Api.AuthenticationManager.CreateTokenAsync(new CreateOAuthTokenPostDTO());
 
             Assert.IsFalse(oldToken.access_token == newToken.access_token);
 

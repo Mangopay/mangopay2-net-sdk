@@ -748,9 +748,12 @@ namespace MangoPay.SDK.Tests
         /// <returns>Registration data.</returns>
         protected async Task<string> GetPaylineCorrectRegistartionData(CardRegistrationDTO cardRegistration)
         {
-            RestClient client = new RestClient(cardRegistration.CardRegistrationURL);
+            var client = new RestClient(cardRegistration.CardRegistrationURL);
 
-            RestRequest request = new RestRequest(Method.POST);
+            var request = new RestRequest
+            {
+                Method = Method.Post
+            };
             request.AddParameter("data", cardRegistration.PreregistrationData);
             request.AddParameter("accessKeyRef", cardRegistration.AccessKey);
             request.AddParameter("cardNumber", "4972485830400056");
@@ -760,21 +763,25 @@ namespace MangoPay.SDK.Tests
             // Payline requires TLS
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            IRestResponse response = await client.ExecuteAsync(request);
+            var response = await client.ExecuteAsync(request);
 
-            String responseString = response.Content;
+            var responseString = response.Content;
 
             if (response.StatusCode == HttpStatusCode.OK)
                 return responseString;
-            else
-                throw new Exception(responseString);
+            
+            throw new Exception(responseString);
         }
 
         protected async Task<string> GetPaylineCorrectRegistartionData3DSecure(CardRegistrationDTO cardRegistration)
         {
-            RestClient client = new RestClient(cardRegistration.CardRegistrationURL);
+            var client = new RestClient(cardRegistration.CardRegistrationURL);
 
-            RestRequest request = new RestRequest(Method.POST);
+            var request = new RestRequest
+            {
+                Method = Method.Post
+            };
+
             request.AddParameter("data", cardRegistration.PreregistrationData);
             request.AddParameter("accessKeyRef", cardRegistration.AccessKey);
             request.AddParameter("cardNumber", "4970105191923460");
@@ -784,9 +791,9 @@ namespace MangoPay.SDK.Tests
             // Payline requires TLS
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            IRestResponse response = await client.ExecuteAsync(request);
+            var response = await client.ExecuteAsync(request);
 
-            String responseString = response.Content;
+            var responseString = response.Content;
 
             if (response.StatusCode == HttpStatusCode.OK)
                 return responseString;

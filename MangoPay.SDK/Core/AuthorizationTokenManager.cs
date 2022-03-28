@@ -4,6 +4,7 @@ using MangoPay.SDK.Entities;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using MangoPay.SDK.Entities.POST;
 
 namespace MangoPay.SDK.Core
 {
@@ -31,7 +32,7 @@ namespace MangoPay.SDK.Core
 
             if (token != null && !token.IsExpired()) return _storageStrategy.Get(GetEnvKey());
             
-            var result = await this.Root.AuthenticationManager.CreateTokenAsync();
+            var result = await this.Root.AuthenticationManager.CreateTokenAsync(new CreateOAuthTokenPostDTO());
             StoreToken(result);
 
             return _storageStrategy.Get(GetEnvKey());

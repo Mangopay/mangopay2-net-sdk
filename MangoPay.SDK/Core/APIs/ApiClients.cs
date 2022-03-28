@@ -17,19 +17,6 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
         public ApiClients(MangoPayApi root) : base(root) { }
 
-        /// <summary>***Now depreciated and soon to be removed from this class (already moved to ApiKyc.cs)*** Gets the list of all the uploaded documents for all users.</summary>
-        /// <param name="pagination">Pagination.</param>
-        /// <param name="filter">Filter.</param>
-        /// <param name="sort">Sort.</param>
-        /// <returns>Collection of all users' uploaded documents.</returns>
-        public async Task<ListPaginated<KycDocumentDTO>> GetKycDocumentsAsync(Pagination pagination, FilterKycDocuments filter, Sort sort = null)
-        {
-            if (filter == null) filter = new FilterKycDocuments();
-
-            return await this.GetListAsync<KycDocumentDTO>(MethodKey.ClientGetKycDocuments, pagination, sort, filter.GetValues());
-        }
-
-
         /// <summary>Gets client wallets.</summary>
         /// <param name="fundsType">Type of funds.</param>
         /// <param name="pagination">Pagination.</param>

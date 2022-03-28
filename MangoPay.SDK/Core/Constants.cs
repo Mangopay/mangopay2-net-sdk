@@ -103,11 +103,11 @@ namespace MangoPay.SDK.Core
         /// <summary>Resolves to "last" string.</summary>
         public const string LINKS_LAST_ITEM = "last";
 
-	/// <summary>Resolves to "DisputeType" string.</summary>
-	public const string DISPUTE_TYPE = "DisputeType";
+	    /// <summary>Resolves to "DisputeType" string.</summary>
+	    public const string DISPUTE_TYPE = "DisputeType";
 
-	/// <summary>Resolves to "Idempotent-Key" string.</summary>
-	public const string IDEMPOTENCY_KEY = "Idempotent-Key";
+	    /// <summary>Resolves to "Idempotent-Key" string.</summary>
+	    public const string IDEMPOTENCY_KEY = "Idempotent-Key";
 
 		/// <summary>Resolves to "ResultCode" string.</summary>
 		public const string RESULT_CODE = "ResultCode";

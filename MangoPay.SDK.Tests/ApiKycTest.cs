@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 
 namespace MangoPay.SDK.Tests
 {
@@ -30,7 +33,40 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-		[Test]
+        [Test]
+        public async Task Test_Client_GetKycDocuments()
+        {
+            ListPaginated<KycDocumentDTO> result = null;
+            ListPaginated<KycDocumentDTO> result2 = null;
+
+            try
+            {
+                result = await this.Api.Kyc.GetKycDocumentsAsync(null, null);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+                var pagination = new Pagination(1, 2);
+                var sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.asc);
+                result = await this.Api.Kyc.GetKycDocumentsAsync(pagination, null, sort);
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Count > 0);
+
+                sort = new Sort();
+                sort.AddField("CreationDate", SortDirection.desc);
+                result2 = await this.Api.Kyc.GetKycDocumentsAsync(pagination, null, sort);
+                Assert.IsNotNull(result2);
+                Assert.IsTrue(result2.Count > 0);
+
+                Assert.IsTrue(result[0].Id != result2[0].Id);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
 		public async Task Test_Users_CreateKycPageFromBytes()
 		{
 			try
