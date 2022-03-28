@@ -14,17 +14,17 @@ namespace MangoPay.SDK.Core
 	{
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
-			bool isNullable = (Nullable.GetUnderlyingType(objectType) != null);
+			var isNullable = (Nullable.GetUnderlyingType(objectType) != null);
 
 			if (reader.TokenType != JsonToken.Null || (reader.TokenType == JsonToken.Null && isNullable))
 				return base.ReadJson(reader, objectType, existingValue, serializer);
 			
 
-			Type enumType = (Nullable.GetUnderlyingType(objectType) ?? objectType);
+			var enumType = (Nullable.GetUnderlyingType(objectType) ?? objectType);
 			if (!enumType.IsEnum)
-				throw new JsonSerializationException(string.Format("Type {0} is not an enum type.", enumType.FullName));
+				throw new JsonSerializationException($"Type {enumType.FullName} is not an enum type.");
 
-			object result = Enum.GetValues(enumType).GetValue(0);
+			var result = Enum.GetValues(enumType).GetValue(0);
 			return result;
 		}
 

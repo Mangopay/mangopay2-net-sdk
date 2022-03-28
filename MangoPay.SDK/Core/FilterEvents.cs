@@ -21,12 +21,12 @@ namespace MangoPay.SDK.Core
         /// <returns>Collection of field name-field value pairs.</returns>
         public Dictionary<string, string> GetValues()
         {
-            Dictionary<string, string> result = new Dictionary<string, string>();
+            var result = new Dictionary<string, string>();
 
 			if (Type != EventType.All)
 				result.Add(Constants.EVENTTYPE, Type.ToString("G").Replace(" ", ""));
 
-			UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
+			var dateConverter = new UnixDateTimeConverter();
 
             if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
             if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());

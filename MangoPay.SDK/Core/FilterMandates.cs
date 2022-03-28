@@ -23,9 +23,9 @@ namespace MangoPay.SDK.Core
 		/// <returns>Returns collection of field_name-field_value pairs.</returns>
 		public Dictionary<string, string> GetValues()
 		{
-			Dictionary<string, string> result = new Dictionary<string, string>();
+			var result = new Dictionary<string, string>();
 
-			UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
+			var dateConverter = new UnixDateTimeConverter();
 
 			if (Status != MandateStatus.NotSpecified) result.Add(Constants.STATUS, Status.ToString());
 			if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());

@@ -9,6 +9,45 @@ using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core
 {
+    public class RestSharpDto
+    {
+        private static RestSharpDto _instance = null;
+
+        private static object _lock = new object();
+
+        private readonly RestClientOptions _options;
+
+        public RestClient Client { get; }
+
+        private RestSharpDto(string url, int timeout)
+        {
+            _options = new RestClientOptions(url)
+            {
+                ThrowOnAnyError = true,
+                Timeout = timeout
+            };
+
+            Client = new RestClient(_options);
+            Client.UseSerializer<MangoPaySerializer>();
+        }
+
+        public static RestSharpDto GetInstance(string url, int timeout)
+        {
+            if (_instance == null)
+            {
+                lock (_lock) // now I can claim some form of thread safety...
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new RestSharpDto(url, timeout);
+                    }
+                }
+            }
+
+            return _instance;
+        }
+    }
+
     /// <summary>Class used to build HTTP request, call the request and handle response.</summary>
     internal class RestTool
     {
@@ -44,6 +83,10 @@ namespace MangoPay.SDK.Core
 
         private readonly int _timeout = 15000;
 
+        private readonly RestSharpDto _dto;
+
+        private readonly UrlTool _urlTool;
+
         /// <summary>Instantiates new RestTool object.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
         /// <param name="authRequired">Defines whether request authentication is required.</param>
@@ -54,6 +97,8 @@ namespace MangoPay.SDK.Core
             LogManager.Adapter = this._root.Config.LoggerFactoryAdapter;
             this._log = LogManager.GetLogger(this._root.Config.LoggerFactoryAdapter.GetType());
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            _urlTool = new UrlTool(_root);
+            _dto = RestSharpDto.GetInstance(_urlTool.GetBaseUrl(), _root.Config.Timeout > 0 ? _root.Config.Timeout : _timeout);
         }
 
         /// <summary>Adds HTTP headers as name/value pairs into the request.</summary>
@@ -151,26 +196,14 @@ namespace MangoPay.SDK.Core
         private async Task<U> DoRequestAsync<U, T>(string urlMethod, T entity = default, Pagination pagination = null, Dictionary<string, string> additionalUrlParams = null, string idempotentKey = null)
             where U : new()
         {
-            var urlTool = new UrlTool(_root);
-            var restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, additionalUrlParams, _root.Config.ApiVersion);
+            var restUrl = _urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, additionalUrlParams, _root.Config.ApiVersion);
+            
+            _log.Debug("FullUrl: " + _urlTool.GetFullUrl(restUrl));
 
-            var fullUrl = urlTool.GetFullUrl(restUrl);
-            var restClientOptions = new RestClientOptions(fullUrl)
-            {
-                ThrowOnAnyError = true,
-                Timeout = _root.Config.Timeout > 0 ? _root.Config.Timeout : _timeout
-            };
-
-            var client = new RestClient(restClientOptions);
-            client.UseSerializer<MangoPaySerializer>();
-
-            _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
-
-            var method = (Method)Enum.Parse(typeof(Method), this._requestType, true);
-            var restRequest = new RestRequest()
+            var restRequest = new RestRequest(restUrl)
             {
                 RequestFormat = DataFormat.Json,
-                Method = method
+                Method = (Method)Enum.Parse(typeof(Method), this._requestType, true)
             };
 
             var headers = await this.GetHttpHeadersAsync(restUrl);
@@ -191,7 +224,7 @@ namespace MangoPay.SDK.Core
 
             if (this._requestData != null || entity != null)
             {
-                if (entity != null && method != Method.Get)
+                if (entity != null)
                 {
                     restRequest.AddBody(entity, "application/json");
                 }
@@ -220,7 +253,7 @@ namespace MangoPay.SDK.Core
                 }
             }
 
-            var restResponse = await client.ExecuteAsync<U>(restRequest);
+            var restResponse = await _dto.Client.ExecuteAsync<U>(restRequest);
             var responseObject = restResponse.Data;
 
             this._responseCode = (int)restResponse.StatusCode;
@@ -268,8 +301,7 @@ namespace MangoPay.SDK.Core
         {
             ListPaginated<T> responseObject = null;
 
-            var urlTool = new UrlTool(_root);
-            var restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, additionalUrlParams, _root.Config.ApiVersion);
+            var restUrl = _urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, additionalUrlParams, _root.Config.ApiVersion);
 
             if (this._requestData != null)
             {
@@ -285,26 +317,13 @@ namespace MangoPay.SDK.Core
                 restUrl += parameters;
             }
 
-            var fullUrl = urlTool.GetFullUrl(restUrl);
-            var restClientOptions = new RestClientOptions(fullUrl)
-            {
-                Timeout = _root.Config.Timeout > 0 ? _root.Config.Timeout : _timeout
-            };
+            _log.Debug("FullUrl: " + _urlTool.GetFullUrl(restUrl));
 
-            var client = new RestClient(restClientOptions);
-            client.UseSerializer<MangoPaySerializer>();
-
-            //client.AddHandler(Constants.APPLICATION_JSON, () => { return new MangoPayJsonDeserializer(); });
-
-            _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
-
-            var method = (Method)Enum.Parse(typeof(Method), this._requestType, true);
-            var restRequest = new RestRequest("", method)
+            var restRequest = new RestRequest(restUrl)
             {
                 RequestFormat = DataFormat.Json,
-                //JsonSerializer = new MangoPayJsonSerializer()
+                Method = (Method)Enum.Parse(typeof(Method), this._requestType, true)
             };
-            //restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
 
             if (!string.IsNullOrWhiteSpace(idempotentKey))
                 restRequest.AddHeader(Constants.IDEMPOTENCY_KEY, idempotentKey);
@@ -320,7 +339,7 @@ namespace MangoPay.SDK.Core
 
             _log.Debug("RequestType: " + this._requestType);
 
-            var restResponse = await client.ExecuteAsync<List<T>>(restRequest);
+            var restResponse = await _dto.Client.ExecuteAsync<List<T>>(restRequest);
 
             responseObject = new ListPaginated<T>(restResponse.Data);
 

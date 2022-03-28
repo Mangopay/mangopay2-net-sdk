@@ -8,7 +8,7 @@ namespace MangoPay.SDK.Core
     /// <summary>File token storage strategy implementation.</summary>
     public class FileStorageStrategy : IStorageStrategy
     {
-        private string _tempDir = null;
+        private readonly string _tempDir = null;
 
         /// <summary>Instantiates FileStorageStrategy object.</summary>
         /// <param name="tempDir">Temporary directory path.</param>
@@ -24,7 +24,7 @@ namespace MangoPay.SDK.Core
         {
             try
             {
-				OAuthTokenDTO token = OAuthTokenDTO.Deserialize(File.ReadAllText(GetFilePath(envKey)));
+				var token = OAuthTokenDTO.Deserialize(File.ReadAllText(GetFilePath(envKey)));
                 return token;
             }
             catch
@@ -38,7 +38,7 @@ namespace MangoPay.SDK.Core
 		/// <param name="envKey">Environment key for token.</param>
         public void Store(OAuthTokenDTO token, string envKey)
         {
-            string serializedToken = token.Serialize();
+            var serializedToken = token.Serialize();
 
 			File.WriteAllText(GetFilePath(envKey), serializedToken);
         }

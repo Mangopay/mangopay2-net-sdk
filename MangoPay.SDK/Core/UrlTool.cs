@@ -100,11 +100,24 @@ namespace MangoPay.SDK.Core
         /// <returns>Returns complete url.</returns>
         public string GetFullUrl(string restUrl)
         {
-            string result = "";
+            var result = "";
 
             try
             {
-                result = (new Uri(_root.Config.BaseUrl)).GetComponents(UriComponents.Scheme, UriFormat.Unescaped) + "://" + this.GetHost() + restUrl;
+                result = GetBaseUrl() + restUrl;
+            }
+            catch { /* Intentionally suppress exceptions here. */ }
+
+            return result;
+        }
+
+        public string GetBaseUrl()
+        {
+            var result = "";
+
+            try
+            {
+                result = (new Uri(_root.Config.BaseUrl)).GetComponents(UriComponents.Scheme, UriFormat.Unescaped) + "://" + this.GetHost();
             }
             catch { /* Intentionally suppress exceptions here. */ }
 

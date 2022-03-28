@@ -7,32 +7,26 @@ namespace MangoPay.SDK.Core
     /// <summary>Base sorting class.</summary>
     public class Sort
     {
-        private Dictionary<string, SortDirection> sortFields = new Dictionary<string,SortDirection>();
+        private readonly Dictionary<string, SortDirection> sortFields = new Dictionary<string,SortDirection>();
 
         public string GetFields()
         {
-            string sortValues = string.Empty;
+            var sortValues = string.Empty;
 
-            foreach (KeyValuePair<string, SortDirection> item in sortFields)
+            foreach (var item in sortFields)
             {
                 if (sortValues != string.Empty)
                 {
                     sortValues += Constants.SORT_FIELD_SEPARATOR;
                 }
 
-                sortValues += string.Format("{0}:{1}", item.Key, item.Value);
+                sortValues += $"{item.Key}:{item.Value}";
             }
 
             return sortValues;
         }
 
-        public bool IsSet
-        {
-            get
-            {
-                return GetFields() != string.Empty;
-            }
-        }
+        public bool IsSet => GetFields() != string.Empty;
 
         public void AddField(string fieldName, SortDirection sortDirection)
         {

@@ -22,7 +22,6 @@ namespace MangoPay.SDK.Core
         {
             var result = new Dictionary<string, string>();
 
-
 			if (!string.IsNullOrEmpty(ResultCode)) result.Add(Constants.RESULT_CODE, ResultCode.ToString());
 			if (Status != PreAuthorizationStatus.NotSpecified) result.Add(Constants.STATUS, Status.ToString());
 			if (PaymentStatus != PaymentStatus.NotSpecified) result.Add(Constants.PAYMENT_STATUS, PaymentStatus.ToString());
