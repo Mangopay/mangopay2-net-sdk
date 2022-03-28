@@ -61,7 +61,7 @@ namespace MangoPay.SDK.Tests
                 HookPutDTO hookPut = new HookPutDTO
                 {
                     Status = hook.Status,
-                    Url = String.Format("http://test{0}.com", DateTime.Now.Ticks)
+                    Url = string.Format("http://test{0}.com", DateTime.Now.Ticks)
                 };
 
                 HookDTO saveHook = await this.Api.Hooks.UpdateAsync(hookPut, hook.Id);

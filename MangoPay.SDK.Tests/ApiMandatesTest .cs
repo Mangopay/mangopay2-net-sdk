@@ -26,7 +26,7 @@ namespace MangoPay.SDK.Tests
 
 				MandateDTO mandate = await this.Api.Mandates.CreateAsync(mandatePost);
 				Assert.IsNotNull(mandate);
-                Assert.IsFalse(String.IsNullOrEmpty(mandate.Id));
+                Assert.IsFalse(string.IsNullOrEmpty(mandate.Id));
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace MangoPay.SDK.Tests
 				MandateDTO mandate = await this.Api.Mandates.GetAsync(mandateCreated.Id);
 
 				Assert.IsNotNull(mandate);
-				Assert.IsFalse(String.IsNullOrEmpty(mandate.Id));
+				Assert.IsFalse(string.IsNullOrEmpty(mandate.Id));
                 Assert.AreEqual(mandateCreated.Id, mandate.Id);
             }
             catch (Exception ex)
@@ -124,7 +124,7 @@ namespace MangoPay.SDK.Tests
 				Assert.IsTrue(mandates.Count > 0);
 
 				Assert.IsNotNull(mandates[0]);
-				Assert.IsFalse(String.IsNullOrEmpty(mandates[0].Id));
+				Assert.IsFalse(string.IsNullOrEmpty(mandates[0].Id));
 				Assert.AreEqual(mandateCreated.Id, mandates[0].Id);
 			}
 			catch (Exception ex)
@@ -153,7 +153,7 @@ namespace MangoPay.SDK.Tests
 				Assert.IsTrue(mandates.Count > 0);
 
 				Assert.IsNotNull(mandates[0]);
-				Assert.IsFalse(String.IsNullOrEmpty(mandates[0].Id));
+				Assert.IsFalse(string.IsNullOrEmpty(mandates[0].Id));
 				Assert.AreEqual(mandateCreated.Id, mandates[0].Id);
 			}
 			catch (Exception ex)

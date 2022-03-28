@@ -74,7 +74,7 @@ namespace MangoPay.SDK.Tests
             {
                 CardRegistrationDTO cardRegistration = await this.GetJohnsCardRegistration();
                 CardRegistrationPutDTO cardRegistrationPut = new CardRegistrationPutDTO();
-                String registrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
+                string registrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
                 cardRegistrationPut.RegistrationData = registrationData;
                 cardRegistrationPut.Tag = "DefaultTag - Updated";
 

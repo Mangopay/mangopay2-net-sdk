@@ -35,26 +35,22 @@ namespace MangoPay.SDK.Tests
         private static HookDTO _johnsHook;
         private static Dictionary<ReportType, ReportRequestDTO> _johnsReports;
 
-        public BaseTest()
+        protected BaseTest()
         {
             this.Api = BuildNewMangoPayApi();
             _johnsReports = new Dictionary<ReportType, ReportRequestDTO>();
-
         }
 
-        protected static List<UserNaturalPostDTO> UserNaturalPostCollection
-        {
-            get
-            {
-                return new List<UserNaturalPostDTO>(){
-                    new UserNaturalPostDTO(
+        protected static List<UserNaturalPostDTO> UserNaturalPostCollection =>
+            new List<UserNaturalPostDTO>(){
+                new UserNaturalPostDTO(
                     "john.doenatural@natual1.com",
                     "JohnNatural1",
                     "DoeNatural1",
                     new DateTime(1985, 12, 21, 0, 0, 0),
                     CountryIso.DE,
                     CountryIso.DE)
-                    {
+                {
                     Address = new Address()
                     {
                         AddressLine1 = "Address line Natural1 1",
@@ -67,16 +63,16 @@ namespace MangoPay.SDK.Tests
                     Occupation = "programmer1",
                     IncomeRange = 5,
                     Capacity = CapacityType.NORMAL
-                    },
+                },
 
-                    new UserNaturalPostDTO(
+                new UserNaturalPostDTO(
                     "john.doenatural@natual2.com",
                     "JohnNatural2",
                     "DoeNatural2",
                     new DateTime(1985, 12, 21, 0, 0, 0),
                     CountryIso.DE,
                     CountryIso.DE)
-                    {
+                {
                     Address = new Address()
                     {
                         AddressLine1 = "Address line Natural2 1",
@@ -89,10 +85,8 @@ namespace MangoPay.SDK.Tests
                     Occupation = "programmer2",
                     IncomeRange = 3,
                     Capacity = CapacityType.NORMAL
-                    }
-                };
-            }
-        }
+                }
+            };
 
         protected static UserLegalPostDTO CreateUserLegalPost()
         {
@@ -141,9 +135,6 @@ namespace MangoPay.SDK.Tests
             api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
             api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
             api.Config.ApiVersion = "v2.01";
-#if NET461
-            api.Config.LoggerFactoryAdapter = new ConsoleOutLoggerFactoryAdapter();
-#endif
 
             // register storage strategy for tests
             api.OAuthTokenManager.RegisterCustomStorageStrategy(new DefaultStorageStrategyForTests());
@@ -431,23 +422,15 @@ namespace MangoPay.SDK.Tests
             return await GetNewPayInCardDirectWithBillingAndShipping(null);
         }
 
-        /// <summary>Creates PayIn Card Direct object.</summary>
-        /// <param name="userId">User identifier.</param>
-        /// <returns>PayIn Card Direct instance returned from API.</returns>
-        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirect(String userId)
-        {
-            return await GetNewPayInCardDirect(userId, null);
-        }
-
         /// <summary>Creates PayIn Card Direct object with billing information.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
-        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBilling(String userId)
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBilling(string userId)
         {
             return await GetNewPayInCardDirectWithBilling(userId, null);
         }
 
-        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBillingAndShipping(String userId)
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBillingAndShipping(string userId)
         {
             return await GetNewPayInCardDirectWithBillingAndShipping(userId, null);
         }
@@ -455,17 +438,17 @@ namespace MangoPay.SDK.Tests
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
-        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirect(String userId, string idempotencyKey)
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirect(string userId, string idempotentKey = null)
         {
 
-            PayInCardDirectPostDTO payIn = await GetPayInCardDirectPost(userId, idempotencyKey);
+            PayInCardDirectPostDTO payIn = await GetPayInCardDirectPost(userId, idempotentKey);
             return await this.Api.PayIns.CreateCardDirectAsync(payIn);
         }
 
         /// <summary>Creates PayIn Card Direct object with billing details.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
-        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBilling(String userId, string idempotencyKey)
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBilling(string userId, string idempotencyKey)
         {
             Address address = new Address
             {
@@ -489,7 +472,7 @@ namespace MangoPay.SDK.Tests
             return await this.Api.PayIns.CreateCardDirectAsync(payIn);
         }
 
-        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBillingAndShipping(String userId, string idempotencyKey)
+        protected async Task<PayInCardDirectDTO> GetNewPayInCardDirectWithBillingAndShipping(string userId, string idempotencyKey)
         {
             var address = new Address
             {
@@ -521,7 +504,7 @@ namespace MangoPay.SDK.Tests
             return await this.Api.PayIns.CreateCardDirectAsync(payIn);
         }
 
-        protected async Task<PayInCardDirectPostDTO> GetPayInCardDirectPost(String userId, string idempotencyKey)
+        protected async Task<PayInCardDirectPostDTO> GetPayInCardDirectPost(string userId, string idempotencyKey)
         {
             WalletDTO wallet = await this.GetJohnsWalletWithMoney();
 
@@ -668,7 +651,7 @@ namespace MangoPay.SDK.Tests
             };
 
             RefundPayInPostDTO refund = new RefundPayInPostDTO(user.Id, fees, debitedFunds);
-            return await this.Api.PayIns.CreateRefundAsync(payIn.Id, refund, idempotencyKey);
+            return await this.Api.PayIns.CreateRefundAsync(payIn.Id, refund, idempotentKey: idempotencyKey);
         }
 
         /// <summary>Creates card registration object.</summary>
@@ -729,7 +712,7 @@ namespace MangoPay.SDK.Tests
             if (BaseTest._johnsKycDocument == null)
             {
                 var john = await this.GetJohn();
-                String johnsId = john.Id;
+                string johnsId = john.Id;
 
                 BaseTest._johnsKycDocument = await this.Api.Users.CreateKycDocumentAsync(johnsId, KycDocumentType.IDENTITY_PROOF);
             }

@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace MangoPay.SDK.Tests
 {
     [TestFixture]
-    [Ignore("Gotta ask?!")]
+    //[Ignore("Gotta ask?!")]
     public class ApiIdempotencyTest : BaseTest
     {
         /*[Test]
@@ -32,7 +32,7 @@ namespace MangoPay.SDK.Tests
         public async Task Test_Idempotency_CardRegistrationCreate()
         {
             string key = DateTime.Now.Ticks.ToString();
-            await GetNewPayInCardDirect(key);
+            await GetNewPayInCardDirect(null, key);
 
             var result = await Api.Idempotent.GetAsync(key);
 
@@ -331,7 +331,7 @@ namespace MangoPay.SDK.Tests
 
             var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
 
-            await Api.UboDeclarations.CreateUboDeclarationAsync(key, userLegal.Id);
+            await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id, key);
 
             var result = await Api.Idempotent.GetAsync(key);
 
@@ -417,7 +417,7 @@ namespace MangoPay.SDK.Tests
         {
             string key = DateTime.Now.Ticks.ToString();
             var john = await GetJohn();
-            await Api.Users.CreateKycDocumentAsync(john.Id, KycDocumentType.IDENTITY_PROOF, key);
+            await Api.Users.CreateKycDocumentAsync(john.Id, KycDocumentType.IDENTITY_PROOF, idempotentKey: key);
 
             var result = await Api.Idempotent.GetAsync(key);
 

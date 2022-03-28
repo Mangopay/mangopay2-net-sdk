@@ -85,7 +85,7 @@ namespace MangoPay.SDK.Tests
             Pagination pagination = new Pagination(1, 1);
             ListPaginated<CardDTO> cards = await Api.Cards.GetCardsByFingerprintAsync(card.Fingerprint, pagination, null);
 
-            Assert.True(cards.Count == 1, String.Format("Requested 1 entity, got {0}", cards.Count));
+            Assert.True(cards.Count == 1, string.Format("Requested 1 entity, got {0}", cards.Count));
 
             foreach (CardDTO cardDTO in cards)
             {

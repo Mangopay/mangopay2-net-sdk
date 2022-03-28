@@ -107,7 +107,7 @@ namespace MangoPay.SDK.Core
 	    public const string DISPUTE_TYPE = "DisputeType";
 
 	    /// <summary>Resolves to "Idempotent-Key" string.</summary>
-	    public const string IDEMPOTENCY_KEY = "Idempotent-Key";
+	    public const string IDEMPOTENCY_KEY = "Idempotency-Key";
 
 		/// <summary>Resolves to "ResultCode" string.</summary>
 		public const string RESULT_CODE = "ResultCode";

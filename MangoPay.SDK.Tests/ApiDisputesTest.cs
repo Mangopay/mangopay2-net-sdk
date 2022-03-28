@@ -645,7 +645,7 @@ namespace MangoPay.SDK.Tests
 
 				Assert.AreEqual(1, result.Count);
 				Assert.IsInstanceOf<DateTime>(result.First().ExpirationDate);
-				Assert.IsInstanceOf<String>(result.First().Url);
+				Assert.IsInstanceOf<string>(result.First().Url);
 				Assert.IsNotEmpty(result.First().Url);
 			}
 			catch (Exception ex)

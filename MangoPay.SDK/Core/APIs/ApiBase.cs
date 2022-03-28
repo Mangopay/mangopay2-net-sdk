@@ -284,11 +284,6 @@ namespace MangoPay.SDK.Core.APIs
             var endPoint = GetApiEndPoint(methodKey);
             endPoint.SetParameters(entitiesId);
 
-            //if (pagination == null)
-            //{
-            //    pagination = new Pagination();
-            //}
-
             if (sort != null && sort.IsSet)
             {
                 if (additionalUrlParams == null)

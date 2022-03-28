@@ -177,7 +177,7 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<RefundDTO> CreateRefundAsync(string payInId, RefundPayInPostDTO refund, string idempotentKey = null)
         {
             return await 
-                this.CreateObjectAsync<RefundDTO, RefundPayInPostDTO>(MethodKey.PayinsCreateRefunds, refund, entitiesId: payInId);
+                this.CreateObjectAsync<RefundDTO, RefundPayInPostDTO>(MethodKey.PayinsCreateRefunds, refund, idempotentKey, payInId);
         }
 
         public async Task<ApplePayDirectPayinDTO> CreateApplePayAsync(ApplePayDirectPayInPostDTO payIn, string idempotentKey = null)

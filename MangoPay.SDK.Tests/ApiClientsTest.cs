@@ -155,9 +155,9 @@ namespace MangoPay.SDK.Tests
             ClientPutDTO client = new ClientPutDTO();
 
             Random rand = new Random();
-            String color1 = (rand.Next(100000) + 100000).ToString();
-            String color2 = (rand.Next(100000) + 100000).ToString();
-            String headquartersPhoneNumber = (rand.Next(10000000, 99999999)).ToString();
+            string color1 = (rand.Next(100000) + 100000).ToString();
+            string color2 = (rand.Next(100000) + 100000).ToString();
+            string headquartersPhoneNumber = (rand.Next(10000000, 99999999)).ToString();
 
             client.PrimaryButtonColour = "#" + color1;
             client.PrimaryThemeColour = "#" + color2;
@@ -218,8 +218,8 @@ namespace MangoPay.SDK.Tests
             ClientPutDTO client = new ClientPutDTO();
 
             Random rand = new Random();
-            String color1 = (rand.Next(100000) + 100000).ToString();
-            String color2 = (rand.Next(100000) + 100000).ToString();
+            string color1 = (rand.Next(100000) + 100000).ToString();
+            string color2 = (rand.Next(100000) + 100000).ToString();
 
             client.PrimaryButtonColour = "#" + color1;
             client.PrimaryThemeColour = "#" + color2;
