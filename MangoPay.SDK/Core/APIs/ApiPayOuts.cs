@@ -30,6 +30,12 @@ namespace MangoPay.SDK.Core.APIs
 			return await this.CreateObjectAsync<PayOutBankWireDTO, PayOutBankWirePostDTO>(idempotencyKey, MethodKey.PayoutsBankwireCreate, payOut);
 		}
 
+        public async Task<PayOutEligibilityDTO> CheckInstantPayoutEligibility(PayOutEligibilityPostDTO payOut, string idempotencyKey = null)
+        {
+            return await this.CreateObjectAsync<PayOutEligibilityDTO, PayOutEligibilityPostDTO>(idempotencyKey,
+                MethodKey.PayoutsEligibility, payOut);
+        }
+
         /// <summary>Gets PayOut entity by its identifier.</summary>
         /// <param name="payOutId">PayOut identifier.</param>
         /// <returns>PayOut instance returned from API.</returns>

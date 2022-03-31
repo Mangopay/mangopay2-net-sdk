@@ -73,6 +73,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayoutsBankwireGet, new ApiEndPoint("/payouts/bankwire/{0}", RequestType.GET)},
             { MethodKey.PayoutsGet, new ApiEndPoint("/payouts/{0}", RequestType.GET)},
             { MethodKey.PayoutsGetRefunds, new ApiEndPoint("/payouts/{0}/refunds", RequestType.GET)},
+            { MethodKey.PayoutsEligibility, new ApiEndPoint("/payouts/reachability/", RequestType.POST)},
 
             { MethodKey.RefundsGet, new ApiEndPoint("/refunds/{0}", RequestType.GET)},
 
