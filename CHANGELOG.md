@@ -1,3 +1,21 @@
+## [2.11.0] - 2022.03.31
+### Added
+
+#### Instant payment eligibility check
+
+The destination bank reachability can now be verified prior to making an instant payout. This results in a better user experience, as this preliminary check will allow the platform to propose the instant payout option only to end users whose bank is eligible. 
+
+#### Instant payment mode only
+
+Instant Payment requests can now be automatically cancelled when an issue is encountered (rather than falling back to the standard payout mode).
+
+This is possible by using the new `INSTANT_PAYMENT_ONLY` option that has been added to the `PayoutModeRequested` parameter.
+
+### Fixed
+
+- `RefundReasonType` is now a string
+
+
 ## [2.10.0] - 2021.11.19
 ## Added
 
