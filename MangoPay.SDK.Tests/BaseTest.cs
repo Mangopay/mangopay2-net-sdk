@@ -516,9 +516,9 @@ namespace MangoPay.SDK.Tests
 
             var wallet = await this.GetJohnsWalletWithMoney();
             var user = await this.GetJohn();
-            BankAccountDTO account = await this.GetJohnsAccount();
+            var account = await this.GetJohnsAccount();
 
-            var payOut = new PayOutBankWirePostDTO(user.Id, wallet.Id, new Money { Amount = 10, Currency = CurrencyIso.EUR }, new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref", "STANDARD")
+            var payOut = new PayOutBankWirePostDTO(user.Id, wallet.Id, new Money { Amount = 10, Currency = CurrencyIso.EUR }, new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref", PayoutModeRequested.STANDARD)
                 {
                     Tag = "DefaultTag",
                     CreditedUserId = user.Id
@@ -539,7 +539,7 @@ namespace MangoPay.SDK.Tests
             var account = await this.GetJohnsAccount();
 
             var payOut = new PayOutBankWirePostDTO(payIn.AuthorId, payIn.CreditedWalletId, new Money { Amount = 10, Currency = CurrencyIso.EUR },
-                new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref", "STANDARD")
+                new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref", PayoutModeRequested.STANDARD)
             {
                 Tag = "DefaultTag",
                 CreditedUserId = payIn.AuthorId
@@ -559,7 +559,7 @@ namespace MangoPay.SDK.Tests
             var account = await this.GetJohnsAccount();
 
             var payOut = new PayOutBankWirePostDTO(payIn.AuthorId, payIn.CreditedWalletId, new Money { Amount = 10, Currency = CurrencyIso.EUR },
-                new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref", "STANDARD")
+                new Money { Amount = 5, Currency = CurrencyIso.EUR }, account.Id, "Johns bank wire ref", PayoutModeRequested.STANDARD)
             {
                 Tag = "DefaultTag",
                 CreditedUserId = payIn.AuthorId

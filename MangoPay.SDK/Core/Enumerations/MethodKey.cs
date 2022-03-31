@@ -42,6 +42,7 @@ namespace MangoPay.SDK.Core.Enumerations
         PayoutsBankwireGet,
         PayoutsGet,
         PayoutsGetRefunds,
+        PayoutsEligibility,
         PreauthorizationCreate,
         PreauthorizationGet,
         PreauthorizationSave,

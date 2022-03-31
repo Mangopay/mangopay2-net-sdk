@@ -27,7 +27,7 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(getRefund.AuthorId, user.Id);
 			Assert.AreEqual(getRefund.Type, TransactionType.TRANSFER);
 			Assert.IsNotNull(getRefund.RefundReason);
-			Assert.AreEqual(getRefund.RefundReason.RefundReasonType, RefundReasonType.OTHER);
+			Assert.AreEqual(getRefund.RefundReason.RefundReasonType, "OTHER");
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(getRefund.AuthorId, user.Id);
 			Assert.AreEqual(getRefund.Type, TransactionType.PAYOUT);
 			Assert.IsNotNull(getRefund.RefundReason);
-			Assert.AreEqual(getRefund.RefundReason.RefundReasonType, RefundReasonType.INITIALIZED_BY_CLIENT);
+			Assert.AreEqual(getRefund.RefundReason.RefundReasonType, "INITIALIZED_BY_CLIENT");
         }
 
 		[Test]
