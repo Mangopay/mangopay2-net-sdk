@@ -9,10 +9,9 @@ namespace MangoPay.SDK.Entities
     public class RefundReason
     {
 		/// <summary>Message.</summary>
-		public String RefundReasonMessage;
+		public string RefundReasonMessage;
 
 		/// <summary>Type of refund reason.</summary>
-		[JsonConverter(typeof(StringEnumConverter))]
-		public RefundReasonType RefundReasonType;
+        public string RefundReasonType;
     }
 }
