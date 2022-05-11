@@ -164,22 +164,23 @@ namespace MangoPay.SDK.Tests
             return BaseTest._john;
         }
 
-        protected async Task<UserNaturalDTO> GetNewJohn()
+        protected async Task<UserNaturalDTO> GetNewJohn(bool termsAccepted = false)
         {
             var user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR)
             {
                 Occupation = "programmer",
                 IncomeRange = 3,
                 Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" },
-                Capacity = CapacityType.DECLARATIVE
+                Capacity = CapacityType.DECLARATIVE,
+                TermsAndConditionsAccepted = termsAccepted
             };
 
             return await this.Api.Users.CreateAsync(user);
         }
 
-        protected async Task<UserLegalDTO> GetMatrix()
+        protected async Task<UserLegalDTO> GetMatrix(bool termsAccepted = false, bool newJohn = false)
         {
-            if (BaseTest._matrix != null) return BaseTest._matrix;
+            if (BaseTest._matrix != null && !newJohn) return BaseTest._matrix;
 
             var john = await this.GetJohn();
             var birthday = john.Birthday ?? new DateTime();
@@ -189,7 +190,8 @@ namespace MangoPay.SDK.Tests
                 LegalRepresentativeAddress = john.Address,
                 LegalRepresentativeEmail = john.Email,
                 LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0),
-                Email = john.Email
+                Email = john.Email,
+                TermsAndConditionsAccepted = termsAccepted
             };
 
             BaseTest._matrix = await this.Api.Users.CreateAsync(user);

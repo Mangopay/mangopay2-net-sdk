@@ -59,6 +59,8 @@ namespace MangoPay.SDK.Entities.PUT
         /// <summary>Income range. One of UserNaturalPutDTO.IncomeRanges constants or null, if not specified.</summary>
         public int? IncomeRange { get; set; }
 
+        public bool? TermsAndConditionsAccepted { get; set; }
+
 		public bool ShouldSerializeAddress()
 		{
 			return Address != null && Address.IsValid();
