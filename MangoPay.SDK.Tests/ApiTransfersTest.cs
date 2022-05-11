@@ -11,11 +11,11 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Transfers_Create()
         {
-            UserNaturalDTO john = await this.GetJohn();
+            var john = await this.GetJohn();
             var wallet = await this.GetNewJohnsWalletWithMoney(100);
 
-            TransferDTO transfer = await this.GetNewTransfer(wallet);
-            WalletDTO creditedWallet = await this.Api.Wallets.GetAsync(transfer.CreditedWalletId);
+            var transfer = await this.GetNewTransfer(wallet);
+            var creditedWallet = await this.Api.Wallets.GetAsync(transfer.CreditedWalletId);
 
             Assert.IsTrue(transfer.Id.Length > 0);
             Assert.AreEqual(transfer.AuthorId, john.Id);
@@ -26,11 +26,11 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Transfers_Get()
         {
-            UserNaturalDTO john = await this.GetJohn();
+            var john = await this.GetJohn();
 			var wallet = await this.GetNewJohnsWalletWithMoney(100);
-			TransferDTO transfer = await this.GetNewTransfer(wallet);
+            var transfer = await this.GetNewTransfer(wallet);
 
-            TransferDTO getTransfer = await this.Api.Transfers.GetAsync(transfer.Id);
+            var getTransfer = await this.Api.Transfers.GetAsync(transfer.Id);
 
             Assert.AreEqual(transfer.Id, getTransfer.Id);
             Assert.AreEqual(getTransfer.AuthorId, john.Id);
@@ -41,12 +41,12 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Transfers_CreateRefund()
         {
-			WalletDTO wallet = await this.GetNewJohnsWalletWithMoney(100);
-            TransferDTO transfer = await this.GetNewTransfer(wallet);
-            WalletDTO walletBefore = await this.Api.Wallets.GetAsync(wallet.Id);
+            var wallet = await this.GetNewJohnsWalletWithMoney(100);
+            var transfer = await this.GetNewTransfer(wallet);
+            var walletBefore = await this.Api.Wallets.GetAsync(wallet.Id);
 
-			RefundDTO refund = await this.GetNewRefundForTransfer(transfer);
-            WalletDTO walletAfter = await this.Api.Wallets.GetAsync(wallet.Id);
+            var refund = await this.GetNewRefundForTransfer(transfer);
+            var walletAfter = await this.Api.Wallets.GetAsync(wallet.Id);
 
             Assert.IsNotNull(walletBefore);
             Assert.IsTrue(refund.Id.Length > 0);

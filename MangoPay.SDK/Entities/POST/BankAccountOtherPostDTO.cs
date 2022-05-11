@@ -8,7 +8,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>OTHER bank account POST entity.</summary>
     public class BankAccountOtherPostDTO : BankAccountPostDTO
     {
-		public BankAccountOtherPostDTO(String ownerName, Address ownerAddress, String accountNumber, String bic)
+		public BankAccountOtherPostDTO(string ownerName, Address ownerAddress, string accountNumber, string bic)
         {
             Type = BankAccountType.OTHER;
             OwnerName = ownerName;
@@ -23,9 +23,9 @@ namespace MangoPay.SDK.Entities.POST
         public CountryIso? Country { get; set; }
 
         /// <summary>Valid BIC format.</summary>
-        public String BIC { get; set; }
+        public string BIC { get; set; }
 
         /// <summary>Account number.</summary>
-        public String AccountNumber { get; set; }
+        public string AccountNumber { get; set; }
     }
 }

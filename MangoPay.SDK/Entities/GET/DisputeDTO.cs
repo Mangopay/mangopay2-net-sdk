@@ -10,7 +10,7 @@ namespace MangoPay.SDK.Entities.GET
 	public class DisputeDTO : EntityBase
     {
 		/// <summary>Identifier of the transaction that was disputed.</summary>
-		public String InitialTransactionId { get; set; }
+		public string InitialTransactionId { get; set; }
 
 		/// <summary>Most transaction type of the original trasaction.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -38,15 +38,15 @@ namespace MangoPay.SDK.Entities.GET
 		public DisputeStatus? Status { get; set; }
 
 		/// <summary>Free text used when reopening the dispute.</summary>
-		public String StatusMessage { get; set; }
+		public string StatusMessage { get; set; }
 
 		/// <summary>Result code.</summary>
-		public String ResultCode { get; set; }
+		public string ResultCode { get; set; }
 
 		/// <summary>Free text that might be completed when the dispute is closed.</summary>
-		public String ResultMessage { get; set; }
+		public string ResultMessage { get; set; }
 		
 		/// <summary>The ID of the associated repudiation transaction.</summary>
-		public String RepudiationId { get; set; }
+		public string RepudiationId { get; set; }
     }
 }

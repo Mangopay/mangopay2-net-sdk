@@ -40,34 +40,34 @@ namespace MangoPay.SDK.Core
 		public List<TransactionNature> Nature;
 
 		/// <summary>The minimum amount of DebitedFunds</summary>
-		public Int64? MinDebitedFundsAmount { get; set; }
+		public long? MinDebitedFundsAmount { get; set; }
 
 		/// <summary>The currency for the minimum amount of DebitedFunds</summary>
 		public CurrencyIso? MinDebitedFundsCurrency { get; set; }
 
 		/// <summary>The maximum amount of DebitedFunds</summary>
-		public Int64? MaxDebitedFundsAmount { get; set; }
+		public long? MaxDebitedFundsAmount { get; set; }
 
 		/// <summary>The currency for the maximum amount of DebitedFunds</summary>
 		public CurrencyIso? MaxDebitedFundsCurrency { get; set; }
 
 		/// <summary>The minimum amount of Fees</summary>
-		public Int64? MinFeesAmount { get; set; }
+		public long? MinFeesAmount { get; set; }
 
 		/// <summary>The currency for the minimum amount of Fees</summary>
 		public CurrencyIso? MinFeesCurrency { get; set; }
 
 		/// <summary>The maximum amount of Fees</summary>
-		public Int64? MaxFeesAmount { get; set; }
+		public long? MaxFeesAmount { get; set; }
 
 		/// <summary>The currency for the maximum amount of Fees</summary>
 		public CurrencyIso? MaxFeesCurrency { get; set; }
 
 		/// <summary>A user's ID</summary>
-		public String AuthorId { get; set; }
+		public string AuthorId { get; set; }
 
 		/// <summary>The ID of a wallet</summary>
-		public String WalletId { get; set; }
+		public string WalletId { get; set; }
 
 		/// <summary>Transaction result code</summary>
 		public List<ReportResultCode> ResultCode { get; set; }
@@ -77,16 +77,16 @@ namespace MangoPay.SDK.Core
 		#region Wallets report filters
 
 		/// <summary></summary>
-		public String OwnerId { get; set; }
+		public string OwnerId { get; set; }
 
 		/// <summary></summary>
-		public Int64? MinBalanceAmount { get; set; }
+		public long? MinBalanceAmount { get; set; }
 
 		/// <summary></summary>
 		public CurrencyIso? MinBalanceCurrency { get; set; }
 
 		/// <summary></summary>
-		public Int64? MaxBalanceAmount { get; set; }
+		public long? MaxBalanceAmount { get; set; }
 
 		/// <summary></summary>
 		public CurrencyIso? MaxBalanceCurrency { get; set; }

@@ -8,10 +8,10 @@ namespace MangoPay.SDK.Entities
     public abstract class EntityBase
     {
         /// <summary>Unique identifier.</summary>
-        public String Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>Custom data.</summary>
-        public String Tag { get; set; }
+        public string Tag { get; set; }
 
         /// <summary>Date of creation.</summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]

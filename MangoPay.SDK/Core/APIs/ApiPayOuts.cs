@@ -14,42 +14,33 @@ namespace MangoPay.SDK.Core.APIs
         public ApiPayOuts(MangoPayApi root) : base(root) { }
 
         /// <summary>Creates new PayOut object.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="payOut">The PayOut object to be created.</param>
         /// <returns>Created PayOut object returned from API.</returns>
-        public async Task<PayOutBankWireDTO> CreateBankWireAsync(PayOutBankWirePostDTO payOut)
+        public async Task<PayOutBankWireDTO> CreateBankWireAsync(PayOutBankWirePostDTO payOut, string idempotentKey = null)
         {
-            return await CreateBankWireAsync(null, payOut);
+            return await this.CreateObjectAsync<PayOutBankWireDTO, PayOutBankWirePostDTO>(MethodKey.PayoutsBankwireCreate, payOut, idempotentKey);
         }
-
-		/// <summary>Creates new PayOut object.</summary>
-		/// <param name="idempotencyKey">Idempotency key for this request.</param>
-		/// <param name="payOut">The PayOut object to be created.</param>
-		/// <returns>Created PayOut object returned from API.</returns>
-		public async Task<PayOutBankWireDTO> CreateBankWireAsync(String idempotencyKey, PayOutBankWirePostDTO payOut)
-		{
-			return await this.CreateObjectAsync<PayOutBankWireDTO, PayOutBankWirePostDTO>(idempotencyKey, MethodKey.PayoutsBankwireCreate, payOut);
-		}
 
         public async Task<PayOutEligibilityDTO> CheckInstantPayoutEligibility(PayOutEligibilityPostDTO payOut, string idempotencyKey = null)
         {
-            return await this.CreateObjectAsync<PayOutEligibilityDTO, PayOutEligibilityPostDTO>(idempotencyKey,
-                MethodKey.PayoutsEligibility, payOut);
+            return await this.CreateObjectAsync<PayOutEligibilityDTO, PayOutEligibilityPostDTO>(MethodKey.PayoutsEligibility, payOut, idempotencyKey);
         }
 
         /// <summary>Gets PayOut entity by its identifier.</summary>
         /// <param name="payOutId">PayOut identifier.</param>
         /// <returns>PayOut instance returned from API.</returns>
-        public async Task<PayOutDTO> GetAsync(String payOutId)
+        public async Task<PayOutDTO> GetAsync(string payOutId)
         {
-            return await this.GetObjectAsync<PayOutDTO>(MethodKey.PayoutsGet, payOutId);
+            return await this.GetObjectAsync<PayOutDTO>(MethodKey.PayoutsGet, entitiesId: payOutId);
         }
 
         /// <summary>Gets PayOut entity by its identifier.</summary>
         /// <param name="payOutId">PayOutBankWire identifier.</param>
         /// <returns>PayOutBankWire instance returned from API.</returns>
-        public async Task<PayOutBankWireDTO> GetBankWireAsync(String payOutId)
+        public async Task<PayOutBankWireDTO> GetBankWireAsync(string payOutId)
         {
-            return await this.GetObjectAsync<PayOutBankWireDTO>(MethodKey.PayoutsGet, payOutId);
+            return await this.GetObjectAsync<PayOutBankWireDTO>(MethodKey.PayoutsGet, entitiesId: payOutId);
         }
 
         /// <summary>
@@ -57,52 +48,9 @@ namespace MangoPay.SDK.Core.APIs
         /// </summary>
         /// <param name="payoutId">PayOutBankWire identifier.</param>
         /// <returns></returns>
-        public async Task<PayOutBankWireGetDTO> GetBankwirePayoutAsync(String payoutId)
+        public async Task<PayOutBankWireGetDTO> GetBankwirePayoutAsync(string payoutId)
         {
-            return await this.GetObjectAsync<PayOutBankWireGetDTO>(MethodKey.PayoutsBankwireGet, payoutId);
-        }
-
-        /// <summary>Creates new PayOut object.</summary>
-        /// <param name="payOut">The PayOut object to be created.</param>
-        /// <returns>Created PayOut object returned from API.</returns>
-        public PayOutBankWireDTO CreateBankWire(PayOutBankWirePostDTO payOut)
-        {
-            return CreateBankWire(null, payOut);
-        }
-
-        /// <summary>Creates new PayOut object.</summary>
-        /// <param name="idempotencyKey">Idempotency key for this request.</param>
-        /// <param name="payOut">The PayOut object to be created.</param>
-        /// <returns>Created PayOut object returned from API.</returns>
-        public PayOutBankWireDTO CreateBankWire(String idempotencyKey, PayOutBankWirePostDTO payOut)
-        {
-            return this.CreateObject<PayOutBankWireDTO, PayOutBankWirePostDTO>(idempotencyKey, MethodKey.PayoutsBankwireCreate, payOut);
-        }
-
-        /// <summary>Gets PayOut entity by its identifier.</summary>
-        /// <param name="payOutId">PayOut identifier.</param>
-        /// <returns>PayOut instance returned from API.</returns>
-        public PayOutDTO Get(String payOutId)
-        {
-            return this.GetObject<PayOutDTO>(MethodKey.PayoutsGet, payOutId);
-        }
-
-        /// <summary>Gets PayOut entity by its identifier.</summary>
-        /// <param name="payOutId">PayOutBankWire identifier.</param>
-        /// <returns>PayOutBankWire instance returned from API.</returns>
-        public PayOutBankWireDTO GetBankWire(String payOutId)
-        {
-            return this.GetObject<PayOutBankWireDTO>(MethodKey.PayoutsGet, payOutId);
-        }
-
-        /// <summary>
-        /// Gets PayOut Bankwire Entity by its identifier
-        /// </summary>
-        /// <param name="payoutId">PayOutBankWire identifier.</param>
-        /// <returns></returns>
-        public PayOutBankWireGetDTO GetBankwirePayout(String payoutId)
-        {
-            return this.GetObject<PayOutBankWireGetDTO>(MethodKey.PayoutsBankwireGet, payoutId);
+            return await this.GetObjectAsync<PayOutBankWireGetDTO>(MethodKey.PayoutsBankwireGet, entitiesId: payoutId);
         }
     }
 }

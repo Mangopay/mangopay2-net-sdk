@@ -7,7 +7,7 @@ namespace MangoPay.SDK.Entities.PUT
 {
     public class UboPutDTO : EntityPutBase
     {
-        public UboPutDTO(String firstName, String lastName, Address address, CountryIso nationality, DateTime birthday,
+        public UboPutDTO(string firstName, string lastName, Address address, CountryIso nationality, DateTime birthday,
             Birthplace birthplace)
         {
             FirstName = firstName;
@@ -19,10 +19,10 @@ namespace MangoPay.SDK.Entities.PUT
         }
 
         /// <summary>First name.</summary>
-        public String FirstName { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>Last name.</summary>
-        public String LastName { get; set; }
+        public string LastName { get; set; }
 
         /// <summary>Address.</summary>
         public Address Address { get; set; }

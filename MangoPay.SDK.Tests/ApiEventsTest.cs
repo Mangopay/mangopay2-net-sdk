@@ -21,10 +21,10 @@ namespace MangoPay.SDK.Tests
                     Type = EventType.PAYIN_NORMAL_CREATED
                 };
 
-                ListPaginated<EventDTO> getEvents = await this.Api.Events.GetAllAsync(null, eventsFilter);
+                var getEvents = await this.Api.Events.GetAllAsync(null, eventsFilter);
 
                 eventsFilter.Type = EventType.All;
-                ListPaginated<EventDTO> getAllEvents = await this.Api.Events.GetAllAsync(null, eventsFilter);
+                var getAllEvents = await this.Api.Events.GetAllAsync(null, eventsFilter);
 
                 Assert.IsNotNull(getEvents);
                 Assert.IsNotNull(getAllEvents);
@@ -34,8 +34,8 @@ namespace MangoPay.SDK.Tests
                 ListPaginated<EventDTO> result = null;
                 ListPaginated<EventDTO> result2 = null;
 
-                Pagination pagination = new Pagination(1, 2);
-                Sort sort = new Sort();
+                var pagination = new Pagination(1, 2);
+                var sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.asc);
                 result = await this.Api.Events.GetAllAsync(pagination, eventsFilter, sort);
                 Assert.IsNotNull(result);
@@ -60,20 +60,20 @@ namespace MangoPay.SDK.Tests
 		{
 			try
 			{
-				PayInCardWebDTO payIn1 = await GetJohnsNewPayInCardWeb();
-				PayInCardWebDTO payIn2 = await GetJohnsNewPayInCardWeb();
+                var payIn1 = await GetJohnsNewPayInCardWeb();
+                var payIn2 = await GetJohnsNewPayInCardWeb();
 
-				FilterEvents eventsFilter = new FilterEvents();
+                var eventsFilter = new FilterEvents();
 				eventsFilter.BeforeDate = payIn2.CreationDate.AddSeconds(1);
 				eventsFilter.AfterDate = payIn1.CreationDate;
 				eventsFilter.Type = EventType.PAYIN_NORMAL_CREATED;
 
-				Sort sort = new Sort();
+                var sort = new Sort();
 				sort.AddField("Date", SortDirection.desc);
 
-				Pagination pagination = new Pagination();
+                var pagination = new Pagination();
 
-				ListPaginated<EventDTO> result = await this.Api.Events.GetAllAsync(pagination, eventsFilter, sort);
+                var result = await this.Api.Events.GetAllAsync(pagination, eventsFilter, sort);
 
 				Assert.IsNotNull(result);
 				Assert.IsTrue(result.Count > 1);

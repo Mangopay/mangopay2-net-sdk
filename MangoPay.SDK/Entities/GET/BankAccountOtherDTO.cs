@@ -13,9 +13,9 @@ namespace MangoPay.SDK.Entities.GET
         public CountryIso Country { get; set; }
 
         /// <summary>Valid BIC format.</summary>
-        public String BIC { get; set; }
+        public string BIC { get; set; }
 
         /// <summary>Account number.</summary>
-        public String AccountNumber { get; set; }
+        public string AccountNumber { get; set; }
     }
 }

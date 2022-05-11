@@ -17,6 +17,6 @@ namespace MangoPay.SDK.Entities.GET
         public DisputeDocumentStatus Status { get; set; }
 
 		/// <summary>The Dispute that this document belongs to.</summary>
-		public String DisputeId { get; set; }
+		public string DisputeId { get; set; }
     }
 }

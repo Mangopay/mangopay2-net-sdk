@@ -20,8 +20,8 @@ namespace MangoPay.SDK.Core
         {
             if (unixTime == null) return null;
 
-            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return (DateTime?)start.AddSeconds(unixTime.Value);
+            var start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return start.AddSeconds(unixTime.Value);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -29,7 +29,7 @@ namespace MangoPay.SDK.Core
             long result;
             if (value is DateTime)
             {
-                long? ticks = ConvertToUnixFormat((DateTime)value);
+                var ticks = ConvertToUnixFormat((DateTime)value);
                 result = ticks.Value;
             }
             else
@@ -42,14 +42,15 @@ namespace MangoPay.SDK.Core
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             object result = null;
-            if (reader.TokenType == JsonToken.Integer)
+            switch (reader.TokenType)
             {
-                result = ConvertFromUnixFormat((long)reader.Value);
-            }
-            else if (reader.TokenType == JsonToken.Float)
-            {
-                // TODO API V2 Correct me
-                result = ConvertFromUnixFormat(long.Parse(reader.Value.ToString()));
+                case JsonToken.Integer:
+                    result = ConvertFromUnixFormat((long)reader.Value);
+                    break;
+                case JsonToken.Float:
+                    // TODO API V2 Correct me
+                    result = ConvertFromUnixFormat(long.Parse(reader.Value.ToString()));
+                    break;
             }
 
             return result;

@@ -9,32 +9,32 @@ namespace MangoPay.SDK.Entities.GET
     public class CardDTO : EntityBase
     {
         /// <summary>Country.</summary>
-        public String Country { get; set; }
+        public string Country { get; set; }
 
         /// <summary>Expiration date.</summary>
-        public String ExpirationDate { get; set; }
+        public string ExpirationDate { get; set; }
 
         /// <summary>Alias.</summary>
-        public String Alias { get; set; }
+        public string Alias { get; set; }
 
         /// <summary>Card type.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public CardType CardType { get; set; }
 
         /// <summary>The card provider, it could be CB, VISA, MASTERCARD, etc.</summary>
-        public String CardProvider { get; set; }
+        public string CardProvider { get; set; }
 
         /// <summary>Product codes.</summary>
-        public String Product { get; set; }
+        public string Product { get; set; }
 
         /// <summary>Bank code.</summary>
-        public String BankCode { get; set; }
+        public string BankCode { get; set; }
 
         /// <summary>Active.</summary>
         public bool Active { get; set; }
 
         /// <summary>User identifier.</summary>
-        public String UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>The currency accepted in the wallet.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -45,6 +45,6 @@ namespace MangoPay.SDK.Entities.GET
         public Validity Validity { get; set; }
 
         ///<summary>Card's fingerprint, which is unique per 16-digit card number.</summary>
-        public String Fingerprint { get; set; }
+        public string Fingerprint { get; set; }
     }
 }

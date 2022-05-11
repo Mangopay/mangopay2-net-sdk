@@ -6,7 +6,7 @@ namespace MangoPay.SDK.Entities.PUT
 	public class DisactivateBankAccountPutDTO : EntityPutBase
 	{
 		/// <summary>Custom data.</summary>
-		public String Tag { get; set; }
+		public string Tag { get; set; }
 
 		/// <summary>Denotes whether the bank account is active or not.</summary>
 		public bool? Active { get; set; }

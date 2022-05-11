@@ -13,10 +13,10 @@ namespace MangoPay.SDK.Entities.GET
         }
         
         /// <summary>First name.</summary>
-        public String FirstName { get; set; }
+        public string FirstName { get; set; }
         
         /// <summary>Last name.</summary>
-        public String LastName { get; set; }
+        public string LastName { get; set; }
         
         /// <summary>Address.</summary>
         public Address Address { get; set; }

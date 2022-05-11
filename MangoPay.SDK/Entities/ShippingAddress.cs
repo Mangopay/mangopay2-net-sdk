@@ -11,7 +11,7 @@ namespace MangoPay.SDK.Entities
 		}
 		
 		/// <summary>Recipient name for PayPal shipping address.</summary>
-		public String RecipientName { get; set; }
+		public string RecipientName { get; set; }
 
 		/// <summary>The address.</summary>
 		public Address Address { get; set; }

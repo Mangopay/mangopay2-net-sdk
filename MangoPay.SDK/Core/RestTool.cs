@@ -9,20 +9,59 @@ using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core
 {
+    public class RestSharpDto
+    {
+        private static RestSharpDto _instance = null;
+
+        private static object _lock = new object();
+
+        private readonly RestClientOptions _options;
+
+        public RestClient Client { get; }
+
+        private RestSharpDto(string url, int timeout)
+        {
+            _options = new RestClientOptions(url)
+            {
+                ThrowOnAnyError = true,
+                Timeout = timeout
+            };
+
+            Client = new RestClient(_options);
+            Client.UseSerializer<MangoPaySerializer>();
+        }
+
+        public static RestSharpDto GetInstance(string url, int timeout)
+        {
+            if (_instance == null)
+            {
+                lock (_lock) // now I can claim some form of thread safety...
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new RestSharpDto(url, timeout);
+                    }
+                }
+            }
+
+            return _instance;
+        }
+    }
+
     /// <summary>Class used to build HTTP request, call the request and handle response.</summary>
     internal class RestTool
     {
         // root/parent instance that holds the OAuthToken and Configuration instance
-        private MangoPayApi _root;
+        private readonly MangoPayApi _root;
 
         // enable/disable log debugging
         //private bool _debugMode;
 
         // variable to flag that in request authentication data are required
-        private bool _authRequired;
+        private readonly bool _authRequired;
 
         // array with HTTP header to send with request
-        private Dictionary<String, String> _requestHttpHeaders;
+        private Dictionary<string, string> _requestHttpHeaders;
 
         // request type for current request
         private string _requestType;
@@ -31,7 +70,7 @@ namespace MangoPay.SDK.Core
         private bool _includeClientId;
 
         // key-value collection pass to the request
-        private Dictionary<String, String> _requestData;
+        private Dictionary<string, string> _requestData;
 
         // code get from response
         private int _responseCode;
@@ -40,7 +79,13 @@ namespace MangoPay.SDK.Core
         private Pagination _pagination;
 
         // logger object
-        private ILog _log;
+        private readonly ILog _log;
+
+        private readonly int _timeout = 15000;
+
+        private readonly RestSharpDto _dto;
+
+        private readonly UrlTool _urlTool;
 
         /// <summary>Instantiates new RestTool object.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
@@ -52,16 +97,18 @@ namespace MangoPay.SDK.Core
             LogManager.Adapter = this._root.Config.LoggerFactoryAdapter;
             this._log = LogManager.GetLogger(this._root.Config.LoggerFactoryAdapter.GetType());
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            _urlTool = new UrlTool(_root);
+            _dto = RestSharpDto.GetInstance(_urlTool.GetBaseUrl(), _root.Config.Timeout > 0 ? _root.Config.Timeout : _timeout);
         }
 
         /// <summary>Adds HTTP headers as name/value pairs into the request.</summary>
         /// <param name="httpHeader">Collection of headers name/value pairs.</param>
-        internal void AddRequestHttpHeader(Dictionary<String, String> httpHeader)
+        internal void AddRequestHttpHeader(Dictionary<string, string> httpHeader)
         {
             if (this._requestHttpHeaders == null)
-                this._requestHttpHeaders = new Dictionary<String, String>();
+                this._requestHttpHeaders = new Dictionary<string, string>();
 
-            foreach (KeyValuePair<string, string> item in httpHeader)
+            foreach (var item in httpHeader)
             {
                 this._requestHttpHeaders.Add(item.Key, item.Value);
             }
@@ -70,26 +117,30 @@ namespace MangoPay.SDK.Core
         /// <summary>Adds HTTP header into the request.</summary>
         /// <param name="key">Header name.</param>
         /// <param name="value">Header value.</param>
-        internal void AddRequestHttpHeader(String key, String value)
+        internal void AddRequestHttpHeader(string key, string value)
         {
-            AddRequestHttpHeader(new Dictionary<String, String> { { key, value } });
+            AddRequestHttpHeader(new Dictionary<string, string> { { key, value } });
         }
 
         /// <summary>Checks the HTTP response and if it's neither 200 nor 204 throws a ResponseException.</summary>
         /// <param name="restResponse">Rest response object</param>
-        private void CheckResponseCode(IRestResponse restResponse)
+        private void CheckResponseCode(RestResponse restResponse)
         {
             var responseCode = (int)restResponse.StatusCode;
 
-            if (responseCode != 200 && responseCode != 204)
+            switch (responseCode)
             {
-                if (responseCode == 401)
+                case 200:
+                case 204:
+                    return;
+                case 401:
                     throw new UnauthorizedAccessException(restResponse.Content);
-                else if (restResponse.ResponseStatus == ResponseStatus.TimedOut)
-                    throw new TimeoutException(restResponse.ErrorMessage);
-                else
-                    throw new ResponseException(restResponse.Content, responseCode);
             }
+
+            if (restResponse.ResponseStatus == ResponseStatus.TimedOut)
+                throw new TimeoutException(restResponse.ErrorMessage);
+
+            throw new ResponseException(restResponse.Content, responseCode);
         }
 
         /// <summary>Makes a call to the MangoPay API.
@@ -99,169 +150,23 @@ namespace MangoPay.SDK.Core
         /// </summary>
         /// <typeparam name="U">Return type.</typeparam>
         /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="idempotencyKey">Idempotency key for this request.</param>
         /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
         /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
         /// <param name="pagination">Pagination object.</param>
         /// <param name="entity">Instance of DTO class that is going to be sent in case of PUTting or POSTing.</param>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <returns>The DTO instance returned from API.</returns>
-        public U Request<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination, T entity)
+        public async Task<U> RequestAsync<U, T>(ApiEndPoint endPoint, Dictionary<string, string> requestData, 
+            T entity = default, Pagination pagination = null, Dictionary<string, string> additionalUrlParams = null, string idempotentKey = null)
             where U : new()
         {
             this._requestType = endPoint.RequestType;
             this._includeClientId = endPoint.IncludeClientId;
             this._requestData = requestData;
 
-            U responseResult = this.DoRequest<U, T>(idempotencyKey, endPoint.GetUrl(), pagination, entity);
+            var responseResult = await this.DoRequestAsync<U, T>(endPoint.GetUrl(), entity, pagination, additionalUrlParams, idempotentKey);
 
             return responseResult;
-        }
-
-        public async Task<U> RequestAsync<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination, T entity)
-            where U : new()
-        {
-            this._requestType = endPoint.RequestType;
-            this._includeClientId = endPoint.IncludeClientId;
-            this._requestData = requestData;
-
-            U responseResult = await this.DoRequestAsync<U, T>(idempotencyKey, endPoint.GetUrl(), pagination, entity);
-
-            return responseResult;
-        }
-
-        /// <summary>Makes a call to the MangoPay API.
-        /// This generic method handles calls targeting single 
-        /// DTO instances. In order to process collections of objects, 
-        /// use <code>RequestList</code> method instead.
-        /// </summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
-        /// <returns>The DTO instance returned from API.</returns>
-        public U Request<U, T>(ApiEndPoint endPoint)
-            where U : new()
-        {
-            return Request<U, T>(null, endPoint, null, null, default(T));
-        }
-
-        public async Task<U> RequestAsync<U, T>(ApiEndPoint endPoint)
-            where U : new()
-        {
-            return await RequestAsync<U, T>(null, endPoint, null, null, default(T));
-        }
-
-        /// <summary>Makes a call to the MangoPay API.
-        /// This generic method handles calls targeting single 
-        /// DTO instances. In order to process collections of objects, 
-        /// use <code>RequestList</code> method instead.
-        /// </summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="idempotencyKey">Idempotency key for this request.</param>
-        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
-        /// <returns>The DTO instance returned from API.</returns>
-        public U Request<U, T>(String idempotencyKey, ApiEndPoint endPoint)
-            where U : new()
-        {
-            return Request<U, T>(idempotencyKey, endPoint, null, null, default(T));
-        }
-
-        public async Task<U> RequestAsync<U, T>(String idempotencyKey, ApiEndPoint endPoint)
-            where U : new()
-        {
-            return await RequestAsync<U, T>(idempotencyKey, endPoint, null, null, default(T));
-        }
-
-        /// <summary>Makes a call to the MangoPay API.
-        /// This generic method handles calls targeting single 
-        /// DTO instances. In order to process collections of objects, 
-        /// use <code>RequestList</code> method instead.
-        /// </summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
-        /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
-        /// <returns>The DTO instance returned from API.</returns>
-        public U Request<U, T>(ApiEndPoint endPoint, Dictionary<String, String> requestData)
-            where U : new()
-        {
-            return Request<U, T>(null, endPoint, requestData, null, default(T));
-        }
-
-        public async Task<U> RequestAsync<U, T>(ApiEndPoint endPoint, Dictionary<String, String> requestData)
-            where U : new()
-        {
-            return await RequestAsync<U, T>(null, endPoint, requestData, null, default(T));
-        }
-
-        /// <summary>Makes a call to the MangoPay API.
-        /// This generic method handles calls targeting single 
-        /// DTO instances. In order to process collections of objects, 
-        /// use <code>RequestList</code> method instead.
-        /// </summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
-        /// <param name="requestType">HTTP request term, one of the GET, PUT or POST.</param>
-        /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
-        /// <returns>The DTO instance returned from API.</returns>
-        public U Request<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData)
-            where U : new()
-        {
-            return Request<U, T>(idempotencyKey, endPoint, requestData, null, default(T));
-        }
-
-        public async Task<U> RequestAsync<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData)
-            where U : new()
-        {
-            return await RequestAsync<U, T>(idempotencyKey, endPoint, requestData, null, default(T));
-        }
-
-        /// <summary>Makes a call to the MangoPay API.
-        /// This generic method handles calls targeting single 
-        /// DTO instances. In order to process collections of objects, 
-        /// use <code>RequestList</code> method instead.
-        /// </summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
-        /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
-        /// <param name="pagination">Pagination object.</param>
-        /// <returns>The DTO instance returned from API.</returns>
-        public U Request<U, T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
-            where U : new()
-        {
-            return Request<U, T>(null, endPoint, requestData, pagination, default(T));
-        }
-
-        public async Task<U> RequestAsync<U, T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
-            where U : new()
-        {
-            return await RequestAsync<U, T>(null, endPoint, requestData, pagination, default(T));
-        }
-
-        /// <summary>Makes a call to the MangoPay API.
-        /// This generic method handles calls targeting single 
-        /// DTO instances. In order to process collections of objects, 
-        /// use <code>RequestList</code> method instead.
-        /// </summary>
-        /// <typeparam name="U">Return type.</typeparam>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="idempotencyKey">Idempotency key for this request.</param>
-        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
-        /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
-        /// <param name="pagination">Pagination object.</param>
-        /// <returns>The DTO instance returned from API.</returns>
-        public U Request<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
-            where U : new()
-        {
-            return Request<U, T>(idempotencyKey, endPoint, requestData, pagination, default(T));
-        }
-
-        public async Task<U> RequestAsync<U, T>(String idempotencyKey, ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
-            where U : new()
-        {
-            return await RequestAsync<U, T>(idempotencyKey, endPoint, requestData, pagination, default(T));
         }
 
         /// <summary>Makes a call to the MangoPay API. 
@@ -275,243 +180,34 @@ namespace MangoPay.SDK.Core
         /// <param name="pagination">Pagination object.</param>
         /// <param name="additionalUrlParams"></param>
         /// <returns>Collection of DTO instances returned from API.</returns>
-        public ListPaginated<T> RequestList<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination, Dictionary<String, String> additionalUrlParams)
+        public async Task<ListPaginated<T>> RequestListAsync<T>(ApiEndPoint endPoint, Dictionary<string, string> requestData, 
+            Dictionary<string, string> additionalUrlParams, Pagination pagination = null, string idempotentKey = null)
             where T : new()
         {
             this._requestType = endPoint.RequestType;
             this._includeClientId = endPoint.IncludeClientId;
             this._requestData = requestData;
 
-            ListPaginated<T> responseResult = this.DoRequestList<T>(endPoint.GetUrl(), pagination, additionalUrlParams);
+            var responseResult = await this.DoRequestListAsync<T>(endPoint.GetUrl(), additionalUrlParams, pagination, idempotentKey);
 
             return responseResult;
         }
 
-        public async Task<ListPaginated<T>> RequestListAsync<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination, Dictionary<String, String> additionalUrlParams)
-            where T : new()
-        {
-            this._requestType = endPoint.RequestType;
-            this._includeClientId = endPoint.IncludeClientId;
-            this._requestData = requestData;
-
-            ListPaginated<T> responseResult = await this.DoRequestListAsync<T>(endPoint.GetUrl(), pagination, additionalUrlParams);
-
-            return responseResult;
-        }
-
-        /// <summary>Makes a call to the MangoPay API. 
-        /// This generic method handles calls targeting collections of 
-        /// DTO instances. In order to process single objects, 
-        /// use <code>Request</code> method instead.
-        /// </summary>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
-        /// <returns>Collection of DTO instances returned from API.</returns>
-        public ListPaginated<T> RequestList<T>(ApiEndPoint endPoint)
-            where T : new()
-        {
-            return RequestList<T>(endPoint, null, null, null);
-        }
-
-        public async Task<ListPaginated<T>> RequestListAsync<T>(ApiEndPoint endPoint)
-            where T : new()
-        {
-            return await RequestListAsync<T>(endPoint, null, null, null);
-        }
-
-        /// <summary>Makes a call to the MangoPay API. 
-        /// This generic method handles calls targeting collections of 
-        /// DTO instances. In order to process single objects, 
-        /// use <code>Request</code> method instead.
-        /// </summary>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
-        /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
-        /// <returns>Collection of DTO instances returned from API.</returns>
-        public ListPaginated<T> RequestList<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData)
-            where T : new()
-        {
-            return RequestList<T>(endPoint, requestData, null, null);
-        }
-
-        public async Task<ListPaginated<T>> RequestListAsync<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData)
-            where T : new()
-        {
-            return await RequestListAsync<T>(endPoint, requestData, null, null);
-        }
-
-        /// <summary>Makes a call to the MangoPay API. 
-        /// This generic method handles calls targeting collections of 
-        /// DTO instances. In order to process single objects, 
-        /// use <code>Request</code> method instead.
-        /// </summary>
-        /// <typeparam name="T">Type on behalf of which the request is being called.</typeparam>
-        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
-        /// <param name="requestData">Collection of key-value pairs of request parameters.</param>
-        /// <param name="pagination">Pagination object.</param>
-        /// <returns>Collection of DTO instances returned from API.</returns>
-        public ListPaginated<T> RequestList<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
-            where T : new()
-        {
-            return RequestList<T>(endPoint, requestData, pagination, null);
-        }
-
-        public async Task<ListPaginated<T>> RequestListAsync<T>(ApiEndPoint endPoint, Dictionary<String, String> requestData, Pagination pagination)
-            where T : new()
-        {
-            return await RequestListAsync<T>(endPoint, requestData, pagination, null);
-        }
-
-        private U DoRequest<U, T>(String idempotencyKey, String urlMethod, Pagination pagination)
-            where T : new()
+        private async Task<U> DoRequestAsync<U, T>(string urlMethod, T entity = default, Pagination pagination = null, Dictionary<string, string> additionalUrlParams = null, string idempotentKey = null)
             where U : new()
         {
-            return DoRequest<U, T>(idempotencyKey, urlMethod, pagination, default(T));
-        }
+            var restUrl = _urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, additionalUrlParams, _root.Config.ApiVersion);
+            
+            _log.Debug("FullUrl: " + _urlTool.GetFullUrl(restUrl));
 
-        private async Task<U> DoRequestAsync<U, T>(String idempotencyKey, String urlMethod, Pagination pagination)
-            where T : new()
-            where U : new()
-        {
-            return await DoRequestAsync<U, T>(idempotencyKey, urlMethod, pagination, default(T));
-        }
-
-        private U DoRequest<U, T>(String idempotencyKey, String urlMethod, Pagination pagination, T entity)
-            where U : new()
-        {
-            U responseObject = default(U);
-
-            UrlTool urlTool = new UrlTool(_root);
-            String restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, null, _root.Config.ApiVersion);
-
-            string fullUrl = urlTool.GetFullUrl(restUrl);
-            RestClient client = new RestClient(fullUrl);
-
-            client.AddHandler(Constants.APPLICATION_JSON, () => { return new MangoPayJsonDeserializer(); });
-
-            _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
-
-            Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
-            RestRequest restRequest = new RestRequest(method)
+            var restRequest = new RestRequest(restUrl)
             {
                 RequestFormat = DataFormat.Json,
-                JsonSerializer = new MangoPayJsonSerializer()
+                Method = (Method)Enum.Parse(typeof(Method), this._requestType, true)
             };
-            restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
-
-            if (_root.Config.Timeout > 0)
-            {
-                client.Timeout = _root.Config.Timeout;
-                restRequest.Timeout = _root.Config.Timeout;
-            }
-
-            var headers = this.GetHttpHeaders(restUrl);
-            foreach (KeyValuePair<string, string> h in headers)
-            {
-                restRequest.AddHeader(h.Key, h.Value);
-
-                if (h.Key != Constants.AUTHORIZATION)
-                    _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
-            }
-
-            if (!String.IsNullOrWhiteSpace(idempotencyKey))
-                restRequest.AddHeader(Constants.IDEMPOTENCY_KEY, idempotencyKey);
-
-            if (pagination != null)
-            {
-                this._pagination = pagination;
-            }
-
-            _log.Debug("RequestType: " + this._requestType);
-
-            if (this._requestData != null || entity != null)
-            {
-                if (entity != null)
-                {
-                    restRequest.AddJsonBody(entity);
-                }
-                if (this._requestData != null)
-                {
-                    foreach (KeyValuePair<String, String> entry in this._requestData)
-                    {
-                        restRequest.AddParameter(entry.Key, entry.Value);
-                    }
-                }
-
-                var body = restRequest.Parameters.Where(p => p.Type == ParameterType.RequestBody).FirstOrDefault();
-                var parameters = restRequest.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
-                foreach (var p in parameters)
-                {
-                    _log.Debug(p.Name + ": " + p.Value);
-                }
-
-                if (body != null)
-                {
-                    _log.Debug("CurrentBody: " + body.Value);
-                }
-                else
-                {
-                    _log.Debug("CurrentBody: /body is null/");
-                }
-            }
-
-            IRestResponse<U> restResponse = client.Execute<U>(restRequest);
-            responseObject = restResponse.Data;
-
-            this._responseCode = (int)restResponse.StatusCode;
-
-            if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
-            {
-                _log.Debug("Response OK: " + restResponse.Content);
-            }
-            else
-            {
-                _log.Debug("Response ERROR: " + restResponse.Content);
-            }
-
-            if (this._responseCode == 200)
-            {
-                _log.Debug("Response object: " + responseObject.ToString());
-            }
-
-            SetLastRequestInfo(restRequest, restResponse);
-
-            this.CheckResponseCode(restResponse);
-
-            return responseObject;
-        }
-
-        private async Task<U> DoRequestAsync<U, T>(String idempotencyKey, String urlMethod, Pagination pagination, T entity)
-            where U : new()
-        {
-            U responseObject = default(U);
-
-            UrlTool urlTool = new UrlTool(_root);
-            String restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, null, _root.Config.ApiVersion);
-
-            string fullUrl = urlTool.GetFullUrl(restUrl);
-            RestClient client = new RestClient(fullUrl);
-
-            client.AddHandler(Constants.APPLICATION_JSON, () => { return new MangoPayJsonDeserializer(); });
-
-            _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
-
-            Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
-            RestRequest restRequest = new RestRequest(method)
-            {
-                RequestFormat = DataFormat.Json,
-                JsonSerializer = new MangoPayJsonSerializer()
-            };
-            restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
-
-            if (_root.Config.Timeout > 0)
-            {
-                client.Timeout = _root.Config.Timeout;
-                restRequest.Timeout = _root.Config.Timeout;
-            }
 
             var headers = await this.GetHttpHeadersAsync(restUrl);
-            foreach (KeyValuePair<string, string> h in headers)
+            foreach (var h in headers)
             {
                 restRequest.AddHeader(h.Key, h.Value);
 
@@ -519,13 +215,10 @@ namespace MangoPay.SDK.Core
                     _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
             }
 
-            if (!String.IsNullOrWhiteSpace(idempotencyKey))
-                restRequest.AddHeader(Constants.IDEMPOTENCY_KEY, idempotencyKey);
+            if (!string.IsNullOrWhiteSpace(idempotentKey))
+                restRequest.AddHeader(Constants.IDEMPOTENCY_KEY, idempotentKey);
 
-            if (pagination != null)
-            {
-                this._pagination = pagination;
-            }
+            if (pagination != null) this._pagination = pagination;
 
             _log.Debug("RequestType: " + this._requestType);
 
@@ -533,17 +226,17 @@ namespace MangoPay.SDK.Core
             {
                 if (entity != null)
                 {
-                    restRequest.AddJsonBody(entity);
+                    restRequest.AddBody(entity, "application/json");
                 }
                 if (this._requestData != null)
                 {
-                    foreach (KeyValuePair<String, String> entry in this._requestData)
+                    foreach (var entry in this._requestData)
                     {
                         restRequest.AddParameter(entry.Key, entry.Value);
                     }
                 }
 
-                var body = restRequest.Parameters.Where(p => p.Type == ParameterType.RequestBody).FirstOrDefault();
+                var body = restRequest.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
                 var parameters = restRequest.Parameters.Where(p => p.Type == ParameterType.GetOrPost);
                 foreach (var p in parameters)
                 {
@@ -560,8 +253,8 @@ namespace MangoPay.SDK.Core
                 }
             }
 
-            IRestResponse<U> restResponse = await client.ExecuteAsync<U>(restRequest);
-            responseObject = restResponse.Data;
+            var restResponse = await _dto.Client.ExecuteAsync<U>(restRequest);
+            var responseObject = restResponse.Data;
 
             this._responseCode = (int)restResponse.StatusCode;
 
@@ -586,139 +279,57 @@ namespace MangoPay.SDK.Core
             return responseObject;
         }
 
-        private void SetLastRequestInfo(IRestRequest request, IRestResponse response)
+        private void SetLastRequestInfo(RestRequest request, RestResponse response)
         {
             _root.LastRequestInfo = new LastRequestInfo() { Request = request, Response = response };
             
-            string getHeaderValue(string key)
+            string GetHeaderValue(string key)
             {
-                return response.Headers
+                return response?.Headers?
                     .FirstOrDefault(h => string.Equals(h.Name, key, StringComparison.OrdinalIgnoreCase))
                     ?.Value
                     ?.ToString();
             }
 
-            _root.LastRequestInfo.RateLimitingCallsAllowed = getHeaderValue("X-RateLimit-Limit");
-            _root.LastRequestInfo.RateLimitingCallsRemaining = getHeaderValue("X-RateLimit-Remaining");
-            _root.LastRequestInfo.RateLimitingTimeTillReset = getHeaderValue("X-RateLimit-Reset");
+            _root.LastRequestInfo.RateLimitingCallsAllowed = GetHeaderValue("X-RateLimit-Limit");
+            _root.LastRequestInfo.RateLimitingCallsRemaining = GetHeaderValue("X-RateLimit-Remaining");
+            _root.LastRequestInfo.RateLimitingTimeTillReset = GetHeaderValue("X-RateLimit-Reset");
         }
 
-        private ListPaginated<T> DoRequestList<T>(string urlMethod, Pagination pagination, Dictionary<String, String> additionalUrlParams)
+        private async Task<ListPaginated<T>> DoRequestListAsync<T>(string urlMethod, Dictionary<string, string> additionalUrlParams = null,
+            Pagination pagination = null, string idempotentKey = null)
         {
             ListPaginated<T> responseObject = null;
 
-            UrlTool urlTool = new UrlTool(_root);
-            string restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, null, _root.Config.ApiVersion);
+            var restUrl = _urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, additionalUrlParams, _root.Config.ApiVersion);
 
             if (this._requestData != null)
             {
-                string parameters = "";
-                foreach (KeyValuePair<String, String> entry in this._requestData)
+                var parameters = string.Empty;
+                foreach (var entry in this._requestData)
                 {
-                    parameters += String.Format("&{0}={1}", Uri.EscapeDataString(entry.Key), Uri.EscapeDataString(entry.Value));
+                    parameters += $"&{Uri.EscapeDataString(entry.Key)}={Uri.EscapeDataString(entry.Value)}";
                 }
+
                 if (pagination == null)
                     parameters = parameters.Remove(0, 1).Insert(0, Constants.URI_QUERY_SEPARATOR);
 
                 restUrl += parameters;
             }
 
-            string fullUrl = urlTool.GetFullUrl(restUrl);
-            RestClient client = new RestClient(fullUrl);
+            _log.Debug("FullUrl: " + _urlTool.GetFullUrl(restUrl));
 
-            client.AddHandler(Constants.APPLICATION_JSON, () => { return new MangoPayJsonDeserializer(); });
-
-            _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
-
-            Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
-            RestRequest restRequest = new RestRequest(method)
+            var restRequest = new RestRequest(restUrl)
             {
                 RequestFormat = DataFormat.Json,
-                JsonSerializer = new MangoPayJsonSerializer()
+                Method = (Method)Enum.Parse(typeof(Method), this._requestType, true)
             };
-            restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
 
-            var headers = this.GetHttpHeaders(restUrl);
-            foreach (KeyValuePair<string, string> h in headers)
-            {
-                restRequest.AddHeader(h.Key, h.Value);
-
-                if (h.Key != Constants.AUTHORIZATION)
-                    _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
-            }
-
-            if (pagination != null)
-            {
-                this._pagination = pagination;
-            }
-
-            _log.Debug("RequestType: " + this._requestType);
-
-            IRestResponse<List<T>> restResponse = client.Execute<List<T>>(restRequest);
-            responseObject = new ListPaginated<T>(restResponse.Data);
-
-            this._responseCode = (int)restResponse.StatusCode;
-
-            if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
-            {
-                _log.Debug("Response OK: " + restResponse.Content);
-            }
-            else
-            {
-                _log.Debug("Response ERROR: " + restResponse.Content);
-            }
-
-            if (this._responseCode == 200)
-            {
-                responseObject = this.ReadResponseHeaders<T>(restResponse, responseObject);
-
-                _log.Debug("Response object: " + responseObject.ToString());
-            }
-
-            SetLastRequestInfo(restRequest, restResponse);
-
-            this.CheckResponseCode(restResponse);
-
-            return responseObject;
-        }
-
-        private async Task<ListPaginated<T>> DoRequestListAsync<T>(string urlMethod, Pagination pagination, Dictionary<String, String> additionalUrlParams)
-        {
-            ListPaginated<T> responseObject = null;
-
-            UrlTool urlTool = new UrlTool(_root);
-            string restUrl = urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination, null, _root.Config.ApiVersion);
-
-            if (this._requestData != null)
-            {
-                string parameters = "";
-                foreach (KeyValuePair<String, String> entry in this._requestData)
-                {
-                    parameters += String.Format("&{0}={1}", Uri.EscapeDataString(entry.Key), Uri.EscapeDataString(entry.Value));
-                }
-                if (pagination == null)
-                    parameters = parameters.Remove(0, 1).Insert(0, Constants.URI_QUERY_SEPARATOR);
-
-                restUrl += parameters;
-            }
-
-            string fullUrl = urlTool.GetFullUrl(restUrl);
-            RestClient client = new RestClient(fullUrl);
-
-            client.AddHandler(Constants.APPLICATION_JSON, () => { return new MangoPayJsonDeserializer(); });
-
-            _log.Debug("FullUrl: " + urlTool.GetFullUrl(restUrl));
-
-            Method method = (Method)Enum.Parse(typeof(Method), this._requestType, false);
-            RestRequest restRequest = new RestRequest(method)
-            {
-                RequestFormat = DataFormat.Json,
-                JsonSerializer = new MangoPayJsonSerializer()
-            };
-            restRequest.JsonSerializer.ContentType = Constants.APPLICATION_JSON;
+            if (!string.IsNullOrWhiteSpace(idempotentKey))
+                restRequest.AddHeader(Constants.IDEMPOTENCY_KEY, idempotentKey);
 
             var headers = await this.GetHttpHeadersAsync(restUrl);
-            foreach (KeyValuePair<string, string> h in headers)
+            foreach (var h in headers)
             {
                 restRequest.AddHeader(h.Key, h.Value);
 
@@ -728,7 +339,7 @@ namespace MangoPay.SDK.Core
 
             _log.Debug("RequestType: " + this._requestType);
 
-            var restResponse = await client.ExecuteAsync<List<T>>(restRequest);
+            var restResponse = await _dto.Client.ExecuteAsync<List<T>>(restRequest);
 
             responseObject = new ListPaginated<T>(restResponse.Data);
 
@@ -758,14 +369,14 @@ namespace MangoPay.SDK.Core
         }
 
         /// <summary>Reads and parses response headers (pagination etc.)</summary>
-        /// <param name="headers">The original response headers</param>
+        /// <param name="response">The original response</param>
         /// <param name="listPaginated">The list</param>
-        private ListPaginated<T> ReadResponseHeaders<T>(IRestResponse response, ListPaginated<T> listPaginated)
+        private ListPaginated<T> ReadResponseHeaders<T>(RestResponse response, ListPaginated<T> listPaginated)
         {
             var headers = response.Headers.Where(x => x.Name != null).ToList();
             foreach (var header in headers)
             {
-                var value = header.Value.ToString();
+                var value = header?.Value?.ToString();
 
                 if (header.Name.ToLower().Contains(Constants.X_NUMBER_OF_PAGES.ToLower()))
                 {
@@ -781,7 +392,6 @@ namespace MangoPay.SDK.Core
 
                 if (header.Name.ToLower().Contains(Constants.LINK.ToLower()))
                 {
-
                     var links = CustomSplit(value, ',');
 
                     if (links.Count <= 0) continue;
@@ -866,11 +476,11 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Reads and parses response headers (pagination etc.)</summary>
         /// <param name="conn">Response object.</param>
-        private ListPaginated<T> ReadResponseHeadersOld<T>(IRestResponse restResponse, ListPaginated<T> listPaginated = null)
+        private ListPaginated<T> ReadResponseHeadersOld<T>(RestResponse restResponse, ListPaginated<T> listPaginated = null)
         {
             foreach (var k in restResponse.Headers)
             {
-                String v = (string)k.Value;
+                string v = (string)k.Value;
                 _log.Debug("Response header: " + k.Name + ":" + v);
 
                 if (k.Name == null) continue;
@@ -885,20 +495,20 @@ namespace MangoPay.SDK.Core
                 }
                 if (k.Name.Equals(Constants.LINK))
                 {
-                    String linkValue = v;
-                    String[] links = linkValue.Split(',');
+                    string linkValue = v;
+                    string[] links = linkValue.Split(',');
 
                     if (links != null && links.Length > 0)
                     {
-                        foreach (String l in links)
+                        foreach (string l in links)
                         {
-                            String link = l;
+                            string link = l;
                             link = link.Replace("<\"", "");
                             link = link.Replace("\">", "");
                             link = link.Replace(" rel=\"", "");
                             link = link.Replace("\"", "");
 
-                            String[] oneLink = link.Split(';');
+                            string[] oneLink = link.Split(';');
 
                             if (oneLink != null && oneLink.Length > 1)
                             {
@@ -921,14 +531,14 @@ namespace MangoPay.SDK.Core
         /// <summary>Gets HTTP header to use in request.</summary>
         /// <param name="restUrl">The REST API URL.</param>
         /// <returns>Collection of headers name-value pairs.</returns>
-        private Dictionary<String, String> GetHttpHeaders(String restUrl)
+        private async Task<Dictionary<string, string>> GetHttpHeadersAsync(string restUrl)
         {
             // return if already created...
             if (this._requestHttpHeaders != null)
                 return this._requestHttpHeaders;
 
             // ...or initialize with default headers
-            Dictionary<String, String> httpHeaders = new Dictionary<String, String>
+            var httpHeaders = new Dictionary<string, string>
             {
                 // content type
                 { Constants.CONTENT_TYPE, Constants.APPLICATION_JSON },
@@ -938,44 +548,13 @@ namespace MangoPay.SDK.Core
             };
 
             // AuthenticationHelper http header
-            if (this._authRequired)
+            if (!this._authRequired) return httpHeaders;
+
+            var authHlp = new AuthenticationHelper(_root);
+            var httpHelper = await authHlp.GetHttpHeaderKeyAsync();
+            foreach (var item in httpHelper)
             {
-                AuthenticationHelper authHlp = new AuthenticationHelper(_root);
-                var httpHelper = authHlp.GetHttpHeaderKey();
-                foreach (KeyValuePair<string, string> item in httpHelper)
-                {
-                    httpHeaders.Add(item.Key, item.Value);
-                }
-            }
-
-            return httpHeaders;
-        }
-
-        private async Task<Dictionary<String, String>> GetHttpHeadersAsync(String restUrl)
-        {
-            // return if already created...
-            if (this._requestHttpHeaders != null)
-                return this._requestHttpHeaders;
-
-            // ...or initialize with default headers
-            Dictionary<String, String> httpHeaders = new Dictionary<String, String>
-            {
-                // content type
-                { Constants.CONTENT_TYPE, Constants.APPLICATION_JSON },
-
-                // User agent header
-                { Constants.USER_AGENT, $"MangoPay V2 SDK .NET {_root.GetVersion()}" }
-            };
-
-            // AuthenticationHelper http header
-            if (this._authRequired)
-            {
-                AuthenticationHelper authHlp = new AuthenticationHelper(_root);
-                var httpHelper = await authHlp.GetHttpHeaderKeyAsync();
-                foreach (KeyValuePair<string, string> item in httpHelper)
-                {
-                    httpHeaders.Add(item.Key, item.Value);
-                }
+                httpHeaders.Add(item.Key, item.Value);
             }
 
             return httpHeaders;

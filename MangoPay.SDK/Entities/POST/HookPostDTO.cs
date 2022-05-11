@@ -8,14 +8,14 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>Hook POST entity.</summary>
     public class HookPostDTO : EntityPostBase
     {
-        public HookPostDTO(String url, EventType eventType)
+        public HookPostDTO(string url, EventType eventType)
         {
             Url = url;
             EventType = eventType;
         }
 
         /// <summary>This is the URL where you receive notification for each EventType.</summary>
-        public String Url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>Event type (the <code>EventType.All</code> value is forbidden here).</summary>
         [JsonConverter(typeof(StringEnumConverter))]

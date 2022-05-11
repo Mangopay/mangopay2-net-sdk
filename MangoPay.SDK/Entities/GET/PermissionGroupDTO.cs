@@ -8,7 +8,7 @@ namespace MangoPay.SDK.Entities.GET
 	public class PermissionGroupDTO : EntityBase
 	{
 		/// <summary>The name of permission group.</summary>
-		public String Name { get; set; }
+		public string Name { get; set; }
 
 		/// <summary>The type of permission group.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

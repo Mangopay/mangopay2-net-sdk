@@ -24,10 +24,10 @@ namespace MangoPay.SDK.Entities.POST
         }
 
         /// <summary>Author identifier.</summary>
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         /// <summary>Credited user identifier.</summary>
-        public String CreditedUserId { get; set; }
+        public string CreditedUserId { get; set; }
 
         /// <summary>Debited funds.</summary>
         public Money DebitedFunds { get; set; }
@@ -36,13 +36,13 @@ namespace MangoPay.SDK.Entities.POST
         public Money Fees { get; set; }
 
         /// <summary>Credited wallet identifier.</summary>
-        public String CreditedWalletId { get; set; }
+        public string CreditedWalletId { get; set; }
 
         /// <summary>Secure mode return URL.</summary>
-        public String SecureModeReturnURL { get; set; }
+        public string SecureModeReturnURL { get; set; }
 
         /// <summary>Card identifier.</summary>
-        public String CardId { get; set; }
+        public string CardId { get; set; }
 
         /// <summary>SecureMode { DEFAULT, FORCE }.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -53,7 +53,7 @@ namespace MangoPay.SDK.Entities.POST
         public CardType? CardType { get; set; }
 
         /// <summary>An optional value to be specified on the user's bank statement.</summary>
-        public String StatementDescriptor { get; set; }
+        public string StatementDescriptor { get; set; }
 
         public Billing Billing { get; set; }
 

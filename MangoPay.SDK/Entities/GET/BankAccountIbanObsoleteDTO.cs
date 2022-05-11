@@ -6,9 +6,9 @@ namespace MangoPay.SDK.Entities.GET
 	public class BankAccountIbanObsoleteDTO : BankAccountObsoleteDTO
     {
         /// <summary>IBAN number.</summary>
-        public String IBAN { get; set; }
+        public string IBAN { get; set; }
 
         /// <summary>BIC.</summary>
-        public String BIC { get; set; }
+        public string BIC { get; set; }
     }
 }

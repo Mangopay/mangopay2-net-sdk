@@ -75,7 +75,7 @@ namespace MangoPay.SDK.Tests
                     }
                 };
                 var idempotencyKey = "keypergroup" + DateTime.Now.Ticks.ToString();
-				var permissionGroup = await Api.PermissionGroups.CreateAsync(idempotencyKey, group);
+				var permissionGroup = await Api.PermissionGroups.CreateAsync(group, idempotencyKey);
 
 				Assert.IsTrue(permissionGroup.Id.Length > 0);
 				Assert.AreEqual("Test name", permissionGroup.Name);

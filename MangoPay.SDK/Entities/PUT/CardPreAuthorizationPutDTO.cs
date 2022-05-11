@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.PUT
     public class CardPreAuthorizationPutDTO : EntityPutBase
     {
         /// <summary>Custom data.</summary>
-        public String Tag { get; set; }
+        public string Tag { get; set; }
 
         /// <summary>The status of the payment after the PreAuthorization.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

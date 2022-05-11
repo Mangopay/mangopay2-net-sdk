@@ -10,7 +10,7 @@ namespace MangoPay.SDK.Entities.GET
     public class EventDTO : EntityBase
     {
         /// <summary>Resource identifier.</summary>
-        public String ResourceId { get; set; }
+        public string ResourceId { get; set; }
 
         /// <summary>Type of event.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

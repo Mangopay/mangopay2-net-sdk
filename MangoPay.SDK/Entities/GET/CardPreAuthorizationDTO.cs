@@ -10,7 +10,7 @@ namespace MangoPay.SDK.Entities.GET
     public class CardPreAuthorizationDTO : EntityBase
     {
         /// <summary>The user Id of the author of the pre-authorization.</summary>
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         /// <summary>Represents the amount debited on the bank account 
         /// of the Author. DebitedFunds = Fees + CreditedFunds 
@@ -26,10 +26,10 @@ namespace MangoPay.SDK.Entities.GET
         public PaymentStatus PaymentStatus { get; set; }
 
         /// <summary>The PreAuthorization result code.</summary>
-        public String ResultCode { get; set; }
+        public string ResultCode { get; set; }
 
         /// <summary>The PreAuthorization result Message explaining the result code.</summary>
-        public String ResultMessage { get; set; }
+        public string ResultMessage { get; set; }
 
         /// <summary>How the PreAuthorization has been executed..</summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -46,16 +46,16 @@ namespace MangoPay.SDK.Entities.GET
         public SecureMode SecureMode { get; set; }
 
         /// <summary>Identifier of the registered card (got through CardRegistration object).</summary>
-        public String CardId { get; set; }
+        public string CardId { get; set; }
 
         /// <summary>The value is { true } if the SecureMode was used.</summary>
         public bool SecureModeNeeded { get; set; }
 
         /// <summary>This is the URL where to redirect users to proceed to 3D secure validation.</summary>
-        public String SecureModeRedirectURL { get; set; }
+        public string SecureModeRedirectURL { get; set; }
 
         /// <summary>This is the URL where users are automatically redirected after 3D secure validation (if activated).</summary>
-        public String SecureModeReturnURL { get; set; }
+        public string SecureModeReturnURL { get; set; }
 
         /// <summary>The date when the preauth expires.</summary>
         [JsonConverter(typeof(Core.UnixDateTimeConverter))]
@@ -66,10 +66,10 @@ namespace MangoPay.SDK.Entities.GET
         public DateTime? AuthorizationDate { get; set; }
 
         /// <summary>Identifier of the associated PayIn.</summary>
-        public String PayInId { get; set; }
+        public string PayInId { get; set; }
 
         /// <summary>An optional value to be specified on the user's bank statement.</summary>
-        public String StatementDescriptor { get; set; }
+        public string StatementDescriptor { get; set; }
 
         public Billing Billing { get; set; }
 

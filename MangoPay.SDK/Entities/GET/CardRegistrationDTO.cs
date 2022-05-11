@@ -9,32 +9,32 @@ namespace MangoPay.SDK.Entities.GET
     public class CardRegistrationDTO : EntityBase
     {
         /// <summary>User identifier.</summary>
-        public String UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>Access key.</summary>
-        public String AccessKey { get; set; }
+        public string AccessKey { get; set; }
 
         /// <summary>Pre-registration data.</summary>
-        public String PreregistrationData { get; set; }
+        public string PreregistrationData { get; set; }
 
         /// <summary>Card registration URL.</summary>
-        public String CardRegistrationURL { get; set; }
+        public string CardRegistrationURL { get; set; }
 
         /// <summary>Card identifier.</summary>
-        public String CardId { get; set; }
+        public string CardId { get; set; }
 
         /// <summary>Card registration data.</summary>
-        public String RegistrationData { get; set; }
+        public string RegistrationData { get; set; }
 
         /// <summary>Result code.</summary>
-        public String ResultCode { get; set; }
+        public string ResultCode { get; set; }
 
         /// <summary>Currency.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public CurrencyIso Currency { get; set; }
 
         /// <summary>Status.</summary>
-        public String Status { get; set; }
+        public string Status { get; set; }
 
 		/// <summary>Card type.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]

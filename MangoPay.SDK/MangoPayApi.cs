@@ -32,15 +32,15 @@ namespace MangoPay.SDK
             CardPreAuthorizations = new ApiCardPreAuthorizations(this);
             Hooks = new ApiHooks(this);
             Kyc = new ApiKyc(this);
-			Disputes = new ApiDisputes(this);
-			Idempotency = new ApiIdempotency(this);
-			Mandates = new ApiMandates(this);
-			Reports = new ApiReports(this);
-			SingleSignOns = new ApiSingleSignOns(this);
-			PermissionGroups = new ApiPermissionGroups(this);
-			BankingAlias = new ApiBankingAliases(this);
-			UboDeclarations = new ApiUboDeclarations(this);
-		}
+            Disputes = new ApiDisputes(this);
+            Idempotent = new ApiIdempotent(this);
+            Mandates = new ApiMandates(this);
+            Reports = new ApiReports(this);
+            SingleSignOns = new ApiSingleSignOns(this);
+            PermissionGroups = new ApiPermissionGroups(this);
+            BankingAlias = new ApiBankingAliases(this);
+            UboDeclarations = new ApiUboDeclarations(this);
+        }
 
         /// <summary>Provides authorization token methods.</summary>
         public AuthorizationTokenManager OAuthTokenManager;
@@ -50,7 +50,7 @@ namespace MangoPay.SDK
 
         /// <summary>Stores the raw request and response of the last call from this Api instance, including information about rate-limiting.</summary>
         public LastRequestInfo LastRequestInfo;
-
+        
         #region API managers
 
         /// <summary>Provides OAuth methods.</summary>
@@ -92,36 +92,36 @@ namespace MangoPay.SDK
         /// <summary>Provides Hooks methods.</summary>
         public ApiHooks Hooks;
 
-		/// <summary>Provides KYC methods.</summary>
-		public ApiKyc Kyc;
+        /// <summary>Provides KYC methods.</summary>
+        public ApiKyc Kyc;
 
-		/// <summary>Provides Disputes methods.</summary>
-		public ApiDisputes Disputes;
+        /// <summary>Provides Disputes methods.</summary>
+        public ApiDisputes Disputes;
 
-		/// <summary>Provides Idempotency methods.</summary>
-		public ApiIdempotency Idempotency;
+        /// <summary>Provides Idempotent methods.</summary>
+        public ApiIdempotent Idempotent;
 
-		/// <summary>Provides Mandates methods.</summary>
-		public ApiMandates Mandates;
+        /// <summary>Provides Mandates methods.</summary>
+        public ApiMandates Mandates;
 
-		/// <summary>Provides Reports methods.</summary>
-		public ApiReports Reports;
+        /// <summary>Provides Reports methods.</summary>
+        public ApiReports Reports;
 
-		/// <summary>Provides Users methods.</summary>
-		public ApiBankingAliases BankingAlias;
+        /// <summary>Provides Users methods.</summary>
+        public ApiBankingAliases BankingAlias;
 
-		/// <summary>Provides SingleSignOns methods.</summary>
-		public ApiSingleSignOns SingleSignOns;
+        /// <summary>Provides SingleSignOns methods.</summary>
+        public ApiSingleSignOns SingleSignOns;
 
-		/// <summary>Provides ApiPermissionGroups methods.</summary>
-		public ApiPermissionGroups PermissionGroups;
+        /// <summary>Provides ApiPermissionGroups methods.</summary>
+        public ApiPermissionGroups PermissionGroups;
 
-		public ApiUboDeclarations UboDeclarations;
-		#endregion
+        public ApiUboDeclarations UboDeclarations;
+        #endregion
 
-		#region Internal and private
+        #region Internal and private
 
-		private Version _version { get; set; }
+        private Version _version { get; set; }
 
 		/// <summary>
 		/// Gets the current SDK <see cref="Version"/>

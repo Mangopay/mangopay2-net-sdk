@@ -8,7 +8,7 @@ namespace MangoPay.SDK.Entities.POST
 	/// <summary>IBAN bank account POST entity.</summary>
 	public class BankingAliasIbanPostDTO : BankingAliasPostDTO
 	{
-		public BankingAliasIbanPostDTO(String ownerName, CountryIso country)
+		public BankingAliasIbanPostDTO(string ownerName, CountryIso country)
         {
             OwnerName = ownerName;
 			Country = country;

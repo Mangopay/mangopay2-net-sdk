@@ -6,9 +6,9 @@ namespace MangoPay.SDK.Entities.GET
 	public class BankAccountGbObsoleteDTO : BankAccountObsoleteDTO
     {
         /// <summary>Account number.</summary>
-        public String AccountNumber { get; set; }
+        public string AccountNumber { get; set; }
 
         /// <summary>Sort code.</summary>
-        public String SortCode { get; set; }
+        public string SortCode { get; set; }
     }
 }

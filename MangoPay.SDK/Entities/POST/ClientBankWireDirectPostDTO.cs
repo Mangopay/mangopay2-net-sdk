@@ -16,6 +16,6 @@ namespace MangoPay.SDK.Entities.POST
         public Money DeclaredDebitedFunds { get; set; }
 
         /// <summary>Credited wallet alias.</summary>
-        public String CreditedWalletId { get; set; }
+        public string CreditedWalletId { get; set; }
     }
 }

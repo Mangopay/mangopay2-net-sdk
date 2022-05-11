@@ -21,11 +21,11 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Gets map of fields and values.</summary>
         /// <returns>Returns collection of field_name-field_value pairs.</returns>
-        public Dictionary<String, String> GetValues()
+        public Dictionary<string, string> GetValues()
         {
-            Dictionary<String, String> result = new Dictionary<String, String>();
+            var result = new Dictionary<string, string>();
 
-            UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
+            var dateConverter = new UnixDateTimeConverter();
 
 			if (Status.HasValue && Status.Value != DisputeDocumentStatus.NotSpecified) result.Add(Constants.STATUS, Status.Value.ToString("G").Replace(" ", ""));
 			if (Type.HasValue && Type.Value != DisputeDocumentType.NotSpecified) result.Add(Constants.TYPE, Type.Value.ToString("G").Replace(" ", ""));

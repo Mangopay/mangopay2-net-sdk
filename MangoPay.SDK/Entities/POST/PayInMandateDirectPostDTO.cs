@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Entities.POST
         }
 
 		/// <summary>The user identifier of the Payin transaction’s author.</summary>
-		public String AuthorId { get; set; }
+		public string AuthorId { get; set; }
 
         /// <summary>Debited funds.</summary>
         public Money DebitedFunds { get; set; }
@@ -26,18 +26,18 @@ namespace MangoPay.SDK.Entities.POST
         public Money Fees { get; set; }
 
         /// <summary>Credited wallet identifier.</summary>
-        public String CreditedWalletId { get; set; }
+        public string CreditedWalletId { get; set; }
 
 		/// <summary>URL format expected.</summary>
-		public String ReturnURL { get; set; }
+		public string ReturnURL { get; set; }
 
         /// <summary>Mandate identifier.</summary>
-		public String MandateId { get; set; }
+		public string MandateId { get; set; }
 
 		/// <summary>Credited user identifier.</summary>
-		public String CreditedUserId { get; set; }
+		public string CreditedUserId { get; set; }
 
 	/// <summary>An optional value to be specified on the user's bank statement.</summary>
-        public String StatementDescriptor { get; set; }
+        public string StatementDescriptor { get; set; }
     }
 }

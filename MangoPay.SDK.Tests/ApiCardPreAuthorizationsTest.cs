@@ -19,7 +19,7 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                CardPreAuthorizationDTO cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
+                var cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
 
                 Assert.IsTrue(cardPreAuthorization.Id.Length > 0);
                 Assert.AreEqual(cardPreAuthorization.Status, PreAuthorizationStatus.SUCCEEDED);
@@ -40,9 +40,9 @@ namespace MangoPay.SDK.Tests
             try
             {
                 var john = await GetJohn();
-                CardPreAuthorizationPostDTO cardPreAuthorization = await GetPreAuthorization(john.Id);
-                Billing billing = new Billing();
-                Address address = new Address
+                var cardPreAuthorization = await GetPreAuthorization(john.Id);
+                var billing = new Billing();
+                var address = new Address
                 {
                     City = "Test city",
                     AddressLine1 = "Test address line 1",
@@ -55,7 +55,7 @@ namespace MangoPay.SDK.Tests
                 billing.LastName = "Doe";
                 cardPreAuthorization.Billing = billing;
 
-                CardPreAuthorizationDTO cardPreAuthorizationWithBilling = await this.Api.CardPreAuthorizations.CreateAsync(cardPreAuthorization);
+                var cardPreAuthorizationWithBilling = await this.Api.CardPreAuthorizations.CreateAsync(cardPreAuthorization);
 
                 Assert.IsNotNull(cardPreAuthorizationWithBilling);
                 Assert.IsNotNull(cardPreAuthorizationWithBilling.Billing);
@@ -76,9 +76,9 @@ namespace MangoPay.SDK.Tests
             try
             {
                 var john = await GetJohn();
-                CardPreAuthorizationPostDTO cardPreAuthorization = await GetPreAuthorization(john.Id);
-                Billing billing = new Billing();
-                Address address = new Address
+                var cardPreAuthorization = await GetPreAuthorization(john.Id);
+                var billing = new Billing();
+                var address = new Address
                 {
                     City = "Test city",
                     AddressLine1 = "Test address line 1",
@@ -92,7 +92,7 @@ namespace MangoPay.SDK.Tests
                 cardPreAuthorization.Billing = billing;
                 cardPreAuthorization.Requested3DSVersion = "V1";
 
-                CardPreAuthorizationDTO cardPreAuthorizationPost = await this.Api.CardPreAuthorizations.CreateAsync(cardPreAuthorization);
+                var cardPreAuthorizationPost = await this.Api.CardPreAuthorizations.CreateAsync(cardPreAuthorization);
 
                 Assert.IsNotNull(cardPreAuthorizationPost);
                 Assert.IsNotNull(cardPreAuthorizationPost.Billing);
@@ -113,9 +113,9 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                CardPreAuthorizationDTO cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
+                var cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
 
-                CardPreAuthorizationDTO getCardPreAuthorization = await this.Api.CardPreAuthorizations.GetAsync(cardPreAuthorization.Id);
+                var getCardPreAuthorization = await this.Api.CardPreAuthorizations.GetAsync(cardPreAuthorization.Id);
 
                 Assert.AreEqual(cardPreAuthorization.Id, getCardPreAuthorization.Id);
                 Assert.AreEqual(getCardPreAuthorization.ResultCode, "000000");
@@ -161,14 +161,14 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                CardPreAuthorizationDTO cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
-                CardPreAuthorizationPutDTO cardPreAuthorizationPut = new CardPreAuthorizationPutDTO
+                var cardPreAuthorization = await this.GetJohnsCardPreAuthorization();
+                var cardPreAuthorizationPut = new CardPreAuthorizationPutDTO
                 {
                     Tag = cardPreAuthorization.Tag,
                     PaymentStatus = PaymentStatus.CANCELED
                 };
 
-                CardPreAuthorizationDTO resultCardPreAuthorization = await this.Api.CardPreAuthorizations.UpdateAsync(cardPreAuthorizationPut, cardPreAuthorization.Id);
+                var resultCardPreAuthorization = await this.Api.CardPreAuthorizations.UpdateAsync(cardPreAuthorizationPut, cardPreAuthorization.Id);
 
                 Assert.AreEqual(resultCardPreAuthorization.Status, PreAuthorizationStatus.SUCCEEDED);
                 Assert.AreEqual(resultCardPreAuthorization.PaymentStatus, PaymentStatus.CANCELED);

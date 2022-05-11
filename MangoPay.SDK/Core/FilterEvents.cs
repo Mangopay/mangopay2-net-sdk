@@ -19,14 +19,14 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Gets map of fields and values.</summary>
         /// <returns>Collection of field name-field value pairs.</returns>
-        public Dictionary<String, String> GetValues()
+        public Dictionary<string, string> GetValues()
         {
-            Dictionary<String, String> result = new Dictionary<String, String>();
+            var result = new Dictionary<string, string>();
 
 			if (Type != EventType.All)
 				result.Add(Constants.EVENTTYPE, Type.ToString("G").Replace(" ", ""));
 
-			UnixDateTimeConverter dateConverter = new UnixDateTimeConverter();
+			var dateConverter = new UnixDateTimeConverter();
 
             if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
             if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());

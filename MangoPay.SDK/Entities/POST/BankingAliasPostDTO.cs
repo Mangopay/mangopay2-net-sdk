@@ -6,9 +6,9 @@ namespace MangoPay.SDK.Entities.POST
 	public class BankingAliasPostDTO : EntityPostBase
     {
 		/// <summary>The user ID who was credited.</summary>
-		public String CreditedUserId { get; set; }
+		public string CreditedUserId { get; set; }
 
 		/// <summary>THe name of the owner of the bank account.</summary>
-		public String OwnerName { get; set; }
+		public string OwnerName { get; set; }
     }
 }

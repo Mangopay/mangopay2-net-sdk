@@ -8,7 +8,7 @@ namespace MangoPay.SDK.Entities
     public class Birthplace
     {
         /// <summary>City.</summary>
-        public String City;
+        public string City;
         
         /// <summary>Country.</summary>
         [JsonConverter(typeof(StringEnumConverter))]

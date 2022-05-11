@@ -41,8 +41,8 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                HookDTO hook = await this.GetJohnsHook();
-                HookDTO getHook = await this.Api.Hooks.GetAsync(hook.Id);
+                var hook = await this.GetJohnsHook();
+                var getHook = await this.Api.Hooks.GetAsync(hook.Id);
 
                 Assert.AreEqual(getHook.Id, hook.Id);
             }
@@ -57,14 +57,14 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                HookDTO hook = await this.GetJohnsHook();
-                HookPutDTO hookPut = new HookPutDTO
+                var hook = await this.GetJohnsHook();
+                var hookPut = new HookPutDTO
                 {
                     Status = hook.Status,
-                    Url = String.Format("http://test{0}.com", DateTime.Now.Ticks)
+                    Url = $"http://test{DateTime.Now.Ticks}.com"
                 };
 
-                HookDTO saveHook = await this.Api.Hooks.UpdateAsync(hookPut, hook.Id);
+                var saveHook = await this.Api.Hooks.UpdateAsync(hookPut, hook.Id);
 
                 Assert.AreEqual(saveHook.Id, hook.Id);
                 Assert.AreEqual(hookPut.Url, saveHook.Url);
@@ -80,10 +80,10 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                HookDTO hook = await this.GetJohnsHook();
-                Pagination pagination = new Pagination(1, 1);
+                var hook = await this.GetJohnsHook();
+                var pagination = new Pagination(1, 1);
 
-                ListPaginated<HookDTO> list = await this.Api.Hooks.GetAllAsync(pagination);
+                var list = await this.Api.Hooks.GetAllAsync(pagination);
 
                 Assert.IsNotNull(list[0]);
                 Assert.IsTrue(list[0] is HookDTO);

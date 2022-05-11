@@ -15,15 +15,15 @@ namespace MangoPay.SDK.Entities.POST
 		}
 
 		/// <summary>The name of the user.</summary>
-		public String FirstName { get; set; }
+		public string FirstName { get; set; }
 
 		/// <summary>The last name of the user.</summary>
-		public String LastName { get; set; }
+		public string LastName { get; set; }
 
 		/// <summary>Email address.</summary>
-		public String Email { get; set; }
+		public string Email { get; set; }
 
 		/// <summary>Permission group ID assigned to this SSO.</summary>
-		public String PermissionGroupId { get; set; }
+		public string PermissionGroupId { get; set; }
 	}
 }

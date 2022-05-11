@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                PayInCardDirectDTO payIn = await GetNewPayInCardDirect();
+                var payIn = await GetNewPayInCardDirect();
 
                 var pagination = new Pagination(1, 1);
                 var filter = new FilterTransactions();
@@ -37,15 +37,15 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Card_GetByFingerprint()
         {
-            PayInCardDirectDTO payIn = await GetNewPayInCardDirect();
+            var payIn = await GetNewPayInCardDirect();
             Assert.IsNotNull(payIn, "PayIn object is null!");
-            CardDTO card = await Api.Cards.GetAsync(payIn.CardId);
+            var card = await Api.Cards.GetAsync(payIn.CardId);
 
             Assert.IsNotNull(card, "Card is null!");
             Assert.IsNotNull(card.Fingerprint, "Card fingerprint is null!");
             Assert.IsNotEmpty(card.Fingerprint, "Card fingerprint is empty!");
 
-            ListPaginated<CardDTO> cards = await Api.Cards.GetCardsByFingerprintAsync(card.Fingerprint);
+            var cards = await Api.Cards.GetCardsByFingerprintAsync(card.Fingerprint);
 
             Assert.True(cards.Count > 0, "Card lsit is empty");
 
@@ -61,31 +61,31 @@ namespace MangoPay.SDK.Tests
         {
             var payIn = await GetNewPayInCardDirect();
             Assert.IsNotNull(payIn, "PayIn object is null!");
-            var card = Api.Cards.Get(payIn.CardId);
+            var card = await Api.Cards.GetAsync(payIn.CardId);
 
             Assert.IsNotNull(card, "Card is null!");
             Assert.IsNotNull(card.Fingerprint, "Card fingerprint is null!");
             Assert.IsNotEmpty(card.Fingerprint, "Card fingerprint is empty!");
 
-            var validated = Api.Cards.Validate(card.Id);
+            var validated = await Api.Cards.ValidateAsync(card.Id);
             Assert.IsNotNull(validated);
         }
 
         [Test]
         public async Task Test_Card_GetByFingerprint_Paginated()
         {
-            PayInCardDirectDTO payIn = await GetNewPayInCardDirect();
+            var payIn = await GetNewPayInCardDirect();
             Assert.IsNotNull(payIn, "PayIn object is null!");
-            CardDTO card = await Api.Cards.GetAsync(payIn.CardId);
+            var card = await Api.Cards.GetAsync(payIn.CardId);
 
             Assert.IsNotNull(card, "Card is null!");
             Assert.IsNotNull(card.Fingerprint, "Card fingerprint is null!");
             Assert.IsNotEmpty(card.Fingerprint, "Card fingerprint is empty!");
 
-            Pagination pagination = new Pagination(1, 1);
-            ListPaginated<CardDTO> cards = await Api.Cards.GetCardsByFingerprintAsync(card.Fingerprint, pagination, null);
+            var pagination = new Pagination(1, 1);
+            var cards = await Api.Cards.GetCardsByFingerprintAsync(card.Fingerprint, pagination, null);
 
-            Assert.True(cards.Count == 1, String.Format("Requested 1 entity, got {0}", cards.Count));
+            Assert.True(cards.Count == 1, $"Requested 1 entity, got {cards.Count}");
 
             foreach (CardDTO cardDTO in cards)
             {

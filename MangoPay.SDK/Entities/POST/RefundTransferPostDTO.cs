@@ -15,6 +15,6 @@ namespace MangoPay.SDK.Entities.POST
         }
 
         /// <summary>Author identifier.</summary>
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
     }
 }

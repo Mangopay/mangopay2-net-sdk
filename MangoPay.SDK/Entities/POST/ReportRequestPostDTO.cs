@@ -34,14 +34,14 @@ namespace MangoPay.SDK.Entities.POST
 		public DownloadReportFormat DownloadFormat { get; set; }
 
 		/// <summary>Callback URL.</summary>
-		public String CallbackURL { get; set; }
+		public string CallbackURL { get; set; }
 
 		/// <summary>Type of the report.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ReportType? ReportType { get; set; }
 
 		/// <summary>Sorting (defaults to: CreationDate, ascending).</summary>
-		public String Sort { get; set; }
+		public string Sort { get; set; }
 
 		/// <summary>If true, the report will be limited to the first 10 lines.</summary>
 		public bool Preview { get; set; }
@@ -50,6 +50,6 @@ namespace MangoPay.SDK.Entities.POST
 		public FilterReports Filters { get; set; }
 
 		/// <summary>Allowed values: "Alias", "BankAccountId", "BankWireRef", "CardId", "CardType", "Country", "Culture", "Currency", "DeclaredDebitedFundsAmount", "DeclaredDebitedFundsCurrency", "DeclaredFeesAmount", "DeclaredFeesCurrency", "ExecutionType", "ExpirationDate", "PaymentType", "PreauthorizationId", "WireReference".</summary>
-		public List<String> Columns { get; set; }
+		public List<string> Columns { get; set; }
 	}
 }

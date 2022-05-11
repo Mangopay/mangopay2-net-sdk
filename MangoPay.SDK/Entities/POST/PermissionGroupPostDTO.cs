@@ -11,7 +11,7 @@ namespace MangoPay.SDK.Entities.POST
 		}
 
 		/// <summary>The name of permission group.</summary>
-		public String Name { get; set; }
+		public string Name { get; set; }
 
 		/// <summary>The name of permission group.</summary>
 		public Scopes Scopes { get; set; }

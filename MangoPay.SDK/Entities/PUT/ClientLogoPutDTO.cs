@@ -10,6 +10,6 @@ namespace MangoPay.SDK.Entities.PUT
 			File = fileContentBase64;
 		}
 
-		public String File { get; set; }
+		public string File { get; set; }
 	}
 }

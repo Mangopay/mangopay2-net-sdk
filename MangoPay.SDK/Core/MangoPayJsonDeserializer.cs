@@ -5,7 +5,7 @@ using MangoPay.SDK.Entities.GET;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
-using RestSharp.Deserializers;
+using RestSharp.Serializers;
 
 namespace MangoPay.SDK.Core
 {
@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Core
 
         public string RootElement { get; set; }
 
-        public T Deserialize<T>(IRestResponse response)
+        public T Deserialize<T>(RestResponse response)
         {
             if (typeof(T) != typeof(IdempotencyResponseDTO))
                 return JsonConvert.DeserializeObject<T>(response.Content);

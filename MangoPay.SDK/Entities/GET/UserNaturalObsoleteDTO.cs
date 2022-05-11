@@ -10,20 +10,20 @@ namespace MangoPay.SDK.Entities.GET
 	public sealed class UserNaturalObsoleteDTO : UserDTO
 	{
 		/// <summary>First name.</summary>
-		public String FirstName { get; set; }
+		public string FirstName { get; set; }
 
 		/// <summary>Last name.</summary>
-		public String LastName { get; set; }
+		public string LastName { get; set; }
 
 		/// <summary>Address.</summary>
-		public String Address { get; set; }
+		public string Address { get; set; }
 
 		/// <summary>Date of birth (UNIX timestamp).</summary>
 		[JsonConverter(typeof(Core.UnixDateTimeConverter))]
 		public DateTime? Birthday { get; set; }
 
 		/// <summary>Place of birth.</summary>
-		public String Birthplace { get; set; }
+		public string Birthplace { get; set; }
 
 		/// <summary>User's country.</summary>
 		[JsonConverter(typeof(EnumerationConverter))]
@@ -34,7 +34,7 @@ namespace MangoPay.SDK.Entities.GET
 		public CountryIso CountryOfResidence { get; set; }
 
 		/// <summary>User's occupation.</summary>
-		public String Occupation { get; set; }
+		public string Occupation { get; set; }
 
 		/// <summary>Income ranges:
 		/// 1 (-18K€),
@@ -57,9 +57,9 @@ namespace MangoPay.SDK.Entities.GET
 		public int? IncomeRange { get; set; }
 
 		/// <summary>Proof of identity.</summary>
-		public String ProofOfIdentity { get; set; }
+		public string ProofOfIdentity { get; set; }
 
 		/// <summary>Proof of address.</summary>
-		public String ProofOfAddress { get; set; }
+		public string ProofOfAddress { get; set; }
 	}
 }

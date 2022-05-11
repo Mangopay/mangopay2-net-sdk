@@ -12,6 +12,6 @@ namespace MangoPay.SDK.Entities.POST
         }
 
         /// <summary>File content.</summary>
-        public String File { get; set; }
+        public string File { get; set; }
     }
 }

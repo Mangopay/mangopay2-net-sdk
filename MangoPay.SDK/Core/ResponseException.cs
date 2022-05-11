@@ -12,7 +12,7 @@ namespace MangoPay.SDK.Core
 		/// <summary>Instantiates new ResponseException object.</summary>
 		/// <param name="message">JSON data that came as a response from API.</param>
 		/// <param name="responseStatusCode">Response status code from API.</param>
-		public ResponseException(String message, int responseStatusCode) : base(message) 
+		public ResponseException(string message, int responseStatusCode) : base(message) 
         {
             try
             {
@@ -27,7 +27,7 @@ namespace MangoPay.SDK.Core
         }
 
         /// <summary>Raw text data that came as response from API.</summary>
-        public String ResponseErrorRaw;
+        public string ResponseErrorRaw;
 
         /// <summary>Deserialized response error data.</summary>
         public ResponseError ResponseError = new ResponseError();

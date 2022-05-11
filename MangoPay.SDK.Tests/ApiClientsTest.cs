@@ -1,5 +1,4 @@
-﻿using MangoPay.SDK.Core;
-using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
@@ -17,40 +16,6 @@ namespace MangoPay.SDK.Tests
     [TestFixture]
     public class ApiClientsTest : BaseTest
     {
-
-        [Test]
-        public async Task Test_Client_GetKycDocuments()
-        {
-            ListPaginated<KycDocumentDTO> result = null;
-            ListPaginated<KycDocumentDTO> result2 = null;
-
-            try
-            {
-                result = await this.Api.Clients.GetKycDocumentsAsync(null, null);
-                Assert.IsNotNull(result);
-                Assert.IsTrue(result.Count > 0);
-
-                Pagination pagination = new Pagination(1, 2);
-                Sort sort = new Sort();
-                sort.AddField("CreationDate", SortDirection.asc);
-                result = await this.Api.Clients.GetKycDocumentsAsync(pagination, null, sort);
-                Assert.IsNotNull(result);
-                Assert.IsTrue(result.Count > 0);
-
-                sort = new Sort();
-                sort.AddField("CreationDate", SortDirection.desc);
-                result2 = await this.Api.Clients.GetKycDocumentsAsync(pagination, null, sort);
-                Assert.IsNotNull(result2);
-                Assert.IsTrue(result2.Count > 0);
-
-                Assert.IsTrue(result[0].Id != result2[0].Id);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
-        }
-
         [Test]
         public async Task Test_Client_GetWallets()
         {
@@ -90,9 +55,9 @@ namespace MangoPay.SDK.Tests
 
             WalletDTO wallet = null;
             WalletDTO result = null;
-            if (feesWallets != null && feesWallets.Count > 0)
+            if (feesWallets.Count > 0)
                 wallet = feesWallets[0];
-            else if (creditWallets != null && creditWallets.Count > 0)
+            else if (creditWallets.Count > 0)
                 wallet = creditWallets[0];
 
             result = await this.Api.Clients.GetWalletAsync(wallet.FundsType, wallet.Currency);
@@ -123,9 +88,9 @@ namespace MangoPay.SDK.Tests
 
             WalletDTO wallet = null;
             ListPaginated<TransactionDTO> result = null;
-            if (feesWallets != null && feesWallets.Count > 0)
+            if (feesWallets.Count > 0)
                 wallet = feesWallets[0];
-            else if (creditWallets != null && creditWallets.Count > 0)
+            else if (creditWallets.Count > 0)
                 wallet = creditWallets[0];
 
             result = await this.Api.Clients.GetWalletTransactionsAsync(wallet.FundsType, wallet.Currency, new Pagination(1, 1), null);
@@ -156,7 +121,7 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                ClientBankWireDirectPostDTO bankwireDirectPost = new ClientBankWireDirectPostDTO("CREDIT_EUR", new Money { Amount = 1000, Currency = CurrencyIso.EUR });
+                var bankwireDirectPost = new ClientBankWireDirectPostDTO("CREDIT_EUR", new Money { Amount = 1000, Currency = CurrencyIso.EUR });
 
                 PayInDTO result = await this.Api.Clients.CreateBankWireDirectAsync(bankwireDirectPost);
 
@@ -178,7 +143,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_ClientGet()
         {
-            ClientDTO client = await this.Api.Clients.GetAsync();
+            var client = await this.Api.Clients.GetAsync();
 
             Assert.IsNotNull(client);
             Assert.IsTrue("sdk-unit-tests".Equals(client.ClientId));
@@ -187,12 +152,12 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_ClientSave()
         {
-            ClientPutDTO client = new ClientPutDTO();
+            var client = new ClientPutDTO();
 
-            Random rand = new Random();
-            String color1 = (rand.Next(100000) + 100000).ToString();
-            String color2 = (rand.Next(100000) + 100000).ToString();
-            String headquartersPhoneNumber = (rand.Next(10000000, 99999999)).ToString();
+            var rand = new Random();
+            var color1 = (rand.Next(100000) + 100000).ToString();
+            var color2 = (rand.Next(100000) + 100000).ToString();
+            var headquartersPhoneNumber = (rand.Next(10000000, 99999999)).ToString();
 
             client.PrimaryButtonColour = "#" + color1;
             client.PrimaryThemeColour = "#" + color2;
@@ -215,7 +180,7 @@ namespace MangoPay.SDK.Tests
             };
             client.HeadquartersPhoneNumber = headquartersPhoneNumber;
 
-            ClientDTO clientNew = await this.Api.Clients.SaveAsync(client);
+            var clientNew = await this.Api.Clients.SaveAsync(client);
 
             Assert.IsNotNull(clientNew);
             Assert.AreEqual(client.PrimaryButtonColour, clientNew.PrimaryButtonColour);
@@ -250,17 +215,17 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_Client_SaveAddressNull()
         {
-            ClientPutDTO client = new ClientPutDTO();
+            var client = new ClientPutDTO();
 
-            Random rand = new Random();
-            String color1 = (rand.Next(100000) + 100000).ToString();
-            String color2 = (rand.Next(100000) + 100000).ToString();
+            var rand = new Random();
+            var color1 = (rand.Next(100000) + 100000).ToString();
+            var color2 = (rand.Next(100000) + 100000).ToString();
 
             client.PrimaryButtonColour = "#" + color1;
             client.PrimaryThemeColour = "#" + color2;
             client.HeadquartersAddress = new Address();
 
-            ClientDTO clientNew = await this.Api.Clients.SaveAsync(client);
+            var clientNew = await this.Api.Clients.SaveAsync(client);
 
             Assert.IsNotNull(clientNew);
         }

@@ -16,9 +16,9 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.WALLETS);
+                var reportPost = new ReportRequestPostDTO(ReportType.WALLETS);
 
-				ReportRequestDTO report = await this.Api.Reports.CreateAsync(reportPost);
+                var report = await this.Api.Reports.CreateAsync(reportPost);
 				Assert.IsNotNull(report);
 				Assert.AreEqual(ReportType.WALLETS, report.ReportType);
 				Assert.IsTrue(report.Id.Length > 0);
@@ -34,9 +34,9 @@ namespace MangoPay.SDK.Tests
 		{
 			try
 			{
-				ReportRequestPostDTO reportPost = new ReportRequestPostDTO(ReportType.WALLETS);
+                var reportPost = new ReportRequestPostDTO(ReportType.WALLETS);
                 var john = await this.GetJohn();
-				string johnsId = john.Id;
+                var johnsId = john.Id;
 				var minBalance = new Money() { Amount = 1, Currency = CurrencyIso.EUR };
 				var maxBalance = new Money() { Amount = 1000, Currency = CurrencyIso.EUR };
 				var currency = CurrencyIso.EUR;
@@ -46,7 +46,7 @@ namespace MangoPay.SDK.Tests
 				reportPost.Filters.MaxBalanceAmount = maxBalance.Amount;
 				reportPost.Filters.MaxBalanceCurrency = maxBalance.Currency;
 				reportPost.Filters.Currency = currency;
-				ReportRequestDTO report = await this.Api.Reports.CreateAsync(reportPost);
+                var report = await this.Api.Reports.CreateAsync(reportPost);
 				Assert.IsNotNull(report);
 				Assert.AreEqual(ReportType.WALLETS, report.ReportType);
 				Assert.IsNotNull(report.Filters);
@@ -70,8 +70,8 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-				ReportRequestDTO report = await this.GetJohnsReport(ReportType.WALLETS);
-				ReportRequestDTO getReport = await this.Api.Reports.GetAsync(report.Id);
+                var report = await this.GetJohnsReport(ReportType.WALLETS);
+                var getReport = await this.Api.Reports.GetAsync(report.Id);
 
 				Assert.AreEqual(getReport.Id, report.Id);
             }

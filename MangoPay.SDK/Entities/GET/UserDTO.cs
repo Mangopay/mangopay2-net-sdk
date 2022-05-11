@@ -13,7 +13,7 @@ namespace MangoPay.SDK.Entities.GET
         public PersonType PersonType { get; set; }
 
         /// <summary>Email address.</summary>
-        public String Email { get; set; }
+        public string Email { get; set; }
 
 		/// <summary>KYC level.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]

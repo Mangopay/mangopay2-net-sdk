@@ -19,7 +19,7 @@ namespace MangoPay.SDK.Entities.POST
         }
 
         /// <summary>Author identifier.</summary>
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         /// <summary>Debited funds.</summary>
         public Money DebitedFunds { get; set; }
@@ -29,17 +29,17 @@ namespace MangoPay.SDK.Entities.POST
         public SecureMode SecureMode { get; set; }
 
         /// <summary>Card identifier.</summary>
-        public String CardId { get; set; }
+        public string CardId { get; set; }
 
         /// <summary>Secure mode return URL.</summary>
-        public String SecureModeReturnURL { get; set; }
+        public string SecureModeReturnURL { get; set; }
 
         /// <summary>The status of the payment after the PreAuthorization.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public PaymentStatus? PaymentStatus { get; set; }
 
         /// <summary>An optional value to be specified on the user's bank statement.</summary>
-        public String StatementDescriptor { get; set; }
+        public string StatementDescriptor { get; set; }
 
         public Billing Billing { get; set; }
 

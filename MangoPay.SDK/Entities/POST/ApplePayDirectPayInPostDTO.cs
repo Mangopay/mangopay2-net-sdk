@@ -12,7 +12,7 @@ namespace MangoPay.SDK.Entities.POST
             
         }
 
-        public ApplePayDirectPayInPostDTO(String authorId, String creditedWalletId, String creditedUserId, Money debitedFunds, Money fees, PaymentData paymentData, String statementDescriptor)
+        public ApplePayDirectPayInPostDTO(string authorId, string creditedWalletId, string creditedUserId, Money debitedFunds, Money fees, PaymentData paymentData, string statementDescriptor)
         {
             AuthorId = authorId;
             
@@ -25,16 +25,16 @@ namespace MangoPay.SDK.Entities.POST
         }
         
         /// <summary>Author identifier.</summary>
-        public String AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
         /// <summary>Debited founds.</summary>
         public Money DebitedFunds { get; set; }
 
         /// <summary>Credited user identifier</summary>
-        public String CreditedUserId { get; set; }
+        public string CreditedUserId { get; set; }
 
         /// <summary>Credited wallet identifier.</summary>
-        public String CreditedWalletId { get; set; }
+        public string CreditedWalletId { get; set; }
 
         /// <summary>Fees.</summary>
         public Money Fees { get; set; }
@@ -43,7 +43,7 @@ namespace MangoPay.SDK.Entities.POST
         public PaymentData PaymentData { get; set; }
 
         /// <summary> A custom description to appear on the user's bank statement </summary>
-        public String StatementDescriptor { get; set; }
+        public string StatementDescriptor { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public PayInPaymentType PaymentType { get; set; }
