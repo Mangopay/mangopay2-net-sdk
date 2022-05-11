@@ -1,3 +1,26 @@
+## [3.0.0] - 2022.05.11
+The .Net SDK has been revamped in order to increase performances and improve the developer experience.
+
+### Changed
+
+#### Updated libraries
+
+The SDK relies on .Net 5.0. You should update your project and librairies accordingly.
+If you use a lower/older version, we will not be able to provide any support.
+
+#### Functions include idempotency management
+
+Previously, if you wish to use idempotency, you had to use a dedicated function for idempotency. These functions have been removed.
+Now, each regular function can use idempotency, thanks to a new parameter.
+
+For example : 
+
+`await this.Api.PayIns.CreateRefundAsync(payIn.Id, refund, idempotentKey: idempotencyKey);`
+
+#### Requests efficiency
+
+We have improved our request management. This version uses a singleton RestClient and changes only the RestRequest at each request. Therefore, requests are faster and have less impact on your server. 
+
 ## [2.11.0] - 2022.03.31
 ### Added
 

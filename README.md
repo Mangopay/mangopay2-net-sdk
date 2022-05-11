@@ -6,7 +6,7 @@ MangopaySDK is a Microsoft .NET client library to work with
 
 Installation and package dependencies
 -------------------------------------------------
-This SDK is currently targeting **.NET Standard 2.0**, **.NET Core 3.1** and **.NET 5.0.** It has **4** dependencies on external packages. 
+This SDK is currently targeting **.NET Standard 2.0** and **.NET 5.0.** It has **4** dependencies on external packages. 
 These dependencies are:
 - Common.Logging library (version 3.4.1)
 - Newtonsoft.Json (version 13.0.1)
@@ -74,10 +74,10 @@ Sample usage (get, update and save an entity)
     api.Config.ClientPassword = "your-client-api-key";
 
     // get some Natural user
-    UserNaturalDTO user = api.Users.GetNatural(someUserId);
+    var user = api.Users.GetNatural(someUserId);
 
 	// create update entity
-	UserNaturalPutDTO userPut = new UserNaturalPutDTO
+	var userPut = new UserNaturalPutDTO
     {
         Tag = user.Tag,
         Email = user.Email,
@@ -92,14 +92,12 @@ Sample usage (get, update and save an entity)
     };
 	
 	// save updated user
-	UserNaturalDTO userSaved = api.Users.UpdateNatural(userPut, user.Id);
+	var userSaved = api.Users.UpdateNatural(userPut, user.Id);
 
 	// get his bank accounts
-    Pagination pagination = new Pagination(2, 10); // get 2nd page, 10 items per page
-    ListPaginated<BankAccountDTO> accounts = api.Users.GetBankAccounts(user.Id, pagination);
+    var accounts = api.Users.GetBankAccounts(user.Id, new Pagination(2, 10));
 	
     // get all users (with pagination)
-    Pagination pagination = new Pagination(1, 8); // get 1st page, 8 items per page
-    ListPaginated<UserDTO> users = api.Users.GetAll(pagination);
+    var users = api.Users.GetAll(new Pagination(1, 8));
 
 	
