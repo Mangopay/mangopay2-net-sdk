@@ -52,7 +52,9 @@ namespace MangoPay.SDK.Entities.PUT
         [JsonConverter(typeof(StringEnumConverter))]
         public CountryIso? LegalRepresentativeCountryOfResidence { get; set; }
 
-		public bool ShouldSerializeHeadquartersAddress()
+        public bool? TermsAndConditionsAccepted { get; set; }
+
+        public bool ShouldSerializeHeadquartersAddress()
 		{
 			return HeadquartersAddress != null && HeadquartersAddress.IsValid();
 		}

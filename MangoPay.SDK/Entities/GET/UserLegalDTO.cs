@@ -61,5 +61,11 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Legal Representative Proof Of Identity.</summary>
         public string LegalRepresentativeProofOfIdentity { get; set; }
+
+        public bool? TermsAndConditionsAccepted { get; set; }
+
+        /// <summary>Execution date.</summary>
+        [JsonConverter(typeof(Core.UnixDateTimeConverter))]
+        public DateTime? TermsAndConditionsAcceptedDate { get; set; }
     }
 }
