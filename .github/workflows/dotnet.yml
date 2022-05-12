@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet: ['5.0.x']
+        dotnet: ['6.0.x']
     name: dotnet ${{ matrix.dotnet }}
     steps:
     - uses: actions/checkout@v2
@@ -31,4 +31,4 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
     - name: Test
-      run: dotnet test ./MangoPay.SDK.Tests/bin/Release/net5.0/MangoPay.SDK.Tests.dll
+      run: dotnet test ./MangoPay.SDK.Tests/bin/Release/net6.0/MangoPay.SDK.Tests.dll
