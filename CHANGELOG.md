@@ -1,3 +1,11 @@
+## [3.1] - 2022.05.12
+###Changed
+
+####Updated libraries
+
+The SDK relies on .Net 6.0. You should update your project and librairies accordingly.
+If you use a lower/older version, we will not be able to provide any support.
+
 ## [3.0.0] - 2022.05.11
 The .Net SDK has been revamped in order to increase performances and improve the developer experience.
 
