@@ -1,4 +1,26 @@
-## [3.1] - 2022.05.12
+## [3.2.0] - 2022.05.18
+### Added
+
+#### Terms and conditions acceptance parameter
+
+The acceptance of the MANGOPAY terms and conditions by the end user can now be registered via the SDK.
+
+This information can be managed by using the new `TermsAndConditionsAccepted` parameter added to the `User` object.
+
+The following API endpoints have been updated to take into account the new TermsAndConditionsAccepted parameter:
+
+[Create a Natural User](https://docs.mangopay.com/endpoints/v2.01/users#e255_create-a-natural-user)
+[Update a Natural User](https://docs.mangopay.com/endpoints/v2.01/users#e260_update-a-natural-user)
+[Create a Legal User](https://docs.mangopay.com/endpoints/v2.01/users#e259_create-a-legal-user)
+[Update a Legal User](https://docs.mangopay.com/endpoints/v2.01/users#e261_update-a-legal-user)
+[View a User](https://docs.mangopay.com/endpoints/v2.01/users#e256_view-a-user)
+
+Please note that:
+
+- Existing users have to be updated to include the terms and conditions acceptance information.
+- Once accepted, the terms and conditions cannot be revoked.
+
+## [3.1.0] - 2022.05.12
 ###Changed
 
 ####Updated libraries
