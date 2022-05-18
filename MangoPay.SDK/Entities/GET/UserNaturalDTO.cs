@@ -63,5 +63,11 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Proof of address.</summary>
         public string ProofOfAddress { get; set; }
+
+        public bool? TermsAndConditionsAccepted { get; set; }
+
+        /// <summary>Execution date.</summary>
+        [JsonConverter(typeof(Core.UnixDateTimeConverter))]
+        public DateTime? TermsAndConditionsAcceptedDate { get; set; }
     }
 }

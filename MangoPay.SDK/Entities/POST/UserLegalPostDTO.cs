@@ -73,7 +73,9 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Legal Representative Proof Of Identity.</summary>
         public string LegalRepresentativeProofOfIdentity { get; set; }
 
-		public bool ShouldSerializeHeadquartersAddress()
+        public bool? TermsAndConditionsAccepted { get; set; }
+
+        public bool ShouldSerializeHeadquartersAddress()
 		{
 			return HeadquartersAddress != null && HeadquartersAddress.IsValid();
 		}

@@ -934,5 +934,57 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(e.Message);
             }
         }
+
+        [Test]
+        public async Task Test_Users_Natural_TermsAndConditions()
+        {
+            try
+            {
+                var naturalJohn = await GetNewJohn();
+                Assert.False(naturalJohn.TermsAndConditionsAccepted ?? false);
+
+                var naturalJohnAccepted = await GetNewJohn(true);
+                Assert.True(naturalJohnAccepted.TermsAndConditionsAccepted ?? true);
+                Assert.True(naturalJohnAccepted.TermsAndConditionsAcceptedDate.HasValue);
+
+                var updatedJohn = await this.Api.Users.UpdateNaturalAsync(new UserNaturalPutDTO
+                {
+                    TermsAndConditionsAccepted = true
+                }, naturalJohn.Id);
+
+                Assert.True(updatedJohn.TermsAndConditionsAccepted ?? true);
+                Assert.True(updatedJohn.TermsAndConditionsAcceptedDate.HasValue);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+
+        [Test]
+        public async Task Test_Users_Legal_TermsAndConditions()
+        {
+            try
+            {
+                var legalJohn = await GetMatrix();
+                Assert.False(legalJohn.TermsAndConditionsAccepted ?? false);
+
+                var legalJohnAccepted = await GetMatrix(true, true);
+                Assert.True(legalJohnAccepted.TermsAndConditionsAccepted ?? true);
+                Assert.True(legalJohnAccepted.TermsAndConditionsAcceptedDate.HasValue);
+
+                var updatedJohn = await this.Api.Users.UpdateLegalAsync(new UserLegalPutDTO
+                {
+                    TermsAndConditionsAccepted = true
+                }, legalJohn.Id);
+
+                Assert.True(updatedJohn.TermsAndConditionsAccepted ?? true);
+                Assert.True(updatedJohn.TermsAndConditionsAcceptedDate.HasValue);
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
     }
 }
