@@ -24,7 +24,6 @@ namespace MangoPay.SDK.Entities.POST
         [JsonConverter(typeof(StringEnumConverter))]
         public UserCategory UserCategory { get; set; }
 
-
         public bool? TermsAndConditionsAccepted { get; set; }
     }
 }

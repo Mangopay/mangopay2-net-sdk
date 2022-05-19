@@ -54,6 +54,9 @@ namespace MangoPay.SDK.Entities.PUT
 
         public bool? TermsAndConditionsAccepted { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
+        public UserCategory UserCategory { get; set; }
+
         public bool ShouldSerializeHeadquartersAddress()
 		{
 			return HeadquartersAddress != null && HeadquartersAddress.IsValid();

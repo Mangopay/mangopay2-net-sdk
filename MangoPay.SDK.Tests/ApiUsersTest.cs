@@ -237,16 +237,8 @@ namespace MangoPay.SDK.Tests
 
                 var johnPut = new UserNaturalPutDTO
                 {
-                    Tag = john.Tag,
-                    Email = john.Email,
-                    FirstName = john.FirstName,
                     LastName = john.LastName + " - CHANGED (éèęóąśłżźćń)",
-                    Address = john.Address,
-                    Birthday = john.Birthday,
-                    Nationality = john.Nationality,
-                    CountryOfResidence = john.CountryOfResidence,
-                    Occupation = john.Occupation,
-                    IncomeRange = john.IncomeRange
+                    Nationality = CountryIso.DK
                 };
 
                 var userSaved = await this.Api.Users.UpdateNaturalAsync(johnPut, john.Id);
