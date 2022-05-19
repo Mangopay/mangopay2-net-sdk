@@ -53,7 +53,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUbo_Create_Ubo_Valid()
         {
-            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateOwnerAsync(CreateUserLegalPost());
             var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id);
             var uboDto = UboPostDtoCollection[0];
             UboDTO result = null;
@@ -64,7 +64,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUbo_Update_Ubo_Valid()
         {
-            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateOwnerAsync(CreateUserLegalPost());
             var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id);
             var uboDto = UboPostDtoCollection[1];
             var ubo = await Api.UboDeclarations.CreateUboAsync(uboDto, userLegal.Id, uboDeclaration.Id);
@@ -99,7 +99,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUboDeclaration_Create_UboDeclaration_Valid()
         {
-            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateOwnerAsync(CreateUserLegalPost());
 
             UboDeclarationDTO result = null;
 
@@ -111,7 +111,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUboDeclaration_Get_UboDeclaration_Valid()
         {
-            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateOwnerAsync(CreateUserLegalPost());
 
             UboDeclarationDTO uboDeclaration = null;
             Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id));
@@ -125,7 +125,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUboDeclaration_GetById_UboDeclaration_Valid()
         {
-            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateOwnerAsync(CreateUserLegalPost());
 
             UboDeclarationDTO uboDeclaration = null;
             Assert.DoesNotThrowAsync(async () => uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id));
@@ -139,7 +139,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUboDeclaration_GetAll_UboDeclaration_Valid()
         {
-            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateOwnerAsync(CreateUserLegalPost());
             var uboDeclarationDto = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id);
 
             ListPaginated<UboDeclarationDTO> result = null;
@@ -153,7 +153,7 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task ApiUboDeclaration_Update_UboDeclaration_Valid()
         {
-            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateOwnerAsync(CreateUserLegalPost());
 
             var uboDeclaration = await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id);
 

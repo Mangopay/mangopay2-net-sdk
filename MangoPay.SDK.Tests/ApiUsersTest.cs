@@ -53,9 +53,18 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                var userPost = new UserLegalPostDTO("email@email.org", "SomeOtherSampleOrg", LegalPersonType.BUSINESS, "RepFName", "RepLName", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
+                var userPost = new UserLegalPayerPostDTO
+                {
+                    Email = "email@email.org",
+                    Name = "SomeOtherSampleOrg",
+                    UserCategory = "Payer",
+                    LegalPersonType = LegalPersonType.BUSINESS,
+                    LegalRepresentativeFirstName = "RepFName",
+                    LegalRepresentativeLastName = "RepLName",
+                    TermsAndConditionsAccepted = true
+                };
 
-                var userCreated = await this.Api.Users.CreateAsync(userPost);
+                var userCreated = await this.Api.Users.CreatePayerAsync(userPost);
 
                 var userGet = await this.Api.Users.GetLegalAsync(userCreated.Id);
 
@@ -984,6 +993,153 @@ namespace MangoPay.SDK.Tests
             catch (Exception e)
             {
                 Assert.Fail(e.Message);
+            }
+        }
+
+        [Test]
+        public async Task TestNaturalUserPayerSuccessful()
+        {
+            try
+            {
+                var user = new UserNaturalPayerPostDTO
+                {
+                    FirstName = "Karim",
+                    LastName = "Benzema",
+                    Email = "karim.benzema@realmadrid.es",
+                    Address = new Address
+                    {
+                        AddressLine1 = "Valdebebas Ciudat Deportiva",
+                        AddressLine2 = "Barajas, Madrid",
+                        City = "Madrid",
+                        Country = CountryIso.ES,
+                        PostalCode = "28080",
+                        Region = "Central"
+                    },
+                    Tag = "BALON DE ORO",
+                    TermsAndConditionsAccepted = true,
+                    UserCategory = "Payer"
+                };
+
+                var result = await this.Api.Users.CreatePayerAsync(user);
+
+                Assert.NotNull(result);
+                Assert.IsTrue(result.UserCategory.ToLower() is "payer");
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+
+        [Test]
+        public async Task TestNaturalUserPayerFails()
+        {
+            try
+            {
+                var user = new UserNaturalPayerPostDTO
+                {
+                    FirstName = "Karim",
+                    LastName = "Benzema",
+                    Email = "karim.benzema@realmadrid.es",
+                    Address = new Address
+                    {
+                        AddressLine1 = "Valdebebas Ciudat Deportiva",
+                        AddressLine2 = "Barajas, Madrid",
+                        City = "Madrid",
+                        Country = CountryIso.ES,
+                        PostalCode = "28080",
+                        Region = "Central"
+                    },
+                    Tag = "BALON DE ORO",
+                    TermsAndConditionsAccepted = true,
+                    UserCategory = "Owner"
+                };
+
+                await this.Api.Users.CreatePayerAsync(user);
+                Assert.Fail("no exception thrown");
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e.Message.Contains("BadRequest"));
+            }
+        }
+
+        [Test]
+        public async Task TestLegalUserOwner()
+        {
+            try
+            {
+                var user = new UserLegalOwnerPostDTO
+                {
+                    Name = "MartixSampleOrg",
+                    LegalPersonType = LegalPersonType.BUSINESS,
+                    UserCategory = "Owner",
+                    TermsAndConditionsAccepted = true,
+                    LegalRepresentativeFirstName = "JohnUbo",
+                    LegalRepresentativeLastName = "DoeUbo",
+                    LegalRepresentativeCountryOfResidence = CountryIso.PL,
+                    LegalRepresentativeNationality = CountryIso.PL,
+                    HeadquartersAddress = new Address
+                    {
+                        AddressLine1 = "Address line ubo 1",
+                        AddressLine2 = "Address line ubo 2",
+                        City = "CityUbo",
+                        Country = CountryIso.PL,
+                        PostalCode = "11222",
+                        Region = "RegionUbo"
+                    },
+                    LegalRepresentativeAddress = new Address
+                    {
+                        AddressLine1 = "Address line ubo 1",
+                        AddressLine2 = "Address line ubo 2",
+                        City = "CityUbo",
+                        Country = CountryIso.PL,
+                        PostalCode = "11222",
+                        Region = "RegionUbo"
+                    },
+                    LegalRepresentativeEmail = "john.doe@sample.org",
+                    LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                    Email = "john.doe@sample.org",
+                    CompanyNumber = "LU72HN11"
+                };
+
+                var result = await Api.Users.CreatePayerAsync(user);
+
+                Assert.NotNull(result);
+                Assert.IsTrue(result.UserCategory.ToLower() is "owner");
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+        }
+
+        [Test]
+        public async Task TestLegallUserPayerFails()
+        {
+            try
+            {
+                var user = new UserLegalOwnerPostDTO
+                {
+                    Name = "MartixSampleOrg",
+                    LegalPersonType = LegalPersonType.BUSINESS,
+                    UserCategory = "Owner",
+                    TermsAndConditionsAccepted = true,
+                    LegalRepresentativeFirstName = "JohnUbo",
+                    LegalRepresentativeLastName = "DoeUbo",
+                    LegalRepresentativeCountryOfResidence = CountryIso.PL,
+                    LegalRepresentativeNationality = CountryIso.PL,
+                    LegalRepresentativeEmail = "john.doe@sample.org",
+                    LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                    Email = "john.doe@sample.org"
+                };
+
+                await this.Api.Users.CreatePayerAsync(user);
+                Assert.Fail("no exception thrown");
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e.Message.Contains("BadRequest"));
             }
         }
     }

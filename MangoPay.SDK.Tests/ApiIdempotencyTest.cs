@@ -332,7 +332,7 @@ namespace MangoPay.SDK.Tests
         {
             var key = DateTime.Now.Ticks.ToString();
 
-            var userLegal = await Api.Users.CreateAsync(CreateUserLegalPost());
+            var userLegal = await Api.Users.CreateOwnerAsync(CreateUserLegalPost());
 
             await Api.UboDeclarations.CreateUboDeclarationAsync(userLegal.Id, key);
 
@@ -437,9 +437,17 @@ namespace MangoPay.SDK.Tests
         public async Task Test_Idempotency_UsersCreateLegals()
         {
             var key = DateTime.Now.Ticks.ToString();
-            var userPost = new UserLegalPostDTO("email@email.org", "SomeOtherSampleOrg", LegalPersonType.BUSINESS,
-                "RepFName", "RepLName", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR);
-            await Api.Users.CreateAsync(userPost, key);
+            var userPost = new UserLegalPayerPostDTO
+            {
+                Email = "email@email.org",
+                Name = "SomeOtherSampleOrg",
+                LegalPersonType = LegalPersonType.BUSINESS,
+                LegalRepresentativeFirstName = "RepFName",
+                LegalRepresentativeLastName = "RepLName",
+                TermsAndConditionsAccepted = true,
+                UserCategory = "Payer"
+            };
+            await Api.Users.CreatePayerAsync(userPost, key);
 
             var result = await Api.Idempotent.GetAsync(key);
 
@@ -450,9 +458,14 @@ namespace MangoPay.SDK.Tests
         public async Task Test_Idempotency_UsersCreateNaturals()
         {
             var key = DateTime.Now.Ticks.ToString();
-            var user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe",
-                new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR)
+            var user = new UserNaturalOwnerPostDTO
             {
+                Email = "john.doe@sample.org",
+                FirstName = "John",
+                LastName = "Doe",
+                Birthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                CountryOfResidence = CountryIso.FR,
+                Nationality = CountryIso.FR,
                 Occupation = "programmer",
                 IncomeRange = 3,
                 Address = new Address
@@ -460,10 +473,11 @@ namespace MangoPay.SDK.Tests
                     AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City",
                     Country = CountryIso.PL, PostalCode = "11222", Region = "Region"
                 },
-                Capacity = CapacityType.NORMAL
+                TermsAndConditionsAccepted = true,
+                UserCategory = "Owner"
             };
 
-            await Api.Users.CreateAsync(user, key);
+            await Api.Users.CreateOwnerAsync(user, key);
 
             var result = await Api.Idempotent.GetAsync(key);
 
