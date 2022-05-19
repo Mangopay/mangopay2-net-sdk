@@ -258,22 +258,12 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                var matrix = await this.GetMatrix();
+                var matrix = await this.GetMatrix(newJohn: true);
 
                 var matrixPut = new UserLegalPutDTO
                 {
-                    Tag = matrix.Tag,
-                    Email = matrix.Email,
-                    Name = matrix.Name,
-                    LegalPersonType = matrix.LegalPersonType,
-                    HeadquartersAddress = matrix.HeadquartersAddress,
-                    LegalRepresentativeFirstName = matrix.LegalRepresentativeFirstName,
                     LegalRepresentativeLastName = matrix.LegalRepresentativeLastName + " - CHANGED",
-                    LegalRepresentativeAddress = matrix.LegalRepresentativeAddress,
-                    LegalRepresentativeEmail = matrix.LegalRepresentativeEmail,
-                    LegalRepresentativeBirthday = matrix.LegalRepresentativeBirthday,
-                    LegalRepresentativeNationality = matrix.LegalRepresentativeNationality,
-                    LegalRepresentativeCountryOfResidence = matrix.LegalRepresentativeCountryOfResidence
+                    UserCategory = UserCategory.OWNER
                 };
 
                 var userSaved = await this.Api.Users.UpdateLegalAsync(matrixPut, matrix.Id);
@@ -967,7 +957,7 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                var legalJohn = await GetMatrix();
+                var legalJohn = await GetMatrix(newJohn: true);
                 Assert.False(legalJohn.TermsAndConditionsAccepted ?? false);
 
                 var legalJohnAccepted = await GetMatrix(true, true);
@@ -976,7 +966,8 @@ namespace MangoPay.SDK.Tests
 
                 var updatedJohn = await this.Api.Users.UpdateLegalAsync(new UserLegalPutDTO
                 {
-                    TermsAndConditionsAccepted = true
+                    TermsAndConditionsAccepted = true,
+                    UserCategory = UserCategory.OWNER
                 }, legalJohn.Id);
 
                 Assert.True(updatedJohn.TermsAndConditionsAccepted ?? true);
