@@ -21,7 +21,9 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Address.</summary>
         public Address Address { get; set; }
 
-        public string UserCategory { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public UserCategory UserCategory { get; set; }
+
 
         public bool? TermsAndConditionsAccepted { get; set; }
     }

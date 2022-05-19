@@ -47,7 +47,7 @@ namespace MangoPay.SDK.Tests
             {
                 Name = "MartixSampleOrg",
                 LegalPersonType = LegalPersonType.BUSINESS,
-                UserCategory = "Payer",
+                UserCategory = UserCategory.PAYER,
                 TermsAndConditionsAccepted = true,
                 LegalRepresentativeFirstName = "JohnUbo",
                 LegalRepresentativeLastName = "DoeUbo",
@@ -150,7 +150,7 @@ namespace MangoPay.SDK.Tests
             {
                 Name = "MartixSampleOrg",
                 LegalPersonType = LegalPersonType.BUSINESS,
-                UserCategory = "Owner",
+                UserCategory = UserCategory.OWNER,
                 TermsAndConditionsAccepted = termsAccepted,
                 LegalRepresentativeFirstName = "JohnUbo",
                 LegalRepresentativeLastName = "DoeUbo",

@@ -445,7 +445,7 @@ namespace MangoPay.SDK.Tests
                 LegalRepresentativeFirstName = "RepFName",
                 LegalRepresentativeLastName = "RepLName",
                 TermsAndConditionsAccepted = true,
-                UserCategory = "Payer"
+                UserCategory = UserCategory.PAYER
             };
             await Api.Users.CreatePayerAsync(userPost, key);
 
@@ -474,7 +474,7 @@ namespace MangoPay.SDK.Tests
                     Country = CountryIso.PL, PostalCode = "11222", Region = "Region"
                 },
                 TermsAndConditionsAccepted = true,
-                UserCategory = "Owner"
+                UserCategory = UserCategory.OWNER
             };
 
             await Api.Users.CreateOwnerAsync(user, key);

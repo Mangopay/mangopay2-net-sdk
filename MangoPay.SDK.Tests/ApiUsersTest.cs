@@ -57,7 +57,7 @@ namespace MangoPay.SDK.Tests
                 {
                     Email = "email@email.org",
                     Name = "SomeOtherSampleOrg",
-                    UserCategory = "Payer",
+                    UserCategory = UserCategory.PAYER,
                     LegalPersonType = LegalPersonType.BUSINESS,
                     LegalRepresentativeFirstName = "RepFName",
                     LegalRepresentativeLastName = "RepLName",
@@ -1017,13 +1017,13 @@ namespace MangoPay.SDK.Tests
                     },
                     Tag = "BALON DE ORO",
                     TermsAndConditionsAccepted = true,
-                    UserCategory = "Payer"
+                    UserCategory = UserCategory.PAYER,
                 };
 
                 var result = await this.Api.Users.CreatePayerAsync(user);
 
                 Assert.NotNull(result);
-                Assert.IsTrue(result.UserCategory.ToLower() is "payer");
+                Assert.IsTrue(result.UserCategory is UserCategory.PAYER);
             }
             catch (Exception e)
             {
@@ -1052,7 +1052,7 @@ namespace MangoPay.SDK.Tests
                     },
                     Tag = "BALON DE ORO",
                     TermsAndConditionsAccepted = true,
-                    UserCategory = "Owner"
+                    UserCategory = UserCategory.OWNER,
                 };
 
                 await this.Api.Users.CreatePayerAsync(user);
@@ -1073,7 +1073,7 @@ namespace MangoPay.SDK.Tests
                 {
                     Name = "MartixSampleOrg",
                     LegalPersonType = LegalPersonType.BUSINESS,
-                    UserCategory = "Owner",
+                    UserCategory = UserCategory.OWNER,
                     TermsAndConditionsAccepted = true,
                     LegalRepresentativeFirstName = "JohnUbo",
                     LegalRepresentativeLastName = "DoeUbo",
@@ -1106,7 +1106,7 @@ namespace MangoPay.SDK.Tests
                 var result = await Api.Users.CreatePayerAsync(user);
 
                 Assert.NotNull(result);
-                Assert.IsTrue(result.UserCategory.ToLower() is "owner");
+                Assert.IsTrue(result.UserCategory is UserCategory.OWNER);
             }
             catch (Exception e)
             {
@@ -1123,7 +1123,7 @@ namespace MangoPay.SDK.Tests
                 {
                     Name = "MartixSampleOrg",
                     LegalPersonType = LegalPersonType.BUSINESS,
-                    UserCategory = "Owner",
+                    UserCategory = UserCategory.OWNER,
                     TermsAndConditionsAccepted = true,
                     LegalRepresentativeFirstName = "JohnUbo",
                     LegalRepresentativeLastName = "DoeUbo",
