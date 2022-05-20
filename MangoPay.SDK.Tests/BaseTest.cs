@@ -41,65 +41,18 @@ namespace MangoPay.SDK.Tests
             _johnsReports = new Dictionary<ReportType, ReportRequestDTO>();
         }
 
-        protected static List<UserNaturalPostDTO> UserNaturalPostCollection =>
-            new List<UserNaturalPostDTO>(){
-                new UserNaturalPostDTO(
-                    "john.doenatural@natual1.com",
-                    "JohnNatural1",
-                    "DoeNatural1",
-                    new DateTime(1985, 12, 21, 0, 0, 0),
-                    CountryIso.DE,
-                    CountryIso.DE)
-                {
-                    Address = new Address()
-                    {
-                        AddressLine1 = "Address line Natural1 1",
-                        AddressLine2 = "Address line Natural1 2",
-                        City = "CityNatural1",
-                        Country = CountryIso.PL,
-                        PostalCode = "11222",
-                        Region = "RegionNatural1"
-                    },
-                    Occupation = "programmer1",
-                    IncomeRange = 5,
-                    Capacity = CapacityType.NORMAL
-                },
-
-                new UserNaturalPostDTO(
-                    "john.doenatural@natual2.com",
-                    "JohnNatural2",
-                    "DoeNatural2",
-                    new DateTime(1985, 12, 21, 0, 0, 0),
-                    CountryIso.DE,
-                    CountryIso.DE)
-                {
-                    Address = new Address()
-                    {
-                        AddressLine1 = "Address line Natural2 1",
-                        AddressLine2 = "Address line Natural2 2",
-                        City = "CityNatural2",
-                        Country = CountryIso.PL,
-                        PostalCode = "11222",
-                        Region = "RegionNatural2"
-                    },
-                    Occupation = "programmer2",
-                    IncomeRange = 3,
-                    Capacity = CapacityType.NORMAL
-                }
-            };
-
-        protected static UserLegalPostDTO CreateUserLegalPost()
+        protected static UserLegalOwnerPostDTO CreateUserLegalPost()
         {
-            var user = new UserLegalPostDTO(
-              "john.doe@sample.org",
-              "MartixSampleOrg",
-              LegalPersonType.BUSINESS,
-              "JohnUbo",
-              "DoeUbo",
-              new DateTime(1975, 12, 21, 0, 0, 0),
-              CountryIso.PL,
-              CountryIso.PL)
+            var user = new UserLegalOwnerPostDTO
             {
+                Name = "MartixSampleOrg",
+                LegalPersonType = LegalPersonType.BUSINESS,
+                UserCategory = UserCategory.PAYER,
+                TermsAndConditionsAccepted = true,
+                LegalRepresentativeFirstName = "JohnUbo",
+                LegalRepresentativeLastName = "DoeUbo",
+                LegalRepresentativeCountryOfResidence = CountryIso.PL,
+                LegalRepresentativeNationality = CountryIso.PL,
                 HeadquartersAddress = new Address
                 {
                     AddressLine1 = "Address line ubo 1",
@@ -120,7 +73,8 @@ namespace MangoPay.SDK.Tests
                 },
                 LegalRepresentativeEmail = "john.doe@sample.org",
                 LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0),
-                Email = "john.doe@sample.org"
+                Email = "john.doe@sample.org",
+                CompanyNumber = "LU72HN11"
             };
 
             return user;
@@ -150,15 +104,20 @@ namespace MangoPay.SDK.Tests
         {
             if (BaseTest._john != null && !recreate) return BaseTest._john;
 
-            var user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR)
-                {
-                    Occupation = "programmer",
-                    IncomeRange = 3,
-                    Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" },
-                    Capacity = CapacityType.DECLARATIVE
-                };
+            var user = new UserNaturalOwnerPostDTO
+            {
+                Email = "john.doe@sample.org",
+                FirstName = "John",
+                LastName = "Doe",
+                Birthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                Nationality = CountryIso.FR,
+                CountryOfResidence = CountryIso.FR,
+                Occupation = "programmer",
+                IncomeRange = 3,
+                Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" }
+            };
 
-            BaseTest._john = await this.Api.Users.CreateAsync(user);
+            BaseTest._john = await this.Api.Users.CreateOwnerAsync(user);
 
             BaseTest._johnsWallet = null;
             return BaseTest._john;
@@ -166,35 +125,62 @@ namespace MangoPay.SDK.Tests
 
         protected async Task<UserNaturalDTO> GetNewJohn(bool termsAccepted = false)
         {
-            var user = new UserNaturalPostDTO("john.doe@sample.org", "John", "Doe", new DateTime(1975, 12, 21, 0, 0, 0), CountryIso.FR, CountryIso.FR)
+            var user = new UserNaturalOwnerPostDTO
             {
+                Email = "john.doe@sample.org",
+                FirstName = "John",
+                LastName = "Doe",
+                Birthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                Nationality = CountryIso.FR,
+                CountryOfResidence = CountryIso.FR,
                 Occupation = "programmer",
                 IncomeRange = 3,
                 Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" },
-                Capacity = CapacityType.DECLARATIVE,
                 TermsAndConditionsAccepted = termsAccepted
             };
 
-            return await this.Api.Users.CreateAsync(user);
+            return await this.Api.Users.CreateOwnerAsync(user);
         }
 
         protected async Task<UserLegalDTO> GetMatrix(bool termsAccepted = false, bool newJohn = false)
         {
             if (BaseTest._matrix != null && !newJohn) return BaseTest._matrix;
 
-            var john = await this.GetJohn();
-            var birthday = john.Birthday ?? new DateTime();
-            var user = new UserLegalPostDTO(john.Email, "MartixSampleOrg", LegalPersonType.BUSINESS, john.FirstName, john.LastName, birthday, john.Nationality, john.CountryOfResidence)
+            var user = new UserLegalOwnerPostDTO
             {
-                HeadquartersAddress = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" },
-                LegalRepresentativeAddress = john.Address,
-                LegalRepresentativeEmail = john.Email,
+                Name = "MartixSampleOrg",
+                LegalPersonType = LegalPersonType.BUSINESS,
+                UserCategory = UserCategory.OWNER,
+                TermsAndConditionsAccepted = termsAccepted,
+                LegalRepresentativeFirstName = "JohnUbo",
+                LegalRepresentativeLastName = "DoeUbo",
+                LegalRepresentativeCountryOfResidence = CountryIso.PL,
+                LegalRepresentativeNationality = CountryIso.PL,
+                HeadquartersAddress = new Address
+                {
+                    AddressLine1 = "Address line ubo 1",
+                    AddressLine2 = "Address line ubo 2",
+                    City = "CityUbo",
+                    Country = CountryIso.PL,
+                    PostalCode = "11222",
+                    Region = "RegionUbo"
+                },
+                LegalRepresentativeAddress = new Address
+                {
+                    AddressLine1 = "Address line ubo 1",
+                    AddressLine2 = "Address line ubo 2",
+                    City = "CityUbo",
+                    Country = CountryIso.PL,
+                    PostalCode = "11222",
+                    Region = "RegionUbo"
+                },
+                LegalRepresentativeEmail = "john.doe@sample.org",
                 LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0),
-                Email = john.Email,
-                TermsAndConditionsAccepted = termsAccepted
+                Email = "john.doe@sample.org",
+                CompanyNumber = "LU72HN11"
             };
 
-            BaseTest._matrix = await this.Api.Users.CreateAsync(user);
+            BaseTest._matrix = await this.Api.Users.CreateOwnerAsync(user);
 
             return BaseTest._matrix;
         }

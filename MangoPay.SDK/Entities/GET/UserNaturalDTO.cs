@@ -69,5 +69,9 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>Execution date.</summary>
         [JsonConverter(typeof(Core.UnixDateTimeConverter))]
         public DateTime? TermsAndConditionsAcceptedDate { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public UserCategory UserCategory { get; set; }
+
     }
 }

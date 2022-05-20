@@ -6,34 +6,9 @@ using System;
 
 namespace MangoPay.SDK.Entities.POST
 {
-    /// <summary>User natural POST entity.</summary>
-    public class UserNaturalPostDTO : EntityPostBase
+    /// <summary>User natural Owner POST entity.</summary>
+    public class UserNaturalOwnerPostDTO : UserNaturalPayerPostDTO
     {
-        public UserNaturalPostDTO(string email, string firstName, string lastName, DateTime birthday, CountryIso nationality, CountryIso countryOfResidence)
-        {
-            Email = email;
-            FirstName = firstName;
-            LastName = lastName;
-            Birthday = birthday;
-            Nationality = nationality;
-            CountryOfResidence = countryOfResidence;
-        }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public CapacityType Capacity { get; set; }
-
-		/// <summary>Email address.</summary>
-		public string Email { get; set; }
-
-        /// <summary>First name.</summary>
-        public string FirstName { get; set; }
-
-        /// <summary>Last name.</summary>
-        public string LastName { get; set; }
-
-        /// <summary>Address.</summary>
-        public Address Address { get; set; }
-
         /// <summary>Date of birth.</summary>
         [JsonConverter(typeof(Core.UnixDateTimeConverter))]
         public DateTime Birthday { get; set; }
@@ -42,7 +17,6 @@ namespace MangoPay.SDK.Entities.POST
         [JsonConverter(typeof(StringEnumConverter))]
         public CountryIso Nationality { get; set; }
 
-        /// <summary>Country of residence.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public CountryIso CountryOfResidence { get; set; }
 
@@ -68,18 +42,5 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Income range. One of UserNaturalPostDTO.IncomeRanges constants or null, if not specified.</summary>
         public int? IncomeRange { get; set; }
-
-        /// <summary>Proof of identity.</summary>
-        public string ProofOfIdentity { get; set; }
-
-        /// <summary>Proof of address.</summary>
-        public string ProofOfAddress { get; set; }
-
-        public bool? TermsAndConditionsAccepted { get; set; }
-
-        public bool ShouldSerializeAddress()
-		{
-			return Address != null && Address.IsValid();
-		}
     }
 }

@@ -26,23 +26,42 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<UserDTO>(MethodKey.UsersGet, entitiesId: userId);
         }
 
-        /// <summary>Creates new user.</summary>
+        /// <summary>Creates new owner user.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="user">UserNatural object to be created.</param>
         /// <returns>UserNatural instance returned from API.</returns>
-        public async Task<UserNaturalDTO> CreateAsync(UserNaturalPostDTO user, string idempotentKey = null)
+        public async Task<UserNaturalDTO> CreateOwnerAsync(UserNaturalOwnerPostDTO user, string idempotentKey = null)
         {
-            return await this.CreateObjectAsync<UserNaturalDTO, UserNaturalPostDTO>(MethodKey.UsersCreateNaturals, user, idempotentKey);
+            return await this.CreateObjectAsync<UserNaturalDTO, UserNaturalOwnerPostDTO>(MethodKey.UsersCreateNaturals, user, idempotentKey);
         }
 
-        /// <summary>Creates new user.</summary>
+        /// <summary>Creates new payer user.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="user">UserNatural object to be created.</param>
+        /// <returns>UserNatural instance returned from API.</returns>
+        public async Task<UserNaturalDTO> CreatePayerAsync(UserNaturalPayerPostDTO user, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<UserNaturalDTO, UserNaturalPayerPostDTO>(MethodKey.UsersCreateNaturals, user, idempotentKey);
+        }
+
+        /// <summary>Creates new legal payer user.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="user">UserLegal object to be created.</param>
         /// <returns>UserLegal instance returned from API.</returns>
-        public async Task<UserLegalDTO> CreateAsync(UserLegalPostDTO user, string idempotentKey = null)
+        public async Task<UserLegalDTO> CreatePayerAsync(UserLegalPayerPostDTO user, string idempotentKey = null)
         {
-            return await this.CreateObjectAsync<UserLegalDTO, UserLegalPostDTO>(MethodKey.UsersCreateLegals, user, idempotentKey);
+            return await this.CreateObjectAsync<UserLegalDTO, UserLegalPayerPostDTO>(MethodKey.UsersCreateLegals, user, idempotentKey);
         }
+
+        /// <summary>Creates new legal owner user.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="user">UserLegal object to be created.</param>
+        /// <returns>UserLegal instance returned from API.</returns>
+        public async Task<UserLegalDTO> CreateOwnerAsync(UserLegalOwnerPostDTO user, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<UserLegalDTO, UserLegalOwnerPostDTO>(MethodKey.UsersCreateLegals, user, idempotentKey);
+        }
+
 
         /// <summary>Gets users.</summary>
         /// <param name="pagination">Pagination.</param>
@@ -61,30 +80,12 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<UserNaturalDTO>(MethodKey.UsersGetNaturals, entitiesId: userId);
         }
 
-        /// TODO: MIRCEA
-        /// <summary>TEMPORAL SOLUTION: Use this method only against API v2.</summary>
-        /// <param name="userId">UserNatural identifier.</param>
-        /// <returns>UserNaturalObsolete object returned from API</returns>
-        public async Task<UserNaturalObsoleteDTO> GetNaturalObsoleteAsync(string userId)
-        {
-            return await this.GetObjectAsync<UserNaturalObsoleteDTO>(MethodKey.UsersGetNaturals, entitiesId: userId);
-        }
-
         /// <summary>Gets legal user.</summary>
         /// <param name="userId">UserLegal identifier.</param>
         /// <returns>UserLegal object returned from API.</returns>
         public async Task<UserLegalDTO> GetLegalAsync(string userId)
         {
             return await this.GetObjectAsync<UserLegalDTO>(MethodKey.UsersGetLegals, entitiesId: userId);
-        }
-
-        /// TODO: MIRCEA
-        /// <summary>TEMPORAL SOLUTION: Use this method only against API v2.</summary>
-        /// <param name="userId">UserLegal identifier.</param>
-        /// <returns>UserLegalObsolete object returned from API</returns>
-        public async Task<UserLegalObsoleteDTO> GetLegalObsoleteAsync(string userId)
-        {
-            return await this.GetObjectAsync<UserLegalObsoleteDTO>(MethodKey.UsersGetLegals, entitiesId: userId);
         }
 
         /// <summary>Updates the user.</summary>
