@@ -6,7 +6,9 @@ namespace MangoPay.SDK.Core.Enumerations
 {
     public enum UserCategory
     {
-        PAYER = 0,
-        OWNER = 1
+        UNKNOWN = 0,
+        PAYER = 1,
+        OWNER = 2
+
     }
 }
