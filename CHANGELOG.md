@@ -1,4 +1,9 @@
-## [3.2.0] - 2022.05.20
+## [3.3.1] - 2022.06.06
+### Fixed
+
+The SDK handles existing User without an UserCategory
+
+## [3.3.0] - 2022.05.20
 ### Added
 
 Users can now be differentiated depending on their MANGOPAY usage.
