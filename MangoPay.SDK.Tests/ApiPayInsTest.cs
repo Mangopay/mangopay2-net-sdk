@@ -863,7 +863,7 @@ namespace MangoPay.SDK.Tests
                         Amount = 1,
                         Currency = CurrencyIso.EUR
                     },
-                    FreeCycles = 1
+                    FreeCycles = 0
                 };
 
                 var result = await this.Api.PayIns.CreateRecurringPayInRegistration(payInPost);
