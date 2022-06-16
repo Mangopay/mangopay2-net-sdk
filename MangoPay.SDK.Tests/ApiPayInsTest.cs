@@ -874,6 +874,7 @@ namespace MangoPay.SDK.Tests
                 Assert.IsTrue(wallet.Id == result.CreditedWalletId);
                 Assert.NotNull(result.Shipping);
                 Assert.NotNull(result.Billing);
+                Assert.NotNull(result.FreeCycles);
             }
             catch (Exception ex)
             {
@@ -946,7 +947,8 @@ namespace MangoPay.SDK.Tests
                     {
                         Amount = 1,
                         Currency = CurrencyIso.EUR
-                    }
+                    },
+                    FreeCycles = 0
                 };
 
                 var result = await this.Api.PayIns.CreateRecurringPayInRegistration(payInPost);
@@ -960,6 +962,7 @@ namespace MangoPay.SDK.Tests
                 Assert.NotNull(get.Shipping);
                 Assert.NotNull(get.Billing);
                 Assert.NotNull(get.CurrentState);
+                Assert.NotNull(get.FreeCycles);
             }
             catch (Exception ex)
             {
