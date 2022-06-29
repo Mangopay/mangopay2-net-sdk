@@ -89,6 +89,8 @@ namespace MangoPay.SDK.Entities.POST
         /// </summary>
         public Money NextTransactionFees { get; set; }
 
+        public int FreeCycles { get; set; }
+
         #endregion
     }
 }
