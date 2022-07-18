@@ -1043,7 +1043,7 @@ namespace MangoPay.SDK.Tests
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains("BadRequest"));
+                Assert.IsTrue(e.Message.Contains("The Birthday field is required"), e.Message);
             }
         }
 
@@ -1122,7 +1122,7 @@ namespace MangoPay.SDK.Tests
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains("BadRequest"));
+                Assert.IsTrue(e.Message.Contains("The HeadquartersAddress field is required"), e.Message);
             }
         }
     }
