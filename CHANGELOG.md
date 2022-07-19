@@ -1,3 +1,7 @@
+## [3.4.1] - 2022-07-18
+##Fixed
+Missing EventType have been added (RECURRING_REGISTRATION).
+
 ## [3.4.0] - 2022-06-29
 ##Added
 **Recurring: €0 deadlines for CIT**
