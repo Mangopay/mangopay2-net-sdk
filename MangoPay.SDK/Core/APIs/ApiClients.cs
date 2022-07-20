@@ -102,7 +102,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Object instance returned from API.</returns>
         public async Task<ClientDTO> GetAsync()
         {
-            return await this.GetObjectAsync<ClientDTO>(MethodKey.ClientGet, null);
+            return await this.GetObjectAsync<ClientDTO>(MethodKey.ClientGet);
         }
 
         /// <summary>Updates client information.</summary>
