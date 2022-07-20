@@ -21,7 +21,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Dispute instance returned from API.</returns>
         public async Task<DisputeDTO> GetAsync(string disputeId)
         {
-            return await this.GetObjectAsync<DisputeDTO>(MethodKey.DisputesGet, disputeId);
+            return await this.GetObjectAsync<DisputeDTO>(MethodKey.DisputesGet, null, disputeId);
         }
 
         /// <summary>Gets all disputes.</summary>
@@ -89,7 +89,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Dispute's document object returned from API.</returns>
         public async Task<DisputeDocumentDTO> GetDocumentAsync(string documentId)
         {
-            return await this.GetObjectAsync<DisputeDocumentDTO>(MethodKey.DisputesDocumentGet, documentId);
+            return await this.GetObjectAsync<DisputeDocumentDTO>(MethodKey.DisputesDocumentGet, null, documentId);
         }
 
         /// <summary>Gets documents for dispute.</summary>
@@ -122,7 +122,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Repudiation instance returned from API.</returns>
         public async Task<RepudiationDTO> GetRepudiationAsync(string repudiationId)
         {
-            return await this.GetObjectAsync<RepudiationDTO>(MethodKey.DisputesRepudiationGet, repudiationId);
+            return await this.GetObjectAsync<RepudiationDTO>(MethodKey.DisputesRepudiationGet, null, repudiationId);
         }
 
         /// <summary>Creates settlement transfer.</summary>

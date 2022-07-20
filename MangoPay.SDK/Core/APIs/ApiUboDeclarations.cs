@@ -39,7 +39,6 @@ namespace MangoPay.SDK.Core.APIs
             return await GetObjectAsync<UboDeclarationDTO>(
                 MethodKey.UboDeclarationGet,
                 null,
-                null,
                 userId,
                 uboDeclarationId
             );
@@ -49,7 +48,6 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await GetObjectAsync<UboDeclarationDTO>(
                 MethodKey.UboDeclarationGetById,
-                null,
                 null,
                 uboDeclarationId
             );

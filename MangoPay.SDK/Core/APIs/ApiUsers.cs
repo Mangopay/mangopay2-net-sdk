@@ -226,7 +226,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Bank account object returned from API.</returns>
 		public async Task<BankAccountIbanDTO> GetBankAccountIbanAsync(string userId, string bankAccountId)
         {
-            return await this.GetObjectAsync<BankAccountIbanDTO>(MethodKey.UsersGetBankAccount, null, null, userId, bankAccountId);
+            return await this.GetObjectAsync<BankAccountIbanDTO>(MethodKey.UsersGetBankAccount, null, userId, bankAccountId);
         }
 
         public async Task<BankAccountIbanObsoleteDTO> GetBankAccountIbanObsoleteAsync(string userId, string bankAccountId)
@@ -352,7 +352,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>KycDocument object returned from API.</returns>
         public async Task<KycDocumentDTO> GetKycDocumentAsync(string userId, string kycDocumentId)
         {
-            return await this.GetObjectAsync<KycDocumentDTO>(MethodKey.UsersGetKycDocument, null, null, userId, kycDocumentId);
+            return await this.GetObjectAsync<KycDocumentDTO>(MethodKey.UsersGetKycDocument, null, userId, kycDocumentId);
         }
 
         /// <summary>Updates KycDocument.</summary>
@@ -393,7 +393,7 @@ namespace MangoPay.SDK.Core.APIs
                 };
             }
 
-            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyGet, null, additionalUrlParams, userId, currency.ToString());
+            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyGet, additionalUrlParams:additionalUrlParams, userId, currency.ToString());
         }
 
         /// <summary>Gets Emoney object.</summary>
@@ -412,7 +412,7 @@ namespace MangoPay.SDK.Core.APIs
                 };
             }
 
-            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyYearGet, null, additionalUrlParams, userId, year, currency.ToString());
+            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyYearGet, additionalUrlParams, userId, year, currency.ToString());
         }
 
         /// <summary>Gets Emoney object.</summary>
@@ -432,7 +432,7 @@ namespace MangoPay.SDK.Core.APIs
                 };
             }
 
-            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyYearMonthGet, null, additionalUrlParams, userId, year, month, currency.ToString());
+            return await this.GetObjectAsync<EmoneyDTO>(MethodKey.UsersEmoneyYearMonthGet, additionalUrlParams, userId, year, month, currency.ToString());
         }
 
         /// <summary>

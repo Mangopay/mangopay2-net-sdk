@@ -23,7 +23,7 @@ namespace MangoPay.SDK.Core
         {
             _options = new RestClientOptions(url)
             {
-                ThrowOnAnyError = true,
+                ThrowOnAnyError = false,
                 Timeout = timeout
             };
 
