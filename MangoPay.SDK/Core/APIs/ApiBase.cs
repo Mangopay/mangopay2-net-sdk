@@ -256,8 +256,8 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="entitiesId">Entities identifier.</param>
         /// <returns>The DTO instance returned from API.</returns>
-        protected async Task<T> GetObjectAsync<T>(MethodKey methodKey, string idempotentKey = null,
-            Dictionary<string, string> additionalUrlParams = null,
+        protected async Task<T> GetObjectAsync<T>(MethodKey methodKey,
+            Dictionary<string, string> additionalUrlParams,
             params string[] entitiesId)
             where T: EntityBase, new()
         {
@@ -266,7 +266,14 @@ namespace MangoPay.SDK.Core.APIs
 
             var rest = new RestTool(this.Root, true);
             return await rest.RequestAsync<T, T>(endPoint, null, null, 
-                additionalUrlParams: additionalUrlParams, idempotentKey: idempotentKey);
+                additionalUrlParams: additionalUrlParams);
+        }
+
+        protected async Task<T> GetObjectAsync<T>(MethodKey methodKey,
+            params string[] entitiesId)
+            where T : EntityBase, new()
+        {
+            return await GetObjectAsync<T>(methodKey, additionalUrlParams: null, entitiesId);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
