@@ -136,9 +136,9 @@ namespace MangoPay.SDK.Tests
                     Region = "Region"
                 };
                 var payInPost = new PayInPayPalPostDTO(user.Id, new Money { Amount = 1000, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, wallet.Id, "http://test/test")
-                    {
-                        ShippingAddress = new ShippingAddress("recipient name", AddressForShippingAddress)
-                    };
+                {
+                    ShippingAddress = new ShippingAddress("recipient name", AddressForShippingAddress)
+                };
 
                 var payIn = await this.Api.PayIns.CreatePayPalAsync(payInPost);
 
@@ -396,10 +396,10 @@ namespace MangoPay.SDK.Tests
 
                 // create pay-in BANKWIRE DIRECT
                 var payIn = new PayInBankWireDirectPostDTO(user.Id, wallet.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR })
-                    {
-                        CreditedWalletId = wallet.Id,
-                        AuthorId = user.Id
-                    };
+                {
+                    CreditedWalletId = wallet.Id,
+                    AuthorId = user.Id
+                };
 
                 var createdPayIn = await this.Api.PayIns.CreateBankWireDirectAsync(payIn);
 
@@ -646,6 +646,49 @@ namespace MangoPay.SDK.Tests
                 Assert.NotNull(payIn.PaypalBuyerAccountEmail);
                 Assert.AreEqual(payInId, payIn.Id);
                 Assert.AreEqual(payPalBuyerEmail, payIn.PaypalBuyerAccountEmail);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task Test_Payins_Get_Payconiq()
+        {
+            try
+            {
+                var wallet = await this.GetJohnsWallet();
+                var user = await this.GetJohn();
+
+                PayInPayconiqPostDTO payInPost = new PayInPayconiqPostDTO()
+                {
+                    AuthorId = user.Id,
+                    Country = "BE",
+                    CreditedWalletId = wallet.Id,
+                    DebitedFunds = new Money
+                    {
+                        Amount = 2222,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Fees = new Money
+                    {
+                        Amount = 22,
+                        Currency = CurrencyIso.EUR
+                    },
+                    ReturnURL = "http://test/test"
+                };
+
+                PayInPayconiqDTO payInCreated = await this.Api.PayIns.CreatePayconiqAsync(payInPost);
+
+                PayInPayconiqDTO payInGet = await this.Api.PayIns.GetPayconiqAsync(payInCreated.Id);
+
+                Assert.IsNotNull(payInGet);
+                Assert.AreEqual(payInCreated.Id, payInGet.Id);
+                Assert.AreEqual(payInCreated.DebitedFunds.Amount, payInGet.DebitedFunds.Amount);
+                Assert.AreEqual(payInGet.PaymentType, PayInPaymentType.PAYCONIQ);
+                Assert.AreEqual(payInGet.ExecutionType, PayInExecutionType.WEB);
+                Assert.IsNotNull(payInGet.DeepLinkURL);
             }
             catch (Exception ex)
             {

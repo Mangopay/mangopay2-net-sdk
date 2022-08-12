@@ -66,7 +66,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Object instance returned from API.</returns>
         public async Task<PayInPreauthorizedDirectDTO> CreatePreauthorizedDirectAsync(PayInPreauthorizedDirectPostDTO payIn, string idempotentKey = null)
         {
-            return await 
+            return await
                 this.CreateObjectAsync<PayInPreauthorizedDirectDTO, PayInPreauthorizedDirectPostDTO>(MethodKey.PayinsPreauthorizedDirectCreate, payIn, idempotentKey);
         }
 
@@ -169,6 +169,14 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<PayInPayPalDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
 
+        /// <summary>Gets PayIn Payconiq entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public async Task<PayInPayconiqDTO> GetPayconiqAsync(string payInId)
+        {
+            return await this.GetObjectAsync<PayInPayconiqDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+        }
+
         /// <summary>Creates refund for PayIn object.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="payInId">PayIn identifier.</param>
@@ -176,19 +184,19 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Refund entity instance returned from API.</returns>
         public async Task<RefundDTO> CreateRefundAsync(string payInId, RefundPayInPostDTO refund, string idempotentKey = null)
         {
-            return await 
+            return await
                 this.CreateObjectAsync<RefundDTO, RefundPayInPostDTO>(MethodKey.PayinsCreateRefunds, refund, idempotentKey, payInId);
         }
 
         public async Task<ApplePayDirectPayinDTO> CreateApplePayAsync(ApplePayDirectPayInPostDTO payIn, string idempotentKey = null)
         {
-            return await 
+            return await
                 this.CreateObjectAsync<ApplePayDirectPayinDTO, ApplePayDirectPayInPostDTO>(MethodKey.ApplePayinsDirectCreate, payIn, idempotentKey);
         }
 
         public async Task<GooglePayDirectPayInDTO> CreateGooglePayAsync(GooglePayDirectPayInPostDTO payIn, string idempotentKey = null)
         {
-            return await 
+            return await
                 this.CreateObjectAsync<GooglePayDirectPayInDTO, GooglePayDirectPayInPostDTO>(MethodKey.GooglePayinsDirectCreate, payIn, idempotentKey);
         }
 
