@@ -1,3 +1,7 @@
+## [3.5.0] - 2022-08-25
+##Added
+- It's now possible to fetch a Payconiq by ID
+
 ## [3.4.2] - 2022-07-21
 ##Fixed
 - Bug with idempotency parameters with some GET requests (Disputes, Repudiations...) 
