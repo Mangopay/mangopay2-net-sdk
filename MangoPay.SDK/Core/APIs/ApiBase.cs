@@ -209,6 +209,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UboUpdate,new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}/ubos/{2}",RequestType.PUT) },
             
             { MethodKey.BankAccountsGetTransactions, new ApiEndPoint("/bankaccounts/{0}/transactions", RequestType.GET)},
+            
+            { MethodKey.CountryAuthorizationGet,new ApiEndPoint("/countries/{0}/authorizations",RequestType.GET)},
+            { MethodKey.CountryAuthorizationGetAll,new ApiEndPoint("/countries/authorizations",RequestType.GET)},
         };
 
         /// <summary>Creates new API instance.</summary>
@@ -263,7 +266,15 @@ namespace MangoPay.SDK.Core.APIs
         {
             var endPoint = GetApiEndPoint(methodKey);
             endPoint.SetParameters(entitiesId);
+            endPoint.IncludeClientId = true;
 
+            return await GetObjectAsync<T>(endPoint, additionalUrlParams);
+        }
+        
+        private async Task<T> GetObjectAsync<T>(ApiEndPoint endPoint,
+            Dictionary<string, string> additionalUrlParams)
+            where T: EntityBase, new()
+        {
             var rest = new RestTool(this.Root, true);
             return await rest.RequestAsync<T, T>(endPoint, null, null, 
                 additionalUrlParams: additionalUrlParams);
@@ -274,6 +285,17 @@ namespace MangoPay.SDK.Core.APIs
             where T : EntityBase, new()
         {
             return await GetObjectAsync<T>(methodKey, additionalUrlParams: null, entitiesId);
+        }
+        
+        protected async Task<T> GetObjectAsyncNoClientId<T>(MethodKey methodKey,
+            params string[] entitiesId)
+            where T : EntityBase, new()
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.SetParameters(entitiesId);
+            endPoint.IncludeClientId = false;
+
+            return await GetObjectAsync<T>(endPoint, null);
         }
 
         /// <summary>Gets the collection of Dto instances from API.</summary>
@@ -291,7 +313,27 @@ namespace MangoPay.SDK.Core.APIs
         {
             var endPoint = GetApiEndPoint(methodKey);
             endPoint.SetParameters(entitiesId);
+            endPoint.IncludeClientId = true;
 
+            return await GetListAsync<T>(endPoint, pagination, sort, additionalUrlParams, idempotentKey);
+        }
+
+        protected async Task<ListPaginated<T>> GetListAsyncNoClientId<T>(MethodKey methodKey, Pagination pagination = null, Sort sort = null, 
+            Dictionary<string, string> additionalUrlParams = null, string idempotentKey = null, params string[] entitiesId)
+            where T : EntityBase, new()
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.SetParameters(entitiesId);
+            endPoint.IncludeClientId = false;
+
+            return await GetListAsync<T>(endPoint, pagination, sort, additionalUrlParams, idempotentKey);
+        }
+        
+        private async Task<ListPaginated<T>> GetListAsync<T>(ApiEndPoint endPoint, Pagination pagination = null,
+            Sort sort = null,
+            Dictionary<string, string> additionalUrlParams = null, string idempotentKey = null)
+            where T : EntityBase, new()
+        {
             if (sort != null && sort.IsSet)
             {
                 if (additionalUrlParams == null)

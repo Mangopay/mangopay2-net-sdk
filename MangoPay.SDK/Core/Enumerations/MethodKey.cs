@@ -170,5 +170,8 @@ namespace MangoPay.SDK.Core.Enumerations
 		UboUpdate,
 
 		BankAccountsGetTransactions,
+		
+		CountryAuthorizationGet,
+		CountryAuthorizationGetAll
     }
 }
