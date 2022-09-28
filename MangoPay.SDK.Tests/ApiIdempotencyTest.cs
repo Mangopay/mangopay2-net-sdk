@@ -151,6 +151,10 @@ namespace MangoPay.SDK.Tests
                 Requested3DSVersion = "V1",
                 CardType = card.CardType
             };
+            
+            payIn.BrowserInfo = getBrowserInfo();
+            payIn.IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C";
+
             await Api.PayIns.CreateCardDirectAsync(payIn, key);
 
             var result = await Api.Idempotent.GetAsync(key);

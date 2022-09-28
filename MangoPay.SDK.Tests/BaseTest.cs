@@ -272,6 +272,9 @@ namespace MangoPay.SDK.Tests
                 CardType = card.CardType
             };
 
+            payIn.BrowserInfo = getBrowserInfo();
+            payIn.IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C";
+
             // create Pay-In
             var result = await this.Api.PayIns.CreateCardDirectAsync(payIn);
 
@@ -307,19 +310,7 @@ namespace MangoPay.SDK.Tests
                 CardType = card.CardType,
                 IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C",
                 Requested3DSVersion = "V2_1",
-                BrowserInfo = new BrowserInfo
-                {
-                    AcceptHeader = "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
-                    JavaEnabled = true,
-                    Language = "FR-FR",
-                    ColorDepth = 4,
-                    ScreenHeight = 1800,
-                    ScreenWidth = 400,
-                    JavascriptEnabled = true,
-                    TimeZoneOffset = "+60",
-                    UserAgent =
-                        "Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
-                }
+                BrowserInfo = getBrowserInfo()
             };
 
 
@@ -495,6 +486,9 @@ namespace MangoPay.SDK.Tests
                 CardType = card.CardType
             };
 
+            payIn.BrowserInfo = getBrowserInfo();
+            payIn.IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C";
+
             return payIn;
         }
 
@@ -656,6 +650,9 @@ namespace MangoPay.SDK.Tests
             var getCardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, newCardRegistration.Id);
 
             var cardPreAuthorization = new CardPreAuthorizationPostDTO(userId, new Money { Amount = 100, Currency = CurrencyIso.EUR }, SecureMode.DEFAULT, getCardRegistration.CardId, "http://test.com");
+
+            cardPreAuthorization.BrowserInfo = getBrowserInfo();
+            cardPreAuthorization.IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C";
 
             return cardPreAuthorization;
         }
@@ -912,6 +909,22 @@ namespace MangoPay.SDK.Tests
             {
                 throw new ArgumentException("Unsupported type.");
             }
+        }
+
+        protected BrowserInfo getBrowserInfo()
+        {
+            return new BrowserInfo
+            {
+                AcceptHeader = "application/json,text/javascript,*/*;q=0.01<",
+                ColorDepth = 32,
+                JavaEnabled = true,
+                JavascriptEnabled = false,
+                Language = "fr",
+                ScreenHeight = 1080,
+                ScreenWidth = 1920,
+                TimeZoneOffset = "+3600",
+                UserAgent = "postman"
+            };
         }
     }
 }

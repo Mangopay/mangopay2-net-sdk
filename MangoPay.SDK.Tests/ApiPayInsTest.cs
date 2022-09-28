@@ -751,18 +751,7 @@ namespace MangoPay.SDK.Tests
                 var beforeWallet = await this.Api.Wallets.GetAsync(johnWallet.Id);
 
                 var payIn = await this.GetNewPayInCardDirect();
-                payIn.BrowserInfo = new BrowserInfo
-                {
-                    AcceptHeader = "application/json,text/javascript,*/*;q=0.01<",
-                    ColorDepth = 32,
-                    JavaEnabled = true,
-                    JavascriptEnabled = false,
-                    Language = "fr",
-                    ScreenHeight = 1080,
-                    ScreenWidth = 1920,
-                    TimeZoneOffset = "+3600",
-                    UserAgent = "postman"
-                };
+                payIn.BrowserInfo = this.getBrowserInfo();
 
                 var wallet = await this.Api.Wallets.GetAsync(johnWallet.Id);
                 var user = await this.GetJohn();
