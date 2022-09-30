@@ -687,7 +687,7 @@ namespace MangoPay.SDK.Tests
             };
             request.AddParameter("data", cardRegistration.PreregistrationData);
             request.AddParameter("accessKeyRef", cardRegistration.AccessKey);
-            request.AddParameter("cardNumber",  is3DSecure ? "4972485830400056" : "4970105191923460");
+            request.AddParameter("cardNumber",  "4970105191923460");
             request.AddParameter("cardExpirationDate", "1224");
             request.AddParameter("cardCvx", "123");
 
