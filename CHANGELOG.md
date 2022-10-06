@@ -1,3 +1,27 @@
+## [3.6.0] - 2022-10-06
+### Added
+
+**New country authorizations endpoints**
+
+Country authorizations can now be viewed by using one of the following endpoints:
+
+[View a country's authorizations](https://docs.mangopay.com/endpoints/v2.01/regulatory#e1061_the-country-authorizations-object)
+[View all countries' authorizations](https://docs.mangopay.com/endpoints/v2.01/regulatory#e1061_the-country-authorizations-object)
+
+With these calls, it is possible to check which countries have:
+
+- Blocked user creation
+- Blocked bank account creation
+- Blocked payout creation
+
+Please refer to the [Restrictions by country](https://docs.mangopay.com/guide/restrictions-by-country) article for more information.
+
+**New country authorization hook**
+
+Country authorization updates can now be received by setting up a hook for the following EventType: COUNTRY_AUTHORIZATION_UPDATED
+
+With this hook, it is possible to be notified when a country’s restrictions are updated. 
+
 ## [3.5.0] - 2022-08-25
 ##Added
 - It's now possible to fetch a Payconiq by ID
