@@ -136,9 +136,12 @@ namespace MangoPay.SDK.Core
                 case 401:
                     throw new UnauthorizedAccessException(restResponse.Content);
             }
-
+            
             if (restResponse.ResponseStatus == ResponseStatus.TimedOut)
                 throw new TimeoutException(restResponse.ErrorMessage);
+
+            if (restResponse.ErrorException is System.Net.ProtocolViolationException)
+                throw restResponse.ErrorException;
 
             throw new ResponseException(restResponse.Content, responseCode);
         }
