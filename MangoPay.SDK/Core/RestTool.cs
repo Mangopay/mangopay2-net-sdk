@@ -212,7 +212,8 @@ namespace MangoPay.SDK.Core
             var headers = await this.GetHttpHeadersAsync(restUrl);
             foreach (var h in headers)
             {
-                restRequest.AddHeader(h.Key, h.Value);
+                if (!(h.Key == Constants.CONTENT_TYPE && this._requestType == RequestType.GET))
+                    restRequest.AddHeader(h.Key, h.Value);
 
                 if (h.Key != Constants.AUTHORIZATION)
                     _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
@@ -334,7 +335,8 @@ namespace MangoPay.SDK.Core
             var headers = await this.GetHttpHeadersAsync(restUrl);
             foreach (var h in headers)
             {
-                restRequest.AddHeader(h.Key, h.Value);
+                if (!(h.Key == Constants.CONTENT_TYPE && this._requestType == RequestType.GET))
+                    restRequest.AddHeader(h.Key, h.Value);
 
                 if (h.Key != Constants.AUTHORIZATION)
                     _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
