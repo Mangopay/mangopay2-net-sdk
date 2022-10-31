@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <DebugType>Full</DebugType>
-    <TargetFrameworks>net48;.net6</TargetFrameworks>
+    <TargetFrameworks>net48;net6.0</TargetFrameworks>
     <Company>MangoPay</Company>
     <Copyright>Copyright © 2020</Copyright>
     <Description>.Net MangoPay Tests</Description>
