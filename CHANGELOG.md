@@ -1,3 +1,8 @@
+## [3.6.1] - 2022-11-08
+### Fixed
+
+- Compatibility issue fixed (Restsharp, Unit tests) : https://github.com/Mangopay/mangopay2-net-sdk/pull/174 
+
 ## [3.6.0] - 2022-10-06
 ### Added
 
