@@ -628,7 +628,7 @@ namespace MangoPay.SDK.Tests
 
                 var assembly = Assembly.GetExecutingAssembly();
                 var fi = this.GetFileInfoOfFile(assembly.Location);
-                var bytes = await File.ReadAllBytesAsync(fi.FullName);
+                var bytes = File.ReadAllBytes(fi.FullName);
 
                 await this.Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, bytes);
             }

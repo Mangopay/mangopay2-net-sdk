@@ -30,5 +30,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build -c Release --no-restore
-    - name: Test
+    - name: Test .NET 6.0
       run: dotnet test ./MangoPay.SDK.Tests/bin/Release/net6.0/MangoPay.SDK.Tests.dll
+    - name: Test .NET 4.8
+      run: dotnet test ./MangoPay.SDK.Tests/bin/Release/net48/MangoPay.SDK.Tests.dll
