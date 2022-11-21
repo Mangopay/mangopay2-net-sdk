@@ -14,6 +14,9 @@ namespace MangoPay.SDK.Core.Enumerations
         ORGANIZATION,
         
         /// <summary>SOLETRADER legal person type.</summary>
-        SOLETRADER
+        SOLETRADER,
+
+        /// <summary>PARTNERSHIP legal person type.</summary>
+        PARTNERSHIP
     }
 }
