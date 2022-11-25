@@ -237,7 +237,7 @@ namespace MangoPay.SDK.Tests
 
                 var johnPut = new UserNaturalPutDTO
                 {
-                    LastName = john.LastName + " - CHANGED (éèęóąśłżźćń)",
+                    LastName = john.LastName + " - CHANGED éèęóąśłżźćń",
                     Nationality = CountryIso.DK
                 };
 
