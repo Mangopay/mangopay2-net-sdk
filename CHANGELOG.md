@@ -1,3 +1,26 @@
+## [3.6.2] - 2022-11-25
+### Added
+
+#### New User LegalPersonType: Partnership
+
+Verifying some specific legal structures is now more efficient thanks to a new legal entity type: PARTNERSHIP.
+
+The Legal User LegalPersonType parameter now includes the “PARTNERSHIP” value. The following endpoints have been updated accordingly:
+
+[Create a Legal User (Payer)](https://docs.mangopay.com/endpoints/v2.01/users#e259_create-a-legal-user)
+
+[Create a Legal User (Owner)](https://docs.mangopay.com/endpoints/v2.01/users#e1060_create-a-legal-user-owner)
+
+[Update a Legal User](https://docs.mangopay.com/endpoints/v2.01/users#e261_update-a-legal-user)
+
+[View a User](https://docs.mangopay.com/endpoints/v2.01/users#e256_view-a-user)
+
+Please note that changing the LegalPersonType to “PARTNERSHIP” for an existing user will automatically result in:
+
+A KYC downgrade to Light (default) verification
+The REGISTRATION_PROOF document being flagged as OUT_OF_DATE.
+With this new LegalPersonType, the MANGOPAY team can better handle specific legal structures and speed up the validation process.
+
 ## [3.6.1] - 2022-11-08
 ### Fixed
 
