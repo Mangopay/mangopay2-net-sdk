@@ -18,7 +18,7 @@
       <WarningLevel>5</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
       <PackageReference Include="Common.Logging" Version="3.4.1" />
       <PackageReference Include="Common.Logging.Core" Version="3.4.1" />
       <PackageReference Include="RestSharp" Version="107.3.0" />
