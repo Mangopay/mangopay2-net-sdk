@@ -41,6 +41,7 @@ namespace MangoPay.SDK
             BankingAlias = new ApiBankingAliases(this);
             UboDeclarations = new ApiUboDeclarations(this);
             Regulatory = new ApiRegulatory(this);
+            Deposits = new ApiDeposits(this);
         }
 
         /// <summary>Provides authorization token methods.</summary>
@@ -120,6 +121,9 @@ namespace MangoPay.SDK
         public ApiUboDeclarations UboDeclarations;
 
         public ApiRegulatory Regulatory;
+        
+        public ApiDeposits Deposits;
+
         #endregion
 
         #region Internal and private

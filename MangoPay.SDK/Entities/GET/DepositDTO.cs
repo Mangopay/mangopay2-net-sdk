@@ -25,7 +25,7 @@ namespace MangoPay.SDK.Entities.GET
         public PaymentStatus PaymentStatus { get; set; }
 
         /// <summary>Details about payments related to the deposit object.</summary>
-        public List<PayinsLinkedDTO> PayinsLinked { get; set; }
+        public PayinsLinkedDTO PayinsLinked { get; set; }
 
         /// <summary>ResultCode.</summary>
         public string ResultCode { get; set; }

@@ -703,6 +703,48 @@ namespace MangoPay.SDK.Tests
             
             throw new Exception(responseString);
         }
+        
+        /// <param name="cardRegistration">CardRegistration instance.</param>
+        /// <returns>Registration data.</returns>
+        protected async Task<string> GetPaylineCorrectRegistartionDataForDeposit(CardRegistrationDTO cardRegistration)
+        {
+            var client = new RestClient(cardRegistration.CardRegistrationURL);
+
+            var request = new RestRequest
+            {
+                Method = Method.Post
+            };
+            request.AddParameter("data", cardRegistration.PreregistrationData);
+            request.AddParameter("accessKeyRef", cardRegistration.AccessKey);
+            request.AddParameter("cardNumber",  "4970105181818183");
+            request.AddParameter("cardExpirationDate", "1224");
+            request.AddParameter("cardCvx", "123");
+
+            // Payline requires TLS
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            var response = await client.ExecuteAsync(request);
+
+            var responseString = response.Content;
+
+            if (response.StatusCode == HttpStatusCode.OK)
+                return responseString;
+            
+            throw new Exception(responseString);
+        }
+
+        protected async Task<CardRegistrationDTO> GetCardRegistrationForDeposit()
+        {
+            var cardRegistration = await this.GetJohnsCardRegistration();
+            var cardRegistrationPut = new CardRegistrationPutDTO();
+            var registrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
+            cardRegistrationPut.RegistrationData = registrationData;
+            cardRegistrationPut.Tag = "DefaultTag - Updated";
+
+            var getCardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
+
+            return getCardRegistration;
+        }
 
         protected FileInfo GetFileInfoOfFile(string location)
         {

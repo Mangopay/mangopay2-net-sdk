@@ -24,7 +24,7 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Culture (language).</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public CultureCode Culture { get; set; }
+        public CultureCode? Culture { get; set; }
 
         /// <summary>IpAddress.</summary>
         public string IpAddress { get; set; }
