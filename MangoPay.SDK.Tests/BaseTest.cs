@@ -735,9 +735,16 @@ namespace MangoPay.SDK.Tests
 
         protected async Task<CardRegistrationDTO> GetCardRegistrationForDeposit()
         {
-            var cardRegistration = await this.GetJohnsCardRegistration();
+            var user = await this.GetJohn();
+
+            var cardRegistrationPostDto = new CardRegistrationPostDTO(user.Id, CurrencyIso.EUR)
+            {
+                Tag = "DefaultTag"
+            };
+
+            var cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPostDto);
             var cardRegistrationPut = new CardRegistrationPutDTO();
-            var registrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
+            var registrationData = await this.GetPaylineCorrectRegistartionDataForDeposit(cardRegistration);
             cardRegistrationPut.RegistrationData = registrationData;
             cardRegistrationPut.Tag = "DefaultTag - Updated";
 
@@ -967,6 +974,27 @@ namespace MangoPay.SDK.Tests
                 TimeZoneOffset = "+3600",
                 UserAgent = "postman"
             };
+        }
+        
+        protected async Task<DepositDTO> CreateNewDeposit()
+        {
+            var john = await this.GetJohn();
+            var cardRegistration = await this.GetCardRegistrationForDeposit();
+            
+            var debitedFunds = new Money();
+            debitedFunds.Amount = 1000;
+            debitedFunds.Currency = CurrencyIso.EUR;
+            
+            var dto = new DepositPostDTO(
+                john.Id,
+                debitedFunds,
+                cardRegistration.CardId,
+                "https://lorem",
+                "2001:0620:0000:0000:0211:24FF:FE80:C12C",
+                getBrowserInfo()
+            );
+
+            return await this.Api.Deposits.CreateAsync(dto);
         }
     }
 }

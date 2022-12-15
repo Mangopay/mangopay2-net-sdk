@@ -19,7 +19,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="deposit">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
-        public async Task<DepositDTO> Create(DepositPostDTO deposit, string idempotentKey = null)
+        public async Task<DepositDTO> CreateAsync(DepositPostDTO deposit, string idempotentKey = null)
         {
             return await this.CreateObjectAsync<DepositDTO, DepositPostDTO>(MethodKey.DepositsCreate, deposit,
                 idempotentKey);
@@ -30,13 +30,13 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Deposit instance returned from API.</returns>
         public async Task<DepositDTO> GetAsync(string depositId)
         {
-            return await this.GetObjectAsync<DepositDTO>(MethodKey.DepositsGet, depositId);
+            return await this.GetObjectAsync<DepositDTO>(MethodKey.DepositsGet, entitiesId: depositId);
         }
 
         /// <summary>Cancel deposit.</summary>
         /// <param name="depositId">Deposit identifier.</param>
         /// <returns>Deposit object returned from API.</returns>
-        public async Task<DepositDTO> Cancel(string depositId)
+        public async Task<DepositDTO> CancelAsync(string depositId)
         {
             DepositPutDTO dto = new DepositPutDTO {PaymentStatus = PaymentStatus.CANCELED};
 

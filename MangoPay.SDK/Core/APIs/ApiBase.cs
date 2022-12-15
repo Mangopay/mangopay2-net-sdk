@@ -216,8 +216,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.CountryAuthorizationGetAll,new ApiEndPoint("/countries/authorizations",RequestType.GET)},
             
             { MethodKey.DepositsCreate,new ApiEndPoint("/deposit-preauthorizations/card/direct",RequestType.POST)},
-            { MethodKey.DepositsGet,new ApiEndPoint("/deposit-preauthorizations/{1}",RequestType.GET)},
-            { MethodKey.DepositsCancel,new ApiEndPoint("/deposit-preauthorizations/{1}",RequestType.PUT)}
+            { MethodKey.DepositsGet,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.GET)},
+            { MethodKey.DepositsCancel,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.PUT)}
         };
 
         /// <summary>Creates new API instance.</summary>

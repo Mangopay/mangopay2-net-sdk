@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MangoPay.SDK.Core.Enumerations;
-using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
-using MangoPay.SDK.Entities.POST;
 using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
@@ -18,24 +15,7 @@ namespace MangoPay.SDK.Tests
 		{
 			try
 			{
-				var john = await this.GetJohn();
-				var cardRegistration = await this.GetCardRegistrationForDeposit();
-
-				var dto = new DepositPostDTO();
-				dto.AuthorId = john.Id;
-				
-				var debitedFunds = new Money();
-				debitedFunds.Amount = 1000;
-				debitedFunds.Currency = CurrencyIso.EUR;
-
-				dto.DebitedFunds = debitedFunds;
-				dto.CardId = cardRegistration.CardId;
-				dto.SecureModeReturnURL = "https://lorem";
-				dto.IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C";
-				dto.BrowserInfo = getBrowserInfo();
-
-				DepositDTO deposit = await this.Api.Deposits.Create(dto);
-				Console.Write(deposit);
+				DepositDTO deposit = await this.CreateNewDeposit();
 				
 				Assert.IsNotNull(deposit);
 			}
@@ -45,5 +25,42 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 
+		[Test]
+		public async Task Test_GetDeposit()
+		{
+			try
+			{
+				DepositDTO deposit = await this.CreateNewDeposit();
+				DepositDTO fetchedDeposit = await this.Api.Deposits.GetAsync(deposit.Id);
+				
+				Assert.IsNotNull(fetchedDeposit);
+				Assert.AreEqual(deposit.Id, fetchedDeposit.Id);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
+		
+		/*[Test]
+		public async Task Test_CancelDeposit()
+		{
+			try
+			{
+				DepositDTO deposit = await this.CreateNewDeposit();
+
+				await this.Api.Deposits.CancelAsync(deposit.Id);
+				
+				DepositDTO canceledDeposit = await this.Api.Deposits.GetAsync(deposit.Id);
+				
+				Assert.IsNotNull(canceledDeposit);
+				Assert.AreEqual(deposit.Id, canceledDeposit.Id);
+				Assert.AreEqual(canceledDeposit.PaymentStatus, PaymentStatus.CANCELED);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}*/
 	}
 }

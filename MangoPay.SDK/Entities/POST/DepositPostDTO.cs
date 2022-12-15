@@ -7,6 +7,20 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>Create Deposit DTO.</summary>
     public class DepositPostDTO : EntityPostBase
     {
+        public DepositPostDTO(string authorId, Money debitedFunds, string cardId, string secureModeReturnUrl, string ipAddress, BrowserInfo browserInfo)
+        {
+            AuthorId = authorId;
+            DebitedFunds = debitedFunds;
+            CardId = cardId;
+            SecureModeReturnURL = secureModeReturnUrl;
+            IpAddress = ipAddress;
+            BrowserInfo = browserInfo;
+        }
+
+        public DepositPostDTO()
+        {
+        }
+
         /// <summary>Author identifier.</summary>
         public string AuthorId { get; set; }
 
