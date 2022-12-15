@@ -230,5 +230,12 @@ namespace MangoPay.SDK.Core.APIs
             return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayInMITPostDTO>(
                 MethodKey.PayinsRecurringCardDirect, payIn, idempotentKey);
         }
+        
+        public async Task<CardPreAuthorizedDepositPayInDTO> CreateCardPreAuthorizedDepositPayIn(
+            CardPreAuthorizedDepositPayInPostDTO payIn, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<CardPreAuthorizedDepositPayInDTO, CardPreAuthorizedDepositPayInPostDTO>(
+                MethodKey.PayInsCreateCardPreAuthorizedDeposit, payIn, idempotentKey);
+        }
     }
 }

@@ -172,6 +172,11 @@ namespace MangoPay.SDK.Core.Enumerations
 		BankAccountsGetTransactions,
 		
 		CountryAuthorizationGet,
-		CountryAuthorizationGetAll
+		CountryAuthorizationGetAll,
+		
+		DepositsCreate,
+		DepositsGet,
+		DepositsCancel,
+		PayInsCreateCardPreAuthorizedDeposit
     }
 }

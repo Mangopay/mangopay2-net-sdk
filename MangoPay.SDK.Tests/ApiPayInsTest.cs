@@ -1393,5 +1393,33 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+        
+        /*[Test]
+        public async Task Test_CreateCardPreAuthorizedDepositPayIn()
+        {
+            try
+            {
+                DepositDTO deposit = await this.CreateNewDeposit();
+                var wallet = await this.GetJohnsWallet();
+                
+                var debitedFunds = new Money();
+                debitedFunds.Amount = 1000;
+                debitedFunds.Currency = CurrencyIso.EUR;
+                
+                var fees = new Money();
+                fees.Amount = 0;
+                fees.Currency = CurrencyIso.EUR;
+                
+                var dto = new CardPreAuthorizedDepositPayInPostDTO(wallet.Id, debitedFunds, fees, deposit.Id);
+                var payIn = await this.Api.PayIns.CreateCardPreAuthorizedDepositPayIn(dto);
+				
+                Assert.IsNotNull(payIn);
+                Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }*/
     }
 }

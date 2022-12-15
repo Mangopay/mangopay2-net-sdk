@@ -68,6 +68,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsPutRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations/{0}", RequestType.PUT)},
 
             { MethodKey.PayinsRecurringCardDirect, new ApiEndPoint("/payins/recurring/card/direct", RequestType.POST) },
+            
+            { MethodKey.PayInsCreateCardPreAuthorizedDeposit,new ApiEndPoint("/payins/deposit-preauthorized/direct/full-capture",RequestType.POST)},
 
             { MethodKey.PayoutsBankwireCreate, new ApiEndPoint("/payouts/bankwire", RequestType.POST)},
             { MethodKey.PayoutsBankwireGet, new ApiEndPoint("/payouts/bankwire/{0}", RequestType.GET)},
@@ -212,6 +214,10 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.CountryAuthorizationGet,new ApiEndPoint("/countries/{0}/authorizations",RequestType.GET)},
             { MethodKey.CountryAuthorizationGetAll,new ApiEndPoint("/countries/authorizations",RequestType.GET)},
+            
+            { MethodKey.DepositsCreate,new ApiEndPoint("/deposit-preauthorizations/card/direct",RequestType.POST)},
+            { MethodKey.DepositsGet,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.GET)},
+            { MethodKey.DepositsCancel,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.PUT)}
         };
 
         /// <summary>Creates new API instance.</summary>
