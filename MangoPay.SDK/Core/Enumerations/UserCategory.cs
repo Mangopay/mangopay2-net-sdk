@@ -8,7 +8,8 @@ namespace MangoPay.SDK.Core.Enumerations
     {
         UNKNOWN = 0,
         PAYER = 1,
-        OWNER = 2
+        OWNER = 2,
+        PLATFORM = 3
 
     }
 }

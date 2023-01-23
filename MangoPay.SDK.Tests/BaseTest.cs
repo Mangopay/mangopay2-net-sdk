@@ -90,7 +90,9 @@ namespace MangoPay.SDK.Tests
                     ClientId = "sdk-unit-tests",
                     ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju",
                     BaseUrl = "https://api.sandbox.mangopay.com",
-                    ApiVersion = "v2.01"
+                    ApiVersion = "v2.01",
+                    Timeout = 60000 // increase timeout because sandbox API takes longer than 15s to reply for transactions
+
                 }
             };
 
