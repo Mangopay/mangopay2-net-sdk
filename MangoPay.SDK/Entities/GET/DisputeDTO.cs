@@ -48,5 +48,9 @@ namespace MangoPay.SDK.Entities.GET
 		
 		/// <summary>The ID of the associated repudiation transaction.</summary>
 		public string RepudiationId { get; set; }
+		
+		/// <summary>The date and time the dispute was closed</summary>
+		[JsonConverter(typeof(Core.UnixDateTimeConverter))]
+		public DateTime? ClosedDate { get; set; }
     }
 }
