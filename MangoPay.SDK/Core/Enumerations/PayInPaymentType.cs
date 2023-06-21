@@ -31,6 +31,9 @@ namespace MangoPay.SDK.Core.Enumerations
         /// <summary>
         /// Payconiq payment type 
         /// </summary>
-        PAYCONIQ
+        PAYCONIQ,
+        
+        /// <summary> Mbway payment type </summary>
+        MBWAY,
     }
 }

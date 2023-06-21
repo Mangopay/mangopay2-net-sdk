@@ -88,6 +88,15 @@ namespace MangoPay.SDK.Core.APIs
             return await
                 this.CreateObjectAsync<PayInMandateDirectDTO, PayInMandateDirectPostDTO>(MethodKey.PayinsMandateDirectDebitCreate, payIn, idempotentKey);
         }
+        
+        /// <summary>Creates new payin mbway direct.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInMbwayDirectDTO> CreateMbwayDirectAsync(PayInMbwayDirectPostDTO payIn, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInMbwayDirectDTO, PayInMbwayDirectPostDTO>(MethodKey.PayinsMbwayDirectCreate, payIn, idempotentKey);
+        }
 
         /// <summary>Gets PayIn entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>

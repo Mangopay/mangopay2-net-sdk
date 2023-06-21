@@ -387,6 +387,12 @@ namespace MangoPay.SDK.Tests
         {
             return await GetNewPayInCardDirect(null);
         }
+        
+        protected async Task<PayInMbwayDirectDTO> GetNewPayInMbwayDirect()
+        {
+            PayInMbwayDirectPostDTO payIn = await GetPayInMbwayDirectPost();
+            return await this.Api.PayIns.CreateMbwayDirectAsync(payIn);
+        }
 
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
@@ -491,6 +497,24 @@ namespace MangoPay.SDK.Tests
             payIn.BrowserInfo = getBrowserInfo();
             payIn.IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C";
 
+            return payIn;
+        }
+        
+        protected async Task<PayInMbwayDirectPostDTO> GetPayInMbwayDirectPost()
+        {
+            var wallet = await this.GetJohnsWalletWithMoney();
+            var user = await this.GetJohn();
+            
+            // create pay-in MBWAY DIRECT
+            var payIn = new PayInMbwayDirectPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 0, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "351#269458236",
+                "test"
+            );
+            
             return payIn;
         }
 

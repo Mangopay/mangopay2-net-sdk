@@ -62,6 +62,8 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.ApplePayinsDirectCreate, new ApiEndPoint("/payins/applepay/direct", RequestType.POST)},
             { MethodKey.GooglePayinsDirectCreate, new ApiEndPoint("/payins/googlepay/direct", RequestType.POST)},
+            
+            { MethodKey.PayinsMbwayDirectCreate, new ApiEndPoint("/payins/payment-methods/mbway", RequestType.POST)},
 
             { MethodKey.PayinsRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations", RequestType.POST)},
             { MethodKey.PayinsGetRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations/{0}", RequestType.GET)},
