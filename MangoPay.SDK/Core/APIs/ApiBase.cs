@@ -50,7 +50,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsGetRefunds, new ApiEndPoint("/payins/{0}/refunds", RequestType.GET)},
 
             { MethodKey.PayinsPayPalCreate, new ApiEndPoint("/payins/paypal/web", RequestType.POST)},
-            { MethodKey.PayinsPayPalV2Create, new ApiEndPoint("/payins/payment-methods/paypal", RequestType.POST)},
+            { MethodKey.PayinsPayPalDirectCreate, new ApiEndPoint("/payins/payment-methods/paypal", RequestType.POST)},
 
             { MethodKey.PayinsPreauthorizedDirectCreate, new ApiEndPoint("/payins/preauthorized/direct", RequestType.POST)},
 

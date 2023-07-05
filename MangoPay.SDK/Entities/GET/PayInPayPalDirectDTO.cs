@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MangoPay.SDK.Entities.GET
 {
-	public class PayInPayPalV2DTO : PayInDTO
+	public class PayInPayPalDirectDTO : PayInDTO
     {
 	    ///<summary>The URL where users are automatically redirected after the payment is validated</summary>
         public string ReturnURL { get; set; }

@@ -80,14 +80,14 @@ namespace MangoPay.SDK.Tests
         }
         
         [Test]
-        public async Task Test_PayIns_Create_PayPalV2()
+        public async Task Test_PayIns_Create_PayPalDirect()
         {
             try
             {
                 var user = await this.GetJohn();
                 var wallet = await this.GetJohnsWallet();
 
-                var payInPost = new PayInPayPalV2PostDTO(
+                var payInPost = new PayInPayPalDirectPostDTO(
                     user.Id,
                     new Money { Amount = 500, Currency = CurrencyIso.EUR },
                     new Money { Amount = 0, Currency = CurrencyIso.EUR },
@@ -122,8 +122,8 @@ namespace MangoPay.SDK.Tests
                     "test"
                 );
                 
-                var payIn = await this.Api.PayIns.CreatePayPalV2Async(payInPost);
-                var fetched = await this.Api.PayIns.GetPayPalV2Async(payIn.Id);
+                var payIn = await this.Api.PayIns.CreatePayPalDirectAsync(payInPost);
+                var fetched = await this.Api.PayIns.GetPayPalDirectAsync(payIn.Id);
 
                 Assert.IsTrue(payIn.Id.Length > 0);
                 Assert.AreEqual(PayInPaymentType.PAYPAL, payIn.PaymentType);

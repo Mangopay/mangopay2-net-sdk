@@ -3,10 +3,10 @@ using MangoPay.SDK.Core.Enumerations;
 
 namespace MangoPay.SDK.Entities.POST
 {
-    /// <summary>PayIn by PayPalV2 POST entity.</summary>
-    public class PayInPayPalV2PostDTO : EntityPostBase
+    /// <summary>PayIn by PayPal Direct POST entity.</summary>
+    public class PayInPayPalDirectPostDTO : EntityPostBase
     {
-        public PayInPayPalV2PostDTO(
+        public PayInPayPalDirectPostDTO(
             string authorId,
             Money debitedFunds,
             Money fees,

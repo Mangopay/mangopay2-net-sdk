@@ -46,19 +46,19 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
-        [Obsolete("CreatePayPalAsync is deprecated, please use CreatePayPalV2Async instead.")]
+        [Obsolete("CreatePayPalAsync is deprecated, please use CreatePayPalDirectAsync instead.")]
         public async Task<PayInPayPalDTO> CreatePayPalAsync(PayInPayPalPostDTO payIn, string idempotentKey = null)
         {
             return await this.CreateObjectAsync<PayInPayPalDTO, PayInPayPalPostDTO>(MethodKey.PayinsPayPalCreate, payIn, idempotentKey);
         }
         
-        /// <summary>Creates new payin by PayPal V2.</summary>
+        /// <summary>Creates new payin by PayPal Direct.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
-        public async Task<PayInPayPalV2DTO> CreatePayPalV2Async(PayInPayPalV2PostDTO payIn, string idempotentKey = null)
+        public async Task<PayInPayPalDirectDTO> CreatePayPalDirectAsync(PayInPayPalDirectPostDTO payIn, string idempotentKey = null)
         {
-            return await this.CreateObjectAsync<PayInPayPalV2DTO, PayInPayPalV2PostDTO>(MethodKey.PayinsPayPalV2Create, payIn, idempotentKey);
+            return await this.CreateObjectAsync<PayInPayPalDirectDTO, PayInPayPalDirectPostDTO>(MethodKey.PayinsPayPalDirectCreate, payIn, idempotentKey);
         }
 
         /// <summary>Creates new payin by Payconiq.</summary>
@@ -192,9 +192,9 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets PayIn PayPal V2 entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
         /// <returns>PayIn object returned from API.</returns>
-        public async Task<PayInPayPalV2DTO> GetPayPalV2Async(string payInId)
+        public async Task<PayInPayPalDirectDTO> GetPayPalDirectAsync(string payInId)
         {
-            return await this.GetObjectAsync<PayInPayPalV2DTO>(MethodKey.PayinsGet, entitiesId: payInId);
+            return await this.GetObjectAsync<PayInPayPalDirectDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
 
         /// <summary>Gets PayIn Payconiq entity by its identifier.</summary>

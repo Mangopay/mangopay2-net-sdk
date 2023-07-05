@@ -3,7 +3,7 @@
 namespace MangoPay.SDK.Entities.POST
 {
     /// <summary>PayIn by PayPal POST entity.</summary>
-    [Obsolete("PayInPayPalPostDTO is deprecated, please use PayInPayPalV2PostDTO instead.")]
+    [Obsolete("PayInPayPalPostDTO is deprecated, please use PayInPayPalDirectPostDTO instead.")]
     public class PayInPayPalPostDTO : EntityPostBase
     {
 		public PayInPayPalPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl)
