@@ -189,7 +189,7 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<PayInPayPalDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
         
-        /// <summary>Gets PayIn PayPal V2 entity by its identifier.</summary>
+        /// <summary>Gets PayIn PayPal Direct entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
         /// <returns>PayIn object returned from API.</returns>
         public async Task<PayInPayPalDirectDTO> GetPayPalDirectAsync(string payInId)
