@@ -1,3 +1,12 @@
+## [3.10.0] - 2023-07-07
+### Added
+
+Paypal integration with Mangopay has been improved. This payment method is in private beta. Please contact support if you have any questions.
+
+### Fixed
+
+- `Phone` parameter instead of `PhoneNumber` for MBWay
+
 ## [3.9.0] - 2023-06-21
 ### Added
 
