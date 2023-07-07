@@ -92,7 +92,6 @@ namespace MangoPay.SDK.Tests
                     new Money { Amount = 500, Currency = CurrencyIso.EUR },
                     new Money { Amount = 0, Currency = CurrencyIso.EUR },
                     wallet.Id,
-                    // CultureCode.FR,
                     "http://example.com",
                     new List<LineItem>
                     {
@@ -120,6 +119,7 @@ namespace MangoPay.SDK.Tests
                         LastName = user.LastName
                     },
                     "test"
+                    // CultureCode.FR
                 );
                 
                 var payIn = await this.Api.PayIns.CreatePayPalDirectAsync(payInPost);
@@ -129,6 +129,7 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual(PayInPaymentType.PAYPAL, payIn.PaymentType);
                 Assert.AreEqual(PayInExecutionType.DIRECT, payIn.ExecutionType);
                 Assert.AreEqual(TransactionStatus.CREATED, payIn.Status);
+                Assert.IsNotNull(payIn.RedirectURL);
                 
                 Assert.AreEqual(payIn.Id, fetched.Id);
             }

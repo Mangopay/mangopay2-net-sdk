@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using MangoPay.SDK.Core.Enumerations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.POST
 {
@@ -11,22 +13,22 @@ namespace MangoPay.SDK.Entities.POST
             Money debitedFunds,
             Money fees,
             string creditedWalletId,
-            // CultureCode culture,
-            string returnUrl,
+            string returnURL,
             List<LineItem> lineItems,
             Shipping shipping = null,
-            string statementDescriptor = null
+            string statementDescriptor = null,
+            CultureCode? culture = null
         )
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
             Fees = fees;
             CreditedWalletId = creditedWalletId;
-            // Culture = culture;
-            ReturnURL = returnUrl;
+            ReturnURL = returnURL;
             LineItems = lineItems;
             Shipping = shipping;
             StatementDescriptor = statementDescriptor;
+            Culture = culture;
         }
 
         /// <summary>Author identifier.</summary>
@@ -41,8 +43,9 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Credited wallet identifier.</summary>
         public string CreditedWalletId { get; set; }
 
-        // /// <summary>Culture</summary>
-        // public CultureCode Culture { get; set; }
+        /// <summary>Culture (language).</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CultureCode? Culture { get; set; }
 
         /// <summary>Return URL.</summary>
         public string ReturnURL { get; set; }

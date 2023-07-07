@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.GET
         public string ReturnURL { get; set; }
 	    
 	    ///<summary>The URL to which the user is redirected to complete the payment</summary>
-	    public string RedirectUrl { get; set; }
+	    public string RedirectURL { get; set; }
 	    
 	    ///<summary>Custom description of the payment shown to the consumer when making payments and on the bank statement</summary>
 	    public string StatementDescriptor { get; set; }
