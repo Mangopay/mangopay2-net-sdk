@@ -23,6 +23,7 @@ namespace MangoPay.SDK.Core.Enumerations
         HooksGet,
         HooksSave,
         PayinsPayPalCreate,
+        PayinsPayPalDirectCreate,
         PayinsBankwireDirectCreate,
         PayinsPayconiqWebCreate,
         PayinsCardDirectCreate,

@@ -1,6 +1,9 @@
 ﻿
+using System;
+
 namespace MangoPay.SDK.Entities.GET
 {
+	[Obsolete("PayInPayPalDTO is deprecated, please use PayInPayPalDirectDTO instead.")]
 	public class PayInPayPalDTO : PayInDTO
     {
 		/// <summary>The shipping address for PayPal PayIn.</summary>

@@ -78,6 +78,66 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+        
+        [Test]
+        public async Task Test_PayIns_Create_PayPalDirect()
+        {
+            try
+            {
+                var user = await this.GetJohn();
+                var wallet = await this.GetJohnsWallet();
+
+                var payInPost = new PayInPayPalDirectPostDTO(
+                    user.Id,
+                    new Money { Amount = 500, Currency = CurrencyIso.EUR },
+                    new Money { Amount = 0, Currency = CurrencyIso.EUR },
+                    wallet.Id,
+                    "http://example.com",
+                    new List<LineItem>
+                    {
+                        new LineItem
+                        {
+                            Name = "running shoes",
+                            Quantity = 1,
+                            UnitAmount = 500,
+                            TaxAmount = 0,
+                            Description = "seller1 ID"
+                        }
+                    },
+                    new Shipping
+                    {
+                        Address = new Address
+                        {
+                            AddressLine1 = "Address line 1",
+                            AddressLine2 = "Address line 2",
+                            City = "City",
+                            Country = CountryIso.FR,
+                            PostalCode = "11222",
+                            Region = "Region"
+                        },
+                        FirstName = user.FirstName,
+                        LastName = user.LastName
+                    },
+                    "test"
+                    // CultureCode.FR
+                );
+                
+                var payIn = await this.Api.PayIns.CreatePayPalDirectAsync(payInPost);
+                var fetched = await this.Api.PayIns.GetPayPalDirectAsync(payIn.Id);
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(PayInPaymentType.PAYPAL, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.DIRECT, payIn.ExecutionType);
+                Assert.AreEqual(TransactionStatus.CREATED, payIn.Status);
+                Assert.IsNotNull(payIn.RedirectURL);
+                
+                Assert.AreEqual(payIn.Id, fetched.Id);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         [Test]
         public async Task Test_PayIns_Create_Payconiq()
@@ -195,6 +255,7 @@ namespace MangoPay.SDK.Tests
             {
                 var user = await this.GetJohn();
                 var payIn = await this.GetNewPayInMbwayDirect();
+                var fetched = await this.Api.PayIns.GetMbwayAsync(payIn.Id);
 
                 Assert.IsTrue(payIn.Id.Length > 0);
                 Assert.AreEqual(PayInPaymentType.MBWAY, payIn.PaymentType);
@@ -206,6 +267,8 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual(TransactionStatus.CREATED, payIn.Status);
                 Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
                 Assert.AreEqual(TransactionNature.REGULAR, payIn.Nature);
+                
+                Assert.AreEqual(payIn.Id, fetched.Id);
 
             }
             catch (Exception ex)
