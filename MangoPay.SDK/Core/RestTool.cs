@@ -72,9 +72,6 @@ namespace MangoPay.SDK.Core
         // key-value collection pass to the request
         private Dictionary<string, string> _requestData;
 
-        // code get from response
-        private int _responseCode;
-
         // pagination object
         private Pagination _pagination;
 
@@ -260,8 +257,6 @@ namespace MangoPay.SDK.Core
             var restResponse = await _dto.Client.ExecuteAsync<U>(restRequest);
             var responseObject = restResponse.Data;
 
-            this._responseCode = (int)restResponse.StatusCode;
-
             if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
             {
                 _log.Debug("Response OK: " + restResponse.Content);
@@ -271,7 +266,7 @@ namespace MangoPay.SDK.Core
                 _log.Debug("Response ERROR: " + restResponse.Content);
             }
 
-            if (this._responseCode == 200)
+            if (restResponse.StatusCode == HttpStatusCode.OK)
             {
                 _log.Debug("Response object: " + responseObject.ToString());
             }
@@ -348,8 +343,6 @@ namespace MangoPay.SDK.Core
 
             responseObject = new ListPaginated<T>(restResponse.Data);
 
-            this._responseCode = (int)restResponse.StatusCode;
-
             if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
             {
                 _log.Debug("Response OK: " + restResponse.Content);
@@ -359,7 +352,7 @@ namespace MangoPay.SDK.Core
                 _log.Debug("Response ERROR: " + restResponse.Content);
             }
 
-            if (this._responseCode == 200)
+            if (restResponse.StatusCode == HttpStatusCode.OK)
             {
                 responseObject = this.ReadResponseHeaders<T>(restResponse, responseObject);
 
