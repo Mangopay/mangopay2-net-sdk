@@ -263,7 +263,7 @@ namespace MangoPay.SDK.Core
             }
             else
             {
-                _log.Debug("Response ERROR: " + restResponse.Content);
+                _log.Debug($"Response ERROR ({(int)restResponse.StatusCode}): " + restResponse.Content);
             }
 
             if (restResponse.StatusCode == HttpStatusCode.OK)
@@ -349,7 +349,7 @@ namespace MangoPay.SDK.Core
             }
             else
             {
-                _log.Debug("Response ERROR: " + restResponse.Content);
+                _log.Debug($"Response ERROR ({(int)restResponse.StatusCode}): " + restResponse.Content);
             }
 
             if (restResponse.StatusCode == HttpStatusCode.OK)
