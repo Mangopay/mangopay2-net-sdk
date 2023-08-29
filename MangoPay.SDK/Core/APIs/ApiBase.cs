@@ -50,7 +50,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsGetRefunds, new ApiEndPoint("/payins/{0}/refunds", RequestType.GET)},
 
             { MethodKey.PayinsPayPalCreate, new ApiEndPoint("/payins/paypal/web", RequestType.POST)},
-            { MethodKey.PayinsPayPalDirectCreate, new ApiEndPoint("/payins/payment-methods/paypal", RequestType.POST)},
+            { MethodKey.PayinsPayPalWebCreate, new ApiEndPoint("/payins/payment-methods/paypal", RequestType.POST)},
 
             { MethodKey.PayinsPreauthorizedDirectCreate, new ApiEndPoint("/payins/preauthorized/direct", RequestType.POST)},
 
@@ -64,7 +64,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.ApplePayinsDirectCreate, new ApiEndPoint("/payins/applepay/direct", RequestType.POST)},
             { MethodKey.GooglePayinsDirectCreate, new ApiEndPoint("/payins/googlepay/direct", RequestType.POST)},
             
-            { MethodKey.PayinsMbwayDirectCreate, new ApiEndPoint("/payins/payment-methods/mbway", RequestType.POST)},
+            { MethodKey.PayinsMbwayWebCreate, new ApiEndPoint("/payins/payment-methods/mbway", RequestType.POST)},
 
             { MethodKey.PayinsRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations", RequestType.POST)},
             { MethodKey.PayinsGetRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations/{0}", RequestType.GET)},

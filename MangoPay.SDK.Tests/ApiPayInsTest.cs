@@ -80,14 +80,14 @@ namespace MangoPay.SDK.Tests
         }
         
         [Test]
-        public async Task Test_PayIns_Create_PayPalDirect()
+        public async Task Test_PayIns_Create_PayPalWeb()
         {
             try
             {
                 var user = await this.GetJohn();
                 var wallet = await this.GetJohnsWallet();
 
-                var payInPost = new PayInPayPalDirectPostDTO(
+                var payInPost = new PayInPayPalWebPostDTO(
                     user.Id,
                     new Money { Amount = 500, Currency = CurrencyIso.EUR },
                     new Money { Amount = 0, Currency = CurrencyIso.EUR },
@@ -122,12 +122,12 @@ namespace MangoPay.SDK.Tests
                     // CultureCode.FR
                 );
                 
-                var payIn = await this.Api.PayIns.CreatePayPalDirectAsync(payInPost);
-                var fetched = await this.Api.PayIns.GetPayPalDirectAsync(payIn.Id);
+                var payIn = await this.Api.PayIns.CreatePayPalWebAsync(payInPost);
+                var fetched = await this.Api.PayIns.GetPayPalWebAsync(payIn.Id);
 
                 Assert.IsTrue(payIn.Id.Length > 0);
                 Assert.AreEqual(PayInPaymentType.PAYPAL, payIn.PaymentType);
-                Assert.AreEqual(PayInExecutionType.DIRECT, payIn.ExecutionType);
+                Assert.AreEqual(PayInExecutionType.WEB, payIn.ExecutionType);
                 Assert.AreEqual(TransactionStatus.CREATED, payIn.Status);
                 Assert.IsNotNull(payIn.RedirectURL);
                 
@@ -249,17 +249,17 @@ namespace MangoPay.SDK.Tests
         }
         
         [Test]
-        public async Task Test_PayIns_Create_MbwayDirect()
+        public async Task Test_PayIns_Create_MbwayWeb()
         {
             try
             {
                 var user = await this.GetJohn();
-                var payIn = await this.GetNewPayInMbwayDirect();
+                var payIn = await this.GetNewPayInMbwayWeb();
                 var fetched = await this.Api.PayIns.GetMbwayAsync(payIn.Id);
 
                 Assert.IsTrue(payIn.Id.Length > 0);
                 Assert.AreEqual(PayInPaymentType.MBWAY, payIn.PaymentType);
-                Assert.AreEqual(PayInExecutionType.DIRECT, payIn.ExecutionType);
+                Assert.AreEqual(PayInExecutionType.WEB, payIn.ExecutionType);
                 Assert.IsTrue(payIn.DebitedFunds is Money);
                 Assert.IsTrue(payIn.CreditedFunds is Money);
                 Assert.IsTrue(payIn.Fees is Money);

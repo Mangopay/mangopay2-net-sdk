@@ -1,6 +1,6 @@
 ﻿namespace MangoPay.SDK.Entities.GET
 {
-    public class PayInMbwayDirectDTO : PayInDTO
+    public class PayInMbwayWebDTO : PayInDTO
     {
         /// <summary>An optional value to be specified on the user's bank statement.</summary>
         public string StatementDescriptor { get; set; }
