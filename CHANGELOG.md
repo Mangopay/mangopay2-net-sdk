@@ -1,3 +1,8 @@
+## [3.10.1] - 2023-08-29
+### Fixed
+
+Implementation of PayPal and MBWay to reflect the API behavior
+
 ## [3.10.0] - 2023-07-07
 ### Added
 
