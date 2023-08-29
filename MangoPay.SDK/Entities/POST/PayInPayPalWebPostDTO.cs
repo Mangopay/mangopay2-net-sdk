@@ -5,10 +5,10 @@ using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.POST
 {
-    /// <summary>PayIn by PayPal Direct POST entity.</summary>
-    public class PayInPayPalDirectPostDTO : EntityPostBase
+    /// <summary>PayIn by PayPal Web POST entity.</summary>
+    public class PayInPayPalWebPostDTO : EntityPostBase
     {
-        public PayInPayPalDirectPostDTO(
+        public PayInPayPalWebPostDTO(
             string authorId,
             Money debitedFunds,
             Money fees,

@@ -388,10 +388,10 @@ namespace MangoPay.SDK.Tests
             return await GetNewPayInCardDirect(null);
         }
         
-        protected async Task<PayInMbwayDirectDTO> GetNewPayInMbwayDirect()
+        protected async Task<PayInMbwayWebDTO> GetNewPayInMbwayWeb()
         {
-            PayInMbwayDirectPostDTO payIn = await GetPayInMbwayDirectPost();
-            return await this.Api.PayIns.CreateMbwayDirectAsync(payIn);
+            PayInMbwayWebPostDTO payIn = await GetPayInMbwayWebPost();
+            return await this.Api.PayIns.CreateMbwayWebAsync(payIn);
         }
 
         /// <summary>Creates PayIn Card Direct object.</summary>
@@ -500,13 +500,13 @@ namespace MangoPay.SDK.Tests
             return payIn;
         }
         
-        protected async Task<PayInMbwayDirectPostDTO> GetPayInMbwayDirectPost()
+        protected async Task<PayInMbwayWebPostDTO> GetPayInMbwayWebPost()
         {
             var wallet = await this.GetJohnsWalletWithMoney();
             var user = await this.GetJohn();
             
-            // create pay-in MBWAY DIRECT
-            var payIn = new PayInMbwayDirectPostDTO(
+            // create pay-in MBWAY WEB
+            var payIn = new PayInMbwayWebPostDTO(
                 user.Id,
                 new Money { Amount = 100, Currency = CurrencyIso.EUR },
                 new Money { Amount = 0, Currency = CurrencyIso.EUR },

@@ -46,19 +46,19 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
-        [Obsolete("CreatePayPalAsync is deprecated, please use CreatePayPalDirectAsync instead.")]
+        [Obsolete("CreatePayPalAsync is deprecated, please use CreatePayPalWebAsync instead.")]
         public async Task<PayInPayPalDTO> CreatePayPalAsync(PayInPayPalPostDTO payIn, string idempotentKey = null)
         {
             return await this.CreateObjectAsync<PayInPayPalDTO, PayInPayPalPostDTO>(MethodKey.PayinsPayPalCreate, payIn, idempotentKey);
         }
         
-        /// <summary>Creates new payin by PayPal Direct.</summary>
+        /// <summary>Creates new payin by PayPal Web.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
-        public async Task<PayInPayPalDirectDTO> CreatePayPalDirectAsync(PayInPayPalDirectPostDTO payIn, string idempotentKey = null)
+        public async Task<PayInPayPalWebDTO> CreatePayPalWebAsync(PayInPayPalWebPostDTO payIn, string idempotentKey = null)
         {
-            return await this.CreateObjectAsync<PayInPayPalDirectDTO, PayInPayPalDirectPostDTO>(MethodKey.PayinsPayPalDirectCreate, payIn, idempotentKey);
+            return await this.CreateObjectAsync<PayInPayPalWebDTO, PayInPayPalWebPostDTO>(MethodKey.PayinsPayPalWebCreate, payIn, idempotentKey);
         }
 
         /// <summary>Creates new payin by Payconiq.</summary>
@@ -99,13 +99,13 @@ namespace MangoPay.SDK.Core.APIs
                 this.CreateObjectAsync<PayInMandateDirectDTO, PayInMandateDirectPostDTO>(MethodKey.PayinsMandateDirectDebitCreate, payIn, idempotentKey);
         }
         
-        /// <summary>Creates new payin mbway direct.</summary>
+        /// <summary>Creates new payin mbway web.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="payIn">Object instance to be created.</param>
         /// <returns>Object instance returned from API.</returns>
-        public async Task<PayInMbwayDirectDTO> CreateMbwayDirectAsync(PayInMbwayDirectPostDTO payIn, string idempotentKey = null)
+        public async Task<PayInMbwayWebDTO> CreateMbwayWebAsync(PayInMbwayWebPostDTO payIn, string idempotentKey = null)
         {
-            return await this.CreateObjectAsync<PayInMbwayDirectDTO, PayInMbwayDirectPostDTO>(MethodKey.PayinsMbwayDirectCreate, payIn, idempotentKey);
+            return await this.CreateObjectAsync<PayInMbwayWebDTO, PayInMbwayWebPostDTO>(MethodKey.PayinsMbwayWebCreate, payIn, idempotentKey);
         }
 
         /// <summary>Gets PayIn entity by its identifier.</summary>
@@ -189,12 +189,12 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<PayInPayPalDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
         
-        /// <summary>Gets PayIn PayPal Direct entity by its identifier.</summary>
+        /// <summary>Gets PayIn PayPal Web entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
         /// <returns>PayIn object returned from API.</returns>
-        public async Task<PayInPayPalDirectDTO> GetPayPalDirectAsync(string payInId)
+        public async Task<PayInPayPalWebDTO> GetPayPalWebAsync(string payInId)
         {
-            return await this.GetObjectAsync<PayInPayPalDirectDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+            return await this.GetObjectAsync<PayInPayPalWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
 
         /// <summary>Gets PayIn Payconiq entity by its identifier.</summary>
@@ -208,9 +208,9 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets PayIn Mbway entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
         /// <returns>PayIn object returned from API.</returns>
-        public async Task<PayInMbwayDirectDTO> GetMbwayAsync(string payInId)
+        public async Task<PayInMbwayWebDTO> GetMbwayAsync(string payInId)
         {
-            return await this.GetObjectAsync<PayInMbwayDirectDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+            return await this.GetObjectAsync<PayInMbwayWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
 
         /// <summary>Creates refund for PayIn object.</summary>
