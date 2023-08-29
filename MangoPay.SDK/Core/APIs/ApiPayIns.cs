@@ -183,7 +183,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>Gets PayIn PayPal entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
         /// <returns>PayIn object returned from API.</returns>
-        [Obsolete("GetPayPalAsync is deprecated, please use GetPayPalAsync instead.")]
+        [Obsolete("GetPayPalAsync is deprecated, please use GetPayPalWebAsync instead.")]
         public async Task<PayInPayPalDTO> GetPayPalAsync(string payInId)
         {
             return await this.GetObjectAsync<PayInPayPalDTO>(MethodKey.PayinsGet, entitiesId: payInId);
