@@ -394,6 +394,24 @@ namespace MangoPay.SDK.Tests
             return await this.Api.PayIns.CreateMbwayWebAsync(payIn);
         }
 
+        protected async Task<PayInMultibancoWebDTO> GetNewPayInMultibancoWeb()
+        {
+            PayInMultibancoWebPostDTO payIn = await GetPayInMultibancoWebPost();
+            return await this.Api.PayIns.CreateMultibancoWebAsync(payIn);
+        }
+
+        protected async Task<PayInSatispayWebDTO> GetNewPayInSatispayWeb()
+        {
+            PayInSatispayWebPostDTO payIn = await GetPayInSatispayWebPost();
+            return await this.Api.PayIns.CreateSatispayWebAsync(payIn);
+        }
+
+        protected async Task<PayInBlikWebDTO> GetNewPayInBlikWeb()
+        {
+            PayInBlikWebPostDTO payIn = await GetPayInBlikWebPost();
+            return await this.Api.PayIns.CreateBlikWebAsync(payIn);
+        }
+
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
@@ -515,6 +533,64 @@ namespace MangoPay.SDK.Tests
                 "test"
             );
             
+            return payIn;
+        }
+
+        protected async Task<PayInMultibancoWebPostDTO> GetPayInMultibancoWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+
+            var payIn = new PayInMultibancoWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_8362acb9-6dbc-4660-b826-b9acb9b850b1",
+                "Multibanco",
+                "test"
+            );
+
+            return payIn;
+        }
+
+        protected async Task<PayInSatispayWebPostDTO> GetPayInSatispayWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+
+            var payIn = new PayInSatispayWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
+                "IT",
+                "Satispay",
+                "Satispay test"
+            );
+
+            return payIn;
+        }
+
+        protected async Task<PayInBlikWebPostDTO> GetPayInBlikWebPost()
+        {
+            var user = await GetJohn();
+            
+            // create wallet with money
+            var wallet = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN PLN WITH MONEY", CurrencyIso.PLN);
+            var johnsWalletWithMoney = await this.Api.Wallets.CreateAsync(wallet);
+
+            var payIn = new PayInBlikWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.PLN },
+                new Money { Amount = 20, Currency = CurrencyIso.PLN },
+                johnsWalletWithMoney.Id,
+                "https://example.com",
+                "Blik",
+                "Blik test"
+            );
+
             return payIn;
         }
 
