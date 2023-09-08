@@ -563,7 +563,7 @@ namespace MangoPay.SDK.Tests
                 SecureMode.DEFAULT,
                 billing,
                 shipping,
-                "GooglePayV2 test"
+                "test"
             );
 
             return payIn;
@@ -1045,7 +1045,7 @@ namespace MangoPay.SDK.Tests
                 ColorDepth = 32,
                 JavaEnabled = true,
                 JavascriptEnabled = false,
-                Language = "fr",
+                Language = "FR-FR",
                 ScreenHeight = 1080,
                 ScreenWidth = 1920,
                 TimeZoneOffset = "+3600",

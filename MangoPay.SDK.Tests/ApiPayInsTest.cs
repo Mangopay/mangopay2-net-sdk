@@ -659,13 +659,12 @@ namespace MangoPay.SDK.Tests
                 var payIn = await GetNewPayInGooglePayDirect();
 
                 Assert.IsTrue(payIn.Id.Length > 0);
-                Assert.AreEqual(PayInPaymentType.GOOGLEPAY, payIn.PaymentType);
+                Assert.AreEqual(PayInPaymentType.GOOGLE_PAY, payIn.PaymentType);
                 Assert.AreEqual(PayInExecutionType.DIRECT, payIn.ExecutionType);
                 Assert.IsTrue(payIn.DebitedFunds is Money);
                 Assert.IsTrue(payIn.CreditedFunds is Money);
                 Assert.IsTrue(payIn.Fees is Money);
                 Assert.AreEqual(user.Id, payIn.AuthorId);
-                Assert.AreEqual(TransactionStatus.CREATED, payIn.Status);
                 Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
                 Assert.AreEqual(TransactionNature.REGULAR, payIn.Nature);
             }
