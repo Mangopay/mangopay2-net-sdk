@@ -394,6 +394,12 @@ namespace MangoPay.SDK.Tests
             return await this.Api.PayIns.CreateMbwayWebAsync(payIn);
         }
 
+        protected async Task<PayInGooglePayDirectDTO> GetNewPayInGooglePayDirect()
+        {
+            PayInGooglePayDirectPostDTO payIn = await GetPayInGooglePayDirectV2Post();
+            return await Api.PayIns.CreateGooglePayDirectV2Async(payIn);
+        }
+
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
@@ -515,6 +521,51 @@ namespace MangoPay.SDK.Tests
                 "test"
             );
             
+            return payIn;
+        }
+
+        protected async Task<PayInGooglePayDirectPostDTO> GetPayInGooglePayDirectV2Post()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+            
+            var billing = new Billing();
+            var address = new Address
+            {
+                City = "Test city",
+                AddressLine1 = "Test address line 1",
+                AddressLine2 = "Test address line 2",
+                Country = CountryIso.RO,
+                PostalCode = "65400"
+            };
+            billing.Address = address;
+            billing.FirstName = "Joe";
+            billing.LastName = "Doe";
+            
+            var shipping = new Shipping
+            {
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
+            };
+
+            // create pay-in GooglePay DIRECT
+            var payIn = new PayInGooglePayDirectPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 0, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "https://mangopay.com/docs/please-ignore",
+                "https://mangopay.com/docs/please-ignore",
+                "159.180.248.187",
+                getBrowserInfo(),
+                "{\"signature\":\"MEUCIQCLXOan2Y9DobLVSOeD5V64Peayvz0ZAWisdz/1iTdthAIgVFb4Hve4EhtW81k46SiMlnXLIiCn1h2+vVQGjHe+sSo\\u003d\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEDGRER6R6PH6K39YTIYX+CpDNej6gQgvi/Wx19SOPtiDnkjAl4/LF9pXlvZYe+aJH0Dy095I6BlfY8bNBB5gjPg\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1688521049102\\\"}\",\"signatures\":[\"MEYCIQDup1B+rkiPAWmpg7RmqY0NfgdGhmdyL8wvAX+6C1aOU2QIhAIZACSDQ/ZexIyEia5KrRlG2B+y3AnKNlhRzumRcnNOR\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"YSSGK9yFdKP+mJB5+wAjnOujnThPM1E/KbbJxd3MDzPVI66ip1DBESldvQXYjjeLq6Rf1tKE9oLwwaj6u0/gU7Z9t3g1MoW+9YoEE1bs1IxImif7IQGAosfYjjbBBfDkOaqEs2JJC5qt6xjKO9lQ/E6JPkPFGqF7+OJ1vzmD83Pi3sHWkVge5MhxXQ3yBNhrjus3kV7zUoYA+uqNrciWcWypc1NndF/tiwSkvUTzM6n4dS8X84fkJiSO7PZ65C0yw0mdybRRnyL2fFdWGssve1zZFAvYfzcpNamyuZGGlu/SCoayitojmMsqe5Cu0efD9+WvvDr9PA+Vo1gzuz7LmiZe81SGvdFhRoq62FBAUiwSsi2A3pWinZxM2XbYNph+HJ5FCNspWhz4ur9JG4ZMLemCXuaybvL++W6PWywAtoiE0mQcBIX3vhOq5itv0RkaKVe6nbcAS2UryRz2u/nDCJLKpIv2Wi11NtCUT2mgD8F6qfcXhvVZHyeLqZ1OLgCudTTSdKirzezbgPTg4tQpW++KufeD7bgG+01XhCWt+7/ftqcSf8n//gSRINne8j2G6w+2\\\",\\\"ephemeralPublicKey\\\":\\\"BLY2+R8C0T+BSf/W3HEq305qH63IGmJxMVmbfJ6+x1V7GQg9W9v7eHc3j+8TeypVn+nRlPu98tivuMXECg+rWZs\\\\u003d\\\",\\\"tag\\\":\\\"MmEjNdLfsDNfYd/FRUjoJ4/IfLypNRqx8zgHfa6Ftmo\\\\u003d\\\"}\"}",
+                SecureMode.DEFAULT,
+                billing,
+                shipping,
+                "GooglePayV2 test"
+            );
+
             return payIn;
         }
 
