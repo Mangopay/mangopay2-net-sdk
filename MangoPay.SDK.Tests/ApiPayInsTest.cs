@@ -118,8 +118,9 @@ namespace MangoPay.SDK.Tests
                         FirstName = user.FirstName,
                         LastName = user.LastName
                     },
-                    "test"
+                    "test",
                     // CultureCode.FR
+                    shippingPreference: ShippingPreference.SET_PROVIDED_ADDRESS
                 );
                 
                 var payIn = await this.Api.PayIns.CreatePayPalWebAsync(payInPost);
