@@ -43,6 +43,7 @@ namespace MangoPay.SDK.Core.Enumerations
         PayinsMultibancoWebCreate,
         PayinsSatispayWebCreate,
         PayinsBlikWebCreate,
+        PayinsKlarnaWebCreate,
         PayoutsBankwireCreate,
         PayoutsBankwireGet,
         PayoutsGet,

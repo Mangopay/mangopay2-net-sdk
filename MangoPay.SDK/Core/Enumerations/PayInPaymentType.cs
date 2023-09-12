@@ -41,5 +41,7 @@ namespace MangoPay.SDK.Core.Enumerations
         SATISPAY,
         /// <summary> Blik payment type </summary>
         BLIK,
+        /// <summary> Klarna payment type </summary>
+        KLARNA,
     }
 }

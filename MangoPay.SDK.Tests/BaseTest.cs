@@ -411,6 +411,12 @@ namespace MangoPay.SDK.Tests
             PayInBlikWebPostDTO payIn = await GetPayInBlikWebPost();
             return await this.Api.PayIns.CreateBlikWebAsync(payIn);
         }
+        
+        protected async Task<PayInKlarnaWebDTO> GetNewPayInKlarnaWeb()
+        {
+            PayInKlarnaWebPostDTO payIn = await GetPayInKlarnaWebPost();
+            return await this.Api.PayIns.CreateKlarnaWebAsync(payIn);
+        }
 
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
@@ -589,6 +595,66 @@ namespace MangoPay.SDK.Tests
                 "https://example.com",
                 "Blik",
                 "Blik test"
+            );
+
+            return payIn;
+        }
+        
+        protected async Task<PayInKlarnaWebPostDTO> GetPayInKlarnaWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+            
+            var address = new Address
+            {
+                AddressLine1 = "Big Street",
+                AddressLine2 = "no 2 ap 6",
+                City = "Lyon",
+                Country = CountryIso.FR,
+                PostalCode = "65400",
+                Region = "Ile de France"
+            };
+
+            var billing = new Billing
+            {
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
+            };
+            
+            var shipping = new Shipping
+            {
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
+            };
+
+            var payIn = new PayInKlarnaWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
+                new List<LineItem>
+                {
+                    new LineItem
+                    {
+                        Name = "test item",
+                        Quantity = 1,
+                        UnitAmount = 100,
+                        TaxAmount = 0,
+                        Description = "seller1 ID"
+                    }
+                },
+                "FR",
+                "33#607080900",
+                "mango@mangopay.com",
+                "{}",
+                billing,
+                "afd48-879d-48fg",
+                "FR",
+                shipping,
+                "Klarna test"
             );
 
             return payIn;
