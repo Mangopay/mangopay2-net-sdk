@@ -3,9 +3,11 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Core;
 using System.Threading.Tasks;
+using MangoPay.SDK.Entities.POST;
 
 namespace MangoPay.SDK.Tests
 {
@@ -56,19 +58,32 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        [Ignore("Ignored as it will deactivate the test card")]
-        public async Task Test_Card_Validate()
+        public async Task Test_Card_Validation()
         {
-            var payIn = await GetNewPayInCardDirect();
-            Assert.IsNotNull(payIn, "PayIn object is null!");
-            var card = await Api.Cards.GetAsync(payIn.CardId);
+            var john = await GetJohn();
+            var wallet =
+                new WalletPostDTO(new List<string> {john.Id}, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
+            var johnsWallet = await Api.Wallets.CreateAsync(wallet);
+            var cardRegistrationPost =
+                new CardRegistrationPostDTO(johnsWallet.Owners[0], CurrencyIso.EUR);
+            var cardRegistration = await Api.CardRegistrations.CreateAsync(cardRegistrationPost);
+            var cardRegistrationPut = new CardRegistrationPutDTO();
+            cardRegistrationPut.RegistrationData = await GetPaylineCorrectRegistartionData(cardRegistration);
+            cardRegistration = await Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
+            
+            var cardValidation = new CardValidationPostDTO(
+                john.Id,
+                "http://www.example.com/",
+                "2001:0620:0000:0000:0211:24FF:FE80:C12C",
+                getBrowserInfo(),
+                "Test card validate"
+            );
 
-            Assert.IsNotNull(card, "Card is null!");
-            Assert.IsNotNull(card.Fingerprint, "Card fingerprint is null!");
-            Assert.IsNotEmpty(card.Fingerprint, "Card fingerprint is empty!");
+            Assert.IsNotNull(cardRegistration, "Card is null!");
 
-            var validated = await Api.Cards.ValidateAsync(card.Id);
+            var validated = await Api.Cards.ValidateAsync(cardRegistration.CardId, cardValidation);
             Assert.IsNotNull(validated);
+            Assert.IsNotNull(validated.Id);
         }
 
         [Test]

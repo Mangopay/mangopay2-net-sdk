@@ -40,7 +40,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.CardSave, new ApiEndPoint("/cards/{0}", RequestType.PUT)},
             { MethodKey.CardPreauthorizations, new ApiEndPoint("/cards/{0}/preauthorizations", RequestType.GET)},
             { MethodKey.CardTransactions, new ApiEndPoint("/cards/{0}/transactions", RequestType.GET)},
-            { MethodKey.CardValidate, new ApiEndPoint("/cards/{0}/validate", RequestType.POST) },
+            { MethodKey.CardValidation, new ApiEndPoint("/cards/{0}/validation", RequestType.POST) },
 
             { MethodKey.PayinsCardWebCreate, new ApiEndPoint("/payins/card/web", RequestType.POST)},
             { MethodKey.PayinsCardWebGetCardData, new ApiEndPoint("/payins/card/web/{0}/extended/", RequestType.GET)},
@@ -63,9 +63,14 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.ApplePayinsDirectCreate, new ApiEndPoint("/payins/applepay/direct", RequestType.POST)},
             { MethodKey.GooglePayinsDirectCreate, new ApiEndPoint("/payins/googlepay/direct", RequestType.POST)},
+            { MethodKey.GooglePayinsDirectCreateV2, new ApiEndPoint("/payins/payment-methods/googlepay", RequestType.POST)},
             
             { MethodKey.PayinsMbwayWebCreate, new ApiEndPoint("/payins/payment-methods/mbway", RequestType.POST)},
-
+            { MethodKey.PayinsMultibancoWebCreate, new ApiEndPoint("/payins/payment-methods/multibanco", RequestType.POST)},
+            { MethodKey.PayinsSatispayWebCreate, new ApiEndPoint("/payins/payment-methods/satispay", RequestType.POST)},
+            { MethodKey.PayinsBlikWebCreate, new ApiEndPoint("/payins/payment-methods/blik", RequestType.POST)},
+            { MethodKey.PayinsKlarnaWebCreate, new ApiEndPoint("/payins/payment-methods/klarna", RequestType.POST)},
+            
             { MethodKey.PayinsRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations", RequestType.POST)},
             { MethodKey.PayinsGetRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations/{0}", RequestType.GET)},
             { MethodKey.PayinsPutRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations/{0}", RequestType.PUT)},
