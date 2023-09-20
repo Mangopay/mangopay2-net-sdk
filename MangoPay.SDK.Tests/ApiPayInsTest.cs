@@ -767,6 +767,30 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        public async Task Test_PayIns_Create_GooglePayDirect()
+        {
+            try
+            {
+                var user = await GetJohn();
+                var payIn = await GetNewPayInGooglePayDirect();
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(PayInPaymentType.GOOGLE_PAY, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.DIRECT, payIn.ExecutionType);
+                Assert.IsTrue(payIn.DebitedFunds is Money);
+                Assert.IsTrue(payIn.CreditedFunds is Money);
+                Assert.IsTrue(payIn.Fees is Money);
+                Assert.AreEqual(user.Id, payIn.AuthorId);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+                Assert.AreEqual(TransactionNature.REGULAR, payIn.Nature);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
         public async Task Test_PayIns_Get_PayPal()
         {
             try

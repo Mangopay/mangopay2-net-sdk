@@ -312,6 +312,13 @@ namespace MangoPay.SDK.Core.APIs
                 this.CreateObjectAsync<GooglePayDirectPayInDTO, GooglePayDirectPayInPostDTO>(MethodKey.GooglePayinsDirectCreate, payIn, idempotentKey);
         }
 
+        public async Task<PayInGooglePayDirectDTO> CreateGooglePayDirectV2Async(PayInGooglePayDirectPostDTO payIn,
+            string idempotentKey = null)
+        {
+            return await CreateObjectAsync<PayInGooglePayDirectDTO, PayInGooglePayDirectPostDTO>(
+                MethodKey.GooglePayinsDirectCreateV2, payIn, idempotentKey);
+        }
+
         public async Task<RecurringPayInRegistrationGetDTO> GetRecurringPayInRegistration(string recurringRegistrationId)
         {
             return await this.GetObjectAsync<RecurringPayInRegistrationGetDTO>(MethodKey.PayinsGetRecurringRegistration,
