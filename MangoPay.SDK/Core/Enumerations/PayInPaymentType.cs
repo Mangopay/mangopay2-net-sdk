@@ -35,5 +35,13 @@ namespace MangoPay.SDK.Core.Enumerations
         
         /// <summary> Mbway payment type </summary>
         MBWAY,
+        /// <summary> Multibanco payment type </summary>
+        MULTIBANCO,
+        /// <summary> Satispay payment type </summary>
+        SATISPAY,
+        /// <summary> Blik payment type </summary>
+        BLIK,
+        /// <summary> Klarna payment type </summary>
+        KLARNA,
     }
 }
