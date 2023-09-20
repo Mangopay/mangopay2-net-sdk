@@ -17,7 +17,8 @@ namespace MangoPay.SDK.Entities.POST
             List<LineItem> lineItems,
             Shipping shipping = null,
             string statementDescriptor = null,
-            CultureCode? culture = null
+            CultureCode? culture = null,
+            ShippingPreference? shippingPreference = null
         )
         {
             AuthorId = authorId;
@@ -29,6 +30,7 @@ namespace MangoPay.SDK.Entities.POST
             Shipping = shipping;
             StatementDescriptor = statementDescriptor;
             Culture = culture;
+            ShippingPreference = shippingPreference;
         }
 
         /// <summary>Author identifier.</summary>
@@ -52,6 +54,9 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Information about the items bought by the customer</summary>
         public List<LineItem> LineItems { get; set; }
+        
+        ///<summary> Shipping preference
+        public ShippingPreference? ShippingPreference { get; set; }
 
         /// <summary>
         /// User’s shipping address
