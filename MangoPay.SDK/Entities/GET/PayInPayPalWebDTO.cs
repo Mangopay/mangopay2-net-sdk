@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using MangoPay.SDK.Core.Enumerations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -21,6 +23,7 @@ namespace MangoPay.SDK.Entities.GET
         public List<LineItem> LineItems { get; set; }
 
         ///<summary> Shipping preference
+        [JsonConverter(typeof(StringEnumConverter))]
         public ShippingPreference? ShippingPreference { get; set; }
     }
 }

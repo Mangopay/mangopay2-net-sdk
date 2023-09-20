@@ -56,6 +56,7 @@ namespace MangoPay.SDK.Entities.POST
         public List<LineItem> LineItems { get; set; }
         
         ///<summary> Shipping preference
+        [JsonConverter(typeof(StringEnumConverter))]
         public ShippingPreference? ShippingPreference { get; set; }
 
         /// <summary>
