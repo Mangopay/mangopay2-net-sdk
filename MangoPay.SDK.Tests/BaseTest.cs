@@ -400,6 +400,30 @@ namespace MangoPay.SDK.Tests
             return await Api.PayIns.CreateGooglePayDirectV2Async(payIn);
         }
 
+        protected async Task<PayInMultibancoWebDTO> GetNewPayInMultibancoWeb()
+        {
+            PayInMultibancoWebPostDTO payIn = await GetPayInMultibancoWebPost();
+            return await this.Api.PayIns.CreateMultibancoWebAsync(payIn);
+        }
+
+        protected async Task<PayInSatispayWebDTO> GetNewPayInSatispayWeb()
+        {
+            PayInSatispayWebPostDTO payIn = await GetPayInSatispayWebPost();
+            return await this.Api.PayIns.CreateSatispayWebAsync(payIn);
+        }
+
+        protected async Task<PayInBlikWebDTO> GetNewPayInBlikWeb()
+        {
+            PayInBlikWebPostDTO payIn = await GetPayInBlikWebPost();
+            return await this.Api.PayIns.CreateBlikWebAsync(payIn);
+        }
+        
+        protected async Task<PayInKlarnaWebDTO> GetNewPayInKlarnaWeb()
+        {
+            PayInKlarnaWebPostDTO payIn = await GetPayInKlarnaWebPost();
+            return await this.Api.PayIns.CreateKlarnaWebAsync(payIn);
+        }
+
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
@@ -564,6 +588,124 @@ namespace MangoPay.SDK.Tests
                 billing,
                 shipping,
                 "test"
+            );
+
+            return payIn;
+        }
+
+        protected async Task<PayInMultibancoWebPostDTO> GetPayInMultibancoWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+
+            var payIn = new PayInMultibancoWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_8362acb9-6dbc-4660-b826-b9acb9b850b1",
+                "Multibanco",
+                "test"
+            );
+
+            return payIn;
+        }
+
+        protected async Task<PayInSatispayWebPostDTO> GetPayInSatispayWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+
+            var payIn = new PayInSatispayWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
+                "IT",
+                "Satispay",
+                "Satispay test"
+            );
+
+            return payIn;
+        }
+
+        protected async Task<PayInBlikWebPostDTO> GetPayInBlikWebPost()
+        {
+            var user = await GetJohn();
+            
+            // create wallet with money
+            var wallet = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN PLN WITH MONEY", CurrencyIso.PLN);
+            var johnsWalletWithMoney = await this.Api.Wallets.CreateAsync(wallet);
+
+            var payIn = new PayInBlikWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.PLN },
+                new Money { Amount = 20, Currency = CurrencyIso.PLN },
+                johnsWalletWithMoney.Id,
+                "https://example.com",
+                "Blik",
+                "Blik test"
+            );
+
+            return payIn;
+        }
+        
+        protected async Task<PayInKlarnaWebPostDTO> GetPayInKlarnaWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+            
+            var address = new Address
+            {
+                AddressLine1 = "Big Street",
+                AddressLine2 = "no 2 ap 6",
+                City = "Lyon",
+                Country = CountryIso.FR,
+                PostalCode = "65400",
+                Region = "Ile de France"
+            };
+
+            var billing = new Billing
+            {
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
+            };
+            
+            var shipping = new Shipping
+            {
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
+            };
+
+            var payIn = new PayInKlarnaWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
+                new List<LineItem>
+                {
+                    new LineItem
+                    {
+                        Name = "test item",
+                        Quantity = 1,
+                        UnitAmount = 100,
+                        TaxAmount = 0,
+                        Description = "seller1 ID"
+                    }
+                },
+                "FR",
+                "33#607080900",
+                "mango@mangopay.com",
+                "{}",
+                billing,
+                "afd48-879d-48fg",
+                "FR",
+                shipping,
+                "Klarna test"
             );
 
             return payIn;
