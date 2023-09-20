@@ -291,4 +291,4 @@ namespace MangoPay.SDK.Tests
             Assert.NotNull(bankWire.Id);
         }
     }
-}
+} 
