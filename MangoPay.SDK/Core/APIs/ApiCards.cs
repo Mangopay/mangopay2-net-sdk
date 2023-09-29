@@ -3,6 +3,7 @@ using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.PUT;
 using MangoPay.SDK.Entities;
 using System.Threading.Tasks;
+using MangoPay.SDK.Entities.POST;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -57,10 +58,12 @@ namespace MangoPay.SDK.Core.APIs
 
         /// <summary>Validates the card.</summary>
         /// <param name="cardId">Card identifier.</param>
-        /// <returns>Card instance returned from API.</returns>
-        public async Task<CardDTO> ValidateAsync(string cardId)
+        /// <param name="cardValidation">Card validation body</param>
+        /// <returns>Card validation instance returned from API.</returns>
+        public async Task<CardValidationDTO> ValidateAsync(string cardId, CardValidationPostDTO cardValidation)
         {
-            return await this.GetObjectAsync<CardDTO>(MethodKey.CardValidate, entitiesId: cardId);
+            return await CreateObjectAsync<CardValidationDTO, CardValidationPostDTO>(MethodKey.CardValidation,
+                cardValidation, entitiesId: cardId);
         }
     }
 }

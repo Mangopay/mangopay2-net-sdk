@@ -394,6 +394,36 @@ namespace MangoPay.SDK.Tests
             return await this.Api.PayIns.CreateMbwayWebAsync(payIn);
         }
 
+        protected async Task<PayInGooglePayDirectDTO> GetNewPayInGooglePayDirect()
+        {
+            PayInGooglePayDirectPostDTO payIn = await GetPayInGooglePayDirectV2Post();
+            return await Api.PayIns.CreateGooglePayDirectV2Async(payIn);
+        }
+
+        protected async Task<PayInMultibancoWebDTO> GetNewPayInMultibancoWeb()
+        {
+            PayInMultibancoWebPostDTO payIn = await GetPayInMultibancoWebPost();
+            return await this.Api.PayIns.CreateMultibancoWebAsync(payIn);
+        }
+
+        protected async Task<PayInSatispayWebDTO> GetNewPayInSatispayWeb()
+        {
+            PayInSatispayWebPostDTO payIn = await GetPayInSatispayWebPost();
+            return await this.Api.PayIns.CreateSatispayWebAsync(payIn);
+        }
+
+        protected async Task<PayInBlikWebDTO> GetNewPayInBlikWeb()
+        {
+            PayInBlikWebPostDTO payIn = await GetPayInBlikWebPost();
+            return await this.Api.PayIns.CreateBlikWebAsync(payIn);
+        }
+        
+        protected async Task<PayInKlarnaWebDTO> GetNewPayInKlarnaWeb()
+        {
+            PayInKlarnaWebPostDTO payIn = await GetPayInKlarnaWebPost();
+            return await this.Api.PayIns.CreateKlarnaWebAsync(payIn);
+        }
+
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
         /// <returns>PayIn Card Direct instance returned from API.</returns>
@@ -515,6 +545,169 @@ namespace MangoPay.SDK.Tests
                 "test"
             );
             
+            return payIn;
+        }
+
+        protected async Task<PayInGooglePayDirectPostDTO> GetPayInGooglePayDirectV2Post()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+            
+            var billing = new Billing();
+            var address = new Address
+            {
+                City = "Test city",
+                AddressLine1 = "Test address line 1",
+                AddressLine2 = "Test address line 2",
+                Country = CountryIso.RO,
+                PostalCode = "65400"
+            };
+            billing.Address = address;
+            billing.FirstName = "Joe";
+            billing.LastName = "Doe";
+            
+            var shipping = new Shipping
+            {
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
+            };
+
+            // create pay-in GooglePay DIRECT
+            var payIn = new PayInGooglePayDirectPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 0, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "https://mangopay.com/docs/please-ignore",
+                "https://mangopay.com/docs/please-ignore",
+                "159.180.248.187",
+                getBrowserInfo(),
+                "{\"signature\":\"MEUCIQCLXOan2Y9DobLVSOeD5V64Peayvz0ZAWisdz/1iTdthAIgVFb4Hve4EhtW81k46SiMlnXLIiCn1h2+vVQGjHe+sSo\\u003d\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEDGRER6R6PH6K39YTIYX+CpDNej6gQgvi/Wx19SOPtiDnkjAl4/LF9pXlvZYe+aJH0Dy095I6BlfY8bNBB5gjPg\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1688521049102\\\"}\",\"signatures\":[\"MEYCIQDup1B+rkiPAWmpg7RmqY0NfgdGhmdyL8wvAX+6C1aOU2QIhAIZACSDQ/ZexIyEia5KrRlG2B+y3AnKNlhRzumRcnNOR\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"YSSGK9yFdKP+mJB5+wAjnOujnThPM1E/KbbJxd3MDzPVI66ip1DBESldvQXYjjeLq6Rf1tKE9oLwwaj6u0/gU7Z9t3g1MoW+9YoEE1bs1IxImif7IQGAosfYjjbBBfDkOaqEs2JJC5qt6xjKO9lQ/E6JPkPFGqF7+OJ1vzmD83Pi3sHWkVge5MhxXQ3yBNhrjus3kV7zUoYA+uqNrciWcWypc1NndF/tiwSkvUTzM6n4dS8X84fkJiSO7PZ65C0yw0mdybRRnyL2fFdWGssve1zZFAvYfzcpNamyuZGGlu/SCoayitojmMsqe5Cu0efD9+WvvDr9PA+Vo1gzuz7LmiZe81SGvdFhRoq62FBAUiwSsi2A3pWinZxM2XbYNph+HJ5FCNspWhz4ur9JG4ZMLemCXuaybvL++W6PWywAtoiE0mQcBIX3vhOq5itv0RkaKVe6nbcAS2UryRz2u/nDCJLKpIv2Wi11NtCUT2mgD8F6qfcXhvVZHyeLqZ1OLgCudTTSdKirzezbgPTg4tQpW++KufeD7bgG+01XhCWt+7/ftqcSf8n//gSRINne8j2G6w+2\\\",\\\"ephemeralPublicKey\\\":\\\"BLY2+R8C0T+BSf/W3HEq305qH63IGmJxMVmbfJ6+x1V7GQg9W9v7eHc3j+8TeypVn+nRlPu98tivuMXECg+rWZs\\\\u003d\\\",\\\"tag\\\":\\\"MmEjNdLfsDNfYd/FRUjoJ4/IfLypNRqx8zgHfa6Ftmo\\\\u003d\\\"}\"}",
+                SecureMode.DEFAULT,
+                billing,
+                shipping,
+                "test"
+            );
+
+            return payIn;
+        }
+
+        protected async Task<PayInMultibancoWebPostDTO> GetPayInMultibancoWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+
+            var payIn = new PayInMultibancoWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_8362acb9-6dbc-4660-b826-b9acb9b850b1",
+                "Multibanco",
+                "test"
+            );
+
+            return payIn;
+        }
+
+        protected async Task<PayInSatispayWebPostDTO> GetPayInSatispayWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+
+            var payIn = new PayInSatispayWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
+                "IT",
+                "Satispay",
+                "Satispay test"
+            );
+
+            return payIn;
+        }
+
+        protected async Task<PayInBlikWebPostDTO> GetPayInBlikWebPost()
+        {
+            var user = await GetJohn();
+            
+            // create wallet with money
+            var wallet = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN PLN WITH MONEY", CurrencyIso.PLN);
+            var johnsWalletWithMoney = await this.Api.Wallets.CreateAsync(wallet);
+
+            var payIn = new PayInBlikWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.PLN },
+                new Money { Amount = 20, Currency = CurrencyIso.PLN },
+                johnsWalletWithMoney.Id,
+                "https://example.com",
+                "Blik",
+                "Blik test"
+            );
+
+            return payIn;
+        }
+        
+        protected async Task<PayInKlarnaWebPostDTO> GetPayInKlarnaWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+            
+            var address = new Address
+            {
+                AddressLine1 = "Big Street",
+                AddressLine2 = "no 2 ap 6",
+                City = "Lyon",
+                Country = CountryIso.FR,
+                PostalCode = "65400",
+                Region = "Ile de France"
+            };
+
+            var billing = new Billing
+            {
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
+            };
+            
+            var shipping = new Shipping
+            {
+                Address = address,
+                FirstName = "John",
+                LastName = "Doe"
+            };
+
+            var payIn = new PayInKlarnaWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
+                new List<LineItem>
+                {
+                    new LineItem
+                    {
+                        Name = "test item",
+                        Quantity = 1,
+                        UnitAmount = 100,
+                        TaxAmount = 0,
+                        Description = "seller1 ID"
+                    }
+                },
+                "FR",
+                "33#607080900",
+                "mango@mangopay.com",
+                "{}",
+                billing,
+                "afd48-879d-48fg",
+                "FR",
+                shipping,
+                "Klarna test"
+            );
+
             return payIn;
         }
 
@@ -994,7 +1187,7 @@ namespace MangoPay.SDK.Tests
                 ColorDepth = 32,
                 JavaEnabled = true,
                 JavascriptEnabled = false,
-                Language = "fr",
+                Language = "FR-FR",
                 ScreenHeight = 1080,
                 ScreenWidth = 1920,
                 TimeZoneOffset = "+3600",
