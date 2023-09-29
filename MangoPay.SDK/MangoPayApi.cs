@@ -42,6 +42,7 @@ namespace MangoPay.SDK
             UboDeclarations = new ApiUboDeclarations(this);
             Regulatory = new ApiRegulatory(this);
             Deposits = new ApiDeposits(this);
+            InstantConversion = new ApiInstantConversion(this);
         }
 
         /// <summary>Provides authorization token methods.</summary>
@@ -123,6 +124,8 @@ namespace MangoPay.SDK
         public ApiRegulatory Regulatory;
         
         public ApiDeposits Deposits;
+
+        public ApiInstantConversion InstantConversion;
 
         #endregion
 

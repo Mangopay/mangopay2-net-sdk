@@ -20,6 +20,9 @@ namespace MangoPay.SDK.Core.Enumerations
         TRANSFER		= 0x04,
         
         /// <summary>CARD_VALIDATION transaction type.</summary>
-        CARD_VALIDATION		= 0x05
+        CARD_VALIDATION		= 0x05,
+        
+        /// <summary>CONVERSION transaction type.</summary>
+        CONVERSION = 0x06
     }
 }

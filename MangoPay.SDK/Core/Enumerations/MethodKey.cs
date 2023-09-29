@@ -184,6 +184,10 @@ namespace MangoPay.SDK.Core.Enumerations
 		DepositsCreate,
 		DepositsGet,
 		DepositsCancel,
-		PayInsCreateCardPreAuthorizedDeposit
+		PayInsCreateCardPreAuthorizedDeposit,
+		
+		GetConversionRate,
+		CreateInstantConversion,
+		GetInstantConversion
     }
 }
