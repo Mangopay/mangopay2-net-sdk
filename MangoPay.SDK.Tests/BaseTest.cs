@@ -735,7 +735,8 @@ namespace MangoPay.SDK.Tests
                 new Money { Amount = 20, Currency = CurrencyIso.EUR },
                 wallet.Id,
                 "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
-                "mango@mangopay.com",
+                "RBRBNL21",
+                "Ideal tag",
                 "Ideal test"
             );
 
@@ -753,8 +754,9 @@ namespace MangoPay.SDK.Tests
                 new Money { Amount = 20, Currency = CurrencyIso.EUR },
                 wallet.Id,
                 "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
-                "mango@mangopay.com",
-                "Giropay test"
+                "Giropay tag",
+                "test"
+                
             );
 
             return payIn;

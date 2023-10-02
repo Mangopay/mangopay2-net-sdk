@@ -310,6 +310,22 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.GetObjectAsync<PayInKlarnaWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
+        
+        /// <summary>Gets PayIn Ideal entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public async Task<PayInIdealWebDTO> GetIdealAsync(string payInId)
+        {
+            return await this.GetObjectAsync<PayInIdealWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+        }
+        
+        /// <summary>Gets PayIn Giropay entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public async Task<PayInGiropayWebDTO> GetGiropayAsync(string payInId)
+        {
+            return await this.GetObjectAsync<PayInGiropayWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+        }
 
         /// <summary>Creates refund for PayIn object.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
