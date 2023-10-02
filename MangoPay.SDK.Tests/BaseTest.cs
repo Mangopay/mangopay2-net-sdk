@@ -423,6 +423,18 @@ namespace MangoPay.SDK.Tests
             PayInKlarnaWebPostDTO payIn = await GetPayInKlarnaWebPost();
             return await this.Api.PayIns.CreateKlarnaWebAsync(payIn);
         }
+        
+        protected async Task<PayInIdealWebDTO> GetNewPayInIdealWeb()
+        {
+            PayInIdealWebPostDTO payIn = await GetPayInIdealWebPost();
+            return await this.Api.PayIns.CreateIdealWebAsync(payIn);
+        }
+        
+        protected async Task<PayInGiropayWebDTO> GetNewPayInGiropayWeb()
+        {
+            PayInGiropayWebPostDTO payIn = await GetPayInGiropayWebPost();
+            return await this.Api.PayIns.CreateGiropayWebAsync(payIn);
+        }
 
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
@@ -706,6 +718,43 @@ namespace MangoPay.SDK.Tests
                 "FR",
                 shipping,
                 "Klarna test"
+            );
+
+            return payIn;
+        }
+        
+        
+        protected async Task<PayInIdealWebPostDTO> GetPayInIdealWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+
+            var payIn = new PayInIdealWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
+                "mango@mangopay.com",
+                "Ideal test"
+            );
+
+            return payIn;
+        }
+        
+        protected async Task<PayInGiropayWebPostDTO> GetPayInGiropayWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+
+            var payIn = new PayInGiropayWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
+                "mango@mangopay.com",
+                "Giropay test"
             );
 
             return payIn;

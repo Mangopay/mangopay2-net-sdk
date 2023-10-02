@@ -151,6 +151,28 @@ namespace MangoPay.SDK.Core.APIs
             return await this.CreateObjectAsync<PayInKlarnaWebDTO, PayInKlarnaWebPostDTO>(
                 MethodKey.PayinsKlarnaWebCreate, payIn, idempotentKey);
         }
+        
+        /// <summary>Creates new payin ideal web.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInIdealWebDTO> CreateIdealWebAsync(PayInIdealWebPostDTO payIn,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInIdealWebDTO, PayInIdealWebPostDTO>(
+                MethodKey.PayinsIdealWebCreate, payIn, idempotentKey);
+        }
+        
+        /// <summary>Creates new payin giropay web.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInGiropayWebDTO> CreateGiropayWebAsync(PayInGiropayWebPostDTO payIn,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInGiropayWebDTO, PayInGiropayWebPostDTO>(
+                MethodKey.PayinsGiropayWebCreate, payIn, idempotentKey);
+        }
 
         /// <summary>Gets PayIn entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
