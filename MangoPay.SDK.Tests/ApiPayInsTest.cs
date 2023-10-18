@@ -120,7 +120,8 @@ namespace MangoPay.SDK.Tests
                     },
                     "test",
                     // CultureCode.FR
-                    shippingPreference: ShippingPreference.SET_PROVIDED_ADDRESS
+                    shippingPreference: ShippingPreference.SET_PROVIDED_ADDRESS,
+                    reference: "Reference"
                 );
                 
                 var payIn = await this.Api.PayIns.CreatePayPalWebAsync(payInPost);

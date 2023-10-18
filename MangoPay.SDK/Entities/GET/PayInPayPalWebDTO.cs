@@ -25,5 +25,7 @@ namespace MangoPay.SDK.Entities.GET
         ///<summary> Shipping preference
         [JsonConverter(typeof(StringEnumConverter))]
         public ShippingPreference? ShippingPreference { get; set; }
+        
+        public string Reference { get; set; }
     }
 }

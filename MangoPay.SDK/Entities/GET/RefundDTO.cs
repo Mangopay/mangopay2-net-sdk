@@ -61,5 +61,7 @@ namespace MangoPay.SDK.Entities.GET
 
 		/// <summary>Contains info about the reason for refund.</summary>
 		public RefundReason RefundReason { get; set; }
+        
+        public string Reference { get; set; }
     }
 }

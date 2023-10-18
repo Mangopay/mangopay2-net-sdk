@@ -14,11 +14,12 @@ namespace MangoPay.SDK.Entities.POST
             AuthorId = authorId;
         }
 
-        public RefundPayInPostDTO(string authorId, Money fees, Money debitedFunds)
+        public RefundPayInPostDTO(string authorId, Money fees, Money debitedFunds, string reference = null)
         {
             AuthorId = authorId;
             Fees = fees;
             DebitedFunds = debitedFunds;
+            Reference = reference;
         }
 
         /// <summary>Author identifier.</summary>
@@ -29,5 +30,7 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Fees.</summary>
         public Money Fees { get; set; }
+        
+        public string Reference { get; set; }
     }
 }
