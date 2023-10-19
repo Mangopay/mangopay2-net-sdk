@@ -7,8 +7,8 @@
         <Description>.Net 6.0 for access to MANGOPAY API v2</Description>
         <Authors>MangoPay</Authors>
         <Version>3.12.0</Version>
-        <AssemblyVersion>3.12.0.0</AssemblyVersion>
-        <FileVersion>3.12.0.0</FileVersion>
+        <AssemblyVersion>3.12.1.0</AssemblyVersion>
+        <FileVersion>3.12.1.0</FileVersion>
         <PackageId>mangopay2-sdk</PackageId>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">

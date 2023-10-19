@@ -1,3 +1,10 @@
+## [3.12.1] - 2023-10-19
+### Fixed
+
+Two events types added to reflect changes in the API :
+- LEGAL_COMPANY_NUMBER_VALIDATION_SUCCEEDED
+- LEGAL_COMPANY_NUMBER_VALIDATION_FAILED
+
 ## [3.12.0] - 2023-09-29
 ### Added
 - Instantly convert funds between 2 wallets of different currencies owned by the same user with the new SPOT FX endpoints
