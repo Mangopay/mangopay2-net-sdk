@@ -18,7 +18,8 @@ namespace MangoPay.SDK.Entities.POST
             Shipping shipping = null,
             string statementDescriptor = null,
             CultureCode? culture = null,
-            ShippingPreference? shippingPreference = null
+            ShippingPreference? shippingPreference = null,
+            string reference = null
         )
         {
             AuthorId = authorId;
@@ -31,6 +32,7 @@ namespace MangoPay.SDK.Entities.POST
             StatementDescriptor = statementDescriptor;
             Culture = culture;
             ShippingPreference = shippingPreference;
+            Reference = reference;
         }
 
         /// <summary>Author identifier.</summary>
@@ -70,5 +72,7 @@ namespace MangoPay.SDK.Entities.POST
         /// Note that a particular bank may show more or less information.
         /// </summary>
         public string StatementDescriptor { get; set; }
+        
+        public string Reference { get; set; }
     }
 }
