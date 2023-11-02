@@ -1,3 +1,16 @@
+## [3.13.0] - 2023-11-02
+### Updated
+
+- Giropay and Ideal integrations with Mangopay have been improved. Some methods have been deprecated.
+
+### Added
+- New Reference parameter for the new Paypal implementation. Some methods have been deprecated.
+- New hooks event :
+  DEPOSIT_PREAUTHORIZATION_PAYMENT_NO_SHOW_REQUESTED
+  DEPOSIT_PREAUTHORIZATION_PAYMENT_NO_SHOW
+  DEPOSIT_PREAUTHORIZATION_PAYMENT_TO_BE_COMPLETED
+  DEPOSIT_PREAUTHORIZATION_PAYMENT_FAILED
+
 ## [3.12.2] - 2023-10-20
 ### Fixed
 - fixed previous release (3.12.1)
