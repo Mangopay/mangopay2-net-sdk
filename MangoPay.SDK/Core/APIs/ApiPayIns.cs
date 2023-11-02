@@ -151,6 +151,28 @@ namespace MangoPay.SDK.Core.APIs
             return await this.CreateObjectAsync<PayInKlarnaWebDTO, PayInKlarnaWebPostDTO>(
                 MethodKey.PayinsKlarnaWebCreate, payIn, idempotentKey);
         }
+        
+        /// <summary>Creates new payin ideal web.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInIdealWebDTO> CreateIdealWebAsync(PayInIdealWebPostDTO payIn,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInIdealWebDTO, PayInIdealWebPostDTO>(
+                MethodKey.PayinsIdealWebCreate, payIn, idempotentKey);
+        }
+        
+        /// <summary>Creates new payin giropay web.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInGiropayWebDTO> CreateGiropayWebAsync(PayInGiropayWebPostDTO payIn,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInGiropayWebDTO, PayInGiropayWebPostDTO>(
+                MethodKey.PayinsGiropayWebCreate, payIn, idempotentKey);
+        }
 
         /// <summary>Gets PayIn entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
@@ -287,6 +309,22 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<PayInKlarnaWebDTO> GetKlarnaAsync(string payInId)
         {
             return await this.GetObjectAsync<PayInKlarnaWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+        }
+        
+        /// <summary>Gets PayIn Ideal entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public async Task<PayInIdealWebDTO> GetIdealAsync(string payInId)
+        {
+            return await this.GetObjectAsync<PayInIdealWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+        }
+        
+        /// <summary>Gets PayIn Giropay entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public async Task<PayInGiropayWebDTO> GetGiropayAsync(string payInId)
+        {
+            return await this.GetObjectAsync<PayInGiropayWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
 
         /// <summary>Creates refund for PayIn object.</summary>

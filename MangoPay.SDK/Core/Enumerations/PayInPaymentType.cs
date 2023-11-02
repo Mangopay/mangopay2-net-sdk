@@ -46,5 +46,9 @@ namespace MangoPay.SDK.Core.Enumerations
         BLIK,
         /// <summary> Klarna payment type </summary>
         KLARNA,
+        /// <summary> Ideal payment type </summary>
+        IDEAL,
+        /// <summary> Giropay payment type </summary>
+        GIROPAY,
     }
 }

@@ -70,6 +70,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsSatispayWebCreate, new ApiEndPoint("/payins/payment-methods/satispay", RequestType.POST)},
             { MethodKey.PayinsBlikWebCreate, new ApiEndPoint("/payins/payment-methods/blik", RequestType.POST)},
             { MethodKey.PayinsKlarnaWebCreate, new ApiEndPoint("/payins/payment-methods/klarna", RequestType.POST)},
+            { MethodKey.PayinsIdealWebCreate, new ApiEndPoint("/payins/payment-methods/ideal", RequestType.POST)},
+            { MethodKey.PayinsGiropayWebCreate, new ApiEndPoint("/payins/payment-methods/giropay", RequestType.POST)},
             
             { MethodKey.PayinsRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations", RequestType.POST)},
             { MethodKey.PayinsGetRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations/{0}", RequestType.GET)},
