@@ -869,6 +869,28 @@ namespace MangoPay.SDK.Tests
             var refund = new RefundPayInPostDTO(user.Id, fees, debitedFunds);
             return await this.Api.PayIns.CreateRefundAsync(payIn.Id, refund, idempotentKey: idempotencyKey);
         }
+        
+        /// <summary>Creates partial refund object for PayIn.</summary>
+        /// <param name="payIn">PayIn entity.</param>
+        /// <returns>Refund instance returned from API.</returns>
+        protected async Task<RefundDTO> GetPartialRefundForPayIn(PayInDTO payIn, string idempotencyKey = null)
+        {
+            var user = await this.GetJohn();
+
+            var debitedFunds = new Money
+            {
+                Amount = 100,
+                Currency = payIn.DebitedFunds.Currency
+            };
+            var fees = new Money
+            {
+                Amount = 10,
+                Currency = payIn.Fees.Currency
+            };
+
+            var refund = new RefundPayInPostDTO(user.Id, fees, debitedFunds);
+            return await this.Api.PayIns.CreateRefundAsync(payIn.Id, refund, idempotentKey: idempotencyKey);
+        }
 
         /// <summary>Creates card registration object.</summary>
         /// <param name="cardType">Card type.</param>
