@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Entities.POST
             string email,
             string additionalData,
             Billing billing,
-            string merchantOrderId,
+            string reference,
             string culture = null,
             Shipping shipping = null,
             string tag = null
@@ -34,7 +34,7 @@ namespace MangoPay.SDK.Entities.POST
             Email = email;
             AdditionalData = additionalData;
             Billing = billing;
-            MerchantOrderId = merchantOrderId;
+            Reference = reference;
             Culture = culture;
             Shipping = shipping;
             Tag = tag;
@@ -74,7 +74,7 @@ namespace MangoPay.SDK.Entities.POST
         public Billing Billing { get; set; }
         
         /// <summary> The merchant order reference
-        public string MerchantOrderId { get; set; }
+        public string Reference { get; set; }
         
         public string Culture { get; set; }
         
