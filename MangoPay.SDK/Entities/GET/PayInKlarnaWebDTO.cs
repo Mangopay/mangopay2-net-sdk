@@ -29,7 +29,7 @@ namespace MangoPay.SDK.Entities.GET
         public Billing Billing { get; set; }
         
         /// <summary> The merchant order reference
-        public string MerchantOrderId { get; set; }
+        public string Reference { get; set; }
         
         public string Culture { get; set; }
         
