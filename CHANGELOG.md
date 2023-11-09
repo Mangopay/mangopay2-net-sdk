@@ -1,3 +1,8 @@
+## [3.13.2] - 2023-11-09
+### Added
+
+It's now possible to specify an amount for DebitedFunds and Fees when you create a refund.
+
 ## [3.13.1] - 2023-11-06
 ### Fixed
 
