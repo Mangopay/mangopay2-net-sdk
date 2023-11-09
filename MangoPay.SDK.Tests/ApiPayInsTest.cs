@@ -529,6 +529,29 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+        
+        [Test]
+        public async Task Test_PayIns_CreatePartialRefund_CardDirect()
+        {
+            try
+            {
+                var payIn = await this.GetNewPayInCardDirect();
+                var wallet = await this.GetJohnsWalletWithMoney();
+                var walletBefore = await this.Api.Wallets.GetAsync(wallet.Id);
+
+                var refund = await this.GetPartialRefundForPayIn(payIn);
+                var walletAfter = await this.Api.Wallets.GetAsync(wallet.Id);
+
+                Assert.IsTrue(refund.Id.Length > 0);
+                Assert.IsTrue(walletAfter.Balance.Amount == (walletBefore.Balance.Amount - refund.DebitedFunds.Amount));
+                Assert.AreEqual(TransactionType.PAYOUT, refund.Type);
+                Assert.AreEqual(TransactionNature.REFUND, refund.Nature);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         [Test]
         public async Task Test_PayIns_PreAuthorizedDirect()
