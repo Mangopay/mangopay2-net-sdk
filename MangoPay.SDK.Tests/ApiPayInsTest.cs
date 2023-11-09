@@ -849,7 +849,7 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(getPayIn.Status, TransactionStatus.SUCCEEDED);
         }
 
-        [Test]
+        [Ignore("Cannot test Google Pay because the necessary data cannot be generated in the test")]
         public async Task Test_PayIns_Create_GooglePayDirect()
         {
             try

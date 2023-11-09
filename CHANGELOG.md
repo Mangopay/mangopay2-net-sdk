@@ -1,3 +1,8 @@
+## [3.13.1] - 2023-11-06
+### Fixed
+
+- Missing parameter for Klarna
+
 ## [3.13.0] - 2023-11-02
 ### Updated
 
