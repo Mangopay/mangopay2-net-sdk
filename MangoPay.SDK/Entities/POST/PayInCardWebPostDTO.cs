@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn card web POST entity.</summary>
     public class PayInCardWebPostDTO : EntityPostBase
     {
-        public PayInCardWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CultureCode culture, CardType cardType, string statementDescriptor = null)
+        public PayInCardWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId, string returnUrl, CultureCode culture, CardType cardType, string statementDescriptor = null, string bic = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
@@ -19,6 +19,7 @@ namespace MangoPay.SDK.Entities.POST
             Culture = culture;
             CardType = cardType;
             StatementDescriptor = statementDescriptor;
+            Bic = bic;
         }
 
         /// <summary>Author identifier.</summary>
@@ -58,5 +59,8 @@ namespace MangoPay.SDK.Entities.POST
         public string StatementDescriptor { get; set; }
 
         public Shipping Shipping { get; set; }
+        
+        /// <summary> The BIC identifier of the end-user’s bank
+        public string Bic { get; set; }
     }
 }
