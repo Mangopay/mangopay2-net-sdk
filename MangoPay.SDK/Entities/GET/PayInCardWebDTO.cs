@@ -33,5 +33,8 @@ namespace MangoPay.SDK.Entities.GET
         public string StatementDescriptor { get; set; }
 
         public Shipping Shipping { get; set; }
+        
+        /// <summary> Name of the end-user’s bank </summary>
+        public string BankName { get; set; }
     }
 }

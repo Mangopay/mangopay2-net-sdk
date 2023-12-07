@@ -435,6 +435,25 @@ namespace MangoPay.SDK.Tests
             PayInGiropayWebPostDTO payIn = await GetPayInGiropayWebPost();
             return await this.Api.PayIns.CreateGiropayWebAsync(payIn);
         }
+        
+        protected async Task<PayInCardWebDTO> CreateLegacyIdealPayInCardWeb(string walletId)
+        {
+            var user = await this.GetJohn();
+
+            var payIn = new PayInCardWebPostDTO(
+                user.Id, 
+                new Money { Amount = 1000, Currency = CurrencyIso.EUR }, 
+                new Money { Amount = 0, Currency = CurrencyIso.EUR },
+                walletId, 
+                "https://test.com", 
+                CultureCode.FR, 
+                CardType.IDEAL,
+                bic: "REVOLT21"
+                );
+
+            return await this.Api.PayIns.CreateCardWebAsync(payIn);
+        }
+
 
         /// <summary>Creates PayIn Card Direct object.</summary>
         /// <param name="userId">User identifier.</param>
