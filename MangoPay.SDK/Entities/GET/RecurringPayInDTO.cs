@@ -40,5 +40,7 @@ namespace MangoPay.SDK.Entities.GET
         public string Applied3DSVersion { get; set; }
 
         public string RecurringPayinRegistrationId { get; set; }
+          
+        public CardInfo CardInfo { get; set; }
     }
 }

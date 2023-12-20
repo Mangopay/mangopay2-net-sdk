@@ -77,5 +77,7 @@ namespace MangoPay.SDK.Entities.GET
         public string Requested3DSVersion { get; set; }
 
         public string Applied3DSVersion { get; set; }
+        
+        public CardInfo CardInfo { get; set; }
     }
 }

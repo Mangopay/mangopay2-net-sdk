@@ -24,6 +24,25 @@ namespace MangoPay.SDK.Tests
 				Assert.Fail(ex.Message);
 			}
 		}
+		
+		[Test]
+		public async Task Test_CreateDeposit_CheckCardInfo()
+		{
+			try
+			{
+				DepositDTO deposit = await this.CreateNewDeposit();
+				
+				Assert.IsNotNull(deposit.CardInfo);
+				Assert.IsNotNull(deposit.CardInfo.IssuingBank);
+				Assert.IsNotNull(deposit.CardInfo.Brand);
+				Assert.IsNotNull(deposit.CardInfo.Type);
+				Assert.IsNotNull(deposit.CardInfo.IssuerCountryCode);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+		}
 
 		[Test]
 		public async Task Test_GetDeposit()

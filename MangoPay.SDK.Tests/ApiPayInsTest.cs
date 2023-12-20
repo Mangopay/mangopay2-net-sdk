@@ -251,6 +251,25 @@ namespace MangoPay.SDK.Tests
         }
         
         [Test]
+        public async Task Test_PayIns_Create_CardDirect_CheckCardInfo()
+        {
+            try
+            {
+                var payIn = await this.GetNewPayInCardDirect();
+
+                Assert.IsNotNull(payIn.CardInfo);
+                Assert.IsNotNull(payIn.CardInfo.IssuingBank);
+                Assert.IsNotNull(payIn.CardInfo.Brand);
+                Assert.IsNotNull(payIn.CardInfo.Type);
+                Assert.IsNotNull(payIn.CardInfo.IssuerCountryCode);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
         public async Task Test_PayIns_Create_MbwayWeb()
         {
             try
@@ -1753,5 +1772,156 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }*/
+        
+        
+         [Test]
+        public async Task Test_PayIns_Create_Recurring_MIT_CheckCardInfo()
+        {
+            try
+            {
+                var data = await GetNewJohnsWalletWithMoneyAndCardId(1000);
+                var cardId = data.Item1;
+                var wallet = data.Item2;
+                var userId = wallet.Owners.FirstOrDefault();
+
+                var payInPost = new RecurringPayInRegistrationPostDTO
+                {
+                    AuthorId = userId,
+                    CardId = cardId,
+                    CreditedUserId = userId,
+                    CreditedWalletId = wallet.Id,
+                    FirstTransactionDebitedFunds = new Money
+                    {
+                        Amount = 12,
+                        Currency = CurrencyIso.EUR
+                    },
+                    FirstTransactionFees = new Money
+                    {
+                        Amount = 1,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Billing = new Billing
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    Shipping = new Shipping
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    EndDate = DateTime.Now.AddDays(365),
+                    Migration = true,
+                    NextTransactionDebitedFunds = new Money
+                    {
+                        Amount = 12,
+                        Currency = CurrencyIso.EUR
+                    },
+                    NextTransactionFees = new Money
+                    {
+                        Amount = 1,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Frequency = "Daily",
+                    FixedNextAmount = true,
+                    FractionedPayment = false
+                };
+
+                var createdPayInRegistration = await this.Api.PayIns.CreateRecurringPayInRegistration(payInPost);
+
+                Assert.NotNull(createdPayInRegistration);
+                Assert.IsTrue(userId == createdPayInRegistration.CreditedUserId);
+                Assert.IsTrue(cardId == createdPayInRegistration.CardId);
+                Assert.IsTrue(wallet.Id == createdPayInRegistration.CreditedWalletId);
+                Assert.NotNull(createdPayInRegistration.Shipping);
+                Assert.NotNull(createdPayInRegistration.Billing);
+
+                var cit = new RecurringPayInCITPostDTO
+                {
+                    RecurringPayinRegistrationId = createdPayInRegistration.Id,
+                    BrowserInfo = new BrowserInfo
+                    {
+                        AcceptHeader = "text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8",
+                        JavaEnabled = true,
+                        Language = "FR-FR",
+                        ColorDepth = 4,
+                        ScreenHeight = 1800,
+                        ScreenWidth = 400,
+                        JavascriptEnabled = true,
+                        TimeZoneOffset = "+60",
+                        UserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
+                    },
+                    IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C",
+                    SecureModeReturnURL = "http://www.my-site.com/returnURL",
+                    StatementDescriptor = "lorem",
+                    Tag = "custom meta",
+                    DebitedFunds = new Money
+                    {
+                        Amount = 12,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Fees = new Money
+                    {
+                        Amount = 1,
+                        Currency = CurrencyIso.EUR
+                    }
+                };
+
+                var createdCit = await this.Api.PayIns.CreateRecurringPayInRegistrationCIT(cit);
+
+                Assert.IsNotNull(createdCit.CardInfo);
+                Assert.IsNotNull(createdCit.CardInfo.IssuingBank);
+                Assert.IsNotNull(createdCit.CardInfo.Brand);
+                Assert.IsNotNull(createdCit.CardInfo.Type);
+                Assert.IsNotNull(createdCit.CardInfo.IssuerCountryCode);
+
+                var mit = new RecurringPayInMITPostDTO
+                {
+                    RecurringPayinRegistrationId = createdPayInRegistration.Id,
+                    StatementDescriptor = "lorem",
+                    Tag = "custom meta",
+                    DebitedFunds = new Money
+                    {
+                        Amount = 10,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Fees = new Money
+                    {
+                        Amount = 1,
+                        Currency = CurrencyIso.EUR
+                    }
+                };
+
+                var createdMit = await this.Api.PayIns.CreateRecurringPayInRegistrationMIT(mit);
+
+                Assert.IsNotNull(createdMit.CardInfo);
+                Assert.IsNotNull(createdMit.CardInfo.IssuingBank);
+                Assert.IsNotNull(createdMit.CardInfo.Brand);
+                Assert.IsNotNull(createdMit.CardInfo.Type);
+                Assert.IsNotNull(createdMit.CardInfo.IssuerCountryCode);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }
