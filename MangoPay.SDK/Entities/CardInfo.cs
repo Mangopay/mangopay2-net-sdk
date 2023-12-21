@@ -1,3 +1,5 @@
+using MangoPay.SDK.Core.Enumerations;
+
 namespace MangoPay.SDK.Entities
 {
     /// <summary>Class represents informations about the cards</summary>
@@ -10,10 +12,10 @@ namespace MangoPay.SDK.Entities
         public string IssuingBank;
         
         /// <summary>The country where the card was issued.</summary>
-        public string IssuerCountryCode;
+        public CountryIso IssuerCountryCode;
 
         /// <summary>The type of card product: DEBIT, CREDIT, CHARGE CARD.</summary>
-        public string Type;
+        public CardInfoType Type;
         
         /// <summary>The card brand. Examples include: AMERICAN EXPRESS, DISCOVER, JCB, MASTERCARD, VISA, etc.</summary>
         public string Brand;
