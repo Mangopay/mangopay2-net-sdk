@@ -1,3 +1,8 @@
+## [3.15.0] - 2023-12-22
+### Added
+
+New `CardInfo` parameter returned on card transactions. More information [here](https://mangopay.com/docs/release-notes/chilka).
+
 ## [3.14.0] - 2023-12-07
 ### Added
 
