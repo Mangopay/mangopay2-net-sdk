@@ -85,6 +85,40 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(validated);
             Assert.IsNotNull(validated.Id);
         }
+        
+        [Test]
+        public async Task Test_Get_Card_Validation()
+        {
+            var john = await GetJohn();
+            var wallet =
+                new WalletPostDTO(new List<string> {john.Id}, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
+            var johnsWallet = await Api.Wallets.CreateAsync(wallet);
+            var cardRegistrationPost =
+                new CardRegistrationPostDTO(johnsWallet.Owners[0], CurrencyIso.EUR);
+            var cardRegistration = await Api.CardRegistrations.CreateAsync(cardRegistrationPost);
+            var cardRegistrationPut = new CardRegistrationPutDTO();
+            cardRegistrationPut.RegistrationData = await GetPaylineCorrectRegistartionData(cardRegistration);
+            cardRegistration = await Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
+            
+            var cardValidation = new CardValidationPostDTO(
+                john.Id,
+                "http://www.example.com/",
+                "2001:0620:0000:0000:0211:24FF:FE80:C12C",
+                getBrowserInfo(),
+                "Test card validate"
+            );
+
+            Assert.IsNotNull(cardRegistration, "Card is null!");
+
+            var validatedResponse = await Api.Cards.ValidateAsync(cardRegistration.CardId, cardValidation);
+            Assert.IsNotNull(validatedResponse);
+            Assert.IsNotNull(validatedResponse.Id);
+            var getCardValidation =
+                await Api.Cards.GetCardValidationAsync(cardRegistration.CardId, validatedResponse.Id);
+            Assert.IsNotNull(getCardValidation);
+            Assert.IsNotNull(getCardValidation.Id);
+            Assert.Equals(getCardValidation.Id, validatedResponse.Id);
+        }
 
         [Test]
         public async Task Test_Card_GetByFingerprint_Paginated()
