@@ -251,6 +251,33 @@ namespace MangoPay.SDK.Tests
         }
         
         [Test]
+        public async Task Test_PayIns_CardDirect_GetPaymentMethodMetadata()
+        {
+            try
+            {
+                var payIn = await this.GetNewPayInCardDirect();
+
+                var metadata = new PaymentMethodMetadataPostDTO
+                {
+                    Type = "BIN",
+                    Bin = payIn.CardInfo.BIN
+                };
+                
+                var resultMetadata = await this.Api.PayIns.GetPaymentMethodMetadataAsync(metadata);
+                
+                Assert.IsNotNull(resultMetadata);
+                Assert.IsNotNull(resultMetadata.IssuerCountryCode);
+                Assert.IsNotNull(resultMetadata.IssuingBank);
+                Assert.IsNotNull(resultMetadata.BinData);
+                Assert.IsNotNull(resultMetadata.CardType);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
         public async Task Test_PayIns_Create_CardDirect_CheckCardInfo()
         {
             try

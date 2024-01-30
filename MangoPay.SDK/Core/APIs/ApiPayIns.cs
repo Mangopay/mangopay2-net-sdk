@@ -394,5 +394,13 @@ namespace MangoPay.SDK.Core.APIs
             return await this.CreateObjectAsync<CardPreAuthorizedDepositPayInDTO, CardPreAuthorizedDepositPayInPostDTO>(
                 MethodKey.PayInsCreateCardPreAuthorizedDeposit, payIn, idempotentKey);
         }
+        
+        /// <summary>Look up metadata from BIN or Google Pay token</summary>
+        /// <param name="metadata">PaymentMethodMetadata object</param>
+        /// <returns>Object returned from API.</returns>
+        public async Task<PaymentMethodMetadataDTO> GetPaymentMethodMetadataAsync(PaymentMethodMetadataPostDTO metadata)
+        {
+            return await this.CreateObjectAsync<PaymentMethodMetadataDTO, PaymentMethodMetadataPostDTO>(MethodKey.GetPaymentMethodMetadata, metadata, null);
+        }
     }
 }
