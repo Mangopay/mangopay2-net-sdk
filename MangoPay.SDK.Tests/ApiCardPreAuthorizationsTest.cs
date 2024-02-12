@@ -7,6 +7,7 @@ using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
@@ -178,7 +179,8 @@ namespace MangoPay.SDK.Tests
                 };
 
                 await Api.PayIns.CreatePreauthorizedDirectAsync(payIn);
-
+                
+                Thread.Sleep(2000);
                 var preAuthTransactions = await this.Api.CardPreAuthorizations.GetTransactionsAsync(cardPreAuthorization.Id, new Pagination(1, 10));
 
                 Assert.NotNull(preAuthTransactions);
