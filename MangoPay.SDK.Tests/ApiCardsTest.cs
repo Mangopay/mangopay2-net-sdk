@@ -117,7 +117,7 @@ namespace MangoPay.SDK.Tests
                 await Api.Cards.GetCardValidationAsync(cardRegistration.CardId, validatedResponse.Id);
             Assert.IsNotNull(getCardValidation);
             Assert.IsNotNull(getCardValidation.Id);
-            Assert.Equals(getCardValidation.Id, validatedResponse.Id);
+            Assert.AreEqual(getCardValidation.Id, validatedResponse.Id);
         }
 
         [Test]
