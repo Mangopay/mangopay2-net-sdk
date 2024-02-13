@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
@@ -899,6 +900,7 @@ namespace MangoPay.SDK.Tests
 				var sort = new Sort();
 				sort.AddField("CreationDate", SortDirection.desc);
 
+                Thread.Sleep(2000);
 				var transactions = await Api.Users.GetTransactionsForBankAccountAsync(bankAccountId, pagination, filter, sort);
 
 				Assert.IsTrue(transactions.Count > 0);

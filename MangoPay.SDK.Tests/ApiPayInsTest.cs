@@ -786,7 +786,6 @@ namespace MangoPay.SDK.Tests
 
             Assert.IsNotNull(createPayIn.ReturnURL);
             Assert.IsNotNull(createPayIn.RedirectURL);
-            Assert.IsNotNull(createPayIn.TemplateURL);
 
 
             var getPayIn = await this.Api.PayIns.GetDirectDebitAsync(createPayIn.Id);

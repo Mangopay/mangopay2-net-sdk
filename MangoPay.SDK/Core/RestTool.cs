@@ -273,7 +273,7 @@ namespace MangoPay.SDK.Core
 
             if (this._responseCode == 200)
             {
-                _log.Debug("Response object: " + responseObject.ToString());
+                _log.Debug("Response object: " + responseObject);
             }
 
             SetLastRequestInfo(restRequest, restResponse);

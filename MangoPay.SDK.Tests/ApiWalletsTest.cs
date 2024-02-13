@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core;
+﻿using System.Threading;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
@@ -63,6 +64,8 @@ namespace MangoPay.SDK.Tests
             {
                 Type = TransactionType.PAYIN
             };
+            
+            Thread.Sleep(2000);
             var transactions = await Api.Wallets.GetTransactionsAsync(wallet.Id, pagination, filter, null);
 
             Assert.IsTrue(transactions.Count == 1);

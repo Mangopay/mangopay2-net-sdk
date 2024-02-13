@@ -65,5 +65,14 @@ namespace MangoPay.SDK.Core.APIs
             return await CreateObjectAsync<CardValidationDTO, CardValidationPostDTO>(MethodKey.CardValidation,
                 cardValidation, entitiesId: cardId);
         }
+        
+        /// <summary>Get card validation.</summary>
+        /// <param name="cardId">Card identifier.</param>
+        /// <param name="cardValidationId">Card validation id</param>
+        /// <returns>Card validation instance returned from API.</returns>
+        public async Task<CardValidationDTO> GetCardValidationAsync(string cardId, string cardValidationId)
+        {
+            return await this.GetObjectAsync<CardValidationDTO>(MethodKey.GetCardValidation, cardId, cardValidationId);
+        }
     }
 }
