@@ -81,6 +81,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsRecurringCardDirect, new ApiEndPoint("/payins/recurring/card/direct", RequestType.POST) },
             
             { MethodKey.PayInsCreateCardPreAuthorizedDeposit,new ApiEndPoint("/payins/deposit-preauthorized/direct/full-capture",RequestType.POST)},
+            
+            { MethodKey.GetPaymentMethodMetadata, new ApiEndPoint("/payment-methods/metadata", RequestType.POST) },
 
             { MethodKey.PayoutsBankwireCreate, new ApiEndPoint("/payouts/bankwire", RequestType.POST)},
             { MethodKey.PayoutsBankwireGet, new ApiEndPoint("/payouts/bankwire/{0}", RequestType.GET)},
