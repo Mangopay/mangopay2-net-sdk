@@ -50,5 +50,10 @@ namespace MangoPay.SDK.Entities.GET
         /// The statuses CREATED and FAILED return an ExecutionDate of null</summary>
         [JsonConverter(typeof(Core.UnixDateTimeConverter))]
         public DateTime ExecutionDate { get; set; }
+
+
+        /// <summary>Information about the fees taken by the platform for
+        /// this transaction (and hence transferred to the Fees Wallet).</summary>
+        public Money Fees { get; set; }
     }
 }

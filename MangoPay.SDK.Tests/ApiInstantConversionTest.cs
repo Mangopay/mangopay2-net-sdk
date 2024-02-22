@@ -29,6 +29,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(createdInstantConversion);
             Assert.IsNotNull(createdInstantConversion.CreditedFunds.Amount);
             Assert.IsNotNull(createdInstantConversion.DebitedFunds.Amount);
+            Assert.IsNotNull(createdInstantConversion.Fees);
             Assert.AreEqual(createdInstantConversion.Status, TransactionStatus.SUCCEEDED);
             Assert.AreEqual(createdInstantConversion.Type, TransactionType.CONVERSION);
         }
@@ -42,6 +43,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(returnedInstantConversion);
             Assert.IsNotNull(returnedInstantConversion.CreditedFunds.Amount);
             Assert.IsNotNull(returnedInstantConversion.DebitedFunds.Amount);
+            Assert.IsNotNull(returnedInstantConversion.Fees);
             Assert.AreEqual(returnedInstantConversion.Status, TransactionStatus.SUCCEEDED);
             Assert.AreEqual(returnedInstantConversion.Type, TransactionType.CONVERSION);
         }
@@ -59,8 +61,9 @@ namespace MangoPay.SDK.Tests
                 john.Id,
                 debitedWallet.Id,
                 creditedWallet.Id,
-                new Money { Amount = 79, Currency = CurrencyIso.EUR },
+                new Money { Amount = 30, Currency = CurrencyIso.EUR },
                 new Money { Currency = CurrencyIso.GBP },
+                new Money { Amount = 9, Currency = CurrencyIso.EUR},
                 "create instant conversion"
             );
 
