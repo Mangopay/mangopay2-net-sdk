@@ -24,7 +24,7 @@ namespace MangoPay.SDK.Core.APIs
                 this.CreateObjectAsync<ConversionDTO, ConversionPostDTO>(MethodKey.CreateInstantConversion,
                     conversion, idempotentKey);
         }
-        
+
         public async Task<ConversionDTO> GetInstantConversion(string id)
         {
             return await this.GetObjectAsync<ConversionDTO>(MethodKey.GetInstantConversion,
@@ -43,6 +43,16 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<ConversionQuoteDTO> GetConversionQuote(string id)
         {
             return await this.GetObjectAsync<ConversionQuoteDTO>(MethodKey.GetConversionQuote, entitiesId: id);
+        }
+
+        public async Task<QuotedConversionDTO> CreateQuotedConversion(
+            QuotedConversionPostDTO quotedConversionPostDto,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<QuotedConversionDTO, QuotedConversionPostDTO>(
+                MethodKey.CreateQuotedConversion,
+                quotedConversionPostDto,
+                idempotentKey);
         }
     }
 }

@@ -71,6 +71,33 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual("ACTIVE", returnedConversionQuote.Status);
         }
 
+        [Test]
+        public async Task Test_CreateQuotedConversion()
+        {
+            var john = await GetJohn();
+            var wallet =
+                new WalletPostDTO(new List<string> {john.Id}, "WALLET IN GBP WITH MONEY", CurrencyIso.GBP);
+            var creditedWallet = await Api.Wallets.CreateAsync(wallet);
+            
+            var debitedWallet = await GetJohnsWalletWithMoney();
+
+            var quote = await CreateConversionQuote();
+            var quotedConversionPostDTO = new QuotedConversionPostDTO(
+                quoteId: quote.Id,
+                authorId: debitedWallet.Owners[0],
+                debitedWalletId: debitedWallet.Id,
+                creditedWalletId: creditedWallet.Id,
+                tag: "Created using the Mangopay .NET SDK"
+            );
+
+            var quotedConversion = await this.Api.Conversions.CreateQuotedConversion(quotedConversionPostDTO);
+            
+            Assert.IsNotNull(quotedConversion);
+            Assert.AreEqual(TransactionStatus.SUCCEEDED, quotedConversion.Status);
+            Assert.AreEqual(TransactionNature.REGULAR, quotedConversion.Nature);
+
+        }
+
         private async Task<ConversionDTO> CreateInstantConversion() 
         {
             var john = await GetJohn();
