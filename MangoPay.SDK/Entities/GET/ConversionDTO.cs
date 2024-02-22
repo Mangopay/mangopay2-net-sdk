@@ -5,7 +5,7 @@ using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.GET
 {
-    public class InstantConversionDTO: EntityBase
+    public class ConversionDTO: EntityBase
     {
         /// <summary>The unique identifier of the user at the source of the transaction.</summary>
         public string AuthorId { get; set; }

@@ -234,7 +234,10 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.GetConversionRate,new ApiEndPoint("/conversion/rate/{0}/{1}",RequestType.GET)},
             { MethodKey.CreateInstantConversion,new ApiEndPoint("/instant-conversion",RequestType.POST)},
-            { MethodKey.GetInstantConversion,new ApiEndPoint("/instant-conversion/{0}",RequestType.GET)}
+            { MethodKey.GetInstantConversion,new ApiEndPoint("/instant-conversion/{0}",RequestType.GET)},
+            { MethodKey.CreateConversionQuote,new ApiEndPoint("/conversions/quote",RequestType.POST)},
+            { MethodKey.GetConversionQuote, new ApiEndPoint("/conversions/quote/{0}", RequestType.GET)},
+            
         };
 
         /// <summary>Creates new API instance.</summary>

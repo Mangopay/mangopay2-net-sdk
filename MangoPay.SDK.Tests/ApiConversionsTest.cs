@@ -9,12 +9,12 @@ using NUnit.Framework;
 namespace MangoPay.SDK.Tests
 {
     [TestFixture]
-    public class ApiInstantConversionTest: BaseTest
+    public class ApiConversionsTest: BaseTest
     {
         [Test]
         public async Task Test_GetConversionRate()
         {
-            var conversionRate = await Api.InstantConversion.GetConversionRate("EUR", "GBP");
+            var conversionRate = await Api.Conversions.GetConversionRate("EUR", "GBP");
             
             Assert.IsNotNull(conversionRate);
             Assert.IsNotNull(conversionRate.ClientRate);
@@ -37,7 +37,7 @@ namespace MangoPay.SDK.Tests
         public async Task Test_GetInstantConversion()
         {
             var createdInstantConversion = await CreateInstantConversion();
-            var returnedInstantConversion = await Api.InstantConversion.GetInstantConversion(createdInstantConversion.Id);
+            var returnedInstantConversion = await Api.Conversions.GetInstantConversion(createdInstantConversion.Id);
             
             Assert.IsNotNull(returnedInstantConversion);
             Assert.IsNotNull(returnedInstantConversion.CreditedFunds.Amount);
@@ -46,7 +46,32 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(returnedInstantConversion.Type, TransactionType.CONVERSION);
         }
 
-        private async Task<InstantConversionDTO> CreateInstantConversion() 
+        [Test]
+        public async Task Test_CreateConversionQuote()
+        {
+            var createdConversionQuote = await CreateConversionQuote();
+            
+            Assert.IsNotNull(createdConversionQuote);
+            Assert.IsNotNull(createdConversionQuote.CreditedFunds);
+            Assert.IsNotNull(createdConversionQuote.DebitedFunds);
+            Assert.IsNotNull(createdConversionQuote.ConversionRateResponse);
+            Assert.AreEqual("ACTIVE", createdConversionQuote.Status);
+        }
+
+        [Test]
+        public async Task Test_GetConversionQuote()
+        {
+            var createdConversionQuote = await CreateConversionQuote();
+            var returnedConversionQuote = await Api.Conversions.GetConversionQuote(createdConversionQuote.Id);
+            
+            Assert.IsNotNull(returnedConversionQuote);
+            Assert.IsNotNull(returnedConversionQuote.CreditedFunds);
+            Assert.IsNotNull(returnedConversionQuote.DebitedFunds);
+            Assert.IsNotNull(returnedConversionQuote.ConversionRateResponse);
+            Assert.AreEqual("ACTIVE", returnedConversionQuote.Status);
+        }
+
+        private async Task<ConversionDTO> CreateInstantConversion() 
         {
             var john = await GetJohn();
             var wallet =
@@ -55,16 +80,28 @@ namespace MangoPay.SDK.Tests
             
             var debitedWallet = await GetJohnsWalletWithMoney();
 
-            var instantConversion = new InstantConversionPostDTO(
+            var instantConversion = new ConversionPostDTO(
                 john.Id,
                 debitedWallet.Id,
                 creditedWallet.Id,
-                new Money { Amount = 79, Currency = CurrencyIso.EUR },
+                new Money { Amount = 30, Currency = CurrencyIso.EUR },
                 new Money { Currency = CurrencyIso.GBP },
                 "create instant conversion"
             );
 
-            return await Api.InstantConversion.CreateInstantConversion(instantConversion);
+            return await Api.Conversions.CreateInstantConversion(instantConversion);
+        }
+
+        private async Task<ConversionQuoteDTO> CreateConversionQuote()
+        {
+            var conversionQuote = new ConversionQuotePostDTO(
+                new Money { Amount = 30, Currency = CurrencyIso.EUR },
+                new Money { Currency = CurrencyIso.GBP },
+                90,
+                "Created using the Mangopay .NET SDK"
+            );
+
+            return await Api.Conversions.CreateConversionQuote(conversionQuote);
         }
     }
 }
