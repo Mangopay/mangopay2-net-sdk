@@ -232,9 +232,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.DepositsGet,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.GET)},
             { MethodKey.DepositsCancel,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.PUT)},
             
-            { MethodKey.GetConversionRate,new ApiEndPoint("/conversion/rate/{0}/{1}",RequestType.GET)},
-            { MethodKey.CreateInstantConversion,new ApiEndPoint("/instant-conversion",RequestType.POST)},
-            { MethodKey.GetInstantConversion,new ApiEndPoint("/instant-conversion/{0}",RequestType.GET)}
+            { MethodKey.GetConversionRate,new ApiEndPoint("/conversions/rate/{0}/{1}",RequestType.GET)},
+            { MethodKey.CreateInstantConversion,new ApiEndPoint("/conversions/instant-conversion",RequestType.POST)},
+            { MethodKey.GetInstantConversion,new ApiEndPoint("/conversions/{0}",RequestType.GET)}
         };
 
         /// <summary>Creates new API instance.</summary>

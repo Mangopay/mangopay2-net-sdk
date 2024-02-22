@@ -59,7 +59,7 @@ namespace MangoPay.SDK.Tests
                 john.Id,
                 debitedWallet.Id,
                 creditedWallet.Id,
-                new Money { Amount = 79, Currency = CurrencyIso.EUR },
+                new Money { Amount = 30, Currency = CurrencyIso.EUR },
                 new Money { Currency = CurrencyIso.GBP },
                 "create instant conversion"
             );
