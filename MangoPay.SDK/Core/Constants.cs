@@ -129,5 +129,8 @@ namespace MangoPay.SDK.Core
 
 		/// <summary>Resolves to "WalletId" string.</summary>
 		public const string WALLET_ID = "WalletId";
+
+		/// <summary>Tenant header</summary>
+		public const string TENANT_ID = "x-tenant-id";
     }
 }
