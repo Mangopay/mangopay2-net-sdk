@@ -4,7 +4,7 @@ namespace MangoPay.SDK.Entities.POST
     {
 
         public ConversionPostDTO(string authorId, string debitedWalletId, string creditedWalletId,
-            Money debitedFunds, Money creditedFunds,
+            Money debitedFunds, Money creditedFunds, Money fees,
             string tag = null)
         {
             AuthorId = authorId;
@@ -12,6 +12,7 @@ namespace MangoPay.SDK.Entities.POST
             CreditedWalletId = creditedWalletId;
             DebitedFunds = debitedFunds;
             CreditedFunds = creditedFunds;
+            Fees = fees;
             Tag = tag;
         }
             
@@ -29,5 +30,9 @@ namespace MangoPay.SDK.Entities.POST
         
         /// <summary>The buy funds</summary>
         public Money CreditedFunds { get; set; }
+        
+        /// <summary>Information about the fees taken by the platform for
+        /// this transaction (and hence transferred to the Fees Wallet).</summary>
+        public Money Fees { get; set; }
     }
 }
