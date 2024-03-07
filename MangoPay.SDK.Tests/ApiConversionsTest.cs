@@ -9,13 +9,13 @@ using NUnit.Framework;
 namespace MangoPay.SDK.Tests
 {
     [TestFixture]
-    public class ApiConversionsTest: BaseTest
+    public class ApiConversionsTest : BaseTest
     {
         [Test]
         public async Task Test_GetConversionRate()
         {
             var conversionRate = await Api.Conversions.GetConversionRate("EUR", "GBP");
-            
+
             Assert.IsNotNull(conversionRate);
             Assert.IsNotNull(conversionRate.ClientRate);
             Assert.IsNotNull(conversionRate.MarketRate);
@@ -25,7 +25,7 @@ namespace MangoPay.SDK.Tests
         public async Task Test_CreateInstantConversion()
         {
             var createdInstantConversion = await CreateInstantConversion();
-            
+
             Assert.IsNotNull(createdInstantConversion);
             Assert.IsNotNull(createdInstantConversion.CreditedFunds.Amount);
             Assert.IsNotNull(createdInstantConversion.DebitedFunds.Amount);
@@ -38,7 +38,7 @@ namespace MangoPay.SDK.Tests
         {
             var createdInstantConversion = await CreateInstantConversion();
             var returnedInstantConversion = await Api.Conversions.GetInstantConversion(createdInstantConversion.Id);
-            
+
             Assert.IsNotNull(returnedInstantConversion);
             Assert.IsNotNull(returnedInstantConversion.CreditedFunds.Amount);
             Assert.IsNotNull(returnedInstantConversion.DebitedFunds.Amount);
@@ -50,7 +50,7 @@ namespace MangoPay.SDK.Tests
         public async Task Test_CreateConversionQuote()
         {
             var createdConversionQuote = await CreateConversionQuote();
-            
+
             Assert.IsNotNull(createdConversionQuote);
             Assert.IsNotNull(createdConversionQuote.CreditedFunds);
             Assert.IsNotNull(createdConversionQuote.DebitedFunds);
@@ -63,7 +63,7 @@ namespace MangoPay.SDK.Tests
         {
             var createdConversionQuote = await CreateConversionQuote();
             var returnedConversionQuote = await Api.Conversions.GetConversionQuote(createdConversionQuote.Id);
-            
+
             Assert.IsNotNull(returnedConversionQuote);
             Assert.IsNotNull(returnedConversionQuote.CreditedFunds);
             Assert.IsNotNull(returnedConversionQuote.DebitedFunds);
@@ -76,9 +76,9 @@ namespace MangoPay.SDK.Tests
         {
             var john = await GetJohn();
             var wallet =
-                new WalletPostDTO(new List<string> {john.Id}, "WALLET IN GBP WITH MONEY", CurrencyIso.GBP);
+                new WalletPostDTO(new List<string> { john.Id }, "WALLET IN GBP WITH MONEY", CurrencyIso.GBP);
             var creditedWallet = await Api.Wallets.CreateAsync(wallet);
-            
+
             var debitedWallet = await GetJohnsWalletWithMoney();
 
             var quote = await CreateConversionQuote();
@@ -91,20 +91,19 @@ namespace MangoPay.SDK.Tests
             );
 
             var quotedConversion = await this.Api.Conversions.CreateQuotedConversion(quotedConversionPostDTO);
-            
+
             Assert.IsNotNull(quotedConversion);
             Assert.AreEqual(TransactionStatus.SUCCEEDED, quotedConversion.Status);
             Assert.AreEqual(TransactionNature.REGULAR, quotedConversion.Nature);
-
         }
 
-        private async Task<ConversionDTO> CreateInstantConversion() 
+        private async Task<ConversionDTO> CreateInstantConversion()
         {
             var john = await GetJohn();
             var wallet =
-                new WalletPostDTO(new List<string> {john.Id}, "WALLET IN GBP WITH MONEY", CurrencyIso.GBP);
+                new WalletPostDTO(new List<string> { john.Id }, "WALLET IN GBP WITH MONEY", CurrencyIso.GBP);
             var creditedWallet = await Api.Wallets.CreateAsync(wallet);
-            
+
             var debitedWallet = await GetJohnsWalletWithMoney();
 
             var instantConversion = new ConversionPostDTO(
@@ -113,6 +112,7 @@ namespace MangoPay.SDK.Tests
                 creditedWallet.Id,
                 new Money { Amount = 30, Currency = CurrencyIso.EUR },
                 new Money { Currency = CurrencyIso.GBP },
+                new Money { Amount = 10, Currency = CurrencyIso.GBP },
                 "create instant conversion"
             );
 
