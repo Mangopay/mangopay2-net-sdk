@@ -237,6 +237,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.GetInstantConversion,new ApiEndPoint("/instant-conversion/{0}",RequestType.GET)},
             { MethodKey.CreateConversionQuote,new ApiEndPoint("/conversions/quote",RequestType.POST)},
             { MethodKey.GetConversionQuote, new ApiEndPoint("/conversions/quote/{0}", RequestType.GET)},
+            { MethodKey.CreateQuotedConversion, new ApiEndPoint("/conversions/quoted-conversion", RequestType.POST)},
             
         };
 
