@@ -229,7 +229,7 @@ namespace MangoPay.SDK.Tests
         /// <returns>Wallet instance loaded with 10k EUR.</returns>
         protected async Task<WalletDTO> GetJohnsWalletWithMoney()
         {
-            return await GetJohnsWalletWithMoney(100);
+            return await GetJohnsWalletWithMoney(200);
         }
 
         /// <summary>Creates wallet for John, if not created yet, or returns an existing one.</summary>

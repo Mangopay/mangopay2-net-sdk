@@ -1,9 +1,9 @@
 namespace MangoPay.SDK.Entities.POST
 {
-    public class ConversionPostDTO: EntityPostBase
+    public class InstantConversionPostDTO: EntityPostBase
     {
 
-        public ConversionPostDTO(string authorId, string debitedWalletId, string creditedWalletId,
+        public InstantConversionPostDTO(string authorId, string debitedWalletId, string creditedWalletId,
             Money debitedFunds, Money creditedFunds, Money fees,
             string tag = null)
         {

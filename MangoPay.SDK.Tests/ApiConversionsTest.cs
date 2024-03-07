@@ -47,6 +47,20 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        public async Task Test_GetQuotedConversion()
+        {
+            var createdQuotedConversion = await CreateQuotedConversion();
+            var returnedInstantConversion = await Api.Conversions.GetInstantConversion(createdQuotedConversion.Id);
+
+            Assert.IsNotNull(returnedInstantConversion);
+            Assert.IsNotNull(returnedInstantConversion.Id);
+            Assert.IsNotNull(returnedInstantConversion.CreditedFunds.Amount);
+            Assert.IsNotNull(returnedInstantConversion.DebitedFunds.Amount);
+            Assert.AreEqual(returnedInstantConversion.Status, TransactionStatus.SUCCEEDED);
+            Assert.AreEqual(returnedInstantConversion.Type, TransactionType.CONVERSION);
+        }
+
+        [Test]
         public async Task Test_CreateConversionQuote()
         {
             var createdConversionQuote = await CreateConversionQuote();
@@ -106,23 +120,44 @@ namespace MangoPay.SDK.Tests
 
             var debitedWallet = await GetJohnsWalletWithMoney();
 
-            var instantConversion = new ConversionPostDTO(
+            var instantConversion = new InstantConversionPostDTO(
                 john.Id,
                 debitedWallet.Id,
                 creditedWallet.Id,
-                new Money { Amount = 30, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
                 new Money { Currency = CurrencyIso.GBP },
-                new Money { Amount = 10, Currency = CurrencyIso.GBP },
+                new Money { Amount = 10, Currency = CurrencyIso.EUR },
                 "create instant conversion"
             );
 
             return await Api.Conversions.CreateInstantConversion(instantConversion);
         }
 
+        private async Task<ConversionDTO> CreateQuotedConversion()
+        {
+            var john = await GetJohn();
+            var wallet =
+                new WalletPostDTO(new List<string> { john.Id }, "WALLET IN GBP WITH MONEY", CurrencyIso.GBP);
+            var creditedWallet = await Api.Wallets.CreateAsync(wallet);
+
+            var debitedWallet = await GetJohnsWalletWithMoney();
+
+            var quote = await CreateConversionQuote();
+            var quotedConversionPostDTO = new QuotedConversionPostDTO(
+                quoteId: quote.Id,
+                authorId: debitedWallet.Owners[0],
+                debitedWalletId: debitedWallet.Id,
+                creditedWalletId: creditedWallet.Id,
+                tag: "Created using the Mangopay .NET SDK"
+            );
+
+            return await this.Api.Conversions.CreateQuotedConversion(quotedConversionPostDTO);
+        }
+
         private async Task<ConversionQuoteDTO> CreateConversionQuote()
         {
             var conversionQuote = new ConversionQuotePostDTO(
-                new Money { Amount = 30, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
                 new Money { Currency = CurrencyIso.GBP },
                 90,
                 "Created using the Mangopay .NET SDK"

@@ -192,9 +192,9 @@ namespace MangoPay.SDK.Core.Enumerations
 		
 		GetConversionRate,
 		CreateInstantConversion,
-		GetInstantConversion,
+		CreateQuotedConversion,
+		GetConversion,
 		CreateConversionQuote,
 		GetConversionQuote,
-		CreateQuotedConversion,
     }
 }

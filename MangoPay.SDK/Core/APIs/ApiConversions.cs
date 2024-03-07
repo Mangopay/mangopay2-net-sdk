@@ -17,17 +17,17 @@ namespace MangoPay.SDK.Core.APIs
                 entitiesId: new[] { debitedCurrency, creditedCurrency });
         }
 
-        public async Task<ConversionDTO> CreateInstantConversion(ConversionPostDTO conversion,
+        public async Task<ConversionDTO> CreateInstantConversion(InstantConversionPostDTO instantConversion,
             string idempotentKey = null)
         {
             return await
-                this.CreateObjectAsync<ConversionDTO, ConversionPostDTO>(MethodKey.CreateInstantConversion,
-                    conversion, idempotentKey);
+                this.CreateObjectAsync<ConversionDTO, InstantConversionPostDTO>(MethodKey.CreateInstantConversion,
+                    instantConversion, idempotentKey);
         }
 
         public async Task<ConversionDTO> GetInstantConversion(string id)
         {
-            return await this.GetObjectAsync<ConversionDTO>(MethodKey.GetInstantConversion,
+            return await this.GetObjectAsync<ConversionDTO>(MethodKey.GetConversion,
                 entitiesId: id);
         }
 
@@ -45,11 +45,11 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<ConversionQuoteDTO>(MethodKey.GetConversionQuote, entitiesId: id);
         }
 
-        public async Task<QuotedConversionDTO> CreateQuotedConversion(
+        public async Task<ConversionDTO> CreateQuotedConversion(
             QuotedConversionPostDTO quotedConversionPostDto,
             string idempotentKey = null)
         {
-            return await this.CreateObjectAsync<QuotedConversionDTO, QuotedConversionPostDTO>(
+            return await this.CreateObjectAsync<ConversionDTO, QuotedConversionPostDTO>(
                 MethodKey.CreateQuotedConversion,
                 quotedConversionPostDto,
                 idempotentKey);
