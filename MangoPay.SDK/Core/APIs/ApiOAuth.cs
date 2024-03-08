@@ -27,6 +27,10 @@ namespace MangoPay.SDK.Core.APIs
             restTool.AddRequestHttpHeader(Constants.AUTHORIZATION,
                 $"{Constants.BASIC} {authHelper.GetHttpHeaderBasicKey()}");
             restTool.AddRequestHttpHeader(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
+            if (Root.Config.UKHeaderFlag)
+            {
+                restTool.AddRequestHttpHeader(Constants.TENANT_ID, "uk");
+            }
 
             return await restTool.RequestAsync<OAuthTokenDTO, CreateOAuthTokenPostDTO>(endPoint, null, entity);
         }   

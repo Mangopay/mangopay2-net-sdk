@@ -20,6 +20,9 @@ namespace MangoPay.SDK.Core
 		/// <summary>Timeout in miliseconds to use for API calls, set to zero to use the default .NET <see cref="HttpWebRequest"/> timeout of 100 seconds</summary>
 		public int Timeout = 0;
 
+        /// <summary>Set to true for uk traffic</summary>
+        public bool UKHeaderFlag = false;
+
 		/// <summary>API version (added in dashboard's SDK only in order to handle both old and new address fields).</summary>
 		public string ApiVersion = "v2.01";
 

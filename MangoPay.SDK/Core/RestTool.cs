@@ -552,6 +552,11 @@ namespace MangoPay.SDK.Core
                 { Constants.USER_AGENT, $"MangoPay V2 SDK .NET {_root.GetVersion()}" }
             };
 
+            if (_root.Config.UKHeaderFlag)
+            {
+                httpHeaders.Add(Constants.TENANT_ID, "uk");
+            }
+
             // AuthenticationHelper http header
             if (!this._authRequired) return httpHeaders;
 
