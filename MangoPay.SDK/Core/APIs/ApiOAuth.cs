@@ -29,6 +29,6 @@ namespace MangoPay.SDK.Core.APIs
             restTool.AddRequestHttpHeader(Constants.CONTENT_TYPE, Constants.APPLICATION_X_WWW_FORM_URLENCODED);
 
             return await restTool.RequestAsync<OAuthTokenDTO, CreateOAuthTokenPostDTO>(endPoint, null, entity);
-        }
+        }   
     }
 }
