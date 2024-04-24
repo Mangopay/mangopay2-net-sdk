@@ -1,7 +1,8 @@
 using System;
-using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using UnixDateTimeConverter = MangoPay.SDK.Core.UnixDateTimeConverter;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -57,5 +58,9 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary> Information about the card used for the transaction. </summary>
         public CardInfo CardInfo { get; set; }
+        
+        /// <summary>Secure mode.</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SecureMode? SecureMode { get; set; }
     }
 }

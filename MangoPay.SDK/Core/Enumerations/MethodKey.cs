@@ -196,5 +196,6 @@ namespace MangoPay.SDK.Core.Enumerations
 		GetConversion,
 		CreateConversionQuote,
 		GetConversionQuote,
+		PayInsAddTrackingInformation
     }
 }
