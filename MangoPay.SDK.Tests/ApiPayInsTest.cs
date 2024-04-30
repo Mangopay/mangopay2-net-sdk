@@ -269,7 +269,7 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(resultMetadata.IssuerCountryCode);
                 Assert.IsNotNull(resultMetadata.IssuingBank);
                 Assert.IsNotNull(resultMetadata.BinData);
-                Assert.IsNotNull(resultMetadata.CardType);
+                Assert.IsNotNull(resultMetadata.BinData[0].CardType);
             }
             catch (Exception ex)
             {
