@@ -13,6 +13,6 @@ namespace MangoPay.SDK.Entities
         
         /// <summary>If true, sends an email notification to the PaypalBuyerAccountEmail containing the
         /// TrackingNumber and Carrier, which allows the end user to track their shipment with the carrier.</summary>
-        public string NotifyBuyer { get; set; }
+        public Boolean NotifyBuyer { get; set; }
     }
 }
