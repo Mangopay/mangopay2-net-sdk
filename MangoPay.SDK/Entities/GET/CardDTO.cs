@@ -46,5 +46,10 @@ namespace MangoPay.SDK.Entities.GET
 
         ///<summary>Card's fingerprint, which is unique per 16-digit card number.</summary>
         public string Fingerprint { get; set; }
+        
+        /// <summary>
+        /// The cardholder’s name shown on the payment card.
+        /// </summary>
+        public string CardHolderName { get; set; }
     }
 }

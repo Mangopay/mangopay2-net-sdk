@@ -4,6 +4,7 @@ using MangoPay.SDK.Entities.POST;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.PUT;
 
 namespace MangoPay.SDK.Core.APIs
@@ -401,6 +402,15 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<PaymentMethodMetadataDTO> GetPaymentMethodMetadataAsync(PaymentMethodMetadataPostDTO metadata)
         {
             return await this.CreateObjectAsync<PaymentMethodMetadataDTO, PaymentMethodMetadataPostDTO>(MethodKey.GetPaymentMethodMetadata, metadata, null);
+        }
+        
+        /// <summary>Add tracking information to a PayPal PayIn (add the tracking number and carrier for LineItems shipments.)</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <param name="trackingInformation">The tracking information to be added.</param>
+        /// <returns>The updated PayPal PayIn.</returns>
+        public async Task<PayInPayPalWebDTO> AddPayPalTrackingInformation(string payInId, PayPalTrackingInformationPutDTO trackingInformation)
+        {
+            return await this.UpdateObjectAsync<PayInPayPalWebDTO, PayPalTrackingInformationPutDTO>(MethodKey.PayInsAddTrackingInformation, trackingInformation, null, payInId);
         }
     }
 }

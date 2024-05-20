@@ -22,5 +22,7 @@ namespace MangoPay.SDK.Entities
         ///		- Or the firstname and lastname of the seller
         /// </summary>
         public string Description { get; set; }
+        
+        public string Category { get; set; }
     }
 }

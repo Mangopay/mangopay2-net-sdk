@@ -847,7 +847,7 @@ namespace MangoPay.SDK.Tests
             var walletPost = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN EUR FOR TRANSFER", CurrencyIso.EUR);
             var wallet = await this.Api.Wallets.CreateAsync(walletPost);
 
-            var transfer = new TransferPostDTO(user.Id, user.Id, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletWithMoney.Id, wallet.Id)
+            var transfer = new TransferPostDTO(user.Id, null, new Money { Amount = 100, Currency = CurrencyIso.EUR }, new Money { Amount = 0, Currency = CurrencyIso.EUR }, walletWithMoney.Id, wallet.Id)
                 {
                     Tag = "DefaultTag"
                 };

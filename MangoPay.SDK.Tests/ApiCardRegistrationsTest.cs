@@ -77,6 +77,7 @@ namespace MangoPay.SDK.Tests
                 var registrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
                 cardRegistrationPut.RegistrationData = registrationData;
                 cardRegistrationPut.Tag = "DefaultTag - Updated";
+                cardRegistrationPut.CardHolderName = "John Silver";
 
                 var getCardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
 

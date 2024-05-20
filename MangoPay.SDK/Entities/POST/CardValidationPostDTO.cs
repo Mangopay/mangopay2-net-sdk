@@ -1,15 +1,20 @@
+using MangoPay.SDK.Core.Enumerations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace MangoPay.SDK.Entities.POST
 {
     public class CardValidationPostDTO: EntityPostBase
     {
         public CardValidationPostDTO(string authorId, string secureModeReturnUrl, string ipAddress, BrowserInfo browserInfo,
-            string tag = null)
+            string tag = null, SecureMode? secureMode = null)
         {
             AuthorId = authorId;
             SecureModeReturnUrl = secureModeReturnUrl;
             IpAddress = ipAddress;
             BrowserInfo = browserInfo;
             Tag = tag;
+            SecureMode = secureMode;
         }
             
         /// <summary> The unique identifier of the user at the source of the transaction.
@@ -24,5 +29,9 @@ namespace MangoPay.SDK.Entities.POST
         
         /// <summary> Information about the browser used by the end user (author) to perform the payment.
         public BrowserInfo BrowserInfo;
+        
+        /// <summary>Secure mode.</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SecureMode? SecureMode { get; set; }
     }
 }
