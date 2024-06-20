@@ -1,3 +1,9 @@
+## [3.19.0] - 2024-06-20
+### Added
+
+- New endpoint [Bancontact payin](https://mangopay.com/docs/endpoints/bancontact)
+- New parameter for update card : `CardHolderName `
+
 ## [3.18.0] - 2024-05-20
 ### Added
 
