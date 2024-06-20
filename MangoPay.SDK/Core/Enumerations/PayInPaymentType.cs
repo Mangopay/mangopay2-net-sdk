@@ -50,5 +50,7 @@ namespace MangoPay.SDK.Core.Enumerations
         IDEAL,
         /// <summary> Giropay payment type </summary>
         GIROPAY,
+        /// <summary> Bancontact payment type </summary>
+        BCMC
     }
 }

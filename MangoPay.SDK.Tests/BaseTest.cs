@@ -436,6 +436,12 @@ namespace MangoPay.SDK.Tests
             return await this.Api.PayIns.CreateGiropayWebAsync(payIn);
         }
         
+        protected async Task<PayInBancontactWebDTO> GetNewPayInBancontactWeb()
+        {
+            PayInBancontactWebPostDTO payIn = await GetPayInBancontactWebPost();
+            return await this.Api.PayIns.CreateBancontactWebAsync(payIn);
+        }
+        
         protected async Task<PayInCardWebDTO> CreateLegacyIdealPayInCardWeb(string walletId)
         {
             var user = await this.GetJohn();
@@ -776,6 +782,26 @@ namespace MangoPay.SDK.Tests
                 "Giropay tag",
                 "test"
                 
+            );
+
+            return payIn;
+        }
+        
+        protected async Task<PayInBancontactWebPostDTO> GetPayInBancontactWebPost()
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+
+            var payIn = new PayInBancontactWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238",
+                null,
+                null,
+                false,
+                CultureCode.NL
             );
 
             return payIn;
