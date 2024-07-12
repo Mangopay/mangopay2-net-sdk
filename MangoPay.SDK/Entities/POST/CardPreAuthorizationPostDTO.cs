@@ -8,7 +8,8 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>Card pre-authorization POST entity.</summary>
     public class CardPreAuthorizationPostDTO : EntityPostBase
     {
-        public CardPreAuthorizationPostDTO(string authorId, Money debitedFunds, SecureMode secureMode, string cardId, string secureModeReturnURL, string statementDescriptor = null)
+        public CardPreAuthorizationPostDTO(string authorId, Money debitedFunds, SecureMode secureMode, string cardId, 
+            string secureModeReturnURL, string statementDescriptor = null, string paymentCategory = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
@@ -16,6 +17,7 @@ namespace MangoPay.SDK.Entities.POST
             CardId = cardId;
             SecureModeReturnURL = secureModeReturnURL;
             StatementDescriptor = statementDescriptor;
+            PaymentCategory = paymentCategory;
         }
 
         /// <summary>Author identifier.</summary>
@@ -60,5 +62,12 @@ namespace MangoPay.SDK.Entities.POST
         public string IpAddress { get; set; }
 
         public string Requested3DSVersion { get; set; }
+        
+        /// <summary>
+        /// The channel through which the user provided their card details, used to indicate mail-order and telephone-order (MOTO) payments:
+        /// ECommerce – Payment received online.
+        /// TelephoneOrder – Payment received via mail order or telephone order (MOTO).
+        /// </summary>
+        public string PaymentCategory { get; set; }
     }
 }

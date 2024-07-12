@@ -494,6 +494,8 @@ namespace MangoPay.SDK.Tests
             var payIn = await GetPayInCardDirectPost(userId, idempotencyKey);
             payIn.Billing = billing;
 
+            payIn.PaymentCategory = "ECommerce";
+
             return await this.Api.PayIns.CreateCardDirectAsync(payIn);
         }
 
