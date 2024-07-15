@@ -9,7 +9,9 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>PayIn card direct POST entity.</summary>
     public class PayInCardDirectPostDTO : EntityPostBase
     {
-        public PayInCardDirectPostDTO(string authorId, string creditedUserId, Money debitedFunds, Money fees, string creditedWalletId, string secureModeReturnURL, string cardId, string statementDescriptor = null, Billing billing = null, BrowserInfo bInfo = null)
+        public PayInCardDirectPostDTO(string authorId, string creditedUserId, Money debitedFunds, Money fees, 
+            string creditedWalletId, string secureModeReturnURL, string cardId, string statementDescriptor = null,
+            Billing billing = null, BrowserInfo bInfo = null, string paymentCategory = null)
         {
             AuthorId = authorId;
             CreditedUserId = creditedUserId;
@@ -21,6 +23,7 @@ namespace MangoPay.SDK.Entities.POST
             StatementDescriptor = statementDescriptor;
             Billing = Billing;
             BrowserInfo = bInfo;
+            PaymentCategory = paymentCategory;
         }
 
         /// <summary>Author identifier.</summary>
@@ -70,5 +73,12 @@ namespace MangoPay.SDK.Entities.POST
         public string IpAddress { get; set; }
 
         public string Requested3DSVersion { get; set; }
+        
+        /// <summary>
+        /// The channel through which the user provided their card details, used to indicate mail-order and telephone-order (MOTO) payments:
+        /// ECommerce – Payment received online.
+        /// TelephoneOrder – Payment received via mail order or telephone order (MOTO).
+        /// </summary>
+        public string PaymentCategory { get; set; }
     }
 }

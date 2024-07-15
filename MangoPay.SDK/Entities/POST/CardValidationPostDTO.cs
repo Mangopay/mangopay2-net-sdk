@@ -7,7 +7,7 @@ namespace MangoPay.SDK.Entities.POST
     public class CardValidationPostDTO: EntityPostBase
     {
         public CardValidationPostDTO(string authorId, string secureModeReturnUrl, string ipAddress, BrowserInfo browserInfo,
-            string tag = null, SecureMode? secureMode = null)
+            string tag = null, SecureMode? secureMode = null, string paymentCategory = null)
         {
             AuthorId = authorId;
             SecureModeReturnUrl = secureModeReturnUrl;
@@ -15,6 +15,7 @@ namespace MangoPay.SDK.Entities.POST
             BrowserInfo = browserInfo;
             Tag = tag;
             SecureMode = secureMode;
+            PaymentCategory = paymentCategory;
         }
             
         /// <summary> The unique identifier of the user at the source of the transaction.
@@ -33,5 +34,12 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Secure mode.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public SecureMode? SecureMode { get; set; }
+        
+        /// <summary>
+        /// The channel through which the user provided their card details, used to indicate mail-order and telephone-order (MOTO) payments:
+        /// ECommerce – Payment received online.
+        /// TelephoneOrder – Payment received via mail order or telephone order (MOTO).
+        /// </summary>
+        public string PaymentCategory { get; set; }
     }
 }
