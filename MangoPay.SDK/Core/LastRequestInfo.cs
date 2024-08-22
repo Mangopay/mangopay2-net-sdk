@@ -9,6 +9,7 @@ namespace MangoPay.SDK.Core
         public RestResponse Response { get; set; }
 
         public string RateLimitingCallsAllowed { get; set; }
+        public string RateLimitingCallsMade { get; set; }
 
         public string RateLimitingCallsRemaining { get; set; }
 
