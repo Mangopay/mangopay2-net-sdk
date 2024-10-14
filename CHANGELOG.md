@@ -1,3 +1,8 @@
+## [3.19.2] - 2024-10-14
+### Added
+
+- Added new `PaymentFlow` parameter to the [Bancontact PayIn](https://docs.mangopay.com/api-reference/bancontact/bancontact-payin-object) endpoint.
+
 ## [3.19.1] - 2024-07-15
 ### Added
 
