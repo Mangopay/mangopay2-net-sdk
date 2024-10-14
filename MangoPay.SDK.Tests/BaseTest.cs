@@ -803,7 +803,8 @@ namespace MangoPay.SDK.Tests
                 null,
                 null,
                 false,
-                CultureCode.NL
+                CultureCode.NL,
+                PaymentFlow.APP
             );
 
             return payIn;

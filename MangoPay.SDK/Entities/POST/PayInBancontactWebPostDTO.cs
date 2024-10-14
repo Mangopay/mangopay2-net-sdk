@@ -7,7 +7,8 @@ namespace MangoPay.SDK.Entities.POST
     public class PayInBancontactWebPostDTO : EntityPostBase
     {
         public PayInBancontactWebPostDTO(string authorId, Money debitedFunds, Money fees, string creditedWalletId,
-            string returnUrl, string tag = null, string statementDescriptor = null, bool? recurring = null, CultureCode? culture = null)
+            string returnUrl, string tag = null, string statementDescriptor = null, bool? recurring = null, 
+            CultureCode? culture = null, PaymentFlow? paymentFlow = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
@@ -18,6 +19,7 @@ namespace MangoPay.SDK.Entities.POST
             Tag = tag;
             Recurring = recurring;
             Culture = culture;
+            PaymentFlow = paymentFlow;
         }
 
         /// <summary>Author identifier.</summary>
@@ -44,5 +46,9 @@ namespace MangoPay.SDK.Entities.POST
         
         /// <summary>Whether the Bancontact pay-ins are being made to be re-used in a recurring payment flow</summary>
         public bool? Recurring { get; set; }
+        
+        /// <summary>Payment flow (default WEB).</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public PaymentFlow? PaymentFlow { get; set; }
     }
 }

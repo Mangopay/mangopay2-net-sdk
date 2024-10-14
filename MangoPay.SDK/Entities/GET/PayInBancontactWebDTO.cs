@@ -24,5 +24,9 @@ namespace MangoPay.SDK.Entities.GET
         
         /// <summary>Whether the Bancontact pay-ins are being made to be re-used in a recurring payment flow</summary>
         public bool? Recurring { get; set; }
+        
+        /// <summary>Payment flow (default WEB).</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public PaymentFlow? PaymentFlow { get; set; }
     }
 }

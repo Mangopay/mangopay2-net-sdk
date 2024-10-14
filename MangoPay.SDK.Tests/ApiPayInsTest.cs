@@ -523,6 +523,7 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(fetched.Id);
                 Assert.AreEqual(CultureCode.NL, fetched.Culture);
                 Assert.AreEqual(false, fetched.Recurring);
+                Assert.AreEqual(PaymentFlow.APP, payIn.PaymentFlow);
             }
             catch (Exception ex)
             {
