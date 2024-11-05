@@ -1,11 +1,11 @@
-﻿using Common.Logging;
-using MangoPay.SDK.Entities;
-using RestSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Common.Logging;
+using MangoPay.SDK.Entities;
+using RestSharp;
 
 namespace MangoPay.SDK.Core
 {
@@ -24,11 +24,10 @@ namespace MangoPay.SDK.Core
             _options = new RestClientOptions(url)
             {
                 ThrowOnAnyError = false,
-                Timeout = timeout
+                Timeout = new TimeSpan(timeout)
             };
 
-            Client = new RestClient(_options);
-            Client.UseSerializer<MangoPaySerializer>();
+            Client = new RestClient(_options, configureSerialization: s => s.UseSerializer(() => new MangoPaySerializer()));
         }
 
         public static RestSharpDto GetInstance(string url, int timeout)
@@ -140,7 +139,7 @@ namespace MangoPay.SDK.Core
             if (restResponse.ResponseStatus == ResponseStatus.TimedOut)
                 throw new TimeoutException(restResponse.ErrorMessage);
 
-            if (restResponse.ErrorException is System.Net.ProtocolViolationException)
+            if (restResponse.ErrorException is ProtocolViolationException)
                 throw restResponse.ErrorException;
 
             throw new ResponseException(restResponse.Content, responseCode);
