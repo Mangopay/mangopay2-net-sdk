@@ -19,12 +19,13 @@ namespace MangoPay.SDK.Core
 
         public RestClient Client { get; }
 
+        // options need timout in milliseconds
         private RestSharpDto(string url, int timeout)
         {
             _options = new RestClientOptions(url)
             {
                 ThrowOnAnyError = false,
-                Timeout = new TimeSpan(timeout)
+                Timeout = new TimeSpan(timeout * 1000L) 
             };
 
             Client = new RestClient(_options, configureSerialization: s => s.UseSerializer(() => new MangoPaySerializer()));
