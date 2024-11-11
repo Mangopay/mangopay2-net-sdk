@@ -298,6 +298,7 @@ namespace MangoPay.SDK.Core
             _root.LastRequestInfo.RateLimitingCallsAllowed = GetHeaderValue("X-RateLimit-Limit");
             _root.LastRequestInfo.RateLimitingCallsRemaining = GetHeaderValue("X-RateLimit-Remaining");
             _root.LastRequestInfo.RateLimitingTimeTillReset = GetHeaderValue("X-RateLimit-Reset");
+            _root.LastRequestInfo.RateLimitingCallsMade = GetHeaderValue("X-RateLimit");
         }
 
         private async Task<ListPaginated<T>> DoRequestListAsync<T>(string urlMethod, Dictionary<string, string> additionalUrlParams = null,
