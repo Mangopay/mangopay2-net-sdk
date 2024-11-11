@@ -1,3 +1,9 @@
+## [3.19.3] - 2024-11-11
+### Fixed
+
+- #231 Update RestSharp from v107.3.0 to v112.1.0.
+- #225 Add `RateLimitingCallsMade` to `LastRequestInfo`. Thanks for your contribution [@bosquig](https://github.com/bosquig)
+
 ## [3.19.2] - 2024-10-14
 ### Added
 
