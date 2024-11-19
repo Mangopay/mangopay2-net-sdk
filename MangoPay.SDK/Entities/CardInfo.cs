@@ -15,7 +15,7 @@ namespace MangoPay.SDK.Entities
         public CountryIso IssuerCountryCode;
 
         /// <summary>The type of card product: DEBIT, CREDIT, CHARGE CARD.</summary>
-        public CardInfoType Type;
+        public CardInfoType? Type;
         
         /// <summary>The card brand. Examples include: AMERICAN EXPRESS, DISCOVER, JCB, MASTERCARD, VISA, etc.</summary>
         public string Brand;
