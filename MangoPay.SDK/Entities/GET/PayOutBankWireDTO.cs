@@ -18,6 +18,8 @@ namespace MangoPay.SDK.Entities.GET
         public string ModeRequested { get; set; }
 
         public string ModeApplied { get; set; }
+        
+        public PaymentRef PaymentRef { get; set; }
 
         public FallbackReason FallbackReason { get; set; }
     }
@@ -26,5 +28,11 @@ namespace MangoPay.SDK.Entities.GET
     {
         public string Code { get; set; }
         public string Message { get; set; }
+    }
+
+    public class PaymentRef
+    {
+        public string ReasonType { get; set; }
+        public string ReferenceId { get; set; }
     }
 }
