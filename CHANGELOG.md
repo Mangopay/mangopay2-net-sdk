@@ -1,3 +1,8 @@
+## [3.20.0] - 2024-12-17
+### Added
+
+- New `PaymentRef` parameter for [Payouts](https://docs.mangopay.com/api-reference/payouts/payout-object#the-payout-object)
+
 ## [3.19.3] - 2024-11-11
 ### Fixed
 
