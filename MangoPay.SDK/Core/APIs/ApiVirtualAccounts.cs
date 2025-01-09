@@ -45,14 +45,14 @@ namespace MangoPay.SDK.Core.APIs
         /// <returns>Deactivated VirtualAccount Object</returns>
         public async Task<VirtualAccountDTO> DeactivateAsync(string walletId, string virtualAccountId)
         {
-            return await this.UpdateObjectAsync<VirtualAccountDTO, VirtualAccountPutDTO>(MethodKey.VirtualAccountDeactivate, new VirtualAccountPutDTO(), entitiesId: new[] { walletId, virtualAccountId });
+            return await this.UpdateObjectAsync<VirtualAccountDTO, VirtualAccountPutDTO>(methodKey: MethodKey.VirtualAccountDeactivate, entity: new VirtualAccountPutDTO(), entitiesId: new[] { walletId, virtualAccountId });
         }
 
         /// <summary>Gets all virtual account availabilities.</summary>
         /// <returns>VirtualAccountAvailabilities Object</returns>
-        public async Task<VirtualAccountAvailabilities> GetAvailabilitiesAsync()
+        public async Task<VirtualAccountAvailabilitiesDTO> GetAvailabilitiesAsync()
         {
-            return await this.GetObjectAsync<VirtualAccountAvailabilities>(MethodKey.VirtualAccountGetAvailabilities);
+            return await this.GetObjectAsync<VirtualAccountAvailabilitiesDTO>(MethodKey.VirtualAccountGetAvailabilities);
         }
     }
 }

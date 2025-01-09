@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-namespace MangoPay.SDK.Entities
+namespace MangoPay.SDK.Entities.GET
 {
-    public class VirtualAccountAvailabilities : EntityBase
+    public class VirtualAccountAvailabilitiesDTO : EntityBase
     {
-        public VirtualAccountAvailabilities()
+        public VirtualAccountAvailabilitiesDTO()
         {
             Collection = new List<VirtualAccountAvailability>();
             UserOwned = new List<VirtualAccountAvailability>();
