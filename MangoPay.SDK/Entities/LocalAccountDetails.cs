@@ -1,6 +1,6 @@
 namespace MangoPay.SDK.Entities
 {
-    public class LocalAccountDetails : EntityBase
+    public class LocalAccountDetails
     {
         public VirtualAccountAddress Address { get; set; }
 

@@ -4,9 +4,14 @@ namespace MangoPay.SDK.Entities.PUT
 {
     public class VirtualAccountPutDTO : EntityPutBase
     {
-        public VirtualAccountPutDTO(string status)
+        public VirtualAccountPutDTO()
         {
-            Status = status;
+            
+        }
+
+        public VirtualAccountPutDTO(bool active)
+        {
+            Active = active;
         }
         
         public string WalletId { get; set; }

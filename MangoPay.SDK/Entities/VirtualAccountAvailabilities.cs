@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace MangoPay.SDK.Entities
 {
-    public class VirtualAccountAvailabilities
+    public class VirtualAccountAvailabilities : EntityBase
     {
         public VirtualAccountAvailabilities()
         {

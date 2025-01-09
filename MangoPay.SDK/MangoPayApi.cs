@@ -43,6 +43,7 @@ namespace MangoPay.SDK
             Regulatory = new ApiRegulatory(this);
             Deposits = new ApiDeposits(this);
             Conversions = new ApiConversions(this);
+            VirtualAccounts = new ApiVirtualAccounts(this);
         }
 
         /// <summary>Provides authorization token methods.</summary>
@@ -126,6 +127,8 @@ namespace MangoPay.SDK
         public ApiDeposits Deposits;
 
         public ApiConversions Conversions;
+
+        public ApiVirtualAccounts VirtualAccounts;
 
         #endregion
 
