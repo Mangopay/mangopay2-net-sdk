@@ -26,7 +26,6 @@ namespace MangoPay.SDK.Tests
             
             Assert.IsNotNull(fetchedVirtualAccount);
             Assert.AreEqual(fetchedVirtualAccount.Id, virtualAccount.Id);
-            Assert.AreSame(virtualAccount, fetchedVirtualAccount);
         }
 
         [Test]

@@ -241,8 +241,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.GetConversionQuote, new ApiEndPoint("/conversions/quote/{0}", RequestType.GET) },
             
             { MethodKey.VirtualAccountCreate, new ApiEndPoint("/wallets/{0}/virtual-accounts", RequestType.POST) },
-            { MethodKey.VirtualAccountDeactivate, new ApiEndPoint("/wallets/{0}/virtual-accounts/{0}", RequestType.PUT) },
-            { MethodKey.VirtualAccountGet, new ApiEndPoint("/wallets/{0}/virtual-accounts/{0}", RequestType.GET) },
+            { MethodKey.VirtualAccountDeactivate, new ApiEndPoint("/wallets/{0}/virtual-accounts/{1}", RequestType.PUT) },
+            { MethodKey.VirtualAccountGet, new ApiEndPoint("/wallets/{0}/virtual-accounts/{1}", RequestType.GET) },
             { MethodKey.VirtualAccountGetAll, new ApiEndPoint("/wallets/{0}/virtual-accounts", RequestType.GET) },
             { MethodKey.VirtualAccountGetAvailabilities, new ApiEndPoint("/virtual-accounts/availability", RequestType.GET) }
         };
