@@ -197,6 +197,12 @@ namespace MangoPay.SDK.Core.Enumerations
 		GetConversion,
 		CreateConversionQuote,
 		GetConversionQuote,
-		PayInsAddTrackingInformation
+		PayInsAddTrackingInformation,
+		
+		VirtualAccountCreate,
+		VirtualAccountGet,
+		VirtualAccountGetAll, 
+		VirtualAccountDeactivate,
+		VirtualAccountGetAvailabilities,
     }
 }

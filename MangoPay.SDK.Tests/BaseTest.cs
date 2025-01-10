@@ -27,6 +27,7 @@ namespace MangoPay.SDK.Tests
         private static BankAccountIbanDTO _johnsAccount;
         private static WalletDTO _johnsWallet;
         private static WalletDTO _johnsWalletWithMoney;
+        private static VirtualAccountDTO _johnsVirtualAccount;
         private static PayInCardWebDTO _johnsPayInCardWeb;
         private static PayOutBankWireDTO _johnsPayOutBankWire;
         private static CardRegistrationDTO _johnsCardRegistration;
@@ -322,6 +323,22 @@ namespace MangoPay.SDK.Tests
             var createdWallet = await this.Api.Wallets.GetAsync(johnsWalletWithMoney.Id);
 
             return new Tuple<string, WalletDTO>(card.Id, createdWallet);
+        }
+
+        protected async Task<VirtualAccountDTO> GetJohnsVirtualAccount()
+        {
+            if (_johnsVirtualAccount != null) return _johnsVirtualAccount;
+            
+            var wallet = await GetJohnsWallet();
+            var virtualAccount = new VirtualAccountPostDTO
+            {
+                Country = "FR",
+                VirtualAccountPurpose = "Collection",
+                Tag = "create virtual account tag"
+            };
+            _johnsVirtualAccount = await Api.VirtualAccounts.CreateAsync(wallet.Id, virtualAccount);
+
+            return _johnsVirtualAccount;
         }
 
         protected async Task<PayInCardWebDTO> GetJohnsPayInCardWeb()
