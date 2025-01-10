@@ -1,4 +1,22 @@
-## [3.20.0] - 2024-12-17
+## [3.21.0] - 2025-01-10
+### Added
+
+New endpoints for The Virtual Account object:
+
+- Create a Virtual Account
+- Deactivate a Virtual Account
+- View a Virtual Account
+- List Virtual Accounts for a Wallet
+- View Client Availabilities
+
+Added all relevant `EVENT_TYPE_CHOICES`:
+
+- `VIRTUAL_ACCOUNT_ACTIVE`
+- `VIRTUAL_ACCOUNT_BLOCKED`
+- `VIRTUAL_ACCOUNT_CLOSED`
+- `VIRTUAL_ACCOUNT_FAILED`
+
+
 ### Added
 
 - New `PaymentRef` parameter for [Payouts](https://docs.mangopay.com/api-reference/payouts/payout-object#the-payout-object)
