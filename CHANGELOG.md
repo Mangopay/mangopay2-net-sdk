@@ -1,3 +1,8 @@
+## [3.21.1] - 2025-01-14
+### Fixed
+
+- #226: Add `DebitedFunds` and `Fees` parameters for [transfer refunds](https://docs.mangopay.com/api-reference/refunds/create-refund-transfer). Thank you for your contribution [@jeremyTyriaux](https://github.com/jeremyTyriaux)!
+
 ## [3.21.0] - 2025-01-10
 ### Added
 
