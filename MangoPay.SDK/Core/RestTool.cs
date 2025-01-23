@@ -285,6 +285,7 @@ namespace MangoPay.SDK.Core
 
         private void SetLastRequestInfo(RestRequest request, RestResponse response)
         {
+            
             _root.LastRequestInfo = new LastRequestInfo() { Request = request, Response = response };
             
             string GetHeaderValue(string key)
