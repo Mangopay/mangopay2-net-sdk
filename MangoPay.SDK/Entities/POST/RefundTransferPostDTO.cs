@@ -15,6 +15,11 @@ namespace MangoPay.SDK.Entities.POST
             Fees = fees;
             DebitedFunds = debitedFunds;
         }
+        
+        public RefundTransferPostDTO(string authorId)
+        {
+            AuthorId = authorId;
+        }
 
         /// <summary>Author identifier.</summary>
         public string AuthorId { get; set; }
