@@ -1,3 +1,13 @@
+## [3.21.2] - 2025-01-27
+### Updated
+
+- Added tests for rate limiting.
+- #232:`CardInfo.Type` field now supports nullable values. Thank you for your contribution @RudyLeetchi!
+
+**Impact**
+
+Please note that if your code assumes `CardInfo.Type` is always non-null, you may need to update your logic to handle null values to prevent potential runtime issues.
+
 ## [3.21.1] - 2025-01-14
 ### Fixed
 
