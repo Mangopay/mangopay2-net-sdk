@@ -25,7 +25,7 @@ namespace MangoPay.SDK.Core
             _options = new RestClientOptions(url)
             {
                 ThrowOnAnyError = false,
-                Timeout = new TimeSpan(timeout * 1000L) 
+                Timeout = new TimeSpan(0, 0, 0, 0, timeout) 
             };
 
             Client = new RestClient(_options, configureSerialization: s => s.UseSerializer(() => new MangoPaySerializer()));
