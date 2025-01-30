@@ -1,3 +1,7 @@
+## [3.21.3] - 2025-01-30
+### Fixed
+
+Adjust the timeout configuration for `Timeout`.
 ## [3.21.2] - 2025-01-27
 ### Updated
 
