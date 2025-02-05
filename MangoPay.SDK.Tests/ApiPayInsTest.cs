@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
@@ -1604,6 +1605,7 @@ namespace MangoPay.SDK.Tests
                     }
                 };
 
+                Thread.Sleep(2000);
                 var createdPayInRegistration = await this.Api.PayIns.CreateRecurringPayInRegistration(payInPost);
 
                 Assert.NotNull(createdPayInRegistration);
@@ -1644,6 +1646,7 @@ namespace MangoPay.SDK.Tests
                     }
                 };
 
+                Thread.Sleep(2000);
                 var createdCit = await this.Api.PayIns.CreateRecurringPayInRegistrationCIT(cit);
 
                 Assert.NotNull(createdCit);
