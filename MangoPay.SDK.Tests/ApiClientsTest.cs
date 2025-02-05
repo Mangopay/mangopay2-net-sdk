@@ -1,15 +1,15 @@
-﻿using MangoPay.SDK.Core.Enumerations;
-using MangoPay.SDK.Entities;
-using MangoPay.SDK.Entities.GET;
-using MangoPay.SDK.Entities.POST;
-using MangoPay.SDK.Entities.PUT;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
+using MangoPay.SDK.Entities.GET;
+using MangoPay.SDK.Entities.POST;
+using MangoPay.SDK.Entities.PUT;
+using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
 {
@@ -100,6 +100,7 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        [Ignore("endpoint removed")]
         public async Task Test_Client_GetTransactions()
         {
             ListPaginated<TransactionDTO> result = null;

@@ -159,7 +159,7 @@ namespace MangoPay.SDK.Tests
             var conversionQuote = new ConversionQuotePostDTO(
                 new Money { Amount = 20, Currency = CurrencyIso.EUR },
                 new Money { Currency = CurrencyIso.GBP },
-                90,
+                300,
                 "Created using the Mangopay .NET SDK"
             );
 

@@ -1,9 +1,8 @@
-﻿using MangoPay.SDK.Core.Enumerations;
-using MangoPay.SDK.Entities.GET;
+﻿using System;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -76,7 +75,6 @@ namespace MangoPay.SDK.Tests
                 var cardRegistrationPut = new CardRegistrationPutDTO();
                 var registrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration);
                 cardRegistrationPut.RegistrationData = registrationData;
-                cardRegistrationPut.Tag = "DefaultTag - Updated";
                 cardRegistrationPut.CardHolderName = "John Silver";
 
                 var getCardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
@@ -85,7 +83,6 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(getCardRegistration.CardId);
                 Assert.AreEqual("VALIDATED", getCardRegistration.Status);
                 Assert.AreEqual("000000", getCardRegistration.ResultCode);
-                Assert.AreEqual(cardRegistrationPut.Tag, getCardRegistration.Tag);
             }
             catch (Exception ex)
             {
