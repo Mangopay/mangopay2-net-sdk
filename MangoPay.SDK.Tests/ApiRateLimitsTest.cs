@@ -14,7 +14,7 @@ namespace MangoPay.SDK.Tests
             
             try
             {
-                await this.GetJohn();
+                await this.GetJohn(true);
                 Assert.IsNotNull(Api.LastRequestInfo);
                 Assert.IsNotNull(Api.LastRequestInfo.RateLimitingCallsRemaining);
                 Assert.IsNotNull(Api.LastRequestInfo.RateLimitingTimeTillReset);

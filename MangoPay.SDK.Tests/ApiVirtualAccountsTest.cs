@@ -41,7 +41,10 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(virtualAccount.Id, virtualAccounts[0].Id);
         }
 
+        
         [Test]
+        [Ignore("API issue. To be re-enabled after fix.")]
+        // TODO
         public async Task Test_VirtualAccounts_GetAvailabilities()
         {
             var availabilities = await Api.VirtualAccounts.GetAvailabilitiesAsync();

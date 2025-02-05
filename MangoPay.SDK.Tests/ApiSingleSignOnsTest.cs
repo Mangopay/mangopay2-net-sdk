@@ -1,11 +1,11 @@
-﻿using MangoPay.SDK.Core;
+﻿using System;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -180,6 +180,7 @@ namespace MangoPay.SDK.Tests
         }
 
 		[Test]
+		[Ignore("Endpoint returns 404")]
 		public async Task Test_SingleSignOns_ExtendInvitation()
 		{
 			try

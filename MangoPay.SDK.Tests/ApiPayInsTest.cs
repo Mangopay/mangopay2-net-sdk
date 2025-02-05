@@ -1,14 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MangoPay.SDK.Entities.PUT;
+using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
 {
@@ -1042,6 +1042,7 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        [Ignore("Expire payin id")]
         public async Task Test_PayIns_Get_PayPal_WithPayPalBuyerAccountEmail()
         {
             try
@@ -1110,7 +1111,7 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                var payInId = "74980101";
+                var payInId = "payin_m_01JK6199ED4VGBP98ABRJVDS9D";
 
                 var payIn = await this.Api.PayIns.GetAsync(payInId);
 
@@ -1129,6 +1130,7 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        [Ignore("Expire payin id")]
         public async Task Test_PayIns_GetBankWireExternalInstructionAccountNumber()
         {
             try
