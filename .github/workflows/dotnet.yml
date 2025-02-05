@@ -22,6 +22,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ matrix.dotnet }}
+    - name: Install mono
+      run: |
+        sudo apt update
+        sudo apt install mono-devel
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
