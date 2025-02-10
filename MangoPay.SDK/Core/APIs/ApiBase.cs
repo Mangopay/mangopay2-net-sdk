@@ -1,9 +1,9 @@
-﻿using MangoPay.SDK.Core.Enumerations;
-using MangoPay.SDK.Entities;
-using MangoPay.SDK.Entities.GET;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
+using MangoPay.SDK.Entities.GET;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -74,6 +74,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsIdealWebCreate, new ApiEndPoint("/payins/payment-methods/ideal", RequestType.POST)},
             { MethodKey.PayinsGiropayWebCreate, new ApiEndPoint("/payins/payment-methods/giropay", RequestType.POST)},
             { MethodKey.PayinsBancontactWebCreate, new ApiEndPoint("/payins/payment-methods/bancontact", RequestType.POST)},
+            { MethodKey.PayinsSwishWebCreate, new ApiEndPoint("/payins/payment-methods/swish", RequestType.POST)},
             
             { MethodKey.PayinsRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations", RequestType.POST)},
             { MethodKey.PayinsGetRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations/{0}", RequestType.GET)},

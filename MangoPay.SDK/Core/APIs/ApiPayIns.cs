@@ -1,10 +1,9 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using System;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.PUT;
 
 namespace MangoPay.SDK.Core.APIs
@@ -175,6 +174,17 @@ namespace MangoPay.SDK.Core.APIs
                 MethodKey.PayinsGiropayWebCreate, payIn, idempotentKey);
         }
         
+        /// <summary>Creates new payin Swish web.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInSwishWebDTO> CreateSwishWebAsync(PayInSwishWebPostDTO payIn,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInSwishWebDTO, PayInSwishWebPostDTO>(
+                MethodKey.PayinsSwishWebCreate, payIn, idempotentKey);
+        }
+        
         /// <summary>Creates new payin bancontact web.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="payIn">Object instance to be created.</param>
@@ -335,6 +345,14 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<PayInGiropayWebDTO> GetGiropayAsync(string payInId)
         {
             return await this.GetObjectAsync<PayInGiropayWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+        }
+        
+        /// <summary>Gets PayIn Swish entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public async Task<PayInSwishWebDTO> GetSwishAsync(string payInId)
+        {
+            return await this.GetObjectAsync<PayInSwishWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
         
         /// <summary>Gets PayIn Bancontact entity by its identifier.</summary>
