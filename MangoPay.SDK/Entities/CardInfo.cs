@@ -1,4 +1,6 @@
 using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Core.Serializers;
+using Newtonsoft.Json;
 
 namespace MangoPay.SDK.Entities
 {
@@ -15,6 +17,7 @@ namespace MangoPay.SDK.Entities
         public CountryIso IssuerCountryCode;
 
         /// <summary>The type of card product: DEBIT, CREDIT, CHARGE CARD.</summary>
+        [JsonConverter(typeof(CardInfoTypeConverter))]
         public CardInfoType? Type;
         
         /// <summary>The card brand. Examples include: AMERICAN EXPRESS, DISCOVER, JCB, MASTERCARD, VISA, etc.</summary>
