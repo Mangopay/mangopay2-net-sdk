@@ -5,10 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Core.Serializers;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
@@ -1985,6 +1987,56 @@ namespace MangoPay.SDK.Tests
             {
                 Assert.Fail(ex.Message);
             }
+        }
+
+        [Test]
+        public async Task Test_Serialize_CardInfo()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                Converters = { new CardInfoTypeConverter() }
+            };
+
+            var cardInfo = new CardInfo();
+            cardInfo.Type = null;
+            
+            var payIn = new PayInCardDirectDTO();
+            payIn.CardInfo = cardInfo;
+            
+            string json = JsonConvert.SerializeObject(payIn, settings);
+            Assert.IsTrue(json.Contains("\"Type\":null"));
+
+            cardInfo.Type = CardInfoType.CREDIT;
+            json = JsonConvert.SerializeObject(payIn, settings);
+            Assert.IsTrue(json.Contains("\"Type\":\"CREDIT\""));
+            
+            cardInfo.Type = CardInfoType.CHARGE_CARD;
+            json = JsonConvert.SerializeObject(payIn, settings);
+            Assert.IsTrue(json.Contains("\"Type\":\"CHARGE CARD\""));
+        }
+        
+        [Test]
+        public async Task Test_Dserialize_CardInfo()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                Converters = { new CardInfoTypeConverter() }
+            };
+
+            string json =
+                "{\"CardInfo\":{\"BIN\":null,\"IssuingBank\":null,\"IssuerCountryCode\":0,\"Type\":null,\"Brand\":null,\"SubType\":null}}";
+            var deserialized = JsonConvert.DeserializeObject<PayInCardDirectDTO>(json, settings);
+            Assert.AreEqual(null, deserialized.CardInfo.Type);
+            
+            json =
+                "{\"CardInfo\":{\"BIN\":null,\"IssuingBank\":null,\"IssuerCountryCode\":0,\"Type\":\"DEBIT\",\"Brand\":null,\"SubType\":null}}";
+            deserialized = JsonConvert.DeserializeObject<PayInCardDirectDTO>(json, settings);
+            Assert.AreEqual(CardInfoType.DEBIT, deserialized.CardInfo.Type);
+            
+            json =
+                "{\"CardInfo\":{\"BIN\":null,\"IssuingBank\":null,\"IssuerCountryCode\":0,\"Type\":\"CHARGE_CARD\",\"Brand\":null,\"SubType\":null}}";
+            deserialized = JsonConvert.DeserializeObject<PayInCardDirectDTO>(json, settings);
+            Assert.AreEqual(CardInfoType.CHARGE_CARD, deserialized.CardInfo.Type);
         }
     }
 }
