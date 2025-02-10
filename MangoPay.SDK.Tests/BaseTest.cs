@@ -1,4 +1,9 @@
-﻿using Common.Logging.Simple;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
@@ -7,12 +12,6 @@ using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -215,7 +214,13 @@ namespace MangoPay.SDK.Tests
 
             return BaseTest._johnsWallet;
         }
-
+        
+        protected async Task<WalletDTO> GetNewWallet(CurrencyIso currencyIso)
+        {
+            var john = await this.GetJohn();
+            var wallet = new WalletPostDTO(new List<string> { john.Id }, $"Wallet in {currencyIso.ToString()}", currencyIso);
+            return await this.Api.Wallets.CreateAsync(wallet);
+        }
 
         protected async Task<WalletDTO> CreateJohnsWallet()
         {
@@ -451,6 +456,12 @@ namespace MangoPay.SDK.Tests
         {
             PayInGiropayWebPostDTO payIn = await GetPayInGiropayWebPost();
             return await this.Api.PayIns.CreateGiropayWebAsync(payIn);
+        }
+        
+        protected async Task<PayInSwishWebDTO> GetNewPayInSwishWeb()
+        {
+            PayInSwishWebPostDTO payIn = await GetPayInSwishWebPost();
+            return await this.Api.PayIns.CreateSwishWebAsync(payIn);
         }
         
         protected async Task<PayInBancontactWebDTO> GetNewPayInBancontactWeb()
@@ -801,6 +812,22 @@ namespace MangoPay.SDK.Tests
                 "Giropay tag",
                 "test"
                 
+            );
+
+            return payIn;
+        }
+        
+        protected async Task<PayInSwishWebPostDTO> GetPayInSwishWebPost()
+        {
+            var wallet = await GetNewWallet(CurrencyIso.SEK);
+            var user = await GetJohn();
+
+            var payIn = new PayInSwishWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.SEK },
+                new Money { Amount = 0, Currency = CurrencyIso.SEK },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238"
             );
 
             return payIn;
