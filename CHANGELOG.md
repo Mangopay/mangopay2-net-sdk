@@ -1,3 +1,13 @@
+## [3.22.0] - 2025-02-10
+### Added
+New endpoints for [SWISH PayIn](https://docs.mangopay.com/api-reference/swish/swish-payin-object) object:
+
+- [Create a SWISH PayIn](https://docs.mangopay.com/api-reference/swish/create-swish-payin)
+- [View a PayIn (SWISH)](https://docs.mangopay.com/api-reference/swish/view-payin-swish)
+
+### Fixed
+
+Added a custom deserializer to support the `CardInfo.Type` naming change from `CHARDE_CARD` to `CHARGE CARD`.
 ## [3.21.4] - 2025-02-05
 ### Updated
 
