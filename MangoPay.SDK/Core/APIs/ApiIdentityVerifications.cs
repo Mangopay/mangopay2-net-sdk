@@ -27,13 +27,22 @@ namespace MangoPay.SDK.Core.APIs
                 idempotentKey, userId);
         }
 
-        /// <summary>Get an identity verification.</summary>
-        /// <param name="identityVerificationId">Identity verification identitifer.</param>
+        /// <summary>See the status and basic details of an identity verification session</summary>
+        /// <param name="id">Identity verification identitifer.</param>
         /// <returns>Object instance returned from API.</returns>
-        public async Task<IdentityVerificationDTO> GetAsync(string identityVerificationId)
+        public async Task<IdentityVerificationDTO> GetAsync(string id)
         {
             return await this.GetObjectAsync<IdentityVerificationDTO>(MethodKey.IdentityVerificationGet,
-                entitiesId: identityVerificationId);
+                entitiesId: id);
+        }
+        
+        /// <summary>Obtain verified user data and results of each check performed</summary>
+        /// <param name="id">Identity verification identitifer.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<IdentityVerificationCheckDTO> GetChecksAsync(string id)
+        {
+            return await this.GetObjectAsync<IdentityVerificationCheckDTO>(MethodKey.IdentityVerificationGetChecks,
+                entitiesId: id);
         }
     }
 }

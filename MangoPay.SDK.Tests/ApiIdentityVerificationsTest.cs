@@ -33,6 +33,21 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(_identityVerification.ReturnUrl, fetched.ReturnUrl);
             Assert.AreEqual(_identityVerification.Status, fetched.Status);
         }
+        
+        [Test]
+        public async Task Test_GetIdentityVerificationChecks()
+        {
+            await GetNewIdentityVerification();
+            IdentityVerificationCheckDTO check =
+                await Api.IdentityVerifications.GetChecksAsync(_identityVerification.Id);
+
+            Assert.IsNotNull(check);
+            Assert.IsNotNull(check.SessionId);
+            Assert.IsNotNull(check.Status);
+            Assert.IsNotNull(check.LastUpdate);
+            Assert.IsNotNull(check.CreationDate);
+            Assert.IsNotNull(check.Checks);
+        }
 
         private async Task GetNewIdentityVerification()
         {

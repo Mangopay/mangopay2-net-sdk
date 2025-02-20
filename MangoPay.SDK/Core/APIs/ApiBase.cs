@@ -248,7 +248,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.VirtualAccountGetAvailabilities, new ApiEndPoint("/virtual-accounts/availability", RequestType.GET) },
             
             { MethodKey.IdentityVerificationCreate, new ApiEndPoint("/users/{0}/identity-verifications", RequestType.POST) },
-            { MethodKey.IdentityVerificationGet, new ApiEndPoint("/identity-verifications/{0}", RequestType.GET) }
+            { MethodKey.IdentityVerificationGet, new ApiEndPoint("/identity-verifications/{0}", RequestType.GET) },
+            { MethodKey.IdentityVerificationGetChecks, new ApiEndPoint("/identity-verifications/{0}/checks", RequestType.GET) }
         };
 
         /// <summary>Creates new API instance.</summary>

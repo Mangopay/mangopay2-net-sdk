@@ -1,6 +1,4 @@
 ﻿
-using System;
-
 namespace MangoPay.SDK.Core.Enumerations
 {
     /// <summary>Event types enumeration.</summary>
@@ -105,6 +103,12 @@ namespace MangoPay.SDK.Core.Enumerations
         VIRTUAL_ACCOUNT_ACTIVE,
         VIRTUAL_ACCOUNT_BLOCKED,
         VIRTUAL_ACCOUNT_CLOSED,
-        VIRTUAL_ACCOUNT_FAILED
+        VIRTUAL_ACCOUNT_FAILED,
+        
+        IDENTITY_VERIFICATION_VALIDATED,
+        IDENTITY_VERIFICATION_FAILED,
+        IDENTITY_VERIFICATION_INCONCLUSIVE,
+        IDENTITY_VERIFICATION_OUTDATED,
+        IDENTITY_VERIFICATION_TIMEOUT
     }
 }
