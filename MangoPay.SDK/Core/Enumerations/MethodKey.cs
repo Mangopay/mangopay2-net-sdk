@@ -205,5 +205,8 @@ namespace MangoPay.SDK.Core.Enumerations
 		VirtualAccountGetAll, 
 		VirtualAccountDeactivate,
 		VirtualAccountGetAvailabilities,
+		
+		IdentityVerificationCreate,
+		IdentityVerificationGet
     }
 }
