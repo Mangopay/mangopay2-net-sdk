@@ -1,6 +1,6 @@
-﻿using MangoPay.SDK.Core;
+﻿using System;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.APIs;
-using System;
 
 namespace MangoPay.SDK
 {
@@ -44,6 +44,7 @@ namespace MangoPay.SDK
             Deposits = new ApiDeposits(this);
             Conversions = new ApiConversions(this);
             VirtualAccounts = new ApiVirtualAccounts(this);
+            IdentityVerifications = new ApiIdentityVerifications(this);
         }
 
         /// <summary>Provides authorization token methods.</summary>
@@ -129,6 +130,8 @@ namespace MangoPay.SDK
         public ApiConversions Conversions;
 
         public ApiVirtualAccounts VirtualAccounts;
+
+        public ApiIdentityVerifications IdentityVerifications;
 
         #endregion
 
