@@ -10,7 +10,7 @@ This SDK is currently targeting **.NET Standard 2.0** and **.NET 6.0.** It has *
 These dependencies are:
 - Common.Logging library (version 3.4.1)
 - Newtonsoft.Json (version 13.0.1)
-- RestSharp (version 107.3.0)
+- RestSharp (version 112.1.0)
 - NETStandard.Library (version 2.0.3)
 
 The installation is as easy as downloading the SDK package and storing it under any location that will be available for referencing by your project (see examples below). You can also install from the .Net Package Manager Console:
