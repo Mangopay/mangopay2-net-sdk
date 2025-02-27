@@ -286,7 +286,7 @@ namespace MangoPay.SDK.Core
         private void SetLastRequestInfo(RestRequest request, RestResponse response)
         {
             _root.LastRequestInfo = new LastRequestInfo() { Request = request, Response = response };
-            
+
             string GetHeaderValue(string key)
             {
                 return response?.Headers?
@@ -299,6 +299,63 @@ namespace MangoPay.SDK.Core
             _root.LastRequestInfo.RateLimitingCallsRemaining = GetHeaderValue("X-RateLimit-Remaining");
             _root.LastRequestInfo.RateLimitingTimeTillReset = GetHeaderValue("X-RateLimit-Reset");
             _root.LastRequestInfo.RateLimitingCallsMade = GetHeaderValue("X-RateLimit");
+
+            var rateLimitReset = response?.Headers?
+                .Where(h => string.Equals(h.Name, "x-ratelimit-reset", StringComparison.OrdinalIgnoreCase))
+                .Select(h => long.Parse(h.Value))
+                .ToList();
+            var rateLimitRemaining = response?.Headers?
+                .Where(h => string.Equals(h.Name, "x-ratelimit-remaining", StringComparison.OrdinalIgnoreCase))
+                .Select(h => int.Parse(h.Value))
+                .ToList();
+            var rateLimitMade = response?.Headers?
+                .Where(h => string.Equals(h.Name, "x-ratelimit", StringComparison.OrdinalIgnoreCase))
+                .Select(h => int.Parse(h.Value))
+                .ToList();
+
+            if (rateLimitRemaining != null && rateLimitReset != null && rateLimitMade != null
+                && rateLimitReset.Count == rateLimitRemaining.Count && rateLimitReset.Count == rateLimitMade.Count)
+            {
+                var currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                var rateLimits = new List<RateLimit>();
+                for (var i = 0; i < rateLimitReset.Count; i++)
+                {
+                    RateLimit rateLimit = new RateLimit();
+                    var numberOfMinutes = (rateLimitReset[i] - currentTime) / 60;
+
+                    if (numberOfMinutes <= 15)
+                    {
+                        rateLimit.IntervalMinutes = 15;
+                    }
+                    else if (numberOfMinutes <= 30)
+                    {
+                        rateLimit.IntervalMinutes = 30;
+                    }
+                    else if (numberOfMinutes <= 60)
+                    {
+                        rateLimit.IntervalMinutes = 60;
+                    }
+                    else if (numberOfMinutes <= 60 * 24)
+                    {
+                        rateLimit.IntervalMinutes = 60 * 24;
+                    }
+
+                    rateLimit.ResetTimeSeconds = rateLimitReset[i];
+                    rateLimit.CallsRemaining = rateLimitRemaining[i];
+                    rateLimit.CallsMade = rateLimitMade[i];
+
+                    rateLimits.Add(rateLimit);
+                }
+
+                if (rateLimits.Count > 0)
+                {
+                    _root.LastRequestInfo.RateLimits = rateLimits;
+                }
+            }
+            else
+            {
+                _log.Debug("Could not set rate limits. Headers are missing or have different structures (sizes)");
+            }
         }
 
         private async Task<ListPaginated<T>> DoRequestListAsync<T>(string urlMethod, Dictionary<string, string> additionalUrlParams = null,
