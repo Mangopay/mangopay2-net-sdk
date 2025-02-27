@@ -36,6 +36,8 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(Api.LastRequestInfo.RateLimitingCallsRemaining);
                 Assert.IsNotNull(Api.LastRequestInfo.RateLimitingTimeTillReset);
                 Assert.IsNotNull(Api.LastRequestInfo.RateLimitingCallsMade);
+                Assert.IsNotNull(Api.LastRequestInfo.RateLimits);
+                Assert.True(Api.LastRequestInfo.RateLimits.Count > 0);
             }
             catch (Exception ex)
             {
