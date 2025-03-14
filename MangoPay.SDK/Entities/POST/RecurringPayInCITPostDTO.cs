@@ -40,5 +40,10 @@ namespace MangoPay.SDK.Entities.POST
         /// Amount of the subsequent fees. If this field is empty we will take the amount entered in the NextTransactionFees of the Recurring PayIn Registration. An amount must be transmitted during either registration or pay-in.
         /// </summary>
         public Money Fees { get; set; }
+        
+        ///  <summary> Allowed values: VISA, MASTERCARD, CB, MAESTRO
+        /// 
+        /// The card network to use, as chosen by the cardholder, in case of co-branded card products. </summary>
+        public string PreferredCardNetwork { get; set; }
     }
 }
