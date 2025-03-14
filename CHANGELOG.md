@@ -1,3 +1,17 @@
+## [3.24.0] - 2025-03-14
+### Added
+
+New endpoint for Payconiq:
+- [POST Create a Payconiq PayIn](https://docs.mangopay.com/api-reference/payconiq/create-payconiq-payin)
+
+### Added
+
+`PreferredCardNetwork` parameter supported on:
+- [POST Create a Direct Card PayIn](https://docs.mangopay.com/api-reference/direct-card-payins/create-direct-card-payin)
+- [POST Create a Recurring Card PayIn (CIT)](https://docs.mangopay.com/api-reference/recurring-card-payins/create-recurring-payin-cit)
+- [POST Create a Preauthorization](https://docs.mangopay.com/api-reference/preauthorizations/create-preauthorization)
+- [POST Create a Deposit Preauthorization](https://docs.mangopay.com/api-reference/deposit-preauthorizations/create-deposit-preauthorization)
+
 ## [3.23.1] - 2025-02-28
 ### Fixed
 
