@@ -9,7 +9,7 @@ namespace MangoPay.SDK.Entities.POST
     public class CardPreAuthorizationPostDTO : EntityPostBase
     {
         public CardPreAuthorizationPostDTO(string authorId, Money debitedFunds, SecureMode secureMode, string cardId, 
-            string secureModeReturnURL, string statementDescriptor = null, string paymentCategory = null)
+            string secureModeReturnURL, string statementDescriptor = null, string preferredCardNetwork = null, string paymentCategory = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
@@ -17,6 +17,7 @@ namespace MangoPay.SDK.Entities.POST
             CardId = cardId;
             SecureModeReturnURL = secureModeReturnURL;
             StatementDescriptor = statementDescriptor;
+            PreferredCardNetwork = preferredCardNetwork;
             PaymentCategory = paymentCategory;
         }
 
@@ -62,6 +63,11 @@ namespace MangoPay.SDK.Entities.POST
         public string IpAddress { get; set; }
 
         public string Requested3DSVersion { get; set; }
+        
+        ///  <summary> Allowed values: VISA, MASTERCARD, CB, MAESTRO
+        /// 
+        /// The card network to use, as chosen by the cardholder, in case of co-branded card products. </summary>
+        public string PreferredCardNetwork { get; set; }
         
         /// <summary>
         /// The channel through which the user provided their card details, used to indicate mail-order and telephone-order (MOTO) payments:

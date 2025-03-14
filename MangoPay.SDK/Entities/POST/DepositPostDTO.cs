@@ -7,7 +7,7 @@ namespace MangoPay.SDK.Entities.POST
     /// <summary>Create Deposit DTO.</summary>
     public class DepositPostDTO : EntityPostBase
     {
-        public DepositPostDTO(string authorId, Money debitedFunds, string cardId, string secureModeReturnUrl, string ipAddress, BrowserInfo browserInfo)
+        public DepositPostDTO(string authorId, Money debitedFunds, string cardId, string secureModeReturnUrl, string ipAddress, BrowserInfo browserInfo, string preferredCardNetwork = null)
         {
             AuthorId = authorId;
             DebitedFunds = debitedFunds;
@@ -15,6 +15,7 @@ namespace MangoPay.SDK.Entities.POST
             SecureModeReturnURL = secureModeReturnUrl;
             IpAddress = ipAddress;
             BrowserInfo = browserInfo;
+            PreferredCardNetwork = preferredCardNetwork;
         }
 
         public DepositPostDTO()
@@ -49,5 +50,10 @@ namespace MangoPay.SDK.Entities.POST
         public Billing Billing { get; set; }
 
         public Shipping Shipping { get; set; }
+        
+        ///  <summary> Allowed values: VISA, MASTERCARD, CB, MAESTRO
+        /// 
+        /// The card network to use, as chosen by the cardholder, in case of co-branded card products. </summary>
+        public string PreferredCardNetwork { get; set; }
     }
 }
