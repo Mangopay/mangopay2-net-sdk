@@ -173,6 +173,38 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+        
+        [Test]
+        public async Task Test_Users_GetNaturalSca()
+        {
+            var john = await this.GetJohnScaOwner();
+            var userNatural = await this.Api.Users.GetNaturalScaAsync(john.Id);
+            var userNatural2 = await this.Api.Users.GetScaAsync(john.Id);
+
+            Assert.IsTrue(userNatural.PersonType == PersonType.NATURAL);
+            Assert.IsTrue(userNatural.Id == john.Id);
+            Assert.IsTrue(userNatural2.Id == john.Id);
+            
+            Assert.IsTrue(userNatural.Email == userNatural2.Email);
+            Assert.IsTrue(userNatural.Tag == userNatural2.Tag);
+            Assert.IsTrue(userNatural.CreationDate == userNatural2.CreationDate);
+        }
+        
+        [Test]
+        public async Task Test_Users_GetLegalSca()
+        {
+            var matrix = await this.GetMatrixScaOwner();
+            var userLegal = await this.Api.Users.GetLegalScaAsync(matrix.Id);
+            var userLegal2 = await this.Api.Users.GetScaAsync(matrix.Id);
+
+            Assert.IsTrue(userLegal.PersonType == PersonType.LEGAL);
+            Assert.IsTrue(userLegal.Id == matrix.Id);
+            Assert.IsTrue(userLegal2.Id == matrix.Id);
+            
+            Assert.IsTrue(userLegal.Email == userLegal2.Email);
+            Assert.IsTrue(userLegal.Tag == userLegal2.Tag);
+            Assert.IsTrue(userLegal.CreationDate == userLegal2.CreationDate);
+        }
 
         [Test]
         public async Task Test_Users_GetNatural_FailsForLegalUser()

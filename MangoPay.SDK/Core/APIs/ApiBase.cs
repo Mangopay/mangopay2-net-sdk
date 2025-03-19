@@ -116,8 +116,11 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersCreateBankAccountsCa, new ApiEndPoint("/users/{0}/bankaccounts/ca", RequestType.POST)},
             { MethodKey.UsersCreateBankAccountsOther, new ApiEndPoint("/users/{0}/bankaccounts/other", RequestType.POST)},
             { MethodKey.UsersGet, new ApiEndPoint("/users/{0}", RequestType.GET)},
+            { MethodKey.UsersGetSca, new ApiEndPoint("/sca/users/{0}", RequestType.GET)},
             { MethodKey.UsersGetNaturals, new ApiEndPoint("/users/natural/{0}", RequestType.GET)},
             { MethodKey.UsersGetLegals, new ApiEndPoint("/users/legal/{0}", RequestType.GET)},
+            { MethodKey.UsersGetNaturalsSca, new ApiEndPoint("/sca/users/natural/{0}", RequestType.GET)},
+            { MethodKey.UsersGetLegalsSca, new ApiEndPoint("/sca/users/legal/{0}", RequestType.GET)},
             { MethodKey.UsersPreauthorizations, new ApiEndPoint("/users/{0}/preauthorizations", RequestType.GET)},
             { MethodKey.UsersRegulatory, new ApiEndPoint("/users/{0}/Regulatory", RequestType.GET)},
 

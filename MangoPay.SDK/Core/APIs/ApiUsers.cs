@@ -24,6 +24,14 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.GetObjectAsync<UserDTO>(MethodKey.UsersGet, entitiesId: userId);
         }
+        
+        /// <summary>Gets SCA user.</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>SCA User instance returned from API, which is either of UserNaturalSca or UserLegalSca type.</returns>
+        public async Task<UserDTO> GetScaAsync(string userId)
+        {
+            return await this.GetObjectAsync<UserDTO>(MethodKey.UsersGetSca, entitiesId: userId);
+        }
 
         /// <summary>Creates new owner user.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
@@ -114,6 +122,14 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.GetObjectAsync<UserNaturalDTO>(MethodKey.UsersGetNaturals, entitiesId: userId);
         }
+        
+        /// <summary>Gets SCA natural user.</summary>
+        /// <param name="userId">UserNaturalSca identifier.</param>
+        /// <returns>UserNaturalSca object returned from API.</returns>
+        public async Task<UserNaturalScaDTO> GetNaturalScaAsync(string userId)
+        {
+            return await this.GetObjectAsync<UserNaturalScaDTO>(MethodKey.UsersGetNaturalsSca, entitiesId: userId);
+        }
 
         /// <summary>Gets legal user.</summary>
         /// <param name="userId">UserLegal identifier.</param>
@@ -121,6 +137,14 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<UserLegalDTO> GetLegalAsync(string userId)
         {
             return await this.GetObjectAsync<UserLegalDTO>(MethodKey.UsersGetLegals, entitiesId: userId);
+        }
+        
+        /// <summary>Gets legal SCA user.</summary>
+        /// <param name="userId">UserLegalSca identifier.</param>
+        /// <returns>UserLegalSca object returned from API.</returns>
+        public async Task<UserLegalScaDTO> GetLegalScaAsync(string userId)
+        {
+            return await this.GetObjectAsync<UserLegalScaDTO>(MethodKey.UsersGetLegalsSca, entitiesId: userId);
         }
 
         /// <summary>Updates the user.</summary>
