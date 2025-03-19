@@ -106,6 +106,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersAllTransactions, new ApiEndPoint("/users/{0}/transactions", RequestType.GET)},
             { MethodKey.UsersCreateNaturals, new ApiEndPoint("/users/natural", RequestType.POST)},
             { MethodKey.UsersCreateLegals, new ApiEndPoint("/users/legal", RequestType.POST)},
+            { MethodKey.UsersCreateNaturalsSca, new ApiEndPoint("/sca/users/natural", RequestType.POST)},
+            { MethodKey.UsersCreateLegalsSca, new ApiEndPoint("/sca/users/legal", RequestType.POST)},
             { MethodKey.UsersCreateKycDocument, new ApiEndPoint("/users/{0}/KYC/documents", RequestType.POST)},
             { MethodKey.UsersCreateKycPage, new ApiEndPoint("/users/{0}/KYC/documents/{1}/pages", RequestType.POST)},
             { MethodKey.UsersCreateBankAccountsIban, new ApiEndPoint("/users/{0}/bankaccounts/iban", RequestType.POST)},

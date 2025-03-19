@@ -1,13 +1,12 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using RestSharp;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -34,6 +33,15 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.CreateObjectAsync<UserNaturalDTO, UserNaturalOwnerPostDTO>(MethodKey.UsersCreateNaturals, user, idempotentKey);
         }
+        
+        /// <summary>Creates new owner SCA user.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="user">UserNaturalSca object to be created.</param>
+        /// <returns>UserNaturalSca instance returned from API.</returns>
+        public async Task<UserNaturalScaDTO> CreateOwnerAsync(UserNaturalScaOwnerPostDTO user, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<UserNaturalScaDTO, UserNaturalScaOwnerPostDTO>(MethodKey.UsersCreateNaturalsSca, user, idempotentKey);
+        }
 
         /// <summary>Creates new payer user.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
@@ -42,6 +50,15 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<UserNaturalDTO> CreatePayerAsync(UserNaturalPayerPostDTO user, string idempotentKey = null)
         {
             return await this.CreateObjectAsync<UserNaturalDTO, UserNaturalPayerPostDTO>(MethodKey.UsersCreateNaturals, user, idempotentKey);
+        }
+        
+        /// <summary>Creates new payer SCA user.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="user">UserNaturalSca object to be created.</param>
+        /// <returns>UserNaturalSca instance returned from API.</returns>
+        public async Task<UserNaturalScaDTO> CreatePayerAsync(UserNaturalScaPayerPostDTO user, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<UserNaturalScaDTO, UserNaturalScaPayerPostDTO>(MethodKey.UsersCreateNaturalsSca, user, idempotentKey);
         }
 
         /// <summary>Creates new legal payer user.</summary>
@@ -52,6 +69,15 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.CreateObjectAsync<UserLegalDTO, UserLegalPayerPostDTO>(MethodKey.UsersCreateLegals, user, idempotentKey);
         }
+        
+        /// <summary>Creates new legal payer SCA user.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="user">UserLegalSca object to be created.</param>
+        /// <returns>UserLegalSca instance returned from API.</returns>
+        public async Task<UserLegalScaDTO> CreatePayerAsync(UserLegalScaPayerPostDTO user, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<UserLegalScaDTO, UserLegalScaPayerPostDTO>(MethodKey.UsersCreateLegalsSca, user, idempotentKey);
+        }
 
         /// <summary>Creates new legal owner user.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
@@ -60,6 +86,15 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<UserLegalDTO> CreateOwnerAsync(UserLegalOwnerPostDTO user, string idempotentKey = null)
         {
             return await this.CreateObjectAsync<UserLegalDTO, UserLegalOwnerPostDTO>(MethodKey.UsersCreateLegals, user, idempotentKey);
+        }
+        
+        /// <summary>Creates new legal SCA owner user.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="user">UserLegalSca object to be created.</param>
+        /// <returns>UserLegalSca instance returned from API.</returns>
+        public async Task<UserLegalScaDTO> CreateOwnerAsync(UserLegalScaOwnerPostDTO user, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<UserLegalScaDTO, UserLegalScaOwnerPostDTO>(MethodKey.UsersCreateLegalsSca, user, idempotentKey);
         }
 
 

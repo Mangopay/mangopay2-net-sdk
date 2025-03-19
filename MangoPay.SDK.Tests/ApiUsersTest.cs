@@ -1,18 +1,15 @@
-﻿using MangoPay.SDK.Core;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -33,6 +30,45 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+        
+        [Test]
+        public async Task Test_Users_CreateNaturalScaPayer()
+        {
+            try
+            {
+                var john = await GetJohnScaPayer();
+                Assert.IsTrue(john.Id.Length > 0);
+                Assert.IsTrue(john.PersonType == PersonType.NATURAL);
+                Assert.IsTrue(john.UserCategory == UserCategory.PAYER);
+                Assert.IsTrue(john.UserStatus == UserStatus.ACTIVE);
+                Assert.IsNotNull(john.PhoneNumber);
+                Assert.IsNotNull(john.PhoneNumberCountry);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_Users_CreateNaturalScaOwner()
+        {
+            try
+            {
+                var john = await GetJohnScaOwner();
+                Assert.IsTrue(john.Id.Length > 0);
+                Assert.IsTrue(john.PersonType == PersonType.NATURAL);
+                Assert.IsTrue(john.UserCategory == UserCategory.OWNER);
+                Assert.IsTrue(john.UserStatus == UserStatus.PENDING_USER_ACTION);
+                Assert.IsNotNull(john.PhoneNumber);
+                Assert.IsNotNull(john.PhoneNumberCountry);
+                Assert.IsNotNull(john.PendingUserAction.RedirectUrl);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         [Test]
         public async Task Test_Users_CreateLegal()
@@ -42,6 +78,45 @@ namespace MangoPay.SDK.Tests
                 var matrix = await this.GetMatrix();
                 Assert.IsTrue(matrix.Id.Length > 0);
                 Assert.IsTrue(matrix.PersonType == PersonType.LEGAL);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_Users_CreateLegalScaPayer()
+        {
+            try
+            {
+                var matrix = await this.GetMatrixScaPayer();
+                Assert.IsTrue(matrix.Id.Length > 0);
+                Assert.IsTrue(matrix.PersonType == PersonType.LEGAL);
+                Assert.IsTrue(matrix.UserCategory == UserCategory.PAYER);
+                Assert.IsTrue(matrix.UserStatus == UserStatus.ACTIVE);
+                Assert.IsNotNull(matrix.LegalRepresentative);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_Users_CreateLegalScaOwner()
+        {
+            try
+            {
+                var matrix = await this.GetMatrixScaOwner();
+                Assert.IsTrue(matrix.Id.Length > 0);
+                Assert.IsTrue(matrix.PersonType == PersonType.LEGAL);
+                Assert.IsTrue(matrix.UserCategory == UserCategory.OWNER);
+                Assert.IsTrue(matrix.UserStatus == UserStatus.PENDING_USER_ACTION);
+                Assert.IsNotNull(matrix.LegalRepresentative);
+                Assert.IsNotNull(matrix.HeadquartersAddress);
+                Assert.IsNotNull(matrix.CompanyNumber);
+                Assert.IsNotNull(matrix.PendingUserAction.RedirectUrl);
             }
             catch (Exception ex)
             {
