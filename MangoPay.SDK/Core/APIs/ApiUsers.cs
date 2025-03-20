@@ -155,6 +155,15 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.UpdateObjectAsync<UserNaturalDTO, UserNaturalPutDTO>(MethodKey.UsersSaveNaturals, user, entitiesId: userId);
         }
+        
+        /// <summary>Updates the user.</summary>
+        /// <param name="user">Instance of UserNaturalSca class to be updated.</param>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>Updated SCA User object returned from API.</returns>
+        public async Task<UserNaturalScaDTO> UpdateNaturalAsync(UserNaturalScaPutDTO user, string userId)
+        {
+            return await this.UpdateObjectAsync<UserNaturalScaDTO, UserNaturalScaPutDTO>(MethodKey.UsersSaveNaturals, user, entitiesId: userId);
+        }
 
         /// <summary>Updates the user.</summary>
         /// <param name="user">Instance UserLegal class to be updated.</param>
@@ -163,6 +172,15 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<UserLegalDTO> UpdateLegalAsync(UserLegalPutDTO user, string userId)
         {
             return await this.UpdateObjectAsync<UserLegalDTO, UserLegalPutDTO>(MethodKey.UsersSaveLegals, user, entitiesId: userId);
+        }
+        
+        /// <summary>Updates the user.</summary>
+        /// <param name="user">Instance UserLegalSca class to be updated.</param>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>Updated User object returned from API.</returns>
+        public async Task<UserLegalScaDTO> UpdateLegalAsync(UserLegalScaPutDTO user, string userId)
+        {
+            return await this.UpdateObjectAsync<UserLegalScaDTO, UserLegalScaPutDTO>(MethodKey.UsersSaveLegalsSca, user, entitiesId: userId);
         }
 
         /// <summary>Gets all user's wallets.</summary>

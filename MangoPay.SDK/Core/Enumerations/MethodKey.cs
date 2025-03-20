@@ -94,6 +94,8 @@ namespace MangoPay.SDK.Core.Enumerations
         UsersSaveKycDocument,
         UsersSaveLegals,
         UsersSaveNaturals,
+        UsersSaveLegalsSca,
+        UsersSaveNaturalsSca,
         UsersSaveBankAccount,
         UsersEmoneyGet,
         UsersEmoneyYearGet,

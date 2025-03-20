@@ -335,6 +335,69 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+        
+        [Test]
+        public async Task Test_Users_Save_NaturalSca()
+        {
+            try
+            {
+                var john = await GetJohnScaOwner();
+
+                var johnPut = new UserNaturalScaPutDTO
+                {
+                    LastName = john.LastName + " - CHANGED",
+                    Nationality = CountryIso.DK,
+                    TermsAndConditionsAccepted = true
+                };
+
+                var userSaved = await Api.Users.UpdateNaturalAsync(johnPut, john.Id);
+                var userFetched = await Api.Users.GetNaturalScaAsync(john.Id);
+
+                Assert.AreEqual(johnPut.LastName, userSaved.LastName);
+                Assert.AreEqual(johnPut.LastName, userFetched.LastName);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_Users_Save_LegalSca()
+        {
+            try
+            {
+                var matrix = await GetMatrixScaOwner();
+
+                var matrixPut = new UserLegalScaPutDTO()
+                {
+                    Name = matrix.Name + " - CHANGED",
+                    LegalPersonType = LegalPersonType.SOLETRADER,
+                    TermsAndConditionsAccepted = true,
+                    LegalRepresentative = new LegalRepresentative()
+                    {
+                        Email = "john.doe.sca@sample.org",
+                        FirstName = "John SCA",
+                        LastName = "Doe SCA Review",
+                        PhoneNumber = "+33611111111",
+                        PhoneNumberCountry = CountryIso.FR,
+                        Birthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                        Nationality = CountryIso.FR,
+                        CountryOfResidence = CountryIso.FR
+                    }
+                };
+
+                var userSaved = await Api.Users.UpdateLegalAsync(matrixPut, matrix.Id);
+                var userFetched = await Api.Users.GetLegalScaAsync(matrix.Id);
+
+                Assert.AreEqual(matrixPut.Name, userSaved.Name);
+                Assert.AreEqual(matrixPut.Name, userFetched.Name);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         [Test]
         public async Task Test_Users_Save_Natural_NonASCII()

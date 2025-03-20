@@ -4,12 +4,12 @@ using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace MangoPay.SDK.Entities.GET
+namespace MangoPay.SDK.Entities.PUT
 {
-    /// <summary>UserNaturalSca entity.</summary>
-    public sealed class UserNaturalScaDTO : UserDTO
+    /// <summary>User natural SCA PUT entity.</summary>
+    public class UserNaturalScaPutDTO : EntityPutBase
     {
-        /// <summary>First name.</summary>
+         /// <summary>First name.</summary>
         public string FirstName { get; set; }
 
         /// <summary>Last name.</summary>
@@ -39,11 +39,7 @@ namespace MangoPay.SDK.Entities.GET
         /// 6 (+120K€).</summary>
         public int? IncomeRange { get; set; }
         
-        /// <summary>Proof of identity.</summary>
-        public string ProofOfIdentity { get; set; }
-
-        /// <summary>Proof of address.</summary>
-        public string ProofOfAddress { get; set; }
+        public string Tag { get; set; }
         
         /// <summary>
         /// Format: International telephone numbering plan E.164 (+ then country code then the number) or local format.
@@ -85,21 +81,8 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>Address.</summary>
 		public Address Address { get; set; }
         
-        /// <summary>
-        /// Object containing the link needed for SCA redirection if triggered by the API call (otherwise returned null).
-        /// </summary>
-        public PendingUserActionDTO PendingUserAction { get; set; }
-        
         public bool TermsAndConditionsAccepted { get; set; }
-
-        /// <summary>Execution date.</summary>
-        [JsonConverter(typeof(Core.UnixDateTimeConverter))]
-        public DateTime? TermsAndConditionsAcceptedDate { get; set; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public UserCategory UserCategory { get; set; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public UserStatus UserStatus { get; set; }
+        
+        public string Email { get; set; }
     }
 }
