@@ -132,6 +132,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersSaveLegals, new ApiEndPoint("/users/legal/{0}", RequestType.PUT)},
             { MethodKey.UsersSaveNaturalsSca, new ApiEndPoint("/sca/users/natural/{0}", RequestType.PUT)},
             { MethodKey.UsersSaveLegalsSca, new ApiEndPoint("/sca/users/legal/{0}", RequestType.PUT)},
+            { MethodKey.UsersCategorizeNatural, new ApiEndPoint("/sca/users/natural/{0}/category", RequestType.PUT)},
+            { MethodKey.UsersCategorizeLegal, new ApiEndPoint("/sca/users/legal/{0}/category", RequestType.PUT)},
             { MethodKey.UsersSaveKycDocument, new ApiEndPoint("/users/{0}/KYC/documents/{1}", RequestType.PUT)},
             { MethodKey.UsersEmoneyGet, new ApiEndPoint("/users/{0}/emoney", RequestType.GET)},
             { MethodKey.UsersEmoneyYearGet, new ApiEndPoint("/users/{0}/emoney/{1}", RequestType.GET)},

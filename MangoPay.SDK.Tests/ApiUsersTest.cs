@@ -69,6 +69,83 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+        
+        [Test]
+        public async Task Test_Users_CategorizeNaturalScaPayer()
+        {
+            try
+            {
+                var john = await GetJohnScaPayer();
+                var categorize = new CategorizeUserNaturalPutDTO
+                {
+                    TermsAndConditionsAccepted = true,
+                    UserCategory = UserCategory.OWNER,
+                    Email = "john.doe.sca@sample.org",
+                    PhoneNumber = "+33611111111",
+                    PhoneNumberCountry = CountryIso.FR,
+                    Birthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                    Nationality = CountryIso.FR,
+                    CountryOfResidence = CountryIso.FR,
+                };
+
+                var response = await Api.Users.CategorizeNaturalAsync(categorize, john.Id);
+                
+                Assert.IsTrue(response.Id.Length > 0);
+                Assert.IsTrue(response.PersonType == PersonType.NATURAL);
+                Assert.IsTrue(john.UserCategory == UserCategory.PAYER);
+                Assert.IsTrue(response.UserCategory == UserCategory.OWNER);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_Users_CategorizeLegalScaPayer()
+        {
+            try
+            {
+                var matrix = await GetMatrixScaPayer();
+                var categorize = new CategorizeUserLegalPutDTO()
+                {
+                    TermsAndConditionsAccepted = true,
+                    UserCategory = UserCategory.OWNER,
+                    LegalRepresentative = new LegalRepresentative()
+                    {
+                        Email = "john.doe.sca@sample.org",
+                        FirstName = "John SCA",
+                        LastName = "Doe SCA Review",
+                        PhoneNumber = "+33611111111",
+                        PhoneNumberCountry = CountryIso.FR,
+                        Birthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                        Nationality = CountryIso.FR,
+                        CountryOfResidence = CountryIso.FR
+                    },
+                    HeadquartersAddress = new Address
+                    {
+                        AddressLine1 = "Address line ubo 1",
+                        AddressLine2 = "Address line ubo 2",
+                        City = "CityUbo",
+                        Country = CountryIso.PL,
+                        PostalCode = "11222",
+                        Region = "RegionUbo"
+                    },
+                    CompanyNumber = "LU72HN11"
+                };
+
+                var response = await Api.Users.CategorizeLegalAsync(categorize, matrix.Id);
+                
+                Assert.IsTrue(response.Id.Length > 0);
+                Assert.IsTrue(response.PersonType == PersonType.LEGAL);
+                Assert.IsTrue(matrix.UserCategory == UserCategory.PAYER);
+                Assert.IsTrue(response.UserCategory == UserCategory.OWNER);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         [Test]
         public async Task Test_Users_CreateLegal()

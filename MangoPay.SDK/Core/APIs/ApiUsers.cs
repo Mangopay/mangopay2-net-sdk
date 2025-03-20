@@ -521,5 +521,23 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.GetObjectAsync<UsersBlockStatusDTO>(MethodKey.UsersRegulatory, entitiesId: userId);
         }
+        
+        /// <summary>Transition a Natural Payer to Owner and enroll them in SCA</summary>
+        /// <param name="user">Instance of CategorizeUserNaturalPutDTO class.</param>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>Updated SCA User object returned from API.</returns>
+        public async Task<UserNaturalScaDTO> CategorizeNaturalAsync(CategorizeUserNaturalPutDTO user, string userId)
+        {
+            return await this.UpdateObjectAsync<UserNaturalScaDTO, CategorizeUserNaturalPutDTO>(MethodKey.UsersCategorizeNatural, user, entitiesId: userId);
+        }
+        
+        /// <summary>Transition a Legal Payer to Owner and enroll them in SCA</summary>
+        /// <param name="user">Instance of CategorizeUserLegalPutDTO class.</param>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>Updated SCA User object returned from API.</returns>
+        public async Task<UserLegalScaDTO> CategorizeLegalAsync(CategorizeUserLegalPutDTO user, string userId)
+        {
+            return await this.UpdateObjectAsync<UserLegalScaDTO, CategorizeUserLegalPutDTO>(MethodKey.UsersCategorizeLegal, user, entitiesId: userId);
+        }
     }
 }
