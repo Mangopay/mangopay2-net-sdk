@@ -32,6 +32,22 @@ namespace MangoPay.SDK.Tests
         }
         
         [Test]
+        public async Task Test_Users_EnrollIntoSca()
+        {
+            try
+            {
+                var john = await this.GetJohn();
+                var enrollmentResult = await Api.Users.EnrollSca(john.Id);
+                
+                Assert.IsNotNull(enrollmentResult.PendingUserAction.RedirectUrl);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
         public async Task Test_Users_CreateNaturalScaPayer()
         {
             try

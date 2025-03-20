@@ -539,5 +539,14 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.UpdateObjectAsync<UserLegalScaDTO, CategorizeUserLegalPutDTO>(MethodKey.UsersCategorizeLegal, user, entitiesId: userId);
         }
+        
+        /// <summary>Obtain an SCA redirection link to enroll an Owner user</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="userId">User identifier.</param>
+        /// <returns>ScaEnrollmentResultDTO instance returned from API.</returns>
+        public async Task<ScaEnrollmentResultDTO> EnrollSca(string userId, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<ScaEnrollmentResultDTO, EntityPostBase>(MethodKey.UsersEnrollSca, null, idempotentKey, userId);
+        }
     }
 }
