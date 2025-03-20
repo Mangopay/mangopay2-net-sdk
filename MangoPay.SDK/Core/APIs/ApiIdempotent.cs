@@ -70,6 +70,8 @@ namespace MangoPay.SDK.Core.APIs
                 { MethodKey.UboDeclarationCreate, typeof(UboDeclarationDTO)},
                 { MethodKey.UsersCreateNaturals, typeof(UserNaturalDTO) },
                 { MethodKey.UsersCreateLegals, typeof(UserLegalDTO) },
+                { MethodKey.UsersCreateNaturalsSca, typeof(UserNaturalScaDTO) },
+                { MethodKey.UsersCreateLegalsSca, typeof(UserLegalScaDTO) },
                 { MethodKey.UsersCreateKycDocument, typeof(KycDocumentDTO) },
                 { MethodKey.UsersCreateBankAccountsIban, typeof(BankAccountIbanDTO) },
                 { MethodKey.UsersCreateBankAccountsGb, typeof(BankAccountGbDTO) },
