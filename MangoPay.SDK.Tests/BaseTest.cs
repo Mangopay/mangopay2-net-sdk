@@ -22,7 +22,11 @@ namespace MangoPay.SDK.Tests
         protected MangoPayApi Api;
 
         private static UserNaturalDTO _john;
+        private static UserNaturalScaDTO _johnScaPayer;
+        private static UserNaturalScaDTO _johnScaOwner;
         private static UserLegalDTO _matrix;
+        private static UserLegalScaDTO _matrixScaPayer;
+        private static UserLegalScaDTO _matrixScaOwner;
         private static BankAccountIbanDTO _johnsAccount;
         private static WalletDTO _johnsWallet;
         private static WalletDTO _johnsWalletWithMoney;
@@ -124,6 +128,49 @@ namespace MangoPay.SDK.Tests
             BaseTest._johnsWallet = null;
             return BaseTest._john;
         }
+        
+        protected async Task<UserNaturalScaDTO> GetJohnScaPayer(bool recreate = false)
+        {
+            if (_johnScaPayer != null && !recreate) return _johnScaPayer;
+
+            var user = new UserNaturalScaPayerPostDTO()
+            {
+                Email = "john.doe.sca@sample.org",
+                FirstName = "John SCA",
+                LastName = "Doe SCA Review",
+                Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" },
+                UserCategory = UserCategory.PAYER,
+                TermsAndConditionsAccepted = true,
+                PhoneNumber = "+33611111111",
+                PhoneNumberCountry = CountryIso.FR
+            };
+
+            _johnScaPayer = await Api.Users.CreatePayerAsync(user);
+            return _johnScaPayer;
+        }
+        
+        protected async Task<UserNaturalScaDTO> GetJohnScaOwner(bool recreate = false)
+        {
+            if (_johnScaOwner != null && !recreate) return _johnScaOwner;
+
+            var user = new UserNaturalScaOwnerPostDTO()
+            {
+                Email = "john.doe.sca@sample.org",
+                FirstName = "John SCA",
+                LastName = "Doe SCA Review",
+                Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" },
+                UserCategory = UserCategory.OWNER,
+                TermsAndConditionsAccepted = true,
+                PhoneNumber = "+33611111111",
+                PhoneNumberCountry = CountryIso.FR,
+                Birthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                Nationality = CountryIso.FR,
+                CountryOfResidence = CountryIso.FR,
+            };
+
+            _johnScaOwner = await Api.Users.CreateOwnerAsync(user);
+            return _johnScaOwner;
+        }
 
         protected async Task<UserNaturalDTO> GetNewJohn(bool termsAccepted = false)
         {
@@ -185,6 +232,87 @@ namespace MangoPay.SDK.Tests
             BaseTest._matrix = await this.Api.Users.CreateOwnerAsync(user);
 
             return BaseTest._matrix;
+        }
+        
+        protected async Task<UserLegalScaDTO> GetMatrixScaPayer(bool recreate = false)
+        {
+            if (_matrixScaPayer != null && !recreate) return _matrixScaPayer;
+
+            var user = new UserLegalScaPayerPostDTO()
+            {
+                Name = "MartixSampleOrg",
+                LegalPersonType = LegalPersonType.BUSINESS,
+                UserCategory = UserCategory.PAYER,
+                TermsAndConditionsAccepted = true,
+                LegalRepresentativeAddress = new Address
+                {
+                    AddressLine1 = "Address line ubo 1",
+                    AddressLine2 = "Address line ubo 2",
+                    City = "CityUbo",
+                    Country = CountryIso.PL,
+                    PostalCode = "11222",
+                    Region = "RegionUbo"
+                },
+                LegalRepresentative = new LegalRepresentative()
+                {
+                    Email = "john.doe.sca@sample.org",
+                    FirstName = "John SCA",
+                    LastName = "Doe SCA Review",
+                    PhoneNumber = "+33611111111",
+                    PhoneNumberCountry = CountryIso.FR
+                },
+                Email = "john.doe@sample.org"
+            };
+
+            _matrixScaPayer = await Api.Users.CreatePayerAsync(user);
+            return _matrixScaPayer;
+        }
+        
+        protected async Task<UserLegalScaDTO> GetMatrixScaOwner(bool recreate = false)
+        {
+            if (_matrixScaOwner != null && !recreate) return _matrixScaOwner;
+
+            var user = new UserLegalScaOwnerPostDTO()
+            {
+                Name = "Alex Smith",
+                LegalPersonType = LegalPersonType.SOLETRADER,
+                UserCategory = UserCategory.OWNER,
+                TermsAndConditionsAccepted = true,
+                LegalRepresentativeAddress = new Address
+                {
+                    AddressLine1 = "Address line ubo 1",
+                    AddressLine2 = "Address line ubo 2",
+                    City = "CityUbo",
+                    Country = CountryIso.PL,
+                    PostalCode = "11222",
+                    Region = "RegionUbo"
+                },
+                LegalRepresentative = new LegalRepresentative()
+                {
+                    Email = "john.doe.sca@sample.org",
+                    FirstName = "John SCA",
+                    LastName = "Doe SCA Review",
+                    PhoneNumber = "+33611111111",
+                    PhoneNumberCountry = CountryIso.FR,
+                    Birthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                    Nationality = CountryIso.FR,
+                    CountryOfResidence = CountryIso.FR
+                },
+                HeadquartersAddress = new Address
+                {
+                    AddressLine1 = "Address line ubo 1",
+                    AddressLine2 = "Address line ubo 2",
+                    City = "CityUbo",
+                    Country = CountryIso.PL,
+                    PostalCode = "11222",
+                    Region = "RegionUbo"
+                },
+                CompanyNumber = "LU72HN11",
+                Email = "alex.smith.services@example.com"
+            };
+
+            _matrixScaOwner = await Api.Users.CreateOwnerAsync(user);
+            return _matrixScaOwner;
         }
 
         protected async Task<BankAccountIbanDTO> GetJohnsAccount(bool recreate = false)
