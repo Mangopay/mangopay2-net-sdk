@@ -568,6 +568,15 @@ namespace MangoPay.SDK.Tests
             return await this.Api.PayIns.CreateBlikWebAsync(payIn);
         }
         
+        protected async Task<PayInBlikWebDTO> GetNewPayInBlikWebWithCode()
+        {
+            PayInBlikWebPostDTO payIn = await GetPayInBlikWebPost();
+            payIn.Code = "777365";
+            payIn.IpAddress = "159.180.248.187";
+            payIn.BrowserInfo = getBrowserInfo();
+            return await this.Api.PayIns.CreateBlikWebAsync(payIn);
+        }
+        
         protected async Task<PayInKlarnaWebDTO> GetNewPayInKlarnaWeb()
         {
             PayInKlarnaWebPostDTO payIn = await GetPayInKlarnaWebPost();
