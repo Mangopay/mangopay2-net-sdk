@@ -1,0 +1,97 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
+using MangoPay.SDK.Entities.GET;
+using NUnit.Framework;
+
+namespace MangoPay.SDK.Tests
+{
+    [TestFixture]
+    [Explicit]
+    public class ApiRecipientsTest : BaseTest
+    {
+        private static RecipientDTO _recipient;
+
+        [Test]
+        public async Task Test_CreateRecipient()
+        {
+            await GetNewRecipient();
+
+            Assert.IsNotNull(_recipient);
+            Assert.IsNotNull(_recipient.Status);
+            Assert.IsNotNull(_recipient.DisplayName);
+            Assert.IsNotNull(_recipient.PayoutMethodType);
+            Assert.IsNotNull(_recipient.RecipientType);
+            Assert.IsNotNull(_recipient.IndividualRecipient);
+            Assert.IsNotNull(_recipient.LocalBankTransfer);
+            Assert.IsNotNull(_recipient.LocalBankTransfer["GBP"].SortCode);
+            Assert.IsNotNull(_recipient.LocalBankTransfer["GBP"].AccountNumber);
+            Assert.IsNotNull(_recipient.PendingUserAction);
+        }
+
+        [Test]
+        public async Task Test_GetRecipient()
+        {
+            await GetNewRecipient();
+            RecipientDTO fetched = await Api.Recipients.GetAsync(_recipient.Id);
+            Assert.IsNotNull(fetched);
+            Assert.AreEqual(_recipient.Id, fetched.Id);
+            Assert.AreEqual(_recipient.Status, fetched.Status);
+        }
+
+        [Test]
+        public async Task Test_GetUserRecipients()
+        {
+            await GetNewRecipient();
+            UserNaturalScaDTO john = await GetJohnScaOwner();
+            ListPaginated<RecipientDTO> recipients = await Api.Recipients.GetUserRecipientsAsync(john.Id);
+            Assert.IsNotEmpty(recipients);
+        }
+
+        [Test]
+        public async Task Test_GetPayoutMethods()
+        {
+            PayoutMethods payoutMethods = await Api.Recipients.GetPayoutMethods(CountryIso.DE, CurrencyIso.EUR);
+            Assert.IsNotNull(payoutMethods);
+            Assert.IsNotEmpty(payoutMethods.AvailablePayoutMethods);
+        }
+
+        private async Task GetNewRecipient()
+        {
+            if (_recipient == null)
+            {
+                UserNaturalScaDTO john = await GetJohnScaOwner();
+                RecipientPostDTO postDto = new RecipientPostDTO();
+
+                Dictionary<string, object> localBankTransfer = new Dictionary<string, object>();
+                Dictionary<string, object> gbpDetails = new Dictionary<string, object>();
+                gbpDetails.Add("SortCode", "010039");
+                gbpDetails.Add("AccountNumber", "11696419");
+                localBankTransfer.Add(CurrencyIso.GBP.ToString(), gbpDetails);
+
+                postDto.DisplayName = "My DB account";
+                postDto.PayoutMethodType = "LocalBankTransfer";
+                postDto.RecipientType = "Individual";
+                postDto.Currency = CurrencyIso.GBP;
+                postDto.IndividualRecipient = new IndividualRecipient()
+                {
+                    FirstName = "Payout",
+                    LastName = "Team",
+                    Address = new Address
+                    {
+                        AddressLine1 = "Address line 1",
+                        AddressLine2 = "Address line 2",
+                        City = "Paris",
+                        Country = CountryIso.FR,
+                        PostalCode = "11222",
+                        Region = "Paris"
+                    }
+                };
+                postDto.LocalBankTransfer = localBankTransfer;
+
+                _recipient = await Api.Recipients.CreateAsync(postDto, john.Id);
+            }
+        }
+    }
+}
