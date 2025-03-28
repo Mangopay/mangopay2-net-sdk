@@ -224,6 +224,7 @@
         RecipientGet,
         RecipientGetAll,
         RecipientGetPayoutMethods,
-        RecipientGetSchema
+        RecipientGetSchema,
+        RecipientValidate
     }
 }

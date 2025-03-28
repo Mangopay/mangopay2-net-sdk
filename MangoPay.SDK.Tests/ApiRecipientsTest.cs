@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
@@ -91,41 +92,67 @@ namespace MangoPay.SDK.Tests
             Assert.IsNull(schema.IndividualRecipient);
         }
 
+        [Test]
+        public async Task Test_ValidateRecipient()
+        {
+            RecipientPostDTO postDto = GetPostDto();
+            UserNaturalScaDTO john = await GetJohnScaOwner();
+            // should pass
+            await Api.Recipients.ValidateAsync(postDto, john.Id);
+
+            // should fail
+            postDto.DisplayName = null;
+            try
+            {
+                await Api.Recipients.ValidateAsync(postDto, john.Id);
+            }
+            catch (Exception e)
+            {
+                Assert.True(e.Message.Contains("One or several required parameters are missing or incorrect"));
+            }
+        }
+
         private async Task GetNewRecipient()
         {
             if (_recipient == null)
             {
                 UserNaturalScaDTO john = await GetJohnScaOwner();
-                RecipientPostDTO postDto = new RecipientPostDTO();
-
-                Dictionary<string, object> localBankTransfer = new Dictionary<string, object>();
-                Dictionary<string, object> gbpDetails = new Dictionary<string, object>();
-                gbpDetails.Add("SortCode", "010039");
-                gbpDetails.Add("AccountNumber", "11696419");
-                localBankTransfer.Add(CurrencyIso.GBP.ToString(), gbpDetails);
-
-                postDto.DisplayName = "My DB account";
-                postDto.PayoutMethodType = "LocalBankTransfer";
-                postDto.RecipientType = "Individual";
-                postDto.Currency = CurrencyIso.GBP;
-                postDto.IndividualRecipient = new IndividualRecipient()
-                {
-                    FirstName = "Payout",
-                    LastName = "Team",
-                    Address = new Address
-                    {
-                        AddressLine1 = "Address line 1",
-                        AddressLine2 = "Address line 2",
-                        City = "Paris",
-                        Country = CountryIso.FR,
-                        PostalCode = "11222",
-                        Region = "Paris"
-                    }
-                };
-                postDto.LocalBankTransfer = localBankTransfer;
-
+                RecipientPostDTO postDto = GetPostDto();
                 _recipient = await Api.Recipients.CreateAsync(postDto, john.Id);
             }
+        }
+
+        private RecipientPostDTO GetPostDto()
+        {
+            RecipientPostDTO postDto = new RecipientPostDTO();
+
+            Dictionary<string, object> localBankTransfer = new Dictionary<string, object>();
+            Dictionary<string, object> gbpDetails = new Dictionary<string, object>();
+            gbpDetails.Add("SortCode", "010039");
+            gbpDetails.Add("AccountNumber", "11696419");
+            localBankTransfer.Add(CurrencyIso.GBP.ToString(), gbpDetails);
+
+            postDto.DisplayName = "My DB account";
+            postDto.PayoutMethodType = "LocalBankTransfer";
+            postDto.RecipientType = "Individual";
+            postDto.Currency = CurrencyIso.GBP;
+            postDto.IndividualRecipient = new IndividualRecipient()
+            {
+                FirstName = "Payout",
+                LastName = "Team",
+                Address = new Address
+                {
+                    AddressLine1 = "Address line 1",
+                    AddressLine2 = "Address line 2",
+                    City = "Paris",
+                    Country = CountryIso.FR,
+                    PostalCode = "11222",
+                    Region = "Paris"
+                }
+            };
+            postDto.LocalBankTransfer = localBankTransfer;
+
+            return postDto;
         }
     }
 }

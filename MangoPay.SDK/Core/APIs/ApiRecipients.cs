@@ -77,5 +77,17 @@ namespace MangoPay.SDK.Core.APIs
                     { "currency", currency.ToString() }
                 });
         }
+
+        /// <summary>Validate recipient data</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="recipient">Object instance to be created.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task ValidateAsync(RecipientPostDTO recipient, string userId,
+            string idempotentKey = null)
+        {
+            await CreateObjectAsync<RecipientDTO, RecipientPostDTO>(MethodKey.RecipientValidate, recipient,
+                idempotentKey, userId);
+        }
     }
 }
