@@ -112,6 +112,19 @@ namespace MangoPay.SDK.Tests
             }
         }
 
+        [Test]
+        [Ignore("The recipient needs to be manually activated before running the test")]
+        public async Task Test_DeactivateRecipient()
+        {
+            await GetNewRecipient();
+            Assert.AreEqual("PENDING", _recipient.Status);
+
+            RecipientDTO deactivated = await Api.Recipients.DeactivateAsync(_recipient.Id);
+            RecipientDTO fetched = await Api.Recipients.GetAsync(_recipient.Id);
+            Assert.AreEqual("DEACTIVATED", deactivated.Status);
+            Assert.AreEqual("DEACTIVATED", fetched.Status);
+        }
+
         private async Task GetNewRecipient()
         {
             if (_recipient == null)

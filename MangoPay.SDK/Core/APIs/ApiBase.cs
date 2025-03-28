@@ -351,6 +351,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.RecipientGetPayoutMethods, new ApiEndPoint("/recipients/payout-methods", RequestType.GET) },
             { MethodKey.RecipientGetSchema, new ApiEndPoint("/recipients/schema", RequestType.GET) },
             { MethodKey.RecipientValidate, new ApiEndPoint("/users/{0}/recipients/validate", RequestType.POST) },
+            { MethodKey.RecipientDeactivate, new ApiEndPoint("/recipients/{0}", RequestType.PUT) }
         };
 
         /// <summary>Creates new API instance.</summary>

@@ -225,6 +225,7 @@
         RecipientGetAll,
         RecipientGetPayoutMethods,
         RecipientGetSchema,
-        RecipientValidate
+        RecipientValidate,
+        RecipientDeactivate
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
+using MangoPay.SDK.Entities.PUT;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -88,6 +89,15 @@ namespace MangoPay.SDK.Core.APIs
         {
             await CreateObjectAsync<RecipientDTO, RecipientPostDTO>(MethodKey.RecipientValidate, recipient,
                 idempotentKey, userId);
+        }
+
+        /// <summary>Deactivate recipient.</summary>
+        /// <param name="recipientId">Recipient identifier.</param>
+        /// <returns>Recipient object returned from API.</returns>
+        public async Task<RecipientDTO> DeactivateAsync(string recipientId)
+        {
+            return await UpdateObjectAsync<RecipientDTO, RecipientPutDTO>(
+                MethodKey.RecipientDeactivate, new RecipientPutDTO(), entitiesId: recipientId);
         }
     }
 }
