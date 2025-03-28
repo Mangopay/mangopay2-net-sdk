@@ -223,6 +223,7 @@
         RecipientCreate,
         RecipientGet,
         RecipientGetAll,
-        RecipientGetPayoutMethods
+        RecipientGetPayoutMethods,
+        RecipientGetSchema
     }
 }

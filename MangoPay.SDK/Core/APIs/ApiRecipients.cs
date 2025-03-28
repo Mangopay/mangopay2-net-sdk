@@ -51,12 +51,29 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="country">Recipient identifier.</param>
         /// <param name="currency">Pagination.</param>
         /// <returns>Recipient instance returned from API.</returns>
-        public async Task<PayoutMethods> GetPayoutMethods(CountryIso country, CurrencyIso currency)
+        public async Task<PayoutMethods> GetPayoutMethodsAsync(CountryIso country, CurrencyIso currency)
         {
             return await GetObjectAsync<PayoutMethods>(MethodKey.RecipientGetPayoutMethods,
                 new Dictionary<string, string>
                 {
                     { "country", country.ToString() },
+                    { "currency", currency.ToString() }
+                });
+        }
+
+        /// <summary>Gets a Recipient schema.</summary>
+        /// <param name="payoutMethodType">Defines the payout method (e.g., LocalBankTransfer, InternationalBankTransfer).</param>
+        /// <param name="recipientType">Specifies whether the recipient is an Individual or a Business.</param>
+        /// <param name="currency">3-letter ISO 4217 destination currency code (e.g. EUR, USD, GBP, AUD, CAD,HKD, SGD, MXN).</param>
+        /// <returns>RecipientSchema instance returned from API.</returns>
+        public async Task<RecipientSchemaDTO> GetSchemaAsync(string payoutMethodType, string recipientType,
+            CurrencyIso currency)
+        {
+            return await GetObjectAsync<RecipientSchemaDTO>(MethodKey.RecipientGetSchema,
+                additionalUrlParams: new Dictionary<string, string>
+                {
+                    { "payoutMethodType", payoutMethodType },
+                    { "recipientType", recipientType },
                     { "currency", currency.ToString() }
                 });
         }

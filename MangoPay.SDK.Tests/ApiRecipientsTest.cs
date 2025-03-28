@@ -52,9 +52,43 @@ namespace MangoPay.SDK.Tests
         [Test]
         public async Task Test_GetPayoutMethods()
         {
-            PayoutMethods payoutMethods = await Api.Recipients.GetPayoutMethods(CountryIso.DE, CurrencyIso.EUR);
+            PayoutMethods payoutMethods = await Api.Recipients.GetPayoutMethodsAsync(CountryIso.DE, CurrencyIso.EUR);
             Assert.IsNotNull(payoutMethods);
             Assert.IsNotEmpty(payoutMethods.AvailablePayoutMethods);
+        }
+
+        [Test]
+        public async Task Test_GetSchema_LocalBankTransfer_Individual()
+        {
+            RecipientSchemaDTO schema =
+                await Api.Recipients.GetSchemaAsync("LocalBankTransfer", "Individual",
+                    CurrencyIso.GBP);
+            Assert.IsNotNull(schema);
+            Assert.IsNotNull(schema.DisplayName);
+            Assert.IsNotNull(schema.Currency);
+            Assert.IsNotNull(schema.RecipientType);
+            Assert.IsNotNull(schema.PayoutMethodType);
+            Assert.IsNotNull(schema.LocalBankTransfer);
+            Assert.IsNotNull(schema.IndividualRecipient);
+            Assert.IsNull(schema.InternationalBankTransfer);
+            Assert.IsNull(schema.BusinessRecipient);
+        }
+
+        [Test]
+        public async Task Test_GetSchema_InternationalBankTransfer_Business()
+        {
+            RecipientSchemaDTO schema =
+                await Api.Recipients.GetSchemaAsync("InternationalBankTransfer", "Business",
+                    CurrencyIso.GBP);
+            Assert.IsNotNull(schema);
+            Assert.IsNotNull(schema.DisplayName);
+            Assert.IsNotNull(schema.Currency);
+            Assert.IsNotNull(schema.RecipientType);
+            Assert.IsNotNull(schema.PayoutMethodType);
+            Assert.IsNotNull(schema.InternationalBankTransfer);
+            Assert.IsNotNull(schema.BusinessRecipient);
+            Assert.IsNull(schema.LocalBankTransfer);
+            Assert.IsNull(schema.IndividualRecipient);
         }
 
         private async Task GetNewRecipient()
