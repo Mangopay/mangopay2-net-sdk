@@ -622,7 +622,7 @@ namespace MangoPay.SDK.Core
                 { Constants.CONTENT_TYPE, Constants.APPLICATION_JSON },
 
                 // User agent header
-                { Constants.USER_AGENT, $"MangoPay-SDK/{_root.GetVersion()} (.NET/{Environment.Version})" }
+                { Constants.USER_AGENT, $"Mangopay-SDK/{_root.GetVersion()} (.NET/{Environment.Version})" }
             };
 
             if (_root.Config.UKHeaderFlag)
