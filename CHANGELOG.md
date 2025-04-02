@@ -1,3 +1,11 @@
+## [3.25.1] - 2025-04-02
+### Changed
+- User-Agent Header value standardized on format: User-Agent: Mangopay-SDK/`SDKVersion` (`Language`/`LanguageVersion`)
+- Made CardInfo.IssuerCountryCode optional
+
+### Fixed
+- Replaced int property with Money property for recurring payin registration `TotalAmount`
+
 ## [3.25.0] - 2025-03-24
 ### Added
 
