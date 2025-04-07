@@ -69,6 +69,8 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(schema.Currency);
             Assert.IsNotNull(schema.RecipientType);
             Assert.IsNotNull(schema.PayoutMethodType);
+            Assert.IsNotNull(schema.RecipientScope);
+            Assert.IsNotNull(schema.Tag);
             Assert.IsNotNull(schema.LocalBankTransfer);
             Assert.IsNotNull(schema.IndividualRecipient);
             Assert.IsNull(schema.InternationalBankTransfer);
@@ -86,6 +88,8 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(schema.Currency);
             Assert.IsNotNull(schema.RecipientType);
             Assert.IsNotNull(schema.PayoutMethodType);
+            Assert.IsNotNull(schema.RecipientScope);
+            Assert.IsNotNull(schema.Tag);
             Assert.IsNotNull(schema.InternationalBankTransfer);
             Assert.IsNotNull(schema.BusinessRecipient);
             Assert.IsNull(schema.LocalBankTransfer);

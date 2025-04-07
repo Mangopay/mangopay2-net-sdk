@@ -12,6 +12,8 @@ namespace MangoPay.SDK.Entities
 
         public RecipientPropertySchema PayoutMethodType { get; set; }
 
+        public RecipientPropertySchema RecipientScope { get; set; }
+
         public Dictionary<string, Dictionary<string, RecipientPropertySchema>> LocalBankTransfer { get; set; }
 
         public Dictionary<string, RecipientPropertySchema> InternationalBankTransfer { get; set; }
