@@ -12,14 +12,17 @@ namespace MangoPay.SDK.Core.APIs
     {
         /// <summary>Instantiates new ApiIdempotent object.</summary>
         /// <param name="root">Root/parent instance that holds the OAuthToken and Configuration instance.</param>
-        public ApiIdempotent(MangoPayApi root) : base(root) { }
+        public ApiIdempotent(MangoPayApi root) : base(root)
+        {
+        }
 
         /// <summary>Gets idempotent response.</summary>
-		/// <param name="key">Idempotent key for .</param>
-		/// <returns>Idempotent response instance returned from API.</returns>
+        /// <param name="key">Idempotent key for .</param>
+        /// <returns>Idempotent response instance returned from API.</returns>
         public async Task<IdempotencyResponseDTO> GetAsync(string key)
         {
-            var response = await this.GetObjectAsync<IdempotencyResponseDTO>(MethodKey.IdempotencyResponseGet, entitiesId: key);
+            var response =
+                await this.GetObjectAsync<IdempotencyResponseDTO>(MethodKey.IdempotencyResponseGet, entitiesId: key);
             LoadResourceObject(response);
 
             return response;
@@ -38,7 +41,7 @@ namespace MangoPay.SDK.Core.APIs
                 sourceUrl = sourceUrl.Replace("/", "\\/");
                 var ex = new Regex(sourceUrl);
                 if (!ex.IsMatch(response.RequestURL)) continue;
-                
+
                 targetType = mapItem.Value;
                 break;
             }
@@ -67,7 +70,7 @@ namespace MangoPay.SDK.Core.APIs
                 { MethodKey.PayoutsBankwireCreate, typeof(PayOutBankWireDTO) },
                 { MethodKey.TransfersCreateRefunds, typeof(RefundDTO) },
                 { MethodKey.TransfersCreate, typeof(TransferDTO) },
-                { MethodKey.UboDeclarationCreate, typeof(UboDeclarationDTO)},
+                { MethodKey.UboDeclarationCreate, typeof(UboDeclarationDTO) },
                 { MethodKey.UsersCreateNaturals, typeof(UserNaturalDTO) },
                 { MethodKey.UsersCreateLegals, typeof(UserLegalDTO) },
                 { MethodKey.UsersCreateNaturalsSca, typeof(UserNaturalScaDTO) },
@@ -82,7 +85,8 @@ namespace MangoPay.SDK.Core.APIs
                 { MethodKey.ClientCreateBankwireDirect, typeof(PayInBankWireDirectDTO) },
                 { MethodKey.DisputesDocumentCreate, typeof(DisputeDocumentDTO) },
                 { MethodKey.DisputesRepudiationCreateSettlement, typeof(SettlementDTO) },
-                { MethodKey.MandateCreate, typeof(MandateDTO) }
+                { MethodKey.MandateCreate, typeof(MandateDTO) },
+                { MethodKey.PayinsPayByBankWebCreate, typeof(PayInPayByBankWebDTO) }
             };
         }
     }

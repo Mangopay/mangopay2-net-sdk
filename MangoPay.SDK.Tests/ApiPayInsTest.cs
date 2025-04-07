@@ -619,6 +619,31 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        public async Task Test_PayIns_Create_PayByBankWeb()
+        {
+            try
+            {
+                var payIn = await GetNewPayInPayByBankWeb();
+                var fetched = await Api.PayIns.GetPayByBankAsync(payIn.Id);
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(PayInPaymentType.PAY_BY_BANK, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.WEB, payIn.ExecutionType);
+                Assert.AreEqual(TransactionStatus.CREATED, payIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+                Assert.AreEqual(TransactionNature.REGULAR, payIn.Nature);
+
+                Assert.AreEqual(payIn.Id, fetched.Id);
+                Assert.AreEqual(CultureCode.DE, fetched.Culture);
+                Assert.AreEqual("WEB", payIn.PaymentFlow);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
         public async Task Test_PayIns_Create_Legacy_IdealWeb()
         {
             var john = await GetJohn();
