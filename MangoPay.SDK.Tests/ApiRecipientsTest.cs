@@ -24,6 +24,8 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(_recipient.DisplayName);
             Assert.IsNotNull(_recipient.PayoutMethodType);
             Assert.IsNotNull(_recipient.RecipientType);
+            Assert.IsNotNull(_recipient.RecipientScope);
+            Assert.IsNotNull(_recipient.UserId);
             Assert.IsNotNull(_recipient.IndividualRecipient);
             Assert.IsNotNull(_recipient.LocalBankTransfer);
             Assert.IsNotNull(_recipient.LocalBankTransfer["GBP"].SortCode);

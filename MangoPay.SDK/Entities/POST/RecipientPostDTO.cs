@@ -19,6 +19,19 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>3-letter ISO 4217 destination currency code (e.g. EUR, USD, GBP, AUD, CAD,HKD, SGD, MXN).</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public CurrencyIso Currency { get; set; }
+        
+        /// <summary>
+        /// The scope of the recipient:
+        /// <para>- PAYOUT – Usable for payouts and in pay-in use cases. 
+        /// A PAYOUT recipient can only be created by a user with the UserCategory OWNER 
+        /// and requires SCA. You need to use the returned PendingUserAction.RedirectUrl value, 
+        /// adding your encoded returnUrl as a query parameter, to redirect the user to the 
+        /// hosted SCA session so they can complete the necessary steps.</para>
+        /// <para>- PAYIN - Usable for pay-in use cases only, such as direct debit and refunds using payouts. 
+        /// A PAYIN recipient can be created by a user with the UserCategory PAYER or OWNER, 
+        /// and does not require SCA.</para>
+        ///</summary>
+        public string RecipientScope { get; set; }
 
         /// <summary>Individual recipient.</summary>
         public IndividualRecipient IndividualRecipient { get; set; }
