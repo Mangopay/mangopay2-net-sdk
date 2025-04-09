@@ -12,14 +12,14 @@ namespace MangoPay.SDK.Entities
 
         /// <summary>The name of the card issuer.</summary>
         public string IssuingBank;
-        
+
         /// <summary>The country where the card was issued.</summary>
-        public CountryIso IssuerCountryCode;
+        public CountryIso? IssuerCountryCode;
 
         /// <summary>The type of card product: DEBIT, CREDIT, CHARGE CARD.</summary>
         [JsonConverter(typeof(CardInfoTypeConverter))]
         public CardInfoType? Type;
-        
+
         /// <summary>The card brand. Examples include: AMERICAN EXPRESS, DISCOVER, JCB, MASTERCARD, VISA, etc.</summary>
         public string Brand;
 

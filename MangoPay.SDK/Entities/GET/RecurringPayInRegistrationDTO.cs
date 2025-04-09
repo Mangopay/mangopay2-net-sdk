@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -14,7 +12,7 @@ namespace MangoPay.SDK.Entities.GET
 
         public string RecurringType { get; set; }
 
-        public int? TotalAmount { get; set; }
+        public Money TotalAmount { get; set; }
 
         public int? CycleNumber { get; set; }
 
