@@ -45,6 +45,7 @@ namespace MangoPay.SDK
             Conversions = new ApiConversions(this);
             VirtualAccounts = new ApiVirtualAccounts(this);
             IdentityVerifications = new ApiIdentityVerifications(this);
+            Recipients = new ApiRecipients(this);
         }
 
         /// <summary>Provides authorization token methods.</summary>
@@ -55,7 +56,7 @@ namespace MangoPay.SDK
 
         /// <summary>Stores the raw request and response of the last call from this Api instance, including information about rate-limiting.</summary>
         public LastRequestInfo LastRequestInfo;
-        
+
         #region API managers
 
         /// <summary>Provides OAuth methods.</summary>
@@ -124,7 +125,7 @@ namespace MangoPay.SDK
         public ApiUboDeclarations UboDeclarations;
 
         public ApiRegulatory Regulatory;
-        
+
         public ApiDeposits Deposits;
 
         public ApiConversions Conversions;
@@ -133,29 +134,31 @@ namespace MangoPay.SDK
 
         public ApiIdentityVerifications IdentityVerifications;
 
+        public ApiRecipients Recipients;
+
         #endregion
 
         #region Internal and private
 
         private Version _version { get; set; }
 
-		/// <summary>
-		/// Gets the current SDK <see cref="Version"/>
-		/// </summary>
-		/// <returns>The current SDK <see cref="Version"/></returns>
-		internal Version GetVersion()
-		{
-			// Get the cached version to avoid using reflection
-			if (_version != null)
-			{
-				return _version;
-			}
+        /// <summary>
+        /// Gets the current SDK <see cref="Version"/>
+        /// </summary>
+        /// <returns>The current SDK <see cref="Version"/></returns>
+        internal Version GetVersion()
+        {
+            // Get the cached version to avoid using reflection
+            if (_version != null)
+            {
+                return _version;
+            }
 
-			_version = typeof(MangoPayApi).Assembly?.GetName()?.Version ?? new Version(0, 0, 0);
+            _version = typeof(MangoPayApi).Assembly?.GetName()?.Version ?? new Version(0, 0, 0);
 
-			return _version;
-		}
-		
-		#endregion
-	}
+            return _version;
+        }
+
+        #endregion
+    }
 }
