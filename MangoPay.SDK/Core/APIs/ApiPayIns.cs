@@ -433,6 +433,18 @@ namespace MangoPay.SDK.Core.APIs
                 MethodKey.PayinsRecurringCardDirect, payIn, idempotentKey);
         }
         
+        public async Task<RecurringPayInDTO> CreateRecurringPayPalPayInCIT(RecurringPayPalPayInCITPostDTO payIn, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayPalPayInCITPostDTO>(
+                MethodKey.PayinsRecurringPayPal, payIn, idempotentKey);
+        }
+
+        public async Task<RecurringPayInDTO> CreateRecurringPayPalPayInMIT(RecurringPayPalPayInMITPostDTO payIn, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<RecurringPayInDTO, RecurringPayPalPayInMITPostDTO>(
+                MethodKey.PayinsRecurringPayPal, payIn, idempotentKey);
+        }
+        
         public async Task<CardPreAuthorizedDepositPayInDTO> CreateCardPreAuthorizedDepositPayIn(
             CardPreAuthorizedDepositPayInPostDTO payIn, string idempotentKey = null)
         {

@@ -42,6 +42,7 @@ namespace MangoPay.SDK.Core.Enumerations
         PayinsGetRecurringRegistration,
         PayinsPutRecurringRegistration,
         PayinsRecurringCardDirect,
+        PayinsRecurringPayPal,
         PayinsMbwayWebCreate,
         PayinsMultibancoWebCreate,
         PayinsSatispayWebCreate,
