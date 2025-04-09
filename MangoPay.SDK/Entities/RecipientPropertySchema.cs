@@ -13,5 +13,9 @@ namespace MangoPay.SDK.Entities
         public string Pattern { get; set; }
 
         public List<string> AllowedValues { get; set; }
+        
+        public string Label { get; set; }
+
+        public string EndUserDisplay { get; set; }
     }
 }
