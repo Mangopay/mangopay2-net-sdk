@@ -82,7 +82,8 @@ namespace MangoPay.SDK.Core.APIs
                 { MethodKey.ClientCreateBankwireDirect, typeof(PayInBankWireDirectDTO) },
                 { MethodKey.DisputesDocumentCreate, typeof(DisputeDocumentDTO) },
                 { MethodKey.DisputesRepudiationCreateSettlement, typeof(SettlementDTO) },
-                { MethodKey.MandateCreate, typeof(MandateDTO) }
+                { MethodKey.MandateCreate, typeof(MandateDTO) },
+                { MethodKey.PayinsRecurringPayPal, typeof(RecurringPayInDTO) }
             };
         }
     }

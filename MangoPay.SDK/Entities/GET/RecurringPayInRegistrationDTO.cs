@@ -46,5 +46,8 @@ namespace MangoPay.SDK.Entities.GET
         public Money NextTransactionDebitedFunds { get; set; }
 
         public Money NextTransactionFees { get; set; }
+        
+        [JsonConverter(typeof(StringEnumConverter))]
+        public PayInPaymentType PaymentType { get; set; }
     }
 }

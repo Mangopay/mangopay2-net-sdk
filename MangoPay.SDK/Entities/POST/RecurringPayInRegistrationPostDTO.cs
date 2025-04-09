@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.POST
 {
@@ -90,6 +90,10 @@ namespace MangoPay.SDK.Entities.POST
         public Money NextTransactionFees { get; set; }
 
         public int FreeCycles { get; set; }
+        
+        /// <summary>Type of payment</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public PayInPaymentType? PaymentType { get; set; }
 
         #endregion
     }
