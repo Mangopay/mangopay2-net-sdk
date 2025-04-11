@@ -1,7 +1,6 @@
-﻿using MangoPay.SDK.Core.Enumerations;
-using MangoPay.SDK.Entities.GET;
+﻿using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -21,6 +20,29 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(transfer.AuthorId, john.Id);
             Assert.AreEqual(transfer.CreditedUserId, john.Id);
             Assert.AreEqual(100, creditedWallet.Balance.Amount);
+        }
+        
+        [Test]
+        public async Task Test_Transfers_CreateSca()
+        {
+            string validUserNaturalScaId = "user_m_01JRFJJN9BR864A4KG7MH1WCZG";
+            string validUserLegalScaId = "user_m_01JRG4ZWZ85RNZDKKTSFRMG6ZW";
+            var debitedWallet = await GetNewJohnsWalletWithMoney(10000, validUserNaturalScaId);
+            var transferUserPresent = await this.GetNewTransferSca(debitedWallet.Id, validUserNaturalScaId, validUserLegalScaId,
+                3001, "USER_PRESENT");
+            var transferUserPresentLowAmount = await this.GetNewTransferSca(debitedWallet.Id, validUserNaturalScaId, validUserLegalScaId,
+                20, "USER_PRESENT");
+            var transferUserNotPresent = await this.GetNewTransferSca(debitedWallet.Id, validUserNaturalScaId, validUserLegalScaId,
+                3001, "USER_NOT_PRESENT");
+
+            Assert.AreEqual(TransactionStatus.CREATED, transferUserPresent.Status);
+            Assert.IsNotNull(transferUserPresent.PendingUserAction);
+            
+            Assert.AreEqual(TransactionStatus.SUCCEEDED, transferUserPresentLowAmount.Status);
+            Assert.IsNull(transferUserPresentLowAmount.PendingUserAction);
+            
+            Assert.AreEqual(TransactionStatus.SUCCEEDED, transferUserNotPresent.Status);
+            Assert.IsNull(transferUserNotPresent.PendingUserAction);
         }
 
         [Test]
