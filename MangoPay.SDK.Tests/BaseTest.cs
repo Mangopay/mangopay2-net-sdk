@@ -601,6 +601,12 @@ namespace MangoPay.SDK.Tests
             return await this.Api.PayIns.CreateSwishWebAsync(payIn);
         }
         
+        protected async Task<PayInTwintWebDTO> GetNewPayInTwintWeb()
+        {
+            PayInTwintWebPostDTO payIn = await GetPayInTwintWebPost();
+            return await this.Api.PayIns.CreateTwintWebAsync(payIn);
+        }
+        
         protected async Task<PayInBancontactWebDTO> GetNewPayInBancontactWeb()
         {
             PayInBancontactWebPostDTO payIn = await GetPayInBancontactWebPost();
@@ -966,6 +972,25 @@ namespace MangoPay.SDK.Tests
                 wallet.Id,
                 "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238"
             );
+
+            return payIn;
+        }
+        
+        protected async Task<PayInTwintWebPostDTO> GetPayInTwintWebPost()
+        {
+            var wallet = await GetNewWallet(CurrencyIso.CHF);
+            var user = await GetJohn();
+
+            var payIn = new PayInTwintWebPostDTO(
+                user.Id,
+                new Money { Amount = 100, Currency = CurrencyIso.CHF },
+                new Money { Amount = 0, Currency = CurrencyIso.CHF },
+                wallet.Id,
+                "http://www.my-site.com/returnURL?transactionId=wt_71a08458-b0cc-468d-98f7-1302591fc238"
+            )
+            {
+                Tag = "Twint payin"
+            };
 
             return payIn;
         }
