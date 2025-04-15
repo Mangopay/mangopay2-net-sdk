@@ -456,5 +456,13 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.UpdateObjectAsync<PayInPayPalWebDTO, PayPalTrackingInformationPutDTO>(MethodKey.PayInsAddTrackingInformation, trackingInformation, null, payInId);
         }
+        
+        /// <summary>Gets PayIn ApplePay entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public async Task<ApplePayDirectPayinDTO> GetApplePayAsync(string payInId)
+        {
+            return await this.GetObjectAsync<ApplePayDirectPayinDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+        }
     }
 }
