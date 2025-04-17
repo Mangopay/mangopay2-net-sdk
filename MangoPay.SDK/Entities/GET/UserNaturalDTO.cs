@@ -1,8 +1,8 @@
-﻿using MangoPay.SDK.Core;
+﻿using System;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -72,6 +72,5 @@ namespace MangoPay.SDK.Entities.GET
 
         [JsonConverter(typeof(StringEnumConverter))]
         public UserCategory UserCategory { get; set; }
-
     }
 }

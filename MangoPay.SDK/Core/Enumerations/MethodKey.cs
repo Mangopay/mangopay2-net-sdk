@@ -108,6 +108,8 @@
         UsersEmoneyYearMonthGet,
         UsersEmoneyMonthGet,
         UsersRegulatory,
+        UsersCloseNatural,
+        UsersCloseLegal,
         WalletsAllTransactions,
         WalletsCreate,
         WalletsGet,
