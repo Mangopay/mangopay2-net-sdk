@@ -47,6 +47,7 @@
         PayinsBlikWebCreate,
         PayinsKlarnaWebCreate,
         PayinsSwishWebCreate,
+        PayinsTwintWebCreate,
         PayinsIdealWebCreate,
         PayinsGiropayWebCreate,
         PayinsBancontactWebCreate,
