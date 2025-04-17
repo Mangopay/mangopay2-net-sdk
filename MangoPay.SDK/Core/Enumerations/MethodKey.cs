@@ -1,5 +1,4 @@
-﻿
-namespace MangoPay.SDK.Core.Enumerations
+﻿namespace MangoPay.SDK.Core.Enumerations
 {
     /// <summary>Method key enumeration.</summary>
     public enum MethodKey
@@ -42,15 +41,18 @@ namespace MangoPay.SDK.Core.Enumerations
         PayinsGetRecurringRegistration,
         PayinsPutRecurringRegistration,
         PayinsRecurringCardDirect,
+        PayinsRecurringPayPal,
         PayinsMbwayWebCreate,
         PayinsMultibancoWebCreate,
         PayinsSatispayWebCreate,
         PayinsBlikWebCreate,
         PayinsKlarnaWebCreate,
         PayinsSwishWebCreate,
+        PayinsTwintWebCreate,
         PayinsIdealWebCreate,
         PayinsGiropayWebCreate,
         PayinsBancontactWebCreate,
+        PayinsPayByBankWebCreate,
         GetPaymentMethodMetadata,
         PayoutsBankwireCreate,
         PayoutsBankwireGet,
@@ -117,9 +119,9 @@ namespace MangoPay.SDK.Core.Enumerations
 
         ClientGetKycDocuments,
         GetKycDocument,
-		KycDocumentConsult,
+        KycDocumentConsult,
 
-		ClientGetWalletsDefault,
+        ClientGetWalletsDefault,
         ClientGetWalletsFees,
         ClientGetWalletsCredit,
         ClientGetWalletsDefaultWithCurrency,
@@ -133,12 +135,12 @@ namespace MangoPay.SDK.Core.Enumerations
         ClientUploadLogo,
         ClientBankAccount,
         ClientPayout,
-        
+
         DisputesGet,
         DisputesSaveTag,
         DisputesSaveContestFunds,
         DisputeSaveClose,
-        DisputesGetTransactions,        
+        DisputesGetTransactions,
         DisputesGetAll,
         DisputesGetForWallet,
         DisputesGetForUser,
@@ -152,8 +154,8 @@ namespace MangoPay.SDK.Core.Enumerations
         DisputesRepudiationGet,
         DisputesRepudiationGetRefunds,
         DisputesRepudiationCreateSettlement,
-		DisputesDocumentConsult,
-		SettlementsGet,
+        DisputesDocumentConsult,
+        SettlementsGet,
 
         IdempotencyResponseGet,
 
@@ -161,7 +163,7 @@ namespace MangoPay.SDK.Core.Enumerations
         MandateGet,
         MandateCancel,
         MandatesGetAll,
-		MandatesGetTransactions,
+        MandatesGetTransactions,
         MandatesGetForUser,
         MandatesGetForBankAccount,
 
@@ -181,44 +183,44 @@ namespace MangoPay.SDK.Core.Enumerations
         PermissionGroupGet,
         PermissionGroupSave,
 
-		SingleSignOnsMe,
-		SingleSignOnsMePermissionGroup,
+        SingleSignOnsMe,
+        SingleSignOnsMePermissionGroup,
 
-		UboDeclarationCreate,
-		UboDeclarationUpdate,
-		UboDeclarationsGet,
-		UboDeclarationGet,
+        UboDeclarationCreate,
+        UboDeclarationUpdate,
+        UboDeclarationsGet,
+        UboDeclarationGet,
         UboDeclarationGetById,
         UboGet,
-		UboCreate,
-		UboUpdate,
+        UboCreate,
+        UboUpdate,
 
-		BankAccountsGetTransactions,
-		
-		CountryAuthorizationGet,
-		CountryAuthorizationGetAll,
-		
-		DepositsCreate,
-		DepositsGet,
-		DepositsCancel,
-		PayInsCreateCardPreAuthorizedDeposit,
-		
-		GetConversionRate,
-		CreateInstantConversion,
-		CreateQuotedConversion,
-		GetConversion,
-		CreateConversionQuote,
-		GetConversionQuote,
-		PayInsAddTrackingInformation,
-		
-		VirtualAccountCreate,
-		VirtualAccountGet,
-		VirtualAccountGetAll, 
-		VirtualAccountDeactivate,
-		VirtualAccountGetAvailabilities,
-		
-		IdentityVerificationCreate,
-		IdentityVerificationGet,
-		IdentityVerificationGetChecks
+        BankAccountsGetTransactions,
+
+        CountryAuthorizationGet,
+        CountryAuthorizationGetAll,
+
+        DepositsCreate,
+        DepositsGet,
+        DepositsCancel,
+        PayInsCreateCardPreAuthorizedDeposit,
+
+        GetConversionRate,
+        CreateInstantConversion,
+        CreateQuotedConversion,
+        GetConversion,
+        CreateConversionQuote,
+        GetConversionQuote,
+        PayInsAddTrackingInformation,
+
+        VirtualAccountCreate,
+        VirtualAccountGet,
+        VirtualAccountGetAll,
+        VirtualAccountDeactivate,
+        VirtualAccountGetAvailabilities,
+
+        IdentityVerificationCreate,
+        IdentityVerificationGet,
+        IdentityVerificationGetChecks
     }
 }
