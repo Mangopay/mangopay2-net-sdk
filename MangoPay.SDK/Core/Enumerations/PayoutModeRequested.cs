@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MangoPay.SDK.Core.Enumerations
+﻿namespace MangoPay.SDK.Core.Enumerations
 {
     public enum PayoutModeRequested
     {
@@ -19,6 +15,8 @@ namespace MangoPay.SDK.Core.Enumerations
         /// <summary>
         /// an instant payment bank wire is requested and the processing time is within 25 seconds, but if any prerequisite is not met or another problem occurs, there is no fallback: the wallet is automatically refunded and the payout is not completed.
         /// </summary>
-        INSTANT_PAYMENT_ONLY
+        INSTANT_PAYMENT_ONLY,
+        
+        RTGS_PAYMENT
     }
 }
