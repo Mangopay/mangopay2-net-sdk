@@ -1,5 +1,4 @@
-﻿
-namespace MangoPay.SDK.Core.Enumerations
+﻿namespace MangoPay.SDK.Core.Enumerations
 {
     /// <summary>Payment type enumeration.</summary>
     public enum PayInPaymentType
@@ -64,6 +63,9 @@ namespace MangoPay.SDK.Core.Enumerations
         SWISH,
         
         /// <summary> Twint payment type </summary>
-        TWINT
+        TWINT,
+
+        /// <summary> PayByBank payment type </summary>
+        PAY_BY_BANK
     }
 }
