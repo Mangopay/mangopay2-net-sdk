@@ -76,11 +76,14 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsGiropayWebCreate, new ApiEndPoint("/payins/payment-methods/giropay", RequestType.POST)},
             { MethodKey.PayinsBancontactWebCreate, new ApiEndPoint("/payins/payment-methods/bancontact", RequestType.POST)},
             { MethodKey.PayinsSwishWebCreate, new ApiEndPoint("/payins/payment-methods/swish", RequestType.POST)},
-            
+            { MethodKey.PayinsTwintWebCreate, new ApiEndPoint("/payins/payment-methods/twint", RequestType.POST)},
+            { MethodKey.PayinsPayByBankWebCreate, new ApiEndPoint("/payins/payment-methods/openbanking", RequestType.POST) },
+
             { MethodKey.PayinsRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations", RequestType.POST)},
             { MethodKey.PayinsGetRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations/{0}", RequestType.GET)},
             { MethodKey.PayinsPutRecurringRegistration, new ApiEndPoint("/recurringpayinregistrations/{0}", RequestType.PUT)},
             { MethodKey.PayinsRecurringCardDirect, new ApiEndPoint("/payins/recurring/card/direct", RequestType.POST) },
+            { MethodKey.PayinsRecurringPayPal, new ApiEndPoint("/payins/payment-methods/paypal/recurring", RequestType.POST) },
             
             { MethodKey.PayInsCreateCardPreAuthorizedDeposit,new ApiEndPoint("/payins/deposit-preauthorized/direct/full-capture",RequestType.POST)},
             { MethodKey.PayInsAddTrackingInformation,new ApiEndPoint("/payins/{0}/trackings",RequestType.PUT)},

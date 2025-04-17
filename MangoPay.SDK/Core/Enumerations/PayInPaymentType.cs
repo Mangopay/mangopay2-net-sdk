@@ -1,5 +1,4 @@
-﻿
-namespace MangoPay.SDK.Core.Enumerations
+﻿namespace MangoPay.SDK.Core.Enumerations
 {
     /// <summary>Payment type enumeration.</summary>
     public enum PayInPaymentType
@@ -61,6 +60,12 @@ namespace MangoPay.SDK.Core.Enumerations
         BCMC,
         
         /// <summary> Swish payment type </summary>
-        SWISH
+        SWISH,
+        
+        /// <summary> Twint payment type </summary>
+        TWINT,
+
+        /// <summary> PayByBank payment type </summary>
+        PAY_BY_BANK
     }
 }
