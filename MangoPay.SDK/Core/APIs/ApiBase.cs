@@ -263,7 +263,15 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.IdentityVerificationCreate, new ApiEndPoint("/users/{0}/identity-verifications", RequestType.POST) },
             { MethodKey.IdentityVerificationGet, new ApiEndPoint("/identity-verifications/{0}", RequestType.GET) },
-            { MethodKey.IdentityVerificationGetChecks, new ApiEndPoint("/identity-verifications/{0}/checks", RequestType.GET) }
+            { MethodKey.IdentityVerificationGetChecks, new ApiEndPoint("/identity-verifications/{0}/checks", RequestType.GET) },
+
+            { MethodKey.RecipientCreate, new ApiEndPoint("/users/{0}/recipients", RequestType.POST) },
+            { MethodKey.RecipientGet, new ApiEndPoint("/recipients/{0}", RequestType.GET) },
+            { MethodKey.RecipientGetAll, new ApiEndPoint("/users/{0}/recipients", RequestType.GET) },
+            { MethodKey.RecipientGetPayoutMethods, new ApiEndPoint("/recipients/payout-methods", RequestType.GET) },
+            { MethodKey.RecipientGetSchema, new ApiEndPoint("/recipients/schema", RequestType.GET) },
+            { MethodKey.RecipientValidate, new ApiEndPoint("/users/{0}/recipients/validate", RequestType.POST) },
+            { MethodKey.RecipientDeactivate, new ApiEndPoint("/recipients/{0}", RequestType.PUT) }
         };
 
         /// <summary>Creates new API instance.</summary>

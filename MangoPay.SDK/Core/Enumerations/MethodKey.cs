@@ -119,9 +119,9 @@
 
         ClientGetKycDocuments,
         GetKycDocument,
-        KycDocumentConsult,
+		KycDocumentConsult,
 
-        ClientGetWalletsDefault,
+		ClientGetWalletsDefault,
         ClientGetWalletsFees,
         ClientGetWalletsCredit,
         ClientGetWalletsDefaultWithCurrency,
@@ -135,12 +135,12 @@
         ClientUploadLogo,
         ClientBankAccount,
         ClientPayout,
-
+        
         DisputesGet,
         DisputesSaveTag,
         DisputesSaveContestFunds,
         DisputeSaveClose,
-        DisputesGetTransactions,
+        DisputesGetTransactions,        
         DisputesGetAll,
         DisputesGetForWallet,
         DisputesGetForUser,
@@ -154,8 +154,8 @@
         DisputesRepudiationGet,
         DisputesRepudiationGetRefunds,
         DisputesRepudiationCreateSettlement,
-        DisputesDocumentConsult,
-        SettlementsGet,
+		DisputesDocumentConsult,
+		SettlementsGet,
 
         IdempotencyResponseGet,
 
@@ -163,7 +163,7 @@
         MandateGet,
         MandateCancel,
         MandatesGetAll,
-        MandatesGetTransactions,
+		MandatesGetTransactions,
         MandatesGetForUser,
         MandatesGetForBankAccount,
 
@@ -183,17 +183,17 @@
         PermissionGroupGet,
         PermissionGroupSave,
 
-        SingleSignOnsMe,
-        SingleSignOnsMePermissionGroup,
+		SingleSignOnsMe,
+		SingleSignOnsMePermissionGroup,
 
-        UboDeclarationCreate,
-        UboDeclarationUpdate,
-        UboDeclarationsGet,
-        UboDeclarationGet,
+		UboDeclarationCreate,
+		UboDeclarationUpdate,
+		UboDeclarationsGet,
+		UboDeclarationGet,
         UboDeclarationGetById,
         UboGet,
-        UboCreate,
-        UboUpdate,
+		UboCreate,
+		UboUpdate,
 
         BankAccountsGetTransactions,
 
@@ -221,6 +221,14 @@
 
         IdentityVerificationCreate,
         IdentityVerificationGet,
-        IdentityVerificationGetChecks
+        IdentityVerificationGetChecks,
+
+        RecipientCreate,
+        RecipientGet,
+        RecipientGetAll,
+        RecipientGetPayoutMethods,
+        RecipientGetSchema,
+        RecipientValidate,
+        RecipientDeactivate
     }
 }
