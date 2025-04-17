@@ -67,7 +67,7 @@ namespace MangoPay.SDK.Core.APIs
                 { MethodKey.PayoutsBankwireCreate, typeof(PayOutBankWireDTO) },
                 { MethodKey.TransfersCreateRefunds, typeof(RefundDTO) },
                 { MethodKey.TransfersCreate, typeof(TransferDTO) },
-                { MethodKey.UboDeclarationCreate, typeof(UboDeclarationDTO)},
+                { MethodKey.UboDeclarationCreate, typeof(UboDeclarationDTO) },
                 { MethodKey.UsersCreateNaturals, typeof(UserNaturalDTO) },
                 { MethodKey.UsersCreateLegals, typeof(UserLegalDTO) },
                 { MethodKey.UsersCreateNaturalsSca, typeof(UserNaturalScaDTO) },
@@ -83,6 +83,7 @@ namespace MangoPay.SDK.Core.APIs
                 { MethodKey.DisputesDocumentCreate, typeof(DisputeDocumentDTO) },
                 { MethodKey.DisputesRepudiationCreateSettlement, typeof(SettlementDTO) },
                 { MethodKey.MandateCreate, typeof(MandateDTO) },
+                { MethodKey.PayinsPayByBankWebCreate, typeof(PayInPayByBankWebDTO) },
                 { MethodKey.PayinsRecurringPayPal, typeof(RecurringPayInDTO) }
             };
         }
