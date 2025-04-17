@@ -1971,53 +1971,7 @@ namespace MangoPay.SDK.Tests
                 var data = await GetNewJohnsWalletWithMoneyAndCardId(1000);
                 var wallet = data.Item2;
                 var userId = wallet.Owners.FirstOrDefault();
-
-                var payInRegistrationPost = new RecurringPayInRegistrationPostDTO
-                {
-                    AuthorId = userId,
-                    CreditedWalletId = wallet.Id,
-                    FirstTransactionDebitedFunds = new Money
-                    {
-                        Amount = 1000,
-                        Currency = CurrencyIso.EUR
-                    },
-                    FirstTransactionFees = new Money
-                    {
-                        Amount = 0,
-                        Currency = CurrencyIso.EUR
-                    },
-                    Billing = new Billing
-                    {
-                        FirstName = "Joe",
-                        LastName = "Blogs",
-                        Address = new Address
-                        {
-                            AddressLine1 = "1 MangoPay Street",
-                            AddressLine2 = "The Loop",
-                            City = "Paris",
-                            Region = "Ile de France",
-                            PostalCode = "75001",
-                            Country = CountryIso.FR
-                        }
-                    },
-                    Shipping = new Shipping
-                    {
-                        FirstName = "Joe",
-                        LastName = "Blogs",
-                        Address = new Address
-                        {
-                            AddressLine1 = "1 MangoPay Street",
-                            AddressLine2 = "The Loop",
-                            City = "Paris",
-                            Region = "Ile de France",
-                            PostalCode = "75001",
-                            Country = CountryIso.FR
-                        }
-                    },
-                    PaymentType = PayInPaymentType.PAYPAL
-                };
-
-                var createdPayInRegistration = await this.Api.PayIns.CreateRecurringPayInRegistration(payInRegistrationPost);
+                var createdPayInRegistration = await GetRecurringPayPalPayInRegistration(userId, wallet.Id);
                 Assert.NotNull(createdPayInRegistration);
 
                 var cit = new RecurringPayPalPayInCITPostDTO
@@ -2064,53 +2018,7 @@ namespace MangoPay.SDK.Tests
                 var data = await GetNewJohnsWalletWithMoneyAndCardId(1000);
                 var wallet = data.Item2;
                 var userId = wallet.Owners.FirstOrDefault();
-
-                var payInRegistrationPost = new RecurringPayInRegistrationPostDTO
-                {
-                    AuthorId = userId,
-                    CreditedWalletId = wallet.Id,
-                    FirstTransactionDebitedFunds = new Money
-                    {
-                        Amount = 1000,
-                        Currency = CurrencyIso.EUR
-                    },
-                    FirstTransactionFees = new Money
-                    {
-                        Amount = 0,
-                        Currency = CurrencyIso.EUR
-                    },
-                    Billing = new Billing
-                    {
-                        FirstName = "Joe",
-                        LastName = "Blogs",
-                        Address = new Address
-                        {
-                            AddressLine1 = "1 MangoPay Street",
-                            AddressLine2 = "The Loop",
-                            City = "Paris",
-                            Region = "Ile de France",
-                            PostalCode = "75001",
-                            Country = CountryIso.FR
-                        }
-                    },
-                    Shipping = new Shipping
-                    {
-                        FirstName = "Joe",
-                        LastName = "Blogs",
-                        Address = new Address
-                        {
-                            AddressLine1 = "1 MangoPay Street",
-                            AddressLine2 = "The Loop",
-                            City = "Paris",
-                            Region = "Ile de France",
-                            PostalCode = "75001",
-                            Country = CountryIso.FR
-                        }
-                    },
-                    PaymentType = PayInPaymentType.PAYPAL
-                };
-
-                var createdPayInRegistration = await this.Api.PayIns.CreateRecurringPayInRegistration(payInRegistrationPost);
+                var createdPayInRegistration = await GetRecurringPayPalPayInRegistration(userId, wallet.Id);
                 Assert.NotNull(createdPayInRegistration);
 
                 var mit = new RecurringPayPalPayInMITPostDTO

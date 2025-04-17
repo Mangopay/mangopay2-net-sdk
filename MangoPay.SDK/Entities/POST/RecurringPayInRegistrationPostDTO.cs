@@ -93,7 +93,7 @@ namespace MangoPay.SDK.Entities.POST
         
         /// <summary>Type of payment</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public PayInPaymentType? PaymentType { get; set; }
+        public RecurringPayInRegistrationPaymentType? PaymentType { get; set; }
 
         #endregion
     }

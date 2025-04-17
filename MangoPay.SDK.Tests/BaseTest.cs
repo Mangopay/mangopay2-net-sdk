@@ -38,6 +38,7 @@ namespace MangoPay.SDK.Tests
         private static PayOutBankWireDTO _johnsPayOutForCardDirect;
         private static HookDTO _johnsHook;
         private static Dictionary<ReportType, ReportRequestDTO> _johnsReports;
+        private static RecurringPayInRegistrationDTO _recurringPayPalPayInRegistrationDto;
 
         protected BaseTest()
         {
@@ -476,6 +477,61 @@ namespace MangoPay.SDK.Tests
             var createdWallet = await this.Api.Wallets.GetAsync(johnsWalletWithMoney.Id);
 
             return new Tuple<string, WalletDTO>(card.Id, createdWallet);
+        }
+        
+         protected async Task<RecurringPayInRegistrationDTO> GetRecurringPayPalPayInRegistration(string authorId, string walletId)
+        {
+            if (_recurringPayPalPayInRegistrationDto == null)
+            {
+                var payInRegistrationPost = new RecurringPayInRegistrationPostDTO
+                {
+                    AuthorId = authorId,
+                    CreditedWalletId = walletId,
+                    FirstTransactionDebitedFunds = new Money
+                    {
+                        Amount = 1000,
+                        Currency = CurrencyIso.EUR
+                    },
+                    FirstTransactionFees = new Money
+                    {
+                        Amount = 0,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Billing = new Billing
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    Shipping = new Shipping
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    PaymentType = RecurringPayInRegistrationPaymentType.PAYPAL
+                };
+
+                _recurringPayPalPayInRegistrationDto = await this.Api.PayIns.CreateRecurringPayInRegistration(payInRegistrationPost);
+            }
+            
+            return _recurringPayPalPayInRegistrationDto;
         }
 
         protected async Task<VirtualAccountDTO> GetJohnsVirtualAccount()
