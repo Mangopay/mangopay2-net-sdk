@@ -585,6 +585,35 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+        
+        [Test]
+        public async Task Test_PayIns_Create_TwintWeb()
+        {
+            try
+            {
+                var user = await GetJohn();
+                var payIn = await GetNewPayInTwintWeb();
+                var fetched = await Api.PayIns.GetTwintAsync(payIn.Id);
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(PayInPaymentType.TWINT, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.WEB, payIn.ExecutionType);
+                Assert.IsTrue(payIn.DebitedFunds is Money);
+                Assert.IsTrue(payIn.CreditedFunds is Money);
+                Assert.IsTrue(payIn.Fees is Money);
+                Assert.AreEqual(user.Id, payIn.AuthorId);
+                Assert.AreEqual(TransactionStatus.CREATED, payIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+                Assert.AreEqual(TransactionNature.REGULAR, payIn.Nature);
+
+                Assert.AreEqual(payIn.Id, fetched.Id);
+                Assert.IsNotNull(fetched.Id);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         [Test]
         public async Task Test_PayIns_Create_BancontactWeb()
@@ -611,6 +640,31 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual(CultureCode.NL, fetched.Culture);
                 Assert.AreEqual(false, fetched.Recurring);
                 Assert.AreEqual(PaymentFlow.APP, payIn.PaymentFlow);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
+        public async Task Test_PayIns_Create_PayByBankWeb()
+        {
+            try
+            {
+                var payIn = await GetNewPayInPayByBankWeb();
+                var fetched = await Api.PayIns.GetPayByBankAsync(payIn.Id);
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(PayInPaymentType.PAY_BY_BANK, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.WEB, payIn.ExecutionType);
+                Assert.AreEqual(TransactionStatus.CREATED, payIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+                Assert.AreEqual(TransactionNature.REGULAR, payIn.Nature);
+
+                Assert.AreEqual(payIn.Id, fetched.Id);
+                Assert.AreEqual(CultureCode.DE, fetched.Culture);
+                Assert.AreEqual("WEB", payIn.PaymentFlow);
             }
             catch (Exception ex)
             {
@@ -1902,6 +1956,110 @@ namespace MangoPay.SDK.Tests
                 Assert.IsTrue(userId == createdMit.CreditedUserId);
                 Assert.IsTrue(cardId == createdMit.CardId);
                 Assert.IsTrue(wallet.Id == createdMit.CreditedWalletId);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_PayIns_Create_Recurring_PayPal_CIT()
+        {
+            try
+            {
+                var data = await GetNewJohnsWalletWithMoneyAndCardId(1000);
+                var wallet = data.Item2;
+                var userId = wallet.Owners.FirstOrDefault();
+                var createdPayInRegistration = await GetRecurringPayPalPayInRegistration(userId, wallet.Id);
+                Assert.NotNull(createdPayInRegistration);
+
+                var cit = new RecurringPayPalPayInCITPostDTO
+                {
+                    RecurringPayinRegistrationId = createdPayInRegistration.Id,
+                    StatementDescriptor = "lorem",
+                    ReturnURL = "http://example.com",
+                    CancelURL = "http://example.net",
+                    Reference = "abcd-efgh-ijkl",
+                    LineItems = new List<LineItem>
+                    {
+                        new LineItem
+                        {
+                            Name = "running shoes",
+                            Quantity = 1,
+                            UnitAmount = 1000,
+                            TaxAmount = 0,
+                            Description = "seller1 ID",
+                            Category = "PHYSICAL_GOODS"
+                        }
+                    },
+                    Tag = "custom meta",
+                    ShippingPreference = ShippingPreference.SET_PROVIDED_ADDRESS
+                };
+
+                var createdCit = await this.Api.PayIns.CreateRecurringPayPalPayInCIT(cit);
+
+                Assert.NotNull(createdCit);
+                Assert.AreEqual(PayInPaymentType.PAYPAL, createdCit.PaymentType);
+                Assert.AreEqual(PayInExecutionType.WEB, createdCit.ExecutionType);
+                Assert.AreEqual(TransactionStatus.CREATED, createdCit.Status);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_PayIns_Create_Recurring_PayPal_MIT()
+        {
+            try
+            {
+                var data = await GetNewJohnsWalletWithMoneyAndCardId(1000);
+                var wallet = data.Item2;
+                var userId = wallet.Owners.FirstOrDefault();
+                var createdPayInRegistration = await GetRecurringPayPalPayInRegistration(userId, wallet.Id);
+                Assert.NotNull(createdPayInRegistration);
+
+                var mit = new RecurringPayPalPayInMITPostDTO
+                {
+                    RecurringPayinRegistrationId = createdPayInRegistration.Id,
+                    StatementDescriptor = "lorem",
+                    ReturnURL = "http://example.com",
+                    CancelURL = "http://example.net",
+                    Reference = "abcd-efgh-ijkl",
+                    DebitedFunds = new Money
+                    {
+                        Amount = 1000,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Fees = new Money
+                    {
+                        Amount = 0,
+                        Currency = CurrencyIso.EUR
+                    },
+                    LineItems = new List<LineItem>
+                    {
+                        new LineItem
+                        {
+                            Name = "running shoes",
+                            Quantity = 1,
+                            UnitAmount = 1000,
+                            TaxAmount = 0,
+                            Description = "seller1 ID",
+                            Category = "PHYSICAL_GOODS"
+                        }
+                    },
+                    Tag = "custom meta",
+                    ShippingPreference = ShippingPreference.SET_PROVIDED_ADDRESS
+                };
+
+                var createdMit = await this.Api.PayIns.CreateRecurringPayPalPayInMIT(mit);
+
+                Assert.NotNull(createdMit);
+                Assert.AreEqual(PayInPaymentType.PAYPAL, createdMit.PaymentType);
+                Assert.AreEqual(PayInExecutionType.WEB, createdMit.ExecutionType);
+                Assert.AreEqual(TransactionStatus.CREATED, createdMit.Status);
             }
             catch (Exception ex)
             {
