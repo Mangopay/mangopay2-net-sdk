@@ -194,6 +194,17 @@ namespace MangoPay.SDK.Core.APIs
                 MethodKey.PayinsSwishWebCreate, payIn, idempotentKey);
         }
         
+        /// <summary>Creates new payin Twint web.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInTwintWebDTO> CreateTwintWebAsync(PayInTwintWebPostDTO payIn,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInTwintWebDTO, PayInTwintWebPostDTO>(
+                MethodKey.PayinsTwintWebCreate, payIn, idempotentKey);
+        }
+        
         /// <summary>Creates new payin bancontact web.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="payIn">Object instance to be created.</param>
@@ -362,6 +373,14 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<PayInSwishWebDTO> GetSwishAsync(string payInId)
         {
             return await this.GetObjectAsync<PayInSwishWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+        }
+        
+        /// <summary>Gets PayIn Twint entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public async Task<PayInTwintWebDTO> GetTwintAsync(string payInId)
+        {
+            return await this.GetObjectAsync<PayInTwintWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
         
         /// <summary>Gets PayIn Bancontact entity by its identifier.</summary>

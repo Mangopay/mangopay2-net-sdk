@@ -61,6 +61,9 @@ namespace MangoPay.SDK.Core.Enumerations
         BCMC,
         
         /// <summary> Swish payment type </summary>
-        SWISH
+        SWISH,
+        
+        /// <summary> Twint payment type </summary>
+        TWINT
     }
 }
