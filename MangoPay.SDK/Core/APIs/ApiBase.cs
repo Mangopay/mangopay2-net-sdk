@@ -144,6 +144,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersEmoneyYearGet, new ApiEndPoint("/users/{0}/emoney/{1}", RequestType.GET)},
             { MethodKey.UsersEmoneyYearMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
             { MethodKey.UsersEmoneyMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
+            { MethodKey.UsersCloseNatural, new ApiEndPoint("/users/natural/{0}", RequestType.DELETE)},
+            { MethodKey.UsersCloseLegal, new ApiEndPoint("/users/legal/{0}", RequestType.DELETE)},
 
 
             { MethodKey.WalletsCreate, new ApiEndPoint("/wallets", RequestType.POST)},
@@ -424,6 +426,15 @@ namespace MangoPay.SDK.Core.APIs
 
             var restTool = new RestTool(this.Root, true);
             return await restTool.RequestAsync<U, T>(endPoint, null, entity, idempotentKey: idempotentKey);
+        }
+        
+        protected async Task DeleteObjectAsync(MethodKey methodKey, params string[] entitiesId)
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.SetParameters(entitiesId);
+
+            var restTool = new RestTool(this.Root, true);
+            await restTool.RequestAsync<object, object>(endPoint, null);
         }
 
         protected Type GetObjectForIdempotencyUrl()

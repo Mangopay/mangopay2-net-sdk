@@ -608,5 +608,23 @@ namespace MangoPay.SDK.Core.APIs
             return await this.CreateObjectAsync<ScaEnrollmentResultDTO, EntityPostBase>(MethodKey.UsersEnrollSca, null,
                 idempotentKey, userId);
         }
+
+        /// <summary>
+        /// Close a natural user (change status to CLOSED). The resource remains available for historical purposes.
+        /// </summary>
+        /// <param name="userId"></param>
+        public async Task CloseNaturalAsync(string userId)
+        {
+            await this.DeleteObjectAsync(MethodKey.UsersCloseNatural, userId);
+        }
+        
+        /// <summary>
+        /// Close a legal user (change status to CLOSED). The resource remains available for historical purposes.
+        /// </summary>
+        /// <param name="userId"></param>
+        public async Task CloseLegalAsync(string userId)
+        {
+            await this.DeleteObjectAsync(MethodKey.UsersCloseLegal, userId);
+        }
     }
 }

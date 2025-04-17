@@ -49,8 +49,5 @@ namespace MangoPay.SDK.Entities.GET
 
         [JsonConverter(typeof(StringEnumConverter))]
         public UserCategory UserCategory { get; set; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public UserStatus UserStatus { get; set; }
     }
 }
