@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
+using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
@@ -124,8 +125,9 @@ namespace MangoPay.SDK.Tests
         {
             await GetNewRecipient();
             Assert.AreEqual("PENDING", _recipient.Status);
+            RecipientPutDTO putDto = new RecipientPutDTO() { Status = "DEACTIVATED" };
 
-            RecipientDTO deactivated = await Api.Recipients.DeactivateAsync(_recipient.Id);
+            RecipientDTO deactivated = await Api.Recipients.DeactivateAsync(putDto, _recipient.Id);
             RecipientDTO fetched = await Api.Recipients.GetAsync(_recipient.Id);
             Assert.AreEqual("DEACTIVATED", deactivated.Status);
             Assert.AreEqual("DEACTIVATED", fetched.Status);

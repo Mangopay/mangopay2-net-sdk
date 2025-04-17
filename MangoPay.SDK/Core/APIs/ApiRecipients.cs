@@ -92,12 +92,13 @@ namespace MangoPay.SDK.Core.APIs
         }
 
         /// <summary>Deactivate recipient.</summary>
+        /// <param name="recipient">Recipient update DTO. The status should be set to DEACTIVATED</param>
         /// <param name="recipientId">Recipient identifier.</param>
         /// <returns>Recipient object returned from API.</returns>
-        public async Task<RecipientDTO> DeactivateAsync(string recipientId)
+        public async Task<RecipientDTO> DeactivateAsync(RecipientPutDTO recipient, string recipientId)
         {
             return await UpdateObjectAsync<RecipientDTO, RecipientPutDTO>(
-                MethodKey.RecipientDeactivate, new RecipientPutDTO(), entitiesId: recipientId);
+                MethodKey.RecipientDeactivate, recipient, entitiesId: recipientId);
         }
     }
 }
