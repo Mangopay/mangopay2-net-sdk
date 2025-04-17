@@ -1,7 +1,4 @@
-﻿using MangoPay.SDK.Core;
-using System;
-
-namespace MangoPay.SDK.Entities.POST
+﻿namespace MangoPay.SDK.Entities.POST
 {
     /// <summary>Transfer POST entity.</summary>
     public class TransferPostDTO : EntityPostBase
@@ -33,5 +30,7 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Credited wallet identifier.</summary>
         public string CreditedWalletId { get; set; }
+        
+        public string ScaContext { get; set; }
     }
 }
