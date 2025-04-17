@@ -1,7 +1,6 @@
 ﻿using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -18,6 +17,9 @@ namespace MangoPay.SDK.Entities.GET
 		/// <summary>KYC level.</summary>
 		[JsonConverter(typeof(StringEnumConverter))]
 		public KycLevel KYCLevel { get; set; }
+        
+        [JsonConverter(typeof(StringEnumConverter))]
+        public UserStatus UserStatus { get; set; }
 
         public UserDTO(PersonType personType)
         {

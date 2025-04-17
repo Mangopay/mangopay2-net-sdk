@@ -1,5 +1,4 @@
-﻿
-namespace MangoPay.SDK.Core.Enumerations
+﻿namespace MangoPay.SDK.Core.Enumerations
 {
     /// <summary>Event types enumeration.</summary>
     public enum EventType
@@ -110,6 +109,10 @@ namespace MangoPay.SDK.Core.Enumerations
         IDENTITY_VERIFICATION_FAILED,
         IDENTITY_VERIFICATION_INCONCLUSIVE,
         IDENTITY_VERIFICATION_OUTDATED,
-        IDENTITY_VERIFICATION_TIMEOUT
+        IDENTITY_VERIFICATION_TIMEOUT,
+
+        RECIPIENT_ACTIVE,
+        RECIPIENT_CANCELED,
+        RECIPIENT_DEACTIVATED
     }
 }

@@ -144,6 +144,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersEmoneyYearGet, new ApiEndPoint("/users/{0}/emoney/{1}", RequestType.GET)},
             { MethodKey.UsersEmoneyYearMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
             { MethodKey.UsersEmoneyMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
+            { MethodKey.UsersCloseNatural, new ApiEndPoint("/users/natural/{0}", RequestType.DELETE)},
+            { MethodKey.UsersCloseLegal, new ApiEndPoint("/users/legal/{0}", RequestType.DELETE)},
 
 
             { MethodKey.WalletsCreate, new ApiEndPoint("/wallets", RequestType.POST)},
@@ -263,7 +265,15 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.IdentityVerificationCreate, new ApiEndPoint("/users/{0}/identity-verifications", RequestType.POST) },
             { MethodKey.IdentityVerificationGet, new ApiEndPoint("/identity-verifications/{0}", RequestType.GET) },
-            { MethodKey.IdentityVerificationGetChecks, new ApiEndPoint("/identity-verifications/{0}/checks", RequestType.GET) }
+            { MethodKey.IdentityVerificationGetChecks, new ApiEndPoint("/identity-verifications/{0}/checks", RequestType.GET) },
+
+            { MethodKey.RecipientCreate, new ApiEndPoint("/users/{0}/recipients", RequestType.POST) },
+            { MethodKey.RecipientGet, new ApiEndPoint("/recipients/{0}", RequestType.GET) },
+            { MethodKey.RecipientGetAll, new ApiEndPoint("/users/{0}/recipients", RequestType.GET) },
+            { MethodKey.RecipientGetPayoutMethods, new ApiEndPoint("/recipients/payout-methods", RequestType.GET) },
+            { MethodKey.RecipientGetSchema, new ApiEndPoint("/recipients/schema", RequestType.GET) },
+            { MethodKey.RecipientValidate, new ApiEndPoint("/users/{0}/recipients/validate", RequestType.POST) },
+            { MethodKey.RecipientDeactivate, new ApiEndPoint("/recipients/{0}", RequestType.PUT) }
         };
 
         /// <summary>Creates new API instance.</summary>
@@ -416,6 +426,15 @@ namespace MangoPay.SDK.Core.APIs
 
             var restTool = new RestTool(this.Root, true);
             return await restTool.RequestAsync<U, T>(endPoint, null, entity, idempotentKey: idempotentKey);
+        }
+        
+        protected async Task DeleteObjectAsync(MethodKey methodKey, params string[] entitiesId)
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.SetParameters(entitiesId);
+
+            var restTool = new RestTool(this.Root, true);
+            await restTool.RequestAsync<object, object>(endPoint, null);
         }
 
         protected Type GetObjectForIdempotencyUrl()

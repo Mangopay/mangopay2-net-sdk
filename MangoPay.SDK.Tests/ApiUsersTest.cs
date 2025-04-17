@@ -1390,5 +1390,92 @@ namespace MangoPay.SDK.Tests
                 Assert.IsTrue(e.Message.Contains("The CompanyNumber field is required"), e.Message);
             }
         }
+        
+        [Test]
+        public async Task Test_Users_CloseNatural()
+        {
+            try
+            {
+                var user = new UserNaturalOwnerPostDTO
+                {
+                    Email = "john.doe@sample.org",
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Birthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                    Nationality = CountryIso.FR,
+                    CountryOfResidence = CountryIso.FR,
+                    Occupation = "programmer",
+                    IncomeRange = 3,
+                    Address = new Address
+                    {
+                        AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City",
+                        Country = CountryIso.PL, PostalCode = "11222", Region = "Region"
+                    }
+                };
+
+                var john = await this.Api.Users.CreateOwnerAsync(user);
+                await Api.Users.CloseNaturalAsync(john.Id);
+                var closed = await Api.Users.GetAsync(john.Id);
+                
+                Assert.IsTrue(john.UserStatus == UserStatus.ACTIVE);
+                Assert.IsTrue(closed.UserStatus == UserStatus.CLOSED);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_Users_CloseLegal()
+        {
+            try
+            {
+                var user = new UserLegalOwnerPostDTO
+                {
+                    Name = "MartixSampleOrg",
+                    LegalPersonType = LegalPersonType.BUSINESS,
+                    UserCategory = UserCategory.OWNER,
+                    TermsAndConditionsAccepted = true,
+                    LegalRepresentativeFirstName = "JohnUbo",
+                    LegalRepresentativeLastName = "DoeUbo",
+                    LegalRepresentativeCountryOfResidence = CountryIso.PL,
+                    LegalRepresentativeNationality = CountryIso.PL,
+                    HeadquartersAddress = new Address
+                    {
+                        AddressLine1 = "Address line ubo 1",
+                        AddressLine2 = "Address line ubo 2",
+                        City = "CityUbo",
+                        Country = CountryIso.PL,
+                        PostalCode = "11222",
+                        Region = "RegionUbo"
+                    },
+                    LegalRepresentativeAddress = new Address
+                    {
+                        AddressLine1 = "Address line ubo 1",
+                        AddressLine2 = "Address line ubo 2",
+                        City = "CityUbo",
+                        Country = CountryIso.PL,
+                        PostalCode = "11222",
+                        Region = "RegionUbo"
+                    },
+                    LegalRepresentativeEmail = "john.doe@sample.org",
+                    LegalRepresentativeBirthday = new DateTime(1975, 12, 21, 0, 0, 0),
+                    Email = "john.doe@sample.org",
+                    CompanyNumber = "LU72HN11"
+                };
+
+                var matrix = await this.Api.Users.CreateOwnerAsync(user);
+                await Api.Users.CloseLegalAsync(matrix.Id);
+                var closed = await Api.Users.GetAsync(matrix.Id);
+                
+                Assert.IsTrue(matrix.UserStatus == UserStatus.ACTIVE);
+                Assert.IsTrue(closed.UserStatus == UserStatus.CLOSED);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

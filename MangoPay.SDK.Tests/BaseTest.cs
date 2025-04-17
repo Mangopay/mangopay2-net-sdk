@@ -402,39 +402,39 @@ namespace MangoPay.SDK.Tests
         protected async Task<WalletDTO> GetNewJohnsWalletWithMoney(int amount, UserNaturalDTO user = null)
         {
             var john = user ?? await this.GetJohn();
+            return await GetNewJohnsWalletWithMoney(amount, john.Id);
+        }
+        
+        protected async Task<WalletDTO> GetNewJohnsWalletWithMoney(int amount, string userId)
+        {
+            var walletPost = new WalletPostDTO(new List<string> { userId }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
+            var wallet = await this.Api.Wallets.CreateAsync(walletPost);
+            var cardRegistration = await createNewCardRegistration(userId);
+            await createNewPayInCardDirect(userId, wallet.Id, cardRegistration.CardId, amount);
+            return await this.Api.Wallets.GetAsync(wallet.Id);
+        }
 
-            // create wallet with money
-            var wallet = new WalletPostDTO(new List<string> { john.Id }, "WALLET IN EUR WITH MONEY", CurrencyIso.EUR);
-
-            var johnsWalletWithMoney = await this.Api.Wallets.CreateAsync(wallet);
-
-            var cardRegistrationPost = new CardRegistrationPostDTO(johnsWalletWithMoney.Owners[0], CurrencyIso.EUR);
+        protected async Task<CardRegistrationDTO> createNewCardRegistration(string userId)
+        {
+            var cardRegistrationPost = new CardRegistrationPostDTO(userId, CurrencyIso.EUR);
             var cardRegistration = await this.Api.CardRegistrations.CreateAsync(cardRegistrationPost);
 
             var cardRegistrationPut = new CardRegistrationPutDTO
             {
-                RegistrationData = await this.GetPaylineCorrectRegistartionData(cardRegistration)
+                RegistrationData = await GetPaylineCorrectRegistartionData(cardRegistration)
             };
-            cardRegistration = await this.Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
+            return await Api.CardRegistrations.UpdateAsync(cardRegistrationPut, cardRegistration.Id);
+        }
 
-            var card = await this.Api.Cards.GetAsync(cardRegistration.CardId);
-
-            // create pay-in CARD DIRECT
-            var payIn = new PayInCardDirectPostDTO(cardRegistration.UserId, cardRegistration.UserId,
+        protected async Task createNewPayInCardDirect(string userId, string walletId, string cardId, int amount)
+        {
+            var payIn = new PayInCardDirectPostDTO(userId, userId,
                 new Money { Amount = amount, Currency = CurrencyIso.EUR },
                 new Money { Amount = 0, Currency = CurrencyIso.EUR },
-                johnsWalletWithMoney.Id, "http://test.com", card.Id)
-            {
-                CardType = card.CardType
-            };
-
+                walletId, "http://test.com", cardId);
             payIn.BrowserInfo = getBrowserInfo();
             payIn.IpAddress = "2001:0620:0000:0000:0211:24FF:FE80:C12C";
-
-            // create Pay-In
-            var result = await this.Api.PayIns.CreateCardDirectAsync(payIn);
-
-            return await this.Api.Wallets.GetAsync(johnsWalletWithMoney.Id);
+            await Api.PayIns.CreateCardDirectAsync(payIn);
         }
 
         protected async Task<Tuple<string, WalletDTO>> GetNewJohnsWalletWithMoneyAndCardId(int amount,
@@ -1215,6 +1215,20 @@ namespace MangoPay.SDK.Tests
             };
 
             return await this.Api.Transfers.CreateAsync(transfer);
+        }
+
+        protected async Task<TransferDTO> GetNewTransferSca(string debitedWalletId, string userId, string creditedUserId, int amount,
+            string scaContext)
+        {
+            var walletPost = new WalletPostDTO(new List<string> { creditedUserId }, "WALLET IN EUR FOR TRANSFER",
+                CurrencyIso.EUR);
+            var creditedWallet = await this.Api.Wallets.CreateAsync(walletPost);
+            var transfer = new TransferPostDTO(userId, creditedUserId, new Money { Amount = amount, Currency = CurrencyIso.EUR },
+                new Money { Amount = 0, Currency = CurrencyIso.EUR }, debitedWalletId, creditedWallet.Id)
+            {
+                ScaContext = scaContext
+            };
+            return await Api.Transfers.CreateAsync(transfer);
         }
 
         /// <summary>Creates refund object for transfer.</summary>

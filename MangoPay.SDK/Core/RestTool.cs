@@ -124,19 +124,20 @@ namespace MangoPay.SDK.Core
             AddRequestHttpHeader(new Dictionary<string, string> { { key, value } });
         }
 
-        /// <summary>Checks the HTTP response and if it's neither 200 nor 204 throws a ResponseException.</summary>
+        /// <summary>Checks the HTTP response and if it's not successful throws a ResponseException.</summary>
         /// <param name="restResponse">Rest response object</param>
         private void CheckResponseCode(RestResponse restResponse)
         {
             var responseCode = (int)restResponse.StatusCode;
 
-            switch (responseCode)
+            if (responseCode >= 200 && responseCode < 300)
             {
-                case 200:
-                case 204:
-                    return;
-                case 401:
-                    throw new UnauthorizedAccessException(restResponse.Content);
+                return;
+            }
+
+            if (responseCode == 401)
+            {
+                throw new UnauthorizedAccessException(restResponse.Content);
             }
 
             if (restResponse.ResponseStatus == ResponseStatus.TimedOut)
