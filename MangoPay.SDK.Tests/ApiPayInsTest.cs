@@ -1962,6 +1962,202 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+        
+        [Test]
+        public async Task Test_PayIns_Create_Recurring_PayPal_CIT()
+        {
+            try
+            {
+                var data = await GetNewJohnsWalletWithMoneyAndCardId(1000);
+                var wallet = data.Item2;
+                var userId = wallet.Owners.FirstOrDefault();
+
+                var payInRegistrationPost = new RecurringPayInRegistrationPostDTO
+                {
+                    AuthorId = userId,
+                    CreditedWalletId = wallet.Id,
+                    FirstTransactionDebitedFunds = new Money
+                    {
+                        Amount = 1000,
+                        Currency = CurrencyIso.EUR
+                    },
+                    FirstTransactionFees = new Money
+                    {
+                        Amount = 0,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Billing = new Billing
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    Shipping = new Shipping
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    PaymentType = PayInPaymentType.PAYPAL
+                };
+
+                var createdPayInRegistration = await this.Api.PayIns.CreateRecurringPayInRegistration(payInRegistrationPost);
+                Assert.NotNull(createdPayInRegistration);
+
+                var cit = new RecurringPayPalPayInCITPostDTO
+                {
+                    RecurringPayinRegistrationId = createdPayInRegistration.Id,
+                    StatementDescriptor = "lorem",
+                    ReturnURL = "http://example.com",
+                    CancelURL = "http://example.net",
+                    Reference = "abcd-efgh-ijkl",
+                    LineItems = new List<LineItem>
+                    {
+                        new LineItem
+                        {
+                            Name = "running shoes",
+                            Quantity = 1,
+                            UnitAmount = 1000,
+                            TaxAmount = 0,
+                            Description = "seller1 ID",
+                            Category = "PHYSICAL_GOODS"
+                        }
+                    },
+                    Tag = "custom meta",
+                    ShippingPreference = ShippingPreference.SET_PROVIDED_ADDRESS
+                };
+
+                var createdCit = await this.Api.PayIns.CreateRecurringPayPalPayInCIT(cit);
+
+                Assert.NotNull(createdCit);
+                Assert.AreEqual(PayInPaymentType.PAYPAL, createdCit.PaymentType);
+                Assert.AreEqual(PayInExecutionType.WEB, createdCit.ExecutionType);
+                Assert.AreEqual(TransactionStatus.CREATED, createdCit.Status);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_PayIns_Create_Recurring_PayPal_MIT()
+        {
+            try
+            {
+                var data = await GetNewJohnsWalletWithMoneyAndCardId(1000);
+                var wallet = data.Item2;
+                var userId = wallet.Owners.FirstOrDefault();
+
+                var payInRegistrationPost = new RecurringPayInRegistrationPostDTO
+                {
+                    AuthorId = userId,
+                    CreditedWalletId = wallet.Id,
+                    FirstTransactionDebitedFunds = new Money
+                    {
+                        Amount = 1000,
+                        Currency = CurrencyIso.EUR
+                    },
+                    FirstTransactionFees = new Money
+                    {
+                        Amount = 0,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Billing = new Billing
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    Shipping = new Shipping
+                    {
+                        FirstName = "Joe",
+                        LastName = "Blogs",
+                        Address = new Address
+                        {
+                            AddressLine1 = "1 MangoPay Street",
+                            AddressLine2 = "The Loop",
+                            City = "Paris",
+                            Region = "Ile de France",
+                            PostalCode = "75001",
+                            Country = CountryIso.FR
+                        }
+                    },
+                    PaymentType = PayInPaymentType.PAYPAL
+                };
+
+                var createdPayInRegistration = await this.Api.PayIns.CreateRecurringPayInRegistration(payInRegistrationPost);
+                Assert.NotNull(createdPayInRegistration);
+
+                var mit = new RecurringPayPalPayInMITPostDTO
+                {
+                    RecurringPayinRegistrationId = createdPayInRegistration.Id,
+                    StatementDescriptor = "lorem",
+                    ReturnURL = "http://example.com",
+                    CancelURL = "http://example.net",
+                    Reference = "abcd-efgh-ijkl",
+                    DebitedFunds = new Money
+                    {
+                        Amount = 1000,
+                        Currency = CurrencyIso.EUR
+                    },
+                    Fees = new Money
+                    {
+                        Amount = 0,
+                        Currency = CurrencyIso.EUR
+                    },
+                    LineItems = new List<LineItem>
+                    {
+                        new LineItem
+                        {
+                            Name = "running shoes",
+                            Quantity = 1,
+                            UnitAmount = 1000,
+                            TaxAmount = 0,
+                            Description = "seller1 ID",
+                            Category = "PHYSICAL_GOODS"
+                        }
+                    },
+                    Tag = "custom meta",
+                    ShippingPreference = ShippingPreference.SET_PROVIDED_ADDRESS
+                };
+
+                var createdMit = await this.Api.PayIns.CreateRecurringPayPalPayInMIT(mit);
+
+                Assert.NotNull(createdMit);
+                Assert.AreEqual(PayInPaymentType.PAYPAL, createdMit.PaymentType);
+                Assert.AreEqual(PayInExecutionType.WEB, createdMit.ExecutionType);
+                Assert.AreEqual(TransactionStatus.CREATED, createdMit.Status);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         /*[Test]
         public async Task Test_CreateCardPreAuthorizedDepositPayIn()

@@ -41,6 +41,7 @@
         PayinsGetRecurringRegistration,
         PayinsPutRecurringRegistration,
         PayinsRecurringCardDirect,
+        PayinsRecurringPayPal,
         PayinsMbwayWebCreate,
         PayinsMultibancoWebCreate,
         PayinsSatispayWebCreate,
