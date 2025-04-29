@@ -1,9 +1,10 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
-using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -29,6 +30,20 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<WalletDTO> GetAsync(string walletId)
         {
             return await this.GetObjectAsync<WalletDTO>(MethodKey.WalletsGet, entitiesId: walletId);
+        }
+        
+        /// <summary>Gets wallet.</summary>
+        /// <param name="walletId">Wallet identifier.</param>
+        /// <param name="scaContext">Possible values: USER_PRESENT, USER_NOT_PRESENT</param>
+        /// <returns>Wallet instance returned from API.</returns>
+        public async Task<WalletDTO> GetAsync(string walletId, string scaContext)
+        {
+            Dictionary<string, string> queryParams = new Dictionary<string, string>
+            {
+                { "ScaContext", scaContext }
+            };
+            return await this.GetObjectAsync<WalletDTO>(MethodKey.WalletsGet, entitiesId: walletId,
+                additionalUrlParams: queryParams);
         }
 
         /// <summary>Updates wallet.</summary>

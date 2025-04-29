@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Common.Logging;
 using MangoPay.SDK.Entities;
@@ -137,6 +138,36 @@ namespace MangoPay.SDK.Core
 
             if (responseCode == 401)
             {
+                HeaderParameter wwwAuthHeader = restResponse.Headers?
+                    .FirstOrDefault(h => string.Equals(h.Name, "www-authenticate", StringComparison.OrdinalIgnoreCase));
+                if (wwwAuthHeader != null)
+                {
+                    var match = Regex.Match(wwwAuthHeader.Value, @"PendingUserAction RedirectUrl=([^\s]+)");
+                    if (match.Success && match.Groups.Count == 2)
+                    {
+                        string redirectUrl = match.Groups[1].Value;
+                        ResponseException ex = new ResponseException();
+                        ex.ResponseErrorRaw = restResponse.Content;
+                        ex.ResponseStatusCode = responseCode;
+
+                        ResponseError error = new ResponseError();
+                        error.Message = "SCA required to perform this action.";
+                        error.Type = "unauthorized";
+                        error.Date = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                        error.errors = new Dictionary<string, string>
+                        {
+                            { "Sca", "SCA required to perform this action." }
+                        };
+                        error.Data = new Dictionary<string, string>
+                        {
+                            { "RedirectUrl", redirectUrl }
+                        };
+
+                        ex.ResponseError = error;
+                        throw ex;
+                    }
+                }
+
                 throw new UnauthorizedAccessException(restResponse.Content);
             }
 

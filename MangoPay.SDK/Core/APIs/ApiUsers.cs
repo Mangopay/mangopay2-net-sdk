@@ -210,6 +210,19 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetListAsync<WalletDTO>(MethodKey.UsersAllWallets, pagination, sort, entitiesId: userId);
         }
 
+        /// <summary>Gets all user's wallets.</summary>
+        /// <param name="userId">User identifier to get wallets of.</param>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="filter">Filters</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>Collection of user's wallets.</returns>
+        public async Task<ListPaginated<WalletDTO>> GetWalletsAsync(string userId, Pagination pagination,
+            FilterWallets filter, Sort sort = null)
+        {
+            return await this.GetListAsync<WalletDTO>(MethodKey.UsersAllWallets, pagination, sort, entitiesId: userId,
+                additionalUrlParams: filter.GetValues());
+        }
+
         /// <summary>Creates CA bank account.</summary>
         /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <param name="userId">User identifier.</param>

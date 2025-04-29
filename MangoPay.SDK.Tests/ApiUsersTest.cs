@@ -1477,5 +1477,62 @@ namespace MangoPay.SDK.Tests
                 Assert.Fail(ex.Message);
             }
         }
+        
+        [Test]
+        public async Task Test_Users_GetWallets()
+        {
+            var john = await GetJohn();
+            await this.GetJohnsWallet();
+            var pagination = new Pagination(1, 1);
+
+            var wallets = await this.Api.Users.GetWalletsAsync(john.Id, pagination);
+            Assert.IsTrue(wallets.Count >= 1);
+        }
+        
+        [Test]
+        public async Task Test_Users_GetWalletsSca()
+        {
+            var john = await GetJohn();
+            var pagination = new Pagination(1, 1);
+
+            try
+            {
+                var filter = new FilterWallets
+                {
+                    ScaContext = "USER_PRESENT"
+                };
+                await this.Api.Users.GetWalletsAsync(john.Id, pagination, filter);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is ResponseException);
+                string redirectUrl = ((ResponseException)ex).ResponseError.Data["RedirectUrl"];
+                Assert.IsNotNull(redirectUrl);
+                Assert.IsNotEmpty(redirectUrl); 
+            }
+        }
+        
+        [Test]
+        public async Task Test_Users_TransactionsSca()
+        {
+            var john = await GetJohn();
+            var pagination = new Pagination(1, 1);
+            var filter = new FilterTransactions
+            {
+                ScaContext = "USER_PRESENT"
+            };
+            
+            try
+            {
+                await Api.Users.GetTransactionsAsync(john.Id, pagination, filter);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is ResponseException);
+                string redirectUrl = ((ResponseException)ex).ResponseError.Data["RedirectUrl"];
+                Assert.IsNotNull(redirectUrl);
+                Assert.IsNotEmpty(redirectUrl);
+            }
+        }
     }
 }

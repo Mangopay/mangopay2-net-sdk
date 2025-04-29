@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MangoPay.SDK.Core
 {
@@ -24,6 +23,9 @@ namespace MangoPay.SDK.Core
 
         /// <summary>Collection of field name / error decription pairs.</summary>
         public Dictionary<string, string> errors;
+        
+        /// <summary>Additional data related to the error.</summary>
+        public Dictionary<string, string> Data;
 
         /// <summary>Deserializes JSON ResponseError instance.</summary>
         /// <param name="serializedResponseError">JSON-serialized ResponseError instance.</param>

@@ -1,6 +1,6 @@
-﻿using MangoPay.SDK.Core.Enumerations;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using MangoPay.SDK.Core.Enumerations;
 
 namespace MangoPay.SDK.Core
 {
@@ -24,6 +24,9 @@ namespace MangoPay.SDK.Core
 
 		/// <summary>Transaction ResultCode.</summary>
 		public string ResultCode;
+		
+		/// <summary>Possible values: USER_PRESENT, USER_NOT_PRESENT</summary>
+		public string ScaContext;
 
 		/// <summary>Gets map of fields and values.</summary>
 		/// <returns>Returns collection of field_name-field_value pairs.</returns>
@@ -39,6 +42,7 @@ namespace MangoPay.SDK.Core
 			if (BeforeDate.HasValue) result.Add(Constants.BEFOREDATE, dateConverter.ConvertToUnixFormat(BeforeDate).Value.ToString());
             if (AfterDate.HasValue) result.Add(Constants.AFTERDATE, dateConverter.ConvertToUnixFormat(AfterDate).Value.ToString());
 			if (!string.IsNullOrEmpty(ResultCode)) result.Add(Constants.RESULT_CODE, ResultCode.ToString());
+			if (!string.IsNullOrEmpty(ScaContext)) result.Add(Constants.SCA_CONTEXT, ScaContext);
 
 			return result;
         }
