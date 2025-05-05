@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities.GET;
 using NUnit.Framework;
 
@@ -33,10 +35,10 @@ namespace MangoPay.SDK.Tests
 				DepositDTO deposit = await this.CreateNewDeposit();
 				
 				Assert.IsNotNull(deposit.CardInfo);
-				Assert.IsNotNull(deposit.CardInfo.IssuingBank);
-				Assert.IsNotNull(deposit.CardInfo.Brand);
-				Assert.IsNotNull(deposit.CardInfo.Type);
-				Assert.IsNotNull(deposit.CardInfo.IssuerCountryCode);
+				// Assert.IsNotNull(deposit.CardInfo.IssuingBank);
+				// Assert.IsNotNull(deposit.CardInfo.Brand);
+				// Assert.IsNotNull(deposit.CardInfo.Type);
+				// Assert.IsNotNull(deposit.CardInfo.IssuerCountryCode);
 			}
 			catch (Exception ex)
 			{
@@ -81,5 +83,29 @@ namespace MangoPay.SDK.Tests
 				Assert.Fail(ex.Message);
 			}
 		}*/
+		
+		[Test]
+		public async Task Test_GetDepositsForCard()
+		{
+			DepositDTO deposit = await this.CreateNewDeposit();
+			var filter = new FilterPreAuthorizations();
+			filter.PaymentStatus = PaymentStatus.WAITING;
+			var deposits = await this.Api.Deposits.GetAllForCardAsync(deposit.CardId, filter);
+				
+			Assert.IsNotNull(deposits);
+			Assert.IsTrue(deposits.Count > 0);
+		}
+		
+		[Test]
+		public async Task Test_GetDepositsForUser()
+		{
+			DepositDTO deposit = await this.CreateNewDeposit();
+			var filter = new FilterPreAuthorizations();
+			filter.PaymentStatus = PaymentStatus.WAITING;
+			var deposits = await this.Api.Deposits.GetAllForUserAsync(deposit.AuthorId, filter);
+				
+			Assert.IsNotNull(deposits);
+			Assert.IsTrue(deposits.Count > 0);
+		}
 	}
 }

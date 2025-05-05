@@ -249,7 +249,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.DepositsCreate,new ApiEndPoint("/deposit-preauthorizations/card/direct",RequestType.POST)},
             { MethodKey.DepositsGet,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.GET)},
             { MethodKey.DepositsCancel,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.PUT)},
-            
+            { MethodKey.DepositsGetAllForCard, new ApiEndPoint("/cards/{0}/deposit-preauthorizations",RequestType.GET)},
+            { MethodKey.DepositsGetAllForUser, new ApiEndPoint("/users/{0}/deposit-preauthorizations",RequestType.GET)},
+
             { MethodKey.GetConversionRate,new ApiEndPoint("/conversions/rate/{0}/{1}",RequestType.GET)},
             { MethodKey.CreateInstantConversion,new ApiEndPoint("/conversions/instant-conversion",RequestType.POST)},
             { MethodKey.CreateQuotedConversion, new ApiEndPoint("/conversions/quoted-conversion", RequestType.POST) },
