@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
@@ -42,6 +43,32 @@ namespace MangoPay.SDK.Core.APIs
 
             return await this.UpdateObjectAsync<DepositDTO, DepositPutDTO>(
                 MethodKey.DepositsCancel, dto, entitiesId: depositId);
+        }
+        
+        /// <summary>List Deposit Preauthorizations for a Card</summary>
+        /// <param name="cardId">Card identifier.</param>
+        /// <param name="pagination">Pagination.</param>
+        ///         /// <param name="filter">Filters.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of DepositDTO</returns>
+        public async Task<ListPaginated<DepositDTO>> GetAllForCardAsync(string cardId, FilterPreAuthorizations filter,
+            Pagination pagination = null, Sort sort = null)
+        {
+            return await this.GetListAsync<DepositDTO>(MethodKey.DepositsGetAllForCard, pagination, sort,
+                filter.GetValues(), entitiesId: cardId);
+        }
+        
+        /// <summary>List Deposit Preauthorizations for a User</summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="pagination">Pagination.</param>
+        ///         /// <param name="filter">Filters.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of DepositDTO</returns>
+        public async Task<ListPaginated<DepositDTO>> GetAllForUserAsync(string userId, FilterPreAuthorizations filter,
+            Pagination pagination = null, Sort sort = null)
+        {
+            return await this.GetListAsync<DepositDTO>(MethodKey.DepositsGetAllForUser, pagination, sort,
+                filter.GetValues(), entitiesId: userId);
         }
     }
 }

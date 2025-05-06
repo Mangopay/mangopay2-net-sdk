@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -43,7 +42,7 @@ namespace MangoPay.SDK.Entities.GET
         public string SecureModeRedirectURL { get; set; }
 
         /// <summary>The value is { true } if the SecureMode was used.</summary>
-        public bool SecureModeNeeded { get; set; }
+        public bool? SecureModeNeeded { get; set; }
 
         /// <summary>The date when the payment is to be processed by.</summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]
@@ -62,7 +61,7 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Culture (language).</summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public CultureCode Culture { get; set; }
+        public CultureCode? Culture { get; set; }
 
         /// <summary>IpAddress.</summary>
         public string IpAddress { get; set; }

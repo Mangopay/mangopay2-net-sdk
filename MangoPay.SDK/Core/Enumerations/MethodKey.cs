@@ -206,6 +206,8 @@
         DepositsGet,
         DepositsCancel,
         PayInsCreateCardPreAuthorizedDeposit,
+        DepositsGetAllForCard,
+        DepositsGetAllForUser,
 
         GetConversionRate,
         CreateInstantConversion,
