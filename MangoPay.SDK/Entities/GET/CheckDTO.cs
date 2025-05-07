@@ -33,5 +33,7 @@ namespace MangoPay.SDK.Entities.GET
         /// The data points collected and verified during the check.
         /// </summary>
         public List<CheckDataDTO> Data { get; set; }
+        
+        public List<CheckDataDTO> Reasons { get; set; }
     }
 }

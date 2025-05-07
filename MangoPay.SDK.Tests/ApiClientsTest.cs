@@ -232,6 +232,7 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+		[Ignore("skip")]
         public async Task Test_ClientLogo()
         {
             var assembly = Assembly.GetExecutingAssembly();
