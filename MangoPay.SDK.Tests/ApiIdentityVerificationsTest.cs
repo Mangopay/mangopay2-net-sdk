@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using NUnit.Framework;
@@ -35,20 +36,16 @@ namespace MangoPay.SDK.Tests
         }
         
         [Test]
-        public async Task Test_GetIdentityVerificationChecks()
+        public async Task Test_GetAllIdentityVerificationsForUser()
         {
             await GetNewIdentityVerification();
-            IdentityVerificationCheckDTO check =
-                await Api.IdentityVerifications.GetChecksAsync(_identityVerification.Id);
+            UserNaturalDTO john = await GetJohn();
+            ListPaginated<IdentityVerificationDTO> fetched = await Api.IdentityVerifications.GetAllAsync(john.Id);
 
-            Assert.IsNotNull(check);
-            Assert.IsNotNull(check.SessionId);
-            Assert.IsNotNull(check.Status);
-            Assert.IsNotNull(check.LastUpdate);
-            Assert.IsNotNull(check.CreationDate);
-            Assert.IsNotNull(check.Checks);
+            Assert.IsNotNull(fetched);
+            Assert.IsTrue(fetched.Count > 0);
         }
-
+        
         private async Task GetNewIdentityVerification()
         {
             if (_identityVerification == null)
