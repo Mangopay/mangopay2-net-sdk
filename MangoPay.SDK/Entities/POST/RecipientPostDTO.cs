@@ -20,6 +20,10 @@ namespace MangoPay.SDK.Entities.GET
         [JsonConverter(typeof(StringEnumConverter))]
         public CurrencyIso Currency { get; set; }
         
+        /// <summary>Country ISO</summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CountryIso? Country { get; set; }
+        
         /// <summary>
         /// The scope of the recipient:
         /// <para>- PAYOUT – Usable for payouts and in pay-in use cases. 

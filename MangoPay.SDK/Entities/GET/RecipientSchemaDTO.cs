@@ -7,6 +7,8 @@ namespace MangoPay.SDK.Entities
         public RecipientPropertySchema DisplayName { get; set; }
 
         public RecipientPropertySchema Currency { get; set; }
+        
+        public RecipientPropertySchema Country { get; set; }
 
         public RecipientPropertySchema RecipientType { get; set; }
 
