@@ -17,6 +17,16 @@ namespace MangoPay.SDK.Core.Enumerations
         EXPIRED, 
 
         /// <summary>VALIDATED payment status.</summary>
-        VALIDATED
+        VALIDATED,
+        
+        CANCEL_REQUESTED,
+        
+        TO_BE_COMPLETED,
+        
+        NO_SHOW_REQUESTED,
+        
+        NO_SHOW,
+        
+        FAILED
     }
 }
