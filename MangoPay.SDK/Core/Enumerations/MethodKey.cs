@@ -223,7 +223,7 @@
 
         IdentityVerificationCreate,
         IdentityVerificationGet,
-        IdentityVerificationGetChecks,
+        IdentityVerificationGetAll,
 
         RecipientCreate,
         RecipientGet,

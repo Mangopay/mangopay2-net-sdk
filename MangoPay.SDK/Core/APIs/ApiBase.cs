@@ -265,7 +265,7 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.IdentityVerificationCreate, new ApiEndPoint("/users/{0}/identity-verifications", RequestType.POST) },
             { MethodKey.IdentityVerificationGet, new ApiEndPoint("/identity-verifications/{0}", RequestType.GET) },
-            { MethodKey.IdentityVerificationGetChecks, new ApiEndPoint("/identity-verifications/{0}/checks", RequestType.GET) },
+            { MethodKey.IdentityVerificationGetAll, new ApiEndPoint("/users/{0}/identity-verifications", RequestType.GET) },
 
             { MethodKey.RecipientCreate, new ApiEndPoint("/users/{0}/recipients", RequestType.POST) },
             { MethodKey.RecipientGet, new ApiEndPoint("/recipients/{0}", RequestType.GET) },

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 
@@ -36,13 +37,16 @@ namespace MangoPay.SDK.Core.APIs
                 entitiesId: id);
         }
         
-        /// <summary>Obtain verified user data and results of each check performed</summary>
-        /// <param name="id">Identity verification identitifer.</param>
-        /// <returns>Object instance returned from API.</returns>
-        public async Task<IdentityVerificationCheckDTO> GetChecksAsync(string id)
+        /// <summary>Get all identity verifications for a user</summary>
+        /// <param name="userId">User identitifer.</param>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List returned from API.</returns>
+        public async Task<ListPaginated<IdentityVerificationDTO>> GetAllAsync(string userId, Pagination pagination = null,
+            Sort sort = null)
         {
-            return await this.GetObjectAsync<IdentityVerificationCheckDTO>(MethodKey.IdentityVerificationGetChecks,
-                entitiesId: id);
+            return await this.GetListAsync<IdentityVerificationDTO>(MethodKey.IdentityVerificationGetAll,
+                entitiesId: userId, pagination: pagination, sort: sort);
         }
     }
 }
