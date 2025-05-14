@@ -1,4 +1,9 @@
-﻿namespace MangoPay.SDK.Entities.GET
+﻿using System;
+using System.Collections.Generic;
+using MangoPay.SDK.Core;
+using Newtonsoft.Json;
+
+namespace MangoPay.SDK.Entities.GET
 {
     public class IdentityVerificationDTO : EntityBase
     {
@@ -19,5 +24,15 @@
 	    /// <para>ERROR – The session was not completed because an error occurred.</para>
 	    /// </summary>
 	    public string Status { get; set; }
+	    
+	    public string UserId { get; set; }
+	    
+	    [JsonConverter(typeof(UnixDateTimeConverter))]
+	    public DateTime? LastUpdate { get; set; }
+	    
+	    /// <summary>
+	    /// The details of the individual verification checks performed during the session.
+	    /// </summary>
+	    public List<CheckDTO> Checks { get; set; }
     }
 }

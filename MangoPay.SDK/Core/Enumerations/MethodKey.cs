@@ -206,6 +206,8 @@
         DepositsGet,
         DepositsCancel,
         PayInsCreateCardPreAuthorizedDeposit,
+        DepositsGetAllForCard,
+        DepositsGetAllForUser,
 
         GetConversionRate,
         CreateInstantConversion,
@@ -223,7 +225,7 @@
 
         IdentityVerificationCreate,
         IdentityVerificationGet,
-        IdentityVerificationGetChecks,
+        IdentityVerificationGetAll,
 
         RecipientCreate,
         RecipientGet,

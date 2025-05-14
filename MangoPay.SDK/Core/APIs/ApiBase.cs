@@ -249,7 +249,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.DepositsCreate,new ApiEndPoint("/deposit-preauthorizations/card/direct",RequestType.POST)},
             { MethodKey.DepositsGet,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.GET)},
             { MethodKey.DepositsCancel,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.PUT)},
-            
+            { MethodKey.DepositsGetAllForCard, new ApiEndPoint("/cards/{0}/deposit-preauthorizations",RequestType.GET)},
+            { MethodKey.DepositsGetAllForUser, new ApiEndPoint("/users/{0}/deposit-preauthorizations",RequestType.GET)},
+
             { MethodKey.GetConversionRate,new ApiEndPoint("/conversions/rate/{0}/{1}",RequestType.GET)},
             { MethodKey.CreateInstantConversion,new ApiEndPoint("/conversions/instant-conversion",RequestType.POST)},
             { MethodKey.CreateQuotedConversion, new ApiEndPoint("/conversions/quoted-conversion", RequestType.POST) },
@@ -265,7 +267,7 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.IdentityVerificationCreate, new ApiEndPoint("/users/{0}/identity-verifications", RequestType.POST) },
             { MethodKey.IdentityVerificationGet, new ApiEndPoint("/identity-verifications/{0}", RequestType.GET) },
-            { MethodKey.IdentityVerificationGetChecks, new ApiEndPoint("/identity-verifications/{0}/checks", RequestType.GET) },
+            { MethodKey.IdentityVerificationGetAll, new ApiEndPoint("/users/{0}/identity-verifications", RequestType.GET) },
 
             { MethodKey.RecipientCreate, new ApiEndPoint("/users/{0}/recipients", RequestType.POST) },
             { MethodKey.RecipientGet, new ApiEndPoint("/recipients/{0}", RequestType.GET) },
