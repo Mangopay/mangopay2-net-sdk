@@ -32,6 +32,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(_recipient.LocalBankTransfer["GBP"].SortCode);
             Assert.IsNotNull(_recipient.LocalBankTransfer["GBP"].AccountNumber);
             Assert.IsNotNull(_recipient.PendingUserAction);
+            Assert.IsNotNull(_recipient.Country);
         }
 
         [Test]
@@ -66,7 +67,7 @@ namespace MangoPay.SDK.Tests
         {
             RecipientSchemaDTO schema =
                 await Api.Recipients.GetSchemaAsync("LocalBankTransfer", "Individual",
-                    CurrencyIso.GBP);
+                    CurrencyIso.GBP, CountryIso.GB);
             Assert.IsNotNull(schema);
             Assert.IsNotNull(schema.DisplayName);
             Assert.IsNotNull(schema.Currency);
@@ -78,6 +79,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(schema.IndividualRecipient);
             Assert.IsNull(schema.InternationalBankTransfer);
             Assert.IsNull(schema.BusinessRecipient);
+            Assert.IsNotNull(schema.Country);
         }
 
         [Test]
@@ -85,7 +87,7 @@ namespace MangoPay.SDK.Tests
         {
             RecipientSchemaDTO schema =
                 await Api.Recipients.GetSchemaAsync("InternationalBankTransfer", "Business",
-                    CurrencyIso.GBP);
+                    CurrencyIso.GBP, CountryIso.GB);
             Assert.IsNotNull(schema);
             Assert.IsNotNull(schema.DisplayName);
             Assert.IsNotNull(schema.Currency);
@@ -97,6 +99,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(schema.BusinessRecipient);
             Assert.IsNull(schema.LocalBankTransfer);
             Assert.IsNull(schema.IndividualRecipient);
+            Assert.IsNotNull(schema.Country);
         }
 
         [Test]
@@ -172,6 +175,7 @@ namespace MangoPay.SDK.Tests
                 }
             };
             postDto.LocalBankTransfer = localBankTransfer;
+            postDto.Country = CountryIso.GB;
 
             return postDto;
         }
