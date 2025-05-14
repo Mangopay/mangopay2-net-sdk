@@ -1045,12 +1045,14 @@ namespace MangoPay.SDK.Tests
                 PaymentData = paymentData
             };
 
-            var getPayIn = await Api.PayIns.CreateApplePayAsync(applePayIn, DateTime.Now.Ticks.ToString());
+            var created = await Api.PayIns.CreateApplePayAsync(applePayIn, DateTime.Now.Ticks.ToString());
+            var fetched = await Api.PayIns.GetApplePayAsync(created.Id);
 
-            Assert.IsNotNull(getPayIn);
-            Assert.AreEqual(getPayIn.AuthorId, applePayIn.AuthorId);
-            Assert.AreEqual(getPayIn.PaymentType, PayInPaymentType.APPLEPAY);
-            Assert.AreEqual(getPayIn.Status, TransactionStatus.SUCCEEDED);
+            Assert.IsNotNull(created);
+            Assert.AreEqual(created.AuthorId, applePayIn.AuthorId);
+            Assert.AreEqual(created.PaymentType, PayInPaymentType.APPLEPAY);
+            Assert.AreEqual(created.Status, TransactionStatus.SUCCEEDED);
+            Assert.AreEqual(created.Id, fetched.Id);
         }
 
         [Ignore("Cannot test Google Pay")]
