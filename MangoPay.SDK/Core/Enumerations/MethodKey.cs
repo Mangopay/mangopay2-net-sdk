@@ -204,8 +204,10 @@
 
         DepositsCreate,
         DepositsGet,
-        DepositsCancel,
+        DepositsUpdate,
         PayInsCreateCardPreAuthorizedDeposit,
+        PayInsCreateDepositPreauthorizedPayInPriorToComplement,
+        PayInsCreateDepositPreauthorizedPayInComplement,
         DepositsGetAllForCard,
         DepositsGetAllForUser,
 

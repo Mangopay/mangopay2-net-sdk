@@ -42,7 +42,17 @@ namespace MangoPay.SDK.Core.APIs
             DepositPutDTO dto = new DepositPutDTO {PaymentStatus = PaymentStatus.CANCELED};
 
             return await this.UpdateObjectAsync<DepositDTO, DepositPutDTO>(
-                MethodKey.DepositsCancel, dto, entitiesId: depositId);
+                MethodKey.DepositsUpdate, dto, entitiesId: depositId);
+        }
+        
+        /// <summary>Update deposit.</summary>
+        /// <param name="depositId">Deposit identifier.</param>
+        /// <<param name="depositPutDto">Update object</param>
+        /// <returns>Deposit object returned from API.</returns>
+        public async Task<DepositDTO> UpdateAsync(string depositId, DepositPutDTO depositPutDto)
+        {
+            return await this.UpdateObjectAsync<DepositDTO, DepositPutDTO>(
+                MethodKey.DepositsUpdate, depositPutDto, entitiesId: depositId);
         }
         
         /// <summary>List Deposit Preauthorizations for a Card</summary>

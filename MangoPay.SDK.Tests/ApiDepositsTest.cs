@@ -63,7 +63,7 @@ namespace MangoPay.SDK.Tests
 			}
 		}
 		
-		/*[Test]
+		[Test]
 		public async Task Test_CancelDeposit()
 		{
 			try
@@ -82,7 +82,7 @@ namespace MangoPay.SDK.Tests
 			{
 				Assert.Fail(ex.Message);
 			}
-		}*/
+		}
 		
 		[Test]
 		public async Task Test_GetDepositsForCard()

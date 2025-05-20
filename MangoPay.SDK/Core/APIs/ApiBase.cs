@@ -86,6 +86,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsRecurringPayPal, new ApiEndPoint("/payins/payment-methods/paypal/recurring", RequestType.POST) },
             
             { MethodKey.PayInsCreateCardPreAuthorizedDeposit,new ApiEndPoint("/payins/deposit-preauthorized/direct/full-capture",RequestType.POST)},
+            { MethodKey.PayInsCreateDepositPreauthorizedPayInPriorToComplement,new ApiEndPoint("/payins/deposit-preauthorized/direct/capture-with-complement",RequestType.POST)},
+            { MethodKey.PayInsCreateDepositPreauthorizedPayInComplement,new ApiEndPoint("/payins/deposit-preauthorized/direct/complement",RequestType.POST)},
             { MethodKey.PayInsAddTrackingInformation,new ApiEndPoint("/payins/{0}/trackings",RequestType.PUT)},
             
             { MethodKey.GetPaymentMethodMetadata, new ApiEndPoint("/payment-methods/metadata", RequestType.POST) },
@@ -248,7 +250,7 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.DepositsCreate,new ApiEndPoint("/deposit-preauthorizations/card/direct",RequestType.POST)},
             { MethodKey.DepositsGet,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.GET)},
-            { MethodKey.DepositsCancel,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.PUT)},
+            { MethodKey.DepositsUpdate,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.PUT)},
             { MethodKey.DepositsGetAllForCard, new ApiEndPoint("/cards/{0}/deposit-preauthorizations",RequestType.GET)},
             { MethodKey.DepositsGetAllForUser, new ApiEndPoint("/users/{0}/deposit-preauthorizations",RequestType.GET)},
 
