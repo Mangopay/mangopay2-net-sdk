@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
+using MangoPay.SDK.Entities.POST;
 using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
@@ -106,6 +108,29 @@ namespace MangoPay.SDK.Tests
 				
 			Assert.IsNotNull(deposits);
 			Assert.IsTrue(deposits.Count > 0);
+		}
+		
+		[Test]
+		public async Task Test_GetTransactions()
+		{
+			DepositDTO deposit = await this.CreateNewDeposit();
+			var wallet = await this.GetJohnsWallet();
+
+			var debitedFunds = new Money();
+			debitedFunds.Amount = 1000;
+			debitedFunds.Currency = CurrencyIso.EUR;
+
+			var fees = new Money();
+			fees.Amount = 0;
+			fees.Currency = CurrencyIso.EUR;
+
+			var dto = new CardPreAuthorizedDepositPayInPostDTO(wallet.Id, debitedFunds, fees, deposit.Id);
+			await this.Api.PayIns.CreateCardPreAuthorizedDepositPayIn(dto);
+
+			var transactions = await Api.Deposits.GetTransactionsAsync(deposit.Id, null);
+				
+			Assert.IsNotNull(transactions);
+			Assert.IsTrue(transactions.Count > 0);
 		}
 	}
 }

@@ -210,6 +210,7 @@
         PayInsCreateDepositPreauthorizedPayInComplement,
         DepositsGetAllForCard,
         DepositsGetAllForUser,
+        DepositsGetTransactions,
 
         GetConversionRate,
         CreateInstantConversion,
