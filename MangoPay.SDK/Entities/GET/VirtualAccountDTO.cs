@@ -23,5 +23,9 @@ namespace MangoPay.SDK.Entities.GET
         public List<InternationalAccountDetails> InternationalAccountDetails { get; set; }
 
         public VirtualAccountCapabilities Capabilities { get; set; }
+        
+        public string ResultCode { get; set; }
+
+        public string ResultMessage { get; set; }
     }
 }

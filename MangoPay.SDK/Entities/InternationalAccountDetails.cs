@@ -5,5 +5,7 @@ namespace MangoPay.SDK.Entities
         public VirtualAccountAddress Address { get; set; }
 
         public InternationalAccount Account { get; set; }
+        
+        public string BankName { get; set; }
     }
 }
