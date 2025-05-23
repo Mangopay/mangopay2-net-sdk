@@ -2069,8 +2069,8 @@ namespace MangoPay.SDK.Tests
             }
         }
 
-        /*[Test]
-        public async Task Test_CreateCardPreAuthorizedDepositPayIn()
+        [Test]
+        public async Task Test_CreateDepositPreauthorizedPayInWithoutComplement()
         {
             try
             {
@@ -2090,13 +2090,73 @@ namespace MangoPay.SDK.Tests
 
                 Assert.IsNotNull(payIn);
                 Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
+                Assert.IsNotNull(payIn.DepositId);
             }
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
             }
-        }*/
+        }
 
+        [Test]
+        public async Task Test_CreateDepositPreauthorizedPayInPriorToComplement()
+        {
+            try
+            {
+                DepositDTO deposit = await this.CreateNewDeposit();
+                var wallet = await this.GetJohnsWallet();
+
+                var debitedFunds = new Money();
+                debitedFunds.Amount = 1000;
+                debitedFunds.Currency = CurrencyIso.EUR;
+
+                var fees = new Money();
+                fees.Amount = 0;
+                fees.Currency = CurrencyIso.EUR;
+
+                var dto = new CardPreAuthorizedDepositPayInPostDTO(wallet.Id, debitedFunds, fees, deposit.Id);
+                var payIn = await this.Api.PayIns.CreateDepositPreauthorizedPayInPriorToComplement(dto);
+
+                Assert.IsNotNull(payIn);
+                Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
+                Assert.IsNotNull(payIn.DepositId);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_CreateDepositPreauthorizedPayInComplement()
+        {
+            try
+            {
+                DepositDTO deposit = await this.CreateNewDeposit();
+                await Api.Deposits.UpdateAsync(deposit.Id,
+                    new DepositPutDTO { PaymentStatus = PaymentStatus.NO_SHOW_REQUESTED });
+                var wallet = await this.GetJohnsWallet();
+
+                var debitedFunds = new Money();
+                debitedFunds.Amount = 1000;
+                debitedFunds.Currency = CurrencyIso.EUR;
+
+                var fees = new Money();
+                fees.Amount = 0;
+                fees.Currency = CurrencyIso.EUR;
+
+                var dto = new CardPreAuthorizedDepositPayInPostDTO(wallet.Id, debitedFunds, fees, deposit.Id);
+                var payIn = await this.Api.PayIns.CreateDepositPreauthorizedPayInComplement(dto);
+
+                Assert.IsNotNull(payIn);
+                Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
+                Assert.IsNotNull(payIn.DepositId);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         [Test]
         public async Task Test_PayIns_Create_Recurring_MIT_CheckCardInfo()
