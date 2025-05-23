@@ -14,6 +14,9 @@ namespace MangoPay.SDK.Tests
             
             Assert.IsNotNull(virtualAccount);
             Assert.AreEqual(virtualAccount.WalletId, wallet.Id);
+            Assert.AreEqual("Success", virtualAccount.ResultMessage);
+            Assert.AreEqual("000000", virtualAccount.ResultCode);
+            Assert.IsNotNull(virtualAccount.LocalAccountDetails.BankName);
         }
 
         [Test]
@@ -43,15 +46,13 @@ namespace MangoPay.SDK.Tests
 
         
         [Test]
-        [Ignore("API issue. To be re-enabled after fix.")]
-        // TODO
         public async Task Test_VirtualAccounts_GetAvailabilities()
         {
             var availabilities = await Api.VirtualAccounts.GetAvailabilitiesAsync();
             
             Assert.IsNotNull(availabilities);
-            Assert.IsTrue(availabilities.Collection.GetType().IsArray);
-            Assert.IsTrue(availabilities.UserOwned.GetType().IsArray);
+            Assert.IsTrue(availabilities.Collection.Count > 0);
+            Assert.IsTrue(availabilities.UserOwned.Count > 0);
             Assert.IsNotEmpty(availabilities.Collection);
             Assert.IsNotEmpty(availabilities.UserOwned);
         }
