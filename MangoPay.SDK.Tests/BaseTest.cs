@@ -1201,9 +1201,8 @@ namespace MangoPay.SDK.Tests
 
         protected async Task<TransferDTO> GetNewTransfer(WalletDTO walletIn = null)
         {
-            var walletWithMoney = walletIn ?? await this.GetJohnsWalletWithMoney();
-
             var user = await this.GetJohn();
+            var walletWithMoney = await this.GetNewJohnsWalletWithMoney(1000, user);
             var walletPost = new WalletPostDTO(new List<string> { user.Id }, "WALLET IN EUR FOR TRANSFER",
                 CurrencyIso.EUR);
             var wallet = await this.Api.Wallets.CreateAsync(walletPost);
