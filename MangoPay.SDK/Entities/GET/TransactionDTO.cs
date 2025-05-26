@@ -1,8 +1,7 @@
-﻿using MangoPay.SDK.Core;
+﻿using System;
 using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -51,5 +50,8 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Debited wallet identifier.</summary>
         public string DebitedWalletId { get; set; }
+        
+        /// <summary>Deposit identifier.</summary>
+        public string DepositId { get; set; }
     }
 }

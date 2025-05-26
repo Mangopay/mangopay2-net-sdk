@@ -42,13 +42,23 @@ namespace MangoPay.SDK.Core.APIs
             DepositPutDTO dto = new DepositPutDTO {PaymentStatus = PaymentStatus.CANCELED};
 
             return await this.UpdateObjectAsync<DepositDTO, DepositPutDTO>(
-                MethodKey.DepositsCancel, dto, entitiesId: depositId);
+                MethodKey.DepositsUpdate, dto, entitiesId: depositId);
+        }
+        
+        /// <summary>Update deposit.</summary>
+        /// <param name="depositId">Deposit identifier.</param>
+        /// <<param name="depositPutDto">Update object</param>
+        /// <returns>Deposit object returned from API.</returns>
+        public async Task<DepositDTO> UpdateAsync(string depositId, DepositPutDTO depositPutDto)
+        {
+            return await this.UpdateObjectAsync<DepositDTO, DepositPutDTO>(
+                MethodKey.DepositsUpdate, depositPutDto, entitiesId: depositId);
         }
         
         /// <summary>List Deposit Preauthorizations for a Card</summary>
         /// <param name="cardId">Card identifier.</param>
         /// <param name="pagination">Pagination.</param>
-        ///         /// <param name="filter">Filters.</param>
+        /// <param name="filter">Filters.</param>
         /// <param name="sort">Sort.</param>
         /// <returns>List of DepositDTO</returns>
         public async Task<ListPaginated<DepositDTO>> GetAllForCardAsync(string cardId, FilterPreAuthorizations filter,
@@ -61,7 +71,7 @@ namespace MangoPay.SDK.Core.APIs
         /// <summary>List Deposit Preauthorizations for a User</summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="pagination">Pagination.</param>
-        ///         /// <param name="filter">Filters.</param>
+        /// <param name="filter">Filters.</param>
         /// <param name="sort">Sort.</param>
         /// <returns>List of DepositDTO</returns>
         public async Task<ListPaginated<DepositDTO>> GetAllForUserAsync(string userId, FilterPreAuthorizations filter,
@@ -69,6 +79,20 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.GetListAsync<DepositDTO>(MethodKey.DepositsGetAllForUser, pagination, sort,
                 filter.GetValues(), entitiesId: userId);
+        }
+        
+        /// <summary>List Transactions for a Deposit</summary>
+        /// <param name="depositId">Deposit identifier.</param>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="filter">Filters.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of TransactionDTO</returns>
+        public async Task<ListPaginated<TransactionDTO>> GetTransactionsAsync(string depositId, FilterTransactions filter,
+            Pagination pagination = null, Sort sort = null)
+        {
+            if (filter == null) filter = new FilterTransactions();
+            return await this.GetListAsync<TransactionDTO>(MethodKey.DepositsGetTransactions, pagination, sort,
+                filter.GetValues(), entitiesId: depositId);
         }
     }
 }
