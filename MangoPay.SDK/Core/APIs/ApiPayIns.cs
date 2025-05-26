@@ -483,11 +483,43 @@ namespace MangoPay.SDK.Core.APIs
                 MethodKey.PayinsRecurringPayPal, payIn, idempotentKey);
         }
         
+        /// <summary>
+        /// Create a Deposit Preauthorized PayIn without complement
+        /// </summary>
+        /// <param name="payIn"></param> The PayIn to be created
+        /// <param name="idempotentKey"></param> Idempotency key (optional)
+        /// <returns>The created PayIn</returns>
         public async Task<CardPreAuthorizedDepositPayInDTO> CreateCardPreAuthorizedDepositPayIn(
             CardPreAuthorizedDepositPayInPostDTO payIn, string idempotentKey = null)
         {
             return await this.CreateObjectAsync<CardPreAuthorizedDepositPayInDTO, CardPreAuthorizedDepositPayInPostDTO>(
                 MethodKey.PayInsCreateCardPreAuthorizedDeposit, payIn, idempotentKey);
+        }
+        
+        /// <summary>
+        /// Create a Deposit Preauthorized PayIn prior to complement
+        /// </summary>
+        /// <param name="payIn"></param> The PayIn to be created
+        /// <param name="idempotentKey"></param> Idempotency key (optional)
+        /// <returns>The created PayIn</returns>
+        public async Task<CardPreAuthorizedDepositPayInDTO> CreateDepositPreauthorizedPayInPriorToComplement(
+            CardPreAuthorizedDepositPayInPostDTO payIn, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<CardPreAuthorizedDepositPayInDTO, CardPreAuthorizedDepositPayInPostDTO>(
+                MethodKey.PayInsCreateDepositPreauthorizedPayInPriorToComplement, payIn, idempotentKey);
+        }
+        
+        /// <summary>
+        /// Create a Deposit Preauthorized PayIn complement
+        /// </summary>
+        /// <param name="payIn"></param> The PayIn to be created
+        /// <param name="idempotentKey"></param> Idempotency key (optional)
+        /// <returns>The created PayIn</returns>
+        public async Task<CardPreAuthorizedDepositPayInDTO> CreateDepositPreauthorizedPayInComplement(
+            CardPreAuthorizedDepositPayInPostDTO payIn, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<CardPreAuthorizedDepositPayInDTO, CardPreAuthorizedDepositPayInPostDTO>(
+                MethodKey.PayInsCreateDepositPreauthorizedPayInComplement, payIn, idempotentKey);
         }
         
         /// <summary>Look up metadata from BIN or Google Pay token</summary>
