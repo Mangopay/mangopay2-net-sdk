@@ -35,7 +35,7 @@ namespace MangoPay.SDK.Tests
             var transferUserNotPresent = await this.GetNewTransferSca(debitedWallet.Id, validUserNaturalScaId, validUserLegalScaId,
                 3001, "USER_NOT_PRESENT");
 
-            Assert.AreEqual(TransactionStatus.CREATED, transferUserPresent.Status);
+            Assert.AreEqual(TransactionStatus.SUCCEEDED, transferUserPresent.Status);
             Assert.IsNotNull(transferUserPresent.PendingUserAction);
             
             Assert.AreEqual(TransactionStatus.SUCCEEDED, transferUserPresentLowAmount.Status);
