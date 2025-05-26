@@ -950,7 +950,6 @@ namespace MangoPay.SDK.Tests
             {
                 var transfer = await this.GetNewTransfer();
                 var pagination = new Pagination(1, 1);
-
                 var transactions = await this.Api.Users.GetTransactionsAsync(transfer.AuthorId, pagination, new FilterTransactions());
 
                 Assert.IsTrue(transactions.Count > 0);
