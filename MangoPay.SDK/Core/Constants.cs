@@ -134,5 +134,8 @@ namespace MangoPay.SDK.Core
 		public const string TENANT_ID = "x-tenant-id";
 		
 		public const string SCA_CONTEXT = "ScaContext";
+		
+		/// <summary>Resolves to "RecipientScope" string.</summary>
+		public const string RECIPIENT_SCOPE = "RecipientScope";
     }
 }

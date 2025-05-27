@@ -40,12 +40,15 @@ namespace MangoPay.SDK.Core.APIs
         /// <param name="userId">Recipient identifier.</param>
         /// <param name="pagination">Pagination.</param>
         /// <param name="sort">Sort.</param>
+        /// <param name="filter">Filter.</param>
         /// <returns>Recipient instance returned from API.</returns>
         public async Task<ListPaginated<RecipientDTO>> GetUserRecipientsAsync(string userId,
             Pagination pagination = null,
-            Sort sort = null)
+            Sort sort = null,
+            FilterRecipients filter = null)
         {
-            return await GetListAsync<RecipientDTO>(MethodKey.RecipientGetAll, pagination, sort, entitiesId: userId);
+            return await GetListAsync<RecipientDTO>(MethodKey.RecipientGetAll, pagination, sort, entitiesId: userId, 
+                additionalUrlParams: filter?.GetValues());
         }
 
         /// <summary>See payout methods available to your platform by currency and country.</summary>
