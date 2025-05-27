@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
@@ -52,6 +53,26 @@ namespace MangoPay.SDK.Tests
             UserNaturalScaDTO john = await GetJohnScaOwner();
             ListPaginated<RecipientDTO> recipients = await Api.Recipients.GetUserRecipientsAsync(john.Id);
             Assert.IsNotEmpty(recipients);
+        }
+        
+        [Test]
+        public async Task Test_GetUserRecipients_Payout()
+        {
+            await GetNewRecipient();
+            UserNaturalScaDTO john = await GetJohnScaOwner();
+            var filter = new FilterRecipients { RecipientScope = "PAYOUT" };
+            ListPaginated<RecipientDTO> recipients = await Api.Recipients.GetUserRecipientsAsync(john.Id, filter: filter);
+            Assert.IsNotEmpty(recipients);
+        }
+        
+        [Test]
+        public async Task Test_GetUserRecipients_PayIn()
+        {
+            await GetNewRecipient();
+            UserNaturalScaDTO john = await GetJohnScaOwner();
+            var filter = new FilterRecipients { RecipientScope = "PAYIN" };
+            ListPaginated<RecipientDTO> recipients = await Api.Recipients.GetUserRecipientsAsync(john.Id, filter: filter);
+            Assert.IsEmpty(recipients);
         }
 
         [Test]
