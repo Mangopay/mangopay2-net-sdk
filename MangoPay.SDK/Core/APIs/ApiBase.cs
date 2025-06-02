@@ -218,6 +218,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.ReportRequest, new ApiEndPoint("/reports/{0}", RequestType.POST)},
             { MethodKey.ReportGetAll, new ApiEndPoint("/reports", RequestType.GET)},
             { MethodKey.ReportGet, new ApiEndPoint("/reports/{0}", RequestType.GET)},
+            { MethodKey.ReportCreate, new ApiEndPoint("/reporting/reports", RequestType.POST)},
+            { MethodKey.ReportGetAllV2, new ApiEndPoint("/reporting/reports", RequestType.GET)},
+            { MethodKey.ReportGetV2, new ApiEndPoint("/reporting/reports/{0}", RequestType.GET)},
 
             { MethodKey.SingleSignOnAll, new ApiEndPoint("/clients/ssos", RequestType.GET)},
             { MethodKey.SingleSignOnCreate, new ApiEndPoint("/clients/ssos", RequestType.POST)},
