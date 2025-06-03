@@ -70,6 +70,6 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>
         /// The data columns to be included in the report.
         /// </summary>
-        public List<string> Columns { get; set; }
+        public List<ReportColumn> Columns { get; set; }
     }
 }
