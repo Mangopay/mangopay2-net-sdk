@@ -110,6 +110,7 @@
         UsersRegulatory,
         UsersCloseNatural,
         UsersCloseLegal,
+        UsersValidateDataFormat,
         WalletsAllTransactions,
         WalletsCreate,
         WalletsGet,

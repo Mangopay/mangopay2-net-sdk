@@ -148,6 +148,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersEmoneyMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
             { MethodKey.UsersCloseNatural, new ApiEndPoint("/users/natural/{0}", RequestType.DELETE)},
             { MethodKey.UsersCloseLegal, new ApiEndPoint("/users/legal/{0}", RequestType.DELETE)},
+            { MethodKey.UsersValidateDataFormat, new ApiEndPoint("/users/data-formats/validation", RequestType.POST)},
 
 
             { MethodKey.WalletsCreate, new ApiEndPoint("/wallets", RequestType.POST)},
