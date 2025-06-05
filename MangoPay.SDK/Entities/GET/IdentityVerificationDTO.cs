@@ -19,7 +19,7 @@ namespace MangoPay.SDK.Entities.GET
 	    /// <para>VALIDATED – The session was successful.</para>
 	    /// <para>REFUSED – The session was refused.</para>
 	    /// <para>REVIEW – The session is under manual review by Mangopay.</para>
-	    /// <para>OUTDATED – The session is no longer valid (likely due to expired documents used during the session).</para>
+	    /// <para>OUT_OF_DATE – The session is no longer valid (likely due to expired documents used during the session).</para>
 	    /// <para>TIMEOUT – The session timed out due to inactivity.</para>
 	    /// <para>ERROR – The session was not completed because an error occurred.</para>
 	    /// </summary>
