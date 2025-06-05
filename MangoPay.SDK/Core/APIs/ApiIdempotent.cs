@@ -85,7 +85,8 @@ namespace MangoPay.SDK.Core.APIs
                 { MethodKey.MandateCreate, typeof(MandateDTO) },
                 { MethodKey.PayinsPayByBankWebCreate, typeof(PayInPayByBankWebDTO) },
                 { MethodKey.PayinsRecurringPayPal, typeof(RecurringPayInDTO) },
-                { MethodKey.RecipientCreate, typeof(RecipientDTO) }
+                { MethodKey.RecipientCreate, typeof(RecipientDTO) },
+                { MethodKey.UsersValidateDataFormat, typeof(UserDataFormatValidationDTO) }
             };
         }
     }

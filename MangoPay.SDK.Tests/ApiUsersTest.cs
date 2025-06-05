@@ -1532,5 +1532,32 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotEmpty(redirectUrl);
             }
         }
+        
+        [Test]
+        public async Task Test_Users_ValidateDataFormat()
+        {
+            var post = new UserDataFormatValidationPostDTO()
+            {
+                CompanyNumber = new CompanyNumberValidation
+                {
+                    CompanyNumber = "AB123456",
+                    CountryCode = CountryIso.IT
+                }
+            };
+            var result = await Api.Users.ValidateUserDataFormat(post);
+            Assert.IsNotNull(result.CompanyNumber);
+
+            
+            try
+            {
+                post.CompanyNumber.CompanyNumber = "123";
+                await Api.Users.ValidateUserDataFormat(post);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is ResponseException);
+                Assert.Equals(400, ((ResponseException)ex).ResponseStatusCode);
+            }
+        }
     }
 }

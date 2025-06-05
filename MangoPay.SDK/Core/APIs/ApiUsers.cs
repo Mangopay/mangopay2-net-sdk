@@ -639,5 +639,14 @@ namespace MangoPay.SDK.Core.APIs
         {
             await this.DeleteObjectAsync(MethodKey.UsersCloseLegal, userId);
         }
+        
+        
+        public async Task<UserDataFormatValidationDTO> ValidateUserDataFormat(
+            UserDataFormatValidationPostDTO validation,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<UserDataFormatValidationDTO, UserDataFormatValidationPostDTO>(
+                MethodKey.UsersValidateDataFormat, validation, idempotentKey);
+        }
     }
 }
