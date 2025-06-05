@@ -1501,6 +1501,19 @@ namespace MangoPay.SDK.Tests
 
             return BaseTest._johnsReports[reportType];
         }
+        
+        protected async Task<ReportDTO> GetReportV2()
+        {
+            var reportPost = new ReportPostDTO
+            {
+                ReportType = "COLLECTED_FEES",
+                AfterDate = DateTimeOffset.FromUnixTimeSeconds(1740787200).DateTime,
+                BeforeDate = DateTimeOffset.FromUnixTimeSeconds(1743544740).DateTime,
+                DownloadFormat = "CSV"
+            };
+
+            return await this.Api.ReportsV2.CreateAsync(reportPost);
+        }
 
         protected async Task<MandateDTO> GetNewMandate()
         {
