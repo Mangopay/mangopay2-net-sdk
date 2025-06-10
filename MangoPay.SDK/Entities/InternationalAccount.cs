@@ -2,8 +2,8 @@ namespace MangoPay.SDK.Entities
 {
     public class InternationalAccount
     {
-        public string IBAN { get; set; }
+        public string Iban { get; set; }
 
-        public string BIC { get; set; }
+        public string Bic { get; set; }
     }
 }
