@@ -657,6 +657,12 @@ namespace MangoPay.SDK.Core
                 { Constants.USER_AGENT, $"Mangopay-SDK/{_root.GetVersion()} (.NET/{Environment.Version})" }
             };
 
+            // some Reporting V2 endpoints fail without the Accept header
+            if (restUrl.Contains("reporting/reports"))
+            {
+                httpHeaders.Add("Accept", "*/*");
+            }
+
             if (_root.Config.UKHeaderFlag)
             {
                 httpHeaders.Add(Constants.TENANT_ID, "uk");

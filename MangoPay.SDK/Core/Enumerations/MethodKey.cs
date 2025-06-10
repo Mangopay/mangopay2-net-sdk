@@ -174,6 +174,9 @@
         ReportRequest,
         ReportGetAll,
         ReportGet,
+        ReportCreate,
+        ReportGetAllV2,
+        ReportGetV2,
 
         SingleSignOnAll,
         SingleSignOnCreate,
