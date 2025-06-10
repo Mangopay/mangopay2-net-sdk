@@ -147,6 +147,7 @@
         DisputesGetAll,
         DisputesGetForWallet,
         DisputesGetForUser,
+        DisputesGetForPayIn,
         DisputesGetPendingSettlement,
         DisputesDocumentCreate,
         DisputesDocumentPageCreate,
@@ -173,6 +174,9 @@
         ReportRequest,
         ReportGetAll,
         ReportGet,
+        ReportCreate,
+        ReportGetAllV2,
+        ReportGetV2,
 
         SingleSignOnAll,
         SingleSignOnCreate,

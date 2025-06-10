@@ -191,6 +191,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.DisputesGetAll, new ApiEndPoint("/disputes", RequestType.GET)},
             { MethodKey.DisputesGetForWallet, new ApiEndPoint("/wallets/{0}/disputes", RequestType.GET)},
             { MethodKey.DisputesGetForUser, new ApiEndPoint("/users/{0}/disputes", RequestType.GET)},
+            { MethodKey.DisputesGetForPayIn, new ApiEndPoint("/payins/{0}/disputes", RequestType.GET)},
 
             { MethodKey.DisputesDocumentCreate, new ApiEndPoint("/disputes/{0}/documents", RequestType.POST)},
             { MethodKey.DisputesDocumentPageCreate, new ApiEndPoint("/disputes/{0}/documents/{1}/pages", RequestType.POST)},
@@ -219,6 +220,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.ReportRequest, new ApiEndPoint("/reports/{0}", RequestType.POST)},
             { MethodKey.ReportGetAll, new ApiEndPoint("/reports", RequestType.GET)},
             { MethodKey.ReportGet, new ApiEndPoint("/reports/{0}", RequestType.GET)},
+            { MethodKey.ReportCreate, new ApiEndPoint("/reporting/reports", RequestType.POST)},
+            { MethodKey.ReportGetAllV2, new ApiEndPoint("/reporting/reports", RequestType.GET)},
+            { MethodKey.ReportGetV2, new ApiEndPoint("/reporting/reports/{0}", RequestType.GET)},
 
             { MethodKey.SingleSignOnAll, new ApiEndPoint("/clients/ssos", RequestType.GET)},
             { MethodKey.SingleSignOnCreate, new ApiEndPoint("/clients/ssos", RequestType.POST)},
