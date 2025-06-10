@@ -1,11 +1,11 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -73,6 +73,21 @@ namespace MangoPay.SDK.Core.APIs
             if (filters == null) filters = new FilterDisputes();
 
             return await this.GetListAsync<DisputeDTO>(MethodKey.DisputesGetForUser, pagination, sort, filters.GetValues(), entitiesId: userId);
+        }
+        
+        /// <summary>Gets payin's disputes.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <param name="pagination">Pagination.</param>
+        /// <param name="filters">Filters.</param>
+        /// <param name="sort">Sort.</param>
+        /// <returns>List of Dispute instances returned from API.</returns>
+        public async Task<ListPaginated<DisputeDTO>> GetDisputesForPayInAsync(string payInId, Pagination pagination, 
+            FilterDisputes filters, Sort sort = null)
+        {
+            if (filters == null) filters = new FilterDisputes();
+
+            return await this.GetListAsync<DisputeDTO>(MethodKey.DisputesGetForPayIn, pagination, sort, 
+                filters.GetValues(), entitiesId: payInId);
         }
 
         /// <summary>Gets Disputes which need settling.</summary>

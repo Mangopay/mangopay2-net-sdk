@@ -191,6 +191,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.DisputesGetAll, new ApiEndPoint("/disputes", RequestType.GET)},
             { MethodKey.DisputesGetForWallet, new ApiEndPoint("/wallets/{0}/disputes", RequestType.GET)},
             { MethodKey.DisputesGetForUser, new ApiEndPoint("/users/{0}/disputes", RequestType.GET)},
+            { MethodKey.DisputesGetForPayIn, new ApiEndPoint("/payins/{0}/disputes", RequestType.GET)},
 
             { MethodKey.DisputesDocumentCreate, new ApiEndPoint("/disputes/{0}/documents", RequestType.POST)},
             { MethodKey.DisputesDocumentPageCreate, new ApiEndPoint("/disputes/{0}/documents/{1}/pages", RequestType.POST)},
