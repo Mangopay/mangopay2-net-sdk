@@ -1,15 +1,15 @@
-﻿using MangoPay.SDK.Core;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
-using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
@@ -125,6 +125,30 @@ namespace MangoPay.SDK.Tests
                 string userId = user[0].AuthorId;
 
 				result = await Api.Disputes.GetDisputesForUserAsync(userId, new Pagination(1, 20), null);
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail(ex.Message);
+			}
+
+			Assert.IsNotNull(result);
+			Assert.IsTrue(result.Count > 0);
+		}
+		
+		[Test]
+		public async Task Test_GetDisputesForPayIn()
+		{
+			DisputeDTO dispute = _clientDisputes.FirstOrDefault(x => x.InitialTransactionId != null);
+
+			if (dispute == null)
+				Assert.Fail("Cannot test getting disputes for wallet because there's no disputes with transaction ID in the disputes list.");
+
+			ListPaginated<DisputeDTO> result = null;
+
+			try
+			{
+				var payIn = await Api.PayIns.GetAsync(dispute.InitialTransactionId);
+				result = await Api.Disputes.GetDisputesForPayInAsync(payIn.Id, new Pagination(1, 10), null);
 			}
 			catch (Exception ex)
 			{

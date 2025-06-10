@@ -147,6 +147,7 @@
         DisputesGetAll,
         DisputesGetForWallet,
         DisputesGetForUser,
+        DisputesGetForPayIn,
         DisputesGetPendingSettlement,
         DisputesDocumentCreate,
         DisputesDocumentPageCreate,
