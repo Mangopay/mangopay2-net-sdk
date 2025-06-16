@@ -46,6 +46,7 @@ namespace MangoPay.SDK
             VirtualAccounts = new ApiVirtualAccounts(this);
             IdentityVerifications = new ApiIdentityVerifications(this);
             Recipients = new ApiRecipients(this);
+            ReportsV2 = new ApiReportsV2(this);
         }
 
         /// <summary>Provides authorization token methods.</summary>
@@ -135,6 +136,8 @@ namespace MangoPay.SDK
         public ApiIdentityVerifications IdentityVerifications;
 
         public ApiRecipients Recipients;
+
+        public ApiReportsV2 ReportsV2;
 
         #endregion
 

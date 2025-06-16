@@ -86,6 +86,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsRecurringPayPal, new ApiEndPoint("/payins/payment-methods/paypal/recurring", RequestType.POST) },
             
             { MethodKey.PayInsCreateCardPreAuthorizedDeposit,new ApiEndPoint("/payins/deposit-preauthorized/direct/full-capture",RequestType.POST)},
+            { MethodKey.PayInsCreateDepositPreauthorizedPayInPriorToComplement,new ApiEndPoint("/payins/deposit-preauthorized/direct/capture-with-complement",RequestType.POST)},
+            { MethodKey.PayInsCreateDepositPreauthorizedPayInComplement,new ApiEndPoint("/payins/deposit-preauthorized/direct/complement",RequestType.POST)},
             { MethodKey.PayInsAddTrackingInformation,new ApiEndPoint("/payins/{0}/trackings",RequestType.PUT)},
             
             { MethodKey.GetPaymentMethodMetadata, new ApiEndPoint("/payment-methods/metadata", RequestType.POST) },
@@ -146,6 +148,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.UsersEmoneyMonthGet, new ApiEndPoint("/users/{0}/emoney/{1}/{2}", RequestType.GET)},
             { MethodKey.UsersCloseNatural, new ApiEndPoint("/users/natural/{0}", RequestType.DELETE)},
             { MethodKey.UsersCloseLegal, new ApiEndPoint("/users/legal/{0}", RequestType.DELETE)},
+            { MethodKey.UsersValidateDataFormat, new ApiEndPoint("/users/data-formats/validation", RequestType.POST)},
 
 
             { MethodKey.WalletsCreate, new ApiEndPoint("/wallets", RequestType.POST)},
@@ -188,6 +191,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.DisputesGetAll, new ApiEndPoint("/disputes", RequestType.GET)},
             { MethodKey.DisputesGetForWallet, new ApiEndPoint("/wallets/{0}/disputes", RequestType.GET)},
             { MethodKey.DisputesGetForUser, new ApiEndPoint("/users/{0}/disputes", RequestType.GET)},
+            { MethodKey.DisputesGetForPayIn, new ApiEndPoint("/payins/{0}/disputes", RequestType.GET)},
 
             { MethodKey.DisputesDocumentCreate, new ApiEndPoint("/disputes/{0}/documents", RequestType.POST)},
             { MethodKey.DisputesDocumentPageCreate, new ApiEndPoint("/disputes/{0}/documents/{1}/pages", RequestType.POST)},
@@ -216,6 +220,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.ReportRequest, new ApiEndPoint("/reports/{0}", RequestType.POST)},
             { MethodKey.ReportGetAll, new ApiEndPoint("/reports", RequestType.GET)},
             { MethodKey.ReportGet, new ApiEndPoint("/reports/{0}", RequestType.GET)},
+            { MethodKey.ReportCreate, new ApiEndPoint("/reporting/reports", RequestType.POST)},
+            { MethodKey.ReportGetAllV2, new ApiEndPoint("/reporting/reports", RequestType.GET)},
+            { MethodKey.ReportGetV2, new ApiEndPoint("/reporting/reports/{0}", RequestType.GET)},
 
             { MethodKey.SingleSignOnAll, new ApiEndPoint("/clients/ssos", RequestType.GET)},
             { MethodKey.SingleSignOnCreate, new ApiEndPoint("/clients/ssos", RequestType.POST)},
@@ -248,9 +255,10 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.DepositsCreate,new ApiEndPoint("/deposit-preauthorizations/card/direct",RequestType.POST)},
             { MethodKey.DepositsGet,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.GET)},
-            { MethodKey.DepositsCancel,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.PUT)},
+            { MethodKey.DepositsUpdate,new ApiEndPoint("/deposit-preauthorizations/{0}",RequestType.PUT)},
             { MethodKey.DepositsGetAllForCard, new ApiEndPoint("/cards/{0}/deposit-preauthorizations",RequestType.GET)},
             { MethodKey.DepositsGetAllForUser, new ApiEndPoint("/users/{0}/deposit-preauthorizations",RequestType.GET)},
+            { MethodKey.DepositsGetTransactions,new ApiEndPoint("/deposit-preauthorizations/{0}/transactions",RequestType.GET)},
 
             { MethodKey.GetConversionRate,new ApiEndPoint("/conversions/rate/{0}/{1}",RequestType.GET)},
             { MethodKey.CreateInstantConversion,new ApiEndPoint("/conversions/instant-conversion",RequestType.POST)},

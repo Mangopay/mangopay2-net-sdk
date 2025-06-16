@@ -948,11 +948,9 @@ namespace MangoPay.SDK.Tests
         {
             try
             {
-                var john = await this.GetJohn();
                 var transfer = await this.GetNewTransfer();
                 var pagination = new Pagination(1, 1);
-
-                var transactions = await this.Api.Users.GetTransactionsAsync(john.Id, pagination, new FilterTransactions());
+                var transactions = await this.Api.Users.GetTransactionsAsync(transfer.AuthorId, pagination, new FilterTransactions());
 
                 Assert.IsTrue(transactions.Count > 0);
 
@@ -963,13 +961,13 @@ namespace MangoPay.SDK.Tests
                 pagination = new Pagination(1, 2);
                 var sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.asc);
-                result = await this.Api.Users.GetTransactionsAsync(john.Id, pagination, new FilterTransactions(), sort);
+                result = await this.Api.Users.GetTransactionsAsync(transfer.AuthorId, pagination, new FilterTransactions(), sort);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Count > 0);
 
                 sort = new Sort();
                 sort.AddField("CreationDate", SortDirection.desc);
-                result2 = await this.Api.Users.GetTransactionsAsync(john.Id, pagination, new FilterTransactions(), sort);
+                result2 = await this.Api.Users.GetTransactionsAsync(transfer.AuthorId, pagination, new FilterTransactions(), sort);
                 Assert.IsNotNull(result2);
                 Assert.IsTrue(result2.Count > 0);
 
@@ -1532,6 +1530,33 @@ namespace MangoPay.SDK.Tests
                 string redirectUrl = ((ResponseException)ex).ResponseError.Data["RedirectUrl"];
                 Assert.IsNotNull(redirectUrl);
                 Assert.IsNotEmpty(redirectUrl);
+            }
+        }
+        
+        [Test]
+        public async Task Test_Users_ValidateDataFormat()
+        {
+            var post = new UserDataFormatValidationPostDTO()
+            {
+                CompanyNumber = new CompanyNumberValidation
+                {
+                    CompanyNumber = "AB123456",
+                    CountryCode = CountryIso.IT
+                }
+            };
+            var result = await Api.Users.ValidateUserDataFormat(post);
+            Assert.IsNotNull(result.CompanyNumber);
+
+            
+            try
+            {
+                post.CompanyNumber.CompanyNumber = "123";
+                await Api.Users.ValidateUserDataFormat(post);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is ResponseException);
+                Assert.Equals(400, ((ResponseException)ex).ResponseStatusCode);
             }
         }
     }
