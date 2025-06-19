@@ -1,4 +1,5 @@
 ﻿using System;
+using MangoPay.SDK.Core.Enumerations;
 
 namespace MangoPay.SDK.Core
 {
@@ -15,6 +16,9 @@ namespace MangoPay.SDK.Core
 
 		/// <summary>Specifies whether this end point URL is preceded by ClientId or not</summary>
 		public bool IncludeClientId { get; set; }
+		
+		/// <summary>Api Version</summary>
+		public ApiVersion ApiVersion { get; set; }
 
 		/// <summary>Adds an optional parameter to embed in the end point URL</summary>
 		public void SetParameters(string[] parameter)
@@ -38,11 +42,14 @@ namespace MangoPay.SDK.Core
 		/// <param name="urlPattern">End point URL fragment with optional placeholders for one or two parameters</param>
 		/// <param name="requestType">End point HTTP verb</param>
 		/// <param name="includeClientId">Specifies whether this end point URL is preceded by ClientId or not</param>
-		public ApiEndPoint(string urlPattern, string requestType, bool includeClientId = true)
+		/// <param name="apiVersion">Api Version. Default V2.01</param>
+		public ApiEndPoint(string urlPattern, string requestType, bool includeClientId = true, 
+			ApiVersion apiVersion = ApiVersion.V2_01)
 		{
 			UrlPattern = urlPattern;
 			RequestType = requestType;
 			IncludeClientId = includeClientId;
+			ApiVersion = apiVersion;
 		}
 
 		public object Clone()

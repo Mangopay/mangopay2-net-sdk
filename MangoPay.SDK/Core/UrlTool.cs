@@ -1,7 +1,7 @@
-﻿using MangoPay.SDK.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MangoPay.SDK.Entities;
 
 namespace MangoPay.SDK.Core
 {
@@ -28,32 +28,32 @@ namespace MangoPay.SDK.Core
             return baseUrl.Authority;
         }
 
-        /// <summary>Gets REST url.</summary>
-        /// <param name="urlKey">Url key.</param>
-        /// <returns>Final REST url.</returns>
-        public string GetRestUrl(string urlKey)
-        {
-			return GetRestUrl(urlKey, true, null, null, _root.Config.ApiVersion);
-        }
-
-        /// <summary>Gets REST url.</summary>
-        /// <param name="urlKey">Url key.</param>
-        /// <param name="addClientId">Denotes whether client identifier should be composed into final url.</param>
-        /// <returns>Final REST url.</returns>
-        public string GetRestUrl(string urlKey, Boolean addClientId)
-        {
-			return GetRestUrl(urlKey, addClientId, null, null, _root.Config.ApiVersion);
-        }
-
-        /// <summary>Gets REST url.</summary>
-        /// <param name="urlKey">Url key.</param>
-        /// <param name="addClientId">Denotes whether client identifier should be composed into final url.</param>
-        /// <param name="pagination">Pagination object.</param>
-        /// <returns>Final REST url.</returns>
-        public string GetRestUrl(string urlKey, Boolean addClientId, Pagination pagination)
-        {
-			return GetRestUrl(urlKey, addClientId, pagination, null, _root.Config.ApiVersion);
-        }
+   //      /// <summary>Gets REST url.</summary>
+   //      /// <param name="urlKey">Url key.</param>
+   //      /// <returns>Final REST url.</returns>
+   //      public string GetRestUrl(string urlKey)
+   //      {
+			// return GetRestUrl(urlKey, true, null, null, _root.Config.ApiVersion);
+   //      }
+   //
+   //      /// <summary>Gets REST url.</summary>
+   //      /// <param name="urlKey">Url key.</param>
+   //      /// <param name="addClientId">Denotes whether client identifier should be composed into final url.</param>
+   //      /// <returns>Final REST url.</returns>
+   //      public string GetRestUrl(string urlKey, Boolean addClientId)
+   //      {
+			// return GetRestUrl(urlKey, addClientId, null, null, _root.Config.ApiVersion);
+   //      }
+   //
+   //      /// <summary>Gets REST url.</summary>
+   //      /// <param name="urlKey">Url key.</param>
+   //      /// <param name="addClientId">Denotes whether client identifier should be composed into final url.</param>
+   //      /// <param name="pagination">Pagination object.</param>
+   //      /// <returns>Final REST url.</returns>
+   //      public string GetRestUrl(string urlKey, Boolean addClientId, Pagination pagination)
+   //      {
+			// return GetRestUrl(urlKey, addClientId, pagination, null, _root.Config.ApiVersion);
+   //      }
 
         /// <summary>Gets REST url.</summary>
         /// <param name="urlKey">Url key.</param>

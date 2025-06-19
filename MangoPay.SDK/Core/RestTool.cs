@@ -5,6 +5,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Common.Logging;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using RestSharp;
 
@@ -67,6 +68,9 @@ namespace MangoPay.SDK.Core
 
         // request type for current request
         private string _requestType;
+
+        // api version
+        private string _apiVersion;
 
         /// <summary>Whether to include ClientId in the API url or not</summary>
         private bool _includeClientId;
@@ -201,6 +205,7 @@ namespace MangoPay.SDK.Core
             this._requestType = endPoint.RequestType;
             this._includeClientId = endPoint.IncludeClientId;
             this._requestData = requestData;
+            this._apiVersion = GetApiVersionAsString(endPoint.ApiVersion);
 
             var responseResult = await this.DoRequestAsync<U, T>(endPoint.GetUrl(), entity, pagination,
                 additionalUrlParams, idempotentKey);
@@ -227,11 +232,17 @@ namespace MangoPay.SDK.Core
             this._requestType = endPoint.RequestType;
             this._includeClientId = endPoint.IncludeClientId;
             this._requestData = requestData;
+            this._apiVersion = GetApiVersionAsString(endPoint.ApiVersion);
 
             var responseResult =
                 await this.DoRequestListAsync<T>(endPoint.GetUrl(), additionalUrlParams, pagination, idempotentKey);
 
             return responseResult;
+        }
+        
+        private string GetApiVersionAsString(ApiVersion apiVersion)
+        {
+            return apiVersion == ApiVersion.V3_0 ? "V3.0" : "v2.01";
         }
 
         private async Task<U> DoRequestAsync<U, T>(string urlMethod, T entity = default, Pagination pagination = null,
@@ -239,7 +250,7 @@ namespace MangoPay.SDK.Core
             where U : new()
         {
             var restUrl = _urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination,
-                additionalUrlParams, _root.Config.ApiVersion);
+                additionalUrlParams, _apiVersion);
 
             _log.Debug("FullUrl: " + _urlTool.GetFullUrl(restUrl));
 
@@ -406,7 +417,7 @@ namespace MangoPay.SDK.Core
             ListPaginated<T> responseObject = null;
 
             var restUrl = _urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination,
-                additionalUrlParams, _root.Config.ApiVersion);
+                additionalUrlParams, _apiVersion);
 
             if (this._requestData != null)
             {
