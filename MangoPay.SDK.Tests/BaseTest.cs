@@ -1735,5 +1735,45 @@ namespace MangoPay.SDK.Tests
 
             return await this.Api.Deposits.CreateAsync(dto);
         }
+
+        protected async Task<PayInIntentDTO> CreateNewPayInIntentAuthorization()
+        {
+            var john = await GetJohn();
+            var wallet = await GetJohnsWallet();
+            var toCreate = new PayInIntentAuthorizationPostDTO
+            {
+                Amount = 1000,
+                Currency = CurrencyIso.EUR,
+                PlatformFeesAmount = 0,
+                ExternalData = new PayInIntentExternalData
+                {
+                    ExternalProcessingDate = "01-10-2024",
+                    ExternalProviderReference = new Random().Next(1000).ToString(),
+                    ExternalProviderName = "Stripe",
+                    ExternalProviderPaymentMethod = "PAYPAL"
+                },
+                Buyer = new PayInIntentBuyer
+                {
+                    Id = john.Id
+                },
+                LineItems = new List<PayInIntentLineItem>
+                {
+                    new PayInIntentLineItem
+                    {
+                        Seller = new PayInIntentSeller
+                        {
+                            WalletId = wallet.Id,
+                            TransferDate = "13-11-2030",
+                            FeesAmount = 0
+                        },
+                        Sku = "item-123456",
+                        Quantity = 1,
+                        UnitAmount = 1000
+                    }
+                }
+            };
+
+            return await Api.PayIns.CreatePayInIntentAuthorizationAsync(toCreate);
+        }
     }
 }

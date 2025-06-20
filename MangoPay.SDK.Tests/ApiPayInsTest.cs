@@ -2358,5 +2358,72 @@ namespace MangoPay.SDK.Tests
             deserialized = JsonConvert.DeserializeObject<PayInCardDirectDTO>(json, settings);
             Assert.AreEqual(CardInfoType.CHARGE_CARD, deserialized.CardInfo.Type);
         }
+
+        [Test]
+        public async Task Test_Create_PayInIntentAuthorization()
+        {
+            var created = await CreateNewPayInIntentAuthorization();
+            Assert.IsNotNull(created);
+            Assert.AreEqual("AUTHORIZED", created.Status);
+        }
+        
+        [Test]
+        public async Task Test_Create_PayInIntentFullCapture_NoParams()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var created =
+                await Api.PayIns.CreatePayInIntentFullCaptureAsync(new PayInIntentFullCapturePostDTO(), intent.Id);
+            Assert.IsNotNull(created);
+            Assert.AreEqual("CAPTURED", created.Status);
+        }
+        
+        [Test]
+        public async Task Test_Create_PayInIntentFullCapture()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var toCreate = new PayInIntentFullCapturePostDTO
+            {
+                ExternalData = new PayInIntentExternalData
+                {
+                    ExternalProcessingDate = "01-11-2024",
+                    ExternalProviderReference = new Random().Next(1000).ToString(),
+                    ExternalProviderName = "Stripe",
+                    ExternalProviderPaymentMethod = "PAYPAL"
+                }
+            };
+            var created = await Api.PayIns.CreatePayInIntentFullCaptureAsync(toCreate, intent.Id);
+            Assert.IsNotNull(created);
+            Assert.AreEqual("CAPTURED", created.Status);
+        }
+        
+        [Test]
+        public async Task Test_Create_PayInIntentPartialCapture()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var toCreate = new PayInIntentPartialCapturePostDTO
+            {
+                Amount = 1000,
+                Currency = CurrencyIso.EUR,
+                PlatformFeesAmount = 0,
+                ExternalData = new PayInIntentExternalData
+                {
+                    ExternalProcessingDate = "01-11-2024",
+                    ExternalProviderReference = new Random().Next(1000).ToString(),
+                    ExternalProviderName = "Stripe",
+                    ExternalProviderPaymentMethod = "PAYPAL"
+                },
+                LineItems = new List<PayInIntentLineItem>
+                {
+                    new PayInIntentLineItem
+                    {
+                        Id = intent.LineItems[0].Id,
+                        Amount = 1000
+                    }
+                }
+            };
+            var created = await Api.PayIns.CreatePayInIntentPartialCaptureAsync(toCreate, intent.Id);
+            Assert.IsNotNull(created);
+            Assert.AreEqual("CAPTURED", created.Status);
+        }
     }
 }

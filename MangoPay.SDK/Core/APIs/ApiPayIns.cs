@@ -546,5 +546,40 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.GetObjectAsync<ApplePayDirectPayinDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
+
+        /// <summary>Creates new payin intent authorization.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payInIntentAuthorization">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInIntentDTO> CreatePayInIntentAuthorizationAsync(
+            PayInIntentAuthorizationPostDTO payInIntentAuthorization, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInIntentDTO, PayInIntentAuthorizationPostDTO>(
+                MethodKey.PayInIntentAuthorizationCreate, payInIntentAuthorization, idempotentKey);
+        }
+        
+        /// <summary>Creates new payin intent full capture.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payInIntentFullCapture">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInIntentDTO> CreatePayInIntentFullCaptureAsync(
+            PayInIntentFullCapturePostDTO payInIntentFullCapture, string payInIntentId, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInIntentDTO, PayInIntentFullCapturePostDTO>(
+                MethodKey.PayInIntentCaptureCreate, payInIntentFullCapture, idempotentKey, entitiesId: payInIntentId);
+        }
+
+        /// <summary>Creates new payin intent partial capture.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payInIntentPartialCapture">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInIntentDTO> CreatePayInIntentPartialCaptureAsync(
+            PayInIntentPartialCapturePostDTO payInIntentPartialCapture, string payInIntentId,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInIntentDTO, PayInIntentPartialCapturePostDTO>(
+                MethodKey.PayInIntentCaptureCreate, payInIntentPartialCapture, idempotentKey,
+                entitiesId: payInIntentId);
+        }
     }
 }

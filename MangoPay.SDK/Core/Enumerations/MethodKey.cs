@@ -241,6 +241,9 @@
         RecipientGetPayoutMethods,
         RecipientGetSchema,
         RecipientValidate,
-        RecipientDeactivate
+        RecipientDeactivate,
+        
+        PayInIntentAuthorizationCreate,
+        PayInIntentCaptureCreate
     }
 }
