@@ -1,9 +1,9 @@
-﻿using MangoPay.SDK.Core.Enumerations;
-using MangoPay.SDK.Entities.GET;
-using MangoPay.SDK.Entities.PUT;
+﻿using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
-using System.Threading.Tasks;
+using MangoPay.SDK.Entities.GET;
 using MangoPay.SDK.Entities.POST;
+using MangoPay.SDK.Entities.PUT;
 
 namespace MangoPay.SDK.Core.APIs
 {
@@ -73,6 +73,21 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<CardValidationDTO> GetCardValidationAsync(string cardId, string cardValidationId)
         {
             return await this.GetObjectAsync<CardValidationDTO>(MethodKey.GetCardValidation, cardId, cardValidationId);
+        }
+        
+        /// <summary>
+        /// Gets a list of transactions for a fingerprint.
+        /// </summary>
+        /// <param name="fingerprint">The fingerprint hash</param>
+        /// <param name="pagination">The pagination object</param>
+        /// <param name="sort">The sort object</param>
+        /// <param name="filter">Transactions list filter</param>
+        /// <returns>List of Transactions</returns>
+        public async Task<ListPaginated<TransactionDTO>> GetTransactionsByFingerprintAsync(string fingerprint, 
+            FilterTransactions filter = null, Pagination pagination = null, Sort sort = null)
+        {
+            return await GetListAsync<TransactionDTO>(MethodKey.TransactionsByFingerprintGet, pagination, sort, 
+                entitiesId: fingerprint, additionalUrlParams: filter?.GetValues());
         }
     }
 }

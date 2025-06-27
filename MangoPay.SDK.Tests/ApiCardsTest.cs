@@ -1,13 +1,13 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core;
+using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
+using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using MangoPay.SDK.Entities;
-using MangoPay.SDK.Core;
-using System.Threading.Tasks;
-using MangoPay.SDK.Entities.POST;
 
 namespace MangoPay.SDK.Tests
 {
@@ -140,6 +140,16 @@ namespace MangoPay.SDK.Tests
             {
                 Assert.AreEqual(card.Fingerprint, cardDTO.Fingerprint);
             }
+        }
+        
+        [Test]
+        public async Task Test_Card_GetTransactionsByFingerprint()
+        {
+            var payIn = await GetNewPayInCardDirect();
+            var card = await Api.Cards.GetAsync(payIn.CardId);
+            var transactions = await Api.Cards.GetTransactionsByFingerprintAsync(card.Fingerprint);
+            
+            Assert.True(transactions.Count > 0, "Transactions list is empty");
         }
     }
 }

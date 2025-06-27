@@ -16,6 +16,7 @@
         GetCardValidation,
         CardTransactions,
         CardByFingerprintGet,
+        TransactionsByFingerprintGet,
         EventsAll,
         GooglePayinsDirectCreate,
         GooglePayinsDirectCreateV2,
