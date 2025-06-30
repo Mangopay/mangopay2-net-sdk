@@ -217,7 +217,7 @@ namespace MangoPay.SDK.Tests
 				result = await Api.Disputes.CreateDisputeDocumentAsync(documentPost, dispute.Id);
 
                 var assembly = Assembly.GetExecutingAssembly();
-                var fi = this.GetFileInfoOfFile(assembly.Location);
+                var fi = this.GetFileInfoOfFile(assembly.Location, "TestKycPageFile.png");
 				await Api.Disputes.CreateDisputePageAsync(dispute.Id, result.Id, fi.FullName);
 			}
 			catch (Exception ex)
@@ -423,7 +423,7 @@ namespace MangoPay.SDK.Tests
 					Assert.Fail("Cannot test submitting dispute's documents because there's no dispute document that can be updated.");
 
                 var assembly = Assembly.GetExecutingAssembly();
-                var fi = this.GetFileInfoOfFile(assembly.Location);
+                var fi = this.GetFileInfoOfFile(assembly.Location, "TestKycPageFile.png");
 				await Api.Disputes.CreateDisputePageAsync(dispute.Id, disputeDocument.Id, fi.FullName);
 
 				DisputeDocumentPutDTO disputeDocumentPut = new DisputeDocumentPutDTO
@@ -661,7 +661,7 @@ namespace MangoPay.SDK.Tests
 				DisputeDocumentPostDTO documentPost = new DisputeDocumentPostDTO(DisputeDocumentType.DELIVERY_PROOF);
 				var disputeDocument = await Api.Disputes.CreateDisputeDocumentAsync(documentPost, dispute.Id);
                 var assembly = Assembly.GetExecutingAssembly();
-                var fi = this.GetFileInfoOfFile(assembly.Location);
+                var fi = this.GetFileInfoOfFile(assembly.Location, "TestKycPageFile.png");
 				byte[] bytes = File.ReadAllBytes(fi.FullName);
 				await Api.Disputes.CreateDisputePageAsync(dispute.Id, disputeDocument.Id, bytes);
 

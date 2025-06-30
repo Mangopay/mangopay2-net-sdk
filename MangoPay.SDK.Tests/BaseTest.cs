@@ -1449,14 +1449,14 @@ namespace MangoPay.SDK.Tests
             return getCardRegistration;
         }
 
-        protected FileInfo GetFileInfoOfFile(string location)
+        protected FileInfo GetFileInfoOfFile(string location, string fileName)
         {
             var exit = false;
             var fi = new FileInfo(location);
             var directory = Directory.GetParent(location);
             do
             {
-                fi = directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).SingleOrDefault();
+                fi = directory.GetFiles(fileName, SearchOption.AllDirectories).SingleOrDefault();
                 if (fi == null)
                 {
                     directory = Directory.GetParent(directory.FullName);

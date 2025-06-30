@@ -286,7 +286,10 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.RecipientDeactivate, new ApiEndPoint("/recipients/{0}", RequestType.PUT) },
             
             { MethodKey.PayInIntentAuthorizationCreate, new ApiEndPoint("/payins/intents", RequestType.POST, apiVersion: ApiVersion.V3_0) },
-            { MethodKey.PayInIntentCaptureCreate, new ApiEndPoint("/payins/intents/{0}/captures", RequestType.POST, apiVersion: ApiVersion.V3_0) }
+            { MethodKey.PayInIntentCaptureCreate, new ApiEndPoint("/payins/intents/{0}/captures", RequestType.POST, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.SettlementCreate, new ApiEndPoint("/payins/intents/settlements", RequestType.POST, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.SettlementGet, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.GET, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.SettlementUpdate, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.PUT, apiVersion: ApiVersion.V3_0) }
         };
 
         /// <summary>Creates new API instance.</summary>
@@ -448,6 +451,27 @@ namespace MangoPay.SDK.Core.APIs
 
             var restTool = new RestTool(this.Root, true);
             await restTool.RequestAsync<object, object>(endPoint, null);
+        }
+
+        /// <summary>Execute POST or PUT with a multipart file</summary>
+        /// <typeparam name="T">Return type.</typeparam>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="file">The file to be processed</param>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="entitiesId">Entity identifier.</param>
+        /// <returns>The DTO instance returned from API.</returns>
+        protected async Task<T> CreateOrUpdateMultipartAsync<T>(
+            MethodKey methodKey,
+            byte[] file,
+            string idempotentKey = null,
+            params string[] entitiesId
+        )
+            where T : EntityBase, new()
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.SetParameters(entitiesId);
+            var restTool = new RestTool(this.Root, true);
+            return await restTool.RequestMultipartAsync<T>(endPoint, file, idempotentKey: idempotentKey);
         }
 
         protected Type GetObjectForIdempotencyUrl()

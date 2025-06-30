@@ -213,6 +213,25 @@ namespace MangoPay.SDK.Core
             return responseResult;
         }
 
+        /// <summary> Makes a call to the MangoPay API which contains a file </summary>
+        /// <typeparam name="T">Return type.</typeparam>
+        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
+        /// <param name="file">The file to be processed</param>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <returns>The DTO instance returned from API.</returns>
+        public async Task<T> RequestMultipartAsync<T>(
+            ApiEndPoint endPoint,
+            byte[] file,
+            string idempotentKey = null
+        )
+            where T : new()
+        {
+            _requestType = endPoint.RequestType;
+            _includeClientId = endPoint.IncludeClientId;
+            _apiVersion = GetApiVersionAsString(endPoint.ApiVersion);
+            return await DoRequestMultipartFileAsync<T>(endPoint.GetUrl(), file, idempotentKey);
+        }
+
         /// <summary>Makes a call to the MangoPay API. 
         /// This generic method handles calls targeting collections of 
         /// DTO instances. In order to process single objects, 
@@ -331,6 +350,65 @@ namespace MangoPay.SDK.Core
             SetLastRequestInfo(restRequest, restResponse);
 
             this.CheckResponseCode(restResponse);
+
+            return responseObject;
+        }
+
+        private async Task<T> DoRequestMultipartFileAsync<T>(
+            string urlPath,
+            byte[] file,
+            string idempotentKey = null
+        ) where T : new()
+        {
+            var restUrl = _urlTool.GetRestUrl(urlPath, _authRequired && _includeClientId, 
+                null, null, _apiVersion);
+
+            _log.Debug("FullUrl: " + _urlTool.GetFullUrl(restUrl));
+
+            var restRequest = new RestRequest(restUrl)
+            {
+                Method = (Method)Enum.Parse(typeof(Method), _requestType, true),
+            };
+            restRequest.AddFile("file", file, "settlement_file.csv", "multipart/form-data");
+
+            var headers = await this.GetHttpHeadersAsync(restUrl);
+            foreach (var h in headers)
+            {
+                // content type is set by restRequest.AddFile
+                if (h.Key != Constants.CONTENT_TYPE)
+                    restRequest.AddHeader(h.Key, h.Value);
+
+                if (h.Key != Constants.AUTHORIZATION)
+                    _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(idempotentKey))
+                restRequest.AddHeader(Constants.IDEMPOTENCY_KEY, idempotentKey);
+            
+            _log.Debug("RequestType: " + _requestType);
+            
+            var restResponse = await _dto.Client.ExecuteAsync<T>(restRequest);
+            var responseObject = restResponse.Data;
+
+            _responseCode = (int)restResponse.StatusCode;
+
+            if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
+            {
+                _log.Debug("Response OK: " + restResponse.Content);
+            }
+            else
+            {
+                _log.Debug("Response ERROR: " + restResponse.Content);
+            }
+
+            if (_responseCode == 200)
+            {
+                _log.Debug("Response object: " + responseObject);
+            }
+
+            SetLastRequestInfo(restRequest, restResponse);
+
+            CheckResponseCode(restResponse);
 
             return responseObject;
         }

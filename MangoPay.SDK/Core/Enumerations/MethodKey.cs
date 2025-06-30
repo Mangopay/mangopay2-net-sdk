@@ -244,6 +244,9 @@
         RecipientDeactivate,
         
         PayInIntentAuthorizationCreate,
-        PayInIntentCaptureCreate
+        PayInIntentCaptureCreate,
+        SettlementCreate,
+        SettlementGet,
+        SettlementUpdate
     }
 }
