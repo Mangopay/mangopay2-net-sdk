@@ -648,6 +648,70 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
+        public async Task Test_PayIns_Create_BizumWeb_With_Phone()
+        {
+            try
+            {
+                var user = await GetJohn();
+                var payIn = await GetNewPayInBizumWeb(true);
+                var fetched = await Api.PayIns.GetBizumAsync(payIn.Id);
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(PayInPaymentType.BIZUM, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.WEB, payIn.ExecutionType);
+                Assert.IsTrue(payIn.DebitedFunds is Money);
+                Assert.IsTrue(payIn.CreditedFunds is Money);
+                Assert.IsTrue(payIn.Fees is Money);
+                Assert.AreEqual(user.Id, payIn.AuthorId);
+                Assert.AreEqual(TransactionStatus.CREATED, payIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+                Assert.AreEqual(TransactionNature.REGULAR, payIn.Nature);
+
+                Assert.AreEqual(payIn.Id, fetched.Id);
+                Assert.IsNotNull(fetched.Id);
+                Assert.AreEqual(payIn.Phone, fetched.Phone);
+                Assert.AreEqual(null, fetched.ReturnURL);
+                Assert.AreEqual(null, payIn.ReturnURL);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+        
+        [Test]
+        public async Task Test_PayIns_Create_BizumWeb_With_ReturnUrl()
+        {
+            try
+            {
+                var user = await GetJohn();
+                var payIn = await GetNewPayInBizumWeb(false);
+                var fetched = await Api.PayIns.GetBizumAsync(payIn.Id);
+
+                Assert.IsTrue(payIn.Id.Length > 0);
+                Assert.AreEqual(PayInPaymentType.BIZUM, payIn.PaymentType);
+                Assert.AreEqual(PayInExecutionType.WEB, payIn.ExecutionType);
+                Assert.IsTrue(payIn.DebitedFunds is Money);
+                Assert.IsTrue(payIn.CreditedFunds is Money);
+                Assert.IsTrue(payIn.Fees is Money);
+                Assert.AreEqual(user.Id, payIn.AuthorId);
+                Assert.AreEqual(TransactionStatus.CREATED, payIn.Status);
+                Assert.AreEqual(TransactionType.PAYIN, payIn.Type);
+                Assert.AreEqual(TransactionNature.REGULAR, payIn.Nature);
+
+                Assert.AreEqual(payIn.Id, fetched.Id);
+                Assert.IsNotNull(fetched.Id);
+                Assert.AreEqual(null, fetched.Phone);
+                Assert.IsNotNull(fetched.RedirectURL);
+                Assert.IsNotNull(fetched.ReturnURL);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [Test]
         public async Task Test_PayIns_Create_PayByBankWeb()
         {
             try

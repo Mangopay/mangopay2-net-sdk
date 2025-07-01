@@ -44,6 +44,9 @@
         /// <summary> Satispay payment type </summary>
         SATISPAY,
         
+        /// <summary> Bizum payment type </summary>
+        BIZUM,
+        
         /// <summary> Blik payment type </summary>
         BLIK,
         

@@ -225,6 +225,16 @@ namespace MangoPay.SDK.Core.APIs
             return await this.CreateObjectAsync<PayInBancontactWebDTO, PayInBancontactWebPostDTO>(MethodKey.PayinsBancontactWebCreate, payIn, idempotentKey);
         }
 
+        /// <summary>Creates new payin bizum web.</summary>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="payIn">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInBizumWebDTO> CreateBizumWebAsync(PayInBizumWebPostDTO payIn, string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInBizumWebDTO, PayInBizumWebPostDTO>(MethodKey.PayinsBizumWebCreate,
+                payIn, idempotentKey);
+        }
+
         /// <summary>Gets PayIn entity by its identifier.</summary>
         /// <param name="payInId">PayIn identifier.</param>
         /// <returns>PayIn object returned from API.</returns>
@@ -400,6 +410,14 @@ namespace MangoPay.SDK.Core.APIs
         public async Task<PayInBancontactWebDTO> GetBancontactAsync(string payInId)
         {
             return await this.GetObjectAsync<PayInBancontactWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
+        }
+
+        /// <summary>Gets PayIn Bizum entity by its identifier.</summary>
+        /// <param name="payInId">PayIn identifier.</param>
+        /// <returns>PayIn object returned from API.</returns>
+        public async Task<PayInBizumWebDTO> GetBizumAsync(string payInId)
+        {
+            return await this.GetObjectAsync<PayInBizumWebDTO>(MethodKey.PayinsGet, entitiesId: payInId);
         }
 
         /// <summary>Gets PayIn PayByBank entity by its identifier.</summary>

@@ -30,6 +30,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.CardRegistrationGet, new ApiEndPoint("/cardregistrations/{0}", RequestType.GET)},
             { MethodKey.CardRegistrationSave, new ApiEndPoint("/cardregistrations/{0}", RequestType.PUT)},
             { MethodKey.CardByFingerprintGet, new ApiEndPoint("/cards/fingerprints/{0}", RequestType.GET)},
+            { MethodKey.TransactionsByFingerprintGet, new ApiEndPoint("/cards/fingerprints/{0}/transactions", RequestType.GET)},
 
             { MethodKey.PreauthorizationCreate, new ApiEndPoint("/preauthorizations/card/direct", RequestType.POST)},
             { MethodKey.PreauthorizationGet, new ApiEndPoint("/preauthorizations/{0}", RequestType.GET)},
@@ -75,6 +76,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsIdealWebCreate, new ApiEndPoint("/payins/payment-methods/ideal", RequestType.POST)},
             { MethodKey.PayinsGiropayWebCreate, new ApiEndPoint("/payins/payment-methods/giropay", RequestType.POST)},
             { MethodKey.PayinsBancontactWebCreate, new ApiEndPoint("/payins/payment-methods/bancontact", RequestType.POST)},
+            { MethodKey.PayinsBizumWebCreate, new ApiEndPoint("/payins/payment-methods/bizum", RequestType.POST)},
             { MethodKey.PayinsSwishWebCreate, new ApiEndPoint("/payins/payment-methods/swish", RequestType.POST)},
             { MethodKey.PayinsTwintWebCreate, new ApiEndPoint("/payins/payment-methods/twint", RequestType.POST)},
             { MethodKey.PayinsPayByBankWebCreate, new ApiEndPoint("/payins/payment-methods/openbanking", RequestType.POST) },
