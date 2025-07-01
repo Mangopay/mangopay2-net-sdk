@@ -75,6 +75,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsIdealWebCreate, new ApiEndPoint("/payins/payment-methods/ideal", RequestType.POST)},
             { MethodKey.PayinsGiropayWebCreate, new ApiEndPoint("/payins/payment-methods/giropay", RequestType.POST)},
             { MethodKey.PayinsBancontactWebCreate, new ApiEndPoint("/payins/payment-methods/bancontact", RequestType.POST)},
+            { MethodKey.PayinsBizumWebCreate, new ApiEndPoint("/payins/payment-methods/bizum", RequestType.POST)},
             { MethodKey.PayinsSwishWebCreate, new ApiEndPoint("/payins/payment-methods/swish", RequestType.POST)},
             { MethodKey.PayinsTwintWebCreate, new ApiEndPoint("/payins/payment-methods/twint", RequestType.POST)},
             { MethodKey.PayinsPayByBankWebCreate, new ApiEndPoint("/payins/payment-methods/openbanking", RequestType.POST) },

@@ -52,6 +52,7 @@
         PayinsIdealWebCreate,
         PayinsGiropayWebCreate,
         PayinsBancontactWebCreate,
+        PayinsBizumWebCreate,
         PayinsPayByBankWebCreate,
         GetPaymentMethodMetadata,
         PayoutsBankwireCreate,
