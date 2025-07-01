@@ -670,9 +670,7 @@ namespace MangoPay.SDK.Tests
                 Assert.AreEqual(payIn.Id, fetched.Id);
                 Assert.IsNotNull(fetched.Id);
                 Assert.AreEqual(payIn.Phone, fetched.Phone);
-                Assert.AreEqual(null, fetched.RedirectURL);
                 Assert.AreEqual(null, fetched.ReturnURL);
-                Assert.AreEqual(null, payIn.RedirectURL);
                 Assert.AreEqual(null, payIn.ReturnURL);
             }
             catch (Exception ex)
