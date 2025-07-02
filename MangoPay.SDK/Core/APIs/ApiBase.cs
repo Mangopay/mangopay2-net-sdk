@@ -463,6 +463,7 @@ namespace MangoPay.SDK.Core.APIs
         protected async Task<T> CreateOrUpdateMultipartAsync<T>(
             MethodKey methodKey,
             byte[] file,
+            string fileName,
             string idempotentKey = null,
             params string[] entitiesId
         )
@@ -471,7 +472,7 @@ namespace MangoPay.SDK.Core.APIs
             var endPoint = GetApiEndPoint(methodKey);
             endPoint.SetParameters(entitiesId);
             var restTool = new RestTool(this.Root, true);
-            return await restTool.RequestMultipartAsync<T>(endPoint, file, idempotentKey: idempotentKey);
+            return await restTool.RequestMultipartAsync<T>(endPoint, file, fileName, idempotentKey: idempotentKey);
         }
 
         protected Type GetObjectForIdempotencyUrl()

@@ -222,6 +222,7 @@ namespace MangoPay.SDK.Core
         public async Task<T> RequestMultipartAsync<T>(
             ApiEndPoint endPoint,
             byte[] file,
+            string fileName,
             string idempotentKey = null
         )
             where T : new()
@@ -229,7 +230,7 @@ namespace MangoPay.SDK.Core
             _requestType = endPoint.RequestType;
             _includeClientId = endPoint.IncludeClientId;
             _apiVersion = GetApiVersionAsString(endPoint.ApiVersion);
-            return await DoRequestMultipartFileAsync<T>(endPoint.GetUrl(), file, idempotentKey);
+            return await DoRequestMultipartFileAsync<T>(endPoint.GetUrl(), file, fileName, idempotentKey);
         }
 
         /// <summary>Makes a call to the MangoPay API. 
@@ -357,6 +358,7 @@ namespace MangoPay.SDK.Core
         private async Task<T> DoRequestMultipartFileAsync<T>(
             string urlPath,
             byte[] file,
+            string fileName,
             string idempotentKey = null
         ) where T : new()
         {
@@ -369,7 +371,7 @@ namespace MangoPay.SDK.Core
             {
                 Method = (Method)Enum.Parse(typeof(Method), _requestType, true),
             };
-            restRequest.AddFile("file", file, "settlement_file.csv", "multipart/form-data");
+            restRequest.AddFile("file", file, fileName, "multipart/form-data");
 
             var headers = await this.GetHttpHeadersAsync(restUrl);
             foreach (var h in headers)

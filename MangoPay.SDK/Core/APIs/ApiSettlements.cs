@@ -23,7 +23,7 @@ namespace MangoPay.SDK.Core.APIs
         )
         {
             return await CreateOrUpdateMultipartAsync<IntentSettlementDTO>(MethodKey.SettlementCreate, file,
-                idempotentKey);
+                "settlement_file.csv", idempotentKey);
         }
 
         /// <summary>Fetches details about a Settlement.</summary>
@@ -44,7 +44,7 @@ namespace MangoPay.SDK.Core.APIs
         )
         {
             return await CreateOrUpdateMultipartAsync<IntentSettlementDTO>(MethodKey.SettlementUpdate, file,
-                entitiesId: settlementId);
+                "settlement_file.csv", entitiesId: settlementId);
         }
     }
 }
