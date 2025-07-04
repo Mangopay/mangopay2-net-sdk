@@ -287,6 +287,7 @@ namespace MangoPay.SDK.Core.APIs
             
             { MethodKey.PayInIntentAuthorizationCreate, new ApiEndPoint("/payins/intents", RequestType.POST, apiVersion: ApiVersion.V3_0) },
             { MethodKey.PayInIntentCaptureCreate, new ApiEndPoint("/payins/intents/{0}/captures", RequestType.POST, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayInIntentGet, new ApiEndPoint("/payins/intents/{0}", RequestType.GET, apiVersion: ApiVersion.V3_0) },
             { MethodKey.SettlementCreate, new ApiEndPoint("/payins/intents/settlements", RequestType.POST, apiVersion: ApiVersion.V3_0) },
             { MethodKey.SettlementGet, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.GET, apiVersion: ApiVersion.V3_0) },
             { MethodKey.SettlementUpdate, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.PUT, apiVersion: ApiVersion.V3_0) }

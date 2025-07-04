@@ -2425,5 +2425,15 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(created);
             Assert.AreEqual("CAPTURED", created.Status);
         }
+
+        [Test]
+        public async Task Test_GetPayInIntent()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var fetched = await Api.PayIns.GetPayInIntentAsync(intent.Id);
+            Assert.IsNotNull(fetched.Id);
+            Assert.AreEqual(intent.Id, fetched.Id);
+            Assert.AreEqual(intent.Status, fetched.Status);
+        }
     }
 }

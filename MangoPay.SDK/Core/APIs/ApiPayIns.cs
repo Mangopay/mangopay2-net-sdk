@@ -581,5 +581,12 @@ namespace MangoPay.SDK.Core.APIs
                 MethodKey.PayInIntentCaptureCreate, payInIntentPartialCapture, idempotentKey,
                 entitiesId: payInIntentId);
         }
+        
+        /// <summary>Get a PayInIntent</summary>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInIntentDTO> GetPayInIntentAsync(string payInIntentId)
+        {
+            return await this.GetObjectAsync<PayInIntentDTO>(MethodKey.PayInIntentGet, entitiesId: payInIntentId);
+        }
     }
 }
