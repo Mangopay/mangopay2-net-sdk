@@ -1747,7 +1747,7 @@ namespace MangoPay.SDK.Tests
                 PlatformFeesAmount = 0,
                 ExternalData = new PayInIntentExternalData
                 {
-                    ExternalProcessingDate = "01-10-2024",
+                    ExternalProcessingDate = new DateTime(2024, 10, 01, 10, 0, 0),
                     ExternalProviderReference = new Random().Next(10000).ToString(),
                     ExternalProviderName = "Stripe",
                     ExternalProviderPaymentMethod = "PAYPAL"
@@ -1763,7 +1763,7 @@ namespace MangoPay.SDK.Tests
                         Seller = new PayInIntentSeller
                         {
                             WalletId = wallet.Id,
-                            TransferDate = "13-11-2030",
+                            TransferDate = new DateTime(2030, 11, 13, 0, 0, 0),
                             FeesAmount = 0
                         },
                         Sku = "item-123456",

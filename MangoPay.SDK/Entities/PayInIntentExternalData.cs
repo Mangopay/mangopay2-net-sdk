@@ -1,3 +1,7 @@
+using System;
+using MangoPay.SDK.Core;
+using Newtonsoft.Json;
+
 namespace MangoPay.SDK.Entities
 {
     public class PayInIntentExternalData
@@ -5,7 +9,8 @@ namespace MangoPay.SDK.Entities
         /// <summary>
         /// The date at which the transaction was created
         /// </summary>
-        public string ExternalProcessingDate { get; set; }
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime ExternalProcessingDate { get; set; }
 
         /// <summary>
         /// The unique identifier of the transaction at the provider level

@@ -1,3 +1,7 @@
+using System;
+using MangoPay.SDK.Core;
+using Newtonsoft.Json;
+
 namespace MangoPay.SDK.Entities
 {
     public class PayInIntentSeller
@@ -23,6 +27,7 @@ namespace MangoPay.SDK.Entities
         /// Information about the date when the funds are to be transferred to the seller’s wallet.
         /// Must be a date in the future.
         /// </summary>
-        public string TransferDate { get; set; }
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime TransferDate { get; set; }
     }
 }

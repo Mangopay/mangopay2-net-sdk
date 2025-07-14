@@ -1,3 +1,7 @@
+using System;
+using MangoPay.SDK.Core;
+using Newtonsoft.Json;
+
 namespace MangoPay.SDK.Entities.GET
 {
     public class IntentSettlementDTO : EntityBase
@@ -15,7 +19,8 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>
         /// The date at which the settlement was created by the external provider
         /// </summary>
-        public string SettlementDate { get; set; }
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime SettlementDate { get; set; }
         
         /// <summary>
         /// The name of the external provider
