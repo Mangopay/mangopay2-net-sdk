@@ -2435,5 +2435,42 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(intent.Id, fetched.Id);
             Assert.AreEqual(intent.Status, fetched.Status);
         }
+        
+        [Test]
+        public async Task Test_UpdatePayInIntent()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var john = await GetJohn(true);
+            var toUpdate = new PayInIntentPutDTO
+            {
+                Buyer = new PayInIntentBuyer
+                {
+                    Id = john.Id
+                }
+            };
+            
+            var updated = await Api.PayIns.UpdatePayInIntentAsync(intent.Id, toUpdate);
+            Assert.IsNotNull(updated.Id);
+            Assert.AreEqual(intent.Id, updated.Id);
+            Assert.AreEqual(intent.Buyer.Id, updated.Buyer.Id);
+        }
+        
+        [Test]
+        public async Task Test_CancelPayInIntent()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var toCancel = new PayInIntentCancelPutDTO
+            {
+                ExternalData = new PayInIntentExternalData
+                {
+                    ExternalProcessingDate = new DateTime(2024, 10, 01, 10, 0, 0),
+                    ExternalProviderReference = new Random().Next(10000).ToString(),
+                }
+            };
+            
+            var canceled = await Api.PayIns.CancelPayInIntentAsync(intent.Id, toCancel);
+            Assert.IsNotNull(canceled.Id);
+            Assert.AreEqual("CANCELED", canceled.Status);
+        }
     }
 }

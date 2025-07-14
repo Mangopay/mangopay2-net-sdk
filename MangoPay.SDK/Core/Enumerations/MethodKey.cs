@@ -246,6 +246,8 @@
         PayInIntentAuthorizationCreate,
         PayInIntentCaptureCreate,
         PayInIntentGet,
+        PayInIntentUpdate,
+        PayInIntentCancel,
         SettlementCreate,
         SettlementGet,
         SettlementUpdate
