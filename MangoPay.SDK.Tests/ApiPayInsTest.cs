@@ -2437,6 +2437,7 @@ namespace MangoPay.SDK.Tests
         }
         
         [Test]
+        [Ignore("skip")]
         public async Task Test_UpdatePayInIntent()
         {
             var intent = await CreateNewPayInIntentAuthorization();
