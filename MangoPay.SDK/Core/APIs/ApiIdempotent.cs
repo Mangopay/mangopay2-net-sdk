@@ -88,7 +88,8 @@ namespace MangoPay.SDK.Core.APIs
                 { MethodKey.RecipientCreate, typeof(RecipientDTO) },
                 { MethodKey.UsersValidateDataFormat, typeof(UserDataFormatValidationDTO) },
                 { MethodKey.ReportCreate, typeof(ReportDTO) },
-                { MethodKey.SettlementCreate, typeof(IntentSettlementDTO) }
+                { MethodKey.SettlementCreate, typeof(IntentSettlementDTO) },
+                { MethodKey.PayInIntentCreateSplits, typeof(IntentSplitsDTO) }
             };
         }
     }
