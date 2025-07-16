@@ -601,6 +601,7 @@ namespace MangoPay.SDK.Core.APIs
                 entitiesId: payInIntentId);
         }
         
+        /*
         /// <summary>
         /// Cancel an Intent
         /// </summary>
@@ -611,6 +612,18 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.UpdateObjectAsync<PayInIntentDTO, PayInIntentCancelPutDTO>(MethodKey.PayInIntentCancel, 
                 intent, entitiesId: payInIntentId);
+        }*/
+
+        /// <summary>Create PayInIntent Splits</summary>
+        /// <param name="payInIntentId">Intent identifier</param>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="splits">Object instance to be created.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<IntentSplitsDTO> CreatePayInIntentSplitsAsync(IntentSplitsPostDTO splits, string payInIntentId,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<IntentSplitsDTO, IntentSplitsPostDTO>(MethodKey.PayInIntentCreateSplits, 
+                splits, idempotentKey, entitiesId: payInIntentId);
         }
     }
 }

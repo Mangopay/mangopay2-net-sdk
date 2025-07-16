@@ -248,6 +248,7 @@
         PayInIntentGet,
         PayInIntentUpdate,
         PayInIntentCancel,
+        PayInIntentCreateSplits,
         SettlementCreate,
         SettlementGet,
         SettlementUpdate

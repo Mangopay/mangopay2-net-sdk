@@ -73,7 +73,7 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>
         /// Information about the amounts split against the intent
         /// </summary>
-        public List<PayInIntentSplit> Splits { get; set; }
+        public List<PayInIntentSplitInfo> Splits { get; set; }
 
         /// <summary>
         /// The unique identifier of the settlement linked to this intent in Mangopay ecosystem

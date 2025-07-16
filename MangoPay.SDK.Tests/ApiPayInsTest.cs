@@ -2456,7 +2456,7 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(intent.Buyer.Id, updated.Buyer.Id);
         }
         
-        [Test]
+        /*[Test]
         public async Task Test_CancelPayInIntent()
         {
             var intent = await CreateNewPayInIntentAuthorization();
@@ -2472,6 +2472,39 @@ namespace MangoPay.SDK.Tests
             var canceled = await Api.PayIns.CancelPayInIntentAsync(intent.Id, toCancel);
             Assert.IsNotNull(canceled.Id);
             Assert.AreEqual("CANCELED", canceled.Status);
+        }*/
+
+        [Test]
+        public async Task Test_CreatePayInIntentSplits()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var fullCapturePostDto = new PayInIntentFullCapturePostDTO
+            {
+                ExternalData = new PayInIntentExternalData
+                {
+                    ExternalProcessingDate = new DateTime(2024, 11, 01, 0, 0, 0),
+                    ExternalProviderReference = new Random().Next(1000).ToString(),
+                    ExternalProviderName = "Stripe",
+                    ExternalProviderPaymentMethod = "PAYPAL"
+                }
+            };
+            var fullCapture = await Api.PayIns.CreatePayInIntentFullCaptureAsync(fullCapturePostDto, intent.Id);
+
+            var split = new PayInIntentSplit
+            {
+                LineItemId = intent.LineItems[0].Id,
+                SplitAmount = 10
+            };
+
+            var splitsList = new List<PayInIntentSplit> { split };
+            var splitsDto = new IntentSplitsPostDTO
+            {
+                Splits = splitsList
+            };
+
+            var createdSplits = await Api.PayIns.CreatePayInIntentSplitsAsync(splitsDto, intent.Id);
+            Assert.IsNotNull(createdSplits);
+            Assert.AreEqual(1, createdSplits.Splits.Count);
         }
     }
 }

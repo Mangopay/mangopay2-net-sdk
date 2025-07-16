@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using MangoPay.SDK.Core;
 using Newtonsoft.Json;
 
@@ -8,35 +7,45 @@ namespace MangoPay.SDK.Entities
     public class PayInIntentSplit
     {
         /// <summary>
-        /// Unique identifier.
+        /// The unique identifier of an item in Mangopay ecosystem
         /// </summary>
-        public string Id { get; set; }
+        public string LineItemId { get; set; }
         
         /// <summary>
-        /// The date at which the object was created
+        /// The unique identifier of the seller providing the item (userId)
+        /// </summary>
+        public string SellerId { get; set; }
+        
+        /// <summary>
+        /// The unique identifier of the wallet to credit the seller funds
+        /// </summary>
+        public string WalletId { get; set; }
+        
+        /// <summary>
+        /// Information about the amount to be credited to the seller wallet
+        /// </summary>
+        public int SplitAmount { get; set; }
+        
+        /// <summary>
+        /// Information about the fees
+        /// </summary>
+        public int FeesAmount { get; set; }
+        
+        /// <summary>
+        /// Information about the date when the funds are to be transferred to the seller’s wallet.
+        /// Must be a date in the future.
         /// </summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime CreationDate { get; set; }
+        public DateTime? TransferDate { get; set; }
         
         /// <summary>
-        /// The date at which the object was successfully moved to CREATED
+        /// The description of the split object
         /// </summary>
-        [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime ExecutionDate { get; set; }
-        
-        /// <summary>
-        /// The split amount
-        /// </summary>
-        public int Amount { get; set; }
+        public string Description { get; set; }
         
         /// <summary>
         /// The status of the split
         /// </summary>
         public string Status { get; set; }
-        
-        /// <summary>
-        /// Information about the items captured in the transaction.
-        /// </summary>
-        public List<PayInIntentLineItem> LineItems { get; set; }
     }
 }
