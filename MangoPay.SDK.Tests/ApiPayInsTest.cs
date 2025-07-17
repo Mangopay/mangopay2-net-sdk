@@ -2483,7 +2483,7 @@ namespace MangoPay.SDK.Tests
                 ExternalData = new PayInIntentExternalData
                 {
                     ExternalProcessingDate = new DateTime(2024, 11, 01, 0, 0, 0),
-                    ExternalProviderReference = new Random().Next(1000).ToString(),
+                    ExternalProviderReference = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                     ExternalProviderName = "Stripe",
                     ExternalProviderPaymentMethod = "PAYPAL"
                 }
@@ -2505,6 +2505,7 @@ namespace MangoPay.SDK.Tests
             var createdSplits = await Api.PayIns.CreatePayInIntentSplitsAsync(splitsDto, intent.Id);
             Assert.IsNotNull(createdSplits);
             Assert.AreEqual(1, createdSplits.Splits.Count);
+            Assert.AreEqual("CREATED", createdSplits.Splits[0].Status);
         }
     }
 }
