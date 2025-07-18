@@ -23,7 +23,7 @@ namespace MangoPay.SDK.Tests
         {
             var settlement = await CreateNewSettlement();
             var fetched = await Api.ApiSettlements.Get(settlement.SettlementId);
-            Assert.AreEqual("fetched", settlement.Status);
+            Assert.AreEqual("UPLOADED", settlement.Status);
         }
         
         [Test]
