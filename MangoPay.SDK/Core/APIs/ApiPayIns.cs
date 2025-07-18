@@ -589,17 +589,17 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<PayInIntentDTO>(MethodKey.PayInIntentGet, entitiesId: payInIntentId);
         }
 
-        /// <summary>
-        /// Update an Intent
-        /// </summary>
-        /// <param name="payInIntentId">Intent identifier</param>
-        /// <param name="intent">Object containing the fields to be updated</param>
-        /// <returns>Object intent returned from API.</returns>
-        public async Task<PayInIntentDTO> UpdatePayInIntentAsync(string payInIntentId, PayInIntentPutDTO intent)
-        {
-            return await this.UpdateObjectAsync<PayInIntentDTO, PayInIntentPutDTO>(MethodKey.PayInIntentUpdate, intent,
-                entitiesId: payInIntentId);
-        }
+        // /// <summary>
+        // /// Update an Intent
+        // /// </summary>
+        // /// <param name="payInIntentId">Intent identifier</param>
+        // /// <param name="intent">Object containing the fields to be updated</param>
+        // /// <returns>Object intent returned from API.</returns>
+        // public async Task<PayInIntentDTO> UpdatePayInIntentAsync(string payInIntentId, PayInIntentPutDTO intent)
+        // {
+        //     return await this.UpdateObjectAsync<PayInIntentDTO, PayInIntentPutDTO>(MethodKey.PayInIntentUpdate, intent,
+        //         entitiesId: payInIntentId);
+        // }
         
         /*
         /// <summary>

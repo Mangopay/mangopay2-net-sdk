@@ -2434,7 +2434,7 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(intent.Status, fetched.Status);
         }
         
-        [Test]
+        /*[Test]
         [Ignore("skip")]
         public async Task Test_UpdatePayInIntent()
         {
@@ -2452,7 +2452,7 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(updated.Id);
             Assert.AreEqual(intent.Id, updated.Id);
             Assert.AreEqual(intent.Buyer.Id, updated.Buyer.Id);
-        }
+        }*/
         
         /*[Test]
         public async Task Test_CancelPayInIntent()
