@@ -285,7 +285,17 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.RecipientGetPayoutMethods, new ApiEndPoint("/recipients/payout-methods", RequestType.GET) },
             { MethodKey.RecipientGetSchema, new ApiEndPoint("/recipients/schema", RequestType.GET) },
             { MethodKey.RecipientValidate, new ApiEndPoint("/users/{0}/recipients/validate", RequestType.POST) },
-            { MethodKey.RecipientDeactivate, new ApiEndPoint("/recipients/{0}", RequestType.PUT) }
+            { MethodKey.RecipientDeactivate, new ApiEndPoint("/recipients/{0}", RequestType.PUT) },
+            
+            { MethodKey.PayInIntentAuthorizationCreate, new ApiEndPoint("/payins/intents", RequestType.POST, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayInIntentCaptureCreate, new ApiEndPoint("/payins/intents/{0}/captures", RequestType.POST, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayInIntentGet, new ApiEndPoint("/payins/intents/{0}", RequestType.GET, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayInIntentUpdate, new ApiEndPoint("/payins/intents/{0}", RequestType.PUT, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayInIntentCancel, new ApiEndPoint("/payins/intents/{0}/cancel", RequestType.PUT, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayInIntentCreateSplits, new ApiEndPoint("/payins/intents/{0}/splits", RequestType.POST, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.SettlementCreate, new ApiEndPoint("/payins/intents/settlements", RequestType.POST, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.SettlementGet, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.GET, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.SettlementUpdate, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.PUT, apiVersion: ApiVersion.V3_0) }
         };
 
         /// <summary>Creates new API instance.</summary>
@@ -447,6 +457,28 @@ namespace MangoPay.SDK.Core.APIs
 
             var restTool = new RestTool(this.Root, true);
             await restTool.RequestAsync<object, object>(endPoint, null);
+        }
+
+        /// <summary>Execute POST or PUT with a multipart file</summary>
+        /// <typeparam name="T">Return type.</typeparam>
+        /// <param name="methodKey">Relevant method key.</param>
+        /// <param name="file">The file to be processed</param>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <param name="entitiesId">Entity identifier.</param>
+        /// <returns>The DTO instance returned from API.</returns>
+        protected async Task<T> CreateOrUpdateMultipartAsync<T>(
+            MethodKey methodKey,
+            byte[] file,
+            string fileName,
+            string idempotentKey = null,
+            params string[] entitiesId
+        )
+            where T : EntityBase, new()
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.SetParameters(entitiesId);
+            var restTool = new RestTool(this.Root, true);
+            return await restTool.RequestMultipartAsync<T>(endPoint, file, fileName, idempotentKey: idempotentKey);
         }
 
         protected Type GetObjectForIdempotencyUrl()

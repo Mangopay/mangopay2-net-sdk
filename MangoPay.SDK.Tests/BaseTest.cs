@@ -95,7 +95,6 @@ namespace MangoPay.SDK.Tests
                     ClientId = "sdk-unit-tests",
                     ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju",
                     BaseUrl = "https://api.sandbox.mangopay.com",
-                    ApiVersion = "v2.01",
                     Timeout = 60000 // increase timeout because sandbox API takes longer than 15s to reply for transactions
 
                 }
@@ -1480,14 +1479,14 @@ namespace MangoPay.SDK.Tests
             return getCardRegistration;
         }
 
-        protected FileInfo GetFileInfoOfFile(string location)
+        protected FileInfo GetFileInfoOfFile(string location, string fileName)
         {
             var exit = false;
             var fi = new FileInfo(location);
             var directory = Directory.GetParent(location);
             do
             {
-                fi = directory.GetFiles("TestKycPageFile.png", SearchOption.AllDirectories).SingleOrDefault();
+                fi = directory.GetFiles(fileName, SearchOption.AllDirectories).SingleOrDefault();
                 if (fi == null)
                 {
                     directory = Directory.GetParent(directory.FullName);
@@ -1765,6 +1764,47 @@ namespace MangoPay.SDK.Tests
             );
 
             return await this.Api.Deposits.CreateAsync(dto);
+        }
+
+        protected async Task<PayInIntentDTO> CreateNewPayInIntentAuthorization()
+        {
+            var john = await GetJohn();
+            var wallet = await GetJohnsWallet();
+            var toCreate = new PayInIntentAuthorizationPostDTO
+            {
+                Amount = 1000,
+                Currency = CurrencyIso.EUR,
+                PlatformFeesAmount = 0,
+                ExternalData = new PayInIntentExternalData
+                {
+                    ExternalProcessingDate = new DateTime(2024, 10, 01, 10, 0, 0),
+                    ExternalProviderReference = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                    ExternalProviderName = "Stripe",
+                    ExternalProviderPaymentMethod = "PAYPAL"
+                },
+                Buyer = new PayInIntentBuyer
+                {
+                    Id = john.Id
+                },
+                LineItems = new List<PayInIntentLineItem>
+                {
+                    new PayInIntentLineItem
+                    {
+                        Seller = new PayInIntentSeller
+                        {
+                            WalletId = wallet.Id,
+                            AuthorId = wallet.Owners[0],
+                            TransferDate = new DateTime(2030, 11, 13, 0, 0, 0),
+                            FeesAmount = 0
+                        },
+                        Sku = "item-123456",
+                        Quantity = 1,
+                        UnitAmount = 1000
+                    }
+                }
+            };
+
+            return await Api.PayIns.CreatePayInIntentAuthorizationAsync(toCreate);
         }
     }
 }

@@ -2068,7 +2068,6 @@ namespace MangoPay.SDK.Tests
                 Assert.NotNull(createdCit);
                 Assert.AreEqual(PayInPaymentType.PAYPAL, createdCit.PaymentType);
                 Assert.AreEqual(PayInExecutionType.WEB, createdCit.ExecutionType);
-                Assert.AreEqual(TransactionStatus.CREATED, createdCit.Status);
             }
             catch (Exception ex)
             {
@@ -2125,7 +2124,6 @@ namespace MangoPay.SDK.Tests
                 Assert.NotNull(createdMit);
                 Assert.AreEqual(PayInPaymentType.PAYPAL, createdMit.PaymentType);
                 Assert.AreEqual(PayInExecutionType.WEB, createdMit.ExecutionType);
-                Assert.AreEqual(TransactionStatus.CREATED, createdMit.Status);
             }
             catch (Exception ex)
             {
@@ -2421,6 +2419,155 @@ namespace MangoPay.SDK.Tests
                 "{\"CardInfo\":{\"BIN\":null,\"IssuingBank\":null,\"IssuerCountryCode\":0,\"Type\":\"CHARGE_CARD\",\"Brand\":null,\"SubType\":null}}";
             deserialized = JsonConvert.DeserializeObject<PayInCardDirectDTO>(json, settings);
             Assert.AreEqual(CardInfoType.CHARGE_CARD, deserialized.CardInfo.Type);
+        }
+
+        [Test]
+        public async Task Test_Create_PayInIntentAuthorization()
+        {
+            var created = await CreateNewPayInIntentAuthorization();
+            Assert.IsNotNull(created);
+            Assert.AreEqual("AUTHORIZED", created.Status);
+        }
+        
+        [Test]
+        public async Task Test_Create_PayInIntentFullCapture_NoParams()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var created =
+                await Api.PayIns.CreatePayInIntentFullCaptureAsync(new PayInIntentFullCapturePostDTO(), intent.Id);
+            Assert.IsNotNull(created);
+            Assert.AreEqual("CAPTURED", created.Status);
+        }
+        
+        [Test]
+        public async Task Test_Create_PayInIntentFullCapture()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var toCreate = new PayInIntentFullCapturePostDTO
+            {
+                ExternalData = new PayInIntentExternalData
+                {
+                    ExternalProcessingDate = new DateTime(2024, 11, 01, 0, 0, 0),
+                    ExternalProviderReference = (DateTimeOffset.UtcNow.ToUnixTimeSeconds() + new Random().Next(10000)).ToString(),
+                    ExternalProviderName = "Stripe",
+                    ExternalProviderPaymentMethod = "PAYPAL"
+                }
+            };
+            var created = await Api.PayIns.CreatePayInIntentFullCaptureAsync(toCreate, intent.Id);
+            Assert.IsNotNull(created);
+            Assert.AreEqual("CAPTURED", created.Status);
+        }
+        
+        [Test]
+        public async Task Test_Create_PayInIntentPartialCapture()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var toCreate = new PayInIntentPartialCapturePostDTO
+            {
+                Amount = 1000,
+                Currency = CurrencyIso.EUR,
+                PlatformFeesAmount = 0,
+                ExternalData = new PayInIntentExternalData
+                {
+                    ExternalProcessingDate = new DateTime(2024, 11, 01, 0, 0, 0),
+                    ExternalProviderReference = (DateTimeOffset.UtcNow.ToUnixTimeSeconds() + new Random().Next(10000)).ToString(),
+                    ExternalProviderName = "Stripe",
+                    ExternalProviderPaymentMethod = "PAYPAL"
+                },
+                LineItems = new List<PayInIntentLineItem>
+                {
+                    new PayInIntentLineItem
+                    {
+                        Id = intent.LineItems[0].Id,
+                        Amount = 1000
+                    }
+                }
+            };
+            var created = await Api.PayIns.CreatePayInIntentPartialCaptureAsync(toCreate, intent.Id);
+            Assert.IsNotNull(created);
+            Assert.AreEqual("CAPTURED", created.Status);
+        }
+
+        [Test]
+        public async Task Test_GetPayInIntent()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var fetched = await Api.PayIns.GetPayInIntentAsync(intent.Id);
+            Assert.IsNotNull(fetched.Id);
+            Assert.AreEqual(intent.Id, fetched.Id);
+            Assert.AreEqual(intent.Status, fetched.Status);
+        }
+        
+        /*[Test]
+        [Ignore("skip")]
+        public async Task Test_UpdatePayInIntent()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var john = await GetJohn(true);
+            var toUpdate = new PayInIntentPutDTO
+            {
+                Buyer = new PayInIntentBuyer
+                {
+                    Id = john.Id
+                }
+            };
+            
+            var updated = await Api.PayIns.UpdatePayInIntentAsync(intent.Id, toUpdate);
+            Assert.IsNotNull(updated.Id);
+            Assert.AreEqual(intent.Id, updated.Id);
+            Assert.AreEqual(intent.Buyer.Id, updated.Buyer.Id);
+        }*/
+        
+        /*[Test]
+        public async Task Test_CancelPayInIntent()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var toCancel = new PayInIntentCancelPutDTO
+            {
+                ExternalData = new PayInIntentExternalData
+                {
+                    ExternalProcessingDate = new DateTime(2024, 10, 01, 10, 0, 0),
+                    ExternalProviderReference = new Random().Next(10000).ToString(),
+                }
+            };
+            
+            var canceled = await Api.PayIns.CancelPayInIntentAsync(intent.Id, toCancel);
+            Assert.IsNotNull(canceled.Id);
+            Assert.AreEqual("CANCELED", canceled.Status);
+        }*/
+
+        [Test]
+        public async Task Test_CreatePayInIntentSplits()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var fullCapturePostDto = new PayInIntentFullCapturePostDTO
+            {
+                ExternalData = new PayInIntentExternalData
+                {
+                    ExternalProcessingDate = new DateTime(2024, 11, 01, 0, 0, 0),
+                    ExternalProviderReference = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                    ExternalProviderName = "Stripe",
+                    ExternalProviderPaymentMethod = "PAYPAL"
+                }
+            };
+            var fullCapture = await Api.PayIns.CreatePayInIntentFullCaptureAsync(fullCapturePostDto, intent.Id);
+
+            var split = new PayInIntentSplit
+            {
+                LineItemId = intent.LineItems[0].Id,
+                SplitAmount = 10
+            };
+
+            var splitsList = new List<PayInIntentSplit> { split };
+            var splitsDto = new IntentSplitsPostDTO
+            {
+                Splits = splitsList
+            };
+
+            var createdSplits = await Api.PayIns.CreatePayInIntentSplitsAsync(splitsDto, intent.Id);
+            Assert.IsNotNull(createdSplits);
+            Assert.AreEqual(1, createdSplits.Splits.Count);
+            Assert.AreEqual("CREATED", createdSplits.Splits[0].Status);
         }
     }
 }

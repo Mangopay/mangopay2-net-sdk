@@ -1,4 +1,5 @@
-﻿using Common.Logging;
+﻿using System;
+using Common.Logging;
 using Common.Logging.Simple;
 
 namespace MangoPay.SDK.Core
@@ -24,6 +25,7 @@ namespace MangoPay.SDK.Core
         public bool UKHeaderFlag = false;
 
 		/// <summary>API version (added in dashboard's SDK only in order to handle both old and new address fields).</summary>
+		[Obsolete("API versioning will be handled internally")]
 		public string ApiVersion = "v2.01";
 
         /// <summary>Logger adapter implementation (default: NoOpLoggerFactoryAdapter).</summary>

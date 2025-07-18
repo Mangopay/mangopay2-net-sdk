@@ -236,7 +236,7 @@ namespace MangoPay.SDK.Tests
         public async Task Test_ClientLogo()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var fi = this.GetFileInfoOfFile(assembly.Location);
+            var fi = this.GetFileInfoOfFile(assembly.Location, "TestKycPageFile.png");
 
             await this.Api.Clients.UploadLogoAsync(fi.FullName);
             await this.Api.Clients.UploadLogoAsync(File.ReadAllBytes(fi.FullName));

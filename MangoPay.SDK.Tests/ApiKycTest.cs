@@ -1,6 +1,4 @@
-﻿using MangoPay.SDK.Entities.GET;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +6,8 @@ using System.Threading.Tasks;
 using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
+using MangoPay.SDK.Entities.GET;
+using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
 {
@@ -76,7 +76,7 @@ namespace MangoPay.SDK.Tests
                 var kycDocument = await this.GetNewKycDocument();
 
                 var assembly = Assembly.GetExecutingAssembly();
-                var fi = this.GetFileInfoOfFile(assembly.Location);
+                var fi = this.GetFileInfoOfFile(assembly.Location, "TestKycPageFile.png");
                 var bytes = File.ReadAllBytes(fi.FullName);
 				await Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, bytes);
 				await Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, bytes);

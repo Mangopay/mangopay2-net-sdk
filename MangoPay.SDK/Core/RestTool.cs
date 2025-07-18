@@ -5,6 +5,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Common.Logging;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using RestSharp;
 
@@ -67,6 +68,9 @@ namespace MangoPay.SDK.Core
 
         // request type for current request
         private string _requestType;
+
+        // api version
+        private string _apiVersion;
 
         /// <summary>Whether to include ClientId in the API url or not</summary>
         private bool _includeClientId;
@@ -201,11 +205,32 @@ namespace MangoPay.SDK.Core
             this._requestType = endPoint.RequestType;
             this._includeClientId = endPoint.IncludeClientId;
             this._requestData = requestData;
+            this._apiVersion = GetApiVersionAsString(endPoint.ApiVersion);
 
             var responseResult = await this.DoRequestAsync<U, T>(endPoint.GetUrl(), entity, pagination,
                 additionalUrlParams, idempotentKey);
 
             return responseResult;
+        }
+
+        /// <summary> Makes a call to the MangoPay API which contains a file </summary>
+        /// <typeparam name="T">Return type.</typeparam>
+        /// <param name="endPoint">An instance of <see cref="ApiEndPoint"/> that specifies API url and method to call</param>
+        /// <param name="file">The file to be processed</param>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <returns>The DTO instance returned from API.</returns>
+        public async Task<T> RequestMultipartAsync<T>(
+            ApiEndPoint endPoint,
+            byte[] file,
+            string fileName,
+            string idempotentKey = null
+        )
+            where T : new()
+        {
+            _requestType = endPoint.RequestType;
+            _includeClientId = endPoint.IncludeClientId;
+            _apiVersion = GetApiVersionAsString(endPoint.ApiVersion);
+            return await DoRequestMultipartFileAsync<T>(endPoint.GetUrl(), file, fileName, idempotentKey);
         }
 
         /// <summary>Makes a call to the MangoPay API. 
@@ -227,11 +252,17 @@ namespace MangoPay.SDK.Core
             this._requestType = endPoint.RequestType;
             this._includeClientId = endPoint.IncludeClientId;
             this._requestData = requestData;
+            this._apiVersion = GetApiVersionAsString(endPoint.ApiVersion);
 
             var responseResult =
                 await this.DoRequestListAsync<T>(endPoint.GetUrl(), additionalUrlParams, pagination, idempotentKey);
 
             return responseResult;
+        }
+        
+        private string GetApiVersionAsString(ApiVersion apiVersion)
+        {
+            return apiVersion == ApiVersion.V3_0 ? "V3.0" : "v2.01";
         }
 
         private async Task<U> DoRequestAsync<U, T>(string urlMethod, T entity = default, Pagination pagination = null,
@@ -239,7 +270,7 @@ namespace MangoPay.SDK.Core
             where U : new()
         {
             var restUrl = _urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination,
-                additionalUrlParams, _root.Config.ApiVersion);
+                additionalUrlParams, _apiVersion);
 
             _log.Debug("FullUrl: " + _urlTool.GetFullUrl(restUrl));
 
@@ -320,6 +351,66 @@ namespace MangoPay.SDK.Core
             SetLastRequestInfo(restRequest, restResponse);
 
             this.CheckResponseCode(restResponse);
+
+            return responseObject;
+        }
+
+        private async Task<T> DoRequestMultipartFileAsync<T>(
+            string urlPath,
+            byte[] file,
+            string fileName,
+            string idempotentKey = null
+        ) where T : new()
+        {
+            var restUrl = _urlTool.GetRestUrl(urlPath, _authRequired && _includeClientId, 
+                null, null, _apiVersion);
+
+            _log.Debug("FullUrl: " + _urlTool.GetFullUrl(restUrl));
+
+            var restRequest = new RestRequest(restUrl)
+            {
+                Method = (Method)Enum.Parse(typeof(Method), _requestType, true),
+            };
+            restRequest.AddFile("file", file, fileName, "multipart/form-data");
+
+            var headers = await this.GetHttpHeadersAsync(restUrl);
+            foreach (var h in headers)
+            {
+                // content type is set by restRequest.AddFile
+                if (h.Key != Constants.CONTENT_TYPE)
+                    restRequest.AddHeader(h.Key, h.Value);
+
+                if (h.Key != Constants.AUTHORIZATION)
+                    _log.Debug("HTTP Header: " + h.Key + ": " + h.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(idempotentKey))
+                restRequest.AddHeader(Constants.IDEMPOTENCY_KEY, idempotentKey);
+            
+            _log.Debug("RequestType: " + _requestType);
+            
+            var restResponse = await _dto.Client.ExecuteAsync<T>(restRequest);
+            var responseObject = restResponse.Data;
+
+            _responseCode = (int)restResponse.StatusCode;
+
+            if (restResponse.StatusCode == HttpStatusCode.OK || restResponse.StatusCode == HttpStatusCode.NoContent)
+            {
+                _log.Debug("Response OK: " + restResponse.Content);
+            }
+            else
+            {
+                _log.Debug("Response ERROR: " + restResponse.Content);
+            }
+
+            if (_responseCode == 200)
+            {
+                _log.Debug("Response object: " + responseObject);
+            }
+
+            SetLastRequestInfo(restRequest, restResponse);
+
+            CheckResponseCode(restResponse);
 
             return responseObject;
         }
@@ -406,7 +497,7 @@ namespace MangoPay.SDK.Core
             ListPaginated<T> responseObject = null;
 
             var restUrl = _urlTool.GetRestUrl(urlMethod, this._authRequired && this._includeClientId, pagination,
-                additionalUrlParams, _root.Config.ApiVersion);
+                additionalUrlParams, _apiVersion);
 
             if (this._requestData != null)
             {

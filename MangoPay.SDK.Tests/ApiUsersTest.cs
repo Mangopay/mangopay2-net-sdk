@@ -821,7 +821,7 @@ namespace MangoPay.SDK.Tests
                 var kycDocument = await this.GetJohnsKycDocument();
 
                 var assembly = Assembly.GetExecutingAssembly();
-                var fi = this.GetFileInfoOfFile(assembly.Location);
+                var fi = this.GetFileInfoOfFile(assembly.Location, "TestKycPageFile.png");
 
                 await this.Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, fi.FullName);
 
@@ -872,7 +872,7 @@ namespace MangoPay.SDK.Tests
                 var kycDocument = await this.GetNewKycDocument();
 
                 var assembly = Assembly.GetExecutingAssembly();
-                var fi = this.GetFileInfoOfFile(assembly.Location);
+                var fi = this.GetFileInfoOfFile(assembly.Location, "TestKycPageFile.png");
 
                 await this.Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, fi.FullName);
             }
@@ -891,7 +891,7 @@ namespace MangoPay.SDK.Tests
                 var kycDocument = await this.GetNewKycDocument();
 
                 var assembly = Assembly.GetExecutingAssembly();
-                var fi = this.GetFileInfoOfFile(assembly.Location);
+                var fi = this.GetFileInfoOfFile(assembly.Location, "TestKycPageFile.png");
                 var bytes = File.ReadAllBytes(fi.FullName);
 
                 await this.Api.Users.CreateKycPageAsync(john.Id, kycDocument.Id, bytes);
