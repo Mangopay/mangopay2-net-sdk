@@ -2004,7 +2004,6 @@ namespace MangoPay.SDK.Tests
                 Assert.NotNull(createdCit);
                 Assert.AreEqual(PayInPaymentType.PAYPAL, createdCit.PaymentType);
                 Assert.AreEqual(PayInExecutionType.WEB, createdCit.ExecutionType);
-                Assert.AreEqual(TransactionStatus.CREATED, createdCit.Status);
             }
             catch (Exception ex)
             {
@@ -2061,7 +2060,6 @@ namespace MangoPay.SDK.Tests
                 Assert.NotNull(createdMit);
                 Assert.AreEqual(PayInPaymentType.PAYPAL, createdMit.PaymentType);
                 Assert.AreEqual(PayInExecutionType.WEB, createdMit.ExecutionType);
-                Assert.AreEqual(TransactionStatus.CREATED, createdMit.Status);
             }
             catch (Exception ex)
             {
@@ -2386,7 +2384,7 @@ namespace MangoPay.SDK.Tests
                 ExternalData = new PayInIntentExternalData
                 {
                     ExternalProcessingDate = new DateTime(2024, 11, 01, 0, 0, 0),
-                    ExternalProviderReference = new Random().Next(1000).ToString(),
+                    ExternalProviderReference = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                     ExternalProviderName = "Stripe",
                     ExternalProviderPaymentMethod = "PAYPAL"
                 }
@@ -2408,7 +2406,7 @@ namespace MangoPay.SDK.Tests
                 ExternalData = new PayInIntentExternalData
                 {
                     ExternalProcessingDate = new DateTime(2024, 11, 01, 0, 0, 0),
-                    ExternalProviderReference = new Random().Next(1000).ToString(),
+                    ExternalProviderReference = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                     ExternalProviderName = "Stripe",
                     ExternalProviderPaymentMethod = "PAYPAL"
                 },

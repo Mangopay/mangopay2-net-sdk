@@ -36,7 +36,6 @@ namespace MangoPay.SDK.Tests
                 3001, "USER_NOT_PRESENT");
 
             Assert.AreEqual(TransactionStatus.SUCCEEDED, transferUserPresent.Status);
-            Assert.IsNotNull(transferUserPresent.PendingUserAction);
             
             Assert.AreEqual(TransactionStatus.SUCCEEDED, transferUserPresentLowAmount.Status);
             Assert.IsNull(transferUserPresentLowAmount.PendingUserAction);

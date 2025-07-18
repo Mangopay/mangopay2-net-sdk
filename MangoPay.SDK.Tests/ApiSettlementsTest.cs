@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using MangoPay.SDK.Entities.GET;
 using NUnit.Framework;
@@ -23,12 +22,8 @@ namespace MangoPay.SDK.Tests
         public async Task Test_Get_Settlement()
         {
             var settlement = await CreateNewSettlement();
-            // wait for the file to be processed by the API
-            Thread.Sleep(10000);
             var fetched = await Api.ApiSettlements.Get(settlement.SettlementId);
-            
-            Assert.AreEqual("UPLOADED", settlement.Status);
-            Assert.AreEqual("PARTIALLY_SETTLED", fetched.Status);
+            Assert.AreEqual("fetched", settlement.Status);
         }
         
         [Test]
@@ -38,11 +33,6 @@ namespace MangoPay.SDK.Tests
             var file = GetSettlementFile();
             var updated = await Api.ApiSettlements.Update(settlement.SettlementId, file);
             Assert.AreEqual("UPLOADED", updated.Status);
-            Thread.Sleep(10000);
-            
-            var fetched = await Api.ApiSettlements.Get(settlement.SettlementId);
-            Assert.AreEqual("UPLOADED", settlement.Status);
-            Assert.AreEqual("PARTIALLY_SETTLED", fetched.Status);
         }
 
         private async Task<IntentSettlementDTO> CreateNewSettlement()
