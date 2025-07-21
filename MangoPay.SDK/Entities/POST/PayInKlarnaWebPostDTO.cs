@@ -80,15 +80,5 @@ namespace MangoPay.SDK.Entities.POST
         
         ///<summary> Information about the shipping address
         public Shipping Shipping { get; set; }
-        
-        /// <summary>
-        /// The unique identifier of the line item.
-        /// </summary>
-        public string Sku { get; set; }
-        
-        /// <summary>
-        /// The category of the item, allowing line items of different types to be distinguished
-        /// </summary>
-        public string Category { get; set; }
     }
 }

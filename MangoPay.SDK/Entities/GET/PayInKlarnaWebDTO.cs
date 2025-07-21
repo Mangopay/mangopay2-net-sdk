@@ -38,15 +38,5 @@ namespace MangoPay.SDK.Entities.GET
         
         /// <summary> The Klarna option that the end-user has chosen at checkout
         public string PaymentMethod { get; set; }
-        
-        /// <summary>
-        /// The unique identifier of the line item.
-        /// </summary>
-        public string Sku { get; set; }
-        
-        /// <summary>
-        /// The category of the item, allowing line items of different types to be distinguished
-        /// </summary>
-        public string Category { get; set; }
     }
 }
