@@ -37,7 +37,14 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(Api.LastRequestInfo.RateLimitingTimeTillReset);
                 Assert.IsNotNull(Api.LastRequestInfo.RateLimitingCallsMade);
                 Assert.IsNotNull(Api.LastRequestInfo.RateLimits);
-                Assert.True(Api.LastRequestInfo.RateLimits.Count > 0);
+                Assert.True(Api.LastRequestInfo.RateLimits.Count == 6);
+                
+                Assert.AreEqual(1, Api.LastRequestInfo.RateLimits[0].IntervalMinutes);
+                Assert.AreEqual(5, Api.LastRequestInfo.RateLimits[1].IntervalMinutes);
+                Assert.AreEqual(15, Api.LastRequestInfo.RateLimits[2].IntervalMinutes);
+                Assert.AreEqual(30, Api.LastRequestInfo.RateLimits[3].IntervalMinutes);
+                Assert.AreEqual(60, Api.LastRequestInfo.RateLimits[4].IntervalMinutes);
+                Assert.AreEqual(1440, Api.LastRequestInfo.RateLimits[5].IntervalMinutes);
             }
             catch (Exception ex)
             {
