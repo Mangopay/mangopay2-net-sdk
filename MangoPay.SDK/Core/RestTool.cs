@@ -455,7 +455,15 @@ namespace MangoPay.SDK.Core
                     RateLimit rateLimit = new RateLimit();
                     var numberOfMinutes = (rateLimitReset[i] - currentTime) / 60;
 
-                    if (numberOfMinutes <= 15)
+                    if (numberOfMinutes <= 1)
+                    {
+                        rateLimit.IntervalMinutes = 1;
+                    }
+                    else if (numberOfMinutes <= 5)
+                    {
+                        rateLimit.IntervalMinutes = 5;
+                    }
+                    else if (numberOfMinutes <= 15)
                     {
                         rateLimit.IntervalMinutes = 15;
                     }
