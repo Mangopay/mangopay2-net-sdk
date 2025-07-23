@@ -23,6 +23,14 @@ namespace MangoPay.SDK.Entities
         /// </summary>
         public string Description { get; set; }
         
+        /// <summary>
+        /// The category of the item, allowing line items of different types to be distinguished
+        /// </summary>
         public string Category { get; set; }
+        
+        /// <summary>
+        /// The unique identifier of the line item.
+        /// </summary>
+        public string Sku { get; set; }
     }
 }
