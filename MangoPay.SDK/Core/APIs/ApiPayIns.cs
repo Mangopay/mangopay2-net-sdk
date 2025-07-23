@@ -643,5 +643,18 @@ namespace MangoPay.SDK.Core.APIs
             return await this.CreateObjectAsync<IntentSplitsDTO, IntentSplitsPostDTO>(MethodKey.PayInIntentCreateSplits, 
                 splits, idempotentKey, entitiesId: payInIntentId);
         }
+        
+        /// <summary>
+        /// Retrieve a paginated list of banks that you can present to the user for selection during their Pay by Bank checkout experience
+        /// </summary>
+        /// <param name="filter">Filter</param>
+        /// <param name="pagination">Pagination</param>
+        /// <returns>Supported banks as PayInPayByBankSupportedBankDTO</returns>
+        public async Task<PayInPayByBankSupportedBankDTO> GetPayByBankSupportedBanks(FilterSupportedBanks filter = null, 
+            Pagination pagination = null)
+        {
+            return await this.GetObjectAsync<PayInPayByBankSupportedBankDTO>(MethodKey.PayByBankGetSupportedBanks, 
+                filter?.GetValues(), pagination);
+        }
     }
 }
