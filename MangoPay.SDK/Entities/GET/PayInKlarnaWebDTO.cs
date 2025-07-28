@@ -38,6 +38,5 @@ namespace MangoPay.SDK.Entities.GET
         
         /// <summary> The Klarna option that the end-user has chosen at checkout
         public string PaymentMethod { get; set; }
-        
     }
 }

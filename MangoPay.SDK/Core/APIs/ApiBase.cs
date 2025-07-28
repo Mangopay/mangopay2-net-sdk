@@ -295,7 +295,9 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayInIntentCreateSplits, new ApiEndPoint("/payins/intents/{0}/splits", RequestType.POST, apiVersion: ApiVersion.V3_0) },
             { MethodKey.SettlementCreate, new ApiEndPoint("/payins/intents/settlements", RequestType.POST, apiVersion: ApiVersion.V3_0) },
             { MethodKey.SettlementGet, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.GET, apiVersion: ApiVersion.V3_0) },
-            { MethodKey.SettlementUpdate, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.PUT, apiVersion: ApiVersion.V3_0) }
+            { MethodKey.SettlementUpdate, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.PUT, apiVersion: ApiVersion.V3_0) },
+            
+            { MethodKey.PayByBankGetSupportedBanks, new ApiEndPoint("/payment-methods/openbanking/metadata/supported-banks", RequestType.GET) },
         };
 
         /// <summary>Creates new API instance.</summary>
@@ -353,6 +355,19 @@ namespace MangoPay.SDK.Core.APIs
             endPoint.IncludeClientId = true;
 
             return await GetObjectAsync<T>(endPoint, additionalUrlParams);
+        }
+        
+        protected async Task<T> GetObjectAsync<T>(MethodKey methodKey,
+            Dictionary<string, string> additionalUrlParams,
+            Pagination pagination = null)
+            where T: EntityBase, new()
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.IncludeClientId = true;
+            
+            var rest = new RestTool(Root, true);
+            return await rest.RequestAsync<T, T>(endPoint, null, null, 
+                additionalUrlParams: additionalUrlParams, pagination: pagination);
         }
         
         private async Task<T> GetObjectAsync<T>(ApiEndPoint endPoint,
