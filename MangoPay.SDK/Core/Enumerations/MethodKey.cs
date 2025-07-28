@@ -55,6 +55,7 @@
         PayinsBancontactWebCreate,
         PayinsBizumWebCreate,
         PayinsPayByBankWebCreate,
+        PayByBankGetSupportedBanks,
         GetPaymentMethodMetadata,
         PayoutsBankwireCreate,
         PayoutsBankwireGet,

@@ -2569,5 +2569,22 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(1, createdSplits.Splits.Count);
             Assert.AreEqual("CREATED", createdSplits.Splits[0].Status);
         }
+
+        [Test]
+        public async Task Test_GetPayByBankSupportedBanks()
+        {
+            var result = await Api.PayIns.GetPayByBankSupportedBanks();
+            Assert.IsTrue(result.SupportedBanks.Countries.Count > 0);
+
+            var filter = new FilterSupportedBanks { CountryCodes = "DE" };
+            var resultFiltered = await Api.PayIns.GetPayByBankSupportedBanks(filter);
+            Assert.AreEqual(1, resultFiltered.SupportedBanks.Countries.Count);
+            Assert.IsTrue(result.SupportedBanks.Countries[0].Banks.Count > 2);
+
+            var pagination = new Pagination { Page = 1, ItemsPerPage = 2 };
+            var resultFilteredPaginated = await Api.PayIns.GetPayByBankSupportedBanks(filter, pagination);
+            Assert.AreEqual(2, resultFilteredPaginated.SupportedBanks.Countries[0].Banks.Count);
+            Assert.AreEqual(1, resultFilteredPaginated.SupportedBanks.Countries.Count);
+        }
     }
 }
