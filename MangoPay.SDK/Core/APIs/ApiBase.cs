@@ -293,7 +293,11 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayInIntentCreateSplits, new ApiEndPoint("/payins/intents/{0}/splits", RequestType.POST, apiVersion: ApiVersion.V3_0) },
             { MethodKey.SettlementCreate, new ApiEndPoint("/payins/intents/settlements", RequestType.POST, apiVersion: ApiVersion.V3_0) },
             { MethodKey.SettlementGet, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.GET, apiVersion: ApiVersion.V3_0) },
-            { MethodKey.SettlementUpdate, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.PUT, apiVersion: ApiVersion.V3_0) }
+            { MethodKey.SettlementUpdate, new ApiEndPoint("/payins/intents/settlements/{0}", RequestType.PUT, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayInIntentExecuteSplit, new ApiEndPoint("/payins/intents/{0}/splits/{1}/execute", RequestType.POST, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayInIntentReverseSplit, new ApiEndPoint("/payins/intents/{0}/splits/{1}/reverse", RequestType.POST, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayInIntentGetSplit, new ApiEndPoint("/payins/intents/{0}/splits/{1}", RequestType.GET, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayInIntentUpdateSplit, new ApiEndPoint("/payins/intents/{0}/splits/{1}", RequestType.PUT, apiVersion: ApiVersion.V3_0) }
         };
 
         /// <summary>Creates new API instance.</summary>

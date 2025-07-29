@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace MangoPay.SDK.Entities
 {
-    public class PayInIntentSplit
+    public class PayInIntentSplitDTO : EntityBase
     {
         /// <summary>
         /// The unique identifier of an item in Mangopay ecosystem

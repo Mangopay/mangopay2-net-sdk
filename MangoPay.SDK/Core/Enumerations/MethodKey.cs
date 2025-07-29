@@ -251,6 +251,10 @@
         PayInIntentCreateSplits,
         SettlementCreate,
         SettlementGet,
-        SettlementUpdate
+        SettlementUpdate,
+        PayInIntentExecuteSplit,
+        PayInIntentReverseSplit,
+        PayInIntentGetSplit,
+        PayInIntentUpdateSplit
     }
 }

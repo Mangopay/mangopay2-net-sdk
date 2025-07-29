@@ -4,6 +4,6 @@ namespace MangoPay.SDK.Entities.POST
 {
     public class IntentSplitsPostDTO : EntityPostBase
     {
-        public List<PayInIntentSplit> Splits { get; set; }
+        public List<PayInIntentSplitPostDTO> Splits { get; set; }
     }
 }

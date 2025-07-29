@@ -2476,6 +2476,73 @@ namespace MangoPay.SDK.Tests
         public async Task Test_CreatePayInIntentSplits()
         {
             var intent = await CreateNewPayInIntentAuthorization();
+            var createdSplits = await createNewPayInIntentSplits(intent);
+            Assert.IsNotNull(createdSplits);
+            Assert.AreEqual(1, createdSplits.Splits.Count);
+            Assert.AreEqual("CREATED", createdSplits.Splits[0].Status);
+        }
+
+        [Test]
+        public async Task Test_ExecutePayInIntentSplit()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var createdSplits = await createNewPayInIntentSplits(intent);
+            var split = createdSplits.Splits[0];
+            try
+            {
+                await Api.PayIns.ExecutePayInIntentSplitAsync(intent.Id, split.Id);
+            }
+            catch (Exception e)
+            {
+                // expect error. A success flow can't be automatically tested since it needs a manual payin to be created
+                Assert.IsTrue(e.Message.Contains("One or several required parameters are missing or incorrect"));
+            }
+        }
+        
+        [Test]
+        public async Task Test_ReversePayInIntentSplit()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var createdSplits = await createNewPayInIntentSplits(intent);
+            var split = createdSplits.Splits[0];
+            try
+            {
+                await Api.PayIns.ReversePayInIntentSplitAsync(intent.Id, split.Id);
+            }
+            catch (Exception e)
+            {
+                // expect error. A success flow can't be automatically tested since it needs a manual payin to be created
+                Assert.IsTrue(e.Message.Contains("One or several required parameters are missing or incorrect"));
+            }
+        }
+        
+        [Test]
+        public async Task Test_GetPayInIntentSplit()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var createdSplits = await createNewPayInIntentSplits(intent);
+            var split = createdSplits.Splits[0];
+            var fetched =  await Api.PayIns.GetPayInIntentSplitAsync(intent.Id, split.Id);
+            Assert.AreEqual(split.Status, fetched.Status);
+        }
+        
+        [Test]
+        public async Task Test_UpdatePayInIntentSplit()
+        {
+            var intent = await CreateNewPayInIntentAuthorization();
+            var createdSplits = await createNewPayInIntentSplits(intent);
+            var split = createdSplits.Splits[0];
+            var dto = new PayInIntentSplitPutDTO
+            {
+                LineItemId = split.LineItemId,
+                Description = "updated description"
+            };
+            var updated =  await Api.PayIns.UpdatePayInIntentSplitAsync(intent.Id, split.Id, dto);
+            Assert.AreEqual("updated description", updated.Description);
+        }
+        
+        private async Task<IntentSplitsDTO> createNewPayInIntentSplits(PayInIntentDTO intent)
+        {
             var fullCapturePostDto = new PayInIntentFullCapturePostDTO
             {
                 ExternalData = new PayInIntentExternalData
@@ -2488,22 +2555,19 @@ namespace MangoPay.SDK.Tests
             };
             var fullCapture = await Api.PayIns.CreatePayInIntentFullCaptureAsync(fullCapturePostDto, intent.Id);
 
-            var split = new PayInIntentSplit
+            var split = new PayInIntentSplitPostDTO
             {
                 LineItemId = intent.LineItems[0].Id,
                 SplitAmount = 10
             };
 
-            var splitsList = new List<PayInIntentSplit> { split };
+            var splitsList = new List<PayInIntentSplitPostDTO> { split };
             var splitsDto = new IntentSplitsPostDTO
             {
                 Splits = splitsList
             };
 
-            var createdSplits = await Api.PayIns.CreatePayInIntentSplitsAsync(splitsDto, intent.Id);
-            Assert.IsNotNull(createdSplits);
-            Assert.AreEqual(1, createdSplits.Splits.Count);
-            Assert.AreEqual("CREATED", createdSplits.Splits[0].Status);
+            return await Api.PayIns.CreatePayInIntentSplitsAsync(splitsDto, intent.Id);
         }
     }
 }

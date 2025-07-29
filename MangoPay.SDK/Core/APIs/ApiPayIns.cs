@@ -625,5 +625,59 @@ namespace MangoPay.SDK.Core.APIs
             return await this.CreateObjectAsync<IntentSplitsDTO, IntentSplitsPostDTO>(MethodKey.PayInIntentCreateSplits, 
                 splits, idempotentKey, entitiesId: payInIntentId);
         }
+        
+        /// <summary>
+        /// Execute split
+        /// </summary>
+        /// <param name="intentId">Intent identifier</param>
+        /// <param name="splitId">Split identifier</param>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInIntentSplitDTO> ExecutePayInIntentSplitAsync(string intentId, string splitId,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInIntentSplitDTO, PayInIntentSplitPostDTO>(MethodKey.PayInIntentExecuteSplit, 
+                null, idempotentKey, intentId, splitId);
+        }
+        
+        /// <summary>
+        /// Reverse split
+        /// </summary>
+        /// <param name="intentId">Intent identifier</param>
+        /// <param name="splitId">Split identifier</param>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInIntentSplitDTO> ReversePayInIntentSplitAsync(string intentId, string splitId,
+            string idempotentKey = null)
+        {
+            return await this.CreateObjectAsync<PayInIntentSplitDTO, PayInIntentSplitPostDTO>(MethodKey.PayInIntentReverseSplit, 
+                null, idempotentKey, intentId, splitId);
+        }
+        
+        /// <summary>
+        /// Get split
+        /// </summary>
+        /// <param name="intentId">Intent identifier</param>
+        /// <param name="splitId">Split identifier</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInIntentSplitDTO> GetPayInIntentSplitAsync(string intentId, string splitId)
+        {
+            return await this.GetObjectAsync<PayInIntentSplitDTO>(MethodKey.PayInIntentGetSplit, 
+                additionalUrlParams: null, intentId, splitId);
+        }
+
+        /// <summary>
+        /// Update split
+        /// </summary>
+        /// <param name="intentId">Intent identifier</param>
+        /// <param name="splitId">Split identifier</param>
+        /// <param name="dto">Object containing the properties to be updated. 'LineItemId' is mandatory.</param>
+        /// <returns>Object instance returned from API.</returns>
+        public async Task<PayInIntentSplitDTO> UpdatePayInIntentSplitAsync(string intentId, string splitId,
+            PayInIntentSplitPutDTO dto)
+        {
+            return await this.UpdateObjectAsync<PayInIntentSplitDTO, PayInIntentSplitPutDTO>(MethodKey.PayInIntentUpdateSplit, 
+                dto, null, intentId, splitId);
+        }
     }
 }
