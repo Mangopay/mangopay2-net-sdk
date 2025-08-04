@@ -2148,8 +2148,9 @@ namespace MangoPay.SDK.Tests
                 fees.Currency = CurrencyIso.EUR;
 
                 var dto = new CardPreAuthorizedDepositPayInPostDTO(wallet.Id, debitedFunds, fees, deposit.Id);
+                dto.AuthorId = deposit.AuthorId;
                 var payIn = await this.Api.PayIns.CreateCardPreAuthorizedDepositPayIn(dto);
-
+                
                 Assert.IsNotNull(payIn);
                 Assert.AreEqual(TransactionStatus.SUCCEEDED, payIn.Status);
                 Assert.IsNotNull(payIn.DepositId);
@@ -2177,6 +2178,7 @@ namespace MangoPay.SDK.Tests
                 fees.Currency = CurrencyIso.EUR;
 
                 var dto = new CardPreAuthorizedDepositPayInPostDTO(wallet.Id, debitedFunds, fees, deposit.Id);
+                dto.AuthorId = deposit.AuthorId;
                 var payIn = await this.Api.PayIns.CreateDepositPreauthorizedPayInPriorToComplement(dto);
 
                 Assert.IsNotNull(payIn);
@@ -2208,6 +2210,7 @@ namespace MangoPay.SDK.Tests
                 fees.Currency = CurrencyIso.EUR;
 
                 var dto = new CardPreAuthorizedDepositPayInPostDTO(wallet.Id, debitedFunds, fees, deposit.Id);
+                dto.AuthorId = deposit.AuthorId;
                 var payIn = await this.Api.PayIns.CreateDepositPreauthorizedPayInComplement(dto);
 
                 Assert.IsNotNull(payIn);
@@ -2612,7 +2615,7 @@ namespace MangoPay.SDK.Tests
                 ExternalData = new PayInIntentExternalData
                 {
                     ExternalProcessingDate = new DateTime(2024, 11, 01, 0, 0, 0),
-                    ExternalProviderReference = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                    ExternalProviderReference = (DateTimeOffset.UtcNow.ToUnixTimeSeconds() + new Random().Next(10000)).ToString(),
                     ExternalProviderName = "Stripe",
                     ExternalProviderPaymentMethod = "PAYPAL"
                 }
