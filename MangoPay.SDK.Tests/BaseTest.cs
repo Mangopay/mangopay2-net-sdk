@@ -696,6 +696,12 @@ namespace MangoPay.SDK.Tests
             PayInBancontactWebPostDTO payIn = await GetPayInBancontactWebPost();
             return await this.Api.PayIns.CreateBancontactWebAsync(payIn);
         }
+        
+        protected async Task<PayInBizumWebDTO> GetNewPayInBizumWeb(bool usePhone)
+        {
+            PayInBizumWebPostDTO payIn = await GetPayInBizumWebPost(usePhone: usePhone);
+            return await this.Api.PayIns.CreateBizumWebAsync(payIn); 
+        }
 
         protected async Task<PayInPayByBankWebDTO> GetNewPayInPayByBankWeb()
         {
@@ -1107,6 +1113,30 @@ namespace MangoPay.SDK.Tests
 
             return payIn;
         }
+        
+        protected async Task<PayInBizumWebPostDTO> GetPayInBizumWebPost(bool usePhone)
+        {
+            var wallet = await GetJohnsWalletWithMoney();
+            var user = await GetJohn();
+
+            var phone  = usePhone ? "+34700000000" : null; 
+            var returnUrl  = usePhone ? null : "https://docs.mangopay.com/please-ignore"; 
+
+            var payIn = new PayInBizumWebPostDTO(
+                authorId: user.Id,
+                debitedFunds: new Money { Amount = 100, Currency = CurrencyIso.EUR },
+                fees: new Money { Amount = 20, Currency = CurrencyIso.EUR },
+                creditedWalletId: wallet.Id,
+                statementDescriptor: "Example123",
+                returnUrl: returnUrl,
+                phone: phone,
+                null,
+                "My Bizum tag"
+            );
+
+            return payIn;
+        }
+        
 
         protected async Task<PayInPayByBankWebPostDTO> GetPayByBankWebPost()
         {

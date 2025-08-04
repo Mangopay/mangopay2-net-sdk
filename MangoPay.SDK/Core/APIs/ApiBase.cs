@@ -30,6 +30,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.CardRegistrationGet, new ApiEndPoint("/cardregistrations/{0}", RequestType.GET)},
             { MethodKey.CardRegistrationSave, new ApiEndPoint("/cardregistrations/{0}", RequestType.PUT)},
             { MethodKey.CardByFingerprintGet, new ApiEndPoint("/cards/fingerprints/{0}", RequestType.GET)},
+            { MethodKey.TransactionsByFingerprintGet, new ApiEndPoint("/cards/fingerprints/{0}/transactions", RequestType.GET)},
 
             { MethodKey.PreauthorizationCreate, new ApiEndPoint("/preauthorizations/card/direct", RequestType.POST)},
             { MethodKey.PreauthorizationGet, new ApiEndPoint("/preauthorizations/{0}", RequestType.GET)},
@@ -75,6 +76,7 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayinsIdealWebCreate, new ApiEndPoint("/payins/payment-methods/ideal", RequestType.POST)},
             { MethodKey.PayinsGiropayWebCreate, new ApiEndPoint("/payins/payment-methods/giropay", RequestType.POST)},
             { MethodKey.PayinsBancontactWebCreate, new ApiEndPoint("/payins/payment-methods/bancontact", RequestType.POST)},
+            { MethodKey.PayinsBizumWebCreate, new ApiEndPoint("/payins/payment-methods/bizum", RequestType.POST)},
             { MethodKey.PayinsSwishWebCreate, new ApiEndPoint("/payins/payment-methods/swish", RequestType.POST)},
             { MethodKey.PayinsTwintWebCreate, new ApiEndPoint("/payins/payment-methods/twint", RequestType.POST)},
             { MethodKey.PayinsPayByBankWebCreate, new ApiEndPoint("/payins/payment-methods/openbanking", RequestType.POST) },
@@ -297,7 +299,8 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.PayInIntentExecuteSplit, new ApiEndPoint("/payins/intents/{0}/splits/{1}/execute", RequestType.POST, apiVersion: ApiVersion.V3_0) },
             { MethodKey.PayInIntentReverseSplit, new ApiEndPoint("/payins/intents/{0}/splits/{1}/reverse", RequestType.POST, apiVersion: ApiVersion.V3_0) },
             { MethodKey.PayInIntentGetSplit, new ApiEndPoint("/payins/intents/{0}/splits/{1}", RequestType.GET, apiVersion: ApiVersion.V3_0) },
-            { MethodKey.PayInIntentUpdateSplit, new ApiEndPoint("/payins/intents/{0}/splits/{1}", RequestType.PUT, apiVersion: ApiVersion.V3_0) }
+            { MethodKey.PayInIntentUpdateSplit, new ApiEndPoint("/payins/intents/{0}/splits/{1}", RequestType.PUT, apiVersion: ApiVersion.V3_0) },
+            { MethodKey.PayByBankGetSupportedBanks, new ApiEndPoint("/payment-methods/openbanking/metadata/supported-banks", RequestType.GET) }
         };
 
         /// <summary>Creates new API instance.</summary>
@@ -355,6 +358,19 @@ namespace MangoPay.SDK.Core.APIs
             endPoint.IncludeClientId = true;
 
             return await GetObjectAsync<T>(endPoint, additionalUrlParams);
+        }
+        
+        protected async Task<T> GetObjectAsync<T>(MethodKey methodKey,
+            Dictionary<string, string> additionalUrlParams,
+            Pagination pagination = null)
+            where T: EntityBase, new()
+        {
+            var endPoint = GetApiEndPoint(methodKey);
+            endPoint.IncludeClientId = true;
+            
+            var rest = new RestTool(Root, true);
+            return await rest.RequestAsync<T, T>(endPoint, null, null, 
+                additionalUrlParams: additionalUrlParams, pagination: pagination);
         }
         
         private async Task<T> GetObjectAsync<T>(ApiEndPoint endPoint,
