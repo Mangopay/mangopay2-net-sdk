@@ -19,7 +19,7 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>
         /// Information about the fees
         /// </summary>
-        public int FeesAmount { get; set; }
+        public int? FeesAmount { get; set; }
         
         /// <summary>
         /// Information about the date when the funds are to be transferred to the seller’s wallet.
