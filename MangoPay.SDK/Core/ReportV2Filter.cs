@@ -14,5 +14,17 @@ namespace MangoPay.SDK.Core
 		public string UserId { get; set; }
 		
 		public string WalletId { get; set; }
+		
+		public string PaymentMethod { get; set; }
+		
+		public string Status { get; set; }
+		
+		public string Type { get; set; }
+		
+		public string IntentId { get; set; }
+		
+		public string ExternalProviderName { get; set; }
+		
+		public bool? Scheduled { get; set; }
 	}
 }

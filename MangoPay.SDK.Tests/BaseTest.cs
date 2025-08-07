@@ -1778,7 +1778,7 @@ namespace MangoPay.SDK.Tests
                 ExternalData = new PayInIntentExternalData
                 {
                     ExternalProcessingDate = new DateTime(2024, 10, 01, 10, 0, 0),
-                    ExternalProviderReference = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                    ExternalProviderReference = (DateTimeOffset.UtcNow.ToUnixTimeSeconds() + new Random().Next(10000)).ToString(),
                     ExternalProviderName = "Stripe",
                     ExternalProviderPaymentMethod = "PAYPAL"
                 },
