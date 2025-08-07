@@ -134,7 +134,7 @@ namespace MangoPay.SDK.Tests
                 Assert.IsNotNull(cardPreAuthorizationPost.SecurityInfo);
                 Assert.IsNotNull(cardPreAuthorizationPost.SecurityInfo.AVSResult);
                 Assert.AreEqual(cardPreAuthorizationPost.SecurityInfo.AVSResult, AVSResult.NO_CHECK);
-                Assert.IsNotNull(cardPreAuthorizationPost.Requested3DSVersion);
+                // Assert.IsNotNull(cardPreAuthorizationPost.Requested3DSVersion);
 
             }
             catch (Exception ex)

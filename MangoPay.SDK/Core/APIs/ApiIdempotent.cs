@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MangoPay.SDK.Core.Enumerations;
+using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.GET;
 
 namespace MangoPay.SDK.Core.APIs
@@ -89,7 +90,9 @@ namespace MangoPay.SDK.Core.APIs
                 { MethodKey.UsersValidateDataFormat, typeof(UserDataFormatValidationDTO) },
                 { MethodKey.ReportCreate, typeof(ReportDTO) },
                 { MethodKey.SettlementCreate, typeof(IntentSettlementDTO) },
-                { MethodKey.PayInIntentCreateSplits, typeof(IntentSplitsDTO) }
+                { MethodKey.PayInIntentCreateSplits, typeof(IntentSplitsDTO) },
+                { MethodKey.PayInIntentExecuteSplit, typeof(PayInIntentSplitDTO) },
+                { MethodKey.PayInIntentReverseSplit, typeof(PayInIntentSplitDTO) }
             };
         }
     }
