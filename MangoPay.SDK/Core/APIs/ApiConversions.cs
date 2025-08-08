@@ -54,5 +54,25 @@ namespace MangoPay.SDK.Core.APIs
                 quotedConversionPostDto,
                 idempotentKey);
         }
+        
+        public async Task<ConversionDTO> CreateClientWalletsQuotedConversion(
+            ClientWalletsQuotedConversionPostDTO quotedConversionPostDto,
+            string idempotentKey = null)
+        {
+            return await CreateObjectAsync<ConversionDTO, ClientWalletsQuotedConversionPostDTO>(
+                MethodKey.CreateClientWalletsQuotedConversion,
+                quotedConversionPostDto,
+                idempotentKey);
+        }
+        
+        public async Task<ConversionDTO> CreateClientWalletsInstantConversion(
+            ClientWalletsInstantConversionPostDTO instantConversionPostDto,
+            string idempotentKey = null)
+        {
+            return await CreateObjectAsync<ConversionDTO, ClientWalletsInstantConversionPostDTO>(
+                MethodKey.CreateClientWalletsInstantConversion,
+                instantConversionPostDto,
+                idempotentKey);
+        }
     }
 }

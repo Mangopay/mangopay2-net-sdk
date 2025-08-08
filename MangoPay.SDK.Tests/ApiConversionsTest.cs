@@ -110,6 +110,49 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(TransactionStatus.SUCCEEDED, quotedConversion.Status);
             Assert.AreEqual(TransactionNature.REGULAR, quotedConversion.Nature);
         }
+        
+        [Test]
+        public async Task Test_CreateClientWalletsQuotedConversion()
+        {
+            var quote = await CreateConversionQuote();
+            var postDto = new ClientWalletsQuotedConversionPostDTO
+            {
+                QuoteId = quote.Id,
+                CreditedWalletType = "CREDIT",
+                DebitedWalletType = "FEES"
+            };
+
+            var conversion = await Api.Conversions.CreateClientWalletsQuotedConversion(postDto);
+
+            Assert.IsNotNull(conversion);
+            Assert.AreEqual(TransactionStatus.SUCCEEDED, conversion.Status);
+            Assert.AreEqual(TransactionNature.REGULAR, conversion.Nature);
+        }
+        
+        [Test]
+        public async Task Test_CreateClientWalletsInstantConversion()
+        {
+            var postDto = new ClientWalletsInstantConversionPostDTO
+            {
+                CreditedWalletType = "CREDIT",
+                DebitedWalletType = "FEES",
+                DebitedFunds = new Money
+                {
+                    Currency = CurrencyIso.GBP,
+                    Amount = 50
+                },
+                CreditedFunds = new Money
+                {
+                    Currency = CurrencyIso.EUR
+                }
+            };
+
+            var conversion = await Api.Conversions.CreateClientWalletsInstantConversion(postDto);
+
+            Assert.IsNotNull(conversion);
+            Assert.AreEqual(TransactionStatus.SUCCEEDED, conversion.Status);
+            Assert.AreEqual(TransactionNature.REGULAR, conversion.Nature);
+        }
 
         private async Task<ConversionDTO> CreateInstantConversion()
         {

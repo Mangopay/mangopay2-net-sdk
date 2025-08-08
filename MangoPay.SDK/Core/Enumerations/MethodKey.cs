@@ -223,6 +223,8 @@
         GetConversionRate,
         CreateInstantConversion,
         CreateQuotedConversion,
+        CreateClientWalletsQuotedConversion,
+        CreateClientWalletsInstantConversion,
         GetConversion,
         CreateConversionQuote,
         GetConversionQuote,
