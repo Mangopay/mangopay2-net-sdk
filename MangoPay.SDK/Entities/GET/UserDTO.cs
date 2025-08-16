@@ -1,4 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
+﻿using System;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -20,6 +21,14 @@ namespace MangoPay.SDK.Entities.GET
         
         [JsonConverter(typeof(StringEnumConverter))]
         public UserStatus UserStatus { get; set; }
+        
+        public bool? TermsAndConditionsAccepted { get; set; }
+
+        [JsonConverter(typeof(Core.UnixDateTimeConverter))]
+        public DateTime? TermsAndConditionsAcceptedDate { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public UserCategory UserCategory { get; set; }
 
         public UserDTO(PersonType personType)
         {

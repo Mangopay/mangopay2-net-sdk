@@ -89,14 +89,5 @@ namespace MangoPay.SDK.Entities.GET
         /// Object containing the link needed for SCA redirection if triggered by the API call (otherwise returned null).
         /// </summary>
         public PendingUserActionDTO PendingUserAction { get; set; }
-        
-        public bool TermsAndConditionsAccepted { get; set; }
-
-        /// <summary>Execution date.</summary>
-        [JsonConverter(typeof(Core.UnixDateTimeConverter))]
-        public DateTime? TermsAndConditionsAcceptedDate { get; set; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public UserCategory UserCategory { get; set; }
     }
 }
