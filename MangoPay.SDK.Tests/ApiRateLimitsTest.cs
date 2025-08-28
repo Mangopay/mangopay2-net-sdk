@@ -27,7 +27,8 @@ namespace MangoPay.SDK.Tests
                     CountryOfResidence = CountryIso.FR,
                     Occupation = "programmer",
                     IncomeRange = 3,
-                    Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" }
+                    Address = new Address { AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City", Country = CountryIso.PL, PostalCode = "11222", Region = "Region" },
+                    TermsAndConditionsAccepted = true
                 };
 
                 await this.Api.Users.CreateOwnerAsync(user);

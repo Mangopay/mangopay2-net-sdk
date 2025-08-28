@@ -10,6 +10,7 @@ using NUnit.Framework;
 namespace MangoPay.SDK.Tests
 {
 	[TestFixture]
+	[Ignore("endpoints return 404")]
     public class ApiSingleSignOnsTest : BaseTest
     {
         [Test]

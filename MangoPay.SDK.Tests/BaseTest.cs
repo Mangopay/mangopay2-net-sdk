@@ -124,7 +124,8 @@ namespace MangoPay.SDK.Tests
                 {
                     AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City",
                     Country = CountryIso.PL, PostalCode = "11222", Region = "Region"
-                }
+                },
+                TermsAndConditionsAccepted = true
             };
 
             BaseTest._john = await this.Api.Users.CreateOwnerAsync(user);
@@ -184,7 +185,7 @@ namespace MangoPay.SDK.Tests
             return _johnScaOwner;
         }
 
-        protected async Task<UserNaturalDTO> GetNewJohn(bool termsAccepted = false)
+        protected async Task<UserNaturalDTO> GetNewJohn()
         {
             var user = new UserNaturalOwnerPostDTO
             {
@@ -201,13 +202,13 @@ namespace MangoPay.SDK.Tests
                     AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City",
                     Country = CountryIso.PL, PostalCode = "11222", Region = "Region"
                 },
-                TermsAndConditionsAccepted = termsAccepted
+                TermsAndConditionsAccepted = true
             };
 
             return await this.Api.Users.CreateOwnerAsync(user);
         }
 
-        protected async Task<UserLegalDTO> GetMatrix(bool termsAccepted = false, bool newJohn = false)
+        protected async Task<UserLegalDTO> GetMatrix(bool newJohn = false)
         {
             if (BaseTest._matrix != null && !newJohn) return BaseTest._matrix;
 
@@ -216,7 +217,7 @@ namespace MangoPay.SDK.Tests
                 Name = "MartixSampleOrg",
                 LegalPersonType = LegalPersonType.BUSINESS,
                 UserCategory = UserCategory.OWNER,
-                TermsAndConditionsAccepted = termsAccepted,
+                TermsAndConditionsAccepted = true,
                 LegalRepresentativeFirstName = "JohnUbo",
                 LegalRepresentativeLastName = "DoeUbo",
                 LegalRepresentativeCountryOfResidence = CountryIso.PL,

@@ -1,15 +1,16 @@
-﻿using MangoPay.SDK.Core;
+﻿using System;
+using System.Threading.Tasks;
+using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.POST;
 using MangoPay.SDK.Entities.PUT;
 using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
 
 namespace MangoPay.SDK.Tests
 {
 	[TestFixture]
+	[Ignore("endpoints return 404")]
     public class ApiPermissionGroupsTests : BaseTest
     {
         [Test]
