@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MangoPay.SDK.Entities.GET
+﻿namespace MangoPay.SDK.Entities.GET
 {
     public class PayOutBankWireDTO : PayOutDTO
     {
@@ -9,6 +7,8 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>A custom reference you wish to appear on the user’s bank statement (your ClientId is already shown).</summary>
         public string BankWireRef { get; set; }
+        
+        public VerificationOfPayee RecipientVerificationOfPayee { get; set; }
     }
 
     public class PayOutBankWireGetDTO : PayOutBankWireDTO
