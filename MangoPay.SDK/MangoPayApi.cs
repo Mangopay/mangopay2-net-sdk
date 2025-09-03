@@ -36,8 +36,6 @@ namespace MangoPay.SDK
             Idempotent = new ApiIdempotent(this);
             Mandates = new ApiMandates(this);
             Reports = new ApiReports(this);
-            SingleSignOns = new ApiSingleSignOns(this);
-            PermissionGroups = new ApiPermissionGroups(this);
             BankingAlias = new ApiBankingAliases(this);
             UboDeclarations = new ApiUboDeclarations(this);
             Regulatory = new ApiRegulatory(this);
@@ -117,12 +115,6 @@ namespace MangoPay.SDK
 
         /// <summary>Provides Users methods.</summary>
         public ApiBankingAliases BankingAlias;
-
-        /// <summary>Provides SingleSignOns methods.</summary>
-        public ApiSingleSignOns SingleSignOns;
-
-        /// <summary>Provides ApiPermissionGroups methods.</summary>
-        public ApiPermissionGroups PermissionGroups;
 
         public ApiUboDeclarations UboDeclarations;
 
