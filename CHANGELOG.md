@@ -1,3 +1,16 @@
+## [3.34.2] - 2025-09-03
+### Added
+- Support for missing properties on `UserDTO` base class: `UserCategory`, `TermsAndConditionsAccepted`, `TermsAndConditionsAcceptedDate` (the properties have been moved to `UserDTO`) #290
+- Support for missing `DisputeReasonType` enum value #293 (thank you @ThomasLmds #223)
+
+### Changed
+- OAuth token refresh buffer before expiry updated to 30s #296
+- Removed unused `ApiPermissionGroups` and `ApiSingleSignOn`, API endpoints no longer available #295
+
+### Fixed
+- Error parsing to avoid `ArgumentNullException` (thank you @outofrange-consulting #200)
+- Tests
+
 ## [3.34.1] - 2025-08-14
 ### Added
 - Support for [POST Create a Quoted Conversion between Client Wallets](https://docs.mangopay.com/api-reference/conversions/create-quoted-conversion-client-wallets) and [POST Create an Instant Conversion between Client Wallets](https://docs.mangopay.com/api-reference/conversions/create-instant-conversion-client-wallets) #289
