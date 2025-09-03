@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace MangoPay.SDK.Core
 {
@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Core
             try
             {
                 this.ResponseErrorRaw = message;
-                this.ResponseError = JsonConvert.DeserializeObject<ResponseError>(message);
+                this.ResponseError = ResponseError.FromJSON(message);
 				this.ResponseStatusCode = responseStatusCode;
 			}
             catch (JsonException)

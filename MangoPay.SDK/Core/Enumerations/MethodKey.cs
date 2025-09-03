@@ -180,22 +180,7 @@
         ReportCreate,
         ReportGetAllV2,
         ReportGetV2,
-
-        SingleSignOnAll,
-        SingleSignOnCreate,
-        SingleSignOnGet,
-        SingleSignOnSave,
-        SingleSignOnExtendInvitation,
-
-        PermissionGroupAll,
-        PermissionGroupAllSsos,
-        PermissionGroupCreate,
-        PermissionGroupGet,
-        PermissionGroupSave,
-
-		SingleSignOnsMe,
-		SingleSignOnsMePermissionGroup,
-
+        
 		UboDeclarationCreate,
 		UboDeclarationUpdate,
 		UboDeclarationsGet,
