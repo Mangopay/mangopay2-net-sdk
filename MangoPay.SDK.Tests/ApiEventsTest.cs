@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MangoPay.SDK.Core;
 using MangoPay.SDK.Core.Enumerations;
@@ -52,10 +53,12 @@ namespace MangoPay.SDK.Tests
 			{
                 var payIn1 = await GetJohnsNewPayInCardWeb();
                 var payIn2 = await GetJohnsNewPayInCardWeb();
+                
+                Thread.Sleep(2000);
 
                 var eventsFilter = new FilterEvents();
-				eventsFilter.BeforeDate = payIn2.CreationDate.AddSeconds(1);
-				eventsFilter.AfterDate = payIn1.CreationDate;
+				eventsFilter.BeforeDate = payIn2.CreationDate.AddMinutes(1);
+				eventsFilter.AfterDate = payIn1.CreationDate.Subtract(new TimeSpan(0, 0, 1, 0));
 				eventsFilter.Type = EventType.PAYIN_NORMAL_CREATED;
 
                 var sort = new Sort();
