@@ -23,7 +23,7 @@ namespace MangoPay.SDK.Entities
         /// <summary>Instantiates new OAuthToken object.</summary>
         public OAuthTokenDTO()
         {
-            create_time = (long)TimeSpan.FromTicks(DateTime.Now.Ticks).TotalMilliseconds - 5000;
+            create_time = (long)TimeSpan.FromTicks(DateTime.Now.Ticks).TotalMilliseconds - 30000;
         }
 
         /// <summary>Checks if current token is expired.</summary>
