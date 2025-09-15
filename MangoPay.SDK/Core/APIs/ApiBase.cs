@@ -53,6 +53,8 @@ namespace MangoPay.SDK.Core.APIs
 
             { MethodKey.PayinsPayPalCreate, new ApiEndPoint("/payins/paypal/web", RequestType.POST)},
             { MethodKey.PayinsPayPalWebCreate, new ApiEndPoint("/payins/payment-methods/paypal", RequestType.POST)},
+            { MethodKey.PayPalDataCollectionCreate, new ApiEndPoint("/payins/payment-methods/paypal/data-collection", RequestType.POST)},
+            { MethodKey.PayPalDataCollectionGet, new ApiEndPoint("/payins/payment-methods/paypal/data-collection/{0}", RequestType.GET)},
 
             { MethodKey.PayinsPreauthorizedDirectCreate, new ApiEndPoint("/payins/preauthorized/direct", RequestType.POST)},
 

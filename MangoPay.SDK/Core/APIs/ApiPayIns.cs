@@ -710,5 +710,18 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<PayInPayByBankSupportedBankDTO>(MethodKey.PayByBankGetSupportedBanks, 
                 filter?.GetValues(), pagination);
         }
+
+        public async Task<PayPalDataCollectionDTO> CreatePayPalDataCollectionAsync(PayPalDataCollectionPostDTO data,
+            string idempotentKey = null)
+        {
+            return await CreateObjectAsync<PayPalDataCollectionDTO, PayPalDataCollectionPostDTO>(
+                MethodKey.PayPalDataCollectionCreate, data, idempotentKey);
+        }
+        
+        public async Task<PayPalDataCollectionDTO> GetPayPalDataCollectionAsync(string dataCollectionId)
+        {
+            return await GetObjectAsync<PayPalDataCollectionDTO>(MethodKey.PayPalDataCollectionGet,
+                dataCollectionId);
+        }
     }
 }
