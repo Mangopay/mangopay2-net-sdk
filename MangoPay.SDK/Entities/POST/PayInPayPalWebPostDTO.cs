@@ -78,5 +78,10 @@ namespace MangoPay.SDK.Entities.POST
         public string Reference { get; set; }
         
         public string CancelURL { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

@@ -76,5 +76,10 @@ namespace MangoPay.SDK.Entities.POST
         
         /// <summary> A custom description to appear on the user’s bank statement
         public string StatementDescriptor { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

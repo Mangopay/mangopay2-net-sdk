@@ -65,5 +65,10 @@ namespace MangoPay.SDK.Entities.POST
         /// Required when creating a Blik PayIn with code.
         /// </summary>
         public BrowserInfo BrowserInfo { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

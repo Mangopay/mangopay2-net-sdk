@@ -28,5 +28,10 @@ namespace MangoPay.SDK.Entities.POST
         
         /// <summary>Deposit identifier.</summary>
         public string DepositId { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

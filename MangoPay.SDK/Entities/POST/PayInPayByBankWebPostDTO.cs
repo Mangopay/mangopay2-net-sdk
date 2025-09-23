@@ -80,5 +80,10 @@ namespace MangoPay.SDK.Entities.POST
         /// Possible value: PENDING_SUCCEEDED
         /// </summary>
         public string ProcessingStatus { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

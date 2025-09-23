@@ -80,5 +80,10 @@ namespace MangoPay.SDK.Entities.POST
         
         ///<summary> Information about the shipping address
         public Shipping Shipping { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

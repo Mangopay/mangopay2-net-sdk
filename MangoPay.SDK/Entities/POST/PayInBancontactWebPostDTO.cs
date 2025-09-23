@@ -50,5 +50,10 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Payment flow (default WEB).</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public PaymentFlow? PaymentFlow { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

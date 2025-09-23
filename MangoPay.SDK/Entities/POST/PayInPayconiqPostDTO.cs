@@ -49,5 +49,10 @@
         
         /// <summary> A custom description to appear </summary>
         public string StatementDescriptor { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

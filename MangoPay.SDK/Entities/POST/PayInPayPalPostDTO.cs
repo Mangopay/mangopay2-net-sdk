@@ -35,5 +35,10 @@ namespace MangoPay.SDK.Entities.POST
 
 		/// <summary>The shipping address for PayPal PayIn.</summary>
 		public ShippingAddress ShippingAddress { get; set; }
+		
+		/// <summary>
+		/// The unique reference generated for the profiling session
+		/// </summary>
+		public string ProfilingAttemptReference { get; set; }
 	}
 }
