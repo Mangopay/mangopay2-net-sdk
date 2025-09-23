@@ -2,7 +2,6 @@
 using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 
 namespace MangoPay.SDK.Entities.POST
 {
@@ -48,5 +47,10 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Identifier of the credited user (owner of the credited wallet).</summary>
         public string CreditedUserId { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

@@ -35,5 +35,10 @@ namespace MangoPay.SDK.Entities.POST
         
         /// <summary>An optional value to be specified on the user's bank statement.</summary>
         public string StatementDescriptor { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

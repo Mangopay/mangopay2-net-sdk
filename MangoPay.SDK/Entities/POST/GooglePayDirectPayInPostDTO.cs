@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MangoPay.SDK.Entities.POST
+﻿namespace MangoPay.SDK.Entities.POST
 {
     public class GooglePayDirectPayInPostDTO : EntityPostBase
     {
@@ -37,5 +31,10 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary> A custom description to appear on the user's bank statement </summary>
         public string StatementDescriptor { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

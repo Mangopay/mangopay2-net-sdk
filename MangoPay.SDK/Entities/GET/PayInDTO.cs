@@ -14,5 +14,10 @@ namespace MangoPay.SDK.Entities.GET
         /// <summary>Type of execution.</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public PayInExecutionType ExecutionType { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

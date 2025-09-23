@@ -94,6 +94,11 @@ namespace MangoPay.SDK.Entities.POST
         /// <summary>Type of payment</summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public RecurringPayInRegistrationPaymentType? PaymentType { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
 
         #endregion
     }

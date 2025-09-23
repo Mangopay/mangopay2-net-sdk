@@ -1,4 +1,3 @@
-using System;
 using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -50,5 +49,10 @@ namespace MangoPay.SDK.Entities.POST
 
         [JsonConverter(typeof(StringEnumConverter))]
         public PayInExecutionType ExecutionType { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

@@ -1,7 +1,4 @@
-﻿using MangoPay.SDK.Core;
-using System;
-
-namespace MangoPay.SDK.Entities.POST
+﻿namespace MangoPay.SDK.Entities.POST
 {
     /// <summary>PayIn pre-authorized direct POST entity.</summary>
     public class PayInPreauthorizedDirectPostDTO : EntityPostBase
@@ -35,5 +32,10 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Secure mode return URL.</summary>
         public string SecureModeReturnURL { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }
