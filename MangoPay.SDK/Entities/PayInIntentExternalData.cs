@@ -10,7 +10,7 @@ namespace MangoPay.SDK.Entities
         /// The date at which the transaction was created
         /// </summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime ExternalProcessingDate { get; set; }
+        public DateTime? ExternalProcessingDate { get; set; }
 
         /// <summary>
         /// The unique identifier of the transaction at the provider level

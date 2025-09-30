@@ -2502,31 +2502,11 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(intent.Status, fetched.Status);
         }
         
-        /*[Test]
-        [Ignore("skip")]
-        public async Task Test_UpdatePayInIntent()
-        {
-            var intent = await CreateNewPayInIntentAuthorization();
-            var john = await GetJohn(true);
-            var toUpdate = new PayInIntentPutDTO
-            {
-                Buyer = new PayInIntentBuyer
-                {
-                    Id = john.Id
-                }
-            };
-            
-            var updated = await Api.PayIns.UpdatePayInIntentAsync(intent.Id, toUpdate);
-            Assert.IsNotNull(updated.Id);
-            Assert.AreEqual(intent.Id, updated.Id);
-            Assert.AreEqual(intent.Buyer.Id, updated.Buyer.Id);
-        }*/
-        
-        /*[Test]
+        [Test]
         public async Task Test_CancelPayInIntent()
         {
             var intent = await CreateNewPayInIntentAuthorization();
-            var toCancel = new PayInIntentCancelPutDTO
+            var toCancel = new PayInIntentCancelPostDTO
             {
                 ExternalData = new PayInIntentExternalData
                 {
@@ -2535,10 +2515,11 @@ namespace MangoPay.SDK.Tests
                 }
             };
             
-            var canceled = await Api.PayIns.CancelPayInIntentAsync(intent.Id, toCancel);
-            Assert.IsNotNull(canceled.Id);
-            Assert.AreEqual("CANCELED", canceled.Status);
-        }*/
+            
+            var cancelled = await Api.PayIns.CancelPayInIntentAsync(intent.Id, toCancel);
+            Assert.IsNotNull(cancelled.Id);
+            Assert.AreEqual("CANCELLED", cancelled.Status);
+        }
 
         [Test]
         public async Task Test_CreatePayInIntentSplits()
