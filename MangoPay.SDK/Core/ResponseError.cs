@@ -32,18 +32,19 @@ namespace MangoPay.SDK.Core
         /// <returns>Returns new instance of ResponseError class or null if deserialization failed.</returns>
         public static ResponseError FromJSON(string serializedResponseError)
         {
-            ResponseError result = null;
-
+            if (string.IsNullOrEmpty(serializedResponseError))
+            {
+                return null;
+            }
+            
             try
             {
-                result = JsonConvert.DeserializeObject<ResponseError>(serializedResponseError);
+                return JsonConvert.DeserializeObject<ResponseError>(serializedResponseError);
             }
             catch (JsonException)
             {
-                result = null;
+                return null;
             }
-
-            return result;
         }
     }
 }

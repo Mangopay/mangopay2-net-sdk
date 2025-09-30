@@ -1,7 +1,4 @@
-﻿using MangoPay.SDK.Core;
-using System;
-
-namespace MangoPay.SDK.Entities.POST
+﻿namespace MangoPay.SDK.Entities.POST
 {
     /// <summary>PayIn bank wire direct POST entity.</summary>
     public class PayInBankWireDirectPostDTO : EntityPostBase
@@ -34,5 +31,10 @@ namespace MangoPay.SDK.Entities.POST
 
         /// <summary>Credited wallet identifier.</summary>
         public string CreditedWalletId { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

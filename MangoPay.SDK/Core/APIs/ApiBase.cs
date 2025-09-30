@@ -225,21 +225,6 @@ namespace MangoPay.SDK.Core.APIs
             { MethodKey.ReportCreate, new ApiEndPoint("/reporting/reports", RequestType.POST)},
             { MethodKey.ReportGetAllV2, new ApiEndPoint("/reporting/reports", RequestType.GET)},
             { MethodKey.ReportGetV2, new ApiEndPoint("/reporting/reports/{0}", RequestType.GET)},
-
-            { MethodKey.SingleSignOnAll, new ApiEndPoint("/clients/ssos", RequestType.GET)},
-            { MethodKey.SingleSignOnCreate, new ApiEndPoint("/clients/ssos", RequestType.POST)},
-            { MethodKey.SingleSignOnGet, new ApiEndPoint("/clients/ssos/{0}", RequestType.GET)},
-            { MethodKey.SingleSignOnSave, new ApiEndPoint("/clients/ssos/{0}", RequestType.PUT)},
-            { MethodKey.SingleSignOnExtendInvitation, new ApiEndPoint("/clients/ssos/{0}/extendinvitation", RequestType.PUT)},
-
-            { MethodKey.PermissionGroupAll, new ApiEndPoint("/clients/permissiongroups", RequestType.GET)},
-            { MethodKey.PermissionGroupAllSsos, new ApiEndPoint("/clients/permissiongroups/{0}/SSOs", RequestType.GET)},
-            { MethodKey.PermissionGroupCreate, new ApiEndPoint("/clients/permissiongroups", RequestType.POST)},
-            { MethodKey.PermissionGroupGet, new ApiEndPoint("/clients/permissiongroups/{0}", RequestType.GET)},
-            { MethodKey.PermissionGroupSave, new ApiEndPoint("/clients/permissiongroups/{0}", RequestType.PUT)},
-
-            { MethodKey.SingleSignOnsMe, new ApiEndPoint("/ssos/me", RequestType.GET, false)},
-            { MethodKey.SingleSignOnsMePermissionGroup , new ApiEndPoint("/ssos/me/permissiongroup", RequestType.GET, false)},
             
             { MethodKey.UboDeclarationCreate, new ApiEndPoint("/users/{0}/kyc/ubodeclarations", RequestType.POST)},
             { MethodKey.UboDeclarationUpdate, new ApiEndPoint("/users/{0}/kyc/ubodeclarations/{1}", RequestType.PUT)},

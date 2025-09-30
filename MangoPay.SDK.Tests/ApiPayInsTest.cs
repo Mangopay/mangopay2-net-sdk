@@ -2192,6 +2192,7 @@ namespace MangoPay.SDK.Tests
         }
         
         [Test]
+        [Ignore("skipped because of PSP external error")]
         public async Task Test_CreateDepositPreauthorizedPayInComplement()
         {
             try

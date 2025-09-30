@@ -2,7 +2,6 @@
 using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 
 namespace MangoPay.SDK.Entities.POST
 {
@@ -62,5 +61,10 @@ namespace MangoPay.SDK.Entities.POST
         
         /// <summary> The BIC identifier of the end-user’s bank
         public string Bic { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

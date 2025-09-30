@@ -38,5 +38,10 @@ namespace MangoPay.SDK.Entities.GET
         /// <p>In both cases you need to provide the relevant ReturnURL, whether to your app or website.</p>
         /// </summary>
         public string PaymentFlow { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

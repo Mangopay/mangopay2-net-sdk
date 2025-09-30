@@ -1,8 +1,6 @@
-﻿using System;
-using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using UnixDateTimeConverter = MangoPay.SDK.Core.UnixDateTimeConverter;
 
 namespace MangoPay.SDK.Entities.GET
 {
@@ -41,13 +39,5 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Legal representative address.</summary>
         public Address LegalRepresentativeAddress { get; set; }
-
-        public bool? TermsAndConditionsAccepted { get; set; }
-
-        [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime? TermsAndConditionsAcceptedDate { get; set; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
-        public UserCategory UserCategory { get; set; }
     }
 }

@@ -1,8 +1,6 @@
-﻿using MangoPay.SDK.Core;
-using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 
 namespace MangoPay.SDK.Entities.POST
 {
@@ -86,5 +84,10 @@ namespace MangoPay.SDK.Entities.POST
         /// TelephoneOrder – Payment received via mail order or telephone order (MOTO).
         /// </summary>
         public string PaymentCategory { get; set; }
+        
+        /// <summary>
+        /// The unique reference generated for the profiling session
+        /// </summary>
+        public string ProfilingAttemptReference { get; set; }
     }
 }

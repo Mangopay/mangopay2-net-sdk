@@ -1,3 +1,22 @@
+## [3.34.3] - 2025-09-23
+### Added
+- Support for `ProfilingAttemptReference` on all payment methods for Mangopay's Fraud Prevention solution #299
+- Webhook event types for [Echo](https://docs.mangopay.com/guides/echo), Mangopay's solution for third-party PSP integrations: `INTENT_AUTHORIZED`,`INTENT_CAPTURED`,`INTENT_REFUNDED`,`INTENT_REFUND_REVERSED`,`INTENT_DISPUTE_CREATED`,`INTENT_DISPUTE_DEFENDED`,`INTENT_DISPUTE_WON`,`INTENT_DISPUTE_LOST`,`INTENT_SETTLED_NOT_PAID`,`INTENT_PAID`,`SPLIT_CREATED`,`SPLIT_PENDING_FUNDS_RECEPTION`,`SPLIT_AVAILABLE`,`SPLIT_REJECTED`,`SPLIT_REVERSED` #298
+- Support for `VirtualAccountPurpose` on Banking Alias object #301
+
+## [3.34.2] - 2025-09-03
+### Added
+- Support for missing properties on `UserDTO` base class: `UserCategory`, `TermsAndConditionsAccepted`, `TermsAndConditionsAcceptedDate` (the properties have been moved to `UserDTO`) #290
+- Support for missing `DisputeReasonType` enum value #293 (thank you @ThomasLmds #223)
+
+### Changed
+- OAuth token refresh buffer before expiry updated to 30s #296
+- Removed unused `ApiPermissionGroups` and `ApiSingleSignOn`, API endpoints no longer available #295
+
+### Fixed
+- Error parsing to avoid `ArgumentNullException` (thank you @outofrange-consulting #200)
+- Tests
+
 ## [3.34.1] - 2025-08-14
 ### Added
 - Support for [POST Create a Quoted Conversion between Client Wallets](https://docs.mangopay.com/api-reference/conversions/create-quoted-conversion-client-wallets) and [POST Create an Instant Conversion between Client Wallets](https://docs.mangopay.com/api-reference/conversions/create-instant-conversion-client-wallets) #289

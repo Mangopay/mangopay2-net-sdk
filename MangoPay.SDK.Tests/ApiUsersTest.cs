@@ -414,7 +414,8 @@ namespace MangoPay.SDK.Tests
                 var johnPut = new UserNaturalPutDTO
                 {
 					LastName = john.LastName + " - CHANGED",
-					Nationality = CountryIso.DK
+					Nationality = CountryIso.DK,
+                    TermsAndConditionsAccepted = true
                 };
 
                 var userSaved = await this.Api.Users.UpdateNaturalAsync(johnPut, john.Id);
@@ -502,7 +503,8 @@ namespace MangoPay.SDK.Tests
                 var johnPut = new UserNaturalPutDTO
                 {
                     LastName = john.LastName + " - CHANGED éèęóąśłżźćń",
-                    Nationality = CountryIso.DK
+                    Nationality = CountryIso.DK,
+                    TermsAndConditionsAccepted = true
                 };
 
                 var userSaved = await this.Api.Users.UpdateNaturalAsync(johnPut, john.Id);
@@ -527,7 +529,8 @@ namespace MangoPay.SDK.Tests
                 var matrixPut = new UserLegalPutDTO
                 {
                     LegalRepresentativeLastName = matrix.LegalRepresentativeLastName + " - CHANGED",
-                    UserCategory = UserCategory.OWNER
+                    UserCategory = UserCategory.OWNER,
+                    TermsAndConditionsAccepted = true
                 };
 
                 var userSaved = await this.Api.Users.UpdateLegalAsync(matrixPut, matrix.Id);
@@ -1195,9 +1198,7 @@ namespace MangoPay.SDK.Tests
             try
             {
                 var naturalJohn = await GetNewJohn();
-                Assert.False(naturalJohn.TermsAndConditionsAccepted ?? false);
-
-                var naturalJohnAccepted = await GetNewJohn(true);
+                var naturalJohnAccepted = await GetNewJohn();
                 Assert.True(naturalJohnAccepted.TermsAndConditionsAccepted ?? true);
                 Assert.True(naturalJohnAccepted.TermsAndConditionsAcceptedDate.HasValue);
 
@@ -1221,9 +1222,7 @@ namespace MangoPay.SDK.Tests
             try
             {
                 var legalJohn = await GetMatrix(newJohn: true);
-                Assert.False(legalJohn.TermsAndConditionsAccepted ?? false);
-
-                var legalJohnAccepted = await GetMatrix(true, true);
+                var legalJohnAccepted = await GetMatrix(true);
                 Assert.True(legalJohnAccepted.TermsAndConditionsAccepted ?? true);
                 Assert.True(legalJohnAccepted.TermsAndConditionsAcceptedDate.HasValue);
 
@@ -1408,7 +1407,8 @@ namespace MangoPay.SDK.Tests
                     {
                         AddressLine1 = "Address line 1", AddressLine2 = "Address line 2", City = "City",
                         Country = CountryIso.PL, PostalCode = "11222", Region = "Region"
-                    }
+                    },
+                    TermsAndConditionsAccepted = true
                 };
 
                 var john = await this.Api.Users.CreateOwnerAsync(user);
