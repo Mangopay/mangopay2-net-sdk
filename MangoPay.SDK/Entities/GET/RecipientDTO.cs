@@ -59,5 +59,7 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>Information about the action required from the user.</summary>
         public PendingUserActionDTO PendingUserAction { get; set; }
+        
+        public VerificationOfPayee RecipientVerificationOfPayee { get; set; }
     }
 }

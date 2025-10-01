@@ -17,7 +17,7 @@ namespace MangoPay.SDK.Tests
         private static RecipientDTO _recipient;
 
         [Test]
-        public async Task Test_CreateRecipient()
+        public async Task Test_CreateRecipient_VerificationOfPayeeNull()
         {
             await GetNewRecipient();
 
@@ -34,6 +34,45 @@ namespace MangoPay.SDK.Tests
             Assert.IsNotNull(_recipient.LocalBankTransfer["GBP"].AccountNumber);
             Assert.IsNotNull(_recipient.PendingUserAction);
             Assert.IsNotNull(_recipient.Country);
+            Assert.IsNull(_recipient.RecipientVerificationOfPayee);
+        }
+        
+        [Test]
+        public async Task Test_CreateRecipient_VerificationOfPayeeNotNull()
+        {
+            RecipientPostDTO postDto = new RecipientPostDTO();
+
+            Dictionary<string, object> localBankTransfer = new Dictionary<string, object>();
+            Dictionary<string, object> details = new Dictionary<string, object>();
+            details.Add("IBAN", "DE75512108001245126199");
+            localBankTransfer.Add(CurrencyIso.EUR.ToString(), details);
+
+            postDto.DisplayName = "My EUR account";
+            postDto.PayoutMethodType = "LocalBankTransfer";
+            postDto.RecipientType = "Individual";
+            postDto.Currency = CurrencyIso.EUR;
+            postDto.IndividualRecipient = new IndividualRecipient()
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                Address = new Address
+                {
+                    AddressLine1 = "Address line 1",
+                    AddressLine2 = "Address line 2",
+                    City = "Paris",
+                    Country = CountryIso.DE,
+                    PostalCode = "11222",
+                    Region = "Paris"
+                }
+            };
+            postDto.LocalBankTransfer = localBankTransfer;
+            postDto.Country = CountryIso.DE;
+            
+            UserNaturalScaDTO john = await GetJohnScaOwner();
+            RecipientDTO recipient = await Api.Recipients.CreateAsync(postDto, john.Id);
+            
+            Assert.IsNotNull(recipient);
+            Assert.IsNotNull(recipient.RecipientVerificationOfPayee);
         }
 
         [Test]

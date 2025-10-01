@@ -1,10 +1,9 @@
-﻿using MangoPay.SDK.Core.Enumerations;
-using MangoPay.SDK.Entities.GET;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using MangoPay.SDK.Core.Enumerations;
 using MangoPay.SDK.Entities;
 using MangoPay.SDK.Entities.POST;
+using NUnit.Framework;
 
 namespace MangoPay.SDK.Tests
 {
@@ -21,6 +20,7 @@ namespace MangoPay.SDK.Tests
 
                 Assert.IsTrue(payOut.Id.Length > 0);
                 Assert.AreEqual(payOut.PaymentType, PayOutPaymentType.BANK_WIRE);
+                Assert.IsNotNull(payOut.RecipientVerificationOfPayee);
             }
             catch (Exception ex)
             {
