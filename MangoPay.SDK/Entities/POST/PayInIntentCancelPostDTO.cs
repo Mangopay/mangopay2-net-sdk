@@ -5,18 +5,18 @@ using Newtonsoft.Json.Converters;
 
 namespace MangoPay.SDK.Entities.PUT
 {
-    public class PayInIntentCancelPutDTO : EntityPutBase
+    public class PayInIntentCancelPostDTO : EntityPostBase
     {
         /// <summary>
         /// An amount of money in the smallest sub-division of the currency
         /// </summary>
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
 
         /// <summary>
         /// The currency of the funds
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public CurrencyIso Currency { get; set; }
+        public CurrencyIso? Currency { get; set; }
 
         /// <summary>
         /// Information about the fees
