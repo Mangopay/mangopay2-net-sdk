@@ -606,31 +606,20 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.GetObjectAsync<PayInIntentDTO>(MethodKey.PayInIntentGet, entitiesId: payInIntentId);
         }
-
-        // /// <summary>
-        // /// Update an Intent
-        // /// </summary>
-        // /// <param name="payInIntentId">Intent identifier</param>
-        // /// <param name="intent">Object containing the fields to be updated</param>
-        // /// <returns>Object intent returned from API.</returns>
-        // public async Task<PayInIntentDTO> UpdatePayInIntentAsync(string payInIntentId, PayInIntentPutDTO intent)
-        // {
-        //     return await this.UpdateObjectAsync<PayInIntentDTO, PayInIntentPutDTO>(MethodKey.PayInIntentUpdate, intent,
-        //         entitiesId: payInIntentId);
-        // }
         
-        /*
         /// <summary>
         /// Cancel an Intent
         /// </summary>
         /// <param name="payInIntentId">Intent identifier</param>
         /// <param name="intent">Object containing required fields for canceling</param>
+        /// <param name="idempotentKey">Idempotent key for this request.</param>
         /// <returns>Object intent returned from API.</returns>
-        public async Task<PayInIntentDTO> CancelPayInIntentAsync(string payInIntentId, PayInIntentCancelPutDTO intent)
+        public async Task<PayInIntentDTO> CancelPayInIntentAsync(string payInIntentId, PayInIntentCancelPostDTO intent,
+            string idempotentKey = null)
         {
-            return await this.UpdateObjectAsync<PayInIntentDTO, PayInIntentCancelPutDTO>(MethodKey.PayInIntentCancel, 
-                intent, entitiesId: payInIntentId);
-        }*/
+            return await CreateObjectAsync<PayInIntentDTO, PayInIntentCancelPostDTO>(MethodKey.PayInIntentCancel, 
+                intent, idempotentKey, payInIntentId);
+        }
 
         /// <summary>Create PayInIntent Splits</summary>
         /// <param name="payInIntentId">Intent identifier</param>
@@ -709,6 +698,34 @@ namespace MangoPay.SDK.Core.APIs
         {
             return await this.GetObjectAsync<PayInPayByBankSupportedBankDTO>(MethodKey.PayByBankGetSupportedBanks, 
                 filter?.GetValues(), pagination);
+        }
+
+        /// <summary>
+        /// Send key pre-transaction data such as order details, buyer information,
+        /// and merchant context before initiating a PayPal payment.
+        ///
+        /// Since the fields needed by PayPal are dynamic and can change, the method uses a Dictionary as payload and response
+        /// 
+        /// </summary>
+        /// <param name="data">Data Collection</param>
+        /// <param name="idempotentKey">Idempotency key (optional)</param>
+        /// <returns>Dictionary containing the dataCollectionId</returns>
+        public async Task<PayPalDataCollectionDTO> CreatePayPalDataCollectionAsync(PayPalDataCollectionPostDTO data,
+            string idempotentKey = null)
+        {
+            return await CreateObjectAsync<PayPalDataCollectionDTO, PayPalDataCollectionPostDTO>(
+                MethodKey.PayPalDataCollectionCreate, data, idempotentKey);
+        }
+        
+        /// <summary>
+        /// Get PayPal Data Collection
+        /// </summary>
+        /// <param name="dataCollectionId">Data Collection identifier</param>
+        /// <returns>Dictionary with data collection properties</returns>
+        public async Task<PayPalDataCollectionDTO> GetPayPalDataCollectionAsync(string dataCollectionId)
+        {
+            return await GetObjectAsync<PayPalDataCollectionDTO>(MethodKey.PayPalDataCollectionGet,
+                dataCollectionId);
         }
     }
 }

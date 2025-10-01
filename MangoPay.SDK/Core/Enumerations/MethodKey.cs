@@ -26,6 +26,8 @@
         HooksSave,
         PayinsPayPalCreate,
         PayinsPayPalWebCreate,
+        PayPalDataCollectionCreate,
+        PayPalDataCollectionGet,
         PayinsBankwireDirectCreate,
         PayinsPayconiqWebCreate,
         PayinsPayconiqV2WebCreate,

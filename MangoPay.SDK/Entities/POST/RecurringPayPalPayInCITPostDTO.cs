@@ -57,5 +57,7 @@ namespace MangoPay.SDK.Entities.POST
         /// The platform’s order reference for the transaction.
         /// </summary>
         public string Reference { get; set; }
+        
+        public string DataCollectionId { get; set; }
     }
 }

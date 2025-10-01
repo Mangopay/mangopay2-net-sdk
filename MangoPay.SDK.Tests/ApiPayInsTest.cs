@@ -2402,7 +2402,7 @@ namespace MangoPay.SDK.Tests
         }
 
         [Test]
-        public async Task Test_Dserialize_CardInfo()
+        public async Task Test_Deserialize_CardInfo()
         {
             var settings = new JsonSerializerSettings
             {
@@ -2502,31 +2502,11 @@ namespace MangoPay.SDK.Tests
             Assert.AreEqual(intent.Status, fetched.Status);
         }
         
-        /*[Test]
-        [Ignore("skip")]
-        public async Task Test_UpdatePayInIntent()
-        {
-            var intent = await CreateNewPayInIntentAuthorization();
-            var john = await GetJohn(true);
-            var toUpdate = new PayInIntentPutDTO
-            {
-                Buyer = new PayInIntentBuyer
-                {
-                    Id = john.Id
-                }
-            };
-            
-            var updated = await Api.PayIns.UpdatePayInIntentAsync(intent.Id, toUpdate);
-            Assert.IsNotNull(updated.Id);
-            Assert.AreEqual(intent.Id, updated.Id);
-            Assert.AreEqual(intent.Buyer.Id, updated.Buyer.Id);
-        }*/
-        
-        /*[Test]
+        [Test]
         public async Task Test_CancelPayInIntent()
         {
             var intent = await CreateNewPayInIntentAuthorization();
-            var toCancel = new PayInIntentCancelPutDTO
+            var toCancel = new PayInIntentCancelPostDTO
             {
                 ExternalData = new PayInIntentExternalData
                 {
@@ -2535,10 +2515,11 @@ namespace MangoPay.SDK.Tests
                 }
             };
             
-            var canceled = await Api.PayIns.CancelPayInIntentAsync(intent.Id, toCancel);
-            Assert.IsNotNull(canceled.Id);
-            Assert.AreEqual("CANCELED", canceled.Status);
-        }*/
+            
+            var cancelled = await Api.PayIns.CancelPayInIntentAsync(intent.Id, toCancel);
+            Assert.IsNotNull(cancelled.Id);
+            Assert.AreEqual("CANCELLED", cancelled.Status);
+        }
 
         [Test]
         public async Task Test_CreatePayInIntentSplits()
@@ -2653,6 +2634,66 @@ namespace MangoPay.SDK.Tests
             var resultFilteredPaginated = await Api.PayIns.GetPayByBankSupportedBanks(filter, pagination);
             Assert.AreEqual(2, resultFilteredPaginated.SupportedBanks.Countries[0].Banks.Count);
             Assert.AreEqual(1, resultFilteredPaginated.SupportedBanks.Countries.Count);
+        }
+        
+        [Test]
+        public async Task Test_Serialize_Deserialize_PayPalDataCollection()
+        {
+            var dto = new PayPalDataCollectionPostDTO
+            {
+                Data = new Dictionary<string, object>
+                {
+                    { "email", "test@example.com" },
+                    { "amount", 100 },
+                    { "verified", true }
+                }
+            };
+            
+            string json = JsonConvert.SerializeObject(dto);
+            Assert.AreEqual("{\"email\":\"test@example.com\",\"amount\":100,\"verified\":true}", json);
+
+            var deserialized = JsonConvert.DeserializeObject<PayPalDataCollectionDTO>(json);
+            Assert.AreEqual("test@example.com", deserialized.Data["email"]);
+        }
+
+        [Test]
+        public async Task Test_Create_Get_PayPalDataCollection()
+        {
+            var dto = new PayPalDataCollectionPostDTO
+            {
+                Data = new Dictionary<string, object>
+                {
+                    { "sender_account_id", "A12345N343" },
+                    { "sender_first_name", "Jane" },
+                    { "sender_last_name", "Doe" },
+                    { "sender_email", "jane.doe@sample.com" },
+                    { "sender_phone", "(042) 1123 4567" },
+                    { "sender_address_zip", "75009" },
+                    { "sender_country_code", "FR" },
+                    { "sender_create_date", "2012-12-09T19:14:55.277-0:00" },
+                    { "sender_signup_ip", "10.220.90.20" },
+                    { "sender_popularity_score", "high" },
+                    { "receiver_account_id", "A12345N344" },
+                    { "receiver_create_date", "2012-12-09T19:14:55.277-0:00" },
+                    { "receiver_email", "jane@sample.com" },
+                    { "receiver_address_country_code", "FR" },
+                    { "business_name", "Jane Ltd" },
+                    { "recipient_popularity_score", "high" },
+                    { "first_interaction_date", "2012-12-09T19:14:55.277-0:00" },
+                    { "txn_count_total", "34" },
+                    { "vertical", "Household goods" },
+                    { "transaction_is_tangible", "0" }
+                }
+            };
+
+            var created = await Api.PayIns.CreatePayPalDataCollectionAsync(dto);
+            Assert.IsNotNull(created.Data["dataCollectionId"]);
+
+            var fetched = await Api.PayIns.GetPayPalDataCollectionAsync(
+                created.Data["dataCollectionId"] as string);
+            Assert.IsNotNull(fetched.Data["dataCollectionId"]);
+            Assert.AreEqual("Jane", fetched.Data["sender_first_name"]);
+            Assert.AreEqual("Doe", fetched.Data["sender_last_name"]);
         }
     }
 }
