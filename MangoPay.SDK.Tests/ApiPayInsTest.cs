@@ -2691,7 +2691,7 @@ namespace MangoPay.SDK.Tests
 
             var fetched = await Api.PayIns.GetPayPalDataCollectionAsync(
                 created.Data["dataCollectionId"] as string);
-            Assert.IsNotNull(fetched.Data["DataCollectionId"]);
+            Assert.IsNotNull(fetched.Data["dataCollectionId"]);
             Assert.AreEqual("Jane", fetched.Data["sender_first_name"]);
             Assert.AreEqual("Doe", fetched.Data["sender_last_name"]);
         }
