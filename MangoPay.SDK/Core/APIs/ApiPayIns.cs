@@ -699,5 +699,33 @@ namespace MangoPay.SDK.Core.APIs
             return await this.GetObjectAsync<PayInPayByBankSupportedBankDTO>(MethodKey.PayByBankGetSupportedBanks, 
                 filter?.GetValues(), pagination);
         }
+
+        /// <summary>
+        /// Send key pre-transaction data such as order details, buyer information,
+        /// and merchant context before initiating a PayPal payment.
+        ///
+        /// Since the fields needed by PayPal are dynamic and can change, the method uses a Dictionary as payload and response
+        /// 
+        /// </summary>
+        /// <param name="data">Data Collection</param>
+        /// <param name="idempotentKey">Idempotency key (optional)</param>
+        /// <returns>Dictionary containing the dataCollectionId</returns>
+        public async Task<PayPalDataCollectionDTO> CreatePayPalDataCollectionAsync(PayPalDataCollectionPostDTO data,
+            string idempotentKey = null)
+        {
+            return await CreateObjectAsync<PayPalDataCollectionDTO, PayPalDataCollectionPostDTO>(
+                MethodKey.PayPalDataCollectionCreate, data, idempotentKey);
+        }
+        
+        /// <summary>
+        /// Get PayPal Data Collection
+        /// </summary>
+        /// <param name="dataCollectionId">Data Collection identifier</param>
+        /// <returns>Dictionary with data collection properties</returns>
+        public async Task<PayPalDataCollectionDTO> GetPayPalDataCollectionAsync(string dataCollectionId)
+        {
+            return await GetObjectAsync<PayPalDataCollectionDTO>(MethodKey.PayPalDataCollectionGet,
+                dataCollectionId);
+        }
     }
 }
