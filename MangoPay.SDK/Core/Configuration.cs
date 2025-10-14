@@ -22,6 +22,7 @@ namespace MangoPay.SDK.Core
 		public int Timeout = 0;
 
         /// <summary>Set to true for uk traffic</summary>
+        [Obsolete("Will be removed in future versions.")]
         public bool UKHeaderFlag = false;
 
 		/// <summary>API version (added in dashboard's SDK only in order to handle both old and new address fields).</summary>

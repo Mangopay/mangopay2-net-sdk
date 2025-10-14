@@ -148,6 +148,7 @@ namespace MangoPay.SDK.Tests
 
             Assert.IsNotNull(client);
             Assert.IsTrue("sdk-unit-tests".Equals(client.ClientId));
+            Assert.IsNotNull(client.Licensor);
         }
 
         [Test]

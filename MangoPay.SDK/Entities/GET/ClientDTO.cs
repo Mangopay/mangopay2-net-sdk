@@ -1,6 +1,5 @@
-﻿using MangoPay.SDK.Core.Enumerations;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -66,5 +65,10 @@ namespace MangoPay.SDK.Entities.GET
 
         /// <summary>The tax (or VAT) number for your company</summary>
         public string TaxNumber { get; set; }
+        
+        /// <summary>
+        /// The licensor of the platform’s company account, indicating the Mangopay entity the platform contracted with
+        /// </summary>
+        public string Licensor { get; set; }
 	}
 }
