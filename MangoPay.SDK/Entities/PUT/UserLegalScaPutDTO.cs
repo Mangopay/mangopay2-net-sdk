@@ -32,5 +32,7 @@ namespace MangoPay.SDK.Entities.PUT
         public string Tag { get; set; }
 
         public string Email { get; set; }
+        
+        public string ScaContext { get; set; }
     }
 }

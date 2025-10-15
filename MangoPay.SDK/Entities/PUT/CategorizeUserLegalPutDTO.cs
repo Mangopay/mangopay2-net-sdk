@@ -21,5 +21,7 @@ namespace MangoPay.SDK.Entities.PUT
         
         /// <summary>Company Number. Required if LegalPersonType is BUSINESS.</summary>
         public string CompanyNumber { get; set; }
+        
+        public string ScaContext { get; set; }
     }
 }

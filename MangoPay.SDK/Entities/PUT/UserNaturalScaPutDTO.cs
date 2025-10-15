@@ -84,5 +84,7 @@ namespace MangoPay.SDK.Entities.PUT
         public bool TermsAndConditionsAccepted { get; set; }
         
         public string Email { get; set; }
+        
+        public string ScaContext { get; set; }
     }
 }

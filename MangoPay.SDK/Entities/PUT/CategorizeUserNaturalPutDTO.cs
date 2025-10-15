@@ -65,5 +65,7 @@ namespace MangoPay.SDK.Entities.PUT
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public CountryIso? PhoneNumberCountry { get; set; }
+        
+        public string ScaContext { get; set; }
     }
 }
