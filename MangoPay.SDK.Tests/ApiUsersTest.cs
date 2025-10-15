@@ -102,6 +102,7 @@ namespace MangoPay.SDK.Tests
                     Birthday = new DateTime(1975, 12, 21, 0, 0, 0),
                     Nationality = CountryIso.FR,
                     CountryOfResidence = CountryIso.FR,
+                    ScaContext = "USER_PRESENT"
                 };
 
                 var response = await Api.Users.CategorizeNaturalAsync(categorize, john.Id);
@@ -147,7 +148,8 @@ namespace MangoPay.SDK.Tests
                         PostalCode = "11222",
                         Region = "RegionUbo"
                     },
-                    CompanyNumber = "LU72HN11"
+                    CompanyNumber = "LU72HN11",
+                    ScaContext = "USER_PRESENT"
                 };
 
                 var response = await Api.Users.CategorizeLegalAsync(categorize, matrix.Id);

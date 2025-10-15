@@ -1,8 +1,6 @@
-﻿using MangoPay.SDK.Core;
-using MangoPay.SDK.Core.Enumerations;
+﻿using MangoPay.SDK.Core.Enumerations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 
 namespace MangoPay.SDK.Entities.POST
 {
@@ -25,5 +23,7 @@ namespace MangoPay.SDK.Entities.POST
         public UserCategory UserCategory { get; set; }
 
         public bool? TermsAndConditionsAccepted { get; set; }
+        
+        public string ScaContext { get; set; }
     }
 }
